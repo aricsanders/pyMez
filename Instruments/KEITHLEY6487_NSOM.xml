@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="DEFAULT_INSTRUMENT_STYLE.xsl"?>
+<!-- Written by Aric Sanders 2008 Altered 10/2009-->
+
+
+<Instrument>
+<!-- Information Specific To My SRS830-->
+    <Specific_Information>
+        <Name>KEITHLEY6487</Name>
+        <Alias>picoammeter</Alias>
+        <Location>NSOM Rm 3311</Location>
+        <Manual href="file://132.163.128.161/68_pml/686/68604/NSOM/Keithley/6487_901_01A.pdf"/>
+        <Image href="./KEITHLEY6487_NSOM_Images/Keithley_Image_1.jpg"/>
+        <Price></Price>
+        <Serial>1111167</Serial>
+        <IDN>'KEITHLEY INSTRUMENTS INC.,MODEL 6487,1111167,A06   Jun 20 2006 15:08:40/A02  /C/E'</IDN>
+        <Instrument_Type>GPIB</Instrument_Type>
+        <Instrument_Address>GPIB::21</Instrument_Address>
+        <Purchase_Date></Purchase_Date>
+        <NIST_Tag></NIST_Tag>
+    </Specific_Information>
+<!-- Information Common To All SRS830-->
+    <General_Information>
+    <Manufacturer>KEITHLEY</Manufacturer>
+    <Manufacturer_Website href='http://www.keithley.com/products/dcac/voltagesource/application/?mn=6487'/>
+    <Use>To detect a small current signal or apply a voltage.</Use>     
+<Commands_Description>
+        <Command>This is the command sent over the GPIB bus.</Command>
+        <Type>Whether or not it returns a value or just sets something.</Type>
+        <Argument>The parameter the command passes to the instrument. Optional parameters
+        are denoted with an *. The types of paramters are int=integer, float=floating point number,
+        string=string, bool=boolean and None=NULL.</Argument>
+        <Returns> What gets returned by the function. </Returns>
+        <Description>A one line describing the purpose of the function, for more detailed info look in the manual. </Description>
+    </Commands_Description>
+    <Commands>
+        <Tuple Command="SYST:ZCH" Type="SET" Argument="String" Returns="None" Description="Enables zero check. ON or OFF"/>
+        <Tuple Command="SYST:ZCH?" Type="QUERY" Argument="None" Returns="bool" Description="Queries the zero check."/>
+        <Tuple Command="CURR:RANG" Type="SET" Argument="float" Returns="None" Description="Sets the measurement range of the picoammeter."/>
+        <Tuple Command="CURR:RANG?" Type="QUERY" Argument="None" Returns="float" Description="Queries the measurement range of the picoammeter."/>
+
+
+
+       
+        
+    </Commands>
+    <Command_Parameter_Definitions>
+        <Parameter_Table Command="SENS">
+            <Tuple Parameter_Value="0" Parameter_Definition="2nv/fA"/>
+            <Tuple Parameter_Value="1" Parameter_Definition="5nv/fA"/>
+            <Tuple Parameter_Value="2" Parameter_Definition="10nv/fA"/>
+            <Tuple Parameter_Value="3" Parameter_Definition="20nv/fA"/>
+            <Tuple Parameter_Value="4" Parameter_Definition="50nv/fA"/>
+            <Tuple Parameter_Value="5" Parameter_Definition="100nv/fA"/>
+            <Tuple Parameter_Value="6" Parameter_Definition="200nv/fA"/>
+            <Tuple Parameter_Value="7" Parameter_Definition="500nv/fA"/>
+            <Tuple Parameter_Value="8" Parameter_Definition="1uv/fA"/>
+            <Tuple Parameter_Value="9" Parameter_Definition="2uv/fA"/>
+            <Tuple Parameter_Value="10" Parameter_Definition="5uv/fA"/>
+            <Tuple Parameter_Value="11" Parameter_Definition="10uv/fA"/>
+            <Tuple Parameter_Value="12" Parameter_Definition="20uv/fA"/>
+        </Parameter_Table>
+        <Parameter_Table Command="OFLT">
+            <Tuple Parameter_Value="0" Parameter_Definition="10us"/>
+            <Tuple Parameter_Value="1" Parameter_Definition="30us"/>
+            <Tuple Parameter_Value="2" Parameter_Definition="100us"/>
+            <Tuple Parameter_Value="3" Parameter_Definition="300us"/>
+            <Tuple Parameter_Value="4" Parameter_Definition="1ms"/>
+            <Tuple Parameter_Value="5" Parameter_Definition="3ms"/>
+            <Tuple Parameter_Value="6" Parameter_Definition="10ms"/>
+            <Tuple Parameter_Value="7" Parameter_Definition="30ms"/>
+            <Tuple Parameter_Value="8" Parameter_Definition="100ms"/>
+            <Tuple Parameter_Value="9" Parameter_Definition="300ms"/>
+            <Tuple Parameter_Value="10" Parameter_Definition="1s"/>
+            <Tuple Parameter_Value="11" Parameter_Definition="3s"/>
+            <Tuple Parameter_Value="12" Parameter_Definition="10s"/>
+            <Tuple Parameter_Value="13" Parameter_Definition="30s"/>
+            <Tuple Parameter_Value="14" Parameter_Definition="100s"/>
+            <Tuple Parameter_Value="15" Parameter_Definition="300s"/>
+            <Tuple Parameter_Value="16" Parameter_Definition="1ks"/>
+            <Tuple Parameter_Value="17" Parameter_Definition="3ks"/>
+            <Tuple Parameter_Value="18" Parameter_Definition="10ks"/>
+            <Tuple Parameter_Value="19" Parameter_Definition="30ks"/>
+        </Parameter_Table>
+    </Command_Parameter_Definitions>
+    <State_Commands>
+        <Tuple Set="CURR:RANG" Query="CURR:RANG?"/>
+        <Tuple Set="SOUR:VOLT:STAT" Query="SOUR:VOLT:STAT?"/>
+        <Tuple Set="SOUR:VOLT" Query="SOUR:VOLT?"/>
+        <Tuple Set="SOUR:VOLT:ILIM" Query="SOUR:VOLT:ILIM?"/>
+        <Tuple Set="SOUR:VOLT:RANG" Query="SOUR:VOLT:RANG?"/>
+    </State_Commands>
+    </General_Information>
+	
+</Instrument>
+
+

@@ -272,5 +272,5 @@ def test_CalibrateDUTWrapper():
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    #test_StatistiCALWrapper()
-    test_CalibrateDUTWrapper()
+    test_StatistiCALWrapper()
+    #test_CalibrateDUTWrapper()

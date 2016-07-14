@@ -61,9 +61,10 @@ except:
     print "Can not find the module GetMetadata, please add it to sys.path"
     print "Anything that uses the functions from GetMetadata will be broken"
     pass
+import pyMeasure
 #-----------------------------------------------------------------------------
 # Module Constants
-PYMEASURE_ROOT=r'C:\Users\sandersa\PyCharm Projects\pyMeasure'
+PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMeasure.__file__))
 INSTRUMENT_SHEETS=fnmatch.filter(os.listdir(os.path.join(
 PYMEASURE_ROOT,'Instruments')),'*.xml')
 XSLT_REPOSITORY='../XSL'

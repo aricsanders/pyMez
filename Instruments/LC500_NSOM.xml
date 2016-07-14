@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="DEFAULT_INSTRUMENT_STYLE.xsl"?>
+<!-- Written by Aric Sanders 11/2009-->
+
+
+<Instrument>
+<!-- Information Specific To My LC500-->
+    <Specific_Information>
+        <Name>LC500</Name>
+        <Alias>HeCd</Alias>
+        <Location>NSOM Rm 3311</Location>
+        
+        <Image href="./LC500_NSOM_Images/LC500Main.jpg"/>
+        <Price></Price>
+        <Serial></Serial>
+        <Manual href="file://132.163.128.161/68_pml/686/68604/NSOM/HeCd/56-74 HeCd Manual Rev B.pdf"/>
+        <Instrument_Address></Instrument_Address>
+        <Instrument_Type>COMM</Instrument_Type>
+        <Purchase_Date></Purchase_Date>
+        <Owner>Norman Sanford</Owner>
+        <NIST_Tag></NIST_Tag>
+    </Specific_Information>
+<!-- Information Common To All LC500-->
+    <General_Information>
+    <Manufacturer>CVI Melles Griot</Manufacturer>
+    <Manufacturer_Website href='http://lasers.mellesgriot.com/'/>
+    <Use>A powersource for a HeCd Laser</Use>
+    <Commands_Description>
+        <Command>This is the command sent over the COMM bus.</Command>
+        <Type>Whether or not it returns a value or just sets something.</Type>
+        <Argument>The parameter the command passes to the instrument. Optional parameters
+        are denoted with an *. The types of paramters are hex=hexadecimal and None=NULL.</Argument>
+        <Returns> What gets returned by the function. </Returns>
+        <Description>A one line describing the purpose of the function, for more detailed info look in the manual. </Description>
+    </Commands_Description>
+    <Commands>
+        <Tuple Command="IRESET" Type="SET" Argument="None" Returns="None" Description="Starts the laser shutdown sequence and resets it."/>
+        <Tuple Command="QRESET" Type="SET" Argument="None" Returns="None" Description="Same as IRESET, except it also ressets TUBE run time."/>
+        <Tuple Command="CF" Type="SET" Argument="None" Returns="None" Description="Clears the serial fault condition."/>
+        <Tuple Command="MODE" Type="QUERY" Argument="None" Returns="None" Description="Requests the laser operating status."/>
+        <Tuple Command="REMELT" Type="SET" Argument="None" Returns="None" Description="Starts the Cd remelt on 95 series lasers."/>
+        <Tuple Command="VERS" Type="QUERY" Argument="None" Returns="None" Description="Requests the software version."/>
+        <Tuple Command="LASER" Type="SET" Argument="int" Returns="None" Description="Sets the laser operating mode."/>
+        <Tuple Command="TBCUR" Type="QUERY" Argument="None" Returns="None" Description="Requests the tube current in mA."/>
+        <Tuple Command="TBVOLT" Type="QUERY" Argument="None" Returns="String" Description="Requests the tube voltage in volts."/>
+        <Tuple Command="LPOWER" Type="QUERY" Argument="None" Returns="String" Description="Request the optical power in mW."/>
+        <Tuple Command="CDCYC" Type="QUERY" Argument="None" Returns="String" Description="Request the Cd duty cycle in %."/>
+        <Tuple Command="TDIODE" Type="QUERY" Argument="None" Returns="String" Description="Request the temperature diode voltage in 1/100 of volts."/>
+        <Tuple Command="HEDMD" Type="QUERY" Argument="None" Returns="String" Description="Request the helium demand status."/>
+        <Tuple Command="PWRTM" Type="QUERY" Argument="None" Returns="String" Description="Request the laser supply on time in hours."/>
+        <Tuple Command="TBTM" Type="QUERY" Argument="None" Returns="String" Description="Request tube on time in hours."/>
+        <Tuple Command="STBYTM" Type="QUERY" Argument="None" Returns="String" Description="Request tube standby time in hours."/>
+    </Commands>
+
+    <State_Commands>
+        <Tuple Set='LASER' Query='MODE'/>
+    </State_Commands>
+    </General_Information>
+	
+</Instrument>
+
+
