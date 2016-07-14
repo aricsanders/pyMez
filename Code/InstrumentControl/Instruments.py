@@ -26,7 +26,7 @@ except:
     print 'PIL is required for some camera operations'
     PIL_AVAILABLE=0
 try:
-    import visa
+    import visa,pyvisa
 except:
     print "To control comm and gpib instruments this module requires the package PyVisa"
     print " Please download it at  http://pyvisa.sourceforge.net/ "
@@ -59,8 +59,7 @@ ACTIVE_COMPONENTS=[PIL_AVAILABLE,DATA_SHEETS,METHOD_ALIASES]
 INSTRUMENT_TYPES=['GPIB','COMM','OCEAN_OPTICS','MIGHTEX','LABJACK']
 INSTRUMENTS_DEFINED=[]
 #TODO Make PYMEASURE_ROOT be read from the settings folder
-PYMEASURE_ROOT=r'C:\Users\sandersa\PyCharm Projects\pyMeasure'
-
+PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMeasure.__file__))
 #-------------------------------------------------------------------------------
 # Module Functions
 
@@ -146,7 +145,7 @@ class VisaInstrumentError(Exception):
 
 
         
-class VisaInstrument(visa.ResourceManager,InstrumentSheet):
+class VisaInstrument(pyvisa.resources.messagebased.MessageBasedResource,InstrumentSheet):
     """ General Class to communicate with COMM and GPIB instruments"""
     def __init__(self,resource_name=None,**key_word_arguments):
         """ Intializes the VisaInstrument Class"""
@@ -177,9 +176,14 @@ class VisaInstrument(visa.ResourceManager,InstrumentSheet):
         self.state_buffer=[]
         self.STATE_BUFFER_MAX_LENGTH=10
         
-        
+        #self.resource_manager=visa.ResourceManager()
         # Call the visa instrument class-- this gives ask,write,read
-        visa.ResourceManager.open_resource.__init__(self,self.instrument_address,**key_word_arguments)
+        #self.resource=self.resource_manager.open_resource(self.instrument_address)
+        # for key,value in self.resource.__dict__.iteritems():
+        #     self.__dict__[key]=value
+        # pyvisa.resources.messagebased.MessageBasedResource.__init__(self,
+        #                                                             **{"resource_manager":visa.ResourceManager(),
+        #                                                               "resource_name":self.instrument_address})
         self.current_state=self.get_state()
         
         if METHOD_ALIASES and not self.info_found :
@@ -201,7 +205,7 @@ class VisaInstrument(visa.ResourceManager,InstrumentSheet):
         """ Gets the current state of the instrument """
         if len(state_query_dictionary)==0:
             state_query_dictionary=self.DEFAULT_STATE_QUERY_DICTIONARY
-        state=dict([(state_command,self.ask(str(query))) for state_command,query 
+        state=dict([(state_command,self.query(str(query))) for state_command,query
         in state_query_dictionary.iteritems()])
         return state
     
@@ -254,26 +258,26 @@ def test_find_description():
     print "The File Contents are:"
     print find_description('Lockin2','file')
      
-def test_VisaInstrument():
+def test_VisaInstrument(address="GPIB::21"):
     """ Simple test of the VisaInstrument class"""
-    srs810=VisaInstrument('GPIB::2')
-    print srs810.ask('*IDN?')
-    print dir(srs810)
-    print srs810.idn
-    print srs810.DEFAULT_STATE_QUERY_DICTIONARY
-    print srs810.current_state
+    instrument=VisaInstrument(address)
+    #print instrument.ask('*IDN?')
+    print dir(instrument)
+    print instrument.idn
+    print instrument.DEFAULT_STATE_QUERY_DICTIONARY
+    print instrument.current_state
     print 'Writing 0 volts to AUX4'
-    srs810.set_state(**{'AUXV 4,':0})
-    print srs810.current_state
-    print srs810.state_buffer
-    print srs810.commands
+    instrument.set_state(**{'AUXV 4,':0})
+    print instrument.current_state
+    print instrument.state_buffer
+    print instrument.commands
 
 #-------------------------------------------------------------------------------
 # Module Runner       
 
 if __name__ == '__main__':
     #test_IV()
-    test_find_description()
-    #test_VisaInstrument()
+    #test_find_description()
+    test_VisaInstrument()
     #user_terminate=raw_input("Please Press Any key To Finish:")
     

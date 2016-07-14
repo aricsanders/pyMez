@@ -78,5 +78,5 @@ if __name__ == '__main__':
     #test_create_help_page()
     #test_create_help_page('pyMeasure')
     #test_create_help_page('pyMeasure.Code.DataHandlers.NISTModels')
-    test_create_help_page('pyMeasure.Code.DataHandlers.XMLModels')
+    test_create_help_page('pyMeasure.Code.DataHandlers.NISTModels')
     #test_create_examples_page()

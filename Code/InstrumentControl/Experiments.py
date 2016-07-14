@@ -54,7 +54,7 @@ class KeithleyIV():
     def __init__(self):
         """ Intializes the KeithleyIV experiment class"""
         try:
-            self.instrument=pyMeasure.Code.BackEnds.Instruments.VisaInstrument('Keithley')
+            self.instrument=pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument('Keithley')
         except:
             print 'Entering Fake Mode'
             pass

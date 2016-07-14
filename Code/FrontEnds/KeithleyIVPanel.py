@@ -310,7 +310,7 @@ class KeithleyIVPanel(wx.Panel):
 
     def __init__(self, parent, id, pos, size, style, name):
         self._init_ctrls(parent)
-        self.experiment=pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV()
+        self.experiment=KeithleyIV()
 
     def OnIVButtonButton(self, event):
         try:
