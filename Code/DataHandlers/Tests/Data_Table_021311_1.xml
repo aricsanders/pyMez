@@ -1,0 +1,553 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type="text/xsl" href="../XSL/DEFAULT_MEASUREMENT_STYLE.XSL"?>
+<Data_Table>
+	
+	
+  
+	
+	<Data_Description>
+		
+		
+    
+		
+		<Current>Current in Amps</Current>
+		
+		
+    
+		
+		<Index>Order in which the point was taken</Index>
+		
+		
+    
+		
+		<Instrument_Description>C:/Documents and Settings/sandersa/My Documents/Share/pyMeasure/Instruments/KEITHLEY6487_NSOM.xml</Instrument_Description>
+		
+		
+    
+		
+		<Notes>This is fake Data</Notes>
+		
+		
+    
+		
+		<Voltage>Voltage in Volts</Voltage>
+		
+		
+  
+	
+	</Data_Description>
+	
+	
+  
+	
+	<Data>
+		
+		
+    
+		
+		<Tuple Current="8.33326388947e-008" Index="0" Votage="0.001"/>
+		
+		
+    
+		
+		<Tuple Current="0.000175081874318" Index="1" Votage="2.101"/>
+		
+		
+    
+		
+		<Tuple Current="0.000350080415997" Index="2" Votage="4.201"/>
+		
+		
+    
+		
+		<Tuple Current="0.000525078957675" Index="3" Votage="6.301"/>
+		
+		
+    
+		
+		<Tuple Current="0.000700077499354" Index="4" Votage="8.401"/>
+		
+		
+    
+		
+		<Tuple Current="0.000875076041033" Index="5" Votage="10.501"/>
+		
+		
+    
+		
+		<Tuple Current="0.00105007458271" Index="6" Votage="12.601"/>
+		
+		
+    
+		
+		<Tuple Current="0.00122507312439" Index="7" Votage="14.701"/>
+		
+		
+    
+		
+		<Tuple Current="0.00140007166607" Index="8" Votage="16.801"/>
+		
+		
+    
+		
+		<Tuple Current="0.00157507020775" Index="9" Votage="18.901"/>
+		
+		
+    
+		
+		<Tuple Current="0.00175006874943" Index="10" Votage="21.001"/>
+		
+		
+    
+		
+		<Tuple Current="0.00192506729111" Index="11" Votage="23.101"/>
+		
+		
+    
+		
+		<Tuple Current="0.00210006583278" Index="12" Votage="25.201"/>
+		
+		
+    
+		
+		<Tuple Current="0.00227506437446" Index="13" Votage="27.301"/>
+		
+		
+    
+		
+		<Tuple Current="0.00245006291614" Index="14" Votage="29.401"/>
+		
+		
+    
+		
+		<Tuple Current="0.00262506145782" Index="15" Votage="31.501"/>
+		
+		
+    
+		
+		<Tuple Current="0.0028000599995" Index="16" Votage="33.601"/>
+		
+		
+    
+		
+		<Tuple Current="0.00297505854118" Index="17" Votage="35.701"/>
+		
+		
+    
+		
+		<Tuple Current="0.00315005708286" Index="18" Votage="37.801"/>
+		
+		
+    
+		
+		<Tuple Current="0.00332505562454" Index="19" Votage="39.901"/>
+		
+		
+    
+		
+		<Tuple Current="0.00350005416622" Index="20" Votage="42.001"/>
+		
+		
+    
+		
+		<Tuple Current="0.00367505270789" Index="21" Votage="44.101"/>
+		
+		
+    
+		
+		<Tuple Current="0.00385005124957" Index="22" Votage="46.201"/>
+		
+		
+    
+		
+		<Tuple Current="0.00402504979125" Index="23" Votage="48.301"/>
+		
+		
+    
+		
+		<Tuple Current="0.00420004833293" Index="24" Votage="50.401"/>
+		
+		
+    
+		
+		<Tuple Current="0.00437504687461" Index="25" Votage="52.501"/>
+		
+		
+    
+		
+		<Tuple Current="0.00455004541629" Index="26" Votage="54.601"/>
+		
+		
+    
+		
+		<Tuple Current="0.00472504395797" Index="27" Votage="56.701"/>
+		
+		
+    
+		
+		<Tuple Current="0.00490004249965" Index="28" Votage="58.801"/>
+		
+		
+    
+		
+		<Tuple Current="0.00507504104132" Index="29" Votage="60.901"/>
+		
+		
+    
+		
+		<Tuple Current="0.005250039583" Index="30" Votage="63.001"/>
+		
+		
+    
+		
+		<Tuple Current="0.00542503812468" Index="31" Votage="65.101"/>
+		
+		
+    
+		
+		<Tuple Current="0.00560003666636" Index="32" Votage="67.201"/>
+		
+		
+    
+		
+		<Tuple Current="0.00577503520804" Index="33" Votage="69.301"/>
+		
+		
+    
+		
+		<Tuple Current="0.00595003374972" Index="34" Votage="71.401"/>
+		
+		
+    
+		
+		<Tuple Current="0.0061250322914" Index="35" Votage="73.501"/>
+		
+		
+    
+		
+		<Tuple Current="0.00630003083308" Index="36" Votage="75.601"/>
+		
+		
+    
+		
+		<Tuple Current="0.00647502937476" Index="37" Votage="77.701"/>
+		
+		
+    
+		
+		<Tuple Current="0.00665002791643" Index="38" Votage="79.801"/>
+		
+		
+    
+		
+		<Tuple Current="0.00682502645811" Index="39" Votage="81.901"/>
+		
+		
+    
+		
+		<Tuple Current="0.00700002499979" Index="40" Votage="84.001"/>
+		
+		
+    
+		
+		<Tuple Current="0.00717502354147" Index="41" Votage="86.101"/>
+		
+		
+    
+		
+		<Tuple Current="0.00735002208315" Index="42" Votage="88.201"/>
+		
+		
+    
+		
+		<Tuple Current="0.00752502062483" Index="43" Votage="90.301"/>
+		
+		
+    
+		
+		<Tuple Current="0.00770001916651" Index="44" Votage="92.401"/>
+		
+		
+    
+		
+		<Tuple Current="0.00787501770819" Index="45" Votage="94.501"/>
+		
+		
+    
+		
+		<Tuple Current="0.00805001624986" Index="46" Votage="96.601"/>
+		
+		
+    
+		
+		<Tuple Current="0.00822501479154" Index="47" Votage="98.701"/>
+		
+		
+    
+		
+		<Tuple Current="0.00840001333322" Index="48" Votage="100.801"/>
+		
+		
+    
+		
+		<Tuple Current="0.0085750118749" Index="49" Votage="102.901"/>
+		
+		
+    
+		
+		<Tuple Current="0.00875001041658" Index="50" Votage="105.001"/>
+		
+		
+    
+		
+		<Tuple Current="0.00892500895826" Index="51" Votage="107.101"/>
+		
+		
+    
+		
+		<Tuple Current="0.00910000749994" Index="52" Votage="109.201"/>
+		
+		
+    
+		
+		<Tuple Current="0.00927500604162" Index="53" Votage="111.301"/>
+		
+		
+    
+		
+		<Tuple Current="0.0094500045833" Index="54" Votage="113.401"/>
+		
+		
+    
+		
+		<Tuple Current="0.00962500312497" Index="55" Votage="115.501"/>
+		
+		
+    
+		
+		<Tuple Current="0.00980000166665" Index="56" Votage="117.601"/>
+		
+		
+    
+		
+		<Tuple Current="0.00997500020833" Index="57" Votage="119.701"/>
+		
+		
+    
+		
+		<Tuple Current="0.01014999875" Index="58" Votage="121.801"/>
+		
+		
+    
+		
+		<Tuple Current="0.0103249972917" Index="59" Votage="123.901"/>
+		
+		
+    
+		
+		<Tuple Current="0.0104999958334" Index="60" Votage="126.001"/>
+		
+		
+    
+		
+		<Tuple Current="0.010674994375" Index="61" Votage="128.101"/>
+		
+		
+    
+		
+		<Tuple Current="0.0108499929167" Index="62" Votage="130.201"/>
+		
+		
+    
+		
+		<Tuple Current="0.0110249914584" Index="63" Votage="132.301"/>
+		
+		
+    
+		
+		<Tuple Current="0.0111999900001" Index="64" Votage="134.401"/>
+		
+		
+    
+		
+		<Tuple Current="0.0113749885418" Index="65" Votage="136.501"/>
+		
+		
+    
+		
+		<Tuple Current="0.0115499870834" Index="66" Votage="138.601"/>
+		
+		
+    
+		
+		<Tuple Current="0.0117249856251" Index="67" Votage="140.701"/>
+		
+		
+    
+		
+		<Tuple Current="0.0118999841668" Index="68" Votage="142.801"/>
+		
+		
+    
+		
+		<Tuple Current="0.0120749827085" Index="69" Votage="144.901"/>
+		
+		
+    
+		
+		<Tuple Current="0.0122499812502" Index="70" Votage="147.001"/>
+		
+		
+    
+		
+		<Tuple Current="0.0124249797918" Index="71" Votage="149.101"/>
+		
+		
+    
+		
+		<Tuple Current="0.0125999783335" Index="72" Votage="151.201"/>
+		
+		
+    
+		
+		<Tuple Current="0.0127749768752" Index="73" Votage="153.301"/>
+		
+		
+    
+		
+		<Tuple Current="0.0129499754169" Index="74" Votage="155.401"/>
+		
+		
+    
+		
+		<Tuple Current="0.0131249739586" Index="75" Votage="157.501"/>
+		
+		
+    
+		
+		<Tuple Current="0.0132999725002" Index="76" Votage="159.601"/>
+		
+		
+    
+		
+		<Tuple Current="0.0134749710419" Index="77" Votage="161.701"/>
+		
+		
+    
+		
+		<Tuple Current="0.0136499695836" Index="78" Votage="163.801"/>
+		
+		
+    
+		
+		<Tuple Current="0.0138249681253" Index="79" Votage="165.901"/>
+		
+		
+    
+		
+		<Tuple Current="0.0139999666669" Index="80" Votage="168.001"/>
+		
+		
+    
+		
+		<Tuple Current="0.0141749652086" Index="81" Votage="170.101"/>
+		
+		
+    
+		
+		<Tuple Current="0.0143499637503" Index="82" Votage="172.201"/>
+		
+		
+    
+		
+		<Tuple Current="0.014524962292" Index="83" Votage="174.301"/>
+		
+		
+    
+		
+		<Tuple Current="0.0146999608337" Index="84" Votage="176.401"/>
+		
+		
+    
+		
+		<Tuple Current="0.0148749593753" Index="85" Votage="178.501"/>
+		
+		
+    
+		
+		<Tuple Current="0.015049957917" Index="86" Votage="180.601"/>
+		
+		
+    
+		
+		<Tuple Current="0.0152249564587" Index="87" Votage="182.701"/>
+		
+		
+    
+		
+		<Tuple Current="0.0153999550004" Index="88" Votage="184.801"/>
+		
+		
+    
+		
+		<Tuple Current="0.0155749535421" Index="89" Votage="186.901"/>
+		
+		
+    
+		
+		<Tuple Current="0.0157499520837" Index="90" Votage="189.001"/>
+		
+		
+    
+		
+		<Tuple Current="0.0159249506254" Index="91" Votage="191.101"/>
+		
+		
+    
+		
+		<Tuple Current="0.0160999491671" Index="92" Votage="193.201"/>
+		
+		
+    
+		
+		<Tuple Current="0.0162749477088" Index="93" Votage="195.301"/>
+		
+		
+    
+		
+		<Tuple Current="0.0164499462504" Index="94" Votage="197.401"/>
+		
+		
+    
+		
+		<Tuple Current="0.0166249447921" Index="95" Votage="199.501"/>
+		
+		
+    
+		
+		<Tuple Current="0.0167999433338" Index="96" Votage="201.601"/>
+		
+		
+    
+		
+		<Tuple Current="0.0169749418755" Index="97" Votage="203.701"/>
+		
+		
+    
+		
+		<Tuple Current="0.0171499404172" Index="98" Votage="205.801"/>
+		
+		
+    
+		
+		<Tuple Current="0.0173249389588" Index="99" Votage="207.901"/>
+		
+		
+  
+	
+	</Data>
+	
+	
+
+
+</Data_Table>

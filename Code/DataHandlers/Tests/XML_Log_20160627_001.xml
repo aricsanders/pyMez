@@ -1,0 +1,10 @@
+<?xml-stylesheet type="text/xsl" href="../XSL/DEFAULT_LOG_STYLE.xsl"?>
+<Log>
+	<Entry Date="2016-06-27T21:13:48.809000" Index="1">This is a test</Entry>
+	
+	<Entry Date="2016-06-27T21:13:48.809000" Index="1">This is a test</Entry>
+	
+
+	<Entry Date="2016-06-30T15:36:55.981000" Index="2">A new Log entry
+</Entry>
+</Log>

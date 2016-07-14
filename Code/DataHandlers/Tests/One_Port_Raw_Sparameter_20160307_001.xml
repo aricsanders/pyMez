@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type="text/xsl" href="../XSL/ONE_PORT_RAW_STYLE.xsl"?>
+<Data_Table>
+	<Data_Description>
+		<Device_Description>n ck std open</Device_Description>
+		<Number_Repeats>1</Number_Repeats>
+		<Magnitude_S22>Linear magnitude for port 2</Magnitude_S22>
+		<Measurement_Date>8 Jun 2000</Measurement_Date>
+		<Device_Id>CTN112</Device_Id>
+		<Direction>Direction of connects, may be unused</Direction>
+		<Connector_Type_Measurement>Type N</Connector_Type_Measurement>
+		<Start_Frequency>7</Start_Frequency>
+		<Program_Revision>960910.143</Program_Revision>
+		<calibration_date>10 Aug 1998</calibration_date>
+		<Connector_Type_Calibration>Type N Fem</Connector_Type_Calibration>
+		<Number_Connects>3</Number_Connects>
+		<Measurement_Time>16:27:53</Measurement_Time>
+		<Phase_S22>Phase in degrees for port 2</Phase_S22>
+		<Magnitude_S11>Linear magnitude for port 1</Magnitude_S11>
+		<Program_Used>MEAS95</Program_Used>
+		<Measurement_Type>1-port</Measurement_Type>
+		<Calibration_Name>C980810.a1</Calibration_Name>
+		<Nbs>1</Nbs>
+		<Number_Frequencies>28</Number_Frequencies>
+		<System_Letter>A</System_Letter>
+		<Phase_S11>Phase in degrees for port 1</Phase_S11>
+		<Frequency>Frequency in GHz</Frequency>
+		<System_Id>System I</System_Id>
+		<Connect>Connect number</Connect>
+		<Operator>afm</Operator>
+		<Port_Used>1</Port_Used>
+	</Data_Description>
+	<Data>
+		<Tuple Connect="1" Direction="1" Frequency="0.01000" Magnitude_S11="0.9996" Magnitude_S22="0.0000" Phase_S11="-0.47" Phase_S22="0.00"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.01000" Magnitude_S11="0.9996" Magnitude_S22="0.0000" Phase_S11="-0.48" Phase_S22="0.00"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.01000" Magnitude_S11="0.9996" Magnitude_S22="0.0000" Phase_S11="-0.48" Phase_S22="0.00"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.02000" Magnitude_S11="1.0001" Magnitude_S22="0.0000" Phase_S11="-0.91" Phase_S22="0.00"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.02000" Magnitude_S11="1.0001" Magnitude_S22="0.0000" Phase_S11="-0.92" Phase_S22="0.00"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.02000" Magnitude_S11="1.0001" Magnitude_S22="0.0000" Phase_S11="-0.92" Phase_S22="0.00"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.03000" Magnitude_S11="0.9998" Magnitude_S22="0.0000" Phase_S11="-1.35" Phase_S22="0.00"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.03000" Magnitude_S11="0.9998" Magnitude_S22="0.0000" Phase_S11="-1.35" Phase_S22="0.00"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.03000" Magnitude_S11="0.9998" Magnitude_S22="0.0000" Phase_S11="-1.35" Phase_S22="0.00"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.04000" Magnitude_S11="0.9997" Magnitude_S22="0.0000" Phase_S11="-1.80" Phase_S22="0.00"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.04000" Magnitude_S11="0.9997" Magnitude_S22="0.0000" Phase_S11="-1.80" Phase_S22="0.00"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.04000" Magnitude_S11="0.9997" Magnitude_S22="0.0000" Phase_S11="-1.80" Phase_S22="0.00"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.05000" Magnitude_S11="0.9998" Magnitude_S22="0.0000" Phase_S11="-2.25" Phase_S22="0.00"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.05000" Magnitude_S11="0.9998" Magnitude_S22="0.0000" Phase_S11="-2.25" Phase_S22="0.00"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.05000" Magnitude_S11="0.9998" Magnitude_S22="0.0000" Phase_S11="-2.25" Phase_S22="0.00"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.06000" Magnitude_S11="0.9999" Magnitude_S22="0.0000" Phase_S11="-2.70" Phase_S22="0.00"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.06000" Magnitude_S11="0.9999" Magnitude_S22="0.0000" Phase_S11="-2.70" Phase_S22="0.00"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.06000" Magnitude_S11="0.9999" Magnitude_S22="0.0000" Phase_S11="-2.70" Phase_S22="0.00"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.07000" Magnitude_S11="1.0000" Magnitude_S22="0.0000" Phase_S11="-3.15" Phase_S22="0.00"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.07000" Magnitude_S11="0.9999" Magnitude_S22="0.0000" Phase_S11="-3.15" Phase_S22="0.00"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.07000" Magnitude_S11="0.9999" Magnitude_S22="0.0000" Phase_S11="-3.15" Phase_S22="0.00"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.08000" Magnitude_S11="1.0000" Magnitude_S22="0.0000" Phase_S11="-3.60" Phase_S22="0.00"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.08000" Magnitude_S11="1.0000" Magnitude_S22="0.0000" Phase_S11="-3.60" Phase_S22="0.00"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.08000" Magnitude_S11="0.9999" Magnitude_S22="0.0000" Phase_S11="-3.60" Phase_S22="0.00"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.09000" Magnitude_S11="1.0001" Magnitude_S22="0.0000" Phase_S11="-4.04" Phase_S22="0.00"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.09000" Magnitude_S11="1.0000" Magnitude_S22="0.0000" Phase_S11="-4.04" Phase_S22="0.00"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.09000" Magnitude_S11="1.0000" Magnitude_S22="0.0000" Phase_S11="-4.04" Phase_S22="0.00"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.10000" Magnitude_S11="0.9998" Magnitude_S22="0.0000" Phase_S11="-4.49" Phase_S22="0.00"/>
+	</Data>
+</Data_Table>

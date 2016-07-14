@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type="text/xsl" href="../XSL/DEFAULT_STYLE.xsl"?>
+<Log>
+	<Entry Date="2016-02-22T08:42:08.083000" Index="-1">This is a End of day log. It consists of entries with
+        a date attribute, an Index attribute that is a simple integer, and xml tags 
+        describing daily activities</Entry>
+	<Entry Date="2016-02-22T08:42:08.087000" Index="0">
+		This is a test
+		<Who_Did>Aric Sanders</Who_Did>
+		<Actions>I tested EndofDayLog()</Actions>
+		<Who_Suggested>Small Green Man</Who_Suggested>
+		<Conclusion>It Does!</Conclusion>
+		<Why>To make sure it works!</Why>
+		<Data_Location>In front of your face</Data_Location>
+	</Entry>
+</Log>

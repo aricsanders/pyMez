@@ -1,0 +1,155 @@
+<?xml-stylesheet type="text/xsl" href="DEFAULT_INSTRUMENT_STYLE.xsl"?>
+<!-- Written by Aric Sanders 2008 Altered 10/2009-->
+<Instrument>
+<!-- Information Specific To My SRS830-->
+    <Specific_Information>
+        <Name_3>SRS830</Name_3>
+        <Alias>Lockin 1</Alias>
+        <Location>NSOM Rm 3311</Location>
+        <Manual href="file://132.163.128.161/68_pml/686/68604/NSOM/Stanford Research/SR830m.pdf"/>
+        <Image href="./SRS830_Lockin1_Images/SR830main2.jpg"/>
+        <Price>$4,500</Price>
+        <Serial>81768</Serial>
+        <IDN>'Stanford_Research_Systems,SR830,s/n81768,ver1.07 '</IDN>
+        <Instrument_Type>GPIB</Instrument_Type>
+        <Instrument_Address>GPIB::6</Instrument_Address>
+        <Purchase_Date/>
+        <NIST_Tag/>
+    </Specific_Information>
+<!-- Information Common To All SRS830-->
+    <General_Information>
+    <Manufacturer>Stanford Research Systems</Manufacturer>
+    <Manufacturer_Website href="http://www.thinksrs.com/"/>
+     <Commands_Description>
+        <Command>This is the command sent over the GPIB bus.</Command>
+        <Type>Whether or not it returns a value or just sets something.</Type>
+        <Argument>The parameter the command passes to the instrument. Optional parameters
+        are denoted with an *. The types of paramters are int=integer, float=floating point number,
+        string=string, and None=NULL.</Argument>
+        <Returns> What gets returned by the function. </Returns>
+        <Description>A one line describing the purpose of the function, for more detailed info look in the manual. </Description>
+    </Commands_Description>
+    <Commands>
+        <Tuple Command="PHAS" Type="SET" Argument="*float" Returns="None" Description="Sets the reference phase shift of the lockin."/>
+        <Tuple Command="PHAS?" Type="QUERY" Argument="None" Returns="float" Description="Queries the reference phase shift of the lockin."/>
+        <Tuple Command="FMOD" Type="SET" Argument="*int" Returns="None" Description="Sets the reference source of the lockin."/>
+        <Tuple Command="FMOD?" Type="QUERY" Argument="None" Returns="int" Description="Queries the reference source of the lockin."/>
+        <Tuple Command="FREQ" Type="SET" Argument="*float" Returns="None" Description="Sets the reference frequency of the lockin."/>
+        <Tuple Command="FREQ?" Type="QUERY" Argument="None" Returns="float" Description="Queries the reference frequency of the lockin."/>
+        <Tuple Command="RSLP" Type="SET" Argument="*int" Returns="None" Description="Sets the reference trigger when using the external mode."/>
+        <Tuple Command="RSLP?" Type="QUERY" Argument="None" Returns="int" Description="Queries the reference trigger when using the external mode."/>
+        <Tuple Command="HARM" Type="SET" Argument="*int" Returns="None" Description="Sets the detection harmonic of the lockin."/>
+        <Tuple Command="HARM?" Type="QUERY" Argument="None" Returns="int" Description="Queries the detection harmonic of the lockin."/>
+        <Tuple Command="SLVL" Type="SET" Argument="*float" Returns="None" Description="Sets the amplitude of the sine output."/>
+        <Tuple Command="SLVL?" Type="QUERY" Argument="None" Returns="float" Description="Queries the amplitude of the sine output."/>
+        <Tuple Command="ISRC" Type="SET" Argument="*int" Returns="None" Description="Sets the input configuration of the lockin."/>
+        <Tuple Command="ISRC?" Type="QUERY" Argument="None" Returns="int" Description="Queries the input configuration of the lockin."/>
+        <Tuple Command="IGND" Type="SET" Argument="*int" Returns="None" Description="Sets the input shield grounding of the lockin."/>
+        <Tuple Command="IGND?" Type="QUERY" Argument="None" Returns="int" Description="Queries the input shield grounding of the lockin."/>
+        <Tuple Command="ICPL" Type="SET" Argument="*int" Returns="None" Description="Sets the input coupling of the lockin."/>
+        <Tuple Command="ICPL?" Type="QUERY" Argument="None" Returns="int" Description="Queries the input coupling of the lockin."/>
+        <Tuple Command="ILIN" Type="SET" Argument="*int" Returns="None" Description="Sets the input line notch filter."/>
+        <Tuple Command="ILIN?" Type="QUERY" Argument="None" Returns="int" Description="Queries the input line notch filter status."/>
+        <Tuple Command="SENS" Type="SET" Argument="*int" Returns="None" Description="Sets the senistivity of the lockin."/>
+        <Tuple Command="SENS?" Type="QUERY" Argument="None" Returns="int" Description="Queries the senistivity of the lockin."/>
+        <Tuple Command="RMOD" Type="SET" Argument="*int" Returns="None" Description="Sets the reserve mode."/>
+        <Tuple Command="RMOD?" Type="QUERY" Argument="None" Returns="int" Description="Queries the reserve mode."/>
+        <Tuple Command="OFLT" Type="SET" Argument="*int" Returns="None" Description="Sets the time constant of the lockin."/>
+        <Tuple Command="OFLT?" Type="QUERY" Argument="None" Returns="int" Description="Queries the time constant of the lockin."/>
+        <Tuple Command="OFSL" Type="SET" Argument="*int" Returns="None" Description="Sets the low pass filter slope."/>
+        <Tuple Command="OFSL?" Type="QUERY" Argument="None" Returns="int" Description="Queries the low pass filter slope."/>
+        <Tuple Command="SYNC" Type="SET" Argument="*int" Returns="None" Description="Sets the synchronus filter status."/>
+        <Tuple Command="SYNC?" Type="QUERY" Argument="None" Returns="int" Description="Queries the synchronus filter status."/>
+        <Tuple Command="DDEF" Type="SET" Argument="int,*int,*int" Returns="None" Description="Sets the CH1 and CH2 displays."/>
+        <Tuple Command="DDEF?" Type="QUERY" Argument="int" Returns="int,int" Description="Queries the display and ratio of channel display."/>
+        <Tuple Command="FPOP" Type="SET" Argument="int,*int" Returns="None" Description="Sets channel output source."/>
+        <Tuple Command="FPOP?" Type="QUERY" Argument="int" Returns="int" Description="Queries channel output source."/>
+        <Tuple Command="OEXP" Type="SET" Argument="int,*float,*int" Returns="None" Description="Sets the output offset and expand."/>
+        <Tuple Command="OEXP?" Type="QUERY" Argument="int" Returns="float,int" Description="Queries the output offset and expand."/>
+        <Tuple Command="AOFF" Type="SET" Argument="int" Returns="None" Description="Automatically sets offset to zero."/>
+        <Tuple Command="OAUX?" Type="QUERY" Argument="int" Returns="float" Description="Queries the aux input values."/>
+        <Tuple Command="AUXV" Type="SET" Argument="int,float" Returns="None" Description="Sets the aux output values."/>
+        <Tuple Command="AUXV?" Type="QUERY" Argument="int" Returns="float" Description="Queries the aux output values."/>
+
+        <Tuple Command="OUTX" Type="SET" Argument="int" Returns="None" Description="Sets the output interface."/>
+        <Tuple Command="OUTX?" Type="QUERY" Argument="None" Returns="int" Description="Queries the output interface."/>
+        <Tuple Command="OVRM" Type="SET" Argument="int" Returns="None" Description="Overides the GPIB remote."/>
+        <Tuple Command="KCLK" Type="SET" Argument="bool" Returns="None" Description="Sets the key click state."/>
+        <Tuple Command="KCLK?" Type="QUERY" Argument="None" Returns="int" Description="Queries the key click state."/>
+        <Tuple Command="ALRM" Type="SET" Argument="bool" Returns="None" Description="Sets the alarm state."/>
+        <Tuple Command="ALRM?" Type="QUERY" Argument="None" Returns="bool" Description="Queries the alarm state."/>
+        <Tuple Command="SSET" Type="SET" Argument="int" Returns="None" Description="Saves the lockin setup in buffer i."/>
+        <Tuple Command="RSET" Type="SET" Argument="int" Returns="None" Description="Recalls the lockin setup in buffer i."/>
+        
+        <Tuple Command="AGAN" Type="SET" Argument="None" Returns="None" Description="Auto Gain"/>
+        <Tuple Command="ARSV" Type="SET" Argument="None" Returns="None" Description="Auto Reserve."/>
+        <Tuple Command="APHS" Type="SET" Argument="None" Returns="None" Description="Auto Phase"/>
+
+        <Tuple Command="OUTP?" Type="QUERY" Argument="int" Returns="float" Description="Queries a selected output value."/>
+        <Tuple Command="OUTR?" Type="QUERY" Argument="int" Returns="float" Description="Queries a selected channel value."/>
+        <Tuple Command="SNAP?" Type="QUERY" Argument="int,int,*int,*int,*int,*int" Returns="float,float,*float,*float,*float,*float" Description="Queries a set of selected output values."/>
+
+
+       
+        
+    </Commands>
+    <Command_Parameter_Definitions>
+        <Parameter_Table Command="SENS">
+            <Tuple Parameter_Value="0" Parameter_Definition="2nv/fA"/>
+            <Tuple Parameter_Value="1" Parameter_Definition="5nv/fA"/>
+            <Tuple Parameter_Value="2" Parameter_Definition="10nv/fA"/>
+            <Tuple Parameter_Value="3" Parameter_Definition="20nv/fA"/>
+            <Tuple Parameter_Value="4" Parameter_Definition="50nv/fA"/>
+            <Tuple Parameter_Value="5" Parameter_Definition="100nv/fA"/>
+            <Tuple Parameter_Value="6" Parameter_Definition="200nv/fA"/>
+            <Tuple Parameter_Value="7" Parameter_Definition="500nv/fA"/>
+            <Tuple Parameter_Value="8" Parameter_Definition="1uv/fA"/>
+            <Tuple Parameter_Value="9" Parameter_Definition="2uv/fA"/>
+            <Tuple Parameter_Value="10" Parameter_Definition="5uv/fA"/>
+            <Tuple Parameter_Value="11" Parameter_Definition="10uv/fA"/>
+            <Tuple Parameter_Value="12" Parameter_Definition="20uv/fA"/>
+        </Parameter_Table>
+        <Parameter_Table Command="OFLT">
+            <Tuple Parameter_Value="0" Parameter_Definition="10us"/>
+            <Tuple Parameter_Value="1" Parameter_Definition="30us"/>
+            <Tuple Parameter_Value="2" Parameter_Definition="100us"/>
+            <Tuple Parameter_Value="3" Parameter_Definition="300us"/>
+            <Tuple Parameter_Value="4" Parameter_Definition="1ms"/>
+            <Tuple Parameter_Value="5" Parameter_Definition="3ms"/>
+            <Tuple Parameter_Value="6" Parameter_Definition="10ms"/>
+            <Tuple Parameter_Value="7" Parameter_Definition="30ms"/>
+            <Tuple Parameter_Value="8" Parameter_Definition="100ms"/>
+            <Tuple Parameter_Value="9" Parameter_Definition="300ms"/>
+            <Tuple Parameter_Value="10" Parameter_Definition="1s"/>
+            <Tuple Parameter_Value="11" Parameter_Definition="3s"/>
+            <Tuple Parameter_Value="12" Parameter_Definition="10s"/>
+            <Tuple Parameter_Value="13" Parameter_Definition="30s"/>
+            <Tuple Parameter_Value="14" Parameter_Definition="100s"/>
+            <Tuple Parameter_Value="15" Parameter_Definition="300s"/>
+            <Tuple Parameter_Value="16" Parameter_Definition="1ks"/>
+            <Tuple Parameter_Value="17" Parameter_Definition="3ks"/>
+            <Tuple Parameter_Value="18" Parameter_Definition="10ks"/>
+            <Tuple Parameter_Value="19" Parameter_Definition="30ks"/>
+        </Parameter_Table>
+    </Command_Parameter_Definitions>
+    <State_Commands>
+        <Tuple Set="SENS" Query="SENS?"/>
+        <Tuple Set="FREQ" Query="FREQ?"/>
+        <Tuple Set="FMOD" Query="FMOD?"/>
+        <Tuple Set="RMOD" Query="RMOD?"/>
+        <Tuple Set="OFLT" Query="OFLT?"/>
+        <Tuple Set="ILIN" Query="ILIN?"/>
+        <Tuple Set="ISRC" Query="ISRC?"/>
+        <Tuple Set="IGND" Query="IGND?"/>
+        <Tuple Set="ICPL" Query="ICPL?"/>
+        <Tuple Set="OFSL" Query="OFSL?"/>
+        <Tuple Set="HARM" Query="HARM?"/>
+        <Tuple Set="SLVL" Query="SLVL?"/>
+        <Tuple Set="AUXV 1" Query="AUXV? 1"/>
+        <Tuple Set="AUXV 2" Query="AUXV? 2"/>
+        <Tuple Set="AUXV 3" Query="AUXV? 3"/>
+        <Tuple Set="AUXV 4" Query="AUXV? 4"/>
+    </State_Commands>
+    </General_Information>
+	
+</Instrument>

@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type="text/xsl" href="../XSL/S2P_STYLE.xsl"?>
+<Data_Table>
+	<Data_Description>
+		<Comments_000> Noise parameters</Comments_000>
+	</Data_Description>
+	<Data>
+		<Tuple Frequency="1.0000" imS11="-0.1211" imS12="-0.0021" imS21="-0" imS22="-0.1211" reS11="0.3926" reS12="-0.0003" reS21="-0.0003" reS22="0.3926"/>
+		<Tuple Frequency="2.0000" imS11="-0.3054" imS12="-0.0298" imS21="-0" imS22="-0.3054" reS11="0.3517" reS12="-0.0096" reS21="-0.0096" reS22="0.3517"/>
+		<Tuple Frequency="10.0000" imS11="0.3336" imS12="0.0379" imS21="0" imS22="0.3336" reS11="0.3419" reS12="-0.0134" reS21="-0.0134" reS22="0.3419"/>
+	</Data>
+</Data_Table>

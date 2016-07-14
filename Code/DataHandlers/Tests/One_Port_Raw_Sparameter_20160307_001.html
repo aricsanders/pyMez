@@ -1,0 +1,463 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One port raw measurement</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<style> h3 {color:black} </style>
+</head>
+<div>
+<h3>Data Description:</h3>
+<button id="ToggleButtonDescription" type="button" class="btn btn-primary">Show Description</button><br><hr>
+<table id="DataDescription">
+<tr>
+<td><b>Device_Description :</b></td>
+<td>n ck std open</td>
+</tr>
+<tr>
+<td><b>Number_Repeats :</b></td>
+<td>1</td>
+</tr>
+<tr>
+<td><b>Magnitude_S22 :</b></td>
+<td>Linear magnitude for port 2</td>
+</tr>
+<tr>
+<td><b>Measurement_Date :</b></td>
+<td>8 Jun 2000</td>
+</tr>
+<tr>
+<td><b>Device_Id :</b></td>
+<td>CTN112</td>
+</tr>
+<tr>
+<td><b>Direction :</b></td>
+<td>Direction of connects, may be unused</td>
+</tr>
+<tr>
+<td><b>Connector_Type_Measurement :</b></td>
+<td>Type N</td>
+</tr>
+<tr>
+<td><b>Start_Frequency :</b></td>
+<td>7</td>
+</tr>
+<tr>
+<td><b>Program_Revision :</b></td>
+<td>960910.143</td>
+</tr>
+<tr>
+<td><b>calibration_date :</b></td>
+<td>10 Aug 1998</td>
+</tr>
+<tr>
+<td><b>Connector_Type_Calibration :</b></td>
+<td>Type N Fem</td>
+</tr>
+<tr>
+<td><b>Number_Connects :</b></td>
+<td>3</td>
+</tr>
+<tr>
+<td><b>Measurement_Time :</b></td>
+<td>16:27:53</td>
+</tr>
+<tr>
+<td><b>Phase_S22 :</b></td>
+<td>Phase in degrees for port 2</td>
+</tr>
+<tr>
+<td><b>Magnitude_S11 :</b></td>
+<td>Linear magnitude for port 1</td>
+</tr>
+<tr>
+<td><b>Program_Used :</b></td>
+<td>MEAS95</td>
+</tr>
+<tr>
+<td><b>Measurement_Type :</b></td>
+<td>1-port</td>
+</tr>
+<tr>
+<td><b>Calibration_Name :</b></td>
+<td>C980810.a1</td>
+</tr>
+<tr>
+<td><b>Nbs :</b></td>
+<td>1</td>
+</tr>
+<tr>
+<td><b>Number_Frequencies :</b></td>
+<td>28</td>
+</tr>
+<tr>
+<td><b>System_Letter :</b></td>
+<td>A</td>
+</tr>
+<tr>
+<td><b>Phase_S11 :</b></td>
+<td>Phase in degrees for port 1</td>
+</tr>
+<tr>
+<td><b>Frequency :</b></td>
+<td>Frequency in GHz</td>
+</tr>
+<tr>
+<td><b>System_Id :</b></td>
+<td>System I</td>
+</tr>
+<tr>
+<td><b>Connect :</b></td>
+<td>Connect number</td>
+</tr>
+<tr>
+<td><b>Operator :</b></td>
+<td>afm</td>
+</tr>
+<tr>
+<td><b>Port_Used :</b></td>
+<td>1</td>
+</tr>
+</table>
+</div>
+<div>
+<h3>Data Plot:</h3>
+<button id="ToggleButtonPlot" type="button" class="btn btn-primary">Show Plots</button><br><hr>
+<table><tr>
+<td><div id="plot" style="width: 480px; height: 400px;" class="plot"></div></td>
+<td><div id="error-plot" style="width: 480px; height: 400px;" class="plot"></div></td>
+</tr></table>
+</div>
+<div>
+<h3>Data:</h3>
+<button id="ToggleButton" type="button" class="btn btn-primary">Show Table</button><br><hr>
+<table class="table table-hover table-condensed table-bordered table-responsive" id="DataTable">
+<tr>
+<th><b>Connect</b></th>
+<th><b>Direction</b></th>
+<th><b>Frequency</b></th>
+<th><b>Magnitude_S11</b></th>
+<th><b>Magnitude_S22</b></th>
+<th><b>Phase_S11</b></th>
+<th><b>Phase_S22</b></th>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0.01000</td>
+<td>0.9996</td>
+<td>0.0000</td>
+<td>-0.47</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0.01000</td>
+<td>0.9996</td>
+<td>0.0000</td>
+<td>-0.48</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>0.01000</td>
+<td>0.9996</td>
+<td>0.0000</td>
+<td>-0.48</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0.02000</td>
+<td>1.0001</td>
+<td>0.0000</td>
+<td>-0.91</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0.02000</td>
+<td>1.0001</td>
+<td>0.0000</td>
+<td>-0.92</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>0.02000</td>
+<td>1.0001</td>
+<td>0.0000</td>
+<td>-0.92</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0.03000</td>
+<td>0.9998</td>
+<td>0.0000</td>
+<td>-1.35</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0.03000</td>
+<td>0.9998</td>
+<td>0.0000</td>
+<td>-1.35</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>0.03000</td>
+<td>0.9998</td>
+<td>0.0000</td>
+<td>-1.35</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0.04000</td>
+<td>0.9997</td>
+<td>0.0000</td>
+<td>-1.80</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0.04000</td>
+<td>0.9997</td>
+<td>0.0000</td>
+<td>-1.80</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>0.04000</td>
+<td>0.9997</td>
+<td>0.0000</td>
+<td>-1.80</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0.05000</td>
+<td>0.9998</td>
+<td>0.0000</td>
+<td>-2.25</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0.05000</td>
+<td>0.9998</td>
+<td>0.0000</td>
+<td>-2.25</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>0.05000</td>
+<td>0.9998</td>
+<td>0.0000</td>
+<td>-2.25</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0.06000</td>
+<td>0.9999</td>
+<td>0.0000</td>
+<td>-2.70</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0.06000</td>
+<td>0.9999</td>
+<td>0.0000</td>
+<td>-2.70</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>0.06000</td>
+<td>0.9999</td>
+<td>0.0000</td>
+<td>-2.70</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0.07000</td>
+<td>1.0000</td>
+<td>0.0000</td>
+<td>-3.15</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0.07000</td>
+<td>0.9999</td>
+<td>0.0000</td>
+<td>-3.15</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>0.07000</td>
+<td>0.9999</td>
+<td>0.0000</td>
+<td>-3.15</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0.08000</td>
+<td>1.0000</td>
+<td>0.0000</td>
+<td>-3.60</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0.08000</td>
+<td>1.0000</td>
+<td>0.0000</td>
+<td>-3.60</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>0.08000</td>
+<td>0.9999</td>
+<td>0.0000</td>
+<td>-3.60</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0.09000</td>
+<td>1.0001</td>
+<td>0.0000</td>
+<td>-4.04</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0.09000</td>
+<td>1.0000</td>
+<td>0.0000</td>
+<td>-4.04</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>0.09000</td>
+<td>1.0000</td>
+<td>0.0000</td>
+<td>-4.04</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0.10000</td>
+<td>0.9998</td>
+<td>0.0000</td>
+<td>-4.49</td>
+<td>0.00</td>
+</tr>
+</table>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script><script src="https://cdn.plot.ly/plotly-latest.min.js"></script><script>
+    var magnitude = [
+  {
+    x: [0.01000,0.01000,0.01000,0.02000,0.02000,0.02000,0.03000,0.03000,0.03000,0.04000,0.04000,0.04000,0.05000,0.05000,0.05000,0.06000,0.06000,0.06000,0.07000,0.07000,0.07000,0.08000,0.08000,0.08000,0.09000,0.09000,0.09000,0.10000,],
+    y: [0.9996,0.9996,0.9996,1.0001,1.0001,1.0001,0.9998,0.9998,0.9998,0.9997,0.9997,0.9997,0.9998,0.9998,0.9998,0.9999,0.9999,0.9999,1.0000,0.9999,0.9999,1.0000,1.0000,0.9999,1.0001,1.0000,1.0000,0.9998,],
+    type: 'scatter',
+    mode:'markers'
+  }
+];
+        var phase = [
+  {
+    x: [0.01000,0.01000,0.01000,0.02000,0.02000,0.02000,0.03000,0.03000,0.03000,0.04000,0.04000,0.04000,0.05000,0.05000,0.05000,0.06000,0.06000,0.06000,0.07000,0.07000,0.07000,0.08000,0.08000,0.08000,0.09000,0.09000,0.09000,0.10000,],
+    y: [-0.47,-0.48,-0.48,-0.91,-0.92,-0.92,-1.35,-1.35,-1.35,-1.80,-1.80,-1.80,-2.25,-2.25,-2.25,-2.70,-2.70,-2.70,-3.15,-3.15,-3.15,-3.60,-3.60,-3.60,-4.04,-4.04,-4.04,-4.49,],
+    type: 'scatter',
+    mode:'markers'
+  }
+];
+var magnitudeLayout = {
+  legend: {
+    y: 0.5,
+    yref: 'paper',
+    font: {
+      family: 'Arial, sans-serif',
+      size: 20,
+      color: 'grey',
+    }
+
+  },
+    xaxis:{
+    title:'Frequency (GHz)'},
+  title:'Magnitude'
+};
+
+    var phaseLayout = {
+  legend: {
+    y: 0.5,
+    yref: 'paper',
+    font: {
+      family: 'Arial, sans-serif',
+      size: 20,
+      color: 'grey',
+    }
+  },
+    xaxis:{
+    title:'Frequency (GHz)'},
+  title:'Phase'
+};
+
+Plotly.newPlot('plot', magnitude,magnitudeLayout);
+Plotly.newPlot('error-plot', phase,phaseLayout);
+	</script><script>
+$(document).ready(function(){
+    $("#ToggleButton").click(function(){
+        $("#DataTable").toggle();});
+        $("#ToggleButtonDescription").click(function(){
+        $("#DataDescription").toggle();});
+        $("#ToggleButtonPlot").click(function(){
+        $(".plot").toggle();});
+
+
+});
+</script>
+</html>
