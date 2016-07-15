@@ -198,7 +198,9 @@ class VisaInstrument(InstrumentSheet):
     def query(self,command):
         "Writes command and then reads a response"
         return self.resource.query(command)
-    self.ask=self.query
+    def ask(self,command):
+        "Writes command and then reads a response"
+        return self.resource.query(command)
     def set_state(self,**state_dictionary):
         """ Sets the instrument to the state specified by Command:Value pairs"""
         if len(self.state_buffer)+1<self.STATE_BUFFER_MAX_LENGTH:
