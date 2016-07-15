@@ -1141,7 +1141,7 @@ class InstrumentSheet(XMLBase):
         #if the file path is not supplied create a new instrument sheet
         #using the supplied instrument_name
         defaults={"root":"Instrument_Sheet",
-                  "style_sheet":os.path.join(PYMEASURE_ROOT,'Settings/XSL Backup/DEFAULT_INSTRUMENT_STYLE.xsl').replace('\\','/'),
+                  "style_sheet":os.path.join(XSLT_REPOSITORY,'DEFAULT_INSTRUMENT_STYLE.xsl').replace('\\','/'),
                   "specific_descriptor":'Instrument',
                   "general_descriptor":'Description',
                   "directory":None,
