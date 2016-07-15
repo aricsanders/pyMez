@@ -145,7 +145,7 @@ class VisaInstrumentError(Exception):
 
 
         
-class VisaInstrument(pyvisa.resources.messagebased.MessageBasedResource,InstrumentSheet):
+class VisaInstrument(InstrumentSheet):
     """ General Class to communicate with COMM and GPIB instruments"""
     def __init__(self,resource_name=None,**key_word_arguments):
         """ Intializes the VisaInstrument Class"""
@@ -176,9 +176,9 @@ class VisaInstrument(pyvisa.resources.messagebased.MessageBasedResource,Instrume
         self.state_buffer=[]
         self.STATE_BUFFER_MAX_LENGTH=10
         
-        #self.resource_manager=visa.ResourceManager()
+        self.resource_manager=visa.ResourceManager()
         # Call the visa instrument class-- this gives ask,write,read
-        #self.resource=self.resource_manager.open_resource(self.instrument_address)
+        self.resource=self.resource_manager.open_resource(self.instrument_address)
         # for key,value in self.resource.__dict__.iteritems():
         #     self.__dict__[key]=value
         # pyvisa.resources.messagebased.MessageBasedResource.__init__(self,
@@ -189,7 +189,16 @@ class VisaInstrument(pyvisa.resources.messagebased.MessageBasedResource,Instrume
         if METHOD_ALIASES and not self.info_found :
             for command in alias(self):
                 exec(command)
-        
+    def write(self,command):
+        "Writes command to instrument"
+        return self.resource.write(command)
+    def read(self):
+        "Reads from the instrument"
+        return self.resource.read()
+    def query(self,command):
+        "Writes command and then reads a response"
+        return self.resource.query(command)
+    self.ask=self.query
     def set_state(self,**state_dictionary):
         """ Sets the instrument to the state specified by Command:Value pairs"""
         if len(self.state_buffer)+1<self.STATE_BUFFER_MAX_LENGTH:
