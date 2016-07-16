@@ -256,6 +256,7 @@ class CalibrateDUTWrapper():
         """Sets the calibration file path """
         self.application.SetCalCoef()
 
+
 class StatistiCALMenuModel():
     """Holds a menu file for statistiCAL, the serialized form is a file with a different value on each line.
     File names need to be the fully qualified path to work.
@@ -478,6 +479,21 @@ Number of calibration standards
         for value in self.menu_data[:]:
             out_string=out_string+value+"\n"
         return out_string
+    def save(self,file_path=None):
+        """Saves the menu to file_path, defaults to self.path attribute"""
+        if file_path is None:
+            file_path=self.path
+        out_file=open(file_path,'w')
+        out_file.write(str(self))
+        out_file.close()
+
+    def set_line(self,line_number,value):
+        "Sets the line specified by line_number to value"
+        self.menu_data[line_number-1]=value
+
+    def get_line(self,line_number):
+        "gets the line specified by line_number "
+        return self.menu_data[line_number-1]
 
     def set_tier(self,tier=1):
         """Sets the tier of the calibration, 1 or 2 """
@@ -753,7 +769,8 @@ Number of calibration standards
             51. Resistor R3 for port 2 load {50}"""
         line_offset=(int(standard_number)-1)*51+57
         return text.format(*self.menu_data[line_offset:line_offset+52])
-            
+
+
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_StatistiCALWrapper():
