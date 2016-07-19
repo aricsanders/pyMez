@@ -1459,6 +1459,7 @@ def test_get_header():
     header=new_table.get_header()
     print header
     print new_table.get_header('xml')
+    return True
 
 def test_open_measurement(sheet_name='Data_Table_021311_1.xml'):
     """Tests opening a sheet"""
@@ -1467,6 +1468,7 @@ def test_open_measurement(sheet_name='Data_Table_021311_1.xml'):
     print("The file path is {0}".format(measurement.path))
     #print measurement
     print measurement.get_header()
+    return True
 
 def test_get_attribute_names(sheet_name='Data_Table_021311_1.xml'):
     "Tests the get_attribute_name method of the DataTable Class"
