@@ -1578,6 +1578,11 @@ def test_InstrumentSheet():
     print instrument_sheet.commands
     print str(instrument_sheet.to_HTML())
     instrument_sheet.show()
+def test_dictionary_to_xmlchunk(dictionary={"li":"My list Element"}):
+    """Tests the function dictionary_to_xmlchunk"""
+    print("The input dicitionary is {0}".format(dictionary))
+    output=dictionary_to_xmlchunk(dictionary)
+    print("The result of dictionary_to_xmlchunk is {0}".format(output))
 
 #-----------------------------------------------------------------------------
 # Module Runner
@@ -1595,4 +1600,5 @@ if __name__=='__main__':
     #test_FileRegister()
     #test_Metadata()
     #metadata_robot()
-    test_InstrumentSheet()
+    #test_InstrumentSheet()
+    test_dictionary_to_xmlchunk()
