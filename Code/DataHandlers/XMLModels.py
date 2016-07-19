@@ -257,6 +257,9 @@ class XMLBase():
         def save_HTML(self,XSLT=None,file_path=None):
             """Saves a HTML transformation of the XML document using XLST at file_path. Defaults to
             an XLST in self.options["XSLT"] and file_path=self.path.replace('.xml','.html')"""
+            if XSLT is None:
+                # For some reason an absolute path tends to break here, maybe a spaces in file names problem
+                XSLT=self.options['style_sheet']
             HTML=self.to_HTML(XSLT=XSLT)
             #print type(HTML)
             if file_path is None:

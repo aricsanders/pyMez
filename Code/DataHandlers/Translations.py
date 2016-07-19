@@ -165,7 +165,7 @@ def S1PV1_to_XMLDataTable(s1p,**options):
     new_xml_data_table=DataTable(None,**XML_options)
     return new_xml_data_table
 
-def TwoPortCalrep_to_XMLDataTable(two_port_calrep_table,**options):
+def TwoPortCalrepModel_to_XMLDataTable(two_port_calrep_table,**options):
     """Converts the 2-port calrep model to xml"""
     table=two_port_calrep_table.joined_table
     defaults={"specific_descriptor":table.options["specific_descriptor"],
@@ -180,6 +180,32 @@ def TwoPortCalrep_to_XMLDataTable(two_port_calrep_table,**options):
         XML_options[key]=value
     new_xml=AsciiDataTable_to_XMLDataTable(table,**XML_options)
     return new_xml
+def TwoPortRawModel_to_XMLDataTable(two_port_raw_table,**options):
+    """Converts the 2-port raw model used by s-parameters to xml"""
+    table=two_port_raw_table
+    defaults={"specific_descriptor":table.options["specific_descriptor"],
+                     "general_descriptor":table.options["general_descriptor"],
+                      "directory":table.options["directory"],
+              "style_sheet":"../XSL/TWO_PORT_RAW_STYLE.xsl"
+                     }
+    XML_options={}
+    for key,value in defaults.iteritems():
+        XML_options[key]=value
+    for key,value in options.iteritems():
+        XML_options[key]=value
+    new_xml=AsciiDataTable_to_XMLDataTable(table,**XML_options)
+    return new_xml
+def TwoPortRawModel_to_S2PV1(two_port_raw_table,**options):
+    """Transforms a TwoPortRawModel  to S2PV1"""
+    table=two_port_raw_table
+    path=table.path.split('.')[0]+".s2p"
+    data=[[row[0],row[3],row[4],row[5],row[6],row[5],row[6],row[7],row[8]] for row in table.data]
+    comments=[[line,index,0] for index,line in enumerate(table.header[:])]
+    s2p_options={"option_line":"# GHz S MA R 50","sparameter_data":data,
+                 "comments":comments,"path":path,"option_line_line":len(table.header),
+                 "sparameter_begin_line":len(table.header)+1,"column_names":S1P_MA_COLUMN_NAMES}
+    s2p_file=S2PV1(None,**s2p_options)
+    return s2p_file
 
 #-----------------------------------------------------------------------------
 # Module Classes
@@ -243,6 +269,23 @@ def test_TwoPortCalrep_to_XMLDataTable(file_path='922729.asc',**options):
     xml.save()
     xml.save_HTML()
 
+def test_TwoPortRawModel_to_XMLDataTable(file_path='TestFileTwoPortRaw.txt',**options):
+    """Test's the conversion of the TwoPorRaw to XMLDataTable"""
+    os.chdir(TESTS_DIRECTORY)
+    two_port=TwoPortRawModel(file_path)
+    two_port.save("SavedTest2PortRaw.txt")
+    xml=TwoPortRaw_to_XMLDataTable(two_port,**options)
+    xml.save("SavedTest2PortRaw.xml")
+    xml.save_HTML(file_path="SavedTest2PortRaw.html")
+
+def test_TwoPortRawModel_to_S2PV1(file_path='TestFileTwoPortRaw.txt',**options):
+    """Test's the conversion of the TwoPorRaw to XMLDataTable"""
+    os.chdir(TESTS_DIRECTORY)
+    two_port=TwoPortRawModel(file_path)
+    s2p=TwoPortRawModel_to_S2PV1(two_port,**options)
+    print(s2p)
+    s2p.save("SavedTest2PortRaw.s2p")
+
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
@@ -258,4 +301,6 @@ if __name__ == '__main__':
     #test_S2P_to_XMLDataTable('TwoPortTouchstoneTestFile.s2p')
     #test_S2P_to_XMLDataTable('20160301_30ft_cable_0.s2p')
     #test_S2P_to_XMLDataTable_02('20160301_30ft_cable_0.s2p',**{"style_sheet":"../XSL/S2P_STYLE_02.xsl"})
-    test_TwoPortCalrep_to_XMLDataTable(r'C:\Share\ascii.dut\000146a.txt')
+    #test_TwoPortCalrep_to_XMLDataTable(r'C:\Share\ascii.dut\000146a.txt')
+    #test_TwoPortRaw_to_XMLDataTable()
+    test_TwoPortRawModel_to_S2PV1()

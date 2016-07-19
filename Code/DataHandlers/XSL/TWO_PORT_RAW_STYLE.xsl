@@ -80,6 +80,12 @@
                 <b>Frequency</b>
             </th>
             <th >
+                <b>Connection</b>
+            </th>
+            <th >
+                <b>Direction</b>
+            </th>
+            <th >
                 <b>magS11</b>
             </th>
             <th >
@@ -91,12 +97,7 @@
             <th >
                 <b>argS21</b>
             </th>
-            <th >
-                <b>magS12</b>
-            </th>
-            <th >
-                <b>argS12</b>
-            </th>
+
             <th >
                 <b>magS22</b>
             </th>
@@ -107,6 +108,12 @@
             <xsl:for-each select="//Data/Tuple">
             <tr>
             <xsl:for-each select="./@Frequency">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@Connect">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@Direction">
             <td><xsl:value-of select="."/></td>
 		    </xsl:for-each>
             <xsl:for-each select="./@magS11">
@@ -121,12 +128,8 @@
             <xsl:for-each select="./@argS21">
             <td><xsl:value-of select="."/></td>
 		    </xsl:for-each>
-            <xsl:for-each select="./@magS12">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
-            <xsl:for-each select="./@argS12">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
+
+
             <xsl:for-each select="./@magS22">
             <td><xsl:value-of select="."/></td>
 		    </xsl:for-each>
@@ -260,23 +263,6 @@ var magS22Layout = {
     name:'S21'
   };
 
-    var magS12 =
-  {
-    x: [<xsl:for-each select="//Data/Tuple/@Frequency"><xsl:value-of select="."/>,</xsl:for-each>],
-    y: [<xsl:for-each select="//Data/Tuple/@magS21"><xsl:value-of select="."/>,</xsl:for-each>],
-    type: 'scatter',
-    mode:'markers',
-    name:'S12'
-  };
-        var argS12 =
-  {
-    x: [<xsl:for-each select="//Data/Tuple/@Frequency"><xsl:value-of select="."/>,</xsl:for-each>],
-    y: [<xsl:for-each select="//Data/Tuple/@argS21"><xsl:value-of select="."/>,</xsl:for-each>],
-
-    type: 'scatter',
-    mode:'markers',
-    name:'S12'
-  };
 
 var magS21Layout = {
   legend: {
@@ -310,8 +296,8 @@ var magS21Layout = {
 };
 Plotly.newPlot('magS11', magS11,magS11Layout);
 Plotly.newPlot('argS11', argS11,argS11Layout);
-Plotly.newPlot('magS21', [magS21,magS12],magS21Layout);
-Plotly.newPlot('argS21', [argS21,argS12],argS21Layout);
+Plotly.newPlot('magS21', [magS21],magS21Layout);
+Plotly.newPlot('argS21', [argS21],argS21Layout);
 Plotly.newPlot('magS22', magS22,magS22Layout);
 Plotly.newPlot('argS22', argS22,argS22Layout);
 	</script>

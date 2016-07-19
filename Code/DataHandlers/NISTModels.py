@@ -570,6 +570,7 @@ class TwoPortRawModel(AsciiDataTable):
     def __read_and_fix__(self,file_path=None):
         """Inputs in the raw OnePortRaw file and fixes any problems with delimiters,etc."""
         lines=[]
+        data_begin_line=0
         in_file=open(file_path,'r')
         for index,line in enumerate(in_file):
             lines.append(line)
@@ -1392,9 +1393,9 @@ if __name__ == '__main__':
     #test_OnePortCalrepModel()
     #test_OnePortCalrepModel('700437.asc')
     #test_OnePortCalrepModel_Ctable(file_path_1='922729c.txt')
-    test_OnePortRawModel()
-    test_OnePortRawModel('OnePortRawTestFile_002.txt')
-    #test_TwoPortRawModel()
+    #test_OnePortRawModel()
+    #test_OnePortRawModel('OnePortRawTestFile_002.txt')
+    test_TwoPortRawModel()
     #test_PowerRawModel()
     #test_JBSparameter()
     #test_JBSparameter('QuartzRefExample_L1_g10_HF')

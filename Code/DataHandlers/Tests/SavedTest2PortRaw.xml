@@ -1,0 +1,196 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type="text/xsl" href="../XSL/TWO_PORT_RAW_STYLE.xsl"?>
+<Data_Table>
+	<Data_Description>
+		<argS11>Phase in degrees for S11</argS11>
+		<Number_Repeats>1</Number_Repeats>
+		<Measurement_Date>9 Sep 2015</Measurement_Date>
+		<Device_Description>CHECK STANDARD 20 dB ATTEN</Device_Description>
+		<Device_Id>CTN208</Device_Id>
+		<Direction>Direction of connects, may be unused</Direction>
+		<Connector_Type_Measurement>N</Connector_Type_Measurement>
+		<magS11>Linear magnitude for S11</magS11>
+		<Start_Frequency>7</Start_Frequency>
+		<Program_Revision>150122</Program_Revision>
+		<System_Letter>L</System_Letter>
+		<Connector_Type_Calibration></Connector_Type_Calibration>
+		<Number_Connects>3</Number_Connects>
+		<argS22>Phase in degrees for S22</argS22>
+		<argS21>Phase in degrees for S21</argS21>
+		<Measurement_Time>10:31:55</Measurement_Time>
+		<Program_Used>MEASLP</Program_Used>
+		<Measurement_Type>2-port</Measurement_Type>
+		<magS21>Linear magnitude for S21</magS21>
+		<magS22>Linear magnitude for S22</magS22>
+		<Calibration_Name>c050211.a2</Calibration_Name>
+		<Calibration_Date></Calibration_Date>
+		<Nbs>4</Nbs>
+		<Number_Frequencies>53</Number_Frequencies>
+		<Frequency>Frequency in GHz</Frequency>
+		<System_Id>HP8510</System_Id>
+		<Connect>Connect number</Connect>
+		<Operator>BFR</Operator>
+		<Port_Used>1</Port_Used>
+	</Data_Description>
+	<Data>
+		<Tuple Connect="1" Direction="1" Frequency="0.10000" argS11="169.13" argS21="-7.22" argS22="154.91" magS11="0.0154" magS21="0.1039" magS22="0.0049"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.10000" argS11="169.08" argS21="-7.21" argS22="155.14" magS11="0.0154" magS21="0.1039" magS22="0.0049"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.10000" argS11="169.12" argS21="-7.21" argS22="155.07" magS11="0.0154" magS21="0.1039" magS22="0.0048"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.15000" argS11="168.13" argS21="-10.79" argS22="134.68" magS11="0.0148" magS21="0.1039" magS22="0.0048"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.15000" argS11="168.03" argS21="-10.79" argS22="134.94" magS11="0.0148" magS21="0.1039" magS22="0.0048"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.15000" argS11="168.09" argS21="-10.79" argS22="134.93" magS11="0.0148" magS21="0.1039" magS22="0.0048"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.20000" argS11="160.94" argS21="-14.36" argS22="125.59" magS11="0.0150" magS21="0.1039" magS22="0.0052"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.20000" argS11="160.90" argS21="-14.36" argS22="125.78" magS11="0.0150" magS21="0.1039" magS22="0.0052"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.20000" argS11="160.98" argS21="-14.36" argS22="125.73" magS11="0.0150" magS21="0.1039" magS22="0.0052"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.25000" argS11="158.35" argS21="-17.92" argS22="118.26" magS11="0.0148" magS21="0.1038" magS22="0.0056"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.25000" argS11="158.33" argS21="-17.92" argS22="118.47" magS11="0.0148" magS21="0.1038" magS22="0.0056"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.25000" argS11="158.42" argS21="-17.92" argS22="118.47" magS11="0.0149" magS21="0.1038" magS22="0.0056"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.30000" argS11="153.28" argS21="-21.49" argS22="109.37" magS11="0.0151" magS21="0.1038" magS22="0.0062"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.30000" argS11="153.32" argS21="-21.49" argS22="109.61" magS11="0.0151" magS21="0.1038" magS22="0.0062"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.30000" argS11="153.40" argS21="-21.49" argS22="109.56" magS11="0.0151" magS21="0.1038" magS22="0.0062"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.35000" argS11="149.58" argS21="-25.05" argS22="102.45" magS11="0.0152" magS21="0.1038" magS22="0.0069"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.35000" argS11="149.69" argS21="-25.05" argS22="102.68" magS11="0.0152" magS21="0.1038" magS22="0.0069"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.35000" argS11="149.79" argS21="-25.06" argS22="102.65" magS11="0.0152" magS21="0.1038" magS22="0.0069"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.40000" argS11="145.76" argS21="-28.62" argS22="96.29" magS11="0.0154" magS21="0.1038" magS22="0.0075"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.40000" argS11="145.92" argS21="-28.62" argS22="96.50" magS11="0.0154" magS21="0.1038" magS22="0.0074"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.40000" argS11="146.02" argS21="-28.62" argS22="96.44" magS11="0.0154" magS21="0.1038" magS22="0.0074"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.45000" argS11="141.85" argS21="-32.18" argS22="90.73" magS11="0.0154" magS21="0.1038" magS22="0.0081"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.45000" argS11="142.02" argS21="-32.17" argS22="90.96" magS11="0.0154" magS21="0.1038" magS22="0.0081"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.45000" argS11="142.13" argS21="-32.18" argS22="90.91" magS11="0.0154" magS21="0.1038" magS22="0.0081"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.50000" argS11="137.68" argS21="-35.73" argS22="86.35" magS11="0.0158" magS21="0.1038" magS22="0.0087"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.50000" argS11="137.85" argS21="-35.73" argS22="86.60" magS11="0.0157" magS21="0.1038" magS22="0.0087"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.50000" argS11="137.97" argS21="-35.74" argS22="86.52" magS11="0.0157" magS21="0.1038" magS22="0.0087"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.55000" argS11="134.26" argS21="-39.30" argS22="81.01" magS11="0.0159" magS21="0.1038" magS22="0.0094"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.55000" argS11="134.38" argS21="-39.30" argS22="81.26" magS11="0.0158" magS21="0.1038" magS22="0.0093"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.55000" argS11="134.50" argS21="-39.30" argS22="81.16" magS11="0.0158" magS21="0.1038" magS22="0.0093"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.60000" argS11="130.09" argS21="-42.86" argS22="76.86" magS11="0.0161" magS21="0.1038" magS22="0.0100"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.60000" argS11="130.14" argS21="-42.86" argS22="77.03" magS11="0.0160" magS21="0.1037" magS22="0.0099"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.60000" argS11="130.26" argS21="-42.86" argS22="76.96" magS11="0.0161" magS21="0.1038" magS22="0.0099"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.65000" argS11="127.11" argS21="-46.41" argS22="72.34" magS11="0.0163" magS21="0.1037" magS22="0.0105"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.65000" argS11="127.06" argS21="-46.41" argS22="72.50" magS11="0.0162" magS21="0.1037" magS22="0.0104"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.65000" argS11="127.19" argS21="-46.40" argS22="72.39" magS11="0.0163" magS21="0.1037" magS22="0.0104"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.70000" argS11="123.32" argS21="-49.96" argS22="68.65" magS11="0.0166" magS21="0.1037" magS22="0.0112"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.70000" argS11="123.16" argS21="-49.94" argS22="68.80" magS11="0.0165" magS21="0.1037" magS22="0.0111"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.70000" argS11="123.28" argS21="-49.95" argS22="68.70" magS11="0.0165" magS21="0.1037" magS22="0.0111"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.75000" argS11="119.73" argS21="-53.50" argS22="64.89" magS11="0.0169" magS21="0.1037" magS22="0.0117"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.75000" argS11="119.49" argS21="-53.52" argS22="65.01" magS11="0.0168" magS21="0.1037" magS22="0.0116"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.75000" argS11="119.62" argS21="-53.49" argS22="64.89" magS11="0.0168" magS21="0.1037" magS22="0.0116"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.80000" argS11="116.43" argS21="-57.06" argS22="60.80" magS11="0.0173" magS21="0.1037" magS22="0.0123"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.80000" argS11="116.13" argS21="-57.06" argS22="60.91" magS11="0.0172" magS21="0.1037" magS22="0.0122"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.80000" argS11="116.24" argS21="-57.09" argS22="60.78" magS11="0.0172" magS21="0.1037" magS22="0.0122"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.85000" argS11="113.30" argS21="-60.62" argS22="57.28" magS11="0.0174" magS21="0.1037" magS22="0.0128"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.85000" argS11="112.99" argS21="-60.62" argS22="57.37" magS11="0.0173" magS21="0.1037" magS22="0.0127"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.85000" argS11="113.09" argS21="-60.62" argS22="57.26" magS11="0.0174" magS21="0.1037" magS22="0.0127"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.90000" argS11="109.87" argS21="-64.17" argS22="53.19" magS11="0.0177" magS21="0.1037" magS22="0.0132"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.90000" argS11="109.59" argS21="-64.17" argS22="53.29" magS11="0.0177" magS21="0.1037" magS22="0.0132"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.90000" argS11="109.69" argS21="-64.18" argS22="53.18" magS11="0.0177" magS21="0.1037" magS22="0.0132"/>
+		<Tuple Connect="1" Direction="1" Frequency="0.95000" argS11="106.74" argS21="-67.73" argS22="49.84" magS11="0.0180" magS21="0.1037" magS22="0.0138"/>
+		<Tuple Connect="2" Direction="1" Frequency="0.95000" argS11="106.52" argS21="-67.73" argS22="49.94" magS11="0.0181" magS21="0.1036" magS22="0.0138"/>
+		<Tuple Connect="3" Direction="1" Frequency="0.95000" argS11="106.61" argS21="-67.74" argS22="49.84" magS11="0.0181" magS21="0.1037" magS22="0.0138"/>
+		<Tuple Connect="1" Direction="1" Frequency="1.00000" argS11="103.48" argS21="-71.30" argS22="46.08" magS11="0.0184" magS21="0.1036" magS22="0.0143"/>
+		<Tuple Connect="2" Direction="1" Frequency="1.00000" argS11="103.35" argS21="-71.31" argS22="46.19" magS11="0.0184" magS21="0.1036" magS22="0.0143"/>
+		<Tuple Connect="3" Direction="1" Frequency="1.00000" argS11="103.46" argS21="-71.30" argS22="46.10" magS11="0.0184" magS21="0.1036" magS22="0.0143"/>
+		<Tuple Connect="1" Direction="1" Frequency="1.50000" argS11="73.87" argS21="-106.84" argS22="9.69" magS11="0.0210" magS21="0.1035" magS22="0.0196"/>
+		<Tuple Connect="2" Direction="1" Frequency="1.50000" argS11="73.46" argS21="-106.84" argS22="9.83" magS11="0.0209" magS21="0.1035" magS22="0.0195"/>
+		<Tuple Connect="3" Direction="1" Frequency="1.50000" argS11="73.55" argS21="-106.86" argS22="9.89" magS11="0.0208" magS21="0.1035" magS22="0.0195"/>
+		<Tuple Connect="1" Direction="1" Frequency="2.00000" argS11="46.25" argS21="-142.40" argS22="-21.17" magS11="0.0232" magS21="0.1034" magS22="0.0248"/>
+		<Tuple Connect="2" Direction="1" Frequency="2.00000" argS11="46.29" argS21="-142.39" argS22="-21.09" magS11="0.0232" magS21="0.1034" magS22="0.0247"/>
+		<Tuple Connect="3" Direction="1" Frequency="2.00000" argS11="46.41" argS21="-142.42" argS22="-21.13" magS11="0.0232" magS21="0.1034" magS22="0.0247"/>
+		<Tuple Connect="1" Direction="1" Frequency="2.50000" argS11="22.18" argS21="-177.92" argS22="-49.61" magS11="0.0245" magS21="0.1032" magS22="0.0279"/>
+		<Tuple Connect="2" Direction="1" Frequency="2.50000" argS11="21.21" argS21="-177.94" argS22="-49.53" magS11="0.0246" magS21="0.1032" magS22="0.0278"/>
+		<Tuple Connect="3" Direction="1" Frequency="2.50000" argS11="21.17" argS21="-177.96" argS22="-49.70" magS11="0.0246" magS21="0.1032" magS22="0.0277"/>
+		<Tuple Connect="1" Direction="1" Frequency="3.00000" argS11="0.37" argS21="146.51" argS22="-81.15" magS11="0.0235" magS21="0.1032" magS22="0.0278"/>
+		<Tuple Connect="2" Direction="1" Frequency="3.00000" argS11="-0.16" argS21="146.50" argS22="-81.00" magS11="0.0233" magS21="0.1031" magS22="0.0277"/>
+		<Tuple Connect="3" Direction="1" Frequency="3.00000" argS11="-0.12" argS21="146.46" argS22="-81.15" magS11="0.0232" magS21="0.1031" magS22="0.0277"/>
+		<Tuple Connect="1" Direction="1" Frequency="3.50000" argS11="-22.47" argS21="110.97" argS22="-113.08" magS11="0.0216" magS21="0.1031" magS22="0.0267"/>
+		<Tuple Connect="2" Direction="1" Frequency="3.50000" argS11="-23.08" argS21="110.94" argS22="-112.91" magS11="0.0219" magS21="0.1031" magS22="0.0265"/>
+		<Tuple Connect="3" Direction="1" Frequency="3.50000" argS11="-23.12" argS21="110.91" argS22="-113.01" magS11="0.0219" magS21="0.1031" magS22="0.0265"/>
+		<Tuple Connect="1" Direction="1" Frequency="4.00000" argS11="-43.24" argS21="75.41" argS22="-143.72" magS11="0.0182" magS21="0.1031" magS22="0.0259"/>
+		<Tuple Connect="2" Direction="1" Frequency="4.00000" argS11="-44.08" argS21="75.38" argS22="-143.53" magS11="0.0182" magS21="0.1031" magS22="0.0256"/>
+		<Tuple Connect="3" Direction="1" Frequency="4.00000" argS11="-44.26" argS21="75.33" argS22="-143.63" magS11="0.0181" magS21="0.1031" magS22="0.0257"/>
+		<Tuple Connect="1" Direction="1" Frequency="4.50000" argS11="-66.66" argS21="39.75" argS22="-170.98" magS11="0.0134" magS21="0.1031" magS22="0.0220"/>
+		<Tuple Connect="2" Direction="1" Frequency="4.50000" argS11="-64.86" argS21="39.73" argS22="-170.76" magS11="0.0139" magS21="0.1031" magS22="0.0217"/>
+		<Tuple Connect="3" Direction="1" Frequency="4.50000" argS11="-64.88" argS21="39.65" argS22="-170.97" magS11="0.0139" magS21="0.1031" magS22="0.0218"/>
+		<Tuple Connect="1" Direction="1" Frequency="5.00000" argS11="-101.96" argS21="4.10" argS22="157.43" magS11="0.0085" magS21="0.1031" magS22="0.0167"/>
+		<Tuple Connect="2" Direction="1" Frequency="5.00000" argS11="-104.17" argS21="4.07" argS22="157.70" magS11="0.0091" magS21="0.1031" magS22="0.0164"/>
+		<Tuple Connect="3" Direction="1" Frequency="5.00000" argS11="-104.93" argS21="3.99" argS22="157.65" magS11="0.0092" magS21="0.1031" magS22="0.0165"/>
+		<Tuple Connect="1" Direction="1" Frequency="5.50000" argS11="170.76" argS21="-31.58" argS22="119.80" magS11="0.0052" magS21="0.1032" magS22="0.0097"/>
+		<Tuple Connect="2" Direction="1" Frequency="5.50000" argS11="170.81" argS21="-31.60" argS22="119.52" magS11="0.0048" magS21="0.1032" magS22="0.0094"/>
+		<Tuple Connect="3" Direction="1" Frequency="5.50000" argS11="171.70" argS21="-31.66" argS22="120.02" magS11="0.0048" magS21="0.1032" magS22="0.0096"/>
+		<Tuple Connect="1" Direction="1" Frequency="6.00000" argS11="101.97" argS21="-67.35" argS22="71.30" magS11="0.0123" magS21="0.1033" magS22="0.0035"/>
+		<Tuple Connect="2" Direction="1" Frequency="6.00000" argS11="102.57" argS21="-67.41" argS22="68.53" magS11="0.0124" magS21="0.1033" magS22="0.0031"/>
+		<Tuple Connect="3" Direction="1" Frequency="6.00000" argS11="103.37" argS21="-67.49" argS22="72.25" magS11="0.0123" magS21="0.1033" magS22="0.0032"/>
+		<Tuple Connect="1" Direction="1" Frequency="6.50000" argS11="73.36" argS21="-103.14" argS22="-93.27" magS11="0.0229" magS21="0.1033" magS22="0.0043"/>
+		<Tuple Connect="2" Direction="1" Frequency="6.50000" argS11="70.59" argS21="-103.21" argS22="-93.69" magS11="0.0234" magS21="0.1033" magS22="0.0047"/>
+		<Tuple Connect="3" Direction="1" Frequency="6.50000" argS11="70.58" argS21="-103.33" argS22="-95.32" magS11="0.0233" magS21="0.1033" magS22="0.0046"/>
+		<Tuple Connect="1" Direction="1" Frequency="7.00000" argS11="50.91" argS21="-139.01" argS22="-145.81" magS11="0.0352" magS21="0.1033" magS22="0.0133"/>
+		<Tuple Connect="2" Direction="1" Frequency="7.00000" argS11="49.57" argS21="-139.08" argS22="-145.56" magS11="0.0348" magS21="0.1033" magS22="0.0137"/>
+		<Tuple Connect="3" Direction="1" Frequency="7.00000" argS11="49.58" argS21="-139.19" argS22="-146.38" magS11="0.0346" magS21="0.1033" magS22="0.0137"/>
+		<Tuple Connect="1" Direction="1" Frequency="7.50000" argS11="32.35" argS21="-174.93" argS22="-171.12" magS11="0.0478" magS21="0.1033" magS22="0.0232"/>
+		<Tuple Connect="2" Direction="1" Frequency="7.50000" argS11="30.88" argS21="-175.04" argS22="-170.97" magS11="0.0478" magS21="0.1033" magS22="0.0236"/>
+		<Tuple Connect="3" Direction="1" Frequency="7.50000" argS11="30.99" argS21="-175.14" argS22="-171.44" magS11="0.0476" magS21="0.1033" magS22="0.0236"/>
+		<Tuple Connect="1" Direction="1" Frequency="8.00000" argS11="13.31" argS21="149.07" argS22="159.31" magS11="0.0608" magS21="0.1032" magS22="0.0291"/>
+		<Tuple Connect="2" Direction="1" Frequency="8.00000" argS11="12.55" argS21="148.96" argS22="159.37" magS11="0.0600" magS21="0.1032" magS22="0.0295"/>
+		<Tuple Connect="3" Direction="1" Frequency="8.00000" argS11="12.54" argS21="148.85" argS22="159.03" magS11="0.0597" magS21="0.1032" magS22="0.0297"/>
+		<Tuple Connect="1" Direction="1" Frequency="8.50000" argS11="-5.96" argS21="113.08" argS22="122.81" magS11="0.0724" magS21="0.1032" magS22="0.0328"/>
+		<Tuple Connect="2" Direction="1" Frequency="8.50000" argS11="-5.90" argS21="112.92" argS22="122.93" magS11="0.0729" magS21="0.1032" magS22="0.0332"/>
+		<Tuple Connect="3" Direction="1" Frequency="8.50000" argS11="-5.87" argS21="112.76" argS22="122.86" magS11="0.0727" magS21="0.1031" magS22="0.0333"/>
+		<Tuple Connect="1" Direction="1" Frequency="9.00000" argS11="-23.35" argS21="76.99" argS22="89.31" magS11="0.0815" magS21="0.1031" magS22="0.0395"/>
+		<Tuple Connect="2" Direction="1" Frequency="9.00000" argS11="-24.83" argS21="76.84" argS22="89.46" magS11="0.0824" magS21="0.1031" magS22="0.0400"/>
+		<Tuple Connect="3" Direction="1" Frequency="9.00000" argS11="-25.01" argS21="76.64" argS22="89.61" magS11="0.0823" magS21="0.1031" magS22="0.0401"/>
+		<Tuple Connect="1" Direction="1" Frequency="9.50000" argS11="-40.41" argS21="40.87" argS22="57.41" magS11="0.0869" magS21="0.1030" magS22="0.0417"/>
+		<Tuple Connect="2" Direction="1" Frequency="9.50000" argS11="-41.60" argS21="40.68" argS22="57.64" magS11="0.0872" magS21="0.1030" magS22="0.0422"/>
+		<Tuple Connect="3" Direction="1" Frequency="9.50000" argS11="-41.81" argS21="40.47" argS22="57.78" magS11="0.0869" magS21="0.1030" magS22="0.0422"/>
+		<Tuple Connect="1" Direction="1" Frequency="10.00000" argS11="-56.62" argS21="4.66" argS22="27.61" magS11="0.0891" magS21="0.1029" magS22="0.0417"/>
+		<Tuple Connect="2" Direction="1" Frequency="10.00000" argS11="-59.18" argS21="4.46" argS22="27.97" magS11="0.0893" magS21="0.1029" magS22="0.0423"/>
+		<Tuple Connect="3" Direction="1" Frequency="10.00000" argS11="-59.66" argS21="4.17" argS22="28.09" magS11="0.0890" magS21="0.1029" magS22="0.0422"/>
+		<Tuple Connect="1" Direction="1" Frequency="10.50000" argS11="-72.92" argS21="-31.62" argS22="-7.70" magS11="0.0877" magS21="0.1028" magS22="0.0395"/>
+		<Tuple Connect="2" Direction="1" Frequency="10.50000" argS11="-74.00" argS21="-31.78" argS22="-7.25" magS11="0.0865" magS21="0.1028" magS22="0.0398"/>
+		<Tuple Connect="3" Direction="1" Frequency="10.50000" argS11="-74.33" argS21="-32.09" argS22="-7.27" magS11="0.0860" magS21="0.1028" magS22="0.0396"/>
+		<Tuple Connect="1" Direction="1" Frequency="11.00000" argS11="-88.51" argS21="-67.94" argS22="-43.82" magS11="0.0833" magS21="0.1028" magS22="0.0359"/>
+		<Tuple Connect="2" Direction="1" Frequency="11.00000" argS11="-88.77" argS21="-68.12" argS22="-43.09" magS11="0.0838" magS21="0.1028" magS22="0.0364"/>
+		<Tuple Connect="3" Direction="1" Frequency="11.00000" argS11="-89.01" argS21="-68.40" argS22="-43.21" magS11="0.0835" magS21="0.1028" magS22="0.0362"/>
+		<Tuple Connect="1" Direction="1" Frequency="11.50000" argS11="-103.48" argS21="-104.35" argS22="-82.03" magS11="0.0756" magS21="0.1028" magS22="0.0314"/>
+		<Tuple Connect="2" Direction="1" Frequency="11.50000" argS11="-105.36" argS21="-104.59" argS22="-80.99" magS11="0.0744" magS21="0.1028" magS22="0.0316"/>
+		<Tuple Connect="3" Direction="1" Frequency="11.50000" argS11="-105.95" argS21="-104.95" argS22="-81.47" magS11="0.0738" magS21="0.1028" magS22="0.0314"/>
+		<Tuple Connect="1" Direction="1" Frequency="12.00000" argS11="-119.33" argS21="-140.93" argS22="-132.10" magS11="0.0628" magS21="0.1028" magS22="0.0247"/>
+		<Tuple Connect="2" Direction="1" Frequency="12.00000" argS11="-118.70" argS21="-141.15" argS22="-130.71" magS11="0.0632" magS21="0.1028" magS22="0.0248"/>
+		<Tuple Connect="3" Direction="1" Frequency="12.00000" argS11="-118.97" argS21="-141.50" argS22="-131.68" magS11="0.0631" magS21="0.1028" magS22="0.0249"/>
+		<Tuple Connect="1" Direction="1" Frequency="12.50000" argS11="-135.38" argS21="-177.62" argS22="170.18" magS11="0.0459" magS21="0.1028" magS22="0.0242"/>
+		<Tuple Connect="2" Direction="1" Frequency="12.50000" argS11="-139.25" argS21="-177.81" argS22="171.22" magS11="0.0480" magS21="0.1028" magS22="0.0240"/>
+		<Tuple Connect="3" Direction="1" Frequency="12.50000" argS11="-140.79" argS21="-178.15" argS22="170.73" magS11="0.0485" magS21="0.1028" magS22="0.0243"/>
+		<Tuple Connect="1" Direction="1" Frequency="13.00000" argS11="-151.88" argS21="145.60" argS22="112.97" magS11="0.0288" magS21="0.1027" magS22="0.0322"/>
+		<Tuple Connect="2" Direction="1" Frequency="13.00000" argS11="-154.22" argS21="145.42" argS22="113.60" magS11="0.0269" magS21="0.1027" magS22="0.0319"/>
+		<Tuple Connect="3" Direction="1" Frequency="13.00000" argS11="-156.80" argS21="145.03" argS22="113.73" magS11="0.0262" magS21="0.1027" magS22="0.0321"/>
+		<Tuple Connect="1" Direction="1" Frequency="13.50000" argS11="173.78" argS21="108.69" argS22="70.84" magS11="0.0106" magS21="0.1026" magS22="0.0398"/>
+		<Tuple Connect="2" Direction="1" Frequency="13.50000" argS11="177.00" argS21="108.47" argS22="71.12" magS11="0.0110" magS21="0.1026" magS22="0.0396"/>
+		<Tuple Connect="3" Direction="1" Frequency="13.50000" argS11="176.33" argS21="108.05" argS22="71.21" magS11="0.0110" magS21="0.1026" magS22="0.0398"/>
+		<Tuple Connect="1" Direction="1" Frequency="14.00000" argS11="41.13" argS21="71.71" argS22="29.68" magS11="0.0118" magS21="0.1024" magS22="0.0507"/>
+		<Tuple Connect="2" Direction="1" Frequency="14.00000" argS11="30.81" argS21="71.50" argS22="29.94" magS11="0.0125" magS21="0.1024" magS22="0.0504"/>
+		<Tuple Connect="3" Direction="1" Frequency="14.00000" argS11="27.66" argS21="71.07" argS22="30.17" magS11="0.0127" magS21="0.1024" magS22="0.0505"/>
+		<Tuple Connect="1" Direction="1" Frequency="14.50000" argS11="5.95" argS21="34.69" argS22="-6.74" magS11="0.0298" magS21="0.1020" magS22="0.0638"/>
+		<Tuple Connect="2" Direction="1" Frequency="14.50000" argS11="2.67" argS21="34.46" argS22="-6.61" magS11="0.0286" magS21="0.1021" magS22="0.0636"/>
+		<Tuple Connect="3" Direction="1" Frequency="14.50000" argS11="1.20" argS21="34.02" argS22="-6.41" magS11="0.0283" magS21="0.1021" magS22="0.0636"/>
+		<Tuple Connect="1" Direction="1" Frequency="15.00000" argS11="-11.64" argS21="-2.36" argS22="-36.19" magS11="0.0448" magS21="0.1018" magS22="0.0771"/>
+		<Tuple Connect="2" Direction="1" Frequency="15.00000" argS11="-13.26" argS21="-2.58" argS22="-36.01" magS11="0.0452" magS21="0.1018" magS22="0.0766"/>
+		<Tuple Connect="3" Direction="1" Frequency="15.00000" argS11="-14.98" argS21="-3.04" argS22="-35.95" magS11="0.0445" magS21="0.1018" magS22="0.0765"/>
+		<Tuple Connect="1" Direction="1" Frequency="15.50000" argS11="-26.87" argS21="-39.53" argS22="-64.90" magS11="0.0567" magS21="0.1016" magS22="0.0840"/>
+		<Tuple Connect="2" Direction="1" Frequency="15.50000" argS11="-27.61" argS21="-39.73" argS22="-64.69" magS11="0.0563" magS21="0.1017" magS22="0.0836"/>
+		<Tuple Connect="3" Direction="1" Frequency="15.50000" argS11="-26.89" argS21="-40.17" argS22="-64.77" magS11="0.0564" magS21="0.1017" magS22="0.0836"/>
+		<Tuple Connect="1" Direction="1" Frequency="16.00000" argS11="-38.48" argS21="-76.76" argS22="-93.98" magS11="0.0624" magS21="0.1015" magS22="0.0890"/>
+		<Tuple Connect="2" Direction="1" Frequency="16.00000" argS11="-38.05" argS21="-76.98" argS22="-93.72" magS11="0.0642" magS21="0.1016" magS22="0.0882"/>
+		<Tuple Connect="3" Direction="1" Frequency="16.00000" argS11="-38.73" argS21="-77.45" argS22="-93.80" magS11="0.0661" magS21="0.1016" magS22="0.0882"/>
+		<Tuple Connect="1" Direction="1" Frequency="16.50000" argS11="-46.79" argS21="-114.04" argS22="-121.54" magS11="0.0652" magS21="0.1015" magS22="0.0951"/>
+		<Tuple Connect="2" Direction="1" Frequency="16.50000" argS11="-48.87" argS21="-114.25" argS22="-121.31" magS11="0.0659" magS21="0.1015" magS22="0.0943"/>
+		<Tuple Connect="3" Direction="1" Frequency="16.50000" argS11="-49.99" argS21="-114.71" argS22="-121.41" magS11="0.0665" magS21="0.1015" magS22="0.0942"/>
+		<Tuple Connect="1" Direction="1" Frequency="17.00000" argS11="-53.82" argS21="-151.39" argS22="-146.59" magS11="0.0652" magS21="0.1014" magS22="0.0979"/>
+		<Tuple Connect="2" Direction="1" Frequency="17.00000" argS11="-54.29" argS21="-151.60" argS22="-146.51" magS11="0.0649" magS21="0.1015" magS22="0.0969"/>
+		<Tuple Connect="3" Direction="1" Frequency="17.00000" argS11="-56.87" argS21="-152.07" argS22="-146.72" magS11="0.0651" magS21="0.1015" magS22="0.0969"/>
+		<Tuple Connect="1" Direction="1" Frequency="17.50000" argS11="-59.66" argS21="171.25" argS22="-170.50" magS11="0.0638" magS21="0.1015" magS22="0.1011"/>
+		<Tuple Connect="2" Direction="1" Frequency="17.50000" argS11="-62.11" argS21="171.02" argS22="-170.28" magS11="0.0635" magS21="0.1016" magS22="0.1001"/>
+		<Tuple Connect="3" Direction="1" Frequency="17.50000" argS11="-64.79" argS21="170.51" argS22="-170.47" magS11="0.0608" magS21="0.1016" magS22="0.1001"/>
+		<Tuple Connect="1" Direction="1" Frequency="18.00000" argS11="-64.16" argS21="133.88" argS22="167.85" magS11="0.0629" magS21="0.1017" magS22="0.1006"/>
+		<Tuple Connect="2" Direction="1" Frequency="18.00000" argS11="-63.07" argS21="133.70" argS22="167.89" magS11="0.0609" magS21="0.1018" magS22="0.0994"/>
+		<Tuple Connect="3" Direction="1" Frequency="18.00000" argS11="-61.95" argS21="133.25" argS22="167.58" magS11="0.0591" magS21="0.1018" magS22="0.0995"/>
+	</Data>
+</Data_Table>

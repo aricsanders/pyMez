@@ -161,7 +161,10 @@ class S1PV1():
                   "sparameter_complex":[],
                   "comments":[],
                   "path":None,
-                  "column_units":None
+                  "column_units":None,
+                  "sparameter_begin_line":1,
+                  "sparameter_end_line":None
+
                   }
         self.options={}
         for key,value in defaults.iteritems():
@@ -176,6 +179,7 @@ class S1PV1():
         else:
             for element in self.elements:
                 self.__dict__[element]=self.options[element]
+            self.sparameter_complex=self.options["sparameter_complex"]
             match=re.match(OPTION_LINE_PATTERN,self.option_line)
             # set the values associated with the option line
             for key,value in match.groupdict().iteritems():
@@ -186,6 +190,7 @@ class S1PV1():
             elif self.sparameter_complex is []:
                 for row in self.sparameter_data:
                     self.add_sparameter_complex_row(row)
+                    #print("{0} is {1}".format("row",row))
             elif self.sparameter_data is []:
                 self.change_data_format(new_format=self.format)
 
@@ -260,9 +265,12 @@ class S1PV1():
             self.options["sparameter_end_line"]=max(data_lines)+add_option_line
         #print self.sparameter_data
 
-    def build_string(self):
+    def build_string(self,**temp_options):
         """Creates the output string"""
         #number of lines = option line + comments that start at zero + rows in sparameter data + rows in noise data
+        original_options=self.options
+        for key,value in temp_options.iteritems():
+            self.options[key]=value
         if self.comments is None:
             number_line_comments=0
         else:
@@ -301,11 +309,20 @@ class S1PV1():
                                                 string_position=comment[2],
                                                 begin_token=self.options["inline_comment_begin"],
                                                 end_token="")
+        self.options=original_options
         return string_list_collapse(out_lines)
 
     def __str__(self):
         self.string=self.build_string()
         return self.string
+
+    def save(self,file_path=None,**temp_options):
+        """Saves the s2p file to file_path with options, defaults to s2p.path"""
+        if file_path is None:
+            file_path=self.path
+        out_file=open(file_path,'w')
+        out_file.write(self.build_string(**temp_options))
+        out_file.close()
 
     def add_sparameter_row(self,row_data):
         """Adds data to the sparameter attribute, which is a list of s-parameters. The
@@ -540,7 +557,9 @@ class S2PV1():
                   "path":None,
                   "column_units":None,
                   "inline_comment_begin":"!",
-                  "inline_comment_end":""
+                  "inline_comment_end":"",
+                  "sparameter_begin_line":1,
+                  "sparameter_end_line":None
                   }
         self.options={}
         for key,value in defaults.iteritems():
@@ -557,18 +576,36 @@ class S2PV1():
         else:
             for element in self.elements:
                 self.__dict__[element]=self.options[element]
+            self.sparameter_complex=self.options["sparameter_complex"]
             match=re.match(OPTION_LINE_PATTERN,self.option_line)
             # set the values associated with the option line
             for key,value in match.groupdict().iteritems():
                 self.__dict__[key.lower()]=value
+            if re.match('db',self.format,re.IGNORECASE):
+                self.column_names=S2P_DB_COLUMN_NAMES
+                self.row_pattern=make_row_match_string(S2P_DB_COLUMN_NAMES)
+            elif re.match('ma',self.format,re.IGNORECASE):
+                self.column_names=S2P_MA_COLUMN_NAMES
+                self.row_pattern=make_row_match_string(S2P_MA_COLUMN_NAMES)
+            elif re.match('ri',self.format,re.IGNORECASE):
+                self.column_names=S2P_RI_COLUMN_NAMES
+                self.row_pattern=make_row_match_string(S2P_RI_COLUMN_NAMES)
             # now we handle the cases if sparameter_data or sparameter_complex is specified
             if self.sparameter_data is [] and self.sparameter_complex is[]:
                 pass
-            elif self.sparameter_complex is []:
+            elif self.sparameter_complex in [[],None]:
                 for row in self.sparameter_data:
                     self.add_sparameter_complex_row(row)
-            elif self.sparameter_data is []:
+                    #print("{0} is {1}".format("row",row))
+            elif self.sparameter_data in [[],None]:
                 self.change_data_format(new_format=self.format)
+            if self.comments is None:
+                number_line_comments=0
+            else:
+                number_line_comments=[str(comment[2]) for comment in self.comments].count('0')
+            self.options["sparameter_begin_line"]=number_line_comments+1
+            self.options["sparameter_end_line"]= self.options["sparameter_begin_line"]\
+                                                 +len(self.sparameter_data)+1
 
             if self.options["path"] is None:
                 self.path=auto_name(self.options["specific_descriptor"],self.options["general_descriptor"],
@@ -653,9 +690,12 @@ class S2PV1():
         #print self.noiseparameter_data
         #print self.options["noiseparameter_begin_line"]
 
-    def build_string(self):
+    def build_string(self,**temp_options):
         """Creates the output string"""
         #number of lines = option line + comments that start at zero + rows in sparameter data + rows in noise data
+        original_options=self.options
+        for key,value in temp_options.iteritems():
+            self.options[key]=value
         if self.comments is None:
             number_line_comments=0
         else:
@@ -705,11 +745,20 @@ class S2PV1():
                                                 begin_token=self.options["inline_comment_begin"],
                                                 end_token="")
         #print("{0} is {1}".format('out_lines', out_lines))
+        self.options=original_options
         return string_list_collapse(out_lines)
 
     def __str__(self):
         self.string=self.build_string()
         return self.string
+
+    def save(self,file_path=None,**temp_options):
+        """Saves the s2p file to file_path with options, defaults to s2p.path"""
+        if file_path is None:
+            file_path=self.path
+        out_file=open(file_path,'w')
+        out_file.write(self.build_string(**temp_options))
+        out_file.close()
 
     def add_sparameter_row(self,row_data):
         """Adds data to the sparameter attribute, which is a list of s-parameters. The
