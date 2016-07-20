@@ -1232,7 +1232,8 @@ class InstrumentState(XMLBase):
     def __init__(self,file_path=None,**options):
         """ Intialize the InstrumentState class"""
         defaults={"root":"Instrument_State",
-                  "style_sheet":os.path.join(PYMEASURE_ROOT,'Settings/XSL Backup/DEFAULT_INSTRUMENT_STYLE.xsl').replace('\\','/'),
+                  "style_sheet":os.path.join(XSLT_REPOSITORY,
+                                             'DEFAULT_STATE_STYLE.xsl').replace('\\','/'),
                   "specific_descriptor":'Instrument',
                   "general_descriptor":'State',
                   "directory":None,

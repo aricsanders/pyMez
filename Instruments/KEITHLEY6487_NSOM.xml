@@ -9,7 +9,7 @@
         <Name>KEITHLEY6487</Name>
         <Alias>picoammeter</Alias>
         <Location>NSOM Rm 3311</Location>
-        <Manual href="file://132.163.128.161/68_pml/686/68604/NSOM/Keithley/6487_901_01A.pdf"/>
+        <Manual href="../Documentation/Manuals/Keithley_6487_Manual.pdf"/>
         <Image href="./KEITHLEY6487_NSOM_Images/Keithley_Image_1.jpg"/>
         <Price></Price>
         <Serial>1111167</Serial>

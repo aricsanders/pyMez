@@ -29,7 +29,7 @@ import wx
 import wx.stc
 
 PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMeasure.__file__))
-LOGS_DIRECTORY=r'C:\Users\sandersa\PyCharm Projects\pyMeasure\Data\Logs'#os.path.join(PYMEASURE_ROOT,'Data','XMLModels')
+LOGS_DIRECTORY=os.path.join(PYMEASURE_ROOT,'Data','Logs')
 
 def convert_datetime(ISO_datetime_string,format_string='%m/%d/%Y at %H:%M:%S'):
     "Converts from long ISO format 2010-05-13T21:54:25.755000 to something reasonable"
