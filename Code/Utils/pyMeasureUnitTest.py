@@ -6,7 +6,7 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ pyMeasureUnitTests Runs a series of unit tests on the modules in pyMeasure,
- before adding to the library add a unit test and check that all the others pass"""
+ before adding a module to the library add a unit test and check that all the others pass"""
 
 #-----------------------------------------------------------------------------
 # Standard Imports
@@ -21,12 +21,12 @@ import pyMeasure.Code.Utils.Names
 
 #-----------------------------------------------------------------------------
 # Module Constants
-TEST_CASE_CLASSES=["TestNames","TestXMLModels","TestAll"]
+TEST_CASE_CLASSES=["TestNames","TestXMLModels"]
 IN_MODULE_TESTS=[]
 for key,value in globals().copy()["pyMeasure"].__dict__.iteritems():
         if re.match("test_",key):
             IN_MODULE_TESTS.append(key)
-print(IN_MODULE_TESTS)
+# print(IN_MODULE_TESTS)
 #-----------------------------------------------------------------------------
 # Module Functions
 def build_suite(*test_classes):
@@ -37,11 +37,7 @@ def build_suite(*test_classes):
 
 #-----------------------------------------------------------------------------
 # Module Classes
-class TestAll(unittest.TestCase):
-    def __init__(self):
-        for test_script in IN_MODULE_TESTS:
-            self.__dict__[test_script]=lambda :self.assertEqual(True,
-                                                                globals().copy()["pyMeasure"].__dict__[test_script]())
+
 
 class TestNames(unittest.TestCase):
     """This Test case sees if all the tests in the modules in pyMeasure.Code.Utils.Names function properly"""
@@ -85,7 +81,6 @@ class TestXMLModels(unittest.TestCase):
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    test_all=TestAll()
     suite=build_suite(*TEST_CASE_CLASSES)
     unittest.TextTestRunner(verbosity=2).run(suite)
     #tests=TestAll()
