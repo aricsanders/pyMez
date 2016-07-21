@@ -40,7 +40,8 @@ def build_suite(*test_classes):
 class TestAll(unittest.TestCase):
     def __init__(self):
         for test_script in IN_MODULE_TESTS:
-            self.__dict__[test_script]=lambda :self.assertEqual(True,globals().copy()["pyMeasure"].__dict__[test_script]())
+            self.__dict__[test_script]=lambda :self.assertEqual(True,
+                                                                globals().copy()["pyMeasure"].__dict__[test_script]())
 
 class TestNames(unittest.TestCase):
     """This Test case sees if all the tests in the modules in pyMeasure.Code.Utils.Names function properly"""
@@ -76,14 +77,15 @@ class TestXMLModels(unittest.TestCase):
     def run_tests(self):
         print self.module_tests
         for item in self.module_tests:
-            self.assertEqual(globals().copy()["pyMeasure"].__dict__[item](),True,"{0} failed".format(item))
+            self.assertEqual(globals().copy()["pyMeasure"].__dict__[item](),
+                             True,"{0} failed".format(item))
 #-----------------------------------------------------------------------------
 # Module Scripts
 
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-
+    test_all=TestAll()
     suite=build_suite(*TEST_CASE_CLASSES)
     unittest.TextTestRunner(verbosity=2).run(suite)
     #tests=TestAll()
