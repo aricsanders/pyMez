@@ -15,6 +15,10 @@ import re
 #-----------------------------------------------------------------------------
 # Third Party Imports
 import pyMeasure.Code.DataHandlers.XMLModels
+import pyMeasure.Code.DataHandlers.NISTModels
+import pyMeasure.Code.DataHandlers.GeneralModels
+import pyMeasure.Code.DataHandlers.StatistiCALModels
+import pyMeasure.Code.DataHandlers.TouchstoneModels
 import pyMeasure.Code.Utils.Names
 # for key,value in globals().copy()["pyMeasure"].__dict__.iteritems():
 #     print(key,value)
