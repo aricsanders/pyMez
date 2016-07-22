@@ -114,8 +114,9 @@ def clean_up_test_module():
     print '-'*80
 def test_auto_name():
     """Tests the auto name function"""
-
-    print("The result of auto_name('Test','AutoName',None,'txt) is {0}".format(auto_name('Test','AutoName',None,'txt')))
+    print("The result of auto_name('Test','AutoName',None,'txt) is {0}".format(auto_name('Test',
+                                                                                         'AutoName',
+                                                                                         None,'txt')))
 
 
 #-------------------------------------------------------------------------------
