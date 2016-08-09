@@ -74,6 +74,10 @@ POWER_3TERM_COLUMN_DESCRIPTIONS={"Frequency": "Frequency in GHz",
                                            "uCc": "Uncertainty in calibration factor for repeated connects",
                                            "uCe": "Total uncertainty in calibration factor"}
 #POWER_COLUMN_NAMES=POWER_3TERM_COLUMN_NAMES
+TWELVE_TERM_ERROR_COLUMN_NAMES=["Frequency","reEdf","imEdf","reEsf","imEsf",
+                                "reErf","imErf","reExf","imExf","reElf","imElf","reEtf","imEtf"
+                                "reEdr","imEdr","reEsr","imEsr","reErr","imErr","reExr","imExr"
+                                "reElr","imElr","reEtr","imEtr"]
 # Constant that determines if S21 is in db-angle or mag-angle format true is in mag-angle
 CONVERT_S21=True
 # Constant that determines if 1-port raw files have S11 and S22 or just S11
@@ -1237,6 +1241,13 @@ class JBSparameter(AsciiDataTable):
 
 
 
+class TwelveTermErrorModel(AsciiDataTable):
+    """TwelveTermErrorModel holds the error coefficients for a twelve term model. The VNA calibration coefficeients
+    are presumed to be stored in the following order frequency Edf Esf Erf Exf Elf Etf Edr Esr Err Exr Elr Etr, where
+    all coefficients are in Real-Imaginary format. """
+    def __init__(self):
+        """Intializes the TwelveTermErrorModel """
+        pass
 
 class SwitchTermsFR():
     pass
