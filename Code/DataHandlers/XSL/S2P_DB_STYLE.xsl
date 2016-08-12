@@ -289,7 +289,7 @@ var dbS21Layout = {
   },
     xaxis:{
     title:'Frequency (GHz)'},
-  title:'dbS21'
+  title:'dbS21 and dbS12'
 };
 
     var argS21Layout = {
