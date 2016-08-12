@@ -244,6 +244,23 @@ def raw_difference_frame(raw_model,mean_frame,**options):
     difference_data_frame=pandas.DataFrame(difference_list,columns=difference_options["column_names"])
     return difference_data_frame
 
+def return_history_key(calrep_model):
+    "Returns a key for the history dictionary given a calrep model"
+    model=calrep_model.__class__.__name__
+    #print model
+    if re.search('Calrep',model):
+        if re.search('OnePortCalrep',model):
+            return '1-port calrep'
+        elif re.search('TwoPortCalrep',model):
+            return '2-port calrep'
+        elif re.search('PowerCalrep',model):
+            if calrep_model.options["column_names"]==POWER_3TERM_COLUMN_NAMES:
+                return 'power 3term calrep'
+            elif calrep_model.options["column_names"]==POWER_4TERM_COLUMN_NAMES:
+                return 'power 3term calrep'
+    else:
+        raise TypeError("Must be a calrep model, such as OnePortCalrepModel, etc. ")
+
 def raw_comparision_plot_with_residuals(raw_nist,mean_frame,difference_frame,**options):
     """Creates a comparision plot given a RawModel object and a pandas.DataFrame mean frame and difference frame"""
     defaults={"display_mean":True,
@@ -305,6 +322,121 @@ def raw_comparision_plot_with_residuals(raw_nist,mean_frame,difference_frame,**o
         plt.savefig(os.path.join(comparison_plot_options["directory"],file_name))
     else:
         plt.show()
+
+def calrep_history_plot(calrep_model,history_frame,**options):
+    """Given a calrep_model and a history frame calrep_history_plot plots the file against any other in history
+    frame  (pandas.DataFrame) with dates"""
+    defaults={"display_legend":True,
+              "save_plot":False,
+              "directory":None,
+              "specific_descriptor":calrep_model.metadata["Device_Id"]+"_Device_Measurement",
+              "general_descriptor":"Plot",
+              "file_name":None,
+              "min_num":0,
+              "max_num":None,
+              "error_style":"area"}
+    history_plot_options={}
+    for key,value in defaults.iteritems():
+        history_plot_options[key]=value
+    for key,value in options.iteritems():
+        history_plot_options[key]=value
+    # The way we plot depends on the models
+    model=calrep_model.__class__.__name__
+    device_history=history_frame[history_frame["Device_Id"]==calrep_model.metadata["Device_Id"]]
+    unique_analysis_dates=sorted(device_history["Analysis_Date"].unique().tolist())
+    print("{0} are {1}".format("unique_analysis_dates",unique_analysis_dates))
+    if re.search('Power',model):
+        number_rows=2
+        column_names=['mag','arg','Efficiency','Calibration_Factor']
+        if calrep_model.options["column_names"]==POWER_3TERM_COLUMN_NAMES:
+            error_names=['uMg','uAg','uEe','uCe']
+        elif calrep_model.options["column_names"]==POWER_4TERM_COLUMN_NAMES:
+            error_names=['uMg','uAg','uEg','uCg']
+        table=calrep_model.joined_table
+
+    elif re.search('OnePort',model):
+        number_rows=1
+        column_names=['mag','arg']
+        error_names=['uMg','uAg']
+        table=calrep_model
+
+    elif re.search('TwoPort',model):
+        number_rows=3
+        column_names=['magS11','argS11','magS21','argS21','magS22','argS22']
+        error_names=['uMgS11','uAgS11','uMgS21','uAgS21','uMgS22','uAgS22']
+        table=calrep_model.joined_table
+
+    fig, compare_axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col',figsize=(8,6),dpi=80)
+    for index, ax in enumerate(compare_axes.flat):
+
+        #ax.xaxis.set_visible(False)
+        if re.search('arg',column_names[index]):
+            ax.set_ylabel('Phase(Degrees)',color='green')
+        elif re.search('mag',column_names[index]):
+            ax.set_ylabel(r'|${\Gamma} $|',color='green')
+        ax.set_title(column_names[index])
+        # initial plot of
+        x=table.get_column('Frequency')
+        y=np.array(table.get_column(column_names[index]))
+        error=np.array(table.get_column(error_names[index]))
+        if re.search('bar',history_plot_options["error_style"],re.IGNORECASE):
+            ax.errorbar(x,y,yerr=error,fmt='k--')
+
+            for date_index,date in enumerate(unique_analysis_dates[history_plot_options["min_num"]:history_plot_options["max_num"]]):
+                number_lines=len(unique_analysis_dates[history_plot_options["min_num"]:history_plot_options["max_num"]])
+                date_device_history=device_history[device_history["Analysis_Date"]==date]
+                if not date_device_history.empty:
+                    x_date=date_device_history['Frequency']
+                    y_date=np.array(date_device_history[column_names[index]].tolist())
+                    error_date=np.array(date_device_history[error_names[index]].tolist())
+                    #print("{0} is {1}".format("date_device_history",date_device_history))
+                    #print("{0} is {1}".format("y_date",y_date))
+                    #print("{0} is {1}".format("date",date))
+                    date_color=(1-float(date_index+1)/number_lines,0,float(date_index+1)/number_lines,.5)
+                    ax.errorbar(x_date,y_date,
+                         yerr=error_date,color=date_color,label=date)
+        elif re.search('area',history_plot_options["error_style"],re.IGNORECASE):
+            ax.plot(x,y,'k--')
+            ax.fill_between(x,y-error,y+error,edgecolor=(0,.0,.0,.25), facecolor=(.25,.25,.25,.1),
+                            linewidth=1)
+            for date_index,date in enumerate(unique_analysis_dates[history_plot_options["min_num"]:history_plot_options["max_num"]]):
+                number_lines=float(len(unique_analysis_dates[history_plot_options["min_num"]:history_plot_options["max_num"]]))
+                #print("{0} is {1}".format("number_lines",number_lines))
+                #print("{0} is {1}".format("index",index))
+                #print("{0} is {1}".format("date_index",date_index))
+                date_color=(1-float(date_index+1)/number_lines,0,float(date_index+1)/number_lines,.5)
+                #print("{0} is {1}".format("date_color",date_color))
+
+                date_device_history=device_history[device_history["Analysis_Date"]==date]
+                x_date=date_device_history['Frequency']
+                y_date=np.array(date_device_history[column_names[index]].tolist())
+                error_date=np.array(date_device_history[error_names[index]].tolist())
+
+
+                ax.plot(x_date,y_date,
+                        color=date_color,label=date)
+        #ax.sharex(diff_axes[index])
+        if history_plot_options["display_legend"]:
+            ax.legend(loc=1,fontsize='8')
+    compare_axes.flat[-2].set_xlabel('Frequency(GHz)',color='k')
+    compare_axes.flat[-1].set_xlabel('Frequency(GHz)',color='k')
+    fig.subplots_adjust(hspace=0)
+    fig.suptitle(calrep_model.metadata["Device_Id"]+"\n",fontsize=18,fontweight='bold')
+    plt.tight_layout()
+
+    # Dealing with the save option
+    if history_plot_options["file_name"] is None:
+        file_name=auto_name(specific_descriptor=history_plot_options["specific_descriptor"],
+                            general_descriptor=history_plot_options["general_descriptor"],
+                            directory=history_plot_options["directory"],extension='png',padding=3)
+    else:
+        file_name=history_plot_options["file_name"]
+    if history_plot_options["save_plot"]:
+        #print file_name
+        plt.savefig(os.path.join(history_plot_options["directory"],file_name))
+    else:
+        plt.show()
+
 #-----------------------------------------------------------------------------
 # Module Classes
 

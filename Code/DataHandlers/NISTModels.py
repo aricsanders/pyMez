@@ -248,6 +248,7 @@ class OnePortCalrepModel(AsciiDataTable):
         if METHOD_ALIASES:
             for command in alias(self):
                 exec(command)
+        self.metadata={}
         if file_path is not None:
             self.path=file_path
             self.__read_and_fix__()
@@ -301,6 +302,11 @@ class OnePortCalrepModel(AsciiDataTable):
             data=np.loadtxt(self.path,skiprows=data_begin_line)
             self.options["data"]=data.tolist()
             self.options["header"]=lines[:self.find_line("TABLE")]
+            self.metadata["Device_Id"]=lines[0].rstrip().lstrip()
+            self.metadata["Analysis_Date"]=lines[1].rstrip().lstrip()
+            self.options["metadata"]={"Device_Id":lines[0].rstrip().lstrip(),
+                                      "Analysis_Date":lines[1].rstrip().lstrip()}
+            print("The {0} variable is {1}".format('self.metadata["Device_Id"]',self.metadata["Device_Id"]))
             #print("The {0} variable is {1}".format('data.tolist()',data.tolist()))
 
     def show(self):
@@ -856,6 +862,7 @@ class TwoPortCalrepModel():
             self.options[key]=value
         for key,value in options.iteritems():
             self.options[key]=value
+        self.metadata={}
         if file_path is None:
             pass
         elif re.match('asc',file_path.split(".")[-1],re.IGNORECASE):
@@ -863,6 +870,8 @@ class TwoPortCalrepModel():
             self.row_pattern=make_row_match_string(ONE_PORT_COLUMN_NAMES)
             self.path=file_path
             self.__read_and_fix__()
+            self.metadata["Device_Id"]=self.joined_table.header[0].rstrip().lstrip()
+            self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
 
         elif re.match('txt',file_path.split(".")[-1],re.IGNORECASE) or type(file_path) is ListType:
             self.table_names=['S11','S22','S21']
@@ -1042,6 +1051,7 @@ class PowerCalrepModel():
             self.options[key]=value
         for key,value in options.iteritems():
             self.options[key]=value
+        self.metadata={}
         if file_path is None:
             pass
         elif re.match('asc',file_path.split(".")[-1],re.IGNORECASE):
@@ -1051,6 +1061,8 @@ class PowerCalrepModel():
             self.power_3term_row_pattern=make_row_match_string(POWER_3TERM_COLUMN_NAMES)
             self.path=file_path
             self.__read_and_fix__()
+            self.metadata["Device_Id"]=self.joined_table.header[0].rstrip().lstrip()
+            self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
 
         elif re.match('txt',file_path.split(".")[-1],re.IGNORECASE) or type(file_path) is ListType:
             self.table_names=['S11','Efficiency']
