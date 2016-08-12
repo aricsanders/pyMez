@@ -1,0 +1,1097 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two port measurement</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<style> h3 {color:black}
+
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
+}
+
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}</style>
+</head>
+<body>
+<ul class="tab">
+<li><a href="#" class="tablinks" onclick="openTab(event, 'description')">Description</a></li>
+<li><a href="#" class="tablinks" onclick="openTab(event, 'plots')">Plots</a></li>
+<li><a href="#" class="tablinks" onclick="openTab(event, 'table')">Table</a></li>
+</ul>
+<div id="description" class="tabcontent">
+<h3>Data Description:</h3>
+<button id="ToggleButtonDescription" type="button" class="btn btn-primary">Show Description</button><br><hr>
+<table id="DataDescription">
+<tr>
+<td><b>argS11 :</b></td>
+<td>Phase in degrees for S11</td>
+</tr>
+<tr>
+<td><b>Number_Repeats :</b></td>
+<td>1</td>
+</tr>
+<tr>
+<td><b>Measurement_Date :</b></td>
+<td>26 Apr 2001</td>
+</tr>
+<tr>
+<td><b>Device_Description :</b></td>
+<td>ck std</td>
+</tr>
+<tr>
+<td><b>Device_Id :</b></td>
+<td>CTNP15</td>
+</tr>
+<tr>
+<td><b>Direction :</b></td>
+<td>Direction of connects, may be unused</td>
+</tr>
+<tr>
+<td><b>Connector_Type_Measurement :</b></td>
+<td>Type N</td>
+</tr>
+<tr>
+<td><b>magS11 :</b></td>
+<td>Linear magnitude for S11</td>
+</tr>
+<tr>
+<td><b>Efficiency :</b></td>
+<td>Effective Efficiency</td>
+</tr>
+<tr>
+<td><b>Measurement_Time :</b></td>
+<td>16:11:06</td>
+</tr>
+<tr>
+<td><b>Program_Revision :</b></td>
+<td>960910.143</td>
+</tr>
+<tr>
+<td><b>System_Letter :</b></td>
+<td>A</td>
+</tr>
+<tr>
+<td><b>Connector_Type_Calibration :</b></td>
+<td>Type N Fem</td>
+</tr>
+<tr>
+<td><b>Number_Connects :</b></td>
+<td>3</td>
+</tr>
+<tr>
+<td><b>Start_Frequency :</b></td>
+<td>7</td>
+</tr>
+<tr>
+<td><b>Program_Used :</b></td>
+<td>MEAS95</td>
+</tr>
+<tr>
+<td><b>Measurement_Type :</b></td>
+<td>Thermistor</td>
+</tr>
+<tr>
+<td><b>Calibration_Name :</b></td>
+<td>C980810.A1</td>
+</tr>
+<tr>
+<td><b>Calibration_Date :</b></td>
+<td>10 Aug 1998</td>
+</tr>
+<tr>
+<td><b>Nbs :</b></td>
+<td>1</td>
+</tr>
+<tr>
+<td><b>Number_Frequencies :</b></td>
+<td>28</td>
+</tr>
+<tr>
+<td><b>Calibration_Factor :</b></td>
+<td>Effective efficiency modified by reflection coefficient</td>
+</tr>
+<tr>
+<td><b>Frequency :</b></td>
+<td>Frequency in GHz</td>
+</tr>
+<tr>
+<td><b>System_Id :</b></td>
+<td>System I</td>
+</tr>
+<tr>
+<td><b>Connect :</b></td>
+<td>Connect number</td>
+</tr>
+<tr>
+<td><b>Operator :</b></td>
+<td>afm</td>
+</tr>
+<tr>
+<td><b>Port_Used :</b></td>
+<td>2</td>
+</tr>
+</table>
+</div>
+<div id="plots" class="tabcontent">
+<h3>Data Plot:</h3>
+<button id="ToggleButtonPlot" type="button" class="btn btn-primary">Show Plots</button><br><hr>
+<table>
+<tr>
+<td><div id="magS11" style="width: 480px; height: 400px;" class="plot"></div></td>
+<td><div id="argS11" style="width: 480px; height: 400px;" class="plot"></div></td>
+</tr>
+<tr>
+<td><div id="Efficiency" style="width: 480px; height: 400px;" class="plot"></div></td>
+<td><div id="Calibration_Factor" style="width: 480px; height: 400px;" class="plot"></div></td>
+</tr>
+</table>
+</div>
+<div id="table" class="tabcontent">
+<h3>Data:</h3>
+<button id="ToggleButton" type="button" class="btn btn-primary">Show Table</button><br><hr>
+<table class="table table-hover table-condensed table-bordered table-responsive" id="DataTable">
+<tr>
+<th><b>Frequency</b></th>
+<th><b>Connection</b></th>
+<th><b>Direction</b></th>
+<th><b>magS11</b></th>
+<th><b>argS11</b></th>
+<th><b>Efficency</b></th>
+<th><b>Calibration_Factor</b></th>
+</tr>
+<tr>
+<td>0.01</td>
+<td>1</td>
+<td>1</td>
+<td>0.01069</td>
+<td>-86.169</td>
+<td>0.99777</td>
+<td>0.99765</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>2</td>
+<td>1</td>
+<td>0.01072</td>
+<td>-86.303</td>
+<td>0.99782</td>
+<td>0.9977</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>3</td>
+<td>1</td>
+<td>0.0107</td>
+<td>-86.150</td>
+<td>0.99779</td>
+<td>0.99767</td>
+</tr>
+<tr>
+<td>0.02</td>
+<td>1</td>
+<td>1</td>
+<td>0.00534</td>
+<td>-83.216</td>
+<td>0.99798</td>
+<td>0.99795</td>
+</tr>
+<tr>
+<td>0.02</td>
+<td>2</td>
+<td>1</td>
+<td>0.00537</td>
+<td>-83.392</td>
+<td>0.99802</td>
+<td>0.99799</td>
+</tr>
+<tr>
+<td>0.02</td>
+<td>3</td>
+<td>1</td>
+<td>0.00535</td>
+<td>-83.031</td>
+<td>0.99799</td>
+<td>0.99796</td>
+</tr>
+<tr>
+<td>0.03</td>
+<td>1</td>
+<td>1</td>
+<td>0.0025</td>
+<td>-70.935</td>
+<td>0.99786</td>
+<td>0.99785</td>
+</tr>
+<tr>
+<td>0.03</td>
+<td>2</td>
+<td>1</td>
+<td>0.00251</td>
+<td>-71.254</td>
+<td>0.9979</td>
+<td>0.9979</td>
+</tr>
+<tr>
+<td>0.03</td>
+<td>3</td>
+<td>1</td>
+<td>0.00252</td>
+<td>-70.527</td>
+<td>0.99787</td>
+<td>0.99786</td>
+</tr>
+<tr>
+<td>0.04</td>
+<td>1</td>
+<td>1</td>
+<td>0.00136</td>
+<td>-54.832</td>
+<td>0.99748</td>
+<td>0.99748</td>
+</tr>
+<tr>
+<td>0.04</td>
+<td>2</td>
+<td>1</td>
+<td>0.00133</td>
+<td>-54.559</td>
+<td>0.99752</td>
+<td>0.99752</td>
+</tr>
+<tr>
+<td>0.04</td>
+<td>3</td>
+<td>1</td>
+<td>0.00136</td>
+<td>-54.966</td>
+<td>0.99748</td>
+<td>0.99748</td>
+</tr>
+<tr>
+<td>0.05</td>
+<td>1</td>
+<td>1</td>
+<td>0.00058</td>
+<td>-10.030</td>
+<td>0.99866</td>
+<td>0.99866</td>
+</tr>
+<tr>
+<td>0.05</td>
+<td>2</td>
+<td>1</td>
+<td>0.00056</td>
+<td>-9.240</td>
+<td>0.99869</td>
+<td>0.99868</td>
+</tr>
+<tr>
+<td>0.05</td>
+<td>3</td>
+<td>1</td>
+<td>0.0006</td>
+<td>-12.325</td>
+<td>0.99866</td>
+<td>0.99866</td>
+</tr>
+<tr>
+<td>0.06</td>
+<td>1</td>
+<td>1</td>
+<td>0.00083</td>
+<td>39.049</td>
+<td>0.99773</td>
+<td>0.99773</td>
+</tr>
+<tr>
+<td>0.06</td>
+<td>2</td>
+<td>1</td>
+<td>0.00084</td>
+<td>39.627</td>
+<td>0.99776</td>
+<td>0.99776</td>
+</tr>
+<tr>
+<td>0.06</td>
+<td>3</td>
+<td>1</td>
+<td>0.00085</td>
+<td>37.792</td>
+<td>0.99774</td>
+<td>0.99774</td>
+</tr>
+<tr>
+<td>0.07</td>
+<td>1</td>
+<td>1</td>
+<td>0.00164</td>
+<td>63.612</td>
+<td>0.99764</td>
+<td>0.99763</td>
+</tr>
+<tr>
+<td>0.07</td>
+<td>2</td>
+<td>1</td>
+<td>0.00166</td>
+<td>64.061</td>
+<td>0.99766</td>
+<td>0.99766</td>
+</tr>
+<tr>
+<td>0.07</td>
+<td>3</td>
+<td>1</td>
+<td>0.00163</td>
+<td>64.060</td>
+<td>0.99764</td>
+<td>0.99764</td>
+</tr>
+<tr>
+<td>0.08</td>
+<td>1</td>
+<td>1</td>
+<td>0.00196</td>
+<td>77.966</td>
+<td>0.99759</td>
+<td>0.99759</td>
+</tr>
+<tr>
+<td>0.08</td>
+<td>2</td>
+<td>1</td>
+<td>0.00198</td>
+<td>78.736</td>
+<td>0.99761</td>
+<td>0.99761</td>
+</tr>
+<tr>
+<td>0.08</td>
+<td>3</td>
+<td>1</td>
+<td>0.00198</td>
+<td>77.956</td>
+<td>0.99759</td>
+<td>0.99759</td>
+</tr>
+<tr>
+<td>0.09</td>
+<td>1</td>
+<td>1</td>
+<td>0.00252</td>
+<td>84.169</td>
+<td>0.99768</td>
+<td>0.99768</td>
+</tr>
+<tr>
+<td>0.09</td>
+<td>2</td>
+<td>1</td>
+<td>0.00253</td>
+<td>84.889</td>
+<td>0.99769</td>
+<td>0.99769</td>
+</tr>
+<tr>
+<td>0.09</td>
+<td>3</td>
+<td>1</td>
+<td>0.00252</td>
+<td>84.119</td>
+<td>0.99768</td>
+<td>0.99767</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>1</td>
+<td>1</td>
+<td>0.0028</td>
+<td>85.575</td>
+<td>0.99785</td>
+<td>0.99784</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>2</td>
+<td>1</td>
+<td>0.00281</td>
+<td>85.990</td>
+<td>0.99787</td>
+<td>0.99786</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>3</td>
+<td>1</td>
+<td>0.00281</td>
+<td>85.382</td>
+<td>0.99785</td>
+<td>0.99784</td>
+</tr>
+<tr>
+<td>0.15</td>
+<td>1</td>
+<td>1</td>
+<td>0.00526</td>
+<td>80.573</td>
+<td>0.99708</td>
+<td>0.99705</td>
+</tr>
+<tr>
+<td>0.15</td>
+<td>2</td>
+<td>1</td>
+<td>0.00527</td>
+<td>81.067</td>
+<td>0.99712</td>
+<td>0.99709</td>
+</tr>
+<tr>
+<td>0.15</td>
+<td>3</td>
+<td>1</td>
+<td>0.00528</td>
+<td>80.850</td>
+<td>0.99709</td>
+<td>0.99706</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>1</td>
+<td>1</td>
+<td>0.00689</td>
+<td>82.915</td>
+<td>0.99672</td>
+<td>0.99667</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>2</td>
+<td>1</td>
+<td>0.00689</td>
+<td>83.095</td>
+<td>0.99675</td>
+<td>0.9967</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>3</td>
+<td>1</td>
+<td>0.00687</td>
+<td>83.181</td>
+<td>0.99673</td>
+<td>0.99668</td>
+</tr>
+<tr>
+<td>0.25</td>
+<td>1</td>
+<td>1</td>
+<td>0.0085</td>
+<td>76.574</td>
+<td>0.996</td>
+<td>0.99593</td>
+</tr>
+<tr>
+<td>0.25</td>
+<td>2</td>
+<td>1</td>
+<td>0.00852</td>
+<td>76.792</td>
+<td>0.99605</td>
+<td>0.99597</td>
+</tr>
+<tr>
+<td>0.25</td>
+<td>3</td>
+<td>1</td>
+<td>0.00848</td>
+<td>76.613</td>
+<td>0.99601</td>
+<td>0.99594</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>1</td>
+<td>1</td>
+<td>0.01054</td>
+<td>74.663</td>
+<td>0.99507</td>
+<td>0.99495</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>2</td>
+<td>1</td>
+<td>0.01054</td>
+<td>74.865</td>
+<td>0.99511</td>
+<td>0.99499</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>3</td>
+<td>1</td>
+<td>0.01054</td>
+<td>74.749</td>
+<td>0.99508</td>
+<td>0.99497</td>
+</tr>
+<tr>
+<td>0.35</td>
+<td>1</td>
+<td>1</td>
+<td>0.01218</td>
+<td>70.417</td>
+<td>0.9948</td>
+<td>0.99465</td>
+</tr>
+<tr>
+<td>0.35</td>
+<td>2</td>
+<td>1</td>
+<td>0.01216</td>
+<td>70.535</td>
+<td>0.99484</td>
+<td>0.99469</td>
+</tr>
+<tr>
+<td>0.35</td>
+<td>3</td>
+<td>1</td>
+<td>0.01218</td>
+<td>70.514</td>
+<td>0.99481</td>
+<td>0.99466</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>1</td>
+<td>1</td>
+<td>0.01449</td>
+<td>64.370</td>
+<td>0.99388</td>
+<td>0.99367</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>2</td>
+<td>1</td>
+<td>0.01449</td>
+<td>64.417</td>
+<td>0.99392</td>
+<td>0.99371</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>3</td>
+<td>1</td>
+<td>0.01448</td>
+<td>64.483</td>
+<td>0.99389</td>
+<td>0.99369</td>
+</tr>
+<tr>
+<td>0.45</td>
+<td>1</td>
+<td>1</td>
+<td>0.0176</td>
+<td>57.774</td>
+<td>0.99357</td>
+<td>0.99326</td>
+</tr>
+<tr>
+<td>0.45</td>
+<td>2</td>
+<td>1</td>
+<td>0.01764</td>
+<td>57.884</td>
+<td>0.9936</td>
+<td>0.99329</td>
+</tr>
+<tr>
+<td>0.45</td>
+<td>3</td>
+<td>1</td>
+<td>0.0176</td>
+<td>57.792</td>
+<td>0.99358</td>
+<td>0.99327</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>1</td>
+<td>1</td>
+<td>0.02067</td>
+<td>54.301</td>
+<td>0.99298</td>
+<td>0.99255</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>2</td>
+<td>1</td>
+<td>0.02067</td>
+<td>54.464</td>
+<td>0.99303</td>
+<td>0.9926</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>3</td>
+<td>1</td>
+<td>0.02068</td>
+<td>54.350</td>
+<td>0.99301</td>
+<td>0.99259</td>
+</tr>
+<tr>
+<td>0.55</td>
+<td>1</td>
+<td>1</td>
+<td>0.02416</td>
+<td>50.106</td>
+<td>0.99254</td>
+<td>0.99196</td>
+</tr>
+<tr>
+<td>0.55</td>
+<td>2</td>
+<td>1</td>
+<td>0.02414</td>
+<td>50.158</td>
+<td>0.99258</td>
+<td>0.992</td>
+</tr>
+<tr>
+<td>0.55</td>
+<td>3</td>
+<td>1</td>
+<td>0.02416</td>
+<td>50.215</td>
+<td>0.99255</td>
+<td>0.99197</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>1</td>
+<td>1</td>
+<td>0.02682</td>
+<td>48.037</td>
+<td>0.99156</td>
+<td>0.99085</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>2</td>
+<td>1</td>
+<td>0.0268</td>
+<td>48.100</td>
+<td>0.9916</td>
+<td>0.99088</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>3</td>
+<td>1</td>
+<td>0.02681</td>
+<td>48.077</td>
+<td>0.99158</td>
+<td>0.99087</td>
+</tr>
+<tr>
+<td>0.65</td>
+<td>1</td>
+<td>1</td>
+<td>0.02993</td>
+<td>44.037</td>
+<td>0.99132</td>
+<td>0.99043</td>
+</tr>
+<tr>
+<td>0.65</td>
+<td>2</td>
+<td>1</td>
+<td>0.02992</td>
+<td>44.045</td>
+<td>0.99139</td>
+<td>0.9905</td>
+</tr>
+<tr>
+<td>0.65</td>
+<td>3</td>
+<td>1</td>
+<td>0.02991</td>
+<td>43.994</td>
+<td>0.99134</td>
+<td>0.99045</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>1</td>
+<td>1</td>
+<td>0.0329</td>
+<td>40.391</td>
+<td>0.9908</td>
+<td>0.98973</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>2</td>
+<td>1</td>
+<td>0.0329</td>
+<td>40.401</td>
+<td>0.99086</td>
+<td>0.98979</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>3</td>
+<td>1</td>
+<td>0.03294</td>
+<td>40.396</td>
+<td>0.99083</td>
+<td>0.98975</td>
+</tr>
+<tr>
+<td>0.75</td>
+<td>1</td>
+<td>1</td>
+<td>0.03502</td>
+<td>36.184</td>
+<td>0.98997</td>
+<td>0.98875</td>
+</tr>
+<tr>
+<td>0.75</td>
+<td>2</td>
+<td>1</td>
+<td>0.03505</td>
+<td>36.165</td>
+<td>0.99003</td>
+<td>0.98881</td>
+</tr>
+<tr>
+<td>0.75</td>
+<td>3</td>
+<td>1</td>
+<td>0.03503</td>
+<td>36.215</td>
+<td>0.99</td>
+<td>0.98878</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>1</td>
+<td>1</td>
+<td>0.03806</td>
+<td>30.673</td>
+<td>0.98977</td>
+<td>0.98834</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>2</td>
+<td>1</td>
+<td>0.03807</td>
+<td>30.729</td>
+<td>0.98984</td>
+<td>0.98841</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>3</td>
+<td>1</td>
+<td>0.03803</td>
+<td>30.672</td>
+<td>0.98981</td>
+<td>0.98838</td>
+</tr>
+<tr>
+<td>0.85</td>
+<td>1</td>
+<td>1</td>
+<td>0.04103</td>
+<td>25.384</td>
+<td>0.98893</td>
+<td>0.98727</td>
+</tr>
+<tr>
+<td>0.85</td>
+<td>2</td>
+<td>1</td>
+<td>0.04102</td>
+<td>25.371</td>
+<td>0.98899</td>
+<td>0.98733</td>
+</tr>
+<tr>
+<td>0.85</td>
+<td>3</td>
+<td>1</td>
+<td>0.04103</td>
+<td>25.370</td>
+<td>0.98897</td>
+<td>0.98731</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>1</td>
+<td>1</td>
+<td>0.04461</td>
+<td>20.551</td>
+<td>0.98803</td>
+<td>0.98607</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>2</td>
+<td>1</td>
+<td>0.04468</td>
+<td>20.567</td>
+<td>0.98813</td>
+<td>0.98616</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>3</td>
+<td>1</td>
+<td>0.04471</td>
+<td>20.575</td>
+<td>0.98811</td>
+<td>0.98613</td>
+</tr>
+<tr>
+<td>0.95</td>
+<td>1</td>
+<td>1</td>
+<td>0.0486</td>
+<td>15.143</td>
+<td>0.98763</td>
+<td>0.9853</td>
+</tr>
+<tr>
+<td>0.95</td>
+<td>2</td>
+<td>1</td>
+<td>0.04861</td>
+<td>15.194</td>
+<td>0.9877</td>
+<td>0.98537</td>
+</tr>
+<tr>
+<td>0.95</td>
+<td>3</td>
+<td>1</td>
+<td>0.04861</td>
+<td>15.201</td>
+<td>0.98767</td>
+<td>0.98534</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0.05279</td>
+<td>10.535</td>
+<td>0.98707</td>
+<td>0.98432</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>0.05277</td>
+<td>10.597</td>
+<td>0.98714</td>
+<td>0.98439</td>
+</tr>
+<tr>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>0.05275</td>
+<td>10.582</td>
+<td>0.98712</td>
+<td>0.98438</td>
+</tr>
+</table>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script><script src="https://cdn.plot.ly/plotly-latest.min.js"></script><script>
+    var magS11 = [
+  {
+    x: [0.01,0.01,0.01,0.02,0.02,0.02,0.03,0.03,0.03,0.04,0.04,0.04,0.05,0.05,0.05,0.06,0.06,0.06,0.07,0.07,0.07,0.08,0.08,0.08,0.09,0.09,0.09,0.1,0.1,0.1,0.15,0.15,0.15,0.2,0.2,0.2,0.25,0.25,0.25,0.3,0.3,0.3,0.35,0.35,0.35,0.4,0.4,0.4,0.45,0.45,0.45,0.5,0.5,0.5,0.55,0.55,0.55,0.6,0.6,0.6,0.65,0.65,0.65,0.7,0.7,0.7,0.75,0.75,0.75,0.8,0.8,0.8,0.85,0.85,0.85,0.9,0.9,0.9,0.95,0.95,0.95,1,1,1,],
+    y: [0.01069,0.01072,0.0107,0.00534,0.00537,0.00535,0.0025,0.00251,0.00252,0.00136,0.00133,0.00136,0.00058,0.00056,0.0006,0.00083,0.00084,0.00085,0.00164,0.00166,0.00163,0.00196,0.00198,0.00198,0.00252,0.00253,0.00252,0.0028,0.00281,0.00281,0.00526,0.00527,0.00528,0.00689,0.00689,0.00687,0.0085,0.00852,0.00848,0.01054,0.01054,0.01054,0.01218,0.01216,0.01218,0.01449,0.01449,0.01448,0.0176,0.01764,0.0176,0.02067,0.02067,0.02068,0.02416,0.02414,0.02416,0.02682,0.0268,0.02681,0.02993,0.02992,0.02991,0.0329,0.0329,0.03294,0.03502,0.03505,0.03503,0.03806,0.03807,0.03803,0.04103,0.04102,0.04103,0.04461,0.04468,0.04471,0.0486,0.04861,0.04861,0.05279,0.05277,0.05275,],
+    type: 'scatter',
+    mode:'markers'
+  }
+];
+        var argS11 = [
+  {
+    x: [0.01,0.01,0.01,0.02,0.02,0.02,0.03,0.03,0.03,0.04,0.04,0.04,0.05,0.05,0.05,0.06,0.06,0.06,0.07,0.07,0.07,0.08,0.08,0.08,0.09,0.09,0.09,0.1,0.1,0.1,0.15,0.15,0.15,0.2,0.2,0.2,0.25,0.25,0.25,0.3,0.3,0.3,0.35,0.35,0.35,0.4,0.4,0.4,0.45,0.45,0.45,0.5,0.5,0.5,0.55,0.55,0.55,0.6,0.6,0.6,0.65,0.65,0.65,0.7,0.7,0.7,0.75,0.75,0.75,0.8,0.8,0.8,0.85,0.85,0.85,0.9,0.9,0.9,0.95,0.95,0.95,1,1,1,],
+    y: [-86.169,-86.303,-86.150,-83.216,-83.392,-83.031,-70.935,-71.254,-70.527,-54.832,-54.559,-54.966,-10.030,-9.240,-12.325,39.049,39.627,37.792,63.612,64.061,64.060,77.966,78.736,77.956,84.169,84.889,84.119,85.575,85.990,85.382,80.573,81.067,80.850,82.915,83.095,83.181,76.574,76.792,76.613,74.663,74.865,74.749,70.417,70.535,70.514,64.370,64.417,64.483,57.774,57.884,57.792,54.301,54.464,54.350,50.106,50.158,50.215,48.037,48.100,48.077,44.037,44.045,43.994,40.391,40.401,40.396,36.184,36.165,36.215,30.673,30.729,30.672,25.384,25.371,25.370,20.551,20.567,20.575,15.143,15.194,15.201,10.535,10.597,10.582,],
+
+    type: 'scatter',
+       mode:'markers+lines'
+  }
+];
+var magS11Layout = {
+  legend: {
+    y: 0.5,
+    yref: 'paper',
+    font: {
+      family: 'Arial, sans-serif',
+      size: 20,
+      color: 'grey',
+    }
+
+  },
+    xaxis:{
+    title:'Frequency (GHz)'},
+  title:'magS11'
+};
+
+    var argS11Layout = {
+  legend: {
+    y: 0.5,
+    yref: 'paper',
+    font: {
+      family: 'Arial, sans-serif',
+      size: 20,
+      color: 'grey',
+    }
+  },
+    xaxis:{
+    title:'Frequency (GHz)'},
+  title:'argS11'
+};
+    var Efficiency = [
+  {
+    x: [0.01,0.01,0.01,0.02,0.02,0.02,0.03,0.03,0.03,0.04,0.04,0.04,0.05,0.05,0.05,0.06,0.06,0.06,0.07,0.07,0.07,0.08,0.08,0.08,0.09,0.09,0.09,0.1,0.1,0.1,0.15,0.15,0.15,0.2,0.2,0.2,0.25,0.25,0.25,0.3,0.3,0.3,0.35,0.35,0.35,0.4,0.4,0.4,0.45,0.45,0.45,0.5,0.5,0.5,0.55,0.55,0.55,0.6,0.6,0.6,0.65,0.65,0.65,0.7,0.7,0.7,0.75,0.75,0.75,0.8,0.8,0.8,0.85,0.85,0.85,0.9,0.9,0.9,0.95,0.95,0.95,1,1,1,],
+    y: [0.99777,0.99782,0.99779,0.99798,0.99802,0.99799,0.99786,0.9979,0.99787,0.99748,0.99752,0.99748,0.99866,0.99869,0.99866,0.99773,0.99776,0.99774,0.99764,0.99766,0.99764,0.99759,0.99761,0.99759,0.99768,0.99769,0.99768,0.99785,0.99787,0.99785,0.99708,0.99712,0.99709,0.99672,0.99675,0.99673,0.996,0.99605,0.99601,0.99507,0.99511,0.99508,0.9948,0.99484,0.99481,0.99388,0.99392,0.99389,0.99357,0.9936,0.99358,0.99298,0.99303,0.99301,0.99254,0.99258,0.99255,0.99156,0.9916,0.99158,0.99132,0.99139,0.99134,0.9908,0.99086,0.99083,0.98997,0.99003,0.99,0.98977,0.98984,0.98981,0.98893,0.98899,0.98897,0.98803,0.98813,0.98811,0.98763,0.9877,0.98767,0.98707,0.98714,0.98712,],
+    type: 'scatter',
+    mode:'markers+lines'
+  }
+];
+        var Calibration_Factor = [
+  {
+    x: [0.01,0.01,0.01,0.02,0.02,0.02,0.03,0.03,0.03,0.04,0.04,0.04,0.05,0.05,0.05,0.06,0.06,0.06,0.07,0.07,0.07,0.08,0.08,0.08,0.09,0.09,0.09,0.1,0.1,0.1,0.15,0.15,0.15,0.2,0.2,0.2,0.25,0.25,0.25,0.3,0.3,0.3,0.35,0.35,0.35,0.4,0.4,0.4,0.45,0.45,0.45,0.5,0.5,0.5,0.55,0.55,0.55,0.6,0.6,0.6,0.65,0.65,0.65,0.7,0.7,0.7,0.75,0.75,0.75,0.8,0.8,0.8,0.85,0.85,0.85,0.9,0.9,0.9,0.95,0.95,0.95,1,1,1,],
+    y: [0.99765,0.9977,0.99767,0.99795,0.99799,0.99796,0.99785,0.9979,0.99786,0.99748,0.99752,0.99748,0.99866,0.99868,0.99866,0.99773,0.99776,0.99774,0.99763,0.99766,0.99764,0.99759,0.99761,0.99759,0.99768,0.99769,0.99767,0.99784,0.99786,0.99784,0.99705,0.99709,0.99706,0.99667,0.9967,0.99668,0.99593,0.99597,0.99594,0.99495,0.99499,0.99497,0.99465,0.99469,0.99466,0.99367,0.99371,0.99369,0.99326,0.99329,0.99327,0.99255,0.9926,0.99259,0.99196,0.992,0.99197,0.99085,0.99088,0.99087,0.99043,0.9905,0.99045,0.98973,0.98979,0.98975,0.98875,0.98881,0.98878,0.98834,0.98841,0.98838,0.98727,0.98733,0.98731,0.98607,0.98616,0.98613,0.9853,0.98537,0.98534,0.98432,0.98439,0.98438,],
+
+    type: 'scatter',
+       mode:'markers+lines'
+  }
+];
+var EfficiencyLayout = {
+  legend: {
+    y: 0.5,
+    yref: 'paper',
+    font: {
+      family: 'Arial, sans-serif',
+      size: 20,
+      color: 'grey',
+    }
+
+  },
+    xaxis:{
+    title:'Frequency (GHz)'},
+  title:'Efficiency'
+};
+
+    var Calibration_FactorLayout = {
+  legend: {
+    y: 0.5,
+    yref: 'paper',
+    font: {
+      family: 'Arial, sans-serif',
+      size: 20,
+      color: 'grey',
+    }
+  },
+    xaxis:{
+    title:'Frequency (GHz)'},
+  title:'Calibration_Factor'
+};
+
+
+Plotly.newPlot('magS11', magS11,magS11Layout);
+Plotly.newPlot('argS11', argS11,argS11Layout);
+Plotly.newPlot('Efficiency', Efficiency,EfficiencyLayout);
+Plotly.newPlot('Calibration_Factor', Calibration_Factor,Calibration_FactorLayout);
+	</script><script>
+$(document).ready(function(){
+    $("#ToggleButton").click(function(){
+        $("#DataTable").toggle();});
+        $("#ToggleButtonDescription").click(function(){
+        $("#DataDescription").toggle();});
+        $("#ToggleButtonPlot").click(function(){
+        $(".plot").toggle();});
+
+
+});
+</script>
+        <script>
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
+        </body>
+</html>

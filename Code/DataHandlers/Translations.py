@@ -180,6 +180,7 @@ def TwoPortCalrepModel_to_XMLDataTable(two_port_calrep_table,**options):
         XML_options[key]=value
     new_xml=AsciiDataTable_to_XMLDataTable(table,**XML_options)
     return new_xml
+
 def TwoPortRawModel_to_XMLDataTable(two_port_raw_table,**options):
     """Converts the 2-port raw model used by s-parameters to xml"""
     table=two_port_raw_table
@@ -195,6 +196,7 @@ def TwoPortRawModel_to_XMLDataTable(two_port_raw_table,**options):
         XML_options[key]=value
     new_xml=AsciiDataTable_to_XMLDataTable(table,**XML_options)
     return new_xml
+
 def TwoPortRawModel_to_S2PV1(two_port_raw_table,**options):
     """Transforms a TwoPortRawModel  to S2PV1"""
     table=two_port_raw_table
@@ -207,6 +209,21 @@ def TwoPortRawModel_to_S2PV1(two_port_raw_table,**options):
     s2p_file=S2PV1(None,**s2p_options)
     return s2p_file
 
+def PowerRawModel_to_XMLDataTable(power_raw_table,**options):
+    """Converts the 2-port raw model used by s-parameters to xml"""
+    table=power_raw_table
+    defaults={"specific_descriptor":table.options["specific_descriptor"],
+                     "general_descriptor":table.options["general_descriptor"],
+                      "directory":table.options["directory"],
+              "style_sheet":"../XSL/POWER_RAW_STYLE.xsl"
+                     }
+    XML_options={}
+    for key,value in defaults.iteritems():
+        XML_options[key]=value
+    for key,value in options.iteritems():
+        XML_options[key]=value
+    new_xml=AsciiDataTable_to_XMLDataTable(table,**XML_options)
+    return new_xml
 #-----------------------------------------------------------------------------
 # Module Classes
 
@@ -260,6 +277,7 @@ def test_S2P_to_XMLDataTable_02(file_path="thru.s2p",**options):
     s2p_file=S2PV1(file_path)
     XML_s2p=S2PV1_to_XMLDataTable(s2p_file,**options)
     #XML_s2p.save()
+
 def test_TwoPortCalrep_to_XMLDataTable(file_path='922729.asc',**options):
     """Test's the conversion of the TwoPortCalrep to XMLDataTable"""
     os.chdir(TESTS_DIRECTORY)
@@ -286,6 +304,14 @@ def test_TwoPortRawModel_to_S2PV1(file_path='TestFileTwoPortRaw.txt',**options):
     print(s2p)
     s2p.save("SavedTest2PortRaw.s2p")
 
+def test_PowerRawModel_to_XMLDataTable(file_path='CTNP15.A1_042601',**options):
+    """Test's the conversion of the TwoPorRaw to XMLDataTable"""
+    os.chdir(TESTS_DIRECTORY)
+    power=PowerRawModel(file_path)
+    print power
+    xml=PowerRawModel_to_XMLDataTable(power,**options)
+    xml.save("SavedTestPowerRaw.xml")
+    xml.save_HTML(file_path="SavedTestPowerPortRaw.html")
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
@@ -303,4 +329,5 @@ if __name__ == '__main__':
     #test_S2P_to_XMLDataTable_02('20160301_30ft_cable_0.s2p',**{"style_sheet":"../XSL/S2P_STYLE_02.xsl"})
     #test_TwoPortCalrep_to_XMLDataTable(r'C:\Share\ascii.dut\000146a.txt')
     #test_TwoPortRaw_to_XMLDataTable()
-    test_TwoPortRawModel_to_S2PV1()
+    #test_TwoPortRawModel_to_S2PV1()
+    test_PowerRawModel_to_XMLDataTable(**{"style_sheet":"../XSL/POWER_RAW_STYLE_002.xsl"})

@@ -1,0 +1,119 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type="text/xsl" href="../XSL/POWER_RAW_STYLE_002.xsl"?>
+<Data_Table>
+	<Data_Description>
+		<argS11>Phase in degrees for S11</argS11>
+		<Number_Repeats>1</Number_Repeats>
+		<Measurement_Date>26 Apr 2001</Measurement_Date>
+		<Device_Description>ck std</Device_Description>
+		<Device_Id>CTNP15</Device_Id>
+		<Direction>Direction of connects, may be unused</Direction>
+		<Connector_Type_Measurement>Type N</Connector_Type_Measurement>
+		<magS11>Linear magnitude for S11</magS11>
+		<Efficiency>Effective Efficiency</Efficiency>
+		<Measurement_Time>16:11:06</Measurement_Time>
+		<Program_Revision>960910.143</Program_Revision>
+		<System_Letter>A</System_Letter>
+		<Connector_Type_Calibration>Type N Fem</Connector_Type_Calibration>
+		<Number_Connects>3</Number_Connects>
+		<Start_Frequency>7</Start_Frequency>
+		<Program_Used>MEAS95</Program_Used>
+		<Measurement_Type>Thermistor</Measurement_Type>
+		<Calibration_Name>C980810.A1</Calibration_Name>
+		<Calibration_Date>10 Aug 1998</Calibration_Date>
+		<Nbs>1</Nbs>
+		<Number_Frequencies>28</Number_Frequencies>
+		<Calibration_Factor>Effective efficiency modified by reflection coefficient</Calibration_Factor>
+		<Frequency>Frequency in GHz</Frequency>
+		<System_Id>System I</System_Id>
+		<Connect>Connect number</Connect>
+		<Operator>afm</Operator>
+		<Port_Used>2</Port_Used>
+	</Data_Description>
+	<Data>
+		<Tuple Calibration_Factor="0.99765" Connect="1" Direction="1" Efficiency="0.99777" Frequency="0.01" argS11="-86.169" magS11="0.01069"/>
+		<Tuple Calibration_Factor="0.9977" Connect="2" Direction="1" Efficiency="0.99782" Frequency="0.01" argS11="-86.303" magS11="0.01072"/>
+		<Tuple Calibration_Factor="0.99767" Connect="3" Direction="1" Efficiency="0.99779" Frequency="0.01" argS11="-86.150" magS11="0.0107"/>
+		<Tuple Calibration_Factor="0.99795" Connect="1" Direction="1" Efficiency="0.99798" Frequency="0.02" argS11="-83.216" magS11="0.00534"/>
+		<Tuple Calibration_Factor="0.99799" Connect="2" Direction="1" Efficiency="0.99802" Frequency="0.02" argS11="-83.392" magS11="0.00537"/>
+		<Tuple Calibration_Factor="0.99796" Connect="3" Direction="1" Efficiency="0.99799" Frequency="0.02" argS11="-83.031" magS11="0.00535"/>
+		<Tuple Calibration_Factor="0.99785" Connect="1" Direction="1" Efficiency="0.99786" Frequency="0.03" argS11="-70.935" magS11="0.0025"/>
+		<Tuple Calibration_Factor="0.9979" Connect="2" Direction="1" Efficiency="0.9979" Frequency="0.03" argS11="-71.254" magS11="0.00251"/>
+		<Tuple Calibration_Factor="0.99786" Connect="3" Direction="1" Efficiency="0.99787" Frequency="0.03" argS11="-70.527" magS11="0.00252"/>
+		<Tuple Calibration_Factor="0.99748" Connect="1" Direction="1" Efficiency="0.99748" Frequency="0.04" argS11="-54.832" magS11="0.00136"/>
+		<Tuple Calibration_Factor="0.99752" Connect="2" Direction="1" Efficiency="0.99752" Frequency="0.04" argS11="-54.559" magS11="0.00133"/>
+		<Tuple Calibration_Factor="0.99748" Connect="3" Direction="1" Efficiency="0.99748" Frequency="0.04" argS11="-54.966" magS11="0.00136"/>
+		<Tuple Calibration_Factor="0.99866" Connect="1" Direction="1" Efficiency="0.99866" Frequency="0.05" argS11="-10.030" magS11="0.00058"/>
+		<Tuple Calibration_Factor="0.99868" Connect="2" Direction="1" Efficiency="0.99869" Frequency="0.05" argS11="-9.240" magS11="0.00056"/>
+		<Tuple Calibration_Factor="0.99866" Connect="3" Direction="1" Efficiency="0.99866" Frequency="0.05" argS11="-12.325" magS11="0.0006"/>
+		<Tuple Calibration_Factor="0.99773" Connect="1" Direction="1" Efficiency="0.99773" Frequency="0.06" argS11="39.049" magS11="0.00083"/>
+		<Tuple Calibration_Factor="0.99776" Connect="2" Direction="1" Efficiency="0.99776" Frequency="0.06" argS11="39.627" magS11="0.00084"/>
+		<Tuple Calibration_Factor="0.99774" Connect="3" Direction="1" Efficiency="0.99774" Frequency="0.06" argS11="37.792" magS11="0.00085"/>
+		<Tuple Calibration_Factor="0.99763" Connect="1" Direction="1" Efficiency="0.99764" Frequency="0.07" argS11="63.612" magS11="0.00164"/>
+		<Tuple Calibration_Factor="0.99766" Connect="2" Direction="1" Efficiency="0.99766" Frequency="0.07" argS11="64.061" magS11="0.00166"/>
+		<Tuple Calibration_Factor="0.99764" Connect="3" Direction="1" Efficiency="0.99764" Frequency="0.07" argS11="64.060" magS11="0.00163"/>
+		<Tuple Calibration_Factor="0.99759" Connect="1" Direction="1" Efficiency="0.99759" Frequency="0.08" argS11="77.966" magS11="0.00196"/>
+		<Tuple Calibration_Factor="0.99761" Connect="2" Direction="1" Efficiency="0.99761" Frequency="0.08" argS11="78.736" magS11="0.00198"/>
+		<Tuple Calibration_Factor="0.99759" Connect="3" Direction="1" Efficiency="0.99759" Frequency="0.08" argS11="77.956" magS11="0.00198"/>
+		<Tuple Calibration_Factor="0.99768" Connect="1" Direction="1" Efficiency="0.99768" Frequency="0.09" argS11="84.169" magS11="0.00252"/>
+		<Tuple Calibration_Factor="0.99769" Connect="2" Direction="1" Efficiency="0.99769" Frequency="0.09" argS11="84.889" magS11="0.00253"/>
+		<Tuple Calibration_Factor="0.99767" Connect="3" Direction="1" Efficiency="0.99768" Frequency="0.09" argS11="84.119" magS11="0.00252"/>
+		<Tuple Calibration_Factor="0.99784" Connect="1" Direction="1" Efficiency="0.99785" Frequency="0.1" argS11="85.575" magS11="0.0028"/>
+		<Tuple Calibration_Factor="0.99786" Connect="2" Direction="1" Efficiency="0.99787" Frequency="0.1" argS11="85.990" magS11="0.00281"/>
+		<Tuple Calibration_Factor="0.99784" Connect="3" Direction="1" Efficiency="0.99785" Frequency="0.1" argS11="85.382" magS11="0.00281"/>
+		<Tuple Calibration_Factor="0.99705" Connect="1" Direction="1" Efficiency="0.99708" Frequency="0.15" argS11="80.573" magS11="0.00526"/>
+		<Tuple Calibration_Factor="0.99709" Connect="2" Direction="1" Efficiency="0.99712" Frequency="0.15" argS11="81.067" magS11="0.00527"/>
+		<Tuple Calibration_Factor="0.99706" Connect="3" Direction="1" Efficiency="0.99709" Frequency="0.15" argS11="80.850" magS11="0.00528"/>
+		<Tuple Calibration_Factor="0.99667" Connect="1" Direction="1" Efficiency="0.99672" Frequency="0.2" argS11="82.915" magS11="0.00689"/>
+		<Tuple Calibration_Factor="0.9967" Connect="2" Direction="1" Efficiency="0.99675" Frequency="0.2" argS11="83.095" magS11="0.00689"/>
+		<Tuple Calibration_Factor="0.99668" Connect="3" Direction="1" Efficiency="0.99673" Frequency="0.2" argS11="83.181" magS11="0.00687"/>
+		<Tuple Calibration_Factor="0.99593" Connect="1" Direction="1" Efficiency="0.996" Frequency="0.25" argS11="76.574" magS11="0.0085"/>
+		<Tuple Calibration_Factor="0.99597" Connect="2" Direction="1" Efficiency="0.99605" Frequency="0.25" argS11="76.792" magS11="0.00852"/>
+		<Tuple Calibration_Factor="0.99594" Connect="3" Direction="1" Efficiency="0.99601" Frequency="0.25" argS11="76.613" magS11="0.00848"/>
+		<Tuple Calibration_Factor="0.99495" Connect="1" Direction="1" Efficiency="0.99507" Frequency="0.3" argS11="74.663" magS11="0.01054"/>
+		<Tuple Calibration_Factor="0.99499" Connect="2" Direction="1" Efficiency="0.99511" Frequency="0.3" argS11="74.865" magS11="0.01054"/>
+		<Tuple Calibration_Factor="0.99497" Connect="3" Direction="1" Efficiency="0.99508" Frequency="0.3" argS11="74.749" magS11="0.01054"/>
+		<Tuple Calibration_Factor="0.99465" Connect="1" Direction="1" Efficiency="0.9948" Frequency="0.35" argS11="70.417" magS11="0.01218"/>
+		<Tuple Calibration_Factor="0.99469" Connect="2" Direction="1" Efficiency="0.99484" Frequency="0.35" argS11="70.535" magS11="0.01216"/>
+		<Tuple Calibration_Factor="0.99466" Connect="3" Direction="1" Efficiency="0.99481" Frequency="0.35" argS11="70.514" magS11="0.01218"/>
+		<Tuple Calibration_Factor="0.99367" Connect="1" Direction="1" Efficiency="0.99388" Frequency="0.4" argS11="64.370" magS11="0.01449"/>
+		<Tuple Calibration_Factor="0.99371" Connect="2" Direction="1" Efficiency="0.99392" Frequency="0.4" argS11="64.417" magS11="0.01449"/>
+		<Tuple Calibration_Factor="0.99369" Connect="3" Direction="1" Efficiency="0.99389" Frequency="0.4" argS11="64.483" magS11="0.01448"/>
+		<Tuple Calibration_Factor="0.99326" Connect="1" Direction="1" Efficiency="0.99357" Frequency="0.45" argS11="57.774" magS11="0.0176"/>
+		<Tuple Calibration_Factor="0.99329" Connect="2" Direction="1" Efficiency="0.9936" Frequency="0.45" argS11="57.884" magS11="0.01764"/>
+		<Tuple Calibration_Factor="0.99327" Connect="3" Direction="1" Efficiency="0.99358" Frequency="0.45" argS11="57.792" magS11="0.0176"/>
+		<Tuple Calibration_Factor="0.99255" Connect="1" Direction="1" Efficiency="0.99298" Frequency="0.5" argS11="54.301" magS11="0.02067"/>
+		<Tuple Calibration_Factor="0.9926" Connect="2" Direction="1" Efficiency="0.99303" Frequency="0.5" argS11="54.464" magS11="0.02067"/>
+		<Tuple Calibration_Factor="0.99259" Connect="3" Direction="1" Efficiency="0.99301" Frequency="0.5" argS11="54.350" magS11="0.02068"/>
+		<Tuple Calibration_Factor="0.99196" Connect="1" Direction="1" Efficiency="0.99254" Frequency="0.55" argS11="50.106" magS11="0.02416"/>
+		<Tuple Calibration_Factor="0.992" Connect="2" Direction="1" Efficiency="0.99258" Frequency="0.55" argS11="50.158" magS11="0.02414"/>
+		<Tuple Calibration_Factor="0.99197" Connect="3" Direction="1" Efficiency="0.99255" Frequency="0.55" argS11="50.215" magS11="0.02416"/>
+		<Tuple Calibration_Factor="0.99085" Connect="1" Direction="1" Efficiency="0.99156" Frequency="0.6" argS11="48.037" magS11="0.02682"/>
+		<Tuple Calibration_Factor="0.99088" Connect="2" Direction="1" Efficiency="0.9916" Frequency="0.6" argS11="48.100" magS11="0.0268"/>
+		<Tuple Calibration_Factor="0.99087" Connect="3" Direction="1" Efficiency="0.99158" Frequency="0.6" argS11="48.077" magS11="0.02681"/>
+		<Tuple Calibration_Factor="0.99043" Connect="1" Direction="1" Efficiency="0.99132" Frequency="0.65" argS11="44.037" magS11="0.02993"/>
+		<Tuple Calibration_Factor="0.9905" Connect="2" Direction="1" Efficiency="0.99139" Frequency="0.65" argS11="44.045" magS11="0.02992"/>
+		<Tuple Calibration_Factor="0.99045" Connect="3" Direction="1" Efficiency="0.99134" Frequency="0.65" argS11="43.994" magS11="0.02991"/>
+		<Tuple Calibration_Factor="0.98973" Connect="1" Direction="1" Efficiency="0.9908" Frequency="0.7" argS11="40.391" magS11="0.0329"/>
+		<Tuple Calibration_Factor="0.98979" Connect="2" Direction="1" Efficiency="0.99086" Frequency="0.7" argS11="40.401" magS11="0.0329"/>
+		<Tuple Calibration_Factor="0.98975" Connect="3" Direction="1" Efficiency="0.99083" Frequency="0.7" argS11="40.396" magS11="0.03294"/>
+		<Tuple Calibration_Factor="0.98875" Connect="1" Direction="1" Efficiency="0.98997" Frequency="0.75" argS11="36.184" magS11="0.03502"/>
+		<Tuple Calibration_Factor="0.98881" Connect="2" Direction="1" Efficiency="0.99003" Frequency="0.75" argS11="36.165" magS11="0.03505"/>
+		<Tuple Calibration_Factor="0.98878" Connect="3" Direction="1" Efficiency="0.99" Frequency="0.75" argS11="36.215" magS11="0.03503"/>
+		<Tuple Calibration_Factor="0.98834" Connect="1" Direction="1" Efficiency="0.98977" Frequency="0.8" argS11="30.673" magS11="0.03806"/>
+		<Tuple Calibration_Factor="0.98841" Connect="2" Direction="1" Efficiency="0.98984" Frequency="0.8" argS11="30.729" magS11="0.03807"/>
+		<Tuple Calibration_Factor="0.98838" Connect="3" Direction="1" Efficiency="0.98981" Frequency="0.8" argS11="30.672" magS11="0.03803"/>
+		<Tuple Calibration_Factor="0.98727" Connect="1" Direction="1" Efficiency="0.98893" Frequency="0.85" argS11="25.384" magS11="0.04103"/>
+		<Tuple Calibration_Factor="0.98733" Connect="2" Direction="1" Efficiency="0.98899" Frequency="0.85" argS11="25.371" magS11="0.04102"/>
+		<Tuple Calibration_Factor="0.98731" Connect="3" Direction="1" Efficiency="0.98897" Frequency="0.85" argS11="25.370" magS11="0.04103"/>
+		<Tuple Calibration_Factor="0.98607" Connect="1" Direction="1" Efficiency="0.98803" Frequency="0.9" argS11="20.551" magS11="0.04461"/>
+		<Tuple Calibration_Factor="0.98616" Connect="2" Direction="1" Efficiency="0.98813" Frequency="0.9" argS11="20.567" magS11="0.04468"/>
+		<Tuple Calibration_Factor="0.98613" Connect="3" Direction="1" Efficiency="0.98811" Frequency="0.9" argS11="20.575" magS11="0.04471"/>
+		<Tuple Calibration_Factor="0.9853" Connect="1" Direction="1" Efficiency="0.98763" Frequency="0.95" argS11="15.143" magS11="0.0486"/>
+		<Tuple Calibration_Factor="0.98537" Connect="2" Direction="1" Efficiency="0.9877" Frequency="0.95" argS11="15.194" magS11="0.04861"/>
+		<Tuple Calibration_Factor="0.98534" Connect="3" Direction="1" Efficiency="0.98767" Frequency="0.95" argS11="15.201" magS11="0.04861"/>
+		<Tuple Calibration_Factor="0.98432" Connect="1" Direction="1" Efficiency="0.98707" Frequency="1" argS11="10.535" magS11="0.05279"/>
+		<Tuple Calibration_Factor="0.98439" Connect="2" Direction="1" Efficiency="0.98714" Frequency="1" argS11="10.597" magS11="0.05277"/>
+		<Tuple Calibration_Factor="0.98438" Connect="3" Direction="1" Efficiency="0.98712" Frequency="1" argS11="10.582" magS11="0.05275"/>
+	</Data>
+</Data_Table>
