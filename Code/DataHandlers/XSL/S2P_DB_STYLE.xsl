@@ -151,7 +151,7 @@
     x: [<xsl:for-each select="//Data/Tuple/@Frequency"><xsl:value-of select="."/>,</xsl:for-each>],
     y: [<xsl:for-each select="//Data/Tuple/@dbS11"><xsl:value-of select="."/>,</xsl:for-each>],
     type: 'scatter',
-    mode:'markers'
+    mode:'markers+lines'
   }
 ];
         var argS11 = [
@@ -160,7 +160,7 @@
     y: [<xsl:for-each select="//Data/Tuple/@argS11"><xsl:value-of select="."/>,</xsl:for-each>],
 
     type: 'scatter',
-       mode:'markers'
+       mode:'markers+lines'
   }
 ];
 var dbS11Layout = {
@@ -198,7 +198,7 @@ var dbS11Layout = {
     x: [<xsl:for-each select="//Data/Tuple/@Frequency"><xsl:value-of select="."/>,</xsl:for-each>],
     y: [<xsl:for-each select="//Data/Tuple/@dbS22"><xsl:value-of select="."/>,</xsl:for-each>],
     type: 'scatter',
-    mode:'markers'
+    mode:'markers+lines'
   }
 ];
         var argS22 = [
@@ -207,7 +207,7 @@ var dbS11Layout = {
     y: [<xsl:for-each select="//Data/Tuple/@argS22"><xsl:value-of select="."/>,</xsl:for-each>],
 
     type: 'scatter',
-       mode:'markers'
+       mode:'markers+lines'
   }
 ];
 var dbS22Layout = {
@@ -245,7 +245,7 @@ var dbS22Layout = {
     x: [<xsl:for-each select="//Data/Tuple/@Frequency"><xsl:value-of select="."/>,</xsl:for-each>],
     y: [<xsl:for-each select="//Data/Tuple/@dbS21"><xsl:value-of select="."/>,</xsl:for-each>],
     type: 'scatter',
-    mode:'markers',
+    mode:'markers+lines',
     name:'S21'
   };
         var argS21 =
@@ -254,7 +254,7 @@ var dbS22Layout = {
     y: [<xsl:for-each select="//Data/Tuple/@argS21"><xsl:value-of select="."/>,</xsl:for-each>],
 
     type: 'scatter',
-    mode:'markers',
+    mode:'markers+lines',
     name:'S21'
   };
 
@@ -272,7 +272,7 @@ var dbS22Layout = {
     y: [<xsl:for-each select="//Data/Tuple/@argS12"><xsl:value-of select="."/>,</xsl:for-each>],
 
     type: 'scatter',
-    mode:'markers',
+    mode:'markers+lines',
     name:'S12'
   };
 
