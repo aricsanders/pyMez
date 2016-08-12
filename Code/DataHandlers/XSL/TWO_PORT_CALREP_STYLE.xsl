@@ -118,7 +118,7 @@
       visible: true,
         },
     type: 'scatter',
-    mode:'markers'
+    mode:'markers+lines'
   }
 ];
         var argS11 = [
@@ -131,7 +131,7 @@
       visible: true,
         },
     type: 'scatter',
-       mode:'markers'
+       mode:'markers+lines'
   }
 ];
 var magS11Layout = {
@@ -174,7 +174,7 @@ var magS11Layout = {
       visible: true,
         },
     type: 'scatter',
-    mode:'markers'
+    mode:'markers+lines'
   }
 ];
         var argS22 = [
@@ -188,7 +188,7 @@ var magS11Layout = {
         },
 
     type: 'scatter',
-       mode:'markers'
+       mode:'markers+lines'
   }
 ];
 var magS22Layout = {
@@ -231,7 +231,7 @@ var magS22Layout = {
       visible: true,
         },
     type: 'scatter',
-    mode:'markers',
+    mode:'markers+lines',
     name:'S21'
   }];
         var argS21 =
@@ -244,7 +244,7 @@ var magS22Layout = {
       visible: true,
         },
     type: 'scatter',
-    mode:'markers',
+    mode:'markers+lines',
     name:'S21'
   }];
 
