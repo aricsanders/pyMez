@@ -205,7 +205,21 @@ def TwoPortRawModel_to_S2PV1(two_port_raw_table,**options):
     comments=[[line,index,0] for index,line in enumerate(table.header[:])]
     s2p_options={"option_line":"# GHz S MA R 50","sparameter_data":data,
                  "comments":comments,"path":path,"option_line_line":len(table.header),
-                 "sparameter_begin_line":len(table.header)+1,"column_names":S1P_MA_COLUMN_NAMES}
+                 "sparameter_begin_line":len(table.header)+1,"column_names":S2P_MA_COLUMN_NAMES}
+    s2p_file=S2PV1(None,**s2p_options)
+    return s2p_file
+
+def JBSparameter_to_S2PV1(jb_model,**options):
+    """Transforms a JBSparameter file to S2PV1 """
+    table=jb_model
+    path=table.path.split('.')[0]+".s2p"
+    old_prefix=table.get_frequency_units().replace('Hz','')
+    table.change_unit_prefix(column_selector=0,old_prefix=old_prefix,new_prefix='G',unit='Hz')
+    data=table.data[:]
+    comments=[[line,index,0] for index,line in enumerate(table.header[:])]
+    s2p_options={"option_line":"# GHz S RI R 50","sparameter_data":data,
+                 "comments":comments,"path":path,"option_line_line":len(table.header),
+                 "sparameter_begin_line":len(table.header)+1,"column_names":S2P_RI_COLUMN_NAMES}
     s2p_file=S2PV1(None,**s2p_options)
     return s2p_file
 
@@ -312,6 +326,15 @@ def test_PowerRawModel_to_XMLDataTable(file_path='CTNP15.A1_042601',**options):
     xml=PowerRawModel_to_XMLDataTable(power,**options)
     xml.save("SavedTestPowerRaw.xml")
     xml.save_HTML(file_path="SavedTestPowerPortRaw.html")
+def test_JBSparameter_to_S2PV1(file_path='QuartzRefExample_L1_g10_HF'):
+    """Tests the conversion of JBSparameter files to S2PV1"""
+    os.chdir(TESTS_DIRECTORY)
+    table=JBSparameter(file_path)
+    s2p=JBSparameter_to_S2PV1(table)
+    print("Before conversion the JBSparameter file is {0} ".format(table))
+    s2p.change_data_format('RI')
+    print("After Conversion the JBSparameter file is {0} ".format(s2p))
+    s2p.show()
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
@@ -330,4 +353,5 @@ if __name__ == '__main__':
     #test_TwoPortCalrep_to_XMLDataTable(r'C:\Share\ascii.dut\000146a.txt')
     #test_TwoPortRaw_to_XMLDataTable()
     #test_TwoPortRawModel_to_S2PV1()
-    test_PowerRawModel_to_XMLDataTable(**{"style_sheet":"../XSL/POWER_RAW_STYLE_002.xsl"})
+    #test_PowerRawModel_to_XMLDataTable(**{"style_sheet":"../XSL/POWER_RAW_STYLE_002.xsl"})
+    test_JBSparameter_to_S2PV1()
