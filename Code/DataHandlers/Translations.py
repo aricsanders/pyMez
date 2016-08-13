@@ -181,6 +181,22 @@ def TwoPortCalrepModel_to_XMLDataTable(two_port_calrep_table,**options):
     new_xml=AsciiDataTable_to_XMLDataTable(table,**XML_options)
     return new_xml
 
+def OnePortCalrep_to_XMLDataTable(one_port_calrep_table,**options):
+    """Converts the 1-port calrep model to xml"""
+    table=one_port_calrep_table
+    defaults={"specific_descriptor":table.options["specific_descriptor"],
+                     "general_descriptor":table.options["general_descriptor"],
+                      "directory":table.options["directory"],
+              "style_sheet":"../XSL/ONE_PORT_CALREP_STYLE.xsl"
+                     }
+    XML_options={}
+    for key,value in defaults.iteritems():
+        XML_options[key]=value
+    for key,value in options.iteritems():
+        XML_options[key]=value
+    new_xml=AsciiDataTable_to_XMLDataTable(table,**XML_options)
+    return new_xml
+
 def TwoPortRawModel_to_XMLDataTable(two_port_raw_table,**options):
     """Converts the 2-port raw model used by s-parameters to xml"""
     table=two_port_raw_table
@@ -301,6 +317,15 @@ def test_TwoPortCalrep_to_XMLDataTable(file_path='922729.asc',**options):
     xml.save()
     xml.save_HTML()
 
+def test_OnePortCalrep_to_XMLDataTable(file_path='700437.asc',**options):
+    """Test's the conversion of the OnePortCalrep to XMLDataTable"""
+    os.chdir(TESTS_DIRECTORY)
+    one_port=OnePortCalrepModel(file_path)
+    one_port.save("ExportedOnePortCalrep.txt")
+    xml=OnePortCalrep_to_XMLDataTable(one_port,**options)
+    xml.save()
+    xml.save_HTML()
+
 def test_TwoPortRawModel_to_XMLDataTable(file_path='TestFileTwoPortRaw.txt',**options):
     """Test's the conversion of the TwoPorRaw to XMLDataTable"""
     os.chdir(TESTS_DIRECTORY)
@@ -354,4 +379,5 @@ if __name__ == '__main__':
     #test_TwoPortRaw_to_XMLDataTable()
     #test_TwoPortRawModel_to_S2PV1()
     #test_PowerRawModel_to_XMLDataTable(**{"style_sheet":"../XSL/POWER_RAW_STYLE_002.xsl"})
-    test_JBSparameter_to_S2PV1()
+    #test_JBSparameter_to_S2PV1()
+    test_OnePortCalrep_to_XMLDataTable()
