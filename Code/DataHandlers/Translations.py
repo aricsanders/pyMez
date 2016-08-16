@@ -380,4 +380,4 @@ if __name__ == '__main__':
     #test_TwoPortRawModel_to_S2PV1()
     #test_PowerRawModel_to_XMLDataTable(**{"style_sheet":"../XSL/POWER_RAW_STYLE_002.xsl"})
     #test_JBSparameter_to_S2PV1()
-    test_OnePortCalrep_to_XMLDataTable()
+    test_OnePortCalrep_to_XMLDataTable(**{"style_sheet":"../XSL/ONE_PORT_CALREP_STYLE_002.xsl"})

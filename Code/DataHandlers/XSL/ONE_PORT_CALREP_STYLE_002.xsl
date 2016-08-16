@@ -85,9 +85,9 @@ td {text-align:center}</style>
         </head>
     <body>
           <ul class="tab">
-  <li><a href="#" class="tablinks" onclick="openTab(event, 'description')">Description</a></li>
-  <li><a href="#" class="tablinks" onclick="openTab(event, 'plots')">Plots</a></li>
-  <li><a href="#" class="tablinks" onclick="openTab(event, 'table')">Table</a></li>
+              <li><a href="#" class="tablinks" onclick="openTab(event, 'plots')">Plots</a></li>
+              <li><a href="#" class="tablinks" onclick="openTab(event, 'description')">Description</a></li>
+              <li><a href="#" class="tablinks" onclick="openTab(event, 'table')">Table</a></li>
   </ul>
     <div id="description" class="tabcontent">
 		<h3>Data Description:</h3>
@@ -319,6 +319,7 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+openTab("","plots")
 </script>]]>
         </xsl:text>
     </body>
