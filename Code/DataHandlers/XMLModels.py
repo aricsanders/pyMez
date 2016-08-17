@@ -77,6 +77,35 @@ NODE_TYPE_DICTIONARY={'ELEMENT_NODE':1, 'ATTRIBUTE_NODE':2, 'TEXT_NODE':3, \
 'NOTATION_NODE':12}
 #-----------------------------------------------------------------------------
 # Module Functions
+
+def join_xml(new_root="root",xml_document_list=None,**options):
+    """join XML returns a new XMLBase instance with nodes derived from a list of
+    xml documents xml_list"""
+    defaults={"root":new_root,
+              "style_sheet":os.path.join(XSLT_REPOSITORY,'DEFAULT_STYLE.xsl').replace('\\','/'),
+              "specific_descriptor":'XML',
+              "general_descriptor":'Document',
+              "directory":None,
+              "extension":'xml'}
+    new_xml_options={}
+    for key,value in defaults.iteritems():
+        new_xml_options[key]=value
+    for key,value in options.iteritems():
+        new_xml_options[key]=value
+    new_xml=XMLBase(None,**new_xml_options)
+    #print new_xml
+    if xml_document_list is None:
+        return new_xml
+    else:
+        for index,xml_document in enumerate(xml_document_list):
+            #print xml_document
+            new_entry=xml.document.documentElement.cloneNode(True)
+            Index_attribute=xml_document.document.createAttribute('Index')
+            new_entry.setAttributeNode(Index_attribute)
+            new_entry.setAttribute('Index',str(index))
+            new_xml.document.documentElement.appendChild(new_entry)
+        return new_xml
+
 def dictionary_to_xml(dictionary=None,char_between='\n'):
     string_output=''
     for key,value in dictionary.iteritems():
