@@ -192,6 +192,8 @@ class S1PV1():
                     self.add_sparameter_complex_row(row)
                     #print("{0} is {1}".format("row",row))
             elif self.sparameter_data is []:
+                self.sparameter_data=[[0,0,0,0,0,0,0,0,0] for row in self.sparameter_complex]
+                #print self.sparameter_data
                 self.change_data_format(new_format=self.format)
 
             if self.options["path"] is None:
@@ -598,6 +600,8 @@ class S2PV1():
                     self.add_sparameter_complex_row(row)
                     #print("{0} is {1}".format("row",row))
             elif self.sparameter_data in [[],None]:
+                self.sparameter_data=[[0,0,0,0,0,0,0,0,0] for row in self.sparameter_complex]
+                #print self.sparameter_data
                 self.change_data_format(new_format=self.format)
             if self.comments is None:
                 number_line_comments=0
@@ -922,7 +926,7 @@ class S2PV1():
             self.option_line=self.option_line.replace(old_format,"DB")
             self.column_names=S2P_DB_COLUMN_NAMES
             self.row_pattern=make_row_match_string(S2P_DB_COLUMN_NAMES)
-            for row_index,row in enumerate(self.sparameter_data):
+            for row_index,row in enumerate(self.sparameter_complex):
                 frequency=self.sparameter_complex[row_index][0]
                 dbS11=20.*math.log(abs(self.sparameter_complex[row_index][1]),10.)
                 argS11=(180./math.pi)*cmath.phase(self.sparameter_complex[row_index][1])
@@ -939,7 +943,7 @@ class S2PV1():
             self.option_line=self.option_line.replace(old_format,"MA")
             self.column_names=S2P_MA_COLUMN_NAMES
             self.row_pattern=make_row_match_string(S2P_MA_COLUMN_NAMES)
-            for row_index,row in enumerate(self.sparameter_data):
+            for row_index,row in enumerate(self.sparameter_complex):
                 frequency=self.sparameter_complex[row_index][0]
                 magS11=abs(self.sparameter_complex[row_index][1])
                 argS11=(180./math.pi)*cmath.phase(self.sparameter_complex[row_index][1])
@@ -956,7 +960,7 @@ class S2PV1():
             self.option_line=self.option_line.replace(old_format,"RI")
             self.column_names=S2P_RI_COLUMN_NAMES
             self.row_pattern=make_row_match_string(S2P_RI_COLUMN_NAMES)
-            for row_index,row in enumerate(self.sparameter_data):
+            for row_index,row in enumerate(self.sparameter_complex):
                 frequency=self.sparameter_complex[row_index][0]
                 reS11=self.sparameter_complex[row_index][1].real
                 imS11=self.sparameter_complex[row_index][1].imag
