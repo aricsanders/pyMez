@@ -6,7 +6,9 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ pyMeasureUnitTests Runs a series of unit tests on the modules in pyMeasure,
- before adding a module to the library add a unit test and check that all the others pass"""
+ before adding a module to the library add a unit test and check that all the others pass.
+ All modules should be imported using import full.module.name and test classes should be
+ named TestPyMeasureModuleName to prevent confusion and circular import statements """
 
 #-----------------------------------------------------------------------------
 # Standard Imports
@@ -14,6 +16,8 @@ import unittest
 import re
 #-----------------------------------------------------------------------------
 # Third Party Imports
+# All the modules should be imported here and each test case class should
+# be a single module tests.
 import pyMeasure.Code.DataHandlers.XMLModels
 import pyMeasure.Code.DataHandlers.NISTModels
 import pyMeasure.Code.DataHandlers.GeneralModels
@@ -79,6 +83,8 @@ class TestXMLModels(unittest.TestCase):
         for item in self.module_tests:
             self.assertEqual(globals().copy()["pyMeasure"].__dict__[item](),
                              True,"{0} failed".format(item))
+
+
 #-----------------------------------------------------------------------------
 # Module Scripts
 

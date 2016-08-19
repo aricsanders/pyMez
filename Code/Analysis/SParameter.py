@@ -5,7 +5,7 @@
 # Created:     4/13/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" Sparameter is a module with tools for analyzing Sparameter data """
+""" Sparameter is a module with tools for analyzing Sparameter data.  """
 #-----------------------------------------------------------------------------
 # Standard Imports
 import os
@@ -27,12 +27,16 @@ except:
     print("Pandas was not imported")
     pass
 try:
+    #Todo: this could lead to a cyclic dependency, it really should import only the models it analyzes
+    #Todo: If analysis is to be in the top import, none of the models should rely on it
     #import pyMeasure.Code.DataHandlers.NISTModels
-    #from pyMeasure.Code.DataHandlers.NISTModels import *
-    from pyMeasure import *
+    from pyMeasure.Code.DataHandlers.NISTModels import *
+    from pyMeasure.Code.DataHandlers.TouchstoneModels import *
+    from pyMeasure.Code.DataHandlers.GeneralModels import *
+    #from pyMeasure import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.NISTModels was not found,"
-          "please put it on the python path")
+    print("The subpackage pyMeasure.Code.DataHandlers did not import properly,"
+          "please check that it is on the python path and that unit tests passed")
     raise ImportError
 try:
     import matplotlib.pyplot as plt
@@ -87,6 +91,57 @@ def one_port_robin_comparision_plot(input_asc_file,input_res_file,**options):
     ax1.set_title('Phase S11')
     ax0.legend(loc='lower left', shadow=True)
     plt.show()
+
+def S_to_T(S_list):
+    """Converts S-parameters into a T Matrix. Input form should be in frequency, np.matrix([[S11,S12],[S21,S22]])
+    format. Returns a list in [frequency, np.matrix] format """
+    t_matrix=[]
+    for row in S_list:
+        frequency=row[0]
+        m=row[1]
+        T11=-np.linalg.det(m)/m[1,0]
+        T12=m[0,0]/m[1,0]
+        T21=-m[1,1]/m[1,0]
+        T22=1/m[1,0]
+        t_matrix.append([frequency,np.matrix([[T11,T12],[T21,T22]])])
+    return t_matrix
+
+def T_to_S(T_list):
+    """Converts T Matrix into S parameters. Input form should be in frequency, np.matrix([[T11,T12],[T21,T22]])
+    format. Returns a list in [frequency, np.matrix] format."""
+    S_list=[]
+    for row in T_list:
+        frequency=row[0]
+        m=row[1]
+        S11=m[0,1]/m[1,1]
+        S12=np.linalg.det(m)/m[1,1]
+        S21=1/m[1,1]
+        S22=-m[1,0]/m[1,1]
+        S_list.append([frequency,np.matrix([[S11,S12],[S21,S22]])])
+    return S_list
+# todo: figure out why Exr and Exf are not used in correction
+def correct_sparameters(sparameters_complex,twelve_term_correction):
+    """Applies the twelve term correction to sparameters and returns a new sparameter list.
+    The sparameters should be a list of [frequency, S11, S21, S12, S22] where S terms are complex numbers.
+    The twelve term correction should be a list of
+    [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr]"""
+    if len(sparameters_complex) != len(twelve_term_correction):
+        raise TypeError("s parameter and twelve term correction must be the same length")
+    s_parameter_out=[]
+    for index,row in enumerate(sparameters_complex):
+        frequency=row[0]
+        Sm=np.matrix(row[1:]).reshape((2,2))
+        [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr]=twelve_term_correction[index]
+#         print [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr]
+#         print Sm[0,0]
+        D =(1+(Sm[0,0]-Edf)*(Esf/Erf))*(1+(Sm[1,1]-Edr)*(Esr/Err))-(Sm[0,1]*Sm[1,0]*Elf*Elr)/(Etf*Etr)
+#         print D
+        S11 =(Sm[0,0]-Edf)/(D*Erf)*(1+(Sm[1,1]-Edr)*(Esr/Err))-(Sm[0,1]*Sm[1,0]*Elf)/(D*Etf*Etr)
+        S21 =(Sm[1,0]/(D*Etf))*(1+(Sm[1,1]-Edr)*(Esr-Elf)/Err)
+        S12 = (Sm[0,1]/(D*Etr))*(1+(Sm[0,0]-Edf)*(Esf-Elr)/Erf)
+        S22 = (Sm[1,1]-Edr)/(D*Err)*(1+(Sm[0,0]-Edf)*(Esf/Erf))-(Sm[0,1]*Sm[1,0]*Elr)/(D*Etf*Etr)
+        s_parameter_out.append([frequency,S11,S21,S12,S22])
+    return s_parameter_out
 
 def average_one_port_sparameters(table_list,**options):
     """Returns a table that is the average of the Sparameters in table list. The new table will have all the unique
@@ -437,6 +492,65 @@ def calrep_history_plot(calrep_model,history_frame,**options):
     else:
         plt.show()
 
+def compare_s2p_plots(list_S2PV1,**options):
+    """compare_s2p_plot compares a list of s2p files plotting each on the same axis for all
+    8 possible components. The format of plots can be changed by passing options as key words in a
+    key word dictionary. """
+    defaults={"format":"MA",
+              "display_legend":True,
+              "save_plot":False,
+              "directory":None,
+              "specific_descriptor":"Comparision_Plot",
+              "general_descriptor":"Plot",
+              "file_name":None,
+              "labels":None}
+    comparision_plot_options={}
+    for key,value in defaults.iteritems():
+        comparision_plot_options[key]=value
+    for key,value in options.iteritems():
+        comparision_plot_options[key]=value
+
+    # create a set of 6 subplots
+    fig, compare_axes = plt.subplots(nrows=4, ncols=2, figsize=(8,6),dpi=80)
+    if comparision_plot_options["labels"] is None:
+        labels=[s2p.path for s2p in list_S2PV1]
+    else:
+        labels=comparision_plot_options["labels"]
+    for s2p_index,s2p in enumerate(list_S2PV1):
+        # start by changing the format of all the s2p
+        s2p.change_data_format(comparision_plot_options["format"])
+        column_names=s2p.column_names[1:]
+        for index, ax in enumerate(compare_axes.flat):
+            #ax.xaxis.set_visible(False)
+            if re.search('arg',column_names[index]):
+                ax.set_ylabel('Phase(Degrees)',color='green')
+            elif re.search('mag',column_names[index]):
+                ax.set_ylabel(r'|${\Gamma} $|',color='green')
+            ax.set_title(column_names[index])
+            # initial plot of
+            x=s2p.get_column('Frequency')
+            y=np.array(s2p.get_column(column_names[index]))
+            ax.plot(x,y,label=labels[s2p_index])
+            if comparision_plot_options["display_legend"]:
+                ax.legend(loc=1,fontsize='8')
+
+    compare_axes.flat[-2].set_xlabel('Frequency(GHz)',color='k')
+    compare_axes.flat[-1].set_xlabel('Frequency(GHz)',color='k')
+    fig.subplots_adjust(hspace=0)
+    plt.tight_layout()
+    # Dealing with the save option
+    if comparision_plot_options["file_name"] is None:
+        file_name=auto_name(specific_descriptor=comparision_plot_options["specific_descriptor"],
+                            general_descriptor=comparision_plot_options["general_descriptor"],
+                            directory=comparision_plot_options["directory"]
+                            ,extension='png',padding=3)
+    else:
+        file_name=comparision_plot_options["file_name"]
+    if comparision_plot_options["save_plot"]:
+        #print file_name
+        plt.savefig(os.path.join(comparision_plot_options["directory"],file_name))
+    else:
+        plt.show()
 #-----------------------------------------------------------------------------
 # Module Classes
 
