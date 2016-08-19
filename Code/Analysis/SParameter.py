@@ -12,7 +12,7 @@ import os
 import re
 import datetime
 import sys
-print sys.path
+
 #-----------------------------------------------------------------------------
 # Third Party Imports
 try:
