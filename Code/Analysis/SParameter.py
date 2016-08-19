@@ -632,9 +632,17 @@ def test_comparison(input_file=None):
     #stop_time=datetime.datetime.now()
     diff=stop_time-start_time
     print("It took {0} seconds to process".format(diff.total_seconds()))
-
+def test_compare_s2p_plots(file_list=["thru.s2p",'20160301_30ft_cable_0.s2p','TwoPortTouchstoneTestFile.s2p']):
+    """Tests the compare_s2p_plots function"""
+    os.chdir(TESTS_DIRECTORY)
+    tables=[S2PV1(file_name) for file_name in file_list]
+    format="MA"
+    compare_s2p_plots(tables,format=format)
+    format="DB"
+    compare_s2p_plots(tables,format=format,display_legend=False)
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
     #test_average_one_port_sparameters()
-    test_comparison()
+    #test_comparison()
+    test_compare_s2p_plots()
