@@ -880,7 +880,7 @@ class S2PV1():
             new_unit=new_prefix+unit
             if column_selector in self.column_names:
                 column_selector=self.column_names.index(column_selector)
-            for index,row in enumerate(self.sparameter_data):
+            for index,row in enumerate(self.sparameter_data[:]):
                 if type(self.sparameter_data[index][column_selector]) in [FloatType,LongType]:
                     #print "{0:e}".format(multipliers[old_prefix]/multipliers[new_prefix])
                     self.sparameter_data[index][column_selector]=\
@@ -891,7 +891,7 @@ class S2PV1():
                 else:
                     print type(self.sparameter_data[index][column_selector])
                     raise
-            for index,row in enumerate(self.noiseparameter_data):
+            for index,row in enumerate(self.noiseparameter_data[:]):
                 if type(self.noiseparameter_data[index][column_selector]) in [FloatType,LongType]:
                     #print "{0:e}".format(multipliers[old_prefix]/multipliers[new_prefix])
                     self.noiseparameter_data[index][column_selector]=\
@@ -902,6 +902,7 @@ class S2PV1():
                 else:
                     print type(self.noiseparameter_data[index][column_selector])
                     raise
+            self.frequency_units=new_frequency_units
             if self.options["column_descriptions"] is not None:
                 old=self.options["column_descriptions"][column_selector]
                 self.options["column_descriptions"][column_selector]=old.replace(old_unit,new_unit)
@@ -1118,13 +1119,43 @@ def test_change_format(file_path="thru.s2p"):
     print_s2p_attributes(new_table=new_table)
     print new_table
     new_table.show()
+def test_change_frequency_units(file_path="thru.s2p"):
+    """Tests the models change_frequnecy_units method"""
+    os.chdir(TESTS_DIRECTORY)
+    new_table=S2PV1(file_path)
+    print("The frequency units are {0},"
+          "and the frequency values are {1}".format(new_table.frequency_units,
+                                             new_table.get_column("Frequency")))
+    new_table.change_frequency_units("Hz")
+    print("The frequency units are {0},"
+          "and the frequency values are {1}".format(new_table.frequency_units,
+                                             new_table.get_column("Frequency")))
+    new_table.change_frequency_units("MHz")
+    print("The frequency units are {0},"
+          "and the frequency values are {1}".format(new_table.frequency_units,
+                                             new_table.get_column("Frequency")))
+    new_table.change_frequency_units("kHz")
+    print("The frequency units are {0},"
+          "and the frequency values are {1}".format(new_table.frequency_units,
+                                             new_table.get_column("Frequency")))
+    new_table.change_frequency_units("THz")
+    print("The frequency units are {0},"
+          "and the frequency values are {1}".format(new_table.frequency_units,
+                                             new_table.get_column("Frequency")))
+    new_table.change_frequency_units("Hz")
+    print("The frequency units are {0},"
+          "and the frequency values are {1}".format(new_table.frequency_units,
+                                             new_table.get_column("Frequency")))
+    print new_table
+    new_table.show()
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    test_S1PV1()
+    #test_S1PV1()
     #test_option_string()
     #test_s2pv1()
     #test_s2pv1('TwoPortTouchstoneTestFile.s2p')
     #test_change_format()
     #test_change_format('TwoPortTouchstoneTestFile.s2p')
     #test_change_format('20160301_30ft_cable_0.s2p')
+    test_change_frequency_units()
