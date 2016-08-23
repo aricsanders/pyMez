@@ -303,7 +303,7 @@ def return_history_key(calrep_model):
     "Returns a key for the history dictionary given a calrep model"
     model=calrep_model.__class__.__name__
     #print model
-    if re.search('Calrep',model):
+    if re.search('Calrep|DUT',model):
         if re.search('OnePortCalrep',model):
             return '1-port calrep'
         elif re.search('TwoPortCalrep',model):
