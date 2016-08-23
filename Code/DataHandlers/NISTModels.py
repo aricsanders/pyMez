@@ -47,6 +47,8 @@ except:
           "please put it on the python path")
 #-----------------------------------------------------------------------------
 # Module Constants
+DUT_COLUMN_NAMES=["Frequency", "mag", "arg","uMb", "uMa", "uMd", "uMg",
+                                    "uAb", "uAa", "uAd", "uAg"]
 ONE_PORT_COLUMN_NAMES=["Frequency", "mag", "uMb", "uMa", "uMd", "uMg", "arg",
                                     "uAb", "uAa", "uAd", "uAg"]
 #Note there are 2 power models!!! one with 4 error terms and one with 3
@@ -318,6 +320,61 @@ class OnePortCalrepModel(AsciiDataTable):
              yerr=self.get_column('uAg'),fmt='ro')
         ax1.set_title('Phase S11')
         plt.show()
+
+class OnePortDUTModel(AsciiDataTable):
+    """OnePortDUTModel is a container for .dut measurements"""
+    def __init__(self,file_path,**options):
+        "Initializes the OnePortDUTModel class"
+        row_pattern=make_row_match_string(DUT_COLUMN_NAMES)
+        defaults={"column_names":DUT_COLUMN_NAMES,"comment_begin":"!",
+                 "comment_end":"\n","column_names_begin_token":"!",
+                 "column_names_end_token":"\n","data_table_element_separator":None,
+                 "row_pattern":row_pattern,"column_types":['float' for i in DUT_COLUMN_NAMES]}
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+
+        if METHOD_ALIASES:
+            for command in alias(self):
+                exec(command)
+        self.options["metadata"]={}
+        if file_path is not None:
+            self.path=file_path
+            self.read_and_fix()
+        AsciiDataTable.__init__(self,None,**self.options)
+        # reassign self.path since we use None in AsciiDataTable.__init__
+        if file_path is not None:
+            self.path=file_path
+        #print("{0} is {1}".format("self.metadata",self.metadata))
+    def read_and_fix(self):
+        """Read and fix opens and fixes any problems with the .dut file"""
+        in_file=open(self.path,'r')
+        lines=[]
+        header=[]
+        for line in in_file:
+            if re.match("!",line):
+                header.append(line)
+            else:
+                lines.append(line)
+        in_file.close()
+        data=parse_lines(lines,**self.options)
+        self.options["header"]=strip_all_line_tokens(header,begin_token="!")
+        self.options["data"]=data
+        device_pattern="[\s]+(?P<Device_Id>[\w]+)[\s]+(.)+"
+        match=re.match(device_pattern,self.options["header"][0])
+        #print("{0} is {1}".format("header",header))
+        print("{0} is {1}".format("match",match))
+        if match:
+            device_id=match.groupdict()["Device_Id"]
+            print("{0} is {1}".format("device_id",device_id))
+            analysis_date=self.options["header"][0].replace(device_id,"")
+            analysis_date=analysis_date.rstrip().lstrip()
+            self.options["metadata"]["Device_Id"]=device_id
+            self.options["metadata"]["Analysis_Date"]=analysis_date
+            print("{0} is {1}".format("self.metadata",self.options["metadata"]))
+
 
 class PowerModel(AsciiDataTable):
     def __init__(self,file_path,**options):
@@ -1408,7 +1465,13 @@ def test_sparameter_power_type(file_list=None):
         except:
             print("There was an error opening {0}".format(file_name))
 
-
+def test_OnePortDUTModel(file_path="69329.dut"):
+    """Tests the OnePortDUTModel class"""
+    os.chdir(TESTS_DIRECTORY)
+    one_port=OnePortDUTModel(file_path)
+    print one_port.__dict__
+    print("The metadata for the OnePortDUT model is {0} ".format(one_port.metadata))
+    print one_port
 
 #-----------------------------------------------------------------------------
 # Module Runner
@@ -1419,7 +1482,7 @@ if __name__ == '__main__':
     #test_OnePortRawModel()
     #test_OnePortRawModel('OnePortRawTestFile_002.txt')
     #test_TwoPortRawModel()
-    test_PowerRawModel('CTNP15.A1_042601')
+    #test_PowerRawModel('CTNP15.A1_042601')
     #test_PowerRawModel()
     #test_JBSparameter()
     #test_JBSparameter('QuartzRefExample_L1_g10_HF')
@@ -1429,3 +1492,4 @@ if __name__ == '__main__':
     #test_PowerCalrepModel('700083b.txt')
     #convert_all_two_ports_script()
     #test_sparameter_power_type()
+    test_OnePortDUTModel()
