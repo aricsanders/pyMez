@@ -1158,4 +1158,6 @@ if __name__ == '__main__':
     #test_change_format()
     #test_change_format('TwoPortTouchstoneTestFile.s2p')
     #test_change_format('20160301_30ft_cable_0.s2p')
-    test_change_frequency_units()
+    #test_change_frequency_units()
+    #test_s2pv1('704b.S2P')
+    test_change_format('704b.S2P')
