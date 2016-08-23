@@ -312,7 +312,9 @@ def return_history_key(calrep_model):
             if calrep_model.options["column_names"]==POWER_3TERM_COLUMN_NAMES:
                 return 'power 3term calrep'
             elif calrep_model.options["column_names"]==POWER_4TERM_COLUMN_NAMES:
-                return 'power 3term calrep'
+                return 'power 4term calrep'
+        elif re.search('OnePortDUT',model):
+            return 'power 4term calrep'
     else:
         raise TypeError("Must be a calrep model, such as OnePortCalrepModel, etc. ")
 
@@ -572,6 +574,7 @@ def test_average_one_port_sparameters():
     ax1.set_title('Phase S11')
     plt.show()
     print out_table
+
 def test_comparison(input_file=None):
     """test_comparision tests the raw_mean,difference and comparison plot functionality"""
     # Data sources, to be replaced as project_files in Django
@@ -632,6 +635,7 @@ def test_comparison(input_file=None):
     #stop_time=datetime.datetime.now()
     diff=stop_time-start_time
     print("It took {0} seconds to process".format(diff.total_seconds()))
+
 def test_compare_s2p_plots(file_list=["thru.s2p",'20160301_30ft_cable_0.s2p','TwoPortTouchstoneTestFile.s2p']):
     """Tests the compare_s2p_plots function"""
     os.chdir(TESTS_DIRECTORY)

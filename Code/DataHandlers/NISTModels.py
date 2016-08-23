@@ -14,6 +14,10 @@ import fnmatch
 import datetime
 #-----------------------------------------------------------------------------
 # Third Party Imports
+
+# All imports in this section should only be from pyMeasure.Code.Utils or pyMeasure.Code.DataHandlers
+# or external packages not in python 2.7. If an import is cyclic, that is this module imports another module
+# and that module imports this one, they should be joined.
 try:
     from pyMeasure.Code.Utils.Alias import *
     METHOD_ALIASES=1
@@ -138,6 +142,8 @@ def sparameter_power_type(file_path):
     elif re.match('[\w][\d]+_[\d]+',extension,re.IGNORECASE):
         #print("The value of {0} is {1}".format('extension',extension))
         out=raw_type(lines)
+    elif re.search('\.dut',file_path,re.IGNORECASE):
+        out='OnePortDUTModel'
     return out
 
 def calrep_to_benchmark(file_path):
@@ -365,15 +371,15 @@ class OnePortDUTModel(AsciiDataTable):
         device_pattern="[\s]+(?P<Device_Id>[\w]+)[\s]+(.)+"
         match=re.match(device_pattern,self.options["header"][0])
         #print("{0} is {1}".format("header",header))
-        print("{0} is {1}".format("match",match))
+        #print("{0} is {1}".format("match",match))
         if match:
             device_id=match.groupdict()["Device_Id"]
-            print("{0} is {1}".format("device_id",device_id))
+            #print("{0} is {1}".format("device_id",device_id))
             analysis_date=self.options["header"][0].replace(device_id,"")
             analysis_date=analysis_date.rstrip().lstrip()
             self.options["metadata"]["Device_Id"]=device_id
             self.options["metadata"]["Analysis_Date"]=analysis_date
-            print("{0} is {1}".format("self.metadata",self.options["metadata"]))
+            #print("{0} is {1}".format("self.metadata",self.options["metadata"]))
 
 
 class PowerModel(AsciiDataTable):
