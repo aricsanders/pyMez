@@ -314,7 +314,7 @@ def return_history_key(calrep_model):
             elif calrep_model.options["column_names"]==POWER_4TERM_COLUMN_NAMES:
                 return 'power 4term calrep'
         elif re.search('OnePortDUT',model):
-            return 'power 4term calrep'
+            return 'power 3term calrep'
     else:
         raise TypeError("Must be a calrep model, such as OnePortCalrepModel, etc. ")
 
