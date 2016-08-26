@@ -199,6 +199,8 @@ class S1PV1():
             if self.options["path"] is None:
                 self.path=auto_name(self.options["specific_descriptor"],self.options["general_descriptor"],
                                     self.options['directory'],self.options["extension"])
+            else:
+                self.path=self.options["path"]
 
     def __read_and_fix__(self):
         """Reads a s2pv1 file and fixes any problems with delimiters. Since s2p files may use
@@ -561,7 +563,7 @@ class S2PV1():
                   "inline_comment_begin":"!",
                   "inline_comment_end":"",
                   "sparameter_begin_line":1,
-                  "sparameter_end_line":None
+                  "sparameter_end_line":None,
                   }
         self.options={}
         for key,value in defaults.iteritems():
@@ -614,6 +616,8 @@ class S2PV1():
             if self.options["path"] is None:
                 self.path=auto_name(self.options["specific_descriptor"],self.options["general_descriptor"],
                                     self.options['directory'],self.options["extension"])
+            else:
+                self.path=self.options["path"]
 
     def __read_and_fix__(self):
         """Reads a s2pv1 file and fixes any problems with delimiters. Since s2p files may use

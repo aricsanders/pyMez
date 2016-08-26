@@ -81,8 +81,8 @@ POWER_3TERM_COLUMN_DESCRIPTIONS={"Frequency": "Frequency in GHz",
                                            "uCe": "Total uncertainty in calibration factor"}
 #POWER_COLUMN_NAMES=POWER_3TERM_COLUMN_NAMES
 TWELVE_TERM_ERROR_COLUMN_NAMES=["Frequency","reEdf","imEdf","reEsf","imEsf",
-                                "reErf","imErf","reExf","imExf","reElf","imElf","reEtf","imEtf"
-                                "reEdr","imEdr","reEsr","imEsr","reErr","imErr","reExr","imExr"
+                                "reErf","imErf","reExf","imExf","reElf","imElf","reEtf","imEtf",
+                                "reEdr","imEdr","reEsr","imEsr","reErr","imErr","reExr","imExr",
                                 "reElr","imElr","reEtr","imEtr"]
 # Constant that determines if S21 is in db-angle or mag-angle format true is in mag-angle
 CONVERT_S21=True
@@ -1320,9 +1320,44 @@ class TwelveTermErrorModel(AsciiDataTable):
     """TwelveTermErrorModel holds the error coefficients for a twelve term model. The VNA calibration coefficeients
     are presumed to be stored in the following order frequency Edf Esf Erf Exf Elf Etf Edr Esr Err Exr Elr Etr, where
     all coefficients are in Real-Imaginary format. """
-    def __init__(self):
+    def __init__(self,file_path,**options):
         """Intializes the TwelveTermErrorModel """
-        pass
+        defaults= {"data_delimiter": " ", "column_names_delimiter": ",", "specific_descriptor": '12Term',
+                   "general_descriptor": 'Correction', "extension": 'txt', "comment_begin": "!", "comment_end": "\n",
+                   "header": None,
+                   "column_names":TWELVE_TERM_ERROR_COLUMN_NAMES, "column_names_begin_token":"!","column_names_end_token": "\n", "data": None,
+                   "row_formatter_string": None, "data_table_element_separator": None,"row_begin_token":None,
+                   "row_end_token":None,"escape_character":None,
+                   "data_begin_token":None,"data_end_token":None,
+                   "column_types":['float' for i in range(len(TWELVE_TERM_ERROR_COLUMN_NAMES))]
+                   }
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        if file_path is not None:
+            self.path=file_path
+            self.__read_and_fix__()
+        AsciiDataTable.__init__(self,None,**self.options)
+        if file_path is not None:
+            self.path=file_path
+
+    def __read_and_fix__(self):
+            """Reads in the data and fixes any problems with delimiters, etc"""
+            in_file=open(self.path,'r')
+            lines=[]
+            for line in in_file:
+                lines.append(map(lambda x:float(x),line.split(" ")))
+            in_file.close()
+            self.options["data"]=lines
+            self.complex_data=[]
+            for row in  self.options["data"]:
+                frequency=[row[0]]
+                complex_numbers=row[1:]
+                #print np.array(complex_numbers[1::2])
+                complex_array=np.array(complex_numbers[0::2])+1.j*np.array(complex_numbers[1::2])
+                self.complex_data.append(frequency+complex_array.tolist())
 
 class SwitchTermsFR():
     pass
@@ -1478,7 +1513,12 @@ def test_OnePortDUTModel(file_path="69329.dut"):
     print one_port.__dict__
     print("The metadata for the OnePortDUT model is {0} ".format(one_port.metadata))
     print one_port
-
+def test_TwelveTermErrorModel(file_path='CalCoefficients.txt'):
+    "Tests the TwelveTermErrorModel"
+    os.chdir(TESTS_DIRECTORY)
+    correction=TwelveTermErrorModel(file_path)
+    print correction
+    print correction.complex_data
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
@@ -1498,4 +1538,5 @@ if __name__ == '__main__':
     #test_PowerCalrepModel('700083b.txt')
     #convert_all_two_ports_script()
     #test_sparameter_power_type()
-    test_OnePortDUTModel()
+   #test_OnePortDUTModel()
+    test_TwelveTermErrorModel()
