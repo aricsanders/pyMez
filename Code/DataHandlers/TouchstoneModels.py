@@ -135,6 +135,12 @@ def build_row_formatter(precision=None,number_columns=None):
     return row_formatter
 #-----------------------------------------------------------------------------
 # Module Classes
+
+# TODO: make a SNPBase class that has save, change_frequency_units,get_column, __str__, methods
+class SNPBase():
+    "SNPBase is a class with methods that are common across all the Touchstone models"
+    pass
+
 class S1PV1():
     """A container for touchstone S1P. S1P are one port s-parameter files, with comments on any line
     began with ! and an option line in the format # GHz S RI R 50.0 that specifies the frequency units,
