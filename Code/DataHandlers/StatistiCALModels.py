@@ -18,9 +18,22 @@ try:
 except:
     print("The win32com package is required to run StatistiCAL models")
     raise ImportError
+try:
+    from pyMeasure.Code.DataHandlers.GeneralModels import *
+except:
+    print("pyMeasure.Code.DataHandlers.GeneralModels is required to run StatistiCAL models")
+    raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants
-
+SOLUTION_VECTOR_COLUMN_NAMES=["Frequency","rePort1S1_11","imPort1S1_11","rePort1S1_22","imPort1S1_22",
+                              "rePort1S1_21","imPort1S1_21","rePort2S1_11","imPort2S1_11","rePort2S1_22","imPort2S1_22",
+                              "rePort2Sqrt(S2_21*S2_12)","imPort2Sqrt(S2_21*S2_12)",
+                              "rePort2Sqrt(S2_21/S2_12)","imPort2Sqrt(S2_21/S2_12)","reEffEps","imEffEps",
+                              "reReflectionCoefficient","imReflectionCoefficient","reAdapterS11","imAdapterS11",
+                              "reAdapterS22","imAdapterS22","reAdapterS21","imAdapterS21","reDUTS11","imDUTS11",
+                              "reDUTS22","imDUTS22","reDUTS21","imDUTS21","reDUTS12","imDUTS12","reXTalkVNA-VNA",
+                              "imXTalkVNA-VNA","reXTalkVNA-DUT","imXTalkVNA-DUT","reXTalkDUT-VNA","imXTalkDUT-VNA",
+                              "reXTalkDUT-DUT","imXTalkDUT-DUT"]
 #-----------------------------------------------------------------------------
 # Module Functions
 
@@ -770,6 +783,99 @@ Number of calibration standards
         line_offset=(int(standard_number)-1)*51+57
         return text.format(*self.menu_data[line_offset:line_offset+52])
 
+class StatistiCALSolutionModel(AsciiDataTable):
+    """StatistiCALSolutionModel is a class for handling the files created by StatistiCAL Save Solution Vector.
+       StatistiCAL generates a solution to the VNA calibration problem, the standard uncertainties of each component of
+       the solution, and a covariance matrix for the solution. This covariance matrix includes information on the
+       correlations between all of the elements of the solution vector. These results can be accessed from the Results
+       pull-down menu.
+
+        Elements of the solution vector are given in real/imaginary format. Elements of the standard uncertainties and
+        correlation matrix are given either in real/imaginary or in-phase/quadrature format, based on your choice of
+        uncertainty format in the Options>Select Error Formats pull-down menu.
+
+        The solution vector, standard uncertainties, and correlation matrix are ordered as follows:
+        1,2	Port 1 error box S1_11
+        3,4	Port 1 error box S1_22
+        5,6	Port 1 error box S1_21
+        7,8	Port 2 error box S2_11
+        9,10	Port 2 error box S2_22
+        11,12	Port 2 error box sqrt(S2_21*S2_12)
+        13,14	Port 2 error box k = sqrt(S2_21/S2_12)
+        15,16	Effective Dielectric Constant (Calibrations using line standards only)
+        17,18	Reflection coefficient of the reflect (Calibrations using reflects only)
+
+        19,20	Adapter S11 (Calibrations using adapters only)
+        21,22	Adapter S22 (Calibrations using adapters only)
+        23,24	Adapter S21 (Calibrations using adapters only)
+        25,26	DUT S11 (Calibrations using DUTs only)
+        27,28	DUT S22 (Calibrations using DUTs only)
+        29,30	DUT S21 (Calibrations using DUTs with transmission only)
+        31,32	DUT S12 (Calibrations using nonreciprocal DUTs only)
+
+        The solution vector for StatistiCAL Plus (see Solving for crosstalk terms with StatistiCAL Plus) contains the
+        following additional crosstalk terms:
+
+        33,34	VNA-VNA	sqrt(S12*S21)
+        35,36	VNA-DUT		S14 = S41
+        37,38	DUT-VNA		sqrt(S23*S32)
+        39,40	DUT-DUT		S34 = S43
+
+        """
+    def __init__(self,file_path,**options):
+        "Initializes StatistiCALSolutionModel"
+        defaults= {"data_delimiter": " ", "column_names_delimiter": ",", "specific_descriptor": 'Solution',
+                   "general_descriptor": 'Vector', "extension": 'txt', "comment_begin": "!", "comment_end": "\n",
+                   "header": None,
+                   "column_names":SOLUTION_VECTOR_COLUMN_NAMES, "column_names_begin_token":"!","column_names_end_token": "\n", "data": None,
+                   "row_formatter_string": None, "data_table_element_separator": None,"row_begin_token":None,
+                   "row_end_token":None,"escape_character":None,
+                   "data_begin_token":None,"data_end_token":None,
+                   "column_types":['float' for i in range(len(SOLUTION_VECTOR_COLUMN_NAMES))]
+                   }
+        #"column_types":['float' for i in range(len(SOLUTION_VECTOR_COLUMN_NAMES))]
+        #print("The len(SOLUTION_VECTOR_COLUMN_NAMES) is {0}".format(len(SOLUTION_VECTOR_COLUMN_NAMES)))
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        if file_path is not None:
+            self.path=file_path
+            self.__read_and_fix__()
+        AsciiDataTable.__init__(self,None,**self.options)
+        if file_path is not None:
+            self.path=file_path
+
+    def __read_and_fix__(self):
+            """Reads in the data and fixes any problems with delimiters, etc"""
+            in_file=open(self.path,'r')
+            lines=[]
+            for line in in_file:
+                lines.append(map(lambda x:float(x),line.split(" ")))
+            in_file.close()
+            self.options["data"]=lines
+            self.complex_data=[]
+            self.S1=[]
+            self.S2=[]
+            for row in  self.options["data"]:
+                frequency=[row[0]]
+                # take all rows that are not frequency
+                complex_numbers=row[1:]
+                #print np.array(complex_numbers[1::2])
+                # create a complex data type
+                complex_array=np.array(complex_numbers[0::2])+1.j*np.array(complex_numbers[1::2])
+                self.complex_data.append(frequency+complex_array.tolist())
+                # fill S1 and S2 for later
+                # S1=frequency,S1_11,S1_21,_S1_12,S1_22
+                S1=frequency+[complex_array[0],complex_array[2],complex_array[2],complex_array[1]]
+                self.S1.append(S1)
+                a=complex_array[5]
+                b=complex_array[6]
+                # S2=frequency,S2_11,S1_21,_S1_12,S2_22
+                S2=frequency+[complex_array[3],a*b,a/b,complex_array[4]]
+                self.S2.append(S2)
+                #print("The len(frequency+complex_array.tolist()) is {0}".format(len(frequency+complex_array.tolist())))
 
 #-----------------------------------------------------------------------------
 # Module Scripts
@@ -785,8 +891,17 @@ def test_CalibrateDUTWrapper():
     print("Initializing an instance of Statistical")
     calibrate_app=CalibrateDUTWrapper()
 
+def test_StatistiCALSolutionModel(file_path="Solution_Plus.txt"):
+    """Tests the StatistiCALSolutionModel"""
+    os.chdir(TESTS_DIRECTORY)
+    new_solution=StatistiCALSolutionModel(file_path)
+    print("The solution's column names are {0}".format(new_solution.column_names))
+    print("The solution is {0}".format(new_solution))
+    print("{0} is {1}".format("new_solution.complex_data",new_solution.complex_data))
+    print("{0} is {1}".format("new_solution.S1",new_solution.S1))
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    test_StatistiCALWrapper()
+    #test_StatistiCALWrapper()
     #test_CalibrateDUTWrapper()
+    test_StatistiCALSolutionModel()
