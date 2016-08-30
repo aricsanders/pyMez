@@ -1092,6 +1092,7 @@ class SNP(SNPBase):
                   "sparameter_row_formatter_string":None,
                   "sparameter_data":[],
                   "sparameter_complex":[],
+                  "noiseparameter_data":[],
                   "comments":[],
                   "path":None,
                   "column_units":None,
@@ -1120,7 +1121,8 @@ class SNP(SNPBase):
                     self.number_ports=number_ports_from_file_name(self.options["path"])
                 elif file_path is not None:
                     self.number_ports=number_ports_from_file_name(file_path)
-        self.elements=['sparameter_data','comments','option_line']
+        self.elements=['sparameter_data','noise_parameters','comments','option_line']
+        self.noiseparameter_data=[]
         self.metadata=self.options["metadata"]
         # Determine the number of lines per sparameter
         if self.number_ports in [1,2]:
@@ -1275,7 +1277,7 @@ class SNP(SNPBase):
             number_line_comments=[str(comment[2]) for comment in self.comments].count('0')
         #print number_line_comments
         number_lines=1+number_line_comments+len(self.sparameter_lines)
-        print("{0} is {1}".format('number_lines',number_lines))
+        #print("{0} is {1}".format('number_lines',number_lines))
         out_lines=["" for i in range(number_lines)]
         sparameter_lines=["" for i in range(len(self.sparameter_data)*self.number_lines_per_sparameter)]
         out_lines[self.options["option_line_line"]]=self.option_line
@@ -1292,7 +1294,7 @@ class SNP(SNPBase):
                     inline_comments.append(comment)
         #print("{0} is {1}".format('out_lines',out_lines))
         # now start writting data at first empty line after the option line
-        print("{0} is {1}".format('len(self.sparameter_lines)',len(self.sparameter_lines)))
+        #print("{0} is {1}".format('len(self.sparameter_lines)',len(self.sparameter_lines)))
         out_line_number=0
         for index,line in enumerate(self.sparameter_lines[:]):
                 value_written=False
@@ -1320,7 +1322,7 @@ class SNP(SNPBase):
                                                 string_position=comment[2],
                                                 begin_token=self.options["inline_comment_begin"],
                                                 end_token="")
-        print("{0} is {1}".format('out_lines', out_lines))
+        #print("{0} is {1}".format('out_lines', out_lines))
         self.options=original_options
         return string_list_collapse(out_lines)
 
@@ -1569,9 +1571,9 @@ def test_change_format(file_path="thru.s2p"):
     print new_table
     new_table.show()
 def test_change_frequency_units(file_path="thru.s2p"):
-    """Tests the models change_frequnecy_units method"""
+    """Tests the models change_frequency_units method"""
     os.chdir(TESTS_DIRECTORY)
-    new_table=S2PV1(file_path)
+    new_table=SNP(file_path)
     print("The frequency units are {0},"
           "and the frequency values are {1}".format(new_table.frequency_units,
                                              new_table.get_column("Frequency")))
@@ -1596,7 +1598,7 @@ def test_change_frequency_units(file_path="thru.s2p"):
           "and the frequency values are {1}".format(new_table.frequency_units,
                                              new_table.get_column("Frequency")))
     print new_table
-    new_table.show()
+    #new_table.show()
 def test_build_snp_column_names():
     """Tests the function build_snp_column_names"""
     for n_port in range(1,10):
@@ -1613,10 +1615,10 @@ if __name__ == '__main__':
     #test_change_format()
     #test_change_format('TwoPortTouchstoneTestFile.s2p')
     #test_change_format('20160301_30ft_cable_0.s2p')
-    #test_change_frequency_units()
+    test_change_frequency_units("B7_baseline_50ohm_OR2_10n0_4p0_REV2_EVB1_01new.s3p")
     #test_s2pv1('704b.S2P')
     #test_change_format('704b.S2P')
     #test_build_snp_column_names()
     #test_SNP()
     #test_SNP("B7_baseline_50ohm_OR2_10n0_4p0_REV2_EVB1_01new.s3p")
-    test_SNP('setup20101028.s4p')
+    #test_SNP('setup20101028.s4p')
