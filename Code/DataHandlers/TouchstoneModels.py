@@ -49,7 +49,8 @@ TOUCHSTONE_KEYWORDS=["Version","Number of Ports","Two-Port Order","Number of Fre
                      "Number of Noise Frequencies","Reference","Matrix Format","Mixed-Mode Order",
                      "Network Data","Noise Data","End"]
 OPTION_LINE_PATTERN="#[\s]+(?P<Frequency_Units>\w+)[\s]+(?P<Parameter>\w+)[\s]+(?P<Format>\w+)[\s]+R[\s]+(?P<Reference_Resistance>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)"
-COMMENT_PATTERN="!(?P<Comment>.+)\n"
+COMMENT_PATTERN="![\s]*(?P<Comment>.+)\n"
+EXTENSION_PATTERN="s(?P<Number_Ports>\d+)p"
 FREQUENCY_UNITS=["Hz","kHz","MHz","GHz"]
 PARAMETERS=["S","Y","Z","G","H"]
 FORMATS=["RI","DB","MA"]
@@ -136,7 +137,9 @@ def build_row_formatter(precision=None,number_columns=None):
 
 def build_snp_row_formatter(number_ports=2,precision=None,number_columns=None):
     """Builds a uniform row_formatter_string given a precision and a number of columns
-    for a snp file. If number_ports """
+    for a snp file. If number_ports is 1,2 all sparameters are assumed to be on a single line
+     if it is 3,4 it is assumed to be in a matrix format, if >4 it is assumed to be 4 sparameters
+     on a line with the first line containing frequency"""
     number_rows_per_frequency=number_ports**2/4
     row_formatter=""
     if precision is None:
@@ -149,6 +152,12 @@ def build_snp_row_formatter(number_ports=2,precision=None,number_columns=None):
         else:
             row_formatter=row_formatter+"{"+str(i)+":.%sg}{delimiter}"%precision
     return row_formatter
+
+def number_ports_from_file_name(file_name):
+    "Returns the number of ports as an integer from a file_name."
+    match=re.search(EXTENSION_PATTERN,file_name.split(".")[-1],re.IGNORECASE)
+    number_ports=match.groupdict()["Number_Ports"]
+    return int(number_ports)
 
 def build_snp_column_names(number_of_ports=2,format="RI"):
     """Return a list of column names based on the format and number of ports. Enter
@@ -177,6 +186,28 @@ def build_snp_column_names(number_of_ports=2,format="RI"):
         column_names[3:7]=[S21_1,S21_2,S12_1,S12_2]
     return column_names
 
+def combine_segments(segment_list):
+    """Combines a list of lists that are segments (each segment is list of strings)
+    and returns a single list of strings, segments are assumed to be the same length"""
+    combined_list=[]
+    for index,row in enumerate(segment_list[0]):
+        new_row=""
+        for segment in segment_list:
+            new_row=new_row+segment[index]
+        combined_list.append(new_row)
+    return combined_list
+
+def parse_combined_float_list(float_string_list):
+    """Parses a list of strings, where each element of the list is a single string which is a list of floats
+    to be parsed.
+    Assumes the data delimiter is whitespace or comma,
+    and removes any white space at the beginning and end of the string
+    all values data types are assumed to be floats returned as floats"""
+    parsed_data=[]
+    for row in float_string_list:
+        new_row=map(lambda x:float(x),re.split("[\s|,]+",row.rstrip().lstrip().replace("\n","\t")))
+        parsed_data.append(new_row)
+    return parsed_data
 #-----------------------------------------------------------------------------
 # Module Classes
 
@@ -725,10 +756,10 @@ class S2PV1(SNPBase):
                 self.options["option_line_line"]=index
                 match=re.search(OPTION_LINE_PATTERN,line,re.IGNORECASE)
                 add_option_line=0
-
-
+        # set the attributes associated with the option line
         for key,value in match.groupdict().iteritems():
                     self.__dict__[key.lower()]=value
+        # now the option line attributes are set deduce column properties from them
         if re.match('db',self.format,re.IGNORECASE):
             self.column_names=S2P_DB_COLUMN_NAMES
             self.row_pattern=make_row_match_string(S2P_DB_COLUMN_NAMES)
@@ -1039,8 +1070,415 @@ class S2PV1(SNPBase):
 class SNP(SNPBase):
     """SNP is a class that holds touchstone files of more than 2 ports. Use S1PV1 and S2PV2
     for one and two ports, they have special methods"""
-    pass
+    def __init__(self,file_path=None,**options):
+        """Initialization of the snp class for version 1 files,
+        if a file path is specified, it opens and parses the file. If the file path is not
+        specified then data can be added through the snp.sparameter_data. A reference to the version 1 touchstone
+        format may be found at
+        http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams/touchstone_file_format.htm
+        For S2P files use the S2PV1 class. This class does not handle noise parameters.
+        """
+        defaults={"number_ports":None,
+                  "data_delimiter":"\t",
+                  "column_names_delimiter":None,
+                  "specific_descriptor":'Multiport',
+                  "general_descriptor":'Sparameter',
+                  "option_line_line":0,
+                  "option_line":'# GHz S RI R 50',
+                  "directory":None,
+                  "extension":None,
+                  "metadata":None,
+                  "column_descriptions":None,
+                  "sparameter_row_formatter_string":None,
+                  "sparameter_data":[],
+                  "sparameter_complex":[],
+                  "comments":[],
+                  "path":None,
+                  "column_units":None,
+                  "inline_comment_begin":"!",
+                  "inline_comment_end":"",
+                  "sparameter_begin_line":1,
+                  "sparameter_end_line":None,
+                  }
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        # adds common functions from base class
+        SNPBase.__init__(self)
+        # determine the number of ports
+        if self.options["number_ports"] is None:
+            if self.options["path"] is None and file_path is None:
+                # if number of ports cannot be figured out exit with error
+                raise TypeError("Cannot determine number of ports, please pass as number_ports=int")
+            else:
+                # determine number of ports
+                if self.options["number_ports"] is not None:
+                    self.number_ports=self.options["number_ports"]
+                elif self.options["path"] is not None:
+                    self.number_ports=number_ports_from_file_name(self.options["path"])
+                elif file_path is not None:
+                    self.number_ports=number_ports_from_file_name(file_path)
+        self.elements=['sparameter_data','comments','option_line']
+        self.metadata=self.options["metadata"]
+        # Determine the number of lines per sparameter
+        if self.number_ports in [1,2]:
+            self.number_lines_per_sparameter=1
+            self.wrap_value=8
+        elif self.number_ports in [3]:
+            self.number_lines_per_sparameter=3
+            self.wrap_value=6
+        else:
+            self.number_lines_per_sparameter=self.number_ports**2/4
+            self.wrap_value=8
+        if file_path is not None:
+            self.path=file_path
+            self.__read_and_fix__()
+        else:
+            # promote options to attributes
+            for element in self.elements:
+                self.__dict__[element]=self.options[element]
+            self.sparameter_complex=self.options["sparameter_complex"]
+            match=re.match(OPTION_LINE_PATTERN,self.option_line)
+            # set the values associated with the option line
+            for key,value in match.groupdict().iteritems():
+                self.__dict__[key.lower()]=value
+            if re.match('db',self.format,re.IGNORECASE):
+                self.column_names=build_snp_column_names(self.number_ports,"db")
+            elif re.match('ma',self.format,re.IGNORECASE):
+                self.column_names=build_snp_column_names(self.number_ports,"ma")
+            elif re.match('ri',self.format,re.IGNORECASE):
+                self.column_names=build_snp_column_names(self.number_ports,"db")
 
+            # now we handle the cases if sparameter_data or sparameter_complex is specified
+            if self.sparameter_data is [] and self.sparameter_complex is[]:
+                pass
+            elif self.sparameter_complex in [[],None]:
+                for row in self.sparameter_data:
+                    self.add_sparameter_complex_row(row)
+                    #print("{0} is {1}".format("row",row))
+            elif self.sparameter_data in [[],None]:
+                self.sparameter_data=[[0 for i in self.column_names] for row in self.sparameter_complex]
+                #print self.sparameter_data
+                self.change_data_format(new_format=self.format)
+            if self.comments is None:
+                number_line_comments=0
+            else:
+                number_line_comments=[str(comment[2]) for comment in self.comments].count('0')
+            self.options["sparameter_begin_line"]=number_line_comments+1
+            self.options["sparameter_end_line"]= self.options["sparameter_begin_line"]\
+                                                 +len(self.sparameter_data)+1
+
+            if self.options["path"] is None:
+                self.path=auto_name(self.options["specific_descriptor"],self.options["general_descriptor"],
+                                    self.options['directory'],self.options["extension"])
+            else:
+                self.path=self.options["path"]
+        # Need to be careful here, sparameters can have many lines
+        self.sparameter_lines=[]
+        for row in self.sparameter_data[:]:
+            for line_number in range(self.number_lines_per_sparameter):
+                if line_number is 0:
+                    row_formatter=build_row_formatter(precision=5,number_columns=self.wrap_value+1)
+                    self.sparameter_lines.append(row_formatter.format(delimiter=self.options["data_delimiter"],
+                                                                      *row[:self.wrap_value+1]))
+                elif line_number>0 and line_number<self.number_lines_per_sparameter:
+                    row_formatter=build_row_formatter(precision=5,number_columns=self.wrap_value)
+                    offset=1+self.wrap_value*(line_number)
+                    span=self.wrap_value
+                    self.sparameter_lines.append(row_formatter.format(delimiter=self.options["data_delimiter"],
+                                                                      *row[offset:offset+span]))
+                elif line_number<self.number_lines_per_sparameter-1:
+                    offset=1+self.wrap_value*(line_number)
+                    span=len(row)-offset
+                    row_formatter=build_row_formatter(precision=5,number_columns=span)
+                    self.sparameter_lines.append(row_formatter.format(delimiter=self.options["data_delimiter"],
+                                                                      *row[offset:offset+span]))
+        print("{0} is {1}".format("len(self.sparameter_lines)",len(self.sparameter_lines)))
+    def __read_and_fix__(self):
+        """Reads a snp v1 file and fixes any problems with delimiters. Since snp files may use
+        any white space or combination of white space as data delimiters it reads the data and creates
+        a uniform delimter. This means a file saved with save() will not be the same as the original if the
+        whitespace is not uniform. """
+        default_option_line=self.options["option_line"]
+
+
+        in_file=open(self.path,'r')
+        # to keep the logic clean we will repeatedly cycle through self.lines
+        # but in theory we could do it all on the line input stage
+        self.lines=[]
+        self.data_lines=[]
+        for index,line in enumerate(in_file):
+            self.lines.append(line)
+            # if the line is just '\n' ignore it
+            if line in ["","\n"]:
+                pass
+            #if the line is an option line collect it
+            elif re.search(OPTION_LINE_PATTERN,line,re.IGNORECASE):
+                option_line=line
+                continue
+            elif re.match(COMMENT_PATTERN,line,re.IGNORECASE):
+                continue
+            else:
+                self.data_lines.append(line)
+        # now we need to collect and extract all the inline comments
+        # There should be two types ones that have char position EOL, -1 or 0
+        self.comments=collect_inline_comments(self.lines,begin_token="!",end_token="\n")
+        # make sure there are no comments in the data
+        self.data_lines=strip_inline_comments(self.data_lines,begin_token="!",end_token="\n")
+        # change all of them to be 0 or -1
+        if self.comments is None:
+            pass
+        else:
+            for index,comment in enumerate(self.comments):
+                if comment[2]>1:
+                    self.comments[index][2]=-1
+                else:
+                    self.comments[index][2]=0
+        # Match the option line and set the attribute associated with them
+        match=re.match(OPTION_LINE_PATTERN,default_option_line)
+        self.option_line=default_option_line
+        add_option_line=1
+        for index,line in enumerate(self.lines):
+            if re.search(OPTION_LINE_PATTERN,line,re.IGNORECASE):
+                #print line
+                self.option_line=line.replace("\n","")
+                self.options["option_line_line"]=index
+                match=re.search(OPTION_LINE_PATTERN,line,re.IGNORECASE)
+                add_option_line=0
+        # set the attributes associated with the option line
+        for key,value in match.groupdict().iteritems():
+                    self.__dict__[key.lower()]=value
+        # now the option line attributes are set deduce column properties from them
+        self.column_names=build_snp_column_names(self.number_ports,self.format)
+        #print stripped_lines
+        segments=[self.data_lines[i::self.number_lines_per_sparameter] for i in range(self.number_lines_per_sparameter)]
+        combined_list=combine_segments(segments)
+        self.sparameter_data=parse_combined_float_list(combined_list)
+        self.sparameter_complex=[]
+        for row in self.sparameter_data[:]:
+            self.add_sparameter_complex_row(row)
+        self.options["sparameter_begin_line"]=self.options["sparameter_end_line"]=0
+
+    def build_string(self,**temp_options):
+        """Creates the output string"""
+        #number of lines = option line + comments that start at
+        # zero + rows in sparameter data*number_lines_per_sparameter + rows in noise data
+        # Is this different for snp? The only difference is noiseparameter_data.
+        original_options=self.options
+        for key,value in temp_options.iteritems():
+            self.options[key]=value
+        if self.comments is None:
+            number_line_comments=0
+        else:
+            number_line_comments=[str(comment[2]) for comment in self.comments].count('0')
+        #print number_line_comments
+        number_lines=1+number_line_comments+len(self.sparameter_lines)
+        print("{0} is {1}".format('number_lines',number_lines))
+        out_lines=["" for i in range(number_lines)]
+        sparameter_lines=["" for i in range(len(self.sparameter_data)*self.number_lines_per_sparameter)]
+        out_lines[self.options["option_line_line"]]=self.option_line
+        #print("{0} is {1}".format('out_lines',out_lines))
+        # populate the line comments
+        comment_lines=[]
+        inline_comments=[]
+        if self.comments != None:
+            for comment in self.comments:
+                if comment[2] == 0:
+                    out_lines[comment[1]]="!"+comment[0]
+                    comment_lines.append(comment[1])
+                else:
+                    inline_comments.append(comment)
+        #print("{0} is {1}".format('out_lines',out_lines))
+        # now start writting data at first empty line after the option line
+        print("{0} is {1}".format('len(self.sparameter_lines)',len(self.sparameter_lines)))
+        out_line_number=0
+        for index,line in enumerate(self.sparameter_lines[:]):
+                value_written=False
+                while(not value_written):
+                    if out_line_number==self.options["option_line_line"]:
+                        out_line_number+=1
+                        continue
+                    elif out_line_number in comment_lines:
+                        out_line_number+=1
+                        continue
+                    else:
+                        #print out_lines
+                        #print index
+                        out_lines[out_line_number]=line
+                        out_line_number+=1
+                        #print("{0} is {1}".format('out_line_number',out_line_number))
+                        value_written=True
+
+        #print("{0} is {1}".format('out_lines',out_lines))
+        #print("{0} is {1}".format('inline_comments',inline_comments))
+        if inline_comments:
+            for comment in inline_comments:
+                out_lines=insert_inline_comment(out_lines,comment=comment[0],
+                                                line_number=comment[1],
+                                                string_position=comment[2],
+                                                begin_token=self.options["inline_comment_begin"],
+                                                end_token="")
+        print("{0} is {1}".format('out_lines', out_lines))
+        self.options=original_options
+        return string_list_collapse(out_lines)
+
+    def add_sparameter_row(self,row_data):
+        """Adds data to the sparameter attribute, which is a list of s-parameters. The
+        data can be a list of nports**2 +1 numbers
+         or dictionary with appropriate column names, note column names are not case sensitive
+         it is assumed that the row_data is in the format that the model is currently in. Check
+         SNP.format if in doubt"""
+        if type(row_data) is ListType:
+            if len(row_data) == self.number_ports**2+1:
+                    self.sparameter_data.append(row_data)
+            else:
+                print("Could not add row, the data was a list of the wrong dimension, if you desire to add multiple"
+                      "rows use add_sparameter_rows")
+                return
+        if type(row_data) is DictionaryType:
+            new_row=[]
+            for column_name in self.column_names:
+                #print row_data
+                new_row.append(float(row_data[column_name]))
+            self.sparameter_data.append(new_row)
+        self.options["sparameter_end_line"]+=1
+
+    def add_sparameter_complex_row(self,row_data):
+        """Adds a row to the sparameter_complex attribute. This attribute stores the values of the sparameter table in
+        complex form for easy conversion and manipulation. Row_data is assumed to be of the same form that would be
+        given to add_sparameter_row"""
+
+        if type(row_data) is ListType and len(row_data)==(self.number_ports**2+1) and type(row_data[1]) is ComplexType:
+            self.sparameter_complex.append(row_data)
+        else:
+            row_data=self.sparameter_row_to_complex(row_data=row_data)
+            self.sparameter_complex.append(row_data)
+    def sparameter_row_to_complex(self,row_data=None,row_index=None):
+        """Given a row_data string, row_data list, or row_data dictionary it converts the values of the sparameter to
+         complex notation (complex types) and returns a single list with number_ports**2 +1 elements [Frequency,S11,..,SNN]"""
+        if row_index is not None:
+            row_data=self.sparameter_data[row_index]
+        if row_data is None:
+            print("Could not convert row to complex, need a valid row_data string, list or dictionary or a row_index in "
+                  "sparameter_data")
+        out_row=[]
+        try:
+            if type(row_data) is StringType:
+                row_data=parse_combined_float_list([row_data])[0]
+                row_data={self.column_names[index]:row_data[index] for index in range(len(self.column_names))}
+            elif type(row_data) is ListType:
+                row_data={self.column_names[index]:row_data[index] for index in range(len(self.column_names))}
+            if type(row_data) is not DictionaryType:
+                raise
+            row_data={key:float(value) for key,value in row_data.iteritems()}
+            # now row data is in dictionary form with known keys, the tranformation is only based on self.format
+            if self.number_ports==2:
+                if re.match('db',self.format,re.IGNORECASE):
+                    S11=cmath.rect(10.**(row_data["dbS11"]/20.),(math.pi/180.)*row_data["argS11"])
+                    S21=cmath.rect(10.**(row_data["dbS21"]/20.),(math.pi/180.)*row_data["argS21"])
+                    S12=cmath.rect(10.**(row_data["dbS12"]/20.),(math.pi/180.)*row_data["argS12"])
+                    S22=cmath.rect(10.**(row_data["dbS22"]/20.),(math.pi/180.)*row_data["argS22"])
+                    out_row=[row_data["Frequency"],S11,S21,S12,S22]
+                elif re.match('ma',self.format,re.IGNORECASE):
+                    S11=cmath.rect(row_data["magS11"],(math.pi/180.)*row_data["argS11"])
+                    S21=cmath.rect(row_data["magS21"],(math.pi/180.)*row_data["argS21"])
+                    S12=cmath.rect(row_data["magS12"],(math.pi/180.)*row_data["argS12"])
+                    S22=cmath.rect(row_data["magS22"],(math.pi/180.)*row_data["argS22"])
+                    out_row=[row_data["Frequency"],S11,S21,S12,S22]
+                elif re.match('ri',self.format,re.IGNORECASE):
+                    S11=complex(row_data["reS11"],row_data["imS11"])
+                    S21=complex(row_data["reS21"],row_data["imS21"])
+                    S12=complex(row_data["reS12"],row_data["imS12"])
+                    S22=complex(row_data["reS22"],row_data["imS22"])
+                    out_row=[row_data["Frequency"],S11,S21,S12,S22]
+                return out_row
+            elif self.number_ports!=2:
+                if re.match('ri',self.format,re.IGNORECASE):
+                    re_values=self.column_names[1::2]
+                    im_values=self.column_names[2::2]
+                    complex_values=[]
+                    for index,value in enumerate(re_values):
+                        complex_s=complex(row_data[value],row_data[im_values[index]])
+                        complex_values.append(complex_s)
+                    out_row=[row_data["Frequency"]]+complex_values
+                elif re.match('ma',self.format,re.IGNORECASE):
+                    mag_values=self.column_names[1::2]
+                    arg_values=self.column_names[2::2]
+                    complex_values=[]
+                    for index,value in enumerate(mag_values):
+                        complex_s=cmath.rect(row_data[value],(math.pi/180.)*row_data[arg_values[index]])
+                        complex_values.append(complex_s)
+                    out_row=[row_data["Frequency"]]+complex_values
+                elif re.match('db',self.format,re.IGNORECASE):
+                    db_values=self.column_names[1::2]
+                    arg_values=self.column_names[2::2]
+                    complex_values=[]
+                    for index,value in enumerate(db_values):
+                        complex_s=cmath.rect(10.**(row_data[value]/20.),(math.pi/180.)*row_data[arg_values[index]])
+                        complex_values.append(complex_s)
+                    out_row=[row_data["Frequency"]]+complex_values
+                return out_row
+        except:
+            print("Could not convert row to a complex row")
+            raise
+    def change_data_format(self,new_format=None):
+        """Changes the data format to new_format. Format must be one of the following: 'DB','MA','RI'
+        standing for Decibel-Angle, Magnitude-Angle or Real-Imaginary as per the touchstone specification
+        all angles are in degrees."""
+        old_format=self.format
+
+        if re.match('db',new_format,re.IGNORECASE):
+            self.format="DB"
+            self.option_line=self.option_line.replace(old_format,"DB")
+            self.column_names=build_snp_column_names(self.number_ports,new_format)
+            for row_index,row in enumerate(self.sparameter_complex):
+                frequency=self.sparameter_complex[row_index][0]
+                complex_values=self.sparameter_complex[row_index][1:]
+                values=[]
+                for index,value in complex_values:
+                    db=20.*math.log(abs(value),10.)
+                    arg=(180./math.pi)*cmath.phase(value)
+                    values.append(db)
+                    values.append(arg)
+                new_row=[frequency]+values
+                self.sparameter_data[row_index]=new_row
+
+        elif re.match('ma',new_format,re.IGNORECASE):
+            self.format="MA"
+            self.option_line=self.option_line.replace(old_format,"MA")
+            self.column_names=build_snp_column_names(self.number_ports,new_format)
+            for row_index,row in enumerate(self.sparameter_complex):
+                frequency=self.sparameter_complex[row_index][0]
+                complex_values=self.sparameter_complex[row_index][1:]
+                values=[]
+                for index,value in complex_values:
+                    mag=abs(value)
+                    arg=(180./math.pi)*cmath.phase(value)
+                    values.append(mag)
+                    values.append(arg)
+                new_row=[frequency]+values
+                self.sparameter_data[row_index]=new_row
+
+        elif re.match('ri',new_format,re.IGNORECASE):
+            self.format="RI"
+            self.option_line=self.option_line.replace(old_format,"RI")
+            self.column_names=build_snp_column_names(self.number_ports,new_format)
+            for row_index,row in enumerate(self.sparameter_complex):
+                frequency=self.sparameter_complex[row_index][0]
+                complex_values=self.sparameter_complex[row_index][1:]
+                values=[]
+                for index,value in complex_values:
+                    re_part=value.real
+                    im_part=value.imag
+                    values.append(re_part)
+                    values.append(im_part)
+                new_row=[frequency]+values
+                self.sparameter_data[row_index]=new_row
+        else:
+            print("Could not change data format the specified format was not DB, MA, or RI")
+            return
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_option_string():
@@ -1090,6 +1528,32 @@ def test_s2pv1(file_path="thru.s2p"):
     print("The attribute {0} is {1}".format('column_names',str(new_table.column_names)))
     print("-"*80)
     print("The attribute {0} is {1}".format('noiseparameter_column_names',str(new_table.noiseparameter_column_names)))
+def test_SNP(file_path="thru.s2p"):
+    """Tests the SNP class"""
+    os.chdir(TESTS_DIRECTORY)
+    new_table=SNP(file_path)
+    #print new_table
+    print("The Table as read in with line numbers is")
+    for index,line in enumerate(new_table.lines):
+        print("{0} {1}".format(index,line))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('sparameter_data',str(new_table.sparameter_data)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('comments',str(new_table.comments)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('option_line',str(new_table.option_line)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('format',str(new_table.format)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('column_names',str(new_table.column_names)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('sparameter_lines',str(new_table.sparameter_lines)))
+    print("-"*80)
+    print str(new_table)
 
 def test_change_format(file_path="thru.s2p"):
     """Tests the s2pv1 class"""
@@ -1152,4 +1616,7 @@ if __name__ == '__main__':
     #test_change_frequency_units()
     #test_s2pv1('704b.S2P')
     #test_change_format('704b.S2P')
-    test_build_snp_column_names()
+    #test_build_snp_column_names()
+    #test_SNP()
+    #test_SNP("B7_baseline_50ohm_OR2_10n0_4p0_REV2_EVB1_01new.s3p")
+    test_SNP('setup20101028.s4p')
