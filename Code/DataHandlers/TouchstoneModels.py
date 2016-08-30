@@ -133,15 +133,164 @@ def build_row_formatter(precision=None,number_columns=None):
         else:
             row_formatter=row_formatter+"{"+str(i)+":.%sg}{delimiter}"%precision
     return row_formatter
+
+def build_snp_row_formatter(number_ports=2,precision=None,number_columns=None):
+    """Builds a uniform row_formatter_string given a precision and a number of columns
+    for a snp file. If number_ports """
+    number_rows_per_frequency=number_ports**2/4
+    row_formatter=""
+    if precision is None:
+        precision=4
+    for row in number_rows_per_frequency:
+       pass
+    for i in range(number_columns):
+        if i==number_columns-1:
+            row_formatter=row_formatter+"{"+str(i)+":.%sg}"%precision
+        else:
+            row_formatter=row_formatter+"{"+str(i)+":.%sg}{delimiter}"%precision
+    return row_formatter
+
+def build_snp_column_names(number_of_ports=2,format="RI"):
+    """Return a list of column names based on the format and number of ports. Enter
+    number_or_ports as a integer and format as text string such as 'RI','MA' or 'DB'"""
+    column_names=["Frequency"]
+    prefix_1=""
+    prefix_2=""
+    if re.search('ri',format,re.IGNORECASE):
+        prefix_1="re"
+        prefix_2="im"
+    elif re.search('ma',format,re.IGNORECASE):
+        prefix_1="mag"
+        prefix_2="arg"
+    elif re.search('db',format,re.IGNORECASE):
+        prefix_1="db"
+        prefix_2="arg"
+    else:
+        raise TypeError("format must be RI, DB or MA")
+    for i in range(number_of_ports):
+        for j in range(number_of_ports):
+            column_names.append(prefix_1+"S"+str(i+1)+str(j+1))
+            column_names.append(prefix_2+"S"+str(i+1)+str(j+1))
+    if number_of_ports==2:
+        #switch S21 and S12
+        [S12_1,S12_2,S21_1,S21_2]=column_names[3:7]
+        column_names[3:7]=[S21_1,S21_2,S12_1,S12_2]
+    return column_names
+
 #-----------------------------------------------------------------------------
 # Module Classes
 
 # TODO: make a SNPBase class that has save, change_frequency_units,get_column, __str__, methods
+# TODO: This doesnt work because .__init__ is so different for each class
 class SNPBase():
-    "SNPBase is a class with methods that are common across all the Touchstone models"
-    pass
+    """SNPBase is a class with methods that are common across all the Touchstone models.
+    It is only meant as a base class to inherit, not to instantiate by itself"""
+    def __init__(self):
+        pass
 
-class S1PV1():
+    def __str__(self):
+        "Controls how the model displays when print and str are called"
+        self.string=self.build_string()
+        return self.string
+
+    def save(self,file_path=None,**temp_options):
+        """Saves the snp file to file_path with options, defaults to snp.path"""
+        if file_path is None:
+            file_path=self.path
+        out_file=open(file_path,'w')
+        out_file.write(self.build_string(**temp_options))
+        out_file.close()
+
+    def get_data_dictionary_list(self,use_row_formatter_string=True):
+        """Returns a python list with a row dictionary of form {column_name:data_column} for sparameters only"""
+        try:
+            if self.options["sparameter_row_formatter_string"] is None:
+                use_row_formatter_string=False
+            if use_row_formatter_string:
+                list_formatter=[item.replace("{"+str(index),"{0")
+                                for index,item in enumerate(self.options["sparameter_row_formatter_string"].split("{delimiter}"))]
+            else:
+                list_formatter=["{0}" for i in self.column_names]
+            out_list=[{self.column_names[i]:list_formatter[i].format(value) for i,value in enumerate(line)}
+                      for line in self.sparameter_data]
+            return out_list
+        except:raise
+
+    def change_frequency_units(self,new_frequency_units=None):
+        """Changes the frequency units from the current to new_frequency_units. Frequency units must be one
+        an accepted scientific prefix, function is case sensitive (mHz=milli Hertz, MHz=Mega Hertz) """
+        multipliers={"yotta":10.**24,"Y":10.**24,"zetta":10.**21,"Z":10.**21,"exa":10.**18,"E":10.**18,"peta":10.**15,
+                     "P":10.**15,"tera":10.**12,"T":10.**12,"giga":10.**9,"G":10.**9,"mega":10.**6,"M":10.**6,
+                     "kilo":10.**3,"k":10.**3,"hecto":10.**2,"h":10.**2,"deka":10.,"da":10.,None:1.,"":1.,
+                     "deci":10.**-1,"d":10.**-1,"centi":10.**-2,"c":10.**-2,"milli":10.**-3,"m":10.**-3,
+                     "micro":10.**-6,"mu":10.**-6,u"\u00B5":10.**-6,"nano":10.**-9,
+                     "n":10.**-9,"pico":10.**-12,"p":10.**-12,"femto":10.**-15,
+                     "f":10.**-15,"atto":10.**-18,"a":10.**-18,"zepto":10.**-21,"z":10.**-21,
+                     "yocto":10.**-24,"y":10.**-24}
+        # change column name into column index
+        old_prefix=re.sub('Hz','',self.frequency_units,flags=re.IGNORECASE)
+        new_prefix=re.sub('Hz','',new_frequency_units,flags=re.IGNORECASE)
+        unit='Hz'
+        column_selector=0
+        try:
+            if old_prefix is None:
+                old_prefix=""
+            if new_prefix is None:
+                new_prefix=""
+            old_unit=old_prefix+unit
+            new_unit=new_prefix+unit
+            if column_selector in self.column_names:
+                column_selector=self.column_names.index(column_selector)
+            for index,row in enumerate(self.sparameter_data[:]):
+                if type(self.sparameter_data[index][column_selector]) in [FloatType,LongType]:
+                    #print "{0:e}".format(multipliers[old_prefix]/multipliers[new_prefix])
+                    self.sparameter_data[index][column_selector]=\
+                    (multipliers[old_prefix]/multipliers[new_prefix])*self.sparameter_data[index][column_selector]
+                elif type(self.sparameter_data[index][column_selector]) in [StringType,IntType]:
+                    self.sparameter_data[index][column_selector]=\
+                    str((multipliers[old_prefix]/multipliers[new_prefix])*float(self.sparameter_data[index][column_selector]))
+                else:
+                    print type(self.sparameter_data[index][column_selector])
+                    raise
+            for index,row in enumerate(self.noiseparameter_data[:]):
+                if type(self.noiseparameter_data[index][column_selector]) in [FloatType,LongType]:
+                    #print "{0:e}".format(multipliers[old_prefix]/multipliers[new_prefix])
+                    self.noiseparameter_data[index][column_selector]=\
+                    (multipliers[old_prefix]/multipliers[new_prefix])*self.noiseparameter_data[index][column_selector]
+                elif type(self.noiseparameter_data[index][column_selector]) in [StringType,IntType]:
+                    self.noiseparameter_data[index][column_selector]=\
+                    str((multipliers[old_prefix]/multipliers[new_prefix])*float(self.noiseparameter_data[index][column_selector]))
+                else:
+                    print type(self.noiseparameter_data[index][column_selector])
+                    raise
+            self.frequency_units=new_frequency_units
+            if self.options["column_descriptions"] is not None:
+                old=self.options["column_descriptions"][column_selector]
+                self.options["column_descriptions"][column_selector]=old.replace(old_unit,new_unit)
+            if self.options["column_units"] is not None:
+                old=self.options["column_units"][column_selector]
+                self.options["column_units"][column_selector]=old.replace(old_unit,new_unit)
+            if re.search(old_unit,self.column_names[column_selector]):
+                old=self.column_names[column_selector]
+                self.column_names[column_selector]=old.replace(old_unit,new_unit)
+        except:
+            print("Could not change the unit prefix of column {0}".format(column_selector))
+            raise
+
+
+    def get_column(self,column_name=None,column_index=None):
+        """Returns a column as a list given a column name or column index"""
+        if column_name is None:
+            if column_index is None:
+                return
+            else:
+                column_selector=column_index
+        else:
+            column_selector=self.column_names.index(column_name)
+        out_list=[self.sparameter_data[i][column_selector] for i in range(len(self.sparameter_data))]
+        return out_list
+
+class S1PV1(SNPBase):
     """A container for touchstone S1P. S1P are one port s-parameter files, with comments on any line
     began with ! and an option line in the format # GHz S RI R 50.0 that specifies the frequency units,
     stored parameter (default is S), data format (RI,MA or DB) and reference resistance data is 3 columns"""
@@ -177,6 +326,7 @@ class S1PV1():
             self.options[key]=value
         for key,value in options.iteritems():
             self.options[key]=value
+        SNPBase.__init__(self)
         self.elements=['sparameter_data','comments','option_line']
         self.metadata=self.options["metadata"]
         if file_path is not None:
@@ -322,21 +472,9 @@ class S1PV1():
         self.options=original_options
         return string_list_collapse(out_lines)
 
-    def __str__(self):
-        self.string=self.build_string()
-        return self.string
-
-    def save(self,file_path=None,**temp_options):
-        """Saves the s2p file to file_path with options, defaults to s2p.path"""
-        if file_path is None:
-            file_path=self.path
-        out_file=open(file_path,'w')
-        out_file.write(self.build_string(**temp_options))
-        out_file.close()
-
     def add_sparameter_row(self,row_data):
         """Adds data to the sparameter attribute, which is a list of s-parameters. The
-        data can be a list of 9 real numbers
+        data can be a list of 5 real numbers
          or dictionary with appropriate column names, note column names are not case sensitive"""
         if type(row_data) is ListType:
             if len(row_data) == 3:
@@ -396,55 +534,7 @@ class S1PV1():
             print("Could not convert row to a complex row")
             raise
 
-    def change_frequency_units(self,new_frequency_units=None):
-        """Changes the frequency units from the current to new_frequency_units. Frequency Units must be one
-        of the following: 'Hz','kHz','MHz', or 'GHz'. """
-        multipliers={"yotta":10.**24,"Y":10.**24,"zetta":10.**21,"Z":10.**21,"exa":10.**18,"E":10.**18,"peta":10.**15,
-                     "P":10.**15,"tera":10.**12,"T":10.**12,"giga":10.**9,"G":10.**9,"mega":10.**6,"M":10.**6,
-                     "kilo":10.**3,"k":10.**3,"hecto":10.**2,"h":10.**2,"deka":10.,"da":10.,None:1.,"":1.,
-                     "deci":10.**-1,"d":10.**-1,"centi":10.**-2,"c":10.**-2,"milli":10.**-3,"m":10.**-3,
-                     "micro":10.**-6,"mu":10.**-6,u"\u00B5":10.**-6,"nano":10.**-9,
-                     "n":10.**-9,"pico":10.**-12,"p":10.**-12,"femto":10.**-15,
-                     "f":10.**-15,"atto":10.**-18,"a":10.**-18,"zepto":10.**-21,"z":10.**-21,
-                     "yocto":10.**-24,"y":10.**-24}
-        # change column name into column index
-        old_prefix=re.sub('Hz','',self.frequency_units,flags=re.IGNORECASE)
-        new_prefix=re.sub('Hz','',new_frequency_units,flags=re.IGNORECASE)
-        unit='Hz'
-        column_selector=0
-        try:
-            if old_prefix is None:
-                old_prefix=""
-            if new_prefix is None:
-                new_prefix=""
-            old_unit=old_prefix+unit
-            new_unit=new_prefix+unit
-            if column_selector in self.column_names:
-                column_selector=self.column_names.index(column_selector)
-            for index,row in enumerate(self.sparameter_data):
-                if type(self.sparameter_data[index][column_selector]) in [FloatType,LongType]:
-                    #print "{0:e}".format(multipliers[old_prefix]/multipliers[new_prefix])
-                    self.sparameter_data[index][column_selector]=\
-                    (multipliers[old_prefix]/multipliers[new_prefix])*self.sparameter_data[index][column_selector]
-                elif type(self.sparameter_data[index][column_selector]) in [StringType,IntType]:
-                    self.sparameter_data[index][column_selector]=\
-                    str((multipliers[old_prefix]/multipliers[new_prefix])*float(self.sparameter_data[index][column_selector]))
-                else:
-                    print type(self.sparameter_data[index][column_selector])
-                    raise
 
-            if self.options["column_descriptions"] is not None:
-                old=self.options["column_descriptions"][column_selector]
-                self.options["column_descriptions"][column_selector]=old.replace(old_unit,new_unit)
-            if self.options["column_units"] is not None:
-                old=self.options["column_units"][column_selector]
-                self.options["column_units"][column_selector]=old.replace(old_unit,new_unit)
-            if re.search(old_unit,self.column_names[column_selector]):
-                old=self.column_names[column_selector]
-                self.column_names[column_selector]=old.replace(old_unit,new_unit)
-        except:
-            print("Could not change the unit prefix of column {0}".format(column_selector))
-            raise
 
     def change_data_format(self,new_format=None):
         """Changes the data format to new_format. Format must be one of the following: 'DB','MA','RI'
@@ -488,32 +578,6 @@ class S1PV1():
             print("Could not change data format the specified format was not DB, MA, or RI")
             return
 
-    def get_data_dictionary_list(self,use_row_formatter_string=True):
-        """Returns a python list with a row dictionary of form {column_name:data_column} for sparameters only"""
-        try:
-            if self.options["sparameter_row_formatter_string"] is None:
-                use_row_formatter_string=False
-            if use_row_formatter_string:
-                list_formatter=[item.replace("{"+str(index),"{0")
-                                for index,item in enumerate(self.options["sparameter_row_formatter_string"].split("{delimiter}"))]
-            else:
-                list_formatter=["{0}" for i in self.column_names]
-            out_list=[{self.column_names[i]:list_formatter[i].format(value) for i,value in enumerate(line)}
-                      for line in self.sparameter_data]
-            return out_list
-        except:raise
-
-    def get_column(self,column_name=None,column_index=None):
-        """Returns a column as a list given a column name or column index"""
-        if column_name is None:
-            if column_index is None:
-                return
-            else:
-                column_selector=column_index
-        else:
-            column_selector=self.column_names.index(column_name)
-        out_list=[self.sparameter_data[i][column_selector] for i in range(len(self.sparameter_data))]
-        return out_list
 
     def show(self,type='matplotlib'):
         """Shows the touchstone file"""
@@ -538,7 +602,7 @@ class S1PV1():
             self.change_data_format(current_format)
             plt.show()
 
-class S2PV1():
+class S2PV1(SNPBase):
     """A container for s2p version 1 files. Files consist of comments, option line, S parameter data
      and noise parameter data"""
     def __init__(self,file_path=None,**options):
@@ -576,6 +640,7 @@ class S2PV1():
             self.options[key]=value
         for key,value in options.iteritems():
             self.options[key]=value
+        SNPBase.__init__(self)
         self.elements=['sparameter_data','noiseparameter_data','comments','option_line']
         self.metadata=self.options["metadata"]
         self.noiseparameter_row_pattern=make_row_match_string(S2P_NOISE_PARAMETER_COLUMN_NAMES)+"\n"
@@ -707,6 +772,7 @@ class S2PV1():
     def build_string(self,**temp_options):
         """Creates the output string"""
         #number of lines = option line + comments that start at zero + rows in sparameter data + rows in noise data
+        # Is this different for snp? The only difference is noiseparameter_data.
         original_options=self.options
         for key,value in temp_options.iteritems():
             self.options[key]=value
@@ -762,17 +828,6 @@ class S2PV1():
         self.options=original_options
         return string_list_collapse(out_lines)
 
-    def __str__(self):
-        self.string=self.build_string()
-        return self.string
-
-    def save(self,file_path=None,**temp_options):
-        """Saves the s2p file to file_path with options, defaults to s2p.path"""
-        if file_path is None:
-            file_path=self.path
-        out_file=open(file_path,'w')
-        out_file.write(self.build_string(**temp_options))
-        out_file.close()
 
     def add_sparameter_row(self,row_data):
         """Adds data to the sparameter attribute, which is a list of s-parameters. The
@@ -864,67 +919,7 @@ class S2PV1():
                 new_row.append(float(row_data[column_name]))
             self.noiseparameter_data.append(new_row)
         self.options["noiseparameter_end_line"]+=1
-    #TODO:Add this to unit tests and fix it
-    def change_frequency_units(self,new_frequency_units=None):
-        """Changes the frequency units from the current to new_frequency_units. Frequency Units must be one
-        of the following: 'Hz','kHz','MHz', or 'GHz'. """
-        multipliers={"yotta":10.**24,"Y":10.**24,"zetta":10.**21,"Z":10.**21,"exa":10.**18,"E":10.**18,"peta":10.**15,
-                     "P":10.**15,"tera":10.**12,"T":10.**12,"giga":10.**9,"G":10.**9,"mega":10.**6,"M":10.**6,
-                     "kilo":10.**3,"k":10.**3,"hecto":10.**2,"h":10.**2,"deka":10.,"da":10.,None:1.,"":1.,
-                     "deci":10.**-1,"d":10.**-1,"centi":10.**-2,"c":10.**-2,"milli":10.**-3,"m":10.**-3,
-                     "micro":10.**-6,"mu":10.**-6,u"\u00B5":10.**-6,"nano":10.**-9,
-                     "n":10.**-9,"pico":10.**-12,"p":10.**-12,"femto":10.**-15,
-                     "f":10.**-15,"atto":10.**-18,"a":10.**-18,"zepto":10.**-21,"z":10.**-21,
-                     "yocto":10.**-24,"y":10.**-24}
-        # change column name into column index
-        old_prefix=re.sub('Hz','',self.frequency_units,flags=re.IGNORECASE)
-        new_prefix=re.sub('Hz','',new_frequency_units,flags=re.IGNORECASE)
-        unit='Hz'
-        column_selector=0
-        try:
-            if old_prefix is None:
-                old_prefix=""
-            if new_prefix is None:
-                new_prefix=""
-            old_unit=old_prefix+unit
-            new_unit=new_prefix+unit
-            if column_selector in self.column_names:
-                column_selector=self.column_names.index(column_selector)
-            for index,row in enumerate(self.sparameter_data[:]):
-                if type(self.sparameter_data[index][column_selector]) in [FloatType,LongType]:
-                    #print "{0:e}".format(multipliers[old_prefix]/multipliers[new_prefix])
-                    self.sparameter_data[index][column_selector]=\
-                    (multipliers[old_prefix]/multipliers[new_prefix])*self.sparameter_data[index][column_selector]
-                elif type(self.sparameter_data[index][column_selector]) in [StringType,IntType]:
-                    self.sparameter_data[index][column_selector]=\
-                    str((multipliers[old_prefix]/multipliers[new_prefix])*float(self.sparameter_data[index][column_selector]))
-                else:
-                    print type(self.sparameter_data[index][column_selector])
-                    raise
-            for index,row in enumerate(self.noiseparameter_data[:]):
-                if type(self.noiseparameter_data[index][column_selector]) in [FloatType,LongType]:
-                    #print "{0:e}".format(multipliers[old_prefix]/multipliers[new_prefix])
-                    self.noiseparameter_data[index][column_selector]=\
-                    (multipliers[old_prefix]/multipliers[new_prefix])*self.noiseparameter_data[index][column_selector]
-                elif type(self.noiseparameter_data[index][column_selector]) in [StringType,IntType]:
-                    self.noiseparameter_data[index][column_selector]=\
-                    str((multipliers[old_prefix]/multipliers[new_prefix])*float(self.noiseparameter_data[index][column_selector]))
-                else:
-                    print type(self.noiseparameter_data[index][column_selector])
-                    raise
-            self.frequency_units=new_frequency_units
-            if self.options["column_descriptions"] is not None:
-                old=self.options["column_descriptions"][column_selector]
-                self.options["column_descriptions"][column_selector]=old.replace(old_unit,new_unit)
-            if self.options["column_units"] is not None:
-                old=self.options["column_units"][column_selector]
-                self.options["column_units"][column_selector]=old.replace(old_unit,new_unit)
-            if re.search(old_unit,self.column_names[column_selector]):
-                old=self.column_names[column_selector]
-                self.column_names[column_selector]=old.replace(old_unit,new_unit)
-        except:
-            print("Could not change the unit prefix of column {0}".format(column_selector))
-            raise
+
 
     def change_data_format(self,new_format=None):
         """Changes the data format to new_format. Format must be one of the following: 'DB','MA','RI'
@@ -986,20 +981,6 @@ class S2PV1():
             print("Could not change data format the specified format was not DB, MA, or RI")
             return
 
-    def get_data_dictionary_list(self,use_row_formatter_string=True):
-        """Returns a python list with a row dictionary of form {column_name:data_column} for sparameters only"""
-        try:
-            if self.options["sparameter_row_formatter_string"] is None:
-                use_row_formatter_string=False
-            if use_row_formatter_string:
-                list_formatter=[item.replace("{"+str(index),"{0")
-                                for index,item in enumerate(self.options["sparameter_row_formatter_string"].split("{delimiter}"))]
-            else:
-                list_formatter=["{0}" for i in self.column_names]
-            out_list=[{self.column_names[i]:list_formatter[i].format(value) for i,value in enumerate(line)}
-                      for line in self.sparameter_data]
-            return out_list
-        except:raise
 
     def correct_switch_terms(self,switch_terms=None,switch_terms_format=None):
         """Corrects sparameter data for switch terms. Switch terms must be a list with a row of format
@@ -1016,17 +997,7 @@ class S2PV1():
             S12_corrected=(S12-S11*S12*SWR)/D
             S22_corrected=(S22-S12*S21*SWR)/D
             self.corrected_sparameter_data.append([row[0],S11_corrected,S21_corrected,S12_corrected,S22_corrected])
-    def get_column(self,column_name=None,column_index=None):
-        """Returns a column as a list given a column name or column index"""
-        if column_name is None:
-            if column_index is None:
-                return
-            else:
-                column_selector=column_index
-        else:
-            column_selector=self.column_names.index(column_name)
-        out_list=[self.sparameter_data[i][column_selector] for i in range(len(self.sparameter_data))]
-        return out_list
+
 
     def show(self,type='matplotlib'):
         """Shows the touchstone file"""
@@ -1065,6 +1036,10 @@ class S2PV1():
             self.change_data_format(current_format)
             plt.show()
 
+class SNP(SNPBase):
+    """SNP is a class that holds touchstone files of more than 2 ports. Use S1PV1 and S2PV2
+    for one and two ports, they have special methods"""
+    pass
 
 #-----------------------------------------------------------------------------
 # Module Scripts
@@ -1158,6 +1133,12 @@ def test_change_frequency_units(file_path="thru.s2p"):
                                              new_table.get_column("Frequency")))
     print new_table
     new_table.show()
+def test_build_snp_column_names():
+    """Tests the function build_snp_column_names"""
+    for n_port in range(1,10):
+        for format in ["RI","DB","MA"]:
+            print("The column names for a {0}-port device in {1} format are ".format(n_port,format))
+            print("{0}".format(build_snp_column_names(number_of_ports=n_port,format=format)))
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
@@ -1170,4 +1151,5 @@ if __name__ == '__main__':
     #test_change_format('20160301_30ft_cable_0.s2p')
     #test_change_frequency_units()
     #test_s2pv1('704b.S2P')
-    test_change_format('704b.S2P')
+    #test_change_format('704b.S2P')
+    test_build_snp_column_names()
