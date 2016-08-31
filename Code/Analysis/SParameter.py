@@ -158,13 +158,12 @@ def T_to_S(T_list):
         S22=-m[1,0]/m[1,1]
         S_list.append([frequency,np.matrix([[S11,S12],[S21,S22]])])
     return S_list
-# todo: figure out why Exr and Exf are not used in correction
+
 def correct_sparameters_eight_term(sparameters_complex,eight_term_correction):
     """Applies the eight term correction to sparameters_complex and returns
     a correct complex list in the form of [[frequency,S11,S21,S12,S22],..]. The eight term
     correction should be in the form [[frequency,S1_11,S1_21,S1_12,S1_22,S2_11,S2_21,S2_12,S2_22]..]
     Use s2p.sparameter_complex as input."""
-
     # first transform both lists to matrices
     s2p_matrix_list=two_port_complex_to_matrix_form(sparameters_complex)
     s1_list=[[row[0],row[1],row[2],row[3],row[4]] for row in eight_term_correction]
@@ -195,12 +194,33 @@ def correct_sparameters_sixteen_term(sparameters_complex,sixteen_term_correction
     The sixteen term correction should be a list of
     [frequency, S11, S12, S13,S14,S21, S22,S23,S24,S31,S32,S33,S34,S41,S42,S43,S44], etc are complex numbers
     Designed to use S2P.sparameter_complex and SNP.sparameter_complex"""
-    pass
+
     # first create 4 separate matrix lists for 16 term correction
-    s1_matrix_list
-    s2_matrix_list
-    s3_matrix_list
-    s3_matrix_list
+    s1_matrix_list=[]
+    s2_matrix_list=[]
+    s3_matrix_list=[]
+    s4_matrix_list=[]
+    # Then populate them with the right values
+    for index,correction in enumerate(sixteen_term_correction):
+        [frequency, S11, S12, S13,S14,S21, S22,S23,S24,S31,S32,S33,S34,S41,S42,S43,S44]=correction
+        s1_matrix_list.append([frequency,np.matrix([[S11,S12],[S21,S22]])])
+        s2_matrix_list.append([frequency,np.matrix([[S13,S14],[S23,S24]])])
+        s3_matrix_list.append([frequency,np.matrix([[S31,S32],[S41,S42]])])
+        s4_matrix_list.append([frequency,np.matrix([[S33,S34],[S43,S44]])])
+    sparameter_matrix_list=two_port_complex_to_matrix_form(sparameters_complex)
+    # Apply the correction
+    sparameter_out=[]
+    for index,sparameter in enumerate(sparameter_matrix_list):
+        frequency=sparameter[0]
+        s_matrix=sparameter[1]
+        [s11_matrix,s12_matrix,s21_matrix,s22_matrix]=[s1_matrix_list[index][1],s2_matrix_list[index][1],
+                                                   s3_matrix_list[index][1],s4_matrix_list[index][1]]
+        corrected_s_matrix=np.linalg.inv(s21_matrix*np.linalg.inv(s_matrix-s11_matrix)*s12_matrix+s22_matrix)
+        # This flips S12 and S21
+        sparameter_out.append([frequency,corrected_s_matrix[0,0],corrected_s_matrix[1,0],
+                                corrected_s_matrix[0,1],corrected_s_matrix[1,1]])
+    return sparameter_out
+
 def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction):
     """Applies the twelve term correction to sparameters and returns a new sparameter list.
     The sparameters should be a list of [frequency, S11, S21, S12, S22] where S terms are complex numbers.
@@ -208,7 +228,7 @@ def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction):
     [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr] where Edf, etc are complex numbers"""
     if len(sparameters_complex) != len(twelve_term_correction):
         raise TypeError("s parameter and twelve term correction must be the same length")
-    s_parameter_out=[]
+    sparameter_out=[]
     for index,row in enumerate(sparameters_complex):
         frequency=row[0]
         Sm=np.matrix(row[1:]).reshape((2,2))
@@ -221,8 +241,8 @@ def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction):
         S21 =(Sm[1,0]/(D*Etf))*(1+(Sm[1,1]-Edr)*(Esr-Elf)/Err)
         S12 = (Sm[0,1]/(D*Etr))*(1+(Sm[0,0]-Edf)*(Esf-Elr)/Erf)
         S22 = (Sm[1,1]-Edr)/(D*Err)*(1+(Sm[0,0]-Edf)*(Esf/Erf))-(Sm[0,1]*Sm[1,0]*Elr)/(D*Etf*Etr)
-        s_parameter_out.append([frequency,S11,S21,S12,S22])
-    return s_parameter_out
+        sparameter_out.append([frequency,S11,S21,S12,S22])
+    return sparameter_out
 
 def average_one_port_sparameters(table_list,**options):
     """Returns a table that is the average of the Sparameters in table list. The new table will have all the unique
