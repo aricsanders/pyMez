@@ -367,6 +367,7 @@ class S1PV1(SNPBase):
                   "sparameter_row_formatter_string":build_row_formatter(None,3),
                   "sparameter_data":[],
                   "sparameter_complex":[],
+                  "noiseparameter_data":[],
                   "comments":[],
                   "path":None,
                   "column_units":None,
@@ -379,6 +380,7 @@ class S1PV1(SNPBase):
             self.options[key]=value
         for key,value in options.iteritems():
             self.options[key]=value
+        self.noiseparameter_data=[]
         SNPBase.__init__(self)
         self.elements=['sparameter_data','comments','option_line']
         self.metadata=self.options["metadata"]
@@ -1568,7 +1570,7 @@ def test_option_string():
     print match.groupdict()["Format"] in FORMATS
 
 def test_S1PV1(file_path="OnePortTouchstoneTestFile.s1p"):
-    """Tests the s2pv1 class"""
+    """Tests the s1pv1 class"""
     os.chdir(TESTS_DIRECTORY)
     new_table=S1PV1(file_path)
     print new_table
@@ -1698,7 +1700,7 @@ def test_build_snp_column_names():
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    #test_S1PV1()
+    test_S1PV1()
     #test_option_string()
     #test_s2pv1()
     #test_s2pv1('TwoPortTouchstoneTestFile.s2p')
@@ -1706,7 +1708,7 @@ if __name__ == '__main__':
     #test_change_format('TwoPortTouchstoneTestFile.s2p')
     #test_change_format('20160301_30ft_cable_0.s2p')
     #test_change_format_SNP('setup20101028.s4p')
-    test_change_frequency_units('setup20101028.s4p')
+    #test_change_frequency_units('setup20101028.s4p')
     #test_change_frequency_units("B7_baseline_50ohm_OR2_10n0_4p0_REV2_EVB1_01new.s3p")
     #test_s2pv1('704b.S2P')
     #test_change_format('704b.S2P')

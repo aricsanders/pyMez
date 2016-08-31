@@ -133,6 +133,36 @@ def S2PV1_to_XMLDataTable(s2p,**options):
     XML_options["data_dictionary"]=data_dictionary
     new_xml_data_table=DataTable(None,**XML_options)
     return new_xml_data_table
+def SNP_to_XMLDataTable(snp,**options):
+    """Transforms a snp's sparameters to a XMLDataTable. Converts the format to #GHz DB first"""
+    defaults={"specific_descriptor":snp.options["specific_descriptor"],
+                     "general_descriptor":snp.options["general_descriptor"],
+                      "directory":snp.options["directory"],
+              "style_sheet":"../XSL/DEFAULT_MEASUREMENT_STYLE.xsl"
+                     }
+    XML_options={}
+    for key,value in defaults.iteritems():
+        XML_options[key]=value
+    for key,value in options.iteritems():
+        XML_options[key]=value
+    data_description={}
+    if snp.options["column_descriptions"] is not None:
+        for key,value in snp.options["column_descriptions"].iteritems():
+            data_description[key]=value
+    if snp.metadata is not None:
+        for key,value in snp.metadata.iteritems():
+            data_description[key]=value
+    else:
+        if snp.comments is not None:
+            for index,line in enumerate(snp.comments):
+                key="Comments_{0:0>3}".format(index)
+                data_description[key]=line[0]
+    snp.change_data_format(new_format='DB')
+    snp.change_frequency_units('GHz')
+    data_dictionary={"Data_Description":data_description,"Data":snp.get_data_dictionary_list()}
+    XML_options["data_dictionary"]=data_dictionary
+    new_xml_data_table=DataTable(None,**XML_options)
+    return new_xml_data_table
 
 def S1PV1_to_XMLDataTable(s1p,**options):
     """Transforms a s1p's sparameters to a XMLDataTable. Converts the format to RI first"""
@@ -295,7 +325,12 @@ def test_S2P_to_XMLDataTable(file_path="thru.s2p"):
     XML_s2p=S2PV1_to_XMLDataTable(s2p_file)
     XML_s2p.save()
     #print XML_s2p
-
+def test_S1PV1_to_XMLDataTable(file_path="OnePortTouchstoneTestFile.s1p"):
+    """Tests the S1PV1 to XMLDataTable translation"""
+    os.chdir(TESTS_DIRECTORY)
+    s1p_file=S1PV1(file_path)
+    XML_s1p=S1PV1_to_XMLDataTable(s1p_file)
+    XML_s1p.show()
 def timeit_script(script='test_AsciiDataTable_to_XMLDataTable()',
                   setup="from __main__ import test_AsciiDataTable_to_XMLDataTable",n_loops=10):
     """Returns the mean time from running script n_loops time. To import a script, put a string
@@ -313,7 +348,7 @@ def test_TwoPortCalrep_to_XMLDataTable(file_path='922729.asc',**options):
     os.chdir(TESTS_DIRECTORY)
     two_port=TwoPortCalrepModel(file_path)
     two_port.joined_table.save()
-    xml=TwoPortCalrep_to_XMLDataTable(two_port,**options)
+    xml=TwoPortCalrepModel_to_XMLDataTable(two_port,**options)
     xml.save()
     xml.save_HTML()
 
@@ -331,7 +366,7 @@ def test_TwoPortRawModel_to_XMLDataTable(file_path='TestFileTwoPortRaw.txt',**op
     os.chdir(TESTS_DIRECTORY)
     two_port=TwoPortRawModel(file_path)
     two_port.save("SavedTest2PortRaw.txt")
-    xml=TwoPortRaw_to_XMLDataTable(two_port,**options)
+    xml=TwoPortRawModel_to_XMLDataTable(two_port,**options)
     xml.save("SavedTest2PortRaw.xml")
     xml.save_HTML(file_path="SavedTest2PortRaw.html")
 
@@ -381,4 +416,5 @@ if __name__ == '__main__':
     #test_PowerRawModel_to_XMLDataTable(**{"style_sheet":"../XSL/POWER_RAW_STYLE_002.xsl"})
     #test_JBSparameter_to_S2PV1()
     #test_OnePortCalrep_to_XMLDataTable(**{"style_sheet":"../XSL/ONE_PORT_CALREP_STYLE_002.xsl"})
-    test_S2P_to_XMLDataTable('704b.S2P')
+    #test_S2P_to_XMLDataTable('704b.S2P')
+    test_S1PV1_to_XMLDataTable()
