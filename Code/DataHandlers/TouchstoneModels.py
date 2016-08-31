@@ -1507,39 +1507,54 @@ class SNP(SNPBase):
         else:
             print("Could not change data format the specified format was not DB, MA, or RI")
             return
-    def show(self,type='matplotlib'):
+    def show(self,**options):
         """Shows the touchstone file"""
+        defaults={"display_legend":True,
+                  "save_plot":False,
+                  "directory":None,
+                  "specific_descriptor":self.options["specific_descriptor"],
+                  "general_descriptor":self.options["general_descriptor"]+"Plot",
+                  "file_name":None,
+                  "type":"matplotlib"}
+        plot_options={}
+        for key,value in defaults.iteritems():
+            plot_options[key]=value
+        for key,value in options.iteritems():
+            plot_options[key]=value
         # plot data
-        if re.search('smith',type,re.IGNORECASE):
-            plt.figure(figsize=(8, 8))
-            val1=[row[1] for row in self.sparameter_complex]
-            val2=[row[4] for row in self.sparameter_complex]
-            ax = plt.subplot(1, 1, 1, projection='smith', axes_norm=50)
-            plt.plot(val1, markevery=1, label="S11")
-            plt.plot(val2, markevery=1, label="S22")
-           #ax.plot_vswr_circle(0.3 - 0.7j, real=1, solution2=True, label="Re(Z)->1")
-            plt.legend(loc="lower right")
-            plt.title("Matplotlib Smith Chart Projection")
-            plt.show()
-        else:
+
+        if re.search("matplot",plot_options["type"],re.IGNORECASE):
             current_format=self.format
             self.change_data_format('MA')
-            fig, axes = plt.subplots(nrows=3, ncols=2)
-            ax0, ax1, ax2, ax3, ax4, ax5 = axes.flat
-            ax0.plot(self.get_column('Frequency'),self.get_column('magS11'),'k-o')
-            ax0.set_title('Magnitude S11')
-            ax1.plot(self.get_column('Frequency'),self.get_column('argS11'),'ro')
-            ax1.set_title('Phase S11')
-            ax2.plot(self.get_column('Frequency'),self.get_column('magS21'),'k-o')
-            ax2.plot(self.get_column('Frequency'),self.get_column('magS12'),'b-o')
-            ax2.set_title('Magnitude S21 and S12')
-            ax3.plot(self.get_column('Frequency'),self.get_column('argS21'),'ro')
-            ax3.plot(self.get_column('Frequency'),self.get_column('argS12'),'bo')
-            ax3.set_title('Phase S21 and S12')
-            ax4.plot(self.get_column('Frequency'),self.get_column('magS22'),'k-o')
-            ax4.set_title('Magnitude S22')
-            ax5.plot(self.get_column('Frequency'),self.get_column('argS22'),'ro')
-            ax5.set_title('Phase S22')
+            number_rows=self.number_ports
+            fig, axes = plt.subplots(nrows=number_rows, ncols=2)
+            mag_axes=axes.flat[0::2]
+            arg_axes=axes.flat[1::2]
+            mag_names=self.column_names[1::2]
+            arg_names=self.column_names[2::2]
+            frequency_data=self.get_column('Frequency')
+
+            for index,ax in enumerate(mag_axes):
+                ax_names=mag_names[index::number_rows]
+                for row_index in range(number_rows):
+                    column_color=(1-float(row_index)/number_rows,0,float(row_index)/number_rows,.5)
+                    ax.plot(frequency_data,
+                            self.get_column(ax_names[row_index]),
+                            label=ax_names[row_index],color=column_color)
+                    if plot_options["display_legend"]:
+                        ax.legend(loc=1,fontsize='8')
+            for index,ax in enumerate(arg_axes):
+                ax_names=arg_names[index::number_rows]
+
+                for row_index in range(number_rows):
+                    column_color=(1-float(row_index)/number_rows,0,float(row_index)/number_rows,.5)
+                    ax.plot(frequency_data,
+                            self.get_column(ax_names[row_index]),
+                            label=ax_names[row_index],color=column_color)
+                    if plot_options["display_legend"]:
+                        ax.legend(loc=1,fontsize='8')
+
+
             plt.tight_layout()
             self.change_data_format(current_format)
             plt.show()
@@ -1673,7 +1688,7 @@ def test_change_frequency_units(file_path="thru.s2p"):
           "and the frequency values are {1}".format(new_table.frequency_units,
                                              new_table.get_column("Frequency")))
     print new_table
-    #new_table.show()
+    new_table.show()
 def test_build_snp_column_names():
     """Tests the function build_snp_column_names"""
     for n_port in range(1,10):
@@ -1690,8 +1705,8 @@ if __name__ == '__main__':
     #test_change_format()
     #test_change_format('TwoPortTouchstoneTestFile.s2p')
     #test_change_format('20160301_30ft_cable_0.s2p')
-    test_change_format_SNP('ThreePortTest.s3p')
-    test_change_frequency_units("ThreePortTest.s3p")
+    #test_change_format_SNP('setup20101028.s4p')
+    test_change_frequency_units('setup20101028.s4p')
     #test_change_frequency_units("B7_baseline_50ohm_OR2_10n0_4p0_REV2_EVB1_01new.s3p")
     #test_s2pv1('704b.S2P')
     #test_change_format('704b.S2P')

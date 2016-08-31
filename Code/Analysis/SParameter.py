@@ -92,9 +92,47 @@ def one_port_robin_comparision_plot(input_asc_file,input_res_file,**options):
     ax0.legend(loc='lower left', shadow=True)
     plt.show()
 
+def two_port_complex_to_matrix_form(complex_data):
+    """two_port_complex_to_matrix_form takes a list of [[frequency,S11,S21,S12,S22],..] and
+    returns a list in the
+    form [[frequency,np.matrix([[S11,S12],[S21,S22]])]..], it is meant to prepare data for correction"""
+    out_list=[]
+    for row in complex_data:
+        frequency=row[0]
+        [S11,S21,S12,S22]=row[1:]
+        m=np.matrix([[S11,S12],[S21,S22]])
+        out_list.append([frequency,m])
+    return out_list
+
+def two_port_matrix_to_complex_form(matrix_form_data):
+    """two_port_matrix_to_complex_form takes a list of [[frequency,np.matrix([[S11,S12],[S21,S22]])]..]
+    and returns a list in the
+    form [[frequency,S11,S21,S12,S22],..] , it is meant to undo two_port_complex_to_matrix_form"""
+    out_list=[]
+    for row in matrix_form_data:
+        frequency=row[0]
+        m=row[1]
+        [S11,S21,S12,S22]=[m[0,0],m[1,0],m[0,1],m[1,1]]
+        out_list.append([frequency,S11,S21,S12,S22])
+    return out_list
+
+def invert_two_port_matrix_list(two_port_matrix_form):
+    """invert_two_port_matrix_list inverts all elements in the list two_port_matrix_form,
+    which is in the format [[frequency,np.matrix([[S11,S12],[S21,S22]])]..] and returns a list
+    in [[frequency,inv(np.matrix([[S11,S12],[S21,S22]]))]..] format works on any list in the form [value, matrix]
+    """
+    out_list=[]
+    for row in two_port_matrix_form:
+        frequency=row[0]
+        m=row[1]
+        m_inv=np.linalg.inv(m)
+        out_list.append([frequency,m_inv])
+    return out_list
+
 def S_to_T(S_list):
     """Converts S-parameters into a T Matrix. Input form should be in frequency, np.matrix([[S11,S12],[S21,S22]])
     format. Returns a list in [frequency, np.matrix] format """
+    t_complex_list=[]
     t_matrix=[]
     for row in S_list:
         frequency=row[0]
@@ -104,6 +142,7 @@ def S_to_T(S_list):
         T21=-m[1,1]/m[1,0]
         T22=1/m[1,0]
         t_matrix.append([frequency,np.matrix([[T11,T12],[T21,T22]])])
+        t_complex_list.append([frequency,T11,T12,T21,T22])
     return t_matrix
 
 def T_to_S(T_list):
@@ -120,11 +159,53 @@ def T_to_S(T_list):
         S_list.append([frequency,np.matrix([[S11,S12],[S21,S22]])])
     return S_list
 # todo: figure out why Exr and Exf are not used in correction
-def correct_sparameters(sparameters_complex,twelve_term_correction):
+def correct_sparameters_eight_term(sparameters_complex,eight_term_correction):
+    """Applies the eight term correction to sparameters_complex and returns
+    a correct complex list in the form of [[frequency,S11,S21,S12,S22],..]. The eight term
+    correction should be in the form [[frequency,S1_11,S1_21,S1_12,S1_22,S2_11,S2_21,S2_12,S2_22]..]
+    Use s2p.sparameter_complex as input."""
+
+    # first transform both lists to matrices
+    s2p_matrix_list=two_port_complex_to_matrix_form(sparameters_complex)
+    s1_list=[[row[0],row[1],row[2],row[3],row[4]] for row in eight_term_correction]
+    s2_list=[[row[0],row[5],row[6],row[7],row[8]] for row in eight_term_correction]
+    s1_matrix_list=two_port_complex_to_matrix_form(s1_list)
+    s2_matrix_list=two_port_complex_to_matrix_form(s2_list)
+    # now transform to T matrices
+    t_matrix_list=S_to_T(s2p_matrix_list)
+    x_matrix_list=S_to_T(s1_list)
+    y_matrix_list=S_to_T(s2_list)
+    # now invert x
+    x_inverse_matrix_list=invert_two_port_matrix_list(x_matrix_list)
+    # now apply the correction
+    t_corrected_list=[]
+    for index,row in enumerate(t_matrix_list):
+        frequency=row[0]
+        t_corrected=x_inverse_matrix_list[index][1]*row[1]*y_matrix_list[index][1]
+        t_corrected_list.append([frequency,t_corrected])
+    # now transform back to S
+    s_corrected_matrix_list =T_to_S(t_corrected_list)
+    # now put back into single row form
+    s_corrected_list=two_port_matrix_to_complex_form(s_corrected_matrix_list)
+    return s_corrected_list
+
+def correct_sparameters_sixteen_term(sparameters_complex,sixteen_term_correction):
+    """Applies the sixteen term correction to sparameters and returns a new sparameter list.
+    The sparameters should be a list of [frequency, S11, S21, S12, S22] where S terms are complex numbers.
+    The sixteen term correction should be a list of
+    [frequency, S11, S12, S13,S14,S21, S22,S23,S24,S31,S32,S33,S34,S41,S42,S43,S44], etc are complex numbers
+    Designed to use S2P.sparameter_complex and SNP.sparameter_complex"""
+    pass
+    # first create 4 separate matrix lists for 16 term correction
+    s1_matrix_list
+    s2_matrix_list
+    s3_matrix_list
+    s3_matrix_list
+def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction):
     """Applies the twelve term correction to sparameters and returns a new sparameter list.
     The sparameters should be a list of [frequency, S11, S21, S12, S22] where S terms are complex numbers.
     The twelve term correction should be a list of
-    [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr]"""
+    [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr] where Edf, etc are complex numbers"""
     if len(sparameters_complex) != len(twelve_term_correction):
         raise TypeError("s parameter and twelve term correction must be the same length")
     s_parameter_out=[]
