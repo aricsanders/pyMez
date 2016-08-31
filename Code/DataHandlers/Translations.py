@@ -15,38 +15,44 @@ import timeit
 try:
     from pyMeasure.Code.DataHandlers.GeneralModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.GeneralModels was not found,"
-          "please put it on the python path")
+    print("The module pyMeasure.Code.DataHandlers.GeneralModels was not found or had an error,"
+          "please check module or put it on the python path")
     raise ImportError
 try:
     from pyMeasure.Code.DataHandlers.XMLModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.XMLModels was not found,"
-          "please put it on the python path")
+    print("The module pyMeasure.Code.DataHandlers.XMLModels was not found or had an error,"
+          "please check module or put it on the python path")
     raise ImportError
 try:
     from pyMeasure.Code.DataHandlers.NISTModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.NISTModels was not found,"
-          "please put it on the python path")
+    print("The module pyMeasure.Code.DataHandlers.NISTModels was not found or had an error,"
+          "please check module or put it on the python path")
     raise ImportError
 try:
     from pyMeasure.Code.DataHandlers.TouchstoneModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.TouchstoneModels was not found,"
-          "please put it on the python path")
+    print("The module pyMeasure.Code.DataHandlers.TouchstoneModels was not found or had an error,"
+          "please check module or put it on the python path")
+    raise ImportError
+try:
+    from pyMeasure.Code.DataHandlers.StatistiCALModels import *
+except:
+    print("The module pyMeasure.Code.DataHandlers.StatistiCALModels was not found or had an error,"
+          "please check module or put it on the python path")
     raise ImportError
 try:
     import pandas
 except:
-    print("The module pandas was not found,"
-          "please put it on the python path")
+    print("The module pandas was not found or had an error,"
+          "please check module or put it on the python path")
     raise ImportError
 try:
     import odo
 except:
-    print("The module odo was not found,"
-          "please put it on the python path")
+    print("The module odo was not found or had an error,"
+          "please check module or put it on the python path")
     raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants
@@ -65,6 +71,10 @@ def AsciiDataTable_to_XMLDataTable(ascii_data_table,**options):
         XML_options[key]=value
     for key,value in options.iteritems():
         XML_options[key]=value
+    # Todo: Clean this up so the AsciiDataTable.column_names always goes to an XML attribute that is properly named
+    for index,column_name in enumerate(ascii_data_table.column_names[:]):
+        ascii_data_table.column_names[index]=column_name.replace("*","_times_").replace("/","_div_").replace("(","_").replace(")","_").replace("-","_")
+
     data_description={}
     if ascii_data_table.options["column_descriptions"] is not None:
         if type(ascii_data_table.options["column_descriptions"]) is DictionaryType:
@@ -312,6 +322,17 @@ def test_OnePortRaw_to_XMLDataTable(input_file="OnePortRawTestFile.txt"):
     XML_one_port.save()
     XML_one_port.save_HTML()
 
+def test_StatistiCALSolutionModel_to_XMLDataTable(input_file="Solution_Plus.txt"):
+    """Tests a StatistiCALSolutionModel  ascii data table to an XMLDataTable transformation
+    and saves the result in the tests directory. """
+    os.chdir(TESTS_DIRECTORY)
+    solution=StatistiCALSolutionModel(input_file)
+    options={"style_sheet":"../XSL/DEFAULT_MEASUREMENT_STYLE.xsl"}
+    XML_solution=AsciiDataTable_to_XMLDataTable(solution,**options)
+    print XML_solution
+    XML_solution.show()
+    print XML_solution.to_HTML()
+
 def test_AsciiDataTable_to_DataFrame(input_file="700437.asc"):
     os.chdir(TESTS_DIRECTORY)
     one_port=OnePortCalrepModel(input_file)
@@ -418,3 +439,4 @@ if __name__ == '__main__':
     #test_OnePortCalrep_to_XMLDataTable(**{"style_sheet":"../XSL/ONE_PORT_CALREP_STYLE_002.xsl"})
     #test_S2P_to_XMLDataTable('704b.S2P')
     test_S1PV1_to_XMLDataTable()
+    test_StatistiCALSolutionModel_to_XMLDataTable()
