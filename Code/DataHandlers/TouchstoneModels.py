@@ -109,6 +109,28 @@ def print_s2p_attributes(new_table):
     print("The attribute {0} is {1}".format('column_names',str(new_table.column_names)))
     print("-"*80)
     print("The attribute {0} is {1}".format('noiseparameter_column_names',str(new_table.noiseparameter_column_names)))
+def print_snp_attributes(new_table):
+    """prints some important attributes of snp table"""
+    print("The attributes for the table as read in are")
+    print("-"*80)
+    print("The attribute {0} is {1}".format('sparameter_data',str(new_table.sparameter_data)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('noiseparameter_data',str(new_table.noiseparameter_data)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('comments',str(new_table.comments)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('option_line',str(new_table.option_line)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('format',str(new_table.format)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units)))
+    print("-"*80)
+    print("The attribute {0} is {1}".format('column_names',str(new_table.column_names)))
+    print("-"*80)
+    print("-"*80)
+    print("-"*80)
 
 def make_row_match_string(column_names,delimiter_pattern='[\s,]+'):
     """Returns a regex string for matching a row given a set of column names assuming the row delimiter
@@ -725,7 +747,7 @@ class S2PV1(SNPBase):
         """Reads a s2pv1 file and fixes any problems with delimiters. Since s2p files may use
         any white space or combination of white space as data delimiters it reads the data and creates
         a uniform delimter. This means a file saved with save() will not be the same as the original if the
-        whitespace is not uniform. """
+        whitespace is not uniform. It will also remove blank lines. """
         default_option_line=self.options["option_line"]
         in_file=open(self.path,'r')
         # to keep the logic clean we will repeatedly cycle through self.lines
@@ -1202,7 +1224,7 @@ class SNP(SNPBase):
         """Reads a snp v1 file and fixes any problems with delimiters. Since snp files may use
         any white space or combination of white space as data delimiters it reads the data and creates
         a uniform delimter. This means a file saved with save() will not be the same as the original if the
-        whitespace is not uniform. """
+        whitespace is not uniform. This function removes empty lines """
         default_option_line=self.options["option_line"]
 
 
@@ -1211,14 +1233,15 @@ class SNP(SNPBase):
         # but in theory we could do it all on the line input stage
         self.lines=[]
         self.data_lines=[]
+        removed_lines=[]
         for index,line in enumerate(in_file):
             self.lines.append(line)
             # if the line is just '\n' ignore it
             if line in ["","\n"]:
-                pass
+                removed_lines.append(index)
+                continue
             #if the line is an option line collect it
             elif re.search(OPTION_LINE_PATTERN,line,re.IGNORECASE):
-                option_line=line
                 continue
             elif re.match(COMMENT_PATTERN,line,re.IGNORECASE):
                 continue
@@ -1234,6 +1257,9 @@ class SNP(SNPBase):
             pass
         else:
             for index,comment in enumerate(self.comments):
+                skipped=removed_lines
+                shift=map(lambda x: x<comment[1],skipped).count(True)
+                self.comments[index][1]=self.comments[index][1]-shift
                 if comment[2]>1:
                     self.comments[index][2]=-1
                 else:
@@ -1439,7 +1465,7 @@ class SNP(SNPBase):
                 frequency=self.sparameter_complex[row_index][0]
                 complex_values=self.sparameter_complex[row_index][1:]
                 values=[]
-                for index,value in complex_values:
+                for index,value in enumerate(complex_values):
                     db=20.*math.log(abs(value),10.)
                     arg=(180./math.pi)*cmath.phase(value)
                     values.append(db)
@@ -1455,7 +1481,7 @@ class SNP(SNPBase):
                 frequency=self.sparameter_complex[row_index][0]
                 complex_values=self.sparameter_complex[row_index][1:]
                 values=[]
-                for index,value in complex_values:
+                for index,value in enumerate(complex_values):
                     mag=abs(value)
                     arg=(180./math.pi)*cmath.phase(value)
                     values.append(mag)
@@ -1471,7 +1497,7 @@ class SNP(SNPBase):
                 frequency=self.sparameter_complex[row_index][0]
                 complex_values=self.sparameter_complex[row_index][1:]
                 values=[]
-                for index,value in complex_values:
+                for index,value in enumerate(complex_values):
                     re_part=value.real
                     im_part=value.imag
                     values.append(re_part)
@@ -1481,6 +1507,43 @@ class SNP(SNPBase):
         else:
             print("Could not change data format the specified format was not DB, MA, or RI")
             return
+    def show(self,type='matplotlib'):
+        """Shows the touchstone file"""
+        # plot data
+        if re.search('smith',type,re.IGNORECASE):
+            plt.figure(figsize=(8, 8))
+            val1=[row[1] for row in self.sparameter_complex]
+            val2=[row[4] for row in self.sparameter_complex]
+            ax = plt.subplot(1, 1, 1, projection='smith', axes_norm=50)
+            plt.plot(val1, markevery=1, label="S11")
+            plt.plot(val2, markevery=1, label="S22")
+           #ax.plot_vswr_circle(0.3 - 0.7j, real=1, solution2=True, label="Re(Z)->1")
+            plt.legend(loc="lower right")
+            plt.title("Matplotlib Smith Chart Projection")
+            plt.show()
+        else:
+            current_format=self.format
+            self.change_data_format('MA')
+            fig, axes = plt.subplots(nrows=3, ncols=2)
+            ax0, ax1, ax2, ax3, ax4, ax5 = axes.flat
+            ax0.plot(self.get_column('Frequency'),self.get_column('magS11'),'k-o')
+            ax0.set_title('Magnitude S11')
+            ax1.plot(self.get_column('Frequency'),self.get_column('argS11'),'ro')
+            ax1.set_title('Phase S11')
+            ax2.plot(self.get_column('Frequency'),self.get_column('magS21'),'k-o')
+            ax2.plot(self.get_column('Frequency'),self.get_column('magS12'),'b-o')
+            ax2.set_title('Magnitude S21 and S12')
+            ax3.plot(self.get_column('Frequency'),self.get_column('argS21'),'ro')
+            ax3.plot(self.get_column('Frequency'),self.get_column('argS12'),'bo')
+            ax3.set_title('Phase S21 and S12')
+            ax4.plot(self.get_column('Frequency'),self.get_column('magS22'),'k-o')
+            ax4.set_title('Magnitude S22')
+            ax5.plot(self.get_column('Frequency'),self.get_column('argS22'),'ro')
+            ax5.set_title('Phase S22')
+            plt.tight_layout()
+            self.change_data_format(current_format)
+            plt.show()
+
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_option_string():
@@ -1570,6 +1633,18 @@ def test_change_format(file_path="thru.s2p"):
     print_s2p_attributes(new_table=new_table)
     print new_table
     new_table.show()
+def test_change_format_SNP(file_path="thru.s2p"):
+    """Tests the s2pv1 class"""
+    os.chdir(TESTS_DIRECTORY)
+    new_table=SNP(file_path)
+    print_snp_attributes(new_table=new_table)
+    new_table.change_data_format(new_format='DB')
+    print_snp_attributes(new_table=new_table)
+    new_table.change_data_format(new_format='MA')
+    print_snp_attributes(new_table=new_table)
+    new_table.change_data_format(new_format='RI')
+    print_snp_attributes(new_table=new_table)
+
 def test_change_frequency_units(file_path="thru.s2p"):
     """Tests the models change_frequency_units method"""
     os.chdir(TESTS_DIRECTORY)
@@ -1615,7 +1690,9 @@ if __name__ == '__main__':
     #test_change_format()
     #test_change_format('TwoPortTouchstoneTestFile.s2p')
     #test_change_format('20160301_30ft_cable_0.s2p')
-    test_change_frequency_units("B7_baseline_50ohm_OR2_10n0_4p0_REV2_EVB1_01new.s3p")
+    test_change_format_SNP('ThreePortTest.s3p')
+    test_change_frequency_units("ThreePortTest.s3p")
+    #test_change_frequency_units("B7_baseline_50ohm_OR2_10n0_4p0_REV2_EVB1_01new.s3p")
     #test_s2pv1('704b.S2P')
     #test_change_format('704b.S2P')
     #test_build_snp_column_names()
