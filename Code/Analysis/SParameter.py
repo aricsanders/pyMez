@@ -176,7 +176,7 @@ def T_to_S(T_list):
         S_list.append([frequency,np.matrix([[S11,S12],[S21,S22]])])
     return S_list
 
-def correct_sparameters_eight_term(sparameters_complex,eight_term_correction):
+def correct_sparameters_eight_term(sparameters_complex,eight_term_correction,reciprocal=True):
     """Applies the eight term correction to sparameters_complex and returns
     a correct complex list in the form of [[frequency,S11,S21,S12,S22],..]. The eight term
     correction should be in the form [[frequency,S1_11,S1_21,S1_12,S1_22,S2_11,S2_21,S2_12,S2_22]..]
@@ -205,13 +205,26 @@ def correct_sparameters_eight_term(sparameters_complex,eight_term_correction):
     # now put back into single row form
     s_corrected_list=two_port_matrix_to_complex_form(s_corrected_matrix_list)
     # now we take the geometric average and replace S12 and S21 with it
-    s_averaged_corrected=[]
-    for row in s_corrected_list:
-        [frequency,S11,S21,S12,S22]=row
-        mean_value=cmath.sqrt(S21*S12)
-        s_averaged_corrected.append([frequency,S11,mean_value,mean_value,S22])
+    if reciprocal:
+        s_averaged_corrected=[]
+        phase_last=0
+        for row in s_corrected_list:
+            [frequency,S11,S21,S12,S22]=row
+            # S12 and S21 are averaged together in a weird way that makes phase continuous
+            geometric_mean=cmath.sqrt(S21*S12)
+            root_select=1
+            phase_new=cmath.phase(geometric_mean)
+            # if the phase jumps by >180 but less than 270, then pick the other root
+            if abs(phase_new-phase_last)>math.pi/2 and abs(phase_new-phase_last)<3*math.pi/2:
+                root_select=-1
+            mean_S12_S21=root_select*cmath.sqrt(S21*S12)
+            s_averaged_corrected.append([frequency,S11,mean_S12_S21,mean_S12_S21,S22])
+            phase_last=cmath.phase(mean_S12_S21)
+        s_corrected_list=s_averaged_corrected
+    else:
+        pass
 
-    return s_averaged_corrected
+    return s_corrected_list
 
 def correct_sparameters_sixteen_term(sparameters_complex,sixteen_term_correction):
     """Applies the sixteen term correction to sparameters and returns a new sparameter list.
@@ -246,7 +259,7 @@ def correct_sparameters_sixteen_term(sparameters_complex,sixteen_term_correction
                                 corrected_s_matrix[0,1],corrected_s_matrix[1,1]])
     return sparameter_out
 
-def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction):
+def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction,reciprocal=True):
     """Applies the twelve term correction to sparameters and returns a new sparameter list.
     The sparameters should be a list of [frequency, S11, S21, S12, S22] where S terms are complex numbers.
     The twelve term correction should be a list of
@@ -254,6 +267,7 @@ def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction):
     if len(sparameters_complex) != len(twelve_term_correction):
         raise TypeError("s parameter and twelve term correction must be the same length")
     sparameter_out=[]
+    phase_last=0.
     for index,row in enumerate(sparameters_complex):
         frequency=row[0]
         Sm=np.matrix(row[1:]).reshape((2,2))
@@ -268,9 +282,35 @@ def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction):
         S12 = ((Sm[0,1]-Exf)/(D*Etr))*(1+(Sm[0,0]-Edf)*(Esf-Elr)/Erf)
         S22 = (Sm[1,1]-Edr)/(D*Err)*(1+(Sm[0,0]-Edf)*(Esf/Erf))-(Sm[0,1]*Sm[1,0]*Elr)/(D*Etf*Etr)
         # S12 and S21 are averaged together in a weird way that makes phase continuous
-        polar_average_S21_S12=cmath.sqrt(S21*S12)
-        sparameter_out.append([frequency,S11,polar_average_S21_S12,polar_average_S21_S12,S22])
+        geometric_mean=cmath.sqrt(S21*S12)
+        root_select=1
+        phase_new=cmath.phase(geometric_mean)
+        # if the phase jumps by >180 but less than 270, then pick the other root
+        if abs(phase_new-phase_last)>math.pi/2 and abs(phase_new-phase_last)<3*math.pi/2:
+            root_select=-1
+        mean_S12_S21=root_select*cmath.sqrt(S21*S12)
+        if reciprocal:
+            sparameter_out.append([frequency,S11,mean_S12_S21,mean_S12_S21,S22])
+        else:
+            sparameter_out.append([frequency,S11,S21,S12,S22])
+        phase_last=cmath.phase(mean_S12_S21)
     return sparameter_out
+def correct_sparameters(sparameters,correction,**options):
+    """Correction sparamters trys to return a corrected set of sparameters given uncorrected sparameters
+    and a correction. Correct sparameters will accept file_name's, pyMeasure classes,
+    complex lists or a mixture, returns value in the form it was entered. Correction is assumed reciprocal
+    unless recipocal=False"""
+    # defaults={"reciprocal":True}
+    # correction_options={}
+    # for key,value in defaults.iteritems():
+    #     correction_options[key]=value
+    # for key,value in options.iteritems():
+    #     correction_options[key]=value
+    # try:
+    #
+    #     if type(sparameters) is StringType:
+    #     # Assume sparameters is given by file name
+    pass
 
 def average_one_port_sparameters(table_list,**options):
     """Returns a table that is the average of the Sparameters in table list. The new table will have all the unique
