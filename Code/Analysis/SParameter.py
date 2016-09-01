@@ -102,6 +102,7 @@ def two_port_complex_to_matrix_form(complex_data):
         [S11,S21,S12,S22]=row[1:]
         m=np.matrix([[S11,S12],[S21,S22]])
         out_list.append([frequency,m])
+    #print out_list
     return out_list
 
 def two_port_matrix_to_complex_form(matrix_form_data):
@@ -113,7 +114,7 @@ def two_port_matrix_to_complex_form(matrix_form_data):
         frequency=row[0]
         m=row[1]
         [S11,S21,S12,S22]=[m[0,0],m[1,0],m[0,1],m[1,1]]
-        out_list.append([frequency,S11,S21,S12,S22])
+        out_list.append([frequency,S11,S12,S21,S22])
     return out_list
 
 def invert_two_port_matrix_list(two_port_matrix_form):
@@ -128,6 +129,22 @@ def invert_two_port_matrix_list(two_port_matrix_form):
         m_inv=np.linalg.inv(m)
         out_list.append([frequency,m_inv])
     return out_list
+def polar_average(complex_number_1,complex_number_2):
+    """Averages 2 complex numbers in polar coordinates and returns a single complex number"""
+    polar_number_1=cmath.polar(complex_number_1)
+    polar_number_2=cmath.polar(complex_number_2)
+    average_length=(polar_number_1[0]+polar_number_2[0])/2.
+    average_phase=(polar_number_1[1]+polar_number_2[1])/2.
+    out_value=cmath.rect(average_length,average_phase)
+    return out_value
+def polar_geometric_average(complex_number_1,complex_number_2):
+    """Averages 2 complex numbers in polar coordinates and returns a single complex number"""
+    polar_number_1=cmath.polar(complex_number_1)
+    polar_number_2=cmath.polar(complex_number_2)
+    average_length=(polar_number_1[0]*polar_number_2[0])**.5
+    average_phase=(polar_number_1[1]+polar_number_2[1])/2
+    out_value=cmath.rect(average_length,average_phase-math.pi)
+    return out_value
 
 def S_to_T(S_list):
     """Converts S-parameters into a T Matrix. Input form should be in frequency, np.matrix([[S11,S12],[S21,S22]])
@@ -172,21 +189,29 @@ def correct_sparameters_eight_term(sparameters_complex,eight_term_correction):
     s2_matrix_list=two_port_complex_to_matrix_form(s2_list)
     # now transform to T matrices
     t_matrix_list=S_to_T(s2p_matrix_list)
-    x_matrix_list=S_to_T(s1_list)
-    y_matrix_list=S_to_T(s2_list)
+    x_matrix_list=S_to_T(s1_matrix_list)
+    y_matrix_list=S_to_T(s2_matrix_list)
     # now invert x
     x_inverse_matrix_list=invert_two_port_matrix_list(x_matrix_list)
+    y_inverse_matrix_list=invert_two_port_matrix_list(y_matrix_list)
     # now apply the correction
     t_corrected_list=[]
     for index,row in enumerate(t_matrix_list):
         frequency=row[0]
-        t_corrected=x_inverse_matrix_list[index][1]*row[1]*y_matrix_list[index][1]
+        t_corrected=x_inverse_matrix_list[index][1]*row[1]*y_inverse_matrix_list[index][1]
         t_corrected_list.append([frequency,t_corrected])
     # now transform back to S
     s_corrected_matrix_list =T_to_S(t_corrected_list)
     # now put back into single row form
     s_corrected_list=two_port_matrix_to_complex_form(s_corrected_matrix_list)
-    return s_corrected_list
+    # now we take the geometric average and replace S12 and S21 with it
+    s_averaged_corrected=[]
+    for row in s_corrected_list:
+        [frequency,S11,S21,S12,S22]=row
+        mean_value=cmath.sqrt(S21*S12)
+        s_averaged_corrected.append([frequency,S11,mean_value,mean_value,S22])
+
+    return s_averaged_corrected
 
 def correct_sparameters_sixteen_term(sparameters_complex,sixteen_term_correction):
     """Applies the sixteen term correction to sparameters and returns a new sparameter list.
@@ -233,15 +258,18 @@ def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction):
         frequency=row[0]
         Sm=np.matrix(row[1:]).reshape((2,2))
         [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr]=twelve_term_correction[index]
+        #        frequency Edf Esf Erf Exf Elf Etf Edr Esr Err Exr Elr Etr.
 #         print [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr]
 #         print Sm[0,0]
         D =(1+(Sm[0,0]-Edf)*(Esf/Erf))*(1+(Sm[1,1]-Edr)*(Esr/Err))-(Sm[0,1]*Sm[1,0]*Elf*Elr)/(Etf*Etr)
 #         print D
         S11 =(Sm[0,0]-Edf)/(D*Erf)*(1+(Sm[1,1]-Edr)*(Esr/Err))-(Sm[0,1]*Sm[1,0]*Elf)/(D*Etf*Etr)
-        S21 =(Sm[1,0]/(D*Etf))*(1+(Sm[1,1]-Edr)*(Esr-Elf)/Err)
-        S12 = (Sm[0,1]/(D*Etr))*(1+(Sm[0,0]-Edf)*(Esf-Elr)/Erf)
+        S21 =((Sm[1,0]-Exr)/(D*Etf))*(1+(Sm[1,1]-Edr)*(Esr-Elf)/Err)
+        S12 = ((Sm[0,1]-Exf)/(D*Etr))*(1+(Sm[0,0]-Edf)*(Esf-Elr)/Erf)
         S22 = (Sm[1,1]-Edr)/(D*Err)*(1+(Sm[0,0]-Edf)*(Esf/Erf))-(Sm[0,1]*Sm[1,0]*Elr)/(D*Etf*Etr)
-        sparameter_out.append([frequency,S11,S21,S12,S22])
+        # S12 and S21 are averaged together in a weird way that makes phase continuous
+        polar_average_S21_S12=cmath.sqrt(S21*S12)
+        sparameter_out.append([frequency,S11,polar_average_S21_S12,polar_average_S21_S12,S22])
     return sparameter_out
 
 def average_one_port_sparameters(table_list,**options):

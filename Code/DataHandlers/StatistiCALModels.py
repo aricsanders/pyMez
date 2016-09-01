@@ -874,9 +874,9 @@ class StatistiCALSolutionModel(AsciiDataTable):
                 a=complex_array[5]
                 b=complex_array[6]
                 # S2=frequency,S2_11,S2_21,_S2_12,S2_22
-                S2=frequency+[complex_array[3],a*b,a/b,complex_array[4]]
+                S2=frequency+[complex_array[3],a,a,complex_array[4]]
                 self.S2.append(S2)
-                eight_term=frequency+[complex_array[0],complex_array[2],complex_array[2],complex_array[1]]+[complex_array[3],a*b,a/b,complex_array[4]]
+                eight_term=frequency+[complex_array[0],complex_array[2],complex_array[2],complex_array[1]]+[complex_array[3],a,a,complex_array[4]]
                 self.eight_term_correction.append(eight_term)
                 #print("The len(frequency+complex_array.tolist()) is {0}".format(len(frequency+complex_array.tolist())))
 

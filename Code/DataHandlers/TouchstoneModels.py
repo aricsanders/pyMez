@@ -1037,14 +1037,21 @@ class S2PV1(SNPBase):
             return
 
 
-    def correct_switch_terms(self,switch_terms=None,switch_terms_format=None):
+    def correct_switch_terms(self,switch_terms=None,switch_terms_format='port'):
         """Corrects sparameter data for switch terms. Switch terms must be a list with a row of format
         [Frequency,SWF,SWR] where SWF is the complex foward switch term (SWport2),
         SWR is the complex reverse switch term (SWport1)"""
+        if re.search('port',switch_terms_format,re.IGNORECASE):
+            foward_index=2
+            reverse_index=1
+        elif re.search('F',switch_terms_format,re.IGNORECASE):
+            foward_index=1
+            reverse_index=2
+
         self.corrected_sparameter_data=[]
-        for index,row in enumerate(self.sparameter_complex):
-            SWF=switch_terms[index][1]
-            SWR=switch_terms[index][2]
+        for index,row in enumerate(self.sparameter_complex[:]):
+            SWF=switch_terms[index][foward_index]
+            SWR=switch_terms[index][reverse_index]
             [S11,S21,S12,S22]=row[1:]
             D=1-S21*S12*SWR*SWF
             S11_corrected=(S11-S12*S21*SWF)/D
