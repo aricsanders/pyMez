@@ -299,18 +299,61 @@ def correct_sparameters(sparameters,correction,**options):
     """Correction sparamters trys to return a corrected set of sparameters given uncorrected sparameters
     and a correction. Correct sparameters will accept file_name's, pyMeasure classes,
     complex lists or a mixture, returns value in the form it was entered. Correction is assumed reciprocal
-    unless recipocal=False"""
-    # defaults={"reciprocal":True}
-    # correction_options={}
-    # for key,value in defaults.iteritems():
-    #     correction_options[key]=value
-    # for key,value in options.iteritems():
-    #     correction_options[key]=value
-    # try:
-    #
-    #     if type(sparameters) is StringType:
-    #     # Assume sparameters is given by file name
-    pass
+    unless reciprocal=False"""
+    defaults={"reciprocal":True,"output_type":None,"file_path":None}
+    correction_options={}
+    for key,value in defaults.iteritems():
+        correction_options[key]=value
+    for key,value in options.iteritems():
+        correction_options[key]=value
+    try:
+        # import and condition sparameters and correction
+        if type(sparameters) is StringType:
+            # Assume sparameters is given by file name
+            sparameters_table=S2PV1(sparameters)
+            sparameters=sparameters_table.sparameter_complex
+            output_type='file'
+        elif re.search('S2PV1',type(sparameters)):
+            output_type='S2PV1'
+            sparameters=sparameters.sparameter_complex
+        elif type(sparameters) is ListType:
+            # check to see if it is a list of complex variables or matrix
+            if type(sparameters[1]) is ComplexType:
+                output_type='complex_list'
+            # Handle frequency, matrix lists
+            elif type(sparameters[1]) in ['np.array','np.matrix'] and type(sparameters) is FloatType :
+                output_type='matrix_list'
+                sparameters=two_port_matrix_to_complex_form(sparameters)
+            # handle matrix
+        elif type(sparameters) in ['np.array','np.matrix']:
+            output_type='matrix'
+            raise
+        # Handle the correction types
+        if len(correction) is 13:
+            corrected_sparameters=correct_sparameters_twelve_term(sparameters,correction)
+        elif len(correction) is 17:
+            corrected_sparameters=correct_sparameters_sixteen_term(sparameters,correction)
+        elif len(correction) is 9:
+            corrected_sparameters=correct_sparameters_eight_term(sparameters,correction)
+        # Handle the output type using the derived one or the one entered as an option
+        if correction_options["output_type"] is None:
+            pass
+        else:
+            output_type=correction_options["output_type"]
+        if re.match('file',output_type, re.IGNORECASE):
+            output_table=S2PV1(correction_options["file_path"],sparameter_complex=corrected_sparameters)
+            output_table.save()
+            print("Output was saved as {0}".format(output_table.path))
+        elif re.search("complex",output_type,re.IGNORECASE):
+            return corrected_sparameters
+        elif re.search("matrix_list",output_type,re.IGNORECASE):
+            return two_port_complex_to_matrix_form(corrected_sparameters)
+        elif re.search("matrix",output_type,re.IGNORECASE):
+            raise
+
+    except:
+        print("Could not correct sparameters")
+        raise
 
 def average_one_port_sparameters(table_list,**options):
     """Returns a table that is the average of the Sparameters in table list. The new table will have all the unique
