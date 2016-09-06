@@ -31,7 +31,7 @@ try:
     from pyMeasure.Code.FrontEnds.KeithleyIVPanel import *
 except:
     print """Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path
-            Also check that the Boa Constructor Source is on sys.path --C:\Python25\Lib\site-packages"""
+            Also check that the Boa Constructor Source is on sys.path """
     raise
 
 #-------------------------------------------------------------------------------
