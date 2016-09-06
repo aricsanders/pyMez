@@ -221,6 +221,19 @@ def TwoPortCalrepModel_to_XMLDataTable(two_port_calrep_table,**options):
     new_xml=AsciiDataTable_to_XMLDataTable(table,**XML_options)
     return new_xml
 
+def TwoPortCalrepModel_to_S2PV1(two_port_calrep_table,**options):
+    """Transforms a TwoPortRawModel  to S2PV1"""
+    table=two_port_calrep_table
+    path=table.path.split('.')[0]+".s2p"
+    data=[[row["Frequency"],row["magS11"],row["argS11"],row["magS21"],row["argS21"],row["magS21"],
+           row["argS21"],row["magS22"],row["argS22"]] for row in table.joined_table.get_data_dictionary_list()]
+    comments=[[line,index,0] for index,line in enumerate(table.joined_table.header[:])]
+    s2p_options={"option_line":"# GHz S MA R 50","sparameter_data":data,
+                 "comments":comments,"path":path,"option_line_line":len(table.joined_table.header),
+                 "sparameter_begin_line":len(table.joined_table.header)+1,"column_names":S2P_MA_COLUMN_NAMES}
+    s2p_file=S2PV1(None,**s2p_options)
+    return s2p_file
+
 def OnePortCalrep_to_XMLDataTable(one_port_calrep_table,**options):
     """Converts the 1-port calrep model to xml"""
     table=one_port_calrep_table
