@@ -230,6 +230,62 @@ def parse_combined_float_list(float_string_list):
         new_row=map(lambda x:float(x),re.split("[\s|,]+",row.rstrip().lstrip().replace("\n","\t")))
         parsed_data.append(new_row)
     return parsed_data
+
+def s2p_mean(list_s2p_models,**options):
+    """Calculates the mean of the sparameter_data of a list of
+    s2p model and returns a new s2p model. The formats should be the same"""
+    #This will work on any table that the data is stored in data, need to add a sparameter version
+    defaults={"frequency_selector":0,"frequency_column_name":"Frequency"}
+    average_options={}
+    for key,value in defaults.iteritems():
+        average_options[key]=value
+    for key,value in options.iteritems():
+        average_options[key]=value
+    frequency_list=[]
+    average_data=[]
+    for table in list_s2p_models:
+        frequency_list=frequency_list+table.get_column("Frequency")
+    unique_frequency_list=sorted(list(set(frequency_list)))
+    for frequency in unique_frequency_list:
+        new_row=[]
+        for table in list_s2p_models:
+            data_list=filter(lambda x: x[average_options["frequency_selector"]]==frequency,table.data)
+            table_average=np.mean(np.array(data_list),axis=0)
+            new_row.append(table_average)
+            #print new_row
+        average_data.append(np.mean(new_row,axis=0).tolist())
+    average_options["sparameter_data"]=average_data
+    new_s2p=S2PV1(None,**average_options)
+    return new_s2p
+
+def s2p_difference(s2p_one,s2p_two,**options):
+    """Calculates the mean of the sparameter_data of a list of
+    s2p model and returns a new s2p model. The Frequency values must all be the same, formats should all be the same"""
+    list_s2p_models=[s2p_one,s2p_two]
+    frequency_check=list_s2p_models[0].get_columns("Frequency")
+    for model in list_s2p_models:
+        if model.get_columns("Frequency")==frequency_check:
+            pass
+        else:
+            raise TypeError("Frequencies must be of the same length")
+    defaults={"frequency_selector":0,"frequency_column_name":"Frequency"}
+    difference_options={}
+    for key,value in defaults.iteritems():
+        difference_options[key]=value
+    for key,value in options.iteritems():
+        difference_options[key]=value
+    difference_data=[]
+    for index,row in s2p_one.sparameter_data[:]:
+        a=np.array(row)
+        b=np.array(s2p_two.sparameter_data[index])
+        new_row=np.subtract(a,b)
+        new_row=new_row.tolist()
+        new_row[0]=row[0]
+        difference_data.append(new_row)
+    difference_options["sparameter_data"]=difference_data
+    new_s2p=S2PV1(None,**difference_options)
+    return new_s2p
+
 #-----------------------------------------------------------------------------
 # Module Classes
 
