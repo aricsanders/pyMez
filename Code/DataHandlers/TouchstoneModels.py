@@ -260,7 +260,8 @@ def s2p_mean(list_s2p_models,**options):
 
 def s2p_difference(s2p_one,s2p_two,**options):
     """Calculates the mean of the sparameter_data of a list of
-    s2p model and returns a new s2p model. The Frequency values must all be the same, formats should all be the same"""
+    s2p model and returns a new s2p model. The Frequency values must all be the same,
+    formats should all be the same"""
     list_s2p_models=[s2p_one,s2p_two]
     frequency_check=list_s2p_models[0].get_columns("Frequency")
     for model in list_s2p_models:
