@@ -13,17 +13,19 @@
 import os
 import cmath
 import math
+import sys
 #-----------------------------------------------------------------------------
 # Third Party Imports
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    from pyMeasure.Code.Utils.Alias import *
+    from Code.Utils.Alias import *
     METHOD_ALIASES=1
 except:
     print("The module pyMeasure.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 try:
-    from pyMeasure.Code.DataHandlers.GeneralModels import *
+    from Code.DataHandlers.GeneralModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.GeneralModels was not found,"
           "please put it on the python path")
@@ -166,8 +168,6 @@ def build_snp_row_formatter(number_ports=2,precision=None,number_columns=None):
     row_formatter=""
     if precision is None:
         precision=4
-    for row in number_rows_per_frequency:
-       pass
     for i in range(number_columns):
         if i==number_columns-1:
             row_formatter=row_formatter+"{"+str(i)+":.%sg}"%precision
@@ -249,7 +249,7 @@ def s2p_mean(list_s2p_models,**options):
     for frequency in unique_frequency_list:
         new_row=[]
         for table in list_s2p_models:
-            data_list=filter(lambda x: x[average_options["frequency_selector"]]==frequency,table.data)
+            data_list=filter(lambda x: x[average_options["frequency_selector"]]==frequency,table.sparameter_data)
             table_average=np.mean(np.array(data_list),axis=0)
             new_row.append(table_average)
             #print new_row
@@ -263,9 +263,9 @@ def s2p_difference(s2p_one,s2p_two,**options):
     s2p model and returns a new s2p model. The Frequency values must all be the same,
     formats should all be the same"""
     list_s2p_models=[s2p_one,s2p_two]
-    frequency_check=list_s2p_models[0].get_columns("Frequency")
+    frequency_check=list_s2p_models[0].get_column("Frequency")
     for model in list_s2p_models:
-        if model.get_columns("Frequency")==frequency_check:
+        if model.get_column("Frequency")==frequency_check:
             pass
         else:
             raise TypeError("Frequencies must be of the same length")
@@ -276,7 +276,7 @@ def s2p_difference(s2p_one,s2p_two,**options):
     for key,value in options.iteritems():
         difference_options[key]=value
     difference_data=[]
-    for index,row in s2p_one.sparameter_data[:]:
+    for index,row in enumerate(s2p_one.sparameter_data[:]):
         a=np.array(row)
         b=np.array(s2p_two.sparameter_data[index])
         new_row=np.subtract(a,b)
@@ -1761,10 +1761,34 @@ def test_build_snp_column_names():
         for format in ["RI","DB","MA"]:
             print("The column names for a {0}-port device in {1} format are ".format(n_port,format))
             print("{0}".format(build_snp_column_names(number_of_ports=n_port,format=format)))
+def test_s2p_mean(s2p_list=["thru.s2p","thru.s2p"]):
+    """Tests the s2p_mean function by applying it the files in TESTS_DIRECTORY"""
+    os.chdir(TESTS_DIRECTORY)
+    s2p_models=[]
+    for file_name in s2p_list:
+        s2p_models.append(S2PV1(file_name))
+    mean=s2p_mean(s2p_models)
+    mean.show()
+def test_s2p_difference(s2p_one="thru.s2p",s2p_two="thru.s2p"):
+    """Tests the s2p_difference function by applying it the files in TESTS_DIRECTORY"""
+    os.chdir(TESTS_DIRECTORY)
+    difference=s2p_difference(s2p_one=S2PV1(s2p_one),s2p_two=S2PV1(s2p_two))
+    difference.show()
+def test_s2p_mean_and_difference(s2p_one="thru.s2p",s2p_two="thru.s2p"):
+    "Tests taking a difference and then a mean"
+    os.chdir(TESTS_DIRECTORY)
+    s2p=S2PV1(s2p_one)
+    s2p.show()
+    difference=s2p_difference(s2p_one=s2p,s2p_two=S2PV1(s2p_two))
+    difference.show()
+    mean=s2p_mean([s2p,difference])
+    mean.show()
+
+
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    test_S1PV1()
+    #test_S1PV1()
     #test_option_string()
     #test_s2pv1()
     #test_s2pv1('TwoPortTouchstoneTestFile.s2p')
@@ -1780,3 +1804,7 @@ if __name__ == '__main__':
     #test_SNP()
     #test_SNP("B7_baseline_50ohm_OR2_10n0_4p0_REV2_EVB1_01new.s3p")
     #test_SNP('setup20101028.s4p')
+    # test_s2p_mean()
+    # test_s2p_difference()
+    # test_s2p_mean(["thru.s2p","thru.s2p","thru.s2p"])
+    test_s2p_mean_and_difference()

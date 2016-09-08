@@ -11,24 +11,27 @@
 # Standard Imports
 import re
 import datetime
+import sys
+import os
 
 #-----------------------------------------------------------------------------
 # Third Party Imports
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    from pyMeasure.Code.Utils.Alias import *
+    from Code.Utils.Alias import *
     METHOD_ALIASES=1
 except:
     print("The module pyMeasure.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 try:
-    from pyMeasure.Code.DataHandlers.GeneralModels import *
+    from Code.DataHandlers.GeneralModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.GeneralModels was not found,"
           "please put it on the python path")
     raise ImportError
 try:
-    from pyMeasure.Code.DataHandlers.TouchstoneModels import *
+    from Code.DataHandlers.TouchstoneModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.TouchstoneModels was not found,"
           "please put it on the python path")

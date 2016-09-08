@@ -19,12 +19,14 @@
 #-------------------------------------------------------------------------------
 # Standard Imports
 import wx
+import sys
+import os
 
 #-------------------------------------------------------------------------------
 #Thid Party Imports
-
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    from pyMeasure.Code.InstrumentControl.Experiments import *
+    from Code.InstrumentControl.Experiments import *
 except:
     print('There was an error importing pyMeasure')
 IMAGE_DIRECTORY=os.path.join(os.path.dirname(os.path.realpath(__file__)),'img')

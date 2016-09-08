@@ -15,6 +15,7 @@ import sys
 
 #-----------------------------------------------------------------------------
 # Third Party Imports
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     import numpy as np
 except:
@@ -30,9 +31,9 @@ try:
     #Todo: this could lead to a cyclic dependency, it really should import only the models it analyzes
     #Todo: If analysis is to be in the top import, none of the models should rely on it
     #import pyMeasure.Code.DataHandlers.NISTModels
-    from pyMeasure.Code.DataHandlers.NISTModels import *
-    from pyMeasure.Code.DataHandlers.TouchstoneModels import *
-    from pyMeasure.Code.DataHandlers.GeneralModels import *
+    from Code.DataHandlers.NISTModels import *
+    from Code.DataHandlers.TouchstoneModels import *
+    from Code.DataHandlers.GeneralModels import *
     #from pyMeasure import *
 except:
     print("The subpackage pyMeasure.Code.DataHandlers did not import properly,"

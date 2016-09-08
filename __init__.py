@@ -1,3 +1,5 @@
+#TODO: Fix any circular imports, I am not sure if __all__ is the right way to do this
+# It appears any import of pyMeasure. causes this file to execute, creating a circular import
 
 from pyMeasure.Code.Utils.Names import *
 from pyMeasure.Code.DataHandlers.NISTModels import *
@@ -14,4 +16,4 @@ from pyMeasure.Code.Analysis.SParameter import *
 
 
 
-#__all__=["pyMeasure.Code.Utils.Names","pyMeasure.Code.DataHandlers.NISTModels"]
+# __all__=["Code"]

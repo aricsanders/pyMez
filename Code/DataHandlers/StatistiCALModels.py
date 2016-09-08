@@ -10,16 +10,18 @@ information on statistical can be found at
  http://www.nist.gov/ctl/rf-technology/related-software.cfm """
 #-----------------------------------------------------------------------------
 # Standard Imports
-
+import sys
+import os
 #-----------------------------------------------------------------------------
 # Third Party Imports
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     import win32com.client
 except:
     print("The win32com package is required to run StatistiCAL models")
     raise ImportError
 try:
-    from pyMeasure.Code.DataHandlers.GeneralModels import *
+    from Code.DataHandlers.GeneralModels import *
 except:
     print("pyMeasure.Code.DataHandlers.GeneralModels is required to run StatistiCAL models")
     raise ImportError

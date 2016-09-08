@@ -13,19 +13,20 @@
 import os
 import time
 import datetime
+import sys
 
 #-------------------------------------------------------------------------------
 # Third Party Imports
-
-try: 
-    import pyMeasure
-except:
-    print("The topmost pyMeasure folder was not found please make sure that the directory directly above it is on sys.path") 
-    raise
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
+# try:
+#     import pyMeasure
+# except:
+#     print("The topmost pyMeasure folder was not found please make sure that the directory directly above it is on sys.path")
+#     raise
 
 try:
-    import pyMeasure.Code.InstrumentControl.Instruments
-    import pyMeasure.Code.DataHandlers.XMLModels
+    import Code.InstrumentControl.Instruments
+    import Code.DataHandlers.XMLModels
 except:
     print "This module requires pyMeasure.Code to be on sys.path"
     raise
@@ -39,7 +40,7 @@ except:
 #-------------------------------------------------------------------------------
 # Module Constants
 
-PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMeasure.__file__))
+PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
 KEITHLEY_INSTRUMENT_SHEET=os.path.join(PYMEASURE_ROOT,
 'Instruments','KEITHLEY6487_NSOM.xml').replace('\\','/')
 
@@ -54,7 +55,7 @@ class KeithleyIV():
     def __init__(self):
         """ Intializes the KeithleyIV experiment class"""
         try:
-            self.instrument=pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument('Keithley')
+            self.instrument=Code.InstrumentControl.Instruments.VisaInstrument('Keithley')
         except:
             print 'Entering Fake Mode'
             pass
@@ -143,7 +144,7 @@ class KeithleyIV():
         'Date':datetime.datetime.utcnow().isoformat(),
         'Notes':self.notes,'Name':self.name,'Resistance':str(self.resistance)}
         self.data_dictionary['Data']=self.data_list
-        self.measurement_data=pyMeasure.Code.DataHandlers.XMLModels.DataTable(**self.data_dictionary)
+        self.measurement_data=Code.DataHandlers.XMLModels.DataTable(**self.data_dictionary)
         self.measurement_data.save()   
         
     def plot_data(self):

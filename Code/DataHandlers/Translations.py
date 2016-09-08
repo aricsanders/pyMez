@@ -10,34 +10,37 @@
 #-----------------------------------------------------------------------------
 # Standard Imports
 import timeit
+import os
+import sys
 #-----------------------------------------------------------------------------
 # Third Party Imports
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    from pyMeasure.Code.DataHandlers.GeneralModels import *
+    from Code.DataHandlers.GeneralModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.GeneralModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
 try:
-    from pyMeasure.Code.DataHandlers.XMLModels import *
+    from Code.DataHandlers.XMLModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.XMLModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
 try:
-    from pyMeasure.Code.DataHandlers.NISTModels import *
+    from Code.DataHandlers.NISTModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.NISTModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
 try:
-    from pyMeasure.Code.DataHandlers.TouchstoneModels import *
+    from Code.DataHandlers.TouchstoneModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.TouchstoneModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
 try:
-    from pyMeasure.Code.DataHandlers.StatistiCALModels import *
+    from Code.DataHandlers.StatistiCALModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.StatistiCALModels was not found or had an error,"
           "please check module or put it on the python path")

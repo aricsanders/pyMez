@@ -12,27 +12,30 @@
 import os
 import fnmatch
 import datetime
+import sys
+import os
 #-----------------------------------------------------------------------------
 # Third Party Imports
 
 # All imports in this section should only be from pyMeasure.Code.Utils or pyMeasure.Code.DataHandlers
 # or external packages not in python 2.7. If an import is cyclic, that is this module imports another module
 # and that module imports this one, they should be joined.
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    from pyMeasure.Code.Utils.Alias import *
+    from Code.Utils.Alias import *
     METHOD_ALIASES=1
 except:
     print("The module pyMeasure.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 try:
-    from pyMeasure.Code.DataHandlers.GeneralModels import *
+    from Code.DataHandlers.GeneralModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.GeneralModels was not found,"
           "please put it on the python path")
     raise ImportError
 try:
-    from pyMeasure.Code.DataHandlers.TouchstoneModels import *
+    from Code.DataHandlers.TouchstoneModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.TouchstoneModels was not found,"
           "please put it on the python path")

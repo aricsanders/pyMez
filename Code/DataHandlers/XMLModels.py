@@ -11,6 +11,7 @@ requires lxml to be installed. """
 #-----------------------------------------------------------------------------
 # Standard Imports
 import os
+import sys
 import xml.dom                                     # Xml document handling
 import xml.dom.minidom                             # For xml parsing
 from xml.dom.minidom import getDOMImplementation   # Making blank XML documents
@@ -22,6 +23,9 @@ import fnmatch
 #-----------------------------------------------------------------------------
 # Third Party Imports
 # For XLST transformations of the data
+# Add Code Subpackage to sys.path
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
+print(__package__)
 try:
     from lxml import etree
     XSLT_CAPABLE=1
@@ -31,15 +35,16 @@ except:
     pass
 # For auto generation of common method aliases
 try:
-    from pyMeasure.Code.Utils.Alias import *
+    from Code.Utils.Alias import alias
     METHOD_ALIASES=1
 except:
+    raise
     print("The module pyMeasure.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 # For Auto-naming of files if path is not specified
 try:
-    from pyMeasure.Code.Utils.Names import auto_name
+    from Code.Utils.Names import auto_name
     DEFAULT_FILE_NAME=None
 except:
     print("The function auto_name in pyMeasure.Code.Utils.Names was not found")
@@ -47,24 +52,17 @@ except:
     DEFAULT_FILE_NAME='New_XML.xml'
     pass
 # For retrieving metadata
+
 try:
-    from pyMeasure.Code.Utils.Names import auto_name
-    DEFAULT_FILE_NAME=None
-except:
-    print("The function auto_name in pyMeasure.Code.Utils.Names was not found")
-    print("Setting Default file name to New_XML.xml")
-    DEFAULT_FILE_NAME='New_XML.xml'
-    pass
-try:
-    from pyMeasure.Code.Utils.GetMetadata import *
+    from Code.Utils.GetMetadata import *
 except:
     print "Can not find the module GetMetadata, please add it to sys.path"
     print "Anything that uses the functions from GetMetadata will be broken"
     pass
-import pyMeasure
+#import pyMeasure
 #-----------------------------------------------------------------------------
 # Module Constants
-PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMeasure.__file__))
+PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
 INSTRUMENT_SHEETS=fnmatch.filter(os.listdir(os.path.join(
 PYMEASURE_ROOT,'Instruments')),'*.xml')
 XSLT_REPOSITORY='../XSL'

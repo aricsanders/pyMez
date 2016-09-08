@@ -18,17 +18,17 @@ from types import *
 import re
 import copy
 
-
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    import pyMeasure
-    from pyMeasure.Code.FrontEnds.IEPanel import *
-    from pyMeasure.Code.FrontEnds.EndOfDayDialog import *
+    #import pyMeasure
+    from Code.FrontEnds.IEPanel import *
+    from Code.FrontEnds.EndOfDayDialog import *
     #from pyMeasure.Code.FrontEnds.ShellPanel import *
-    from pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel import *
-    from pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel import *
-    from pyMeasure.Code.FrontEnds.VisaDialog import *
-    from pyMeasure.Code.FrontEnds.MatplotlibWxPanel import *
-    from pyMeasure.Code.FrontEnds.KeithleyIVPanel import *
+    from Code.FrontEnds.SimpleLogLowerInterfacePanel import *
+    from Code.FrontEnds.SimpleArbDBLowerInterfacePanel import *
+    from Code.FrontEnds.VisaDialog import *
+    from Code.FrontEnds.MatplotlibWxPanel import *
+    from Code.FrontEnds.KeithleyIVPanel import *
 except:
     print """Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path
             Also check that the Boa Constructor Source is on sys.path """
@@ -36,7 +36,7 @@ except:
 
 #-------------------------------------------------------------------------------
 #Constants
-PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMeasure.__file__))
+PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
 FRONTENDS_DIRECTORY=os.path.join(PYMEASURE_ROOT,'Code','FrontEnds')
 IMAGE_DIRECTORY=os.path.join(PYMEASURE_ROOT,'Code','FrontEnds','img')
 JAVASCRIPT_STRING="""<html>

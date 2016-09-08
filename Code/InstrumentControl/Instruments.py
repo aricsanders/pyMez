@@ -15,10 +15,11 @@ import re
 from types import *
 from ctypes import *
 import datetime,time
-
+import sys
 
 #-------------------------------------------------------------------------------
 # Third Party Imports
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try: 
     from PIL import Image
     PIL_AVAILABLE=1
@@ -34,9 +35,9 @@ except:
     pass 
 try:
     #raise
-    import pyMeasure.Code.DataHandlers.XMLModels
-    InstrumentSheet=pyMeasure.Code.DataHandlers.XMLModels.InstrumentSheet
-    InstrumentState=pyMeasure.Code.DataHandlers.XMLModels.InstrumentState
+    import Code.DataHandlers.XMLModels
+    InstrumentSheet=Code.DataHandlers.XMLModels.InstrumentSheet
+    InstrumentState=Code.DataHandlers.XMLModels.InstrumentState
     DATA_SHEETS=1
     #print dir(pyMeasure)
 except:
@@ -47,7 +48,7 @@ except:
     pass
 
 try:
-    from pyMeasure.Code.Utils.Alias import *
+    from Code.Utils.Alias import *
     METHOD_ALIASES=1
 except:
     METHOD_ALIASES=0
@@ -59,7 +60,7 @@ ACTIVE_COMPONENTS=[PIL_AVAILABLE,DATA_SHEETS,METHOD_ALIASES]
 INSTRUMENT_TYPES=['GPIB','COMM','OCEAN_OPTICS','MIGHTEX','LABJACK']
 INSTRUMENTS_DEFINED=[]
 #TODO Make PYMEASURE_ROOT be read from the settings folder
-PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMeasure.__file__))
+PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
 #-------------------------------------------------------------------------------
 # Module Functions
 
