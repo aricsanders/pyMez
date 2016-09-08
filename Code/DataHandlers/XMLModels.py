@@ -25,7 +25,7 @@ import fnmatch
 # For XLST transformations of the data
 # Add Code Subpackage to sys.path
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
-print(__package__)
+#print(__package__)
 try:
     from lxml import etree
     XSLT_CAPABLE=1
