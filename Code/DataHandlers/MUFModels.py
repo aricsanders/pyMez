@@ -10,11 +10,13 @@ Most models are xml based"""
 
 #-----------------------------------------------------------------------------
 # Standard Imports
-
+import sys
+import os
 #-----------------------------------------------------------------------------
 # Third Party Imports
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    from pyMeasure.Code.DataHandlers.XMLModels import *
+    from Code.DataHandlers.XMLModels import *
 except:
     print("The module pyMeasure.Code.DataHandlers.XMLModels was not found,"
           "please put it on the python path")
