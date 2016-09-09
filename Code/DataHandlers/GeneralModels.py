@@ -1559,6 +1559,10 @@ class AsciiDataTable():
         out_list=[self.data[i][column_selector] for i in range(len(self.data))]
         return out_list
 
+    def __getitem__(self, item):
+        """Controls how the model responds to self["Item"]"""
+        return self.get_column(column_name=item)
+
     def get_data_dictionary_list(self,use_row_formatter_string=True):
         """Returns a python list with a row dictionary of form {column_name:data_column}"""
         try:
@@ -2049,6 +2053,26 @@ def test_add_column():
                                            new_table.options["row_formatter_string"]))
     print("The new table after adding the column is :\n")
     print new_table
+def test_AsciiDataTable_get_column_and_getitem():
+    """Tests the get_column and __getitem__ methods"""
+    options={"column_names":["Frequency","b","c"],"column_names_delimiter":",","data":[[0.1*10**10,1,2],[2*10**10,3,4]],"data_delimiter":'\t',
+             "header":['Hello There',"My Darling"],"column_names_begin_token":'#',"comment_begin":'!',
+             "comment_end":"\n",
+             "directory":TESTS_DIRECTORY,
+             "column_units":["Hz",None,None],
+             "column_descriptions":["Frequency in Hz",None,None],
+             "column_types":['float','float','float'],
+             "row_formatter_string":"{0:.2e}{delimiter}{1}{delimiter}{2}",
+             "treat_header_as_comment":True}
+    new_table=AsciiDataTable(None,**options)
+    print("The new table is :\n")
+    print new_table
+
+    print("The value of {0} is {1}".format('new_table["Frequency"]',
+                                           new_table["Frequency"]))
+    print("The value of {0} is {1}".format('new_table.get_column("Frequency")',
+                                           new_table.get_column("Frequency")))
+
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
@@ -2062,4 +2086,5 @@ if __name__ == '__main__':
     #test_save_schema()
     #test_read_schema()
     #test_change_unit_prefix()
-    test_add_column()
+    #test_add_column()
+    test_AsciiDataTable_get_column_and_getitem()

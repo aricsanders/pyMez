@@ -399,6 +399,18 @@ class SNPBase():
             column_selector=self.column_names.index(column_name)
         out_list=[self.sparameter_data[i][column_selector] for i in range(len(self.sparameter_data))]
         return out_list
+    def __getitem__(self, item):
+        """Controls how the model responds to self["Item"]"""
+        if item in self.column_names:
+            return self.get_column(column_name=item)
+        elif item in ["sparameter_data","data"]:
+            return self.sparameter_data
+        elif item in ["sparameter_complex","complex_data"]:
+            return self.sparameter_complex
+        elif item in ["noiseparameter_data","noise"]:
+            return self.noiseparameter_data
+
+
 
 class S1PV1(SNPBase):
     """A container for touchstone S1P. S1P are one port s-parameter files, with comments on any line
