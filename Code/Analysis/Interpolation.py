@@ -77,4 +77,4 @@ def test_interpolate(data_set=None):
 # Module Runner
 if __name__ == '__main__':
     test_interpolate()
-    test_interpolate(data_set=[[i,complex(2*i,2*i)] for i in range(0,200,2)])
+    test_interpolate(data_set=[[i,complex(2.2*i,2.5*i)] for i in range(0,200,2)])
