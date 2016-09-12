@@ -15,22 +15,23 @@ from types import *
 import re
 import copy
 
-
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    from pyMeasure.Code.FrontEnds.IEPanel import *
-    from pyMeasure.Code.FrontEnds.EndOfDayDialog import *
-    from pyMeasure.Code.FrontEnds.ShellPanel import *
-    from pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel import *
-    from pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel import *
-    from pyMeasure.Code.FrontEnds.VisaDialog import *
+    from Code.FrontEnds.IEPanel import *
+    from Code.FrontEnds.EndOfDayDialog import *
+    #ShellPanel must be imported in the model runner
+    #from Code.FrontEnds.ShellPanel import *
+    from Code.FrontEnds.SimpleLogLowerInterfacePanel import *
+    from Code.FrontEnds.SimpleArbDBLowerInterfacePanel import *
+    from Code.FrontEnds.VisaDialog import *
 except:
     print """Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path
-            Also check that the Boa Constructor Source is on sys.path --C:\Python25\Lib\site-packages"""
+            Also check that the Boa Constructor Source is on sys.path --C:\Python27\Lib\site-packages"""
     raise
 
 #-------------------------------------------------------------------------------
 #Constants
-PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMeasure.__file__))
+PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
 IMAGE_DIRECTORY=os.path.join(os.path.dirname(os.path.realpath(__file__)),'img')
 JAVASCRIPT_STRING="""<html>
 <head>
@@ -490,8 +491,9 @@ class BasicInterfaceFrame(wx.Frame):
         #Added these for script handling
         self.loaded_script_menu_items=[]
         self.event_handlers={}
-        
         self.tool_menu_number=0
+
+        self.Center()
     def OnFileMenuOpenMenu(self, event):
         event.Skip()
 
@@ -685,27 +687,27 @@ class BasicInterfaceFrame(wx.Frame):
         
 def test_BasicInterfaceFrame():
     """ Tests the BasicInterfaceFrame Class"""
-    app = wx.PySimpleApp()
+    app = wx.App(False)
     app.RedirectStdio()
+    # The import here stops the Error wx Debug Alert
+
     frame = create(None)
     frame.Show()
-    
     # This is needed for the execfile command to output properly--can't redirect
     frame.locals=locals()
-    
-    
     app.MainLoop()
 
 
 
 if __name__ == '__main__':
-    app = wx.PySimpleApp()
+    app = wx.App(False)
     app.RedirectStdio()
+    # The import here stops the Error wx Debug Alert
+    from Code.FrontEnds.ShellPanel import *
     frame = create(None)
     frame.Show()
-    
     # This is needed for the execfile command to output properly--can't redirect
     frame.locals=locals()
-    
-    
+
+
     app.MainLoop()

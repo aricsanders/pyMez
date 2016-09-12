@@ -11,9 +11,11 @@ import time
 from xml.dom.minidom import parse
 from os.path import normpath
 import os
-
+import sys
+# Add pyMeasure to sys.path (this allows imports that don't go through pyMeasure/__init__.py
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    import pyMeasure.Code.DataHandlers.XMLModels
+    import Code.DataHandlers.XMLModels
 except:
     print "Cannot find  pyMeasure.Code.DataHandlers.Logs"
 
@@ -228,13 +230,13 @@ class EndOfDayDialog(wx.Dialog):
         
     def XML_processing(self,xml_file):
         try:
-            log=pyMeasure.Code.DataHandlers.XMLModels.EndOfDayXMLLog(xml_file)
+            log=Code.DataHandlers.XMLModels.EndOfDayXMLLog(xml_file)
         except:
             options={"directory":TESTS_DIRECTORY,
                      "general_descriptor":"Log",
                      "specific_descriptor":"End_Of_Day"
                      }
-            log=pyMeasure.Code.DataHandlers.XMLModels.EndOfDayXMLLog(None,**options)
+            log=Code.DataHandlers.XMLModels.EndOfDayXMLLog(None,**options)
             log.path=os.path.join(TESTS_DIRECTORY,log.path)
         doc = log.document
         root = doc.documentElement

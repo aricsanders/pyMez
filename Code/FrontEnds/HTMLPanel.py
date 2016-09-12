@@ -10,6 +10,7 @@
 import wx
 import wx.html
 import re
+TEST_HTML="<h1>This is a Test String<h1>"
 
 class LinkError(Exception):
     pass
@@ -76,9 +77,11 @@ if __name__ == '__main__':
     panel=Panel1(id=1, name=u'HTMLPanel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(762, 502),
               style=wx.TAB_TRAVERSAL)
+    panel.htmlWindow1.LoadPage("http://www.example.com")
     sizer=wx.BoxSizer()
     sizer.Add(panel,1,wx.EXPAND,2)
     frame.SetSizerAndFit(sizer)
     frame.SetSize(wx.Size(800, 600))
+
     frame.Show()
     app.MainLoop()

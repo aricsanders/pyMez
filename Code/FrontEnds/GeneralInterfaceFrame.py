@@ -15,10 +15,12 @@ import sys
 import os
 import wx
 from types import *
-
+# Add pyMeasure to sys.path (this allows imports that don't go through pyMeasure/__init__.py
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    from pyMeasure.Code.FrontEnds.IEPanel import *
-    from pyMeasure.Code.FrontEnds.ShellPanel import *
+    from Code.FrontEnds.IEPanel import *
+
+    #from Code.FrontEnds.ShellPanel import *
 except:
     print """Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path
             Also check that the Boa Constructor Source is on sys.path --C:\Python25\Lib\site-packages"""
@@ -254,7 +256,8 @@ class GeneralInterfaceFrame(wx.Frame):
 
 
 if __name__ == '__main__':
-    app = wx.PySimpleApp()
+    app = wx.App(False)
+    from Code.FrontEnds.ShellPanel import *
     frame = create(None)
     sys.stdout=frame.Shell.ShellEditor.stdout
     sys.stdin=frame.Shell.ShellEditor.stdin

@@ -8,7 +8,7 @@
 # Created:     2010/04/20
 # RCS-ID:      $Id: AdvancedInterfaceFrame.py $
 #-----------------------------------------------------------------------------
-#Boa:Frame:BasicInterfaceFrame
+#Boa:Frame:AdvancedInterfaceFrame
 """ Advanced wx.Frame with standard containers for interface and control this
 is meant as a template for GUI design and a test bed for pyMeasure"""
 import sys
@@ -17,7 +17,7 @@ import wx
 from types import *
 import re
 import copy
-
+# Add pyMeasure to sys.path (this allows imports that don't go through pyMeasure/__init__.py
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     #import pyMeasure
@@ -95,7 +95,7 @@ def convert_datetime(ISO_datetime_string,format_string='%m/%d/%Y at %H:%M:%S GMT
 # Boa Code
 
 def create(parent):
-    return BasicInterfaceFrame(parent)
+    return AdvancedInterfaceFrame(parent)
 
 [wxID_BASICINTERFACEFRAME, wxID_BASICINTERFACEFRAMEARBDBPANEL, 
  wxID_BASICINTERFACEFRAMEBUTTON1, wxID_BASICINTERFACEFRAMEBUTTON2, 
@@ -129,7 +129,7 @@ def create(parent):
 [wxID_BASICINTERFACEFRAMEFILEMENUNEW, wxID_BASICINTERFACEFRAMEFILEMENUOPEN, 
 ] = [wx.NewId() for _init_coll_FileMenu_Items in range(2)]
 
-class BasicInterfaceFrame(wx.Frame):
+class AdvancedInterfaceFrame(wx.Frame):
     # Needs to have an explicit list for the designer to work 
     _custom_classes = {'wx.Panel':['ShellPanel','IEPanel',
     'SimpleLogLowerInterfacePanel','SimpleArbDBLowerInterfacePanel','MatplotlibWxPanel','KeithleyIVPanel'],'wx.Dialog':'EndOfDayDialog'}
@@ -317,7 +317,7 @@ class BasicInterfaceFrame(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_BASICINTERFACEFRAME,
-              name=u'BasicInterfaceFrame', parent=prnt, pos=wx.Point(-5, 106),
+              name=u'AdvancedInterfaceFrame', parent=prnt, pos=wx.Point(-5, 106),
               size=wx.Size(1448, 874), style=wx.DEFAULT_FRAME_STYLE,
               title=u'Advanced Interface')
         self._init_utils()
@@ -770,13 +770,13 @@ class BasicInterfaceFrame(wx.Frame):
 ##    def OnAddPanel(self, event):
 ##        exec('self.%s'+'_%s'+'=%s(self.UpperInterface)'%(panel_name,panel_number,panel_name))
         
-def test_BasicInterfaceFrame():
-    """ Tests the BasicInterfaceFrame Class"""
-    app = wx.PySimpleApp()
-    
+def test_AdvancedInterfaceFrame():
+    """ Tests the AdvancedInterfaceFrame Class"""
+    app = wx.App(False)
+    app.RedirectStdio()
+
     frame = create(None)
     frame.Show()
-    app.RedirectStdio()
     # This is needed for the execfile command to output properly--can't redirect
     frame.locals=locals()
     
@@ -788,7 +788,8 @@ def test_BasicInterfaceFrame():
 if __name__ == '__main__':
     app = wx.App(False)
     app.RedirectStdio()
-    from pyMeasure.Code.FrontEnds.ShellPanel import *
+    # The import here stops the Error wx Debug Alert
+    from Code.FrontEnds.ShellPanel import *
     frame = create(None)
     frame.Show()
     # This is needed for the execfile command to output properly--can't redirect
