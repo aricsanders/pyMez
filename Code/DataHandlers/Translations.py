@@ -170,7 +170,7 @@ def SNP_to_XMLDataTable(snp,**options):
             for index,line in enumerate(snp.comments):
                 key="Comments_{0:0>3}".format(index)
                 data_description[key]=line[0]
-    snp.change_data_format(new_format='DB')
+    snp.change_data_format(new_format='RI')
     snp.change_frequency_units('GHz')
     data_dictionary={"Data_Description":data_description,"Data":snp.get_data_dictionary_list()}
     XML_options["data_dictionary"]=data_dictionary

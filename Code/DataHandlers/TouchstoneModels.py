@@ -68,6 +68,10 @@ S2P_DB_COLUMN_DESCRIPTION=["Frequency","dbS11","argS11","dbS21","argS21","dbS12"
 S2P_RI_COLUMN_DESCRIPTION=["Frequency","reS11","imS11","reS21","imS21","reS12","imS12","reS22","imS22"]
 S2P_COMPLEX_COLUMN_NAMES=["Frequency","S11","S21","S12","S22"]
 S2P_NOISE_PARAMETER_COLUMN_NAMES=["Frequency","NFMin","mag","arg","Rn"]
+# value to assign to any thing that is 0
+MINIMUM_DB_VALUE=-200
+MINIMUM_DB_ARG_VALUE=0
+
 
 #-----------------------------------------------------------------------------
 # Module Functions
@@ -1544,8 +1548,12 @@ class SNP(SNPBase):
                 complex_values=self.sparameter_complex[row_index][1:]
                 values=[]
                 for index,value in enumerate(complex_values):
-                    db=20.*math.log(abs(value),10.)
-                    arg=(180./math.pi)*cmath.phase(value)
+                    if value == complex(0,0):
+                        db=MINIMUM_DB_VALUE
+                        arg=MINIMUM_DB_ARG_VALUE
+                    else:
+                        db=20.*math.log(abs(value),10.)
+                        arg=(180./math.pi)*cmath.phase(value)
                     values.append(db)
                     values.append(arg)
                 new_row=[frequency]+values
@@ -1819,4 +1827,6 @@ if __name__ == '__main__':
     # test_s2p_mean()
     # test_s2p_difference()
     # test_s2p_mean(["thru.s2p","thru.s2p","thru.s2p"])
-    test_s2p_mean_and_difference()
+    #test_s2p_mean_and_difference()
+    test_SNP('Solution_0.s4p')
+    test_change_format_SNP('Solution_0.s4p')
