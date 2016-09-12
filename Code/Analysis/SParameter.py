@@ -93,6 +93,16 @@ def one_port_robin_comparision_plot(input_asc_file,input_res_file,**options):
     ax0.legend(loc='lower left', shadow=True)
     plt.show()
 
+def two_port_swap_ports(complex_data):
+    """Accepts data in [[frequency, S11, S21, S12, S22]..] format and returns
+    [[frequency, S22, S12, S21, S11]..]"""
+    out_data=[]
+    for row in complex_data:
+        [frequency, S11, S21, S12, S22]=row
+        new_row=[frequency, S22, S12, S21, S11]
+        out_data.append(new_row)
+    return out_data
+
 def two_port_complex_to_matrix_form(complex_data):
     """two_port_complex_to_matrix_form takes a list of [[frequency,S11,S21,S12,S22],..] and
     returns a list in the
@@ -130,6 +140,7 @@ def invert_two_port_matrix_list(two_port_matrix_form):
         m_inv=np.linalg.inv(m)
         out_list.append([frequency,m_inv])
     return out_list
+
 def polar_average(complex_number_1,complex_number_2):
     """Averages 2 complex numbers in polar coordinates and returns a single complex number"""
     polar_number_1=cmath.polar(complex_number_1)
@@ -138,6 +149,7 @@ def polar_average(complex_number_1,complex_number_2):
     average_phase=(polar_number_1[1]+polar_number_2[1])/2.
     out_value=cmath.rect(average_length,average_phase)
     return out_value
+
 def polar_geometric_average(complex_number_1,complex_number_2):
     """Averages 2 complex numbers in polar coordinates and returns a single complex number"""
     polar_number_1=cmath.polar(complex_number_1)
@@ -453,6 +465,7 @@ def two_port_mean_frame(device_id,system_id=None,history_data_frame=None):
         mean_array.append(row)
     mean_frame=pandas.DataFrame(mean_array,columns=column_names)
     return mean_frame
+
 def mean_from_history(history_frame,**options):
     """mean_from_history creates a mean_frame given a full history frame (pandas.DataFrame object),
     by setting options it selects column names
