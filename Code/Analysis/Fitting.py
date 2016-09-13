@@ -35,6 +35,7 @@ except:
 #-----------------------------------------------------------------------------
 # Module Functions
 #TODO: These definitions of fits do not use the FittingFunction Class
+# These fits are all of the form f(parameters,variables)
 def line_function(a,x):
     "line function (y=a[1]x+a[0])"
     return a[1]*x+a[0]
