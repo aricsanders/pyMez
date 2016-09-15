@@ -128,8 +128,11 @@ class StatistiCALWrapper():
         """Calibrates the data using the menu data and the standard definitions"""
         try:
             self.application.CalibrateData()
-        except:
-            raise
+        except :
+            # This a little lazy, I should catch com_error but I don't know its parent module
+            pass
+            #raise
+
 
     def ShowStatistiCAL(self):
         """Shows the visual basic 6 GUI of StatistiCAL"""
@@ -492,7 +495,7 @@ Number of calibration standards
         "Controls the behavior of the menu when a string function such as print is called"
         out_string=""
         for value in self.menu_data[:]:
-            out_string=out_string+value+"\n"
+            out_string=out_string+str(value)+"\n"
         return out_string
     def save(self,file_path=None):
         """Saves the menu to file_path, defaults to self.path attribute"""
@@ -604,6 +607,12 @@ Number of calibration standards
     def get_description(self):
         """Gets the sample description """
         return self.menu_data[33]
+    def set_number_dut(self,description):
+        """Sets the number of duts """
+        self.menu_data[53]=description
+    def get_number_dut(self):
+        """Gets the number of duts """
+        return self.menu_data[53]
     def set_standard(self,standard_number=1,**options):
         """Sets the calibration standard defintion, pass all the variables in the options dictionary,
         options={1:length of standard,2:type of standard, etc}
@@ -691,7 +700,7 @@ Number of calibration standards
             50. Resistor R2 for port 2 load
             51. Resistor R3 for port 2 load """
         # line that the standard definition starts
-        line_offset=(int(standard_number)-1)*51+57
+        line_offset=(int(standard_number)-1)*51+56
         for key,value in options.iteritems():
             self.menu_data[line_offset+int(key)]=value
 
@@ -784,6 +793,20 @@ Number of calibration standards
             51. Resistor R3 for port 2 load {50}"""
         line_offset=(int(standard_number)-1)*51+57
         return text.format(*self.menu_data[line_offset:line_offset+52])
+    def remove_duts(self):
+        "Removes all standards that are type 6-8"
+        # set number duts to 0
+        self.menu_data[53]=0
+        # remove all of the standards
+        for standard_number in range(1,40):
+            line_offset=(int(standard_number)-1)*51+57
+            standard_type=self.menu_data[line_offset:line_offset+52][1]
+            if int(standard_type) in [6,7,8]:
+                # set the standard to all 0's
+                standard_setting={str(i):0 for i in range(1,51)}
+                for i in range(3,6):
+                    standard_setting[str(i)]=""
+                self.set_standard(standard_number,**standard_setting)
 
 class StatistiCALSolutionModel(AsciiDataTable):
     """StatistiCALSolutionModel is a class for handling the files created by StatistiCAL Save Solution Vector.
@@ -855,7 +878,7 @@ class StatistiCALSolutionModel(AsciiDataTable):
             in_file=open(self.path,'r')
             lines=[]
             for line in in_file:
-                lines.append(map(lambda x:float(x),line.split(" ")))
+                lines.append(map(lambda x:float(x),line.rstrip().lstrip().split(" ")))
             in_file.close()
             self.options["data"]=lines
             self.complex_data=[]
@@ -869,6 +892,7 @@ class StatistiCALSolutionModel(AsciiDataTable):
                 #print np.array(complex_numbers[1::2])
                 # create a complex data type
                 complex_array=np.array(complex_numbers[0::2])+1.j*np.array(complex_numbers[1::2])
+                print(complex_array.tolist())
                 self.complex_data.append(frequency+complex_array.tolist())
                 # fill S1 and S2 for later
                 # S1=frequency,S1_11,S1_21,_S1_12,S1_22
@@ -916,4 +940,4 @@ def test_StatistiCALSolutionModel(file_path="Solution_Plus.txt"):
 if __name__ == '__main__':
     #test_StatistiCALWrapper()
     #test_CalibrateDUTWrapper()
-    test_StatistiCALSolutionModel()
+    test_StatistiCALSolutionModel("Solution_Plus_2.txt")
