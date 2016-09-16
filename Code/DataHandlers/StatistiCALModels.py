@@ -84,6 +84,10 @@ class StatistiCALWrapper():
         except:
             #raise
             raise StatistiCALError('The COM object representing StatistiCAL failed to intialize')
+    def Sucess(self):
+        """Checks to see if the last command by the com object executed succesfully"""
+        return self.application.Sucessfull
+
     def SuppressErrorMessages(self):
         """Suppresses the Error Messages Created by Statistical"""
         try:
@@ -127,7 +131,10 @@ class StatistiCALWrapper():
     def CalibrateData(self):
         """Calibrates the data using the menu data and the standard definitions"""
         try:
+            self.ShowStatistiCAL()
             self.application.CalibrateData()
+            print("The command executed sucessfully {0}".format(self.Succesfull()))
+
         except :
             # This a little lazy, I should catch com_error but I don't know its parent module
             pass
@@ -885,34 +892,39 @@ class StatistiCALSolutionModel(AsciiDataTable):
             self.S1=[]
             self.S2=[]
             self.eight_term_correction=[]
-            for row in  self.options["data"]:
-                frequency=[row[0]]
-                # take all rows that are not frequency
-                complex_numbers=row[1:]
-                #print np.array(complex_numbers[1::2])
-                # create a complex data type
-                complex_array=np.array(complex_numbers[0::2])+1.j*np.array(complex_numbers[1::2])
-                print(complex_array.tolist())
-                self.complex_data.append(frequency+complex_array.tolist())
-                # fill S1 and S2 for later
-                # S1=frequency,S1_11,S1_21,_S1_12,S1_22
-                S1=frequency+[complex_array[0],complex_array[2],complex_array[2],complex_array[1]]
-                self.S1.append(S1)
-                a=complex_array[5]
-                b=complex_array[6]
-                # S2=frequency,S2_11,S2_21,_S2_12,S2_22
-                if self.options["reciprocal"]:
-                    S2=frequency+[complex_array[3],a,a,complex_array[4]]
-                    self.S2.append(S2)
-                    eight_term=frequency+[complex_array[0],complex_array[2],complex_array[2],complex_array[1]]+[complex_array[3],a,a,complex_array[4]]
-                    self.eight_term_correction.append(eight_term)
-                else:
-                    S2=frequency+[complex_array[3],a*b,a/b,complex_array[4]]
-                    self.S2.append(S2)
-                    eight_term=frequency+[complex_array[0],complex_array[2],complex_array[2],complex_array[1]]+[complex_array[3],a*b,a/b,complex_array[4]]
-                    self.eight_term_correction.append(eight_term)
-                #print("The len(frequency+complex_array.tolist()) is {0}".format(len(frequency+complex_array.tolist())))
-
+            try:
+                for row in  self.options["data"]:
+                    frequency=[row[0]]
+                    # take all rows that are not frequency
+                    complex_numbers=row[1:]
+                    #print np.array(complex_numbers[1::2])
+                    # create a complex data type
+                    complex_array=np.array(complex_numbers[0::2])+1.j*np.array(complex_numbers[1::2])
+                    #print(len(complex_array.tolist()))
+                    self.complex_data.append(frequency+complex_array.tolist())
+                    # fill S1 and S2 for later
+                    # S1=frequency,S1_11,S1_21,_S1_12,S1_22
+                    S1=frequency+[complex_array[0],complex_array[2],complex_array[2],complex_array[1]]
+                    self.S1.append(S1)
+                    a=complex_array[5]
+                    b=complex_array[6]
+                    # S2=frequency,S2_11,S2_21,_S2_12,S2_22
+                    if self.options["reciprocal"]:
+                        S2=frequency+[complex_array[3],a,a,complex_array[4]]
+                        self.S2.append(S2)
+                        eight_term=frequency+[complex_array[0],complex_array[2],complex_array[2],complex_array[1]]+[complex_array[3],a,a,complex_array[4]]
+                        self.eight_term_correction.append(eight_term)
+                    else:
+                        S2=frequency+[complex_array[3],a*b,a/b,complex_array[4]]
+                        self.S2.append(S2)
+                        eight_term=frequency+[complex_array[0],complex_array[2],complex_array[2],complex_array[1]]+[complex_array[3],a*b,a/b,complex_array[4]]
+                        self.eight_term_correction.append(eight_term)
+                    #print("The len(frequency+complex_array.tolist()) is {0}".format(len(frequency+complex_array.tolist())))
+            except IndexError:
+                print("The data was not fully formed. Please make sure that all rows are the same length."
+                      "If the file is not properly formed, then run statisticAL again (make sure "
+                      "you ShowStatistiCAL first)")
+                raise
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_StatistiCALWrapper():

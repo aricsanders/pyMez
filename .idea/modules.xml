@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$USER_HOME$/PyCharm Projects/Jupyter-Notebooks/.idea/Jupyter-Notebooks.iml" filepath="$USER_HOME$/PyCharm Projects/Jupyter-Notebooks/.idea/Jupyter-Notebooks.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/pyMeasure.iml" filepath="$PROJECT_DIR$/.idea/pyMeasure.iml" />
     </modules>
   </component>
