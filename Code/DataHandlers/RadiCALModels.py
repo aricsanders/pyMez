@@ -55,6 +55,7 @@ def radical_dataset_to_s2p(radical_data_set,frequency_list,**options):
     for key,value in options.iteritems():
         s2p_options[key]=value
     input_data=np.array(radical_data_set)
+    sparameters=[]
     for index,item in enumerate(frequency_list):
         [S11,S21,S12,S22]=[complex(input_data[0][index][0],input_data[0][index][1]),
                            complex(input_data[1][index][0],input_data[1][index][1]),
@@ -88,7 +89,7 @@ class RadicalDataModel():
         defaults={}
         self.options={}
         for key,value in defaults.iteritems():
-            self.options[key]=vale
+            self.options[key]=value
         for key,value in options.iteritems():
             self.options[key]=value
         if file_path is None:
@@ -96,8 +97,16 @@ class RadicalDataModel():
         else:
             self.data_file=h5py.File(file_path,"r")
             # load the frequency list
-            self.frequency_list=np.array(radical_data_file["RadiCalData/StatistiCalData/F"])[0].tolist()
-            self.uncorrected_short=[]
+            self.frequency_list=np.array(self.data_file["RadiCalData/StatistiCalData/F"])[0].tolist()
+            # create some s2p file attributes for easy access
+            self.uncorrected_short=radical_dataset_to_s2p(self.data_file["RadiCalData/StatistiCalData/S"],
+                                                          self.frequency_list)
+            self.uncorrected_Rs=radical_dataset_to_s2p(self.data_file["RadiCalData/StatistiCalData/Rs"],
+                                                       self.frequency_list)
+            self.corrected_Rs=radical_dataset_to_s2p(self.data_file["RadiCalData/Ref/TRL/Models/Rs"],
+                                                       self.frequency_list)
+            self.corrected_DUT=radical_dataset_to_s2p(self.data_file[self.data_file[np.array(self.data_file["RadiCalData/Dut/Calibrated"])[0][0]][0][0]],
+                      self.frequency_list)
 #-----------------------------------------------------------------------------
 # Module Scripts
 
