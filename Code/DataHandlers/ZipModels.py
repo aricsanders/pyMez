@@ -5,7 +5,7 @@
 # Created:     9/15/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" Module Docstring """
+"""ZipModels holds classes and functions for manipulating zip files """
 
 #-----------------------------------------------------------------------------
 # Standard Imports
@@ -16,7 +16,12 @@ import shutil
 
 #-----------------------------------------------------------------------------
 # Third Party Imports
-
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
+try:
+    from Code.Utils.Names import auto_name
+except:
+    print("The function auto_name in pyMeasure.Code.Utils.Names was not found or had an error")
+    raise
 #-----------------------------------------------------------------------------
 # Module Constants
 
@@ -119,7 +124,7 @@ class ZipArchive():
 #-----------------------------------------------------------------------------
 # Module Scripts
 # Todo: Make this script actually test functionality of ZipArchive
-def test_ZipArchive(file_path="Test_Zip_File"):
+def test_ZipArchive(file_path="Test_Zip_File.zip"):
     #os.chdir()
     file_names=[file_path]
     test_string="A test string"
