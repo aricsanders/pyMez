@@ -107,6 +107,9 @@ class RadicalDataModel():
                                                        self.frequency_list)
             self.corrected_DUT=radical_dataset_to_s2p(self.data_file[self.data_file[np.array(self.data_file["RadiCalData/Dut/Calibrated"])[0][0]][0][0]],
                       self.frequency_list)
+    def show(self):
+        """Displays corrected DUT as s2p"""
+        self.corrected_DUT.show()
 #-----------------------------------------------------------------------------
 # Module Scripts
 

@@ -147,6 +147,9 @@ def sparameter_power_type(file_path):
         out=raw_type(lines)
     elif re.search('\.dut',file_path,re.IGNORECASE):
         out='OnePortDUTModel'
+    else:
+        out=None
+
     return out
 
 def calrep_to_benchmark(file_path):
@@ -314,9 +317,8 @@ class OnePortCalrepModel(AsciiDataTable):
             self.options["data"]=data.tolist()
             self.options["header"]=lines[:self.find_line("TABLE")]
             self.metadata["Device_Id"]=lines[0].rstrip().lstrip()
-            self.metadata["Analysis_Date"]=lines[1].rstrip().lstrip()
-            self.options["metadata"]={"Device_Id":lines[0].rstrip().lstrip(),
-                                      "Analysis_Date":lines[1].rstrip().lstrip()}
+            if len(self.joined_table.header)>1:
+                self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
             print("The {0} variable is {1}".format('self.metadata["Device_Id"]',self.metadata["Device_Id"]))
             #print("The {0} variable is {1}".format('data.tolist()',data.tolist()))
 
@@ -937,7 +939,8 @@ class TwoPortCalrepModel():
             self.path=file_path
             self.__read_and_fix__()
             self.metadata["Device_Id"]=self.joined_table.header[0].rstrip().lstrip()
-            self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
+            if len(self.joined_table.header)>1:
+                self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
 
         elif re.match('txt',file_path.split(".")[-1],re.IGNORECASE) or type(file_path) is ListType:
             self.table_names=['S11','S22','S21']
@@ -995,7 +998,6 @@ class TwoPortCalrepModel():
                 self.tables[0].options[key]=value
             self.joined_table=ascii_data_table_join("Frequency",self.tables[0],self.tables[2])
             self.joined_table=ascii_data_table_join("Frequency",self.joined_table,self.tables[1])
-
     def __read_and_fix__(self):
         in_file=open(self.path,'r')
         self.lines=[]
@@ -1128,7 +1130,8 @@ class PowerCalrepModel():
             self.path=file_path
             self.__read_and_fix__()
             self.metadata["Device_Id"]=self.joined_table.header[0].rstrip().lstrip()
-            self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
+            if len(self.joined_table.header)>1:
+                self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
 
         elif re.match('txt',file_path.split(".")[-1],re.IGNORECASE) or type(file_path) is ListType:
             self.table_names=['S11','Efficiency']
@@ -1248,12 +1251,20 @@ class PowerCalrepModel():
         ax1.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('arg'),
                      yerr=self.joined_table.get_column('uAg'),fmt='ro')
         ax1.set_title('Phase S11')
-        ax2.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('Efficiency'),
-                     yerr=self.joined_table.get_column('uEe'),fmt='k--')
-        ax2.set_title('Effective Efficiency')
-        ax3.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('Calibration_Factor'),
-                     yerr=self.joined_table.get_column('uCe'),fmt='ro')
-        ax3.set_title('Calibration Factor')
+        if self.tables[2].column_names==POWER_3TERM_COLUMN_NAMES:
+            ax2.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('Efficiency'),
+                         yerr=self.joined_table.get_column('uEe'),fmt='k--')
+            ax2.set_title('Effective Efficiency')
+            ax3.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('Calibration_Factor'),
+                         yerr=self.joined_table.get_column('uCe'),fmt='ro')
+            ax3.set_title('Calibration Factor')
+        elif self.tables[2].column_names==POWER_4TERM_COLUMN_NAMES:
+            ax2.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('Efficiency'),
+                         yerr=self.joined_table.get_column('uEg'),fmt='k--')
+            ax2.set_title('Effective Efficiency')
+            ax3.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('Calibration_Factor'),
+                         yerr=self.joined_table.get_column('uCg'),fmt='ro')
+            ax3.set_title('Calibration Factor')
         plt.tight_layout()
         plt.show()
 
@@ -1316,6 +1327,15 @@ class JBSparameter(AsciiDataTable):
         pattern='freq\((?P<Frequency_Units>\w+)\)'
         match=re.match(pattern,self.column_names[0])
         return match.groupdict()['Frequency_Units']
+    def show(self):
+        """Plots a simple plot of data in native format"""
+        fig, axes = plt.subplots(nrows=4, ncols=2)
+        for index,ax in enumerate(axes.flat):
+            ax.plot(self.get_column(column_index=0),self.get_column(column_index=index+1))
+            ax.set_title(self.column_names[index+1])
+        plt.tight_layout()
+
+        plt.show()
 
 
 
