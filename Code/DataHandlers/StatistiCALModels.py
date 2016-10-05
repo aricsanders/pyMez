@@ -17,6 +17,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     import win32com.client
+    import pythoncom
 except:
     print("The win32com package is required to run StatistiCAL models")
     raise ImportError
@@ -78,15 +79,18 @@ class StatistiCALWrapper():
         """Intialize the instance of StatistiCAL"""
         # This is different than the name used in the help file, I found it by looking at regedit in windows
         try:
+
+            pythoncom.CoInitialize()
             self.application=win32com.client.Dispatch('StatistiCAL_Plus.StatistiCAL_Plus_Cnt')
             self.Successful=self.application.Successful
             self.NumberOfODRPACKErrors=self.application.NumberOfODRPACKErrors
         except:
-            #raise
+            raise
             raise StatistiCALError('The COM object representing StatistiCAL failed to intialize')
+
     def Sucess(self):
         """Checks to see if the last command by the com object executed succesfully"""
-        return self.application.Sucessfull
+        return self.application.Successful
 
     def SuppressErrorMessages(self):
         """Suppresses the Error Messages Created by Statistical"""
@@ -266,6 +270,7 @@ class StatistiCALWrapper():
                 self.application.SaveResidualsToFile(file_name)
         except:
             raise
+
 class CalibrateDUTWrapper():
     def __init__(self):
         """Intialize the instance of CalibrateDUT"""
@@ -756,8 +761,8 @@ Number of calibration standards
             8. Error in raw measurement file, LFile_e(i) {7}
             9. Standard definition file, LFile_def(i) {8}
             10. Error in standard definition, LFile_def_e(i){9}
-            11. Model, LFile_def_model(i) {9}
-            The 40 model parameters defining the calibration standard {10}
+            11. Model, LFile_def_model(i) {10}
+            The 40 model parameters defining the calibration standard
             12. Transmission line t (ps) for port 1 load (or entire std for an attenuator) {11}
             13. Transmission line Z0 (ohms) for port 1 load (or entire std for an attenuator) {12}
             14. Transmission line series resistance (Gohm/s) for port 1 load (or entire std for an attenuator) {13}
@@ -814,6 +819,11 @@ Number of calibration standards
                 for i in range(3,6):
                     standard_setting[str(i)]=""
                 self.set_standard(standard_number,**standard_setting)
+
+    def rebase_file_names(self,new_directory):
+        """Replaces all file name directories with new_directory"""
+        pass
+
 
 class StatistiCALSolutionModel(AsciiDataTable):
     """StatistiCALSolutionModel is a class for handling the files created by StatistiCAL Save Solution Vector.
@@ -950,6 +960,6 @@ def test_StatistiCALSolutionModel(file_path="Solution_Plus.txt"):
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    #test_StatistiCALWrapper()
+    test_StatistiCALWrapper()
     #test_CalibrateDUTWrapper()
-    test_StatistiCALSolutionModel("Solution_Plus_2.txt")
+    #test_StatistiCALSolutionModel("Solution_Plus_2.txt")

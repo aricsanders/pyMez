@@ -16,6 +16,8 @@ if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.XMLModels"))
 from Code.DataHandlers.XMLModels import *
 if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.RadiCALModels"))
 from Code.DataHandlers.RadiCALModels import *
+if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.ZipModels"))
+from Code.DataHandlers.ZipModels import *
 if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.Translations"))
 from Code.DataHandlers.Translations import *
 if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.StatistiCALModels"))
