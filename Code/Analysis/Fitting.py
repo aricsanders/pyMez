@@ -13,7 +13,13 @@ import os
 import sys
 #-----------------------------------------------------------------------------
 # Third Party Imports
-import numpy as np
+
+try:
+    import numpy as np
+except:
+    print("The module numpy either was not found or had an error"
+          "Please put it on the python path, or resolve the error")
+    raise
 try:
     import sympy
 except:
@@ -60,6 +66,23 @@ def calculate_residuals(fit_function,a,xdata,ydata):
     output_x=xdata
     output_y=[fit_function(a,x)-ydata[index] for index,x in enumerate(xdata)]
     return [output_x,output_y]
+
+def build_modeled_data_set(x_list,function_list):
+    """build_modeled_data_set takes an input independent variable and a list
+    of  functions and returns a data set of the form [..[xi,f1(xi),..fn(xi)]]
+    it is meant to create a modeled data set. Requires that the list of functions is callable f(x) is defined"""
+    out_data=[]
+    for x in x_list:
+        new_row=[]
+        new_row.append(x)
+        for function in function_list:
+            if type(function(x)) in [np.ndarray,'numpy.array']:
+                # to list is needed if the function returns np.array
+                new_row.append(function(x).tolist())
+            else:
+                new_row.append(function(x))
+        out_data.append(new_row)
+    return out_data
 #-----------------------------------------------------------------------------
 # Module Classes
 class FittingFunction():
@@ -67,6 +90,8 @@ class FittingFunction():
      symbolic manipulation of the function and formatted output. If called it acts like a
      tradional python function"""
     def __init__(self):pass
+    def __call__(self, *args, **kwargs):pass
+
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_linear_fit(data=None):

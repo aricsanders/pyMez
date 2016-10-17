@@ -11,6 +11,7 @@
 # Standard Imports
 import os
 import sys
+from types import *
 #-----------------------------------------------------------------------------
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
@@ -54,7 +55,11 @@ def build_interpolated_data_set(x_list,interpolated_function_list):
         new_row=[]
         new_row.append(x)
         for function in interpolated_function_list:
-            new_row.append(function(x).tolist())
+            # to list is needed if the function returns np.array
+            if type(function(x)) in [np.ndarray]:
+                new_row.append(function(x).tolist())
+            else:
+                new_row.append(function(x))
         out_data.append(new_row)
     return out_data
 #-----------------------------------------------------------------------------
@@ -66,6 +71,9 @@ def test_interpolate(data_set=None):
     if data_set is None:
         data_set=[[i,i**2,i**3] for i in range(100)]
     interpolation_functions=interpolate_data(data_set)
+    type_of_f=type(interpolation_functions[0](1))
+    print("The types of of the function results are {0}".format(type_of_f))
+    print("type(f(x)) == numpy.ndarray is {0}".format(type_of_f in [np.ndarray,"<type 'numpy.ndarray'>"]))
     new_x=[i for i in range(100)]
     interpolated_data=build_interpolated_data_set(new_x,interpolation_functions)
     print("Testing interpolation of data set")
