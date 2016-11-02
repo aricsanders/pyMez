@@ -414,6 +414,7 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+openTab(event, 'description');
 </script>]]>
 </xsl:text>
     </body>
