@@ -283,6 +283,20 @@ ul.tab li a:focus, .active {
     mode:'markers+lines',
     name:'Drift Switch Terms'
     };
+    var driftTrackingMagPlotData = {
+    x: driftFrequency,
+    y: driftTrackingMag,
+    type: 'scatter',
+    mode:'markers+lines',
+    name:'Drift Tracking Mag'
+    };
+    var driftSymmetryMagPlotData = {
+    x: driftFrequency,
+    y: driftSymmetryMag,
+    type: 'scatter',
+    mode:'markers+lines',
+    name:'Drift Symmetry Mag'
+    };
     var driftDirectivityPlotData = {
     x: driftFrequency,
     y: driftDirectivity,
@@ -369,8 +383,8 @@ ul.tab li a:focus, .active {
 
 
 Plotly.newPlot('noise', [noiseFloor,magTraceNoise],noiseLayout);
-Plotly.newPlot('drift', [driftSwitchTermsPlotData,driftDirectivityPlotData,
-    driftIsolationPlotData,driftMatchPlotData],driftLayout);
+Plotly.newPlot('drift', [driftSwitchTermsPlotData,driftTrackingMagPlotData,driftSymmetryMagPlotData,
+    driftDirectivityPlotData,driftIsolationPlotData,driftMatchPlotData],driftLayout);
 Plotly.newPlot('linearity', linearityList,linearityLayout);
 
 	</script>
