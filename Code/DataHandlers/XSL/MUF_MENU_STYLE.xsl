@@ -2,12 +2,8 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method='html' version='1.0' encoding='UTF-8' indent='yes'/>
 <!--Written by Aric Sanders 10/2016 Style sheet that maps MUF xml menus to html-->
-
-
-
 <!-- Template for entries-->
-
-<xsl:template match='/'>
+    <xsl:template match='/'>
     <html>
         <head>
     <meta charset="utf-8"/>
@@ -33,8 +29,13 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         h1,h2 {text-align: center }
-        div {border-style: solid;
+        div {border-style: solid;}
+        #menuStripDiv {border-style: solid;
              border-color: blue;}
+        #textBoxDiv {border-style: solid;
+             border-color: green;}
+        #controlDiv {border-style: solid;
+             border-color: green;}
         #attribute {font-weight:bold;}
         #control {font-weight:bold;}
 
@@ -42,7 +43,7 @@
 
 </head>
 <body>
-    <h1> Microwave Uncertainty Framework Menu -  <xsl:value-of select="name(/*)" />  </h1>
+    <h1> Microwave Uncertainty Framework Menu -  <em><xsl:value-of select="name(/*)" /></em>  </h1>
     <table class='table table-hover table-condensed table-bordered table-responsive'>
             <xsl:for-each select="/*/@*">
                 <tr>
@@ -51,13 +52,13 @@
                 </tr>
             </xsl:for-each>
     </table>
-<xsl:apply-templates/>
+    <xsl:apply-templates/>
 
     </body>
     </html>
-    </xsl:template>
+</xsl:template>
     <xsl:template match="//MenuStripItems">
-        <div>
+        <div id="menuStripDiv">
             <h2>Menu Check Boxes</h2>
         <table class='table table-hover table-condensed table-bordered table-responsive'>
             <tr>
@@ -92,7 +93,7 @@
 
     </xsl:template>
     <xsl:template match="//MenuStripTextBoxes">
-        <div>
+        <div id="textBoxDiv">
             <h2> Menu Text Boxes </h2>
         <table class='table table-hover table-condensed table-bordered table-responsive'>
             <tr>
@@ -125,13 +126,10 @@
         </table>
         </div>
     </xsl:template>
+    <xsl:template match="//Controls/*">
 
-
-
-<xsl:template match="//Controls/*">
-
-<div>
-<h2> <span id="control">Control:</span> <xsl:value-of select="name()"/> </h2>
+    <div id="controlDiv">
+    <h2> <span id="control">Control:</span> <xsl:value-of select="name()"/> </h2>
     <table border='true' class='table table-hover table-condensed table-bordered table-responsive'>
         <tr>
         <xsl:for-each select="./@*"><th><xsl:value-of select="name()"/></th></xsl:for-each>
