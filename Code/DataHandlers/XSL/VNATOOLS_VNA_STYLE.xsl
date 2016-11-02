@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method='html' version='1.0' encoding='UTF-8' indent='yes'/>
 <!--Written by Aric Sanders 10/2016 Style sheet that maps VNA tools vnadev xml sheets to html-->
-<!--Try to add in tabs -->
+
 <!-- Template for entries-->
 
 <xsl:template match='/'>
@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>VNA Tools:<xsl:value-of select="./Identification"/></title>
+    <title>VNA Tools:<xsl:value-of select="//Identification"/></title>
 
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -24,7 +24,11 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <style> h3 {color:black}
 
 ul.tab {
@@ -77,26 +81,25 @@ ul.tab li a:focus, .active {
 @keyframes fadeEffect {
     from {opacity: 0;}
     to {opacity: 1;}
-}</style>
+}
+</style>
+</head>
 
-        </head>
-    <body>
+<body>
 
+  <!-- Tab Navigation -->
   <ul class="tab">
   <li><a href="#" class="tablinks" onclick="openTab(event, 'description')">Description</a></li>
   <li><a href="#" class="tablinks" onclick="openTab(event, 'plots')">Plots</a></li>
   <li><a href="#" class="tablinks" onclick="openTab(event, 'table')">Table</a></li>
   </ul>
-
-
-    <div id="description" class="tabcontent">
-		<h3>Data Description:</h3>
-        <button id="ToggleButtonDescription" type="button" class="btn btn-primary">Show Description</button>
+  <!-- Description Page -->
+  <div id="description" class="tabcontent">
+	<h3>VNA Description:</h3>
     <br/><hr/>
 		 <table id="DataDescription">
             <xsl:for-each select="VnaDevice/*">
-            <xsl:if
-                    test=".!='' and name()!='Zr' and name()!='Noise' and
+            <xsl:if test=".!='' and name()!='Zr' and name()!='Noise' and
                     name()!='LinearityPowerLevels' and name()!='Linearity' and name()!='Drift'">
             <tr><td><b><xsl:value-of select="name()"/> :</b> </td><td><xsl:value-of select="."/></td></tr>
             </xsl:if>
@@ -107,9 +110,20 @@ ul.tab li a:focus, .active {
             </xsl:for-each>
          </table>
     </div>
+<!-- Plots -->
   <div id="plots" class="tabcontent">
-        <h3>Data Plot:</h3>
-     <button id="ToggleButtonPlot" type="button" class="btn btn-primary">Show Plots</button><br/><hr/>
+    <h3>Data Plots:</h3>
+    <table>
+        <td>
+        <button id="NoisePlotToggleButton" type="button" class="btn btn-primary">Noise</button>
+        </td>
+        <td>
+        <button id="DriftPlotToggleButton" type="button" class="btn btn-primary">Drift</button>
+        </td>
+        <td>
+        <button id="LinearityPlotToggleButton" type="button" class="btn btn-primary">Linearity</button>
+        </td>
+    </table>
     <table>
         <tr>
             <td>
@@ -118,70 +132,85 @@ ul.tab li a:focus, .active {
 
         </tr>
         <tr>
-        <td><div id="drift" style="width: 480px; height: 400px;" class="plot">
+        <td><div id="drift" style="width: 1000px; height: 400px;" class="plot">
         <!-- Plotly chart will be drawn inside this DIV --></div></td>
         </tr>
 
         <tr>
             <td>
-        <div id="linearity" style="width: 480px; height: 400px;" class="plot">
+        <div id="linearity" style="width: 1000px; height: 400px;" class="plot">
         <!-- Plotly chart will be drawn inside this DIV --></div></td>
         </tr>
 </table>
     </div>
+<!-- Tabular Data -->
     <div id="table" class="tabcontent">
         <h3>Data:</h3>
-        <button id="ToggleButton" type="button" class="btn btn-primary">Show Table</button><br/><hr/>
-		<table class='table table-hover table-condensed table-bordered table-responsive' id="DataTable">
+        <table>
+        <td>
+        <button id="NoiseToggleButton" type="button" class="btn btn-primary">Show Noise Table</button>
+        </td>
+        <td>
+        <button id="DriftToggleButton" type="button" class="btn btn-primary">Show Drift Table</button>
+        </td>
+        <td>
+        <button id="LinearityToggleButton" type="button" class="btn btn-primary">Show Linearity Table</button>
+        </td>
+        </table>
+        <br/><hr/>
+        <h3>Noise</h3>
+
+		<table class='table table-hover table-condensed table-bordered table-responsive' id="NoiseTable">
 		    <tr>
-            <th >
-                <b>Frequency</b>
-            </th>
-            <th >
-                <b>Connection</b>
-            </th>
-            <th >
-                <b>Direction</b>
-            </th>
-            <th >
-                <b>magS11</b>
-            </th>
-            <th >
-                <b>argS11</b>
-            </th>
-            <th >
-                <b>Efficency</b>
-            </th>
-            <th >
-                <b>Calibration_Factor</b>
-            </th>
+            <xsl:for-each select="//VnaDevice/Noise/VnaNoiseElectricalSpec[1]/*">
 
+            <th bgcolor='silver'><b><xsl:value-of select="name()"/></b></th>
 
+            </xsl:for-each>
             </tr>
-            <xsl:for-each select="//Data/Tuple">
+            <xsl:for-each select="//VnaDevice/Noise/VnaNoiseElectricalSpec">
             <tr>
-            <xsl:for-each select="./@Frequency">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
-            <xsl:for-each select="./@Connect">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
-            <xsl:for-each select="./@Direction">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
-            <xsl:for-each select="./@magS11">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
-            <xsl:for-each select="./@argS11">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
-            <xsl:for-each select="./@Efficiency">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
-            <xsl:for-each select="./@Calibration_Factor">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
 
+            <xsl:for-each select="./*">
+
+                <td><xsl:value-of select="."/></td>
+
+		    </xsl:for-each>
+            </tr>
+            </xsl:for-each>
+		</table>
+        <br/><hr/>
+        <h3>Drift</h3>
+
+		<table class='table table-hover table-condensed table-bordered table-responsive' id="DriftTable">
+		    <tr>
+            <xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec[1]/*">
+
+            <th bgcolor='silver'><b><xsl:value-of select="name()"/></b></th>
+
+            </xsl:for-each>
+            </tr>
+            <xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec">
+            <tr>
+            <xsl:for-each select="./*">
+                <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            </tr>
+            </xsl:for-each>
+		</table>
+        <br/><hr/>
+        <h3>Linearity</h3>
+        <table class='table table-hover table-condensed table-bordered table-responsive' id="LinearityTable">
+		    <tr>
+            <xsl:for-each select="//VnaDevice/Linearity/VnaLinearityElectricalSpec[1]/*">
+            <th bgcolor='silver'><b><xsl:value-of select="name()"/></b></th>
+            </xsl:for-each>
+            </tr>
+            <xsl:for-each select="//VnaDevice/Linearity/VnaLinearityElectricalSpec">
+            <tr>
+            <xsl:for-each select="./*">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
             </tr>
             </xsl:for-each>
 		</table>
@@ -189,14 +218,12 @@ ul.tab li a:focus, .active {
 
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
+<!-- Plotly Plot Scripts -->
 <script>
-    var noiseFrequency=[<xsl:for-each select="//VnaDevice/Noise/VnaNoiseElectricalSpec/Frequency"><xsl:value-of select="."/>,</xsl:for-each>]
+    // Noise Data
+    var noiseFrequency=[<xsl:for-each select="//VnaDevice/Noise/VnaNoiseElectricalSpec/Frequency">
+    <xsl:value-of select="."/>,</xsl:for-each>];
     var noiseFloor =   {
     x: noiseFrequency,
     y: [<xsl:for-each select="//VnaDevice/Noise/VnaNoiseElectricalSpec/NoiseFloor"><xsl:value-of select="."/>,</xsl:for-each>],
@@ -213,7 +240,7 @@ ul.tab li a:focus, .active {
     name:'Trace Noise Mag'
   };
 
-var noiseLayout = {
+  var noiseLayout = {
   legend: {
     y: 0.5,
     yref: 'paper',
@@ -227,86 +254,151 @@ var noiseLayout = {
     xaxis:{
     title:'Frequency (Hz)'},
   title:'Noise'
-};
+  };
+    // drift terms
+    var driftFrequency=[<xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec/Frequency">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var driftSwitchTerms=[<xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec/DriftSwitchTerm">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var driftDirectivity=[<xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec/DriftDirectivity">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var driftTrackingMag=[<xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec/DriftTrackingMag">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var driftTrackingPhase=[<xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec/DriftTrackingPhase">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var driftSymmetryMag=[<xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec/DriftSymmetryMag">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var driftSymmetryPhase=[<xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec/DriftSymmetryPhase">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var driftMatch=[<xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec/DriftMatch">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var driftIsolation=[<xsl:for-each select="//VnaDevice/Drift/VnaDriftElectricalSpec/DriftIsolation">
+    <xsl:value-of select="."/>,</xsl:for-each>];
 
-
-    var Efficiency = [
-  {
-    x: [<xsl:for-each select="//Data/Tuple/@Frequency"><xsl:value-of select="."/>,</xsl:for-each>],
-    y: [<xsl:for-each select="//Data/Tuple/@Efficiency"><xsl:value-of select="."/>,</xsl:for-each>],
-        error_y: {
-    type: 'data',
-      array: [<xsl:for-each select="//Data/Tuple/@uEg"><xsl:value-of select="."/>,</xsl:for-each>],
-      visible: true,
-        },
-
+    // Drift Plot Definition
+    var driftSwitchTermsPlotData = {
+    x: driftFrequency,
+    y: driftSwitchTerms,
     type: 'scatter',
-    mode:'markers+lines'
-  }
-];
-        var Calibration_Factor = [
-  {
-    x: [<xsl:for-each select="//Data/Tuple/@Frequency"><xsl:value-of select="."/>,</xsl:for-each>],
-    y: [<xsl:for-each select="//Data/Tuple/@Calibration_Factor"><xsl:value-of select="."/>,</xsl:for-each>],
-    error_y: {
-    type: 'data',
-      array: [<xsl:for-each select="//Data/Tuple/@uCg"><xsl:value-of select="."/>,</xsl:for-each>],
-      visible: true,
-        },
-
+    mode:'markers+lines',
+    name:'Drift Switch Terms'
+    };
+    var driftDirectivityPlotData = {
+    x: driftFrequency,
+    y: driftDirectivity,
     type: 'scatter',
-       mode:'markers+lines'
-  }
-];
-var EfficiencyLayout = {
-  legend: {
-    y: 0.5,
-    yref: 'paper',
-    font: {
-      family: 'Arial, sans-serif',
-      size: 20,
-      color: 'grey',
-    }
+    mode:'markers+lines',
+    name:'Drift Directivity'
+    };
+    var driftMatchPlotData = {
+    x: driftFrequency,
+    y: driftMatch,
+    type: 'scatter',
+    mode:'markers+lines',
+    name:'Drift Match'
+    };
+    var driftIsolationPlotData = {
+    x: driftFrequency,
+    y: driftIsolation,
+    type: 'scatter',
+    mode:'markers+lines',
+    name:'Drift Isolation'
+    };
 
-  },
-    xaxis:{
-    title:'Frequency (GHz)'},
-  title:'Efficiency'
-};
+    var driftLayout = {
+      legend: {
+        y: 0.5,
+        yref: 'paper',
+        font: {
+          family: 'Arial, sans-serif',
+          size: 20,
+          color: 'grey',
+        }
 
-    var Calibration_FactorLayout = {
-  legend: {
-    y: 0.5,
-    yref: 'paper',
-    font: {
-      family: 'Arial, sans-serif',
-      size: 20,
-      color: 'grey',
+      },
+        xaxis:{
+        title:'Frequency (Hz)'},
+      title:'Drift'
+    };
+    // Linearity Terms
+    var linearityPower = [<xsl:for-each select="//VnaDevice/LinearityPowerLevels/double">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var linearityFrequency = [<xsl:for-each select="//VnaDevice/Linearity/VnaLinearityElectricalSpec/Frequency">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var linearityMag = [<xsl:for-each select="//VnaDevice/Linearity/VnaLinearityElectricalSpec/LinearityMag/double">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+    var linearityPhase = [<xsl:for-each select="//VnaDevice/Linearity/VnaLinearityElectricalSpec/LinearityPhase/double">
+    <xsl:value-of select="."/>,</xsl:for-each>];
+
+    console.log(linearityFrequency.length)
+    console.log(linearityPower.length)
+    // Should be a loop
+    <xsl:text disable-output-escaping="yes" >
+    <![CDATA[
+        var linearityList=[];
+        for(i=0;i<=linearityFrequency.length;i++){
+        var linearityPlot = {
+        x: linearityPower,
+        y: linearityMag.slice(i*linearityPower.length,(i+1)*linearityPower.length),
+        type: 'scatter',
+        mode:'markers+lines',
+        name:'Linearity at ' + linearityFrequency[i] +'Hz'
+        }
+    linearityList.push(linearityPlot);
     }
-  },
-    xaxis:{
-    title:'Frequency (GHz)'},
-  title:'Calibration_Factor'
-};
+    ]]>
+    </xsl:text>
+
+
+
+    var linearityLayout = {
+      legend: {
+        y: 0.5,
+        yref: 'paper',
+        font: {
+          family: 'Arial, sans-serif',
+          size: 20,
+          color: 'grey',
+        }
+
+      },
+        xaxis:{
+        title:'Power (dB)'},
+      title:'Linearity'
+    };
 
 
 Plotly.newPlot('noise', [noiseFloor,magTraceNoise],noiseLayout);
-Plotly.newPlot('argS11', argS11,argS11Layout);
-Plotly.newPlot('Efficiency', Efficiency,EfficiencyLayout);
-Plotly.newPlot('Calibration_Factor', Calibration_Factor,Calibration_FactorLayout);
+Plotly.newPlot('drift', [driftSwitchTermsPlotData,driftDirectivityPlotData,
+    driftIsolationPlotData,driftMatchPlotData],driftLayout);
+Plotly.newPlot('linearity', linearityList,linearityLayout);
+
 	</script>
+
+<!-- Buttons Definition-->
+
 <script>
+
+// Buttons to show data
 $(document).ready(function(){
-    $("#ToggleButton").click(function(){
-        $("#DataTable").toggle();});
-        $("#ToggleButtonDescription").click(function(){
-        $("#DataDescription").toggle();});
-        $("#ToggleButtonPlot").click(function(){
-        $(".plot").toggle();});
 
+    $('#NoiseToggleButton').click(function(){
+    $('#NoiseTable').toggle();});
+    $('#DriftToggleButton').click(function(){
+    $('#DriftTable').toggle();});
+    $('#LinearityToggleButton').click(function(){
+    $('#LinearityTable').toggle();});
 
+    $('#NoisePlotToggleButton').click(function(){
+    $('#noise').toggle();});
+    $('#DriftPlotToggleButton').click(function(){
+    $('#drift').toggle();});
+    $('#LinearityPlotToggleButton').click(function(){
+    $('#linearity').toggle();});
 });
+
 </script>
+<!-- Function for handling tabs -->
 <xsl:text disable-output-escaping="yes" >
         <![CDATA[<script>
 function openTab(evt, tabName) {
@@ -323,7 +415,7 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 </script>]]>
-        </xsl:text>
+</xsl:text>
     </body>
 </html>
 
