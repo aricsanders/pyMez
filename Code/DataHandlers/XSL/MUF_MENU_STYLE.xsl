@@ -107,7 +107,6 @@
                     Text
                 </th>
             </tr>
-
             <xsl:for-each select="./*">
                 <tr>
                 <td>
@@ -126,8 +125,8 @@
         </table>
         </div>
     </xsl:template>
-    <xsl:template match="//Controls/*">
 
+    <xsl:template match="//Controls/*">
     <div id="controlDiv">
     <h2> <span id="control">Control:</span> <xsl:value-of select="name()"/> </h2>
     <table border='true' class='table table-hover table-condensed table-bordered table-responsive'>
@@ -145,7 +144,6 @@
         <tr>
         <xsl:for-each select="./Item[1]/@*"><th><xsl:value-of select="name()"/></th></xsl:for-each>
         </tr>
-
         <xsl:for-each select="./Item">
         <tr>
         <xsl:for-each select="./@*">
@@ -153,7 +151,6 @@
             </xsl:for-each>
         </tr>
         </xsl:for-each>
-
     </table>
     </xsl:if>
 </div>
