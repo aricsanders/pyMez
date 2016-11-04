@@ -41,7 +41,7 @@ def coax_s11_S_NIST(connector_type='Type-N',frequency=1.0):
         uncertainty_phase=math.atan(uncertainty_magnitude)
     elif re.search('2.4',connector_type,re.IGNORECASE):
         # TODO: Fix this, the printed version is blurry
-        uncertainty_magnitude=10.0**(-3.281+.03*frequency)
+        uncertainty_magnitude=1/(400.-.75*frequency*math.exp(.04*frequency))
         uncertainty_phase=math.atan(uncertainty_magnitude)
     return [uncertainty_magnitude,uncertainty_phase]
 
@@ -116,6 +116,121 @@ def waveguide_s11_type_b(waveguide_type='WR90',magnitude_S11=1.0):
     return [uncertainty_magnitude,uncertainty_phase]
 
 
+def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB'):
+    """Calculates SNIST for connector type, power and frequency"""
+    if re.search('mag',format,re.IGNORECASE):
+        # if the format is mag then change the number to db
+        magnitude=magnitude_S12
+        magnitude_S12=-20.*math.log10(magnitude_S12)
+
+    if re.search('14',connector_type,re.IGNORECASE):
+        if magnitude_S12>=0 and magnitude_S12<25:
+            uncertainty_magnitude=.0005+.00035*frequency
+            uncertainty_phase=.02+.0153*frequency
+        elif magnitude_S12>=25 and magnitude_S12<40:
+            uncertainty_magnitude=.02
+            uncertainty_phase=.1+.017*frequency
+        elif magnitude_S12>=40 and magnitude_S12<65:
+            uncertainty_magnitude=.02+.00015(magnitude_S12-40.)**2
+            uncertainty_phase=.1+.017*frequency
+        #enforce min uncertainties
+        if uncertainty_magnitude<.004:
+            uncertainty_magnitude=.004
+
+    elif re.search('7',connector_type,re.IGNORECASE):
+        if magnitude_S12>=0 and magnitude_S12<25:
+            if frequency>=.01 and frequency<1.:
+                uncertainty_magnitude=10.**(-3.06+.051*frequency)
+                uncertainty_phase=10.**(-1.95+.792*frequency)
+            elif frequency>=1. and frequency<=18.:
+                uncertainty_magnitude=10.**(-2.816+.038*frequency)
+                uncertainty_phase=10.**(-.927+.023*frequency)
+        elif magnitude_S12>=25 and magnitude_S12<40:
+            if frequency>=.01 and frequency<1.:
+                uncertainty_magnitude=.02
+                uncertainty_phase=10.**(-.96+.259*frequency)
+            elif frequency>=1. and frequency<=18.:
+                uncertainty_magnitude=.02
+                uncertainty_phase=.1+.017*frequency
+        elif magnitude_S12>=40 and magnitude_S12<65:
+            if frequency>=.01 and frequency<1.:
+                uncertainty_magnitude=.02+.00015*(magnitude_S12-40)**2
+                uncertainty_phase=10.**(-.96+.259*frequency)
+            elif frequency>=1. and frequency<=18.:
+                uncertainty_magnitude=.02+.00015*(magnitude_S12-40)**2
+                uncertainty_phase=.1+.017*frequency
+        #enforce min uncertainties
+        if uncertainty_magnitude<.004:
+            uncertainty_magnitude=.004
+
+    elif re.search('N',connector_type,re.IGNORECASE):
+        if magnitude_S12>=0 and magnitude_S12<25:
+            uncertainty_magnitude=10.**(-2.17+.024*frequency)
+            uncertainty_phase=10.**(-1.138+.032*frequency)
+        elif magnitude_S12>=25 and magnitude_S12<40:
+            uncertainty_magnitude=.02
+            uncertainty_phase=.1+.017*frequency
+        elif magnitude_S12>=40 and magnitude_S12<65:
+            uncertainty_magnitude=.02+.00015(magnitude_S12-40.)**2
+            uncertainty_phase=.1+.017*frequency
+        #enforce min uncertainties
+        if uncertainty_magnitude<.004:
+            uncertainty_magnitude=.004
+    elif re.search('3.5|2.92|2.4',connector_type,re.IGNORECASE):
+        # All of the following cases have the same phase uncertainty
+        uncertainty_phase=.1+.0098*frequency
+        if re.search('3.5|2.92',connector_type,re.IGNORECASE):
+            # 3.5mm and 2.92mm have the same mag relations
+            if magnitude_S12>=0 and magnitude_S12<25:
+                uncertainty_magnitude=.0005+.00027*frequency
+            elif magnitude_S12>=25 and magnitude_S12<40:
+                uncertainty_magnitude=.02
+            elif magnitude_S12>=40 and magnitude_S12<65:
+                uncertainty_magnitude=.02+.00015(magnitude_S12-40.)**2
+        elif re.search('2.4',connector_type,re.IGNORECASE):
+            # 3.5mm and 2.92mm have the same mag relations
+            if magnitude_S12>=0 and magnitude_S12<25:
+                uncertainty_magnitude=.01+.0004*frequency
+            elif magnitude_S12>=25 and magnitude_S12<40:
+                uncertainty_magnitude=.03
+            elif magnitude_S12>=40 and magnitude_S12<65:
+                uncertainty_magnitude=.03+.00015(magnitude_S12-40.)**2
+        #enforce min uncertainties
+        if uncertainty_magnitude<.002:
+            uncertainty_magnitude=.002
+    #enforce min uncertainties
+    if uncertainty_phase<.01:
+        uncertainty_phase=.01
+    if re.search('mag',format,re.IGNORECASE):
+        # if the format is mag then change the uncertainty back to mag
+        uncertainty_magnitude=abs((1/math.log10(math.e))*magnitude*uncertainty_magnitude/20.)
+    return [uncertainty_magnitude,uncertainty_phase]
+
+def coax_s12_type_b(connector_type='N',frequency=1,magnitude_S12=10,format='DB'):
+    """Calculates the type-b uncertainty for coax connecters"""
+    uncertainty_m4=.0006*math.sqrt(frequency)+.0011
+    uncertainty_m5=(1.434*math.sqrt(frequency)*5.*6.*10**6)/(.35*math.sqrt((1.4*10**7)**3))
+    delta=math.sqrt((uncertainty_m4**2+uncertainty_m5**2)/3)
+    uncertainty_arg4=math.atan(.01*math.sqrt((.017+.018*math.sqrt(frequency)+.05*frequency+.018*frequency**2)))
+    uncertainty_arg5=12.0115*frequency*.0025
+    delta_arg=math.sqrt((uncertainty_arg4**2+uncertainty_arg5**2)/3)
+    if frequency<=1.:
+        delta_arg=.03
+    if re.search('14|7|N',connector_type,re.IGNORECASE):
+        uncertainty_magnitude=delta
+        uncertainty_phase=delta_arg
+    elif re.search('3.5|2.92|2.4',connector_type,re.IGNORECASE):
+        uncertainty_phase=delta_arg
+        if re.search('3.5',connector_type,re.IGNORECASE):
+            uncertainty_magnitude=2.*delta
+        elif re.search('2.92',connector_type,re.IGNORECASE):
+            uncertainty_magnitude=2.4*delta
+        elif re.search('2.4',connector_type,re.IGNORECASE):
+            uncertainty_magnitude=2.92*delta
+    if re.search('mag',format,re.IGNORECASE):
+        # if the format is mag then change the uncertainty back to mag
+        uncertainty_magnitude=abs((1/math.log10(math.e))*magnitude_S12*uncertainty_magnitude/20.)
+    return [uncertainty_magnitude,uncertainty_phase]
 
 
 def S_NIST(connector_type='Type-N', frequency=1, s_parameter='S11',magnitude=1.0, phase=0):
