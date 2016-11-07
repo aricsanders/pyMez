@@ -16,6 +16,12 @@ import math
 #-----------------------------------------------------------------------------
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
+try:
+    import numpy as np
+except:
+    print("The module numpy was not found,"
+          "please put it on the python path")
+    raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants
 CONNECTOR_TYPES=['14 mm','7 mm', 'Type-N','3.5 mm', '2.92 mm', '2.4mm', '1.85 mm','1.0 mm',
@@ -376,7 +382,9 @@ def type_b(wr_connector_type='Type-N', frequency=1, parameter='S11', magnitude=1
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_uncertainty():
-    pass
+    frequency=np.linspace(.1,18,1000)
+    s11_mag_thru=[0 for i in range(1000)]
+    s12_mag_thru=[1 for i in range(1000)]
 
 #-----------------------------------------------------------------------------
 # Module Runner
