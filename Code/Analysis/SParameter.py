@@ -189,6 +189,14 @@ def T_to_S(T_list):
         S_list.append([frequency,np.matrix([[S11,S12],[S21,S22]])])
     return S_list
 
+def unwrap_phase(phase_list,min_phase=0,units='degree'):
+    """unwrap_phase returns an unwraped phase list given a wraped phase list, the beginning value can be specified
+    by min_phase and radians or degrees can be specified by units"""
+    unwrapped_phase_list=[]
+    pass
+
+
+
 def correct_sparameters_eight_term(sparameters_complex,eight_term_correction,reciprocal=True):
     """Applies the eight term correction to sparameters_complex and returns
     a correct complex list in the form of [[frequency,S11,S21,S12,S22],..]. The eight term
