@@ -12,6 +12,7 @@ from types import *
 import os
 import pickle
 import sys
+import copy
 #-----------------------------------------------------------------------------
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
@@ -39,6 +40,7 @@ except:
 #-----------------------------------------------------------------------------
 # Module Constants
 TESTS_DIRECTORY=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
+# General Regular Expression For matching a number
 NUMBER_MATCH_STRING=r'[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?'
 #-----------------------------------------------------------------------------
 # Module Functions
@@ -272,10 +274,10 @@ def split_row(row_string,delimiter=None,escape_character=None):
         row_list=[row_string]
         return row_list
     if escape_character is None:
-        row_list=row_string.split(delimiter)
+        row_list=re.split(delimiter,row_string)
     else:
         temp_row_string=row_string.replace(escape_character+delimiter,'TempPlaceHolder')
-        temp_row_list=temp_row_string.split(delimiter)
+        temp_row_list=re.split(delimiter,temp_row_string)
         for item in temp_row_list:
             item.replace('TempPlaceHolder',escape_character+delimiter)
         row_list=temp_row_list
@@ -908,7 +910,8 @@ class AsciiDataTable():
         for element in list_types:
             if self.__dict__[element] is not None:
                 for index,item in enumerate(self.__dict__[element]):
-                    self.__dict__[element][index]=item.replace("\n","")
+                    if type(self.__dict__[element][index]) is StringType:
+                        self.__dict__[element][index]=item.replace("\n","")
         self.update_column_names()
         if self.data is not None:
             self.data=convert_all_rows(self.data,self.options["column_types"])
@@ -1313,7 +1316,7 @@ class AsciiDataTable():
 
     def __add__(self, other):
         """Controls the behavior of the addition operator, if column_names are equal it adds rows at the end
-        and increments any column named index. If the column_names and number of roows are different it adds columns
+        and increments any column named index. If the column_names and number of rows are different it adds columns
         to the table and fills the non-defined rows with self.options['empty_character'] which is None by default. If
         the rows are equal it adds the columns to the table ignoring any columns that are the same. If the headers or
         footers are different it appends them to the left most object."""
@@ -1650,6 +1653,9 @@ class AsciiDataTable():
         except:
             print("Could not change the unit prefix of column {0}".format(column_selector))
             raise
+    def copy(self):
+        "Creates a shallow copy of the data table"
+        return copy.copy(self)
 
 class AsciiDataTableCollection():
     """A collection of multiple AsciiDataTables. The class can be created from a file path with options or can
@@ -2072,19 +2078,39 @@ def test_AsciiDataTable_get_column_and_getitem():
                                            new_table["Frequency"]))
     print("The value of {0} is {1}".format('new_table.get_column("Frequency")',
                                            new_table.get_column("Frequency")))
+def test_copy_method():
+    """Tests the copy() method"""
+    options={"column_names":["Frequency","b","c"],"column_names_delimiter":",","data":[[0.1*10**10,1,2],[2*10**10,3,4]],"data_delimiter":'\t',
+             "header":['Hello There',"My Darling"],"column_names_begin_token":'#',"comment_begin":'!',
+             "comment_end":"\n",
+             "directory":TESTS_DIRECTORY,
+             "column_units":["Hz",None,None],
+             "column_descriptions":["Frequency in Hz",None,None],
+             "column_types":['float','float','float'],
+             "row_formatter_string":"{0:.2e}{delimiter}{1}{delimiter}{2}",
+             "treat_header_as_comment":True}
+    new_table=AsciiDataTable(None,**options)
+    print("The new table is :\n")
+    print new_table
 
+    print("Coping the new table")
+    copy_of_table=new_table.copy()
+
+    print("The value of {0} is {1}".format('new_table.copy()',
+                                           copy_of_table))
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    #test_AsciiDataTable()
-    #test_open_existing_AsciiDataTable()
+    # test_AsciiDataTable()
+    # test_open_existing_AsciiDataTable()
     #test_AsciiDataTable_equality()
     #test_inline_comments()
     #test_add_row()
-    #test_add_index()
+    # test_add_index()
     #show_structure_script()
     #test_save_schema()
     #test_read_schema()
     #test_change_unit_prefix()
     #test_add_column()
-    test_AsciiDataTable_get_column_and_getitem()
+    # test_AsciiDataTable_get_column_and_getitem()
+    test_copy_method()

@@ -87,6 +87,10 @@ TWELVE_TERM_ERROR_COLUMN_NAMES=["Frequency","reEdf","imEdf","reEsf","imEsf",
                                 "reErf","imErf","reExf","imExf","reElf","imElf","reEtf","imEtf",
                                 "reEdr","imEdr","reEsr","imEsr","reErr","imErr","reExr","imExr",
                                 "reElr","imElr","reEtr","imEtr"]
+RESULTS_FILE_ONE_PORT_COLUMN_NAMES=["Device_Id","Frequency","Number_Measurements","magS11","argS11"]
+RESULTS_FILE_TWO_PORT_COLUMN_NAMES=["Device_Id","Frequency","Number_Measurements","magS11","argS11",
+                                    "dbS21","argS21","magS22","argS22"]
+RESULTS_FILE_POWER_COLUMN_NAMES=["Device_Id","Frequency","Number_Measurements","magS11","argS11","Efficiency"]
 # Constant that determines if S21 is in db-angle or mag-angle format true is in mag-angle
 CONVERT_S21=True
 # Constant that determines if 1-port raw files have S11 and S22 or just S11
