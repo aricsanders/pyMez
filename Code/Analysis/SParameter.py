@@ -746,7 +746,7 @@ def compare_s2p_plots(list_S2PV1,**options):
     for key,value in options.iteritems():
         comparision_plot_options[key]=value
 
-    # create a set of 6 subplots
+    # create a set of 8 subplots
     fig, compare_axes = plt.subplots(nrows=4, ncols=2, figsize=(8,6),dpi=80)
     if comparision_plot_options["labels"] is None:
         labels=[s2p.path for s2p in list_S2PV1]
