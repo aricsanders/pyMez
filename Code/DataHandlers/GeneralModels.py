@@ -266,10 +266,12 @@ def strip_all_line_tokens(string_list,begin_token=None,end_token=None):
         stripped_list.append(strip_line_tokens(row,begin_token=begin_token,end_token=end_token))
     return stripped_list
 
-def split_row(row_string,delimiter=None,escape_character=None):
+def split_row(row_string,delimiter=None,escape_character=None,strip=True):
     """Splits a row given a delimiter, and ignores any delimiters after an escape character
     returns a list. If the string is unsplit returns a list of length 1"""
     check_arg_type(row_string,StringType)
+    if strip:
+        row_string=row_string.rstrip().lstrip()
     if delimiter is None:
         row_list=[row_string]
         return row_list
@@ -1562,9 +1564,32 @@ class AsciiDataTable():
         out_list=[self.data[i][column_selector] for i in range(len(self.data))]
         return out_list
 
-    def __getitem__(self, item):
+    def __getitem__(self, items):
         """Controls how the model responds to self["Item"]"""
-        return self.get_column(column_name=item)
+        out_data=[]
+        column_selectors=[]
+        #print items[0]
+        if type(items) in [StringType,IntType]:
+            return self.get_column(items)
+        else:
+            for item in items:
+                if type(item) is IntType:
+                    column_selectors.append(item)
+                else:
+                    #print self.column_names
+                    column_selectors.append(self.column_names.index(item))
+            for row in self.data[:]:
+                new_row=[]
+                for selector in column_selectors:
+                    new_row.append(row[selector])
+                out_data.append(new_row)
+            return out_data
+
+
+
+
+
+
 
     def get_data_dictionary_list(self,use_row_formatter_string=True):
         """Returns a python list with a row dictionary of form {column_name:data_column}"""
@@ -2098,6 +2123,41 @@ def test_copy_method():
 
     print("The value of {0} is {1}".format('new_table.copy()',
                                            copy_of_table))
+def test_add_method():
+    """Tests the __add__ method"""
+    options={"column_names":["Frequency","b","c"],"column_names_delimiter":",","data":[[0.1*10**10,1,2],[2*10**10,3,4]],
+             "data_delimiter":'\t',
+             "header":['Hello There',"My Darling"],"column_names_begin_token":'#',"comment_begin":'!',
+             "comment_end":"\n",
+             "directory":TESTS_DIRECTORY,
+             "column_units":["Hz",None,None],
+             "column_descriptions":["Frequency in Hz",None,None],
+             "column_types":['float','float','float'],
+             "row_formatter_string":"{0:.2e}{delimiter}{1}{delimiter}{2}",
+             "treat_header_as_comment":True}
+    new_table=AsciiDataTable(None,**options)
+    new_table_2=AsciiDataTable(None,**options)
+    new_table_2.add_row([0.3*10**10,1,2])
+    add_table=new_table+new_table_2
+    print add_table
+    print new_table
+def test_get_item():
+    """Tests the __add__ method"""
+    options={"column_names":["Frequency","b","c"],"column_names_delimiter":",","data":[[0.1*10**10,1,2],[2*10**10,3,4]],"data_delimiter":'\t',
+             "header":['Hello There',"My Darling"],"column_names_begin_token":'#',"comment_begin":'!',
+             "comment_end":"\n",
+             "directory":TESTS_DIRECTORY,
+             "column_units":["Hz",None,None],
+             "column_descriptions":["Frequency in Hz",None,None],
+             "column_types":['float','float','float'],
+             "row_formatter_string":"{0:.2e}{delimiter}{1}{delimiter}{2}",
+             "treat_header_as_comment":True}
+    new_table=AsciiDataTable(None,**options)
+
+    print new_table["Frequency"]
+    print new_table[("Frequency",1)]
+    print new_table[["Frequency","c"]]
+
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
@@ -2113,4 +2173,6 @@ if __name__ == '__main__':
     #test_change_unit_prefix()
     #test_add_column()
     # test_AsciiDataTable_get_column_and_getitem()
-    test_copy_method()
+    # test_copy_method()
+    # test_add_method()
+    test_get_item()
