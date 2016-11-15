@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$USER_HOME$/PyCharm Projects/Jupyter-Notebooks" vcs="Git" />
+    <mapping directory="$USER_HOME$/PyCharm Projects/check_standard" vcs="Git" />
   </component>
 </project>

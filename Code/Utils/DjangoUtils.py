@@ -114,7 +114,7 @@ def write_admin_file(directory=None):
                      "                            exec('admin.site.register(%s)'%model)\n",
                      '                    except:raise\n',
                      '            except:pass\n', 'register_all_models()']
-
+    out_file=open('admin.py','w')
     for line in admin_file_template:
         out_file.write(line)
     out_file.close()
