@@ -111,6 +111,23 @@ def AsciiDataTable_to_DataFrame(ascii_data_table):
     data_frame=pandas.DataFrame(data=ascii_data_table.data,columns=ascii_data_table.column_names)
     return data_frame
 
+def DataFrame_to_AsciiDataTable(pandas_data_frame,**options):
+    """Converts a pandas.DataFrame to an AsciiDataTable"""
+    # Set up defaults and pass options
+    defaults={}
+    conversion_options={}
+    for key,value in defaults.iteritems():
+        conversion_options[key]=value
+    for key,value in options.iteritems():
+        conversion_options[key]=value
+
+    conversion_options["column_names"]=pandas_data_frame.columns.tolist()
+    conversion_options["data"]=pandas_data_frame.as_matrix().tolist()
+    conversion_options["column_types"]=map(lambda x:str(x),pandas_data_frame.dtypes.tolist())
+
+    new_table=AsciiDataTable(None,**conversion_options)
+    return new_table
+
 def AsciiDataTable_to_Excel(ascii_data_table,file_path=None):
     """Converts an AsciiDataTable to an excel spreadsheet using pandas"""
     if ascii_data_table.header:

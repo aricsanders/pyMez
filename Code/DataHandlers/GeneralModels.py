@@ -312,7 +312,7 @@ def convert_row(row_list_strings,column_types=None):
                 out_row[index]=int(row_list_strings[index])
             elif re.match('float',column_type,re.IGNORECASE):
                 out_row[index]=float(row_list_strings[index])
-            elif re.match('str|char',column_type,re.IGNORECASE):
+            elif re.match('str|char|object',column_type,re.IGNORECASE):
                 #print_comparison(row_list_strings[index],out_row[index])
                 out_row[index]=str(row_list_strings[index])
             elif re.match('com',column_type,re.IGNORECASE):
