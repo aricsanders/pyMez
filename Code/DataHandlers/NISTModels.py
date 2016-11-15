@@ -1003,6 +1003,7 @@ class TwoPortCalrepModel():
             self.joined_table=ascii_data_table_join("Frequency",self.tables[0],self.tables[2])
             self.joined_table=ascii_data_table_join("Frequency",self.joined_table,self.tables[1])
     def __read_and_fix__(self):
+        """Reads in an existing file and fixes any issues with multiple tables, delimiters etc."""
         in_file=open(self.path,'r')
         self.lines=[]
         table_locators=["Table 1","Table 2","Table 3"]
@@ -1174,6 +1175,7 @@ class PowerCalrepModel():
             #print self.joined_table
 
     def __read_and_fix__(self):
+        """Reads in and parses an existing table fixing any issues with delimiters and multiple tables, etc."""
         in_file=open(self.path,'r')
         self.lines=[]
         table_locators=["Table 1","Table 2"]
@@ -1272,6 +1274,64 @@ class PowerCalrepModel():
         plt.tight_layout()
         plt.show()
 
+class ResultFileModel(AsciiDataTable):
+    """Class to hold the results file created by the SAS database for CALREP comparisions.
+    Files are white space delimited files that have Device_Id, Frequency, Number_Measurements and Variable number
+    of columns based on the type of measurement (one-port,two-port and power) the files are found in chkstd/resfiles
+    folder along side other data files"""
+    def __init__(self, file_path=None,**options):
+        """Intializes the ResultFileModel class, if a file path is given, creates the appropriate model"""
+        defaults={"data_delimiter":'  ',"data":None,"header":None,"column_names":None,
+          "row_end_token":"\n","metadata":{},"Measurement_Type":None}
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        if file_path is not None:
+            self.__read_and_fix__(file_path)
+        else:
+            if self.options["Measurement_Type"]:
+                self.options["metadata"]={}
+                self.options["metadata"]["Measurement_Type"]=self.options["Measurement_Type"]
+            AsciiDataTable.__init__(self,file_path=None,**self.options)
+
+    def __read_and_fix__(self,file_path=None):
+        """Reads in existing tables assigning names to the columns and setting the type and fixing any delimiter
+        issues"""
+        self.metadata=self.options["metadata"]
+        options={"data_begin_line":0,"data_end_line":-1,"data_delimiter":'[\s]+',
+                  "row_end_token":"\n"}
+        for key,value in options.iteritems():
+            self.options[key]=value
+        first_column_types=['String','float','int']
+        AsciiDataTable.__init__(self,file_path=file_path,**self.options)
+        self.options['data_delimiter']='  '
+        number_columns=len(self.data[0])
+
+        if number_columns is 5:
+            self.column_names=RESULTS_FILE_ONE_PORT_COLUMN_NAMES
+            self.options['column_types']=first_column_types+['float','float']
+            self.update_model()
+            self.metadata["Measurement_Type"]="1-port"
+
+        elif number_columns is 6:
+            self.column_names=RESULTS_FILE_POWER_COLUMN_NAMES
+            self.options['column_types']=first_column_types+['float','float','float']
+            self.metadata["Measurement_Type"]="power"
+            self.update_model()
+        elif number_columns is 9:
+            self.column_names=RESULTS_FILE_POWER_COLUMN_NAMES
+            if CONVERT_S21:
+                self.column_names[5]='magS21'
+                for row_index,row in enumerate(self.options["data"]):
+                    db_value=row[5]
+                    mag_value=10.**(-1*db_value/20.)
+                    self.options["data"][row_index][5]=mag_value
+            self.metadata["Measurement_Type"]="2-port"
+            self.options['column_types']=first_column_types+['float' for i in range(len(self.column_names)-3)]
+            self.update_model()
+        self.metadata["Device_Id"]=self.get_column("Device_Id")[0]
 
 class JBSparameter(AsciiDataTable):
     """JBSparameter is a class that holds data taken and stored using Jim Booth's two port format.
