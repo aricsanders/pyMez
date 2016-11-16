@@ -28,12 +28,17 @@ except:
     print("Pandas was not imported")
     pass
 try:
+    from scipy.stats.mstats import gmean
+except:
+    print("The function gmean from the package scipy.stats.mstats did not import correctly ")
+try:
     #Todo: this could lead to a cyclic dependency, it really should import only the models it analyzes
     #Todo: If analysis is to be in the top import, none of the models should rely on it
     #import pyMeasure.Code.DataHandlers.NISTModels
     from Code.DataHandlers.NISTModels import *
     from Code.DataHandlers.TouchstoneModels import *
     from Code.DataHandlers.GeneralModels import *
+    from Code.DataHandlers.Translations import AsciiDataTable_to_DataFrame,DataFrame_to_AsciiDataTable
     #from pyMeasure import *
 except:
     print("The subpackage pyMeasure.Code.DataHandlers did not import properly,"
@@ -51,6 +56,111 @@ except:
 ONE_PORT_DUT=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
 #-----------------------------------------------------------------------------
 # Module Functions
+def frequency_model_collapse_multiple_measurements(model,**options):
+    """Returns a model with a single set of frequencies. Default is to average values together
+    but geometric mean, std and median are options. Geometric means of odd number of negative values fails"""
+    defaults={"method":"mean"}
+    # load other options from model
+    for option,value in model.options.iteritems():
+        if not re.search('begin_line|end_line',option):
+            defaults[option]=value
+    defaults["header"]=model.header
+    defaults["column_names"]=model.column_names
+    defaults["footer"]=model.footer
+    defaults["metadata"]=model.metadata
+
+    collapse_options={}
+    for key,value in defaults.iteritems():
+        collapse_options[key]=value
+    for key,value in options.iteritems():
+        collapse_options[key]=value    
+    unique_frequency_list=sorted(list(set(model["Frequency"])))
+    frequency_selector=model.column_names.index("Frequency")
+    out_data=[]
+    for index, frequency in enumerate(unique_frequency_list):
+        data_row=filter(lambda x: x[frequency_selector]==frequency,model.data)
+        if re.search('mean|av',collapse_options["method"],re.IGNORECASE):
+            new_row=np.mean(np.array(data_row),axis=0).tolist()
+        elif re.search('median',collapse_options["method"],re.IGNORECASE):
+            new_row=np.median(np.array(data_row),axis=0).tolist()
+        elif re.search('geometric',collapse_options["method"],re.IGNORECASE):
+            new_row=gmean(np.array(data_row),axis=0).tolist()
+        elif re.search('st',collapse_options["method"],re.IGNORECASE):
+            new_row=np.std(np.array(data_row),axis=0).tolist()
+        
+        out_data.append(new_row)
+
+    collapse_options["data"]=out_data
+
+    if collapse_options["specific_descriptor"]:
+        collapse_options["specific_descriptor"]=collapse_options["method"]+"_"+\
+        collapse_options["specific_descriptor"]
+        
+    
+    resulting_model=AsciiDataTable(None,**collapse_options)
+    return resulting_model
+
+def frequency_model_difference(model_1,model_2,**options):
+    """Takes the difference of two models that both have frequency and a similar set of columns. Returns an object that is 
+    a list of [[frequency,column_1,..column_n],...] where columns are the same in the models. If  a particular subset of 
+    columns is desired use columns=["Frequency","magS11] models can be any subclass of AsciiDataTable, SNP, or 
+    pandas.DataFrame, if a column is a non-numeric type it drops it. The frequency list should be unique 
+    (no multiple frequencies) for at least one model"""
+    # Set up defaults and pass options
+    defaults={"columns":"all","interpolate":False,"average":True}
+    difference_options={}
+    for key,value in defaults.iteritems():
+        difference_options[key]=value
+    for key,value in options.iteritems():
+        difference_options[key]=value
+        
+    # first check type, if it is a panadas data frame a little conversion is needed, else is for all other models
+    if type(model_1) in [pandas.DataFrame]:
+        model_1=DataFrame_to_AsciiDataTable(model_1)
+    if type(model_2) in [pandas.DataFrame]:
+        model_2=DataFrame_to_AsciiDataTable(model_2)
+    # now start with a set of frequencies (unique values from both)
+    frequency_set_1=set(model_1["Frequency"])
+    frequency_set_2=set(model_2["Frequency"])
+    model_2_frequency_selector=model_2.column_names.index('Frequency')
+    column_names_set_1=set(model_1.column_names)
+    column_names_set_2=set(model_2.column_names)
+    
+
+    # All points must be in the intersection to be used
+    frequency_intersection=list(frequency_set_1.intersection(frequency_set_2))
+    column_names_intersection=list(column_names_set_1.intersection(column_names_set_2))
+    
+    if not frequency_intersection:
+        print("The models do not have any frequency points in common")
+        return None
+    
+    difference_data=[]
+    for row_index,frequency in enumerate(model_1["Frequency"]):
+        new_row=[frequency]
+        new_column_names=["Frequency"]
+        if frequency in frequency_intersection:
+            model_2_frequency_row=filter(lambda x: x[model_2_frequency_selector]==frequency,model_2.data)[0]
+            print("{0} is {1}".format("model_2_frequency_row",model_2_frequency_row))
+            for column_index,column in enumerate(model_1.column_names):
+                if column in column_names_intersection and column not in ["Frequency"]:
+                    model_2_column_selector=model_2.column_names.index(column)
+                    if re.search('int|float',
+                                 model_1.options["column_types"][column_index],
+                                 re.IGNORECASE) and re.search('int|float',
+                                                              model_2.options["column_types"][model_2_column_selector],
+                                                              re.IGNORECASE):
+                        
+                        new_row.append(model_1.data[row_index][column_index]-model_2_frequency_row[model_2_column_selector])
+                        new_column_names.append(column)
+                    elif difference_options["columns"] in ["all"]:
+                        new_row.append(model_1.data[row_index])
+                        new_column_names.append(column)
+            difference_data.append(new_row)
+    difference_options["column_names"]=new_column_names
+    difference_options["data"]=difference_data      
+    result=AsciiDataTable(None,**difference_options)
+    return result
 def one_port_robin_comparision_plot(input_asc_file,input_res_file,**options):
     """one_port_robin_comparision_plot plots a one port.asc file against a given .res file,
     use device_history=True in options to show device history"""

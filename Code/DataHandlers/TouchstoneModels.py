@@ -6,7 +6,10 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ A module dedicated to the manipulation and storage of touchstone files, such as
- .s2p or .ts files. Touchstone files are normally s-parameter data for multiport VNA's"""
+ .s2p or .ts files. Touchstone files are normally s-parameter data for multiport VNA's
+ This module handles all SNP's and different formats such as MA, DB, RI. It currently does
+ not support T, Y, and Z transformations. On 11/15/2016 the sparameter_data attribute was
+ changed to data to align better with other class models."""
 
 #-----------------------------------------------------------------------------
 # Standard Imports
