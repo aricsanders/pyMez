@@ -61,7 +61,7 @@ def one_port_robin_comparision_plot(input_asc_file,input_res_file,**options):
     for key,value in options.iteritems():
         plot_options[key]=value
     history=np.loadtxt(input_res_file,skiprows=1)
-    column_names=["Frequency",'mag','arg','magS11N','argS11N','UmagS11N','UargS11N']
+    column_names=["Frequency",'magS11','argS11','magS11N','argS11N','UmagS11N','UargS11N']
     options={"data":history.tolist(),"column_names":column_names,"column_types":['float' for column in column_names]}
     history_table=AsciiDataTable(None,**options)
     table=OnePortCalrepModel(input_asc_file)
@@ -72,10 +72,10 @@ def one_port_robin_comparision_plot(input_asc_file,input_res_file,**options):
 
     ax0.errorbar(history_table.get_column('Frequency'),history_table.get_column('magS11N'),fmt='k--',
                 yerr=history_table.get_column('UmagS11N'),label="History")
-    ax0.errorbar(table.get_column('Frequency'),table.get_column('mag'),
+    ax0.errorbar(table.get_column('Frequency'),table.get_column('magS11'),
         yerr=table.get_column('uMg'),fmt='ro',label="Current Measurement",alpha=.3)
     if plot_options["device_history"]:
-        ax0.errorbar(device_history['Frequency'].tolist(),device_history['mag'].tolist(),fmt='bs',
+        ax0.errorbar(device_history['Frequency'].tolist(),device_history['magS11'].tolist(),fmt='bs',
                     yerr=device_history['uMg'].tolist(),label="From .asc", alpha=.5)
     if plot_options["mag_res"]:
         ax0.errorbar(history_table.get_column('Frequency'),history_table.get_column('mag'),fmt='gx',
@@ -638,7 +638,7 @@ def calrep_history_plot(calrep_model,history_frame,**options):
     print("{0} are {1}".format("unique_analysis_dates",unique_analysis_dates))
     if re.search('Power',model):
         number_rows=2
-        column_names=['mag','arg','Efficiency','Calibration_Factor']
+        column_names=['magS11','argS11','Efficiency','Calibration_Factor']
         if calrep_model.options["column_names"]==POWER_3TERM_COLUMN_NAMES:
             error_names=['uMg','uAg','uEe','uCe']
         elif calrep_model.options["column_names"]==POWER_4TERM_COLUMN_NAMES:
@@ -647,7 +647,7 @@ def calrep_history_plot(calrep_model,history_frame,**options):
 
     elif re.search('OnePort',model):
         number_rows=1
-        column_names=['mag','arg']
+        column_names=['magS11','argS11']
         error_names=['uMg','uAg']
         table=calrep_model
 
@@ -851,7 +851,7 @@ def test_comparison(input_file=None):
     elif re.search('1-port',table.metadata["Measurement_Type"],re.IGNORECASE):
         history_key='1-port'
         if COMBINE_S11_S22:
-             options["column_names"]=['Frequency','mag','arg']
+             options["column_names"]=['Frequency','magS11','argS11']
         else:
             options["column_names"]=['Frequency','magS11','argS11','magS22','argS22']
     elif re.search('Dry Cal|Thermistor|power',table.metadata["Measurement_Type"],re.IGNORECASE):
