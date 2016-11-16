@@ -141,7 +141,7 @@ def frequency_model_difference(model_1,model_2,**options):
         new_column_names=["Frequency"]
         if frequency in frequency_intersection:
             model_2_frequency_row=filter(lambda x: x[model_2_frequency_selector]==frequency,model_2.data)[0]
-            print("{0} is {1}".format("model_2_frequency_row",model_2_frequency_row))
+            #print("{0} is {1}".format("model_2_frequency_row",model_2_frequency_row))
             for column_index,column in enumerate(model_1.column_names):
                 if column in column_names_intersection and column not in ["Frequency"]:
                     model_2_column_selector=model_2.column_names.index(column)
@@ -154,7 +154,7 @@ def frequency_model_difference(model_1,model_2,**options):
                         new_row.append(model_1.data[row_index][column_index]-model_2_frequency_row[model_2_column_selector])
                         new_column_names.append(column)
                     elif difference_options["columns"] in ["all"]:
-                        new_row.append(model_1.data[row_index])
+                        new_row.append(model_1.data[row_index][column_index])
                         new_column_names.append(column)
             difference_data.append(new_row)
     difference_options["column_names"]=new_column_names
