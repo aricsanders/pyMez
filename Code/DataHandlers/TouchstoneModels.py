@@ -403,16 +403,34 @@ class SNPBase():
             column_selector=self.column_names.index(column_name)
         out_list=[self.sparameter_data[i][column_selector] for i in range(len(self.sparameter_data))]
         return out_list
-    def __getitem__(self, item):
+    def __getitem__(self, items):
         """Controls how the model responds to self["Item"]"""
-        if item in self.column_names:
-            return self.get_column(column_name=item)
-        elif item in ["sparameter_data","data"]:
-            return self.sparameter_data
-        elif item in ["sparameter_complex","complex_data"]:
-            return self.sparameter_complex
-        elif item in ["noiseparameter_data","noise"]:
-            return self.noiseparameter_data
+        out_data=[]
+        column_selectors=[]
+        #print items[0]
+        if type(items) in [StringType,IntType]:
+            if items in self.column_names:
+                return self.get_column(column_name=item)
+            elif items in ["sparameter_data","data"]:
+                return self.sparameter_data
+            elif items in ["sparameter_complex","complex_data"]:
+                return self.sparameter_complex
+            elif items in ["noiseparameter_data","noise"]:
+                return self.noiseparameter_data
+        else:
+            for item in items:
+                if type(item) is IntType:
+                    column_selectors.append(item)
+                else:
+                    #print self.column_names
+                    column_selectors.append(self.column_names.index(item))
+            for row in self.sparameter_data[:]:
+                new_row=[]
+                for selector in column_selectors:
+                    new_row.append(row[selector])
+                out_data.append(new_row)
+            return out_data
+
 
 
 

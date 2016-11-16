@@ -54,9 +54,9 @@ except:
           "please put it on the python path")
 #-----------------------------------------------------------------------------
 # Module Constants
-DUT_COLUMN_NAMES=["Frequency", "mag", "arg","uMb", "uMa", "uMd", "uMg",
+DUT_COLUMN_NAMES=["Frequency", "magS11", "argS11","uMb", "uMa", "uMd", "uMg",
                                     "uAb", "uAa", "uAd", "uAg"]
-ONE_PORT_COLUMN_NAMES=["Frequency", "mag", "uMb", "uMa", "uMd", "uMg", "arg",
+ONE_PORT_COLUMN_NAMES=["Frequency", "magS11", "uMb", "uMa", "uMd", "uMg", "argS11",
                                     "uAb", "uAa", "uAd", "uAg"]
 #Note there are 2 power models!!! one with 4 error terms and one with 3
 POWER_4TERM_COLUMN_NAMES=['Frequency','Efficiency','uEb', 'uEa','uEd','uEg',
@@ -244,12 +244,12 @@ class OnePortCalrepModel(AsciiDataTable):
         defaults= {"data_delimiter": ",", "column_names_delimiter": ",", "specific_descriptor": 'One_Port',
                    "general_descriptor": 'Sparameter', "extension": 'txt', "comment_begin": "#", "comment_end": "\n",
                    "column_types": ['float' for i in range(11)],
-                   "column_descriptions": {"Frequency": "Frequency in GHz", "mag": "Linear magnitude",
+                   "column_descriptions": {"Frequency": "Frequency in GHz", "magS11": "Linear magnitude",
                                            "uMb": "Uncertainty in magnitude due to standards",
                                            "uMa": "Uncertainty in magnitude due to electronics",
                                            "uMd": "Uncertainty in magnitude for repeated connects",
                                            "uMg": "Total uncertainty in magnitude",
-                                           "arg": "Phase in degrees",
+                                           "argS11": "Phase in degrees",
                                            "uAb": "Uncertainty in phase due to standards",
                                            "uAa": "Uncertainty in phase due to electronics",
                                            "uAd": "Uncertainty in phase for repeated connects",
@@ -329,10 +329,10 @@ class OnePortCalrepModel(AsciiDataTable):
 
     def show(self):
         fig, (ax0, ax1) = plt.subplots(nrows=2, sharex=True)
-        ax0.errorbar(self.get_column('Frequency'),self.get_column('mag'),
+        ax0.errorbar(self.get_column('Frequency'),self.get_column('magS11'),
              yerr=self.get_column('uMg'),fmt='k--')
         ax0.set_title('Magnitude S11')
-        ax1.errorbar(self.get_column('Frequency'),self.get_column('arg'),
+        ax1.errorbar(self.get_column('Frequency'),self.get_column('argS11'),
              yerr=self.get_column('uAg'),fmt='ro')
         ax1.set_title('Phase S11')
         plt.show()
@@ -524,11 +524,11 @@ class OnePortRawModel(AsciiDataTable):
         if COMBINE_S11_S22:
             self.options['row_formatter_string']= "{0:.5f}{delimiter}{1}{delimiter}{2}{delimiter}{3:.4f}{delimiter}{4:.2f}"
             self.options["column_types"]= ['float','int','int','float','float']
-            self.options["column_names"]=["Frequency","Direction","Connect", "mag","arg"]
+            self.options["column_names"]=["Frequency","Direction","Connect", "magS11","argS11"]
             self.options["column_descriptions"]= {"Frequency":"Frequency in GHz",
                                            "Direction":"Direction of connects, may be unused",
-                                           "Connect":"Connect number", "mag":"Linear magnitude",
-                                           "arg":"Phase in degrees"}
+                                           "Connect":"Connect number", "magS11":"Linear magnitude",
+                                           "argS11":"Phase in degrees"}
         AsciiDataTable.__init__(self,None,**self.options)
         self.path=file_path
         self.structure_metadata()
@@ -575,8 +575,8 @@ class OnePortRawModel(AsciiDataTable):
     def show(self):
         fig, (ax0, ax1) = plt.subplots(nrows=2, sharex=True)
         if COMBINE_S11_S22:
-            ax0.plot(self.get_column('Frequency'),self.get_column('mag'),'k--')
-            ax1.plot(self.get_column('Frequency'),self.get_column('arg'),'ro')
+            ax0.plot(self.get_column('Frequency'),self.get_column('magS11'),'k--')
+            ax1.plot(self.get_column('Frequency'),self.get_column('argS11'),'ro')
         else:
             ax0.plot(self.get_column('Frequency'),self.get_column('magS11'),'k--')
             ax0.plot(self.get_column('Frequency'),self.get_column('magS22'),'k--')
@@ -1252,10 +1252,10 @@ class PowerCalrepModel():
     def show(self):
         fig, axes = plt.subplots(nrows=2, ncols=2)
         ax0, ax1, ax2, ax3 = axes.flat
-        ax0.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('mag'),
+        ax0.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('magS11'),
                      yerr=self.joined_table.get_column('uMg'),fmt='k--')
         ax0.set_title('Magnitude S11')
-        ax1.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('arg'),
+        ax1.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('argS11'),
                      yerr=self.joined_table.get_column('uAg'),fmt='ro')
         ax1.set_title('Phase S11')
         if self.tables[2].column_names==POWER_3TERM_COLUMN_NAMES:
