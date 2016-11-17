@@ -315,6 +315,7 @@ class OnePortCalrepModel(AsciiDataTable):
             self.options["header"]=["Device_Id = {0}".format(root_name)]
 
         elif re.match("asc",table_type,re.IGNORECASE):
+
             self.lines=lines
             data_begin_line=self.find_line("TABLE")+2
             # TODO: Replace with parse lines, it ignores blank lines
@@ -322,8 +323,8 @@ class OnePortCalrepModel(AsciiDataTable):
             self.options["data"]=data.tolist()
             self.options["header"]=lines[:self.find_line("TABLE")]
             self.metadata["Device_Id"]=lines[0].rstrip().lstrip()
-            if len(self.joined_table.header)>1:
-                self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
+            if len(self.options["header"])>1:
+                self.metadata["Analysis_Date"]=self.options["header"][1].rstrip().lstrip()
             print("The {0} variable is {1}".format('self.metadata["Device_Id"]',self.metadata["Device_Id"]))
             #print("The {0} variable is {1}".format('data.tolist()',data.tolist()))
 
@@ -1071,9 +1072,12 @@ class TwoPortCalrepModel():
                 column_names=[]
                 for column_number,column in enumerate(self.tables[index].column_names):
                     if column is not "Frequency":
+                        if re.search('mag|arg',column):
+                            column_names.append(column.replace('S11',self.table_names[:][index]))
                         #print("{0} is {1}".format("self.table_names[index]",self.table_names[index]))
                         #print("{0} is {1}".format("column",column))
-                        column_names.append(column+self.table_names[:][index])
+                        else:
+                            column_names.append(column+self.table_names[:][index])
                     else:
                         column_names.append(column)
                 self.tables[index].column_names=column_names
@@ -1615,7 +1619,7 @@ if __name__ == '__main__':
     #test_OnePortCalrepModel()
     #test_OnePortCalrepModel('700437.asc')
     #test_OnePortCalrepModel_Ctable(file_path_1='922729c.txt')
-    test_OnePortRawModel()
+    #test_OnePortRawModel()
     #test_OnePortRawModel('OnePortRawTestFile_002.txt')
     #test_TwoPortRawModel()
     #test_PowerRawModel('CTNP15.A1_042601')
@@ -1623,7 +1627,7 @@ if __name__ == '__main__':
     #test_JBSparameter()
     #test_JBSparameter('QuartzRefExample_L1_g10_HF')
     #test_TwoPortCalrepModel()
-    #test_TwoPortCalrepModel('N205RV.asc')
+    test_TwoPortCalrepModel('N205RV.asc')
     #test_PowerCalrepModel()
     #test_PowerCalrepModel('700083b.txt')
     #convert_all_two_ports_script()

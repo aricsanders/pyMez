@@ -426,6 +426,7 @@ def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction,r
             sparameter_out.append([frequency,S11,S21,S12,S22])
         phase_last=cmath.phase(mean_S12_S21)
     return sparameter_out
+#TODO: Check that this works the way it should
 def correct_sparameters(sparameters,correction,**options):
     """Correction sparamters trys to return a corrected set of sparameters given uncorrected sparameters
     and a correction. Correct sparameters will accept file_name's, pyMeasure classes,

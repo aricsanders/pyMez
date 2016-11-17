@@ -1937,7 +1937,7 @@ def show_structure_script():
         print("{0} {1}".format(index,line))
 
     for item in new_table.elements:
-        if item is 'inline_comments':
+        if item in ['inline_comments','metadata']:
             pass
         else:
             begin_line=new_table.options["%s_begin_line"%item]
