@@ -44,6 +44,7 @@ TESTS_DIRECTORY=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests'
 NUMBER_MATCH_STRING=r'[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?'
 #-----------------------------------------------------------------------------
 # Module Functions
+
 def print_comparison(var_1,var_2):
     """If var_1==var_2 prints True, else Prints false and a string representation of the 2 vars"""
     print(var_1==var_2)
@@ -510,6 +511,20 @@ def ascii_data_table_join(column_selector,table_1,table_2):
             new_table.add_column(column,column_type=column_type,column_data=column_data)
 
     return new_table
+
+def structure_metadata(header_string,metadata_fact_delimiter=";",metadata_key_value_delimiter="=",comment_character="#"):
+    """Strucutre Metadata returns a metadata string and returns a metadata dictionary"""
+    string_list=re.split(metadata_fact_delimiter+'|\n',header_string.replace(comment_character,''))
+    metadata_dictionary={}
+    for string in string_list:
+        pair=string.split(metadata_key_value_delimiter)
+        #print pair
+        #print len(pair)
+        if len(pair)==2:
+            key=pair[0].rstrip().lstrip().replace(".","_")
+            value=pair[1].rstrip().lstrip()
+            metadata_dictionary[key]=value
+    return metadata_dictionary
 
 #-----------------------------------------------------------------------------
 # Module Classes

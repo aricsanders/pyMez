@@ -322,8 +322,8 @@ class OnePortCalrepModel(AsciiDataTable):
             self.options["data"]=data.tolist()
             self.options["header"]=lines[:self.find_line("TABLE")]
             self.metadata["Device_Id"]=lines[0].rstrip().lstrip()
-            if len(self.joined_table.header)>1:
-                self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
+            if len(self.options["header"])>1:
+                self.metadata["Analysis_Date"]=self.options["header"][1].rstrip().lstrip()
             print("The {0} variable is {1}".format('self.metadata["Device_Id"]',self.metadata["Device_Id"]))
             #print("The {0} variable is {1}".format('data.tolist()',data.tolist()))
 
@@ -1613,9 +1613,9 @@ def test_TwelveTermErrorModel(file_path='CalCoefficients.txt'):
 # Module Runner
 if __name__ == '__main__':
     #test_OnePortCalrepModel()
-    #test_OnePortCalrepModel('700437.asc')
+    test_OnePortCalrepModel('700437.asc')
     #test_OnePortCalrepModel_Ctable(file_path_1='922729c.txt')
-    test_OnePortRawModel()
+    #test_OnePortRawModel()
     #test_OnePortRawModel('OnePortRawTestFile_002.txt')
     #test_TwoPortRawModel()
     #test_PowerRawModel('CTNP15.A1_042601')
