@@ -670,6 +670,10 @@ class DataTable(XMLBase):
                         new_entry=self.list_to_XML(value)
                         self.document.documentElement.appendChild(new_entry)
         except:pass
+        self.attribute_names=self.get_attribute_names()
+        node_list=self.document.getElementsByTagName('Tuple')
+        self.data=[[node.getAttribute(attribute_name) for
+            attribute_name in self.attribute_names] for node in node_list]
 
     def list_to_XML(self,data_list):
         """ Converts a list to XML document"""
@@ -719,8 +723,10 @@ class DataTable(XMLBase):
         except:
             return None
 
-    def to_tuple_list(self,attribute_names):
+    def to_tuple_list(self,attribute_names=None):
         """ Returns a list of tuples for the specified list of attribute names"""
+        if not attribute_names:
+            attribute_names=self.get_attribute_names()
         try:
             node_list=self.document.getElementsByTagName('Tuple')
             data_list=[tuple([node.getAttribute(attribute_name) for
