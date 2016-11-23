@@ -111,6 +111,53 @@ def AsciiDataTable_to_DataFrame(ascii_data_table):
     data_frame=pandas.DataFrame(data=ascii_data_table.data,columns=ascii_data_table.column_names)
     return data_frame
 
+def AsciiDataTable_to_DataFrame_dict(AsciiDataTable):
+    """Converts an AsciiDataTable to a dictionary of pandas.DataFrame s"""
+    output_dict={}
+    for element in AsciiDataTable.elements:
+        #print("{0} is {1}".format('element',element))
+        if AsciiDataTable.__dict__[element]:
+            if re.search('header',element,re.IGNORECASE):
+                header_table=pandas.DataFrame(AsciiDataTable.header,columns=["Header_Line_Content"])
+                output_dict["Header"]=header_table
+            # needs to be before data search
+            elif re.search('meta',element,re.IGNORECASE):
+                #print("{0} is {1}".format('element',element))
+                metadata_table=pandas.DataFrame([[key,value] for key,value in AsciiDataTable.metadata.iteritems()],
+                                columns=["Property","Value"])
+                output_dict["Metadata"]=metadata_table
+            elif re.search('data|^meta',element,re.IGNORECASE):
+
+                data_table=pandas.DataFrame(AsciiDataTable.data,columns=AsciiDataTable.column_names)
+                output_dict["Data"]=data_table
+
+            elif re.search('footer',element,re.IGNORECASE):
+                footer_table=pandas.DataFrame(AsciiDataTable.footer,columns=["Footer_Line_Content"])
+                output_dict["Footer"]=footer_table
+
+            elif re.search('comment',element,re.IGNORECASE):
+                comments=AsciiDataTable.__dict__[element]
+                inline_comments=pandas.DataFrame(comments,columns=["Comment","Line","Location"])
+                output_dict["Comments"]=inline_comments
+    return output_dict
+
+def DataFrame_dict_to_excel(DataFrame_dict,excel_file_name="Test.xlsx"):
+    """Converts a dictionary of pandas DataFrames to a single excel file with sheet names
+    determined by keys"""
+    # sort the keys so that they will display in the same order
+    writer = pandas.ExcelWriter(excel_file_name)
+    keys=sorted(DataFrame_dict.keys())
+    for key in keys:
+        #print key
+        DataFrame_dict[key].to_excel(writer,sheet_name=key,index=False)
+        writer.close()
+    return excel_file_name
+
+def excel_to_DataFrame_dict(excel_file_name):
+    """Reads an excel file into a dictionary of data frames"""
+    data_frame_dictionary=pandas.read_excel(excel_file_name,sheetname=None)
+    return data_frame_dictionary
+
 def DataFrame_to_AsciiDataTable(pandas_data_frame,**options):
     """Converts a pandas.DataFrame to an AsciiDataTable"""
     # Set up defaults and pass options
