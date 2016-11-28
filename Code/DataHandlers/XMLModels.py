@@ -245,9 +245,10 @@ class XMLBase():
             impl=getDOMImplementation()
             self.document=impl.createDocument(None,self.options['root'],None)
             # Should be a relative path for
-            new_node=self.document.createProcessingInstruction('xml-stylesheet',
-            u'type="text/xsl" href="%s"'%self.options['style_sheet'])
-            self.document.insertBefore(new_node,self.document.documentElement)
+            if self.options["style_sheet"] is not None:
+                new_node=self.document.createProcessingInstruction('xml-stylesheet',
+                u'type="text/xsl" href="%s"'%self.options['style_sheet'])
+                self.document.insertBefore(new_node,self.document.documentElement)
             if DEFAULT_FILE_NAME is None:
                 self.path=auto_name(self.options["specific_descriptor"],
                                     self.options["general_descriptor"],
