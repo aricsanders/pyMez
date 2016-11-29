@@ -282,7 +282,10 @@ class OnePortCalrepModel(AsciiDataTable):
             else:
                 row_formatter=row_formatter+"{"+str(i)+":.2f}{delimiter}"
         self.options["row_formatter_string"]=row_formatter
+        self.options["metadata"]=self.metadata
+        #print("{0} is {1}".format('self.metadata',self.metadata))
         AsciiDataTable.__init__(self,None,**self.options)
+        #print("{0} is {1}".format('self.metadata',self.metadata))
         if file_path is not None:
             self.path=file_path
 
@@ -530,6 +533,7 @@ class OnePortRawModel(AsciiDataTable):
                                            "Direction":"Direction of connects, may be unused",
                                            "Connect":"Connect number", "magS11":"Linear magnitude",
                                            "argS11":"Phase in degrees"}
+        #self.options["metadata"]=self.metadata
         AsciiDataTable.__init__(self,None,**self.options)
         self.path=file_path
         self.structure_metadata()
@@ -1617,7 +1621,7 @@ def test_TwelveTermErrorModel(file_path='CalCoefficients.txt'):
 # Module Runner
 if __name__ == '__main__':
     #test_OnePortCalrepModel()
-    #test_OnePortCalrepModel('700437.asc')
+    test_OnePortCalrepModel('700437.asc')
     #test_OnePortCalrepModel_Ctable(file_path_1='922729c.txt')
     #test_OnePortRawModel()
     #test_OnePortRawModel('OnePortRawTestFile_002.txt')

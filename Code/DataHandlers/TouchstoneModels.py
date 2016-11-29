@@ -413,7 +413,7 @@ class SNPBase():
         #print items[0]
         if type(items) in [StringType,IntType]:
             if items in self.column_names:
-                return self.get_column(column_name=item)
+                return self.get_column(column_name=items)
             elif items in ["data","data"]:
                 return self.data
             elif items in ["sparameter_complex","complex_data"]:

@@ -43,6 +43,12 @@ except:
     print("The module numpy was not found,"
           "please put it on the python path")
     raise ImportError
+try:
+    import networkx
+except:
+    print("The module networkx was not found,"
+          "please put it on the python path")
+    raise ImportError
 
 #-----------------------------------------------------------------------------
 # Module Constants
@@ -54,8 +60,47 @@ def edge_1_to_2(in_string):
 
 def edge_2_to_1(string_list):
     return string_list_collapse(string_list)
+def remove_circular_paths(path):
+    """Removes pieces of the path that just end on the same node"""
+    edge_pattern=re.compile("edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
+    past_locations=[]
+
+    for index,edge in enumerate(path):
+        match=re.match(edge_pattern,edge)
+        begin_node=match.groupdict()["begin_node"]
+        end_node=match.groupdict()["end_node"]
+        past_locations.append(begin_node)
+        #print("{0} is {1}".format("past_locations",past_locations))
+    new_path=[]
+    node_index=0
+    between_list=[False for item in past_locations]
+    while(node_index<len(past_locations)):
+        node=past_locations[node_index]
+        old_path=new_path
+        new_path=[]
+
+        if past_locations.count(node)>1:
+            equality_list=map(lambda x:x==node,past_locations)
+            between=False
+            for index,equality in enumerate(equality_list):
+                if equality:
+                    between=not between
+                    between_list[index]=between or between_list[index]
+                else:
+                    between_list[index]=between or between_list[index]
+        #print("{0} is {1}".format("between_list",between_list))
+        for index,item in enumerate(between_list):
+            if not item:
+                new_path.append(path[index])
+        node_index+=1
+
+    if new_path in [[]]:
+        new_path=path
+
+    return new_path
 #-----------------------------------------------------------------------------
 # Module Classes
+
 class Graph():
     def __init__(self,**options):
         """Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required"""
@@ -120,7 +165,7 @@ class Graph():
 
     def move_to(self,path):
         """Changes the state of the graph by moving along the path specified"""
-        #print path
+        print path
         for index,edge in enumerate(path):
             #print edge
             edge_pattern='edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)'
@@ -167,9 +212,11 @@ class Graph():
     def __str__(self):
         return str(self.data)
 
-    def add_node(self,node_name,edge_into_node_begin,edge_into_node_function,edge_out_node_end,edge_out_node_function):
-        """Adds a node to the graph. Required input is node_name (a string with no spaces), a reference to an entering node,
-        the function mapping the entering node to the new node, a reference to an exiting node and the function mapping the
+    def add_node(self,node_name,edge_into_node_begin,edge_into_node_function,edge_out_node_end,
+                 edge_out_node_function):
+        """Adds a node to the graph. Required input is node_name (a string with no spaces),
+        a reference to an entering node,the function mapping the entering node to the new node,
+        a reference to an exiting node and the function mapping the
         new node to the exiting node."""
         # first check if node into and out of node is good
         self.node_names.append(node_name)
@@ -195,7 +242,8 @@ class Graph():
         delta_t=end_time-begin_time
         path_length=delta_t.total_seconds()/float(num_repeats)
         if path_length ==0.0:
-            print("Warning the path length is less than 1 microsecond, make sure num_repeats is high enough to measure it.")
+            print("Warning the path length is less than 1 microsecond,"
+                  "make sure num_repeats is high enough to measure it.")
         return path_length
 
     def is_path_valid(self,path):
@@ -258,7 +306,8 @@ class Graph():
         return exit_nodes
 
     def get_path(self,first_node,last_node):
-        """Returns the first path found between first node and last node"""
+        """Returns the first path found between first node and last node, three step paths are broken"""
+        #TODO: Remove Circular Paths
         edge_pattern=re.compile('edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)')
         exit_paths=self.get_exiting_edges(first_node)
         next_nodes=self.get_exiting_nodes(first_node)
@@ -268,20 +317,25 @@ class Graph():
             possible_paths.append([exit_path])
         #print("{0} is {1}".format('possible_paths',possible_paths))
         for i in range(len(self.node_names)):
+            #print("{0} is {1}".format('i',i))
+            #print("{0} is {1}".format('possible_paths',possible_paths))
             for index,path in enumerate(possible_paths):
+                #print("{0} is {1}".format('index',index))
                 last_edge=path[-1]
+                #print("{0} is {1}".format('last_edge',last_edge))
                 match=re.match(edge_pattern,last_edge)
                 begin_node=match.groupdict()['begin_node']
                 end_node=match.groupdict()['end_node']
-                #print next_node
+                #print("{0} is {1}".format('end_node',end_node))
                 if end_node==last_node:
                     #print("The path found is {0}".format(path))
-                    return path
+                    return remove_circular_paths(path)
                 next_possible_paths=[]
                 next_edges=self.get_exiting_edges(end_node)
                 next_nodes=self.get_exiting_nodes(end_node)
                 #print("{0} is {1}".format('next_edges',next_edges))
-                for index,next_edge in enumerate(next_edges):
+                for next_edge_index,next_edge in enumerate(next_edges):
+                    #print("{0} is {1}".format('next_edge_index',next_edge_index))
                     #be careful here using the wrong assignment statement breaks this function
                     #next_path=path is a deal breaker!!
                     next_path=[]
@@ -296,19 +350,27 @@ class Graph():
                     begin_node_next_edge=next_match.groupdict()["begin_node"]
                     #print("{0} is {1}".format('next_node',next_node))
                     #print("{0} is {1}".format('begin_node_next_edge',begin_node_next_edge))
-
                     if next_node==last_node and begin_node_next_edge==end_node:
                         next_path.append(next_edge)
                         #print("The path found is {0}".format(next_path))
                         return next_path
                     elif begin_node_next_edge==end_node:
                         next_path.append(next_edge)
+                        # This keeps it from getting stuck on circular paths
+                        if next_edge in path:
+                        #ossible_paths=possible_paths
+                            #print("next_edge was already in path")
+                            continue
                         next_possible_paths.append(next_path)
+
                         #print("{0} is {1}".format('next_possible_paths',next_possible_paths))
                     else:
+                        print("Path is not found")
                         pass
+
                     #print("{0} is {1}".format('next_possible_paths',next_possible_paths))
-                possible_paths=next_possible_paths
+                if next_possible_paths:
+                    possible_paths=next_possible_paths
                 #print("{0} is {1}".format('possible_paths',possible_paths))
 
     def move_to_node(self,node):
@@ -340,6 +402,50 @@ class Graph():
             if not self.check_closed_path:
                 out=False
         return out
+
+    def show(self,**options):
+        """Shows the graph using matplotlib and networkx"""
+        # Should be seperated to allow for fixed presentation?
+        defaults={"descriptions":False,"save_figure":False,"path":None,"active_node":True}
+        show_options={}
+        for key,value in defaults.iteritems():
+            show_options[key]=value
+        for key,value in options.iteritems():
+            show_options[key]=value
+        new_graph=networkx.DiGraph()
+        edge_pattern=re.compile("edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
+        for node in self.node_names:
+            new_graph.add_node(node)
+        for edge in self.edges:
+            match=re.match(edge_pattern,edge)
+            if match:
+                begin_node=match.groupdict()["begin_node"]
+                end_node=match.groupdict()["end_node"]
+                new_graph.add_edge(begin_node,end_node)
+                #print("Begin Node = {0}, End Node= {1}".format(begin_node,end_node))
+        #print("{0} is {1}".format('new_graph.nodes()',new_graph.nodes()))
+        if show_options["active_node"]:
+            node_colors=[]
+            for node in new_graph.nodes():
+                if node==self.current_node:
+                    node_colors.append('b')
+                else:
+                    node_colors.append('r')
+        else:
+            node_colors=['r' for node in self.node_names]
+        #print("{0} is {1}".format('node_colors',node_colors))
+        if show_options["descriptions"]:
+            node_labels={node:rect_graph.node_descriptions[index] for index,
+                               node in enumerate(self.node_names)}
+            networkx.draw_networkx(new_graph,arrows=True,
+                       labels=node_labels,node_color=node_colors,
+                                   node_size=1500,font_size=10)
+            #print("{0} is {1}".format('node_labels',node_labels))
+        else:
+            networkx.draw_networkx(new_graph,arrows=True,node_color=node_colors)
+
+        plt.suptitle(self.options["graph_name"])
+        plt.show()
 
 class StringGraph(Graph):
     """String Graph is  a graph relating different string forms"""
