@@ -134,12 +134,7 @@ ul.tab li a:focus, .active {
             <th >
                 <b>Frequency</b>
             </th>
-            <th >
-                <b>Connection</b>
-            </th>
-            <th >
-                <b>Direction</b>
-            </th>
+
             <th >
                 <b>magS11</b>
             </th>
@@ -160,12 +155,8 @@ ul.tab li a:focus, .active {
             <xsl:for-each select="./@Frequency">
             <td><xsl:value-of select="."/></td>
 		    </xsl:for-each>
-            <xsl:for-each select="./@Connect">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
-            <xsl:for-each select="./@Direction">
-            <td><xsl:value-of select="."/></td>
-		    </xsl:for-each>
+
+
             <xsl:for-each select="./@magS11">
             <td><xsl:value-of select="."/></td>
 		    </xsl:for-each>
@@ -199,7 +190,7 @@ ul.tab li a:focus, .active {
     y: [<xsl:for-each select="//Data/Tuple/@magS11"><xsl:value-of select="."/>,</xsl:for-each>],
     error_y: {
       type: 'data',
-      array: [<xsl:for-each select="//Data/Tuple/@uMgS11"><xsl:value-of select="."/>,</xsl:for-each>],
+      array: [<xsl:for-each select="//Data/Tuple/@uMg"><xsl:value-of select="."/>,</xsl:for-each>],
       visible: true,
         }
     type: 'scatter',
@@ -212,7 +203,7 @@ ul.tab li a:focus, .active {
     y: [<xsl:for-each select="//Data/Tuple/@argS11"><xsl:value-of select="."/>,</xsl:for-each>],
     error_y: {
       type: 'data',
-      array: [<xsl:for-each select="//Data/Tuple/@uAgS11"><xsl:value-of select="."/>,</xsl:for-each>],
+      array: [<xsl:for-each select="//Data/Tuple/@uAg"><xsl:value-of select="."/>,</xsl:for-each>],
       visible: true,
         },
 

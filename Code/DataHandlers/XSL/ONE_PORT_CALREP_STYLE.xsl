@@ -92,24 +92,24 @@
 
 <script>
     var frequency=[<xsl:for-each select="//Data/Tuple/@Frequency"><xsl:value-of select="."/>,</xsl:for-each>];
-    var yData=[<xsl:for-each select="//Data/Tuple/@mag"><xsl:value-of select="."/>,</xsl:for-each>];
+    var yData=[<xsl:for-each select="//Data/Tuple/@magS11"><xsl:value-of select="."/>,</xsl:for-each>];
     var yError=[<xsl:for-each select="//Data/Tuple/@uMg"><xsl:value-of select="."/>,</xsl:for-each>];
-    var argData=[<xsl:for-each select="//Data/Tuple/@arg"><xsl:value-of select="."/>,</xsl:for-each>];
-    var argError=[<xsl:for-each select="//Data/Tuple/@uAg"><xsl:value-of select="."/>,</xsl:for-each>];
+    var argS11Data=[<xsl:for-each select="//Data/Tuple/@argS11"><xsl:value-of select="."/>,</xsl:for-each>];
+    var argS11Error=[<xsl:for-each select="//Data/Tuple/@uAg"><xsl:value-of select="."/>,</xsl:for-each>];
     var upper=[]
     var lower=[]
-    var argUpper=[]
-    var argLower=[]
+    var argS11Upper=[]
+    var argS11Lower=[]
     <xsl:text disable-output-escaping="yes">
     <![CDATA[
     for(i=0;i<=yData.length;i++){
     upper.push(yData[i]+yError[i]);
     lower.push(yData[i]-yError[i]);
-    argUpper.push(argData[i]+argError[i]);
-    argLower.push(argData[i]-argError[i]);
+    argS11Upper.push(argS11Data[i]+argS11Error[i]);
+    argS11Lower.push(argS11Data[i]-argS11Error[i]);
     };]]>
     </xsl:text>
-    var magUpper={
+    var magS11Upper={
     x:frequency ,
     y:upper,
     name:'S11+uMg',
@@ -117,7 +117,7 @@
     mode:'lines',
     line: {color: "rgb(0, 0, 255,.5)"},
   };
-    var magLower={
+    var magS11Lower={
     x:frequency ,
     y:lower,
     name:'S11-uMg',
@@ -127,7 +127,7 @@
     fillcolor: "rgba(68, 68, 68, 0.3)",
     line: {color: "rgb(0, 0, 255,.5)"},
   };
-    var magnitude = {
+    var magS11nitude = {
     x: frequency,
     y: yData,
     name:'S11',
@@ -143,7 +143,7 @@
   };
         var phaseUpper={
     x:frequency ,
-    y:argUpper,
+    y:argS11Upper,
     name:'phase+uAg',
     type: 'scatter',
     mode:'lines',
@@ -151,7 +151,7 @@
   };
     var phaseLower={
     x:frequency ,
-    y:argLower,
+    y:argS11Lower,
     type: 'scatter',
     mode:'lines',
     name:'phase-uAg',
@@ -161,17 +161,17 @@
   };
     var phase = {
     x: frequency,
-    y: argData,
+    y: argS11Data,
     name:'phase',
     error_y: {
       type: 'data',
-      array: argError,
+      array: argS11Error,
       visible: false,
     },
     type: 'scatter',
     mode:'lines'
   };
-var magnitudeLayout = {
+var magS11nitudeLayout = {
   legend: {
     y: 0.5,
     yref: 'paper',
@@ -205,7 +205,7 @@ var magnitudeLayout = {
   title:'Phase'
 };
 
-Plotly.newPlot('plot',[magUpper,magLower,magnitude],magnitudeLayout);
+Plotly.newPlot('plot',[magS11Upper,magS11Lower,magS11nitude],magS11nitudeLayout);
 Plotly.newPlot('error-plot', [phaseUpper,phaseLower,phase],phaseLayout);
 	</script>
     <script>

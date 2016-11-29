@@ -94,7 +94,7 @@
     var magnitude = [
   {
     x: [<xsl:for-each select="//Data/Tuple/@Frequency"><xsl:value-of select="."/>,</xsl:for-each>],
-    y: [<xsl:for-each select="//Data/Tuple/@mag"><xsl:value-of select="."/>,</xsl:for-each>],
+    y: [<xsl:for-each select="//Data/Tuple/@magS11"><xsl:value-of select="."/>,</xsl:for-each>],
     error_y: {
       type: 'data',
       array: [<xsl:for-each select="//Data/Tuple/@uMg"><xsl:value-of select="."/>,</xsl:for-each>],
@@ -107,7 +107,7 @@
         var phase = [
   {
     x: [<xsl:for-each select="//Data/Tuple/@Frequency"><xsl:value-of select="."/>,</xsl:for-each>],
-    y: [<xsl:for-each select="//Data/Tuple/@arg"><xsl:value-of select="."/>,</xsl:for-each>],
+    y: [<xsl:for-each select="//Data/Tuple/@argS11"><xsl:value-of select="."/>,</xsl:for-each>],
     error_y: {
       type: 'data',
       array: [<xsl:for-each select="//Data/Tuple/@uAg"><xsl:value-of select="."/>,</xsl:for-each>],
