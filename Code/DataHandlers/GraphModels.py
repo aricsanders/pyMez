@@ -106,51 +106,6 @@ def remove_circular_paths(path):
 #-----------------------------------------------------------------------------
 # Module Classes
 
-def remove_circular_paths(path):
-    """Removes pieces of the path that just end on the same node"""
-    edge_pattern=re.compile("edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
-    past_locations=[]
-
-    for index,edge in enumerate(path):
-        match=re.match(edge_pattern,edge)
-        begin_node=match.groupdict()["begin_node"]
-        end_node=match.groupdict()["end_node"]
-        past_locations.append(begin_node)
-        #print("{0} is {1}".format("past_locations",past_locations))
-    new_path=[]
-    node_index=0
-    between_list=[False for item in past_locations]
-    while(node_index<len(past_locations)):
-        node=past_locations[node_index]
-        old_path=new_path
-        new_path=[]
-
-        if past_locations.count(node)>1:
-            equality_list=map(lambda x:x==node,past_locations)
-            between=False
-            for index,equality in enumerate(equality_list):
-                if equality:
-                    between=not between
-                    between_list[index]=between or between_list[index]
-                else:
-                    between_list[index]=between or between_list[index]
-        #print("{0} is {1}".format("between_list",between_list))
-        for index,item in enumerate(between_list):
-            if not item:
-                new_path.append(path[index])
-        node_index+=1
-
-    if new_path in [[]]:
-        new_path=path
-
-    return new_path
-
-def edge_1_to_2(in_string):
-    return in_string.splitlines()
-
-def edge_2_to_1(string_list):
-    return string_list_collapse(string_list)
-
 class Graph():
     def __init__(self,**options):
         """Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required"""
@@ -178,6 +133,9 @@ class Graph():
         # Add the first 2 edges, required to intialize the graph properly
         self.add_edge(self.node_names[0],self.node_names[1],self.options["edge_1_to_2"])
         self.add_edge(self.node_names[1],self.node_names[0],self.options["edge_2_to_1"])
+        self.jumps=[]
+        self.external_node_names=[]
+        self.external_node_descriptions=[]
 
     def get_description_dictionary(self):
         dictionary={node_name:self.node_descriptions[index] for index,node_name in enumerate(self.node_names)}
@@ -216,6 +174,22 @@ class Graph():
         edge_matrix[end_position][begin_position]=1
         edge_matrix=np.matrix(edge_matrix)
         self.edge_matrices.append(edge_matrix)
+
+    def add_jump(self,begin_node=None,end_node=None,jump_function=None):
+        """Adds a jump mapping one internal node to an external node, required input is begin_node (it's name)
+        end_node, and the edge function"""
+        # check to see if edge is defined if it is increment a number
+        jump_match=re.compile("jump_{0}_{1}".format(begin_node,end_node))
+        keys=self.__dict__.keys()
+        #print keys
+        iterator=0
+        for key in keys:
+            if re.match(jump_match,key):
+                iterator+=1
+        jump_name="jump_{0}_{1}_{2:0>3d}".format(begin_node,end_node,iterator)
+        self.__dict__[jump_name]=jump_function
+        self.jumps.append(jump_name)
+
 
     def move_to(self,path):
         """Changes the state of the graph by moving along the path specified"""
@@ -285,6 +259,28 @@ class Graph():
             self.edge_matrices[index]=new_matrix
         self.add_edge(begin_node=node_name,end_node=edge_out_node_end,edge_function=edge_out_node_function)
         self.add_edge(begin_node=edge_into_node_begin,end_node=node_name,edge_function=edge_into_node_function)
+
+    def add_external_node(self,external_node_name,jump_into_node_begin,jump_into_node_function):
+        """Adds an external node to the graph. Required input is node_name (a string with no spaces),
+        a reference to an entering node,the function mapping the entering node to the new external node"""
+        # first check if node into and out of node is good
+        self.external_node_names.append(external_node_name)
+        self.add_jump(begin_node=jump_into_node_begin,end_node=external_node_name,jump_function=jump_into_node_function)
+
+    def jump_to_external_node(self,external_node_name):
+        """Returns the result of the jump, the graph is left in the node that is the begining of the jump"""
+        end_node=external_node_name
+        jump_pattern='jump_(?P<begin_node>\w+)_{0}_(?P<iterator>\w+)'.format(end_node)
+        for jump in self.jumps[:]:
+            jump_match=re.match(jump_pattern,jump,re.IGNORECASE)
+            if jump_match:
+                jump_to_use=jump
+                begin_node=jump_match.groupdict()["begin_node"]
+
+        self.move_to_node(begin_node)
+        return self.__dict__[jump_to_use](self.data)
+
+
 
     def path_length(self,path,num_repeats=10):
         """Determines the length of a given path, currently the metric is based on the time to move to."""
@@ -460,7 +456,8 @@ class Graph():
     def show(self,**options):
         """Shows the graph using matplotlib and networkx"""
         # Should be seperated to allow for fixed presentation?
-        defaults={"descriptions":False,"save_figure":False,"path":None,"active_node":True}
+        defaults={"descriptions":False,"save_figure":False,"path":None,"active_node":True,
+                 "arrows":True,"node_size":1000,"font_size":10}
         show_options={}
         for key,value in defaults.iteritems():
             show_options[key]=value
@@ -468,7 +465,10 @@ class Graph():
             show_options[key]=value
         new_graph=networkx.DiGraph()
         edge_pattern=re.compile("edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
+        jump_pattern=re.compile("jump_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
         for node in self.node_names:
+            new_graph.add_node(node)
+        for node in self.external_node_names:
             new_graph.add_node(node)
         for edge in self.edges:
             match=re.match(edge_pattern,edge)
@@ -478,29 +478,42 @@ class Graph():
                 new_graph.add_edge(begin_node,end_node)
                 #print("Begin Node = {0}, End Node= {1}".format(begin_node,end_node))
         #print("{0} is {1}".format('new_graph.nodes()',new_graph.nodes()))
+        for jump in self.jumps:
+            match=re.match(jump_pattern,jump)
+            if match:
+                begin_node=match.groupdict()["begin_node"]
+                end_node=match.groupdict()["end_node"]
+                new_graph.add_edge(begin_node,end_node)
+
         if show_options["active_node"]:
             node_colors=[]
             for node in new_graph.nodes():
                 if node==self.current_node:
                     node_colors.append('b')
                 else:
-                    node_colors.append('r')
+                    if node in self.node_names:
+                        node_colors.append('r')
+                    elif node in self.external_node_names:
+                        node_colors.append('g')
         else:
-            node_colors=['r' for node in self.node_names]
+            node_colors=['r' for node in self.node_names]+['g' for node in self.node_names]
         #print("{0} is {1}".format('node_colors',node_colors))
         if show_options["descriptions"]:
             node_labels={node:self.node_descriptions[index] for index,
                                node in enumerate(self.node_names)}
-            networkx.draw_networkx(new_graph,arrows=True,
+            if self.external_node_names:
+                for index,node in enumerate(self.external_node_names):
+                    node_labels[node]=self.external_node_descriptions[index]
+            networkx.draw_networkx(new_graph,arrows=show_options["arrows"],
                        labels=node_labels,node_color=node_colors,
-                                   node_size=1500,font_size=10)
+                                   node_size=show_options["node_size"],font_size=show_options["font_size"])
             #print("{0} is {1}".format('node_labels',node_labels))
         else:
-            networkx.draw_networkx(new_graph,arrows=True,node_color=node_colors)
+            networkx.draw_networkx(new_graph,arrows=show_options["arrows"],node_color=node_colors,
+                                  node_size=show_options["node_size"],font_size=show_options["font_size"])
 
         plt.suptitle(self.options["graph_name"])
         plt.show()
-
 
 class StringGraph(Graph):
     """String Graph is  a graph relating different string forms"""
