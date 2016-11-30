@@ -192,7 +192,7 @@ ul.tab li a:focus, .active {
       type: 'data',
       array: [<xsl:for-each select="//Data/Tuple/@uMg"><xsl:value-of select="."/>,</xsl:for-each>],
       visible: true,
-        }
+        },
     type: 'scatter',
     mode:'markers+lines'
   }
