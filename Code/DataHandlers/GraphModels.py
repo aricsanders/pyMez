@@ -36,7 +36,12 @@ except:
     print("The module pyMeasure.Code.DataHandlers.TouchstoneModels was not found,"
           "please put it on the python path")
     raise ImportError
-
+try:
+    from Code.DataHandlers.Translations import *
+except:
+    print("The module pyMeasure.Code.DataHandlers.Translations was not found or had an error,"
+          "please put it on the python path or resolve the error")
+    raise ImportError
 try:
     import numpy as np
 except:
@@ -101,13 +106,58 @@ def remove_circular_paths(path):
 #-----------------------------------------------------------------------------
 # Module Classes
 
+def remove_circular_paths(path):
+    """Removes pieces of the path that just end on the same node"""
+    edge_pattern=re.compile("edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
+    past_locations=[]
+
+    for index,edge in enumerate(path):
+        match=re.match(edge_pattern,edge)
+        begin_node=match.groupdict()["begin_node"]
+        end_node=match.groupdict()["end_node"]
+        past_locations.append(begin_node)
+        #print("{0} is {1}".format("past_locations",past_locations))
+    new_path=[]
+    node_index=0
+    between_list=[False for item in past_locations]
+    while(node_index<len(past_locations)):
+        node=past_locations[node_index]
+        old_path=new_path
+        new_path=[]
+
+        if past_locations.count(node)>1:
+            equality_list=map(lambda x:x==node,past_locations)
+            between=False
+            for index,equality in enumerate(equality_list):
+                if equality:
+                    between=not between
+                    between_list[index]=between or between_list[index]
+                else:
+                    between_list[index]=between or between_list[index]
+        #print("{0} is {1}".format("between_list",between_list))
+        for index,item in enumerate(between_list):
+            if not item:
+                new_path.append(path[index])
+        node_index+=1
+
+    if new_path in [[]]:
+        new_path=path
+
+    return new_path
+
+def edge_1_to_2(in_string):
+    return in_string.splitlines()
+
+def edge_2_to_1(string_list):
+    return string_list_collapse(string_list)
+
 class Graph():
     def __init__(self,**options):
         """Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required"""
         defaults={"graph_name":"Graph",
                   "node_names":['n1','n2'],
-                  "node_descriptions":{'n1':"A plain string",
-                                       'n2':"A list of strings with no \\n, created with string.splitlines()"},
+                  "node_descriptions":["A plain string",
+                                       "A list of strings with no \\n, created with string.splitlines()"],
                   "current_node":'n1',
                   "state":[1,0],
                   "data":"This is a test string\n it has to have multiple lines \n and many characters 34%6\n^",
@@ -128,6 +178,10 @@ class Graph():
         # Add the first 2 edges, required to intialize the graph properly
         self.add_edge(self.node_names[0],self.node_names[1],self.options["edge_1_to_2"])
         self.add_edge(self.node_names[1],self.node_names[0],self.options["edge_2_to_1"])
+
+    def get_description_dictionary(self):
+        dictionary={node_name:self.node_descriptions[index] for index,node_name in enumerate(self.node_names)}
+        return dictionary
 
     def set_state(self,node_name,node_data):
         """Sets the graph state to be the state specified by node_name, and node_data"""
@@ -435,7 +489,7 @@ class Graph():
             node_colors=['r' for node in self.node_names]
         #print("{0} is {1}".format('node_colors',node_colors))
         if show_options["descriptions"]:
-            node_labels={node:rect_graph.node_descriptions[index] for index,
+            node_labels={node:self.node_descriptions[index] for index,
                                node in enumerate(self.node_names)}
             networkx.draw_networkx(new_graph,arrows=True,
                        labels=node_labels,node_color=node_colors,
@@ -446,6 +500,7 @@ class Graph():
 
         plt.suptitle(self.options["graph_name"])
         plt.show()
+
 
 class StringGraph(Graph):
     """String Graph is  a graph relating different string forms"""
@@ -467,6 +522,56 @@ class StringGraph(Graph):
         for key,value in options.iteritems():
             self.options[key]=value
         Graph.__init__(self,**self.options)
+
+class ColumnModeledGraph(Graph):
+    """Class that transforms column modeled data from one format to another, use set_state to intialize to
+    your data"""
+    def __init__(self,**options):
+        defaults={"graph_name":"Column Modeled Graph",
+                  "node_names":['n1','n2'],
+                  "node_descriptions":["Pandas Data Frame","AsciiDataTable"],
+                  "current_node":'n1',
+                  "state":[1,0],
+                  "data":pandas.DataFrame([[1,2,3],[3,4,5]],columns=["a","b","c"]),
+                  "edge_2_to_1":AsciiDataTable_to_DataFrame,
+                  "edge_1_to_2":DataFrame_to_AsciiDataTable}
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        Graph.__init__(self,**self.options)
+        self.add_node("n3","n1",DataFrame_to_hdf,"n1",hdf_to_DataFrame)
+        self.node_descriptions.append("HDF File")
+        self.add_node("n4","n2",AsciiDataTable_to_XMLDataTable_2,"n2",XMLDataTable_to_AsciiDataTable)
+        self.node_descriptions.append("XML Data Table")
+
+        # Need to add XML File and Html File using save and save_HTML()
+        self.add_node("n5","n1",DataFrame_to_excel,"n1",excel_to_DataFrame)
+        self.node_descriptions.append("Excel File")
+        self.add_node("n6","n1",DataFrame_to_HTML_string,"n1",HTML_string_to_DataFrame)
+        self.node_descriptions.append("HTML String")
+
+        # Note a lot of the pandas reading and writing cause float64 round off errors
+        # applymap(lambda x: np.around(x,10) any all float fields will fix this
+        # also the column names move about in order
+        self.add_node("n7","n1",DataFrame_to_json,"n1",json_to_DataFrame)
+        self.node_descriptions.append("JSON File")
+        self.add_node("n8","n1",DataFrame_to_json_string,"n1",json_string_to_DataFrame)
+        self.node_descriptions.append("JSON String")
+        self.add_node("n9","n1",DataFrame_to_csv,"n1",csv_to_DataFrame)
+        self.node_descriptions.append("CSV File")
+        self.add_node("n10","n2",AsciiDataTable_to_Matlab,"n2",Matlab_to_AsciiDataTable)
+        self.node_descriptions.append("Matlab File")
+        self.add_node("n11","n4",DataTable_to_XML,"n4",XML_to_DataTable)
+        self.node_descriptions.append("XML File")
+        self.add_node("n12","n6",html_string_to_html_file,"n6",html_file_to_html_string)
+        self.node_descriptions.append("HTML File")
+        self.add_edge("n1","n12",DataFrame_to_html_file)
+        self.add_edge("n7","n4",json_to_DataTable)
+
+
+
 #-----------------------------------------------------------------------------
 # Module Scripts
 #TODO: Add test_Graph script currently lives in jupyter-notebooks

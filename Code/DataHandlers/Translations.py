@@ -374,6 +374,116 @@ def PowerRawModel_to_XMLDataTable(power_raw_table,**options):
         XML_options[key]=value
     new_xml=AsciiDataTable_to_XMLDataTable(table,**XML_options)
     return new_xml
+
+def DataFrame_to_hdf(pandas_data_frame):
+    pandas_data_frame.to_hdf("Test.hdf","table")
+    return "Test.hdf"
+def hdf_to_DataFrame(hdf_file_name):
+    df=pandas.read_hdf(hdf_file_name,"table")
+    return df
+def XMLDataTable_to_AsciiDataTable(xml_table):
+
+    table=AsciiDataTable(None,
+                         column_names=xml_table.attribute_names,
+                         data=xml_table.data)
+    return table
+def AsciiDataTable_to_XMLDataTable_2(data_table):
+    xml=AsciiDataTable_to_XMLDataTable(data_table)
+    return xml
+def DataFrame_to_excel(pandas_data_frame,file_name="Test.xlsx"):
+    pandas_data_frame.to_excel(file_name,index=False)
+    return file_name
+
+def excel_to_DataFrame(excel_file_name):
+    df=pandas.read_excel(excel_file_name)
+    return df
+def DataFrame_to_HTML_string(pandas_data_frame):
+    html=pandas_data_frame.to_html(index=False)
+    return html
+
+def HTML_string_to_DataFrame(html_string):
+    list_df=pandas.read_html(html_string)
+    return list_df[0]
+def DataFrame_to_json(pandas_data_frame):
+    json=pandas_data_frame.to_json("test.json",orient='records')
+    return "test.json"
+
+def json_to_DataFrame(json_file_name):
+    data_frame=pandas.read_json(json_file_name,orient='records')
+    return data_frame
+
+def DataFrame_to_json_string(pandas_data_frame):
+    json=pandas_data_frame.to_json(orient='records')
+    return json
+
+def json_string_to_DataFrame(json_string):
+    data_frame=pandas.read_json(json_string,orient='records')
+    return data_frame
+
+def DataFrame_to_csv(pandas_data_frame,file_name="test.csv"):
+    csv=pandas_data_frame.to_csv(file_name,index=False)
+    return file_name
+
+def csv_to_DataFrame(csv_file_name):
+    data_frame=pandas.read_csv(csv_file_name)
+    return data_frame
+
+def AsciiDataTable_to_Matlab(ascii_data_table,file_name="test.mat"):
+    matlab_data_dictionary={"data":ascii_data_table.data,"column_names":ascii_data_table.column_names}
+    savemat(file_name,matlab_data_dictionary)
+    return file_name
+
+def Matlab_to_AsciiDataTable(matlab_file_name):
+    matlab_data_dictionary=loadmat(matlab_file_name)
+    ascii_data_table=AsciiDataTable(None,
+                                    column_names=map(lambda x: x.rstrip().lstrip(),
+                                                     matlab_data_dictionary["column_names"].tolist()),
+                                     data=matlab_data_dictionary["data"].tolist())
+    return ascii_data_table
+
+def DataTable_to_XML(xml_data_table,file_name="test.xml"):
+    xml_data_table.save(file_name)
+    return file_name
+
+def XML_to_DataTable(xml_file_name):
+    xml_data_table=DataTable(xml_file_name)
+    return xml_data_table
+def html_string_to_html_file(html_string,file_name="test.html"):
+    out_file=open(file_name,'w')
+    out_file.write(html_string)
+    out_file.close()
+    return file_name
+# this is broken, something does not work properly
+def html_file_to_pandas(html_file_name):
+    in_file=open(html_file_name,'r')
+    pandas_data_frame=pandas.read_html(in_file)
+    return pandas_data_frame
+
+def html_file_to_html_string(html_file_name):
+    in_file=open(html_file_name,'r')
+    html_string=in_file.read()
+    return html_string
+
+def DataFrame_to_html_file(pandas_data_frame,file_name="test.html"):
+    out_file=open(file_name,'w')
+    pandas_data_frame.to_html(out_file,index=False)
+    return file_name
+
+def json_to_DataTable(json_file_name):
+    data_dictionary_list=json.load(open(json_file_name,'r'))
+    xml=DataTable(None,data_dictionary={"data":data_dictionary_list})
+    return xml
+
+def csv_to_AsciiDataTable(csv_file_name):
+    options={"column_names_begin_line":0,"column_names_end_line":1,
+             "data_begin_line":1,"data_end_line":-1,"data_delimiter":",","column_names_delimiter":","}
+    table=AsciiDataTable(csv_file_name,**options)
+    return table
+
+
+
+
+
 #-----------------------------------------------------------------------------
 # Module Classes
 
