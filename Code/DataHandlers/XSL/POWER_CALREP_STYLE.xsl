@@ -126,7 +126,7 @@ ul.tab li a:focus, .active {
         </tr>
 </table>
     </div>
-    <div id="table" class="tabcontent">
+ <div id="table" class="tabcontent">
         <h3>Data:</h3>
         <button id="ToggleButton" type="button" class="btn btn-primary">Show Table</button><br/><hr/>
 		<table class='table table-hover table-condensed table-bordered table-responsive' id="DataTable">
@@ -139,35 +139,132 @@ ul.tab li a:focus, .active {
                 <b>magS11</b>
             </th>
             <th >
+                <b>uMa</b>
+            </th>
+            <th >
+                <b>uMb</b>
+            </th>
+            <th >
+                <b>uMd</b>
+            </th>
+            <th >
+                <b>uMg</b>
+            </th>
+            <th >
                 <b>argS11</b>
+            </th>
+            <th >
+                <b>uAa</b>
+            </th>
+            <th >
+                <b>uAb</b>
+            </th>
+            <th >
+                <b>uAd</b>
+            </th>
+            <th >
+                <b>uAg</b>
             </th>
             <th >
                 <b>Efficency</b>
             </th>
             <th >
+                <b>uEa</b>
+            </th>
+            <th >
+                <b>uEb</b>
+            </th>
+            <th >
+                <b>uEd</b>
+            </th>
+            <th >
+                <b>uEg</b>
+            </th>
+            <th >
                 <b>Calibration_Factor</b>
             </th>
-
+            <th >
+                <b>uCa</b>
+            </th>
+            <th >
+                <b>uCb</b>
+            </th>
+            <th >
+                <b>uCd</b>
+            </th>
+            <th >
+                <b>uCg</b>
+            </th>
 
             </tr>
             <xsl:for-each select="//Data/Tuple">
             <tr>
             <xsl:for-each select="./@Frequency">
             <td><xsl:value-of select="."/></td>
-            </xsl:for-each>
+		    </xsl:for-each>
+
+
             <xsl:for-each select="./@magS11">
             <td><xsl:value-of select="."/></td>
 		    </xsl:for-each>
+            <xsl:for-each select="./@uMa">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uMb">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uMd">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uMg">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+
             <xsl:for-each select="./@argS11">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uAa">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uAb">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uAd">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uAg">
             <td><xsl:value-of select="."/></td>
 		    </xsl:for-each>
             <xsl:for-each select="./@Efficiency">
             <td><xsl:value-of select="."/></td>
 		    </xsl:for-each>
+            <xsl:for-each select="./@uEa">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uEb">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uEd">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uEg">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
             <xsl:for-each select="./@Calibration_Factor">
             <td><xsl:value-of select="."/></td>
 		    </xsl:for-each>
-
+            <xsl:for-each select="./@uCa">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uCb">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uCd">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
+            <xsl:for-each select="./@uCg">
+            <td><xsl:value-of select="."/></td>
+		    </xsl:for-each>
             </tr>
             </xsl:for-each>
 		</table>
@@ -192,7 +289,7 @@ ul.tab li a:focus, .active {
       visible: true,
         },
     type: 'scatter',
-    mode:'markers+lines'};
+    mode:'markers+lines'}
 ];
         var argS11 = [
   {
