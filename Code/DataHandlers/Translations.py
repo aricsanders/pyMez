@@ -168,9 +168,9 @@ def DataFrame_to_AsciiDataTable(pandas_data_frame,**options):
     for key,value in options.iteritems():
         conversion_options[key]=value
 
-    conversion_options["column_names"]=pandas_data_frame.columns.tolist()
-    conversion_options["data"]=pandas_data_frame.as_matrix().tolist()
-    conversion_options["column_types"]=map(lambda x:str(x),pandas_data_frame.dtypes.tolist())
+    conversion_options["column_names"]=pandas_data_frame.columns.tolist()[:]
+    conversion_options["data"]=pandas_data_frame.as_matrix().tolist()[:]
+    conversion_options["column_types"]=map(lambda x:str(x),pandas_data_frame.dtypes.tolist()[:])
 
     new_table=AsciiDataTable(None,**conversion_options)
     return new_table

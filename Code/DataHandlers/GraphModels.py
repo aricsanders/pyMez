@@ -85,10 +85,13 @@ def remove_circular_paths(path):
         new_path=[]
 
         if past_locations.count(node)>1:
+            #print("{0} is {1}".format("node",node))
+            #print("{0} is {1}".format("past_locations",past_locations))
             equality_list=map(lambda x:x==node,past_locations)
+            #print("{0} is {1}".format("equality_list",equality_list))
             between=False
             for index,equality in enumerate(equality_list):
-                if equality:
+                if equality and equality_list[index:].count(True)%2==1:
                     between=not between
                     between_list[index]=between or between_list[index]
                 else:
