@@ -57,6 +57,12 @@ except:
     print("The module odo was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
+try:
+    import PIL
+except:
+    print("The module PIL was not found or had an error,"
+          "please check module or put it on the python path")
+    raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants
 
@@ -479,7 +485,53 @@ def csv_to_AsciiDataTable(csv_file_name):
              "data_begin_line":1,"data_end_line":-1,"data_delimiter":",","column_names_delimiter":","}
     table=AsciiDataTable(csv_file_name,**options)
     return table
+def png_to_jpg(png_file_name):
+    [root_name,extension]=png_file_name.split(".")
+    jpeg_file_name=root_name+".jpg"
+    PIL.Image.open(png_file_name).save(jpeg_file_name)
+    return jpeg_file_name
+def file_to_Image(file_path):
+    new_image=PIL.Image.open(file_path)
+    if re.search(".gif",file_path,re.IGNORECASE):
+        new_image=new_image.convert("RGB")
+    return new_image
 
+def Image_to_file(pil_image,file_path=None):
+    if file_path is None:
+        file_path=pil_image.filename
+    pil_image.save(file_path)
+    return file_path
+
+def Image_to_file_type(pil_image,file_path=None,extension="png"):
+
+    if file_path is None:
+        file_path=pil_image.filename
+    root_name=file_path.split(".")[0]
+    new_file_name=root_name+"."+extension.replace(".","")
+    if re.search('jp|bmp',extension,re.IGNORECASE):
+        pil_image.convert('RGB')
+    print("{0} is {1}".format("pil_image.mode",pil_image.mode))
+    pil_image.save(new_file_name)
+    return new_file_name
+
+def Image_to_thumbnail(pil_image,file_path="thumbnail.jpg"):
+    size = (64, 64)
+    temp_image=pil_image.copy()
+    temp_image.thumbnail(size)
+    temp_image.save(file_path)
+    return file_path
+
+def png_to_base64(file_name):
+    in_file=open(file_name, "rb")
+    encoded=base64.b64encode(in_file.read())
+    return encoded
+
+def base64_to_png(base64_encoded_png,file_name="test.png"):
+    out_file=open(file_name, "wb")
+    decoded=base64.b64decode(base64_encoded_png)
+    out_file.write(decoded)
+    out_file.close()
+    return file_name
 
 
 
