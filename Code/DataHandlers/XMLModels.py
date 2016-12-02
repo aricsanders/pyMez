@@ -217,6 +217,26 @@ def determine_instrument_type(object):
                 except: pass
 #-----------------------------------------------------------------------------
 # Module Classes
+class HTMLEcho():
+    """ A class that allows the reading and echoing of html files
+    """
+    def __init__(self,file_path=None,**options):
+        "Initializes the HTMLEcho() "
+        # This is a general pattern for adding a lot of options
+        # The next more advanced thing to do is retrieve defaults from a settings file
+        defaults={}
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        if file_path:
+            in_file=open(file_path,"r")
+            self.text=in_file.read()
+        else:
+            self.text=None
+    def to_HTML(self):
+        return str(self.text)
 class XMLBase():
     """ The XMLBase Class is designed to be a container for xml data
     """
@@ -712,7 +732,6 @@ class DataTable(XMLBase):
                 #print name
                 attribute_names.append(name)
             except:pass
-
         return attribute_names
 
     def to_list(self,attribute_name):
