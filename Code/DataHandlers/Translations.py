@@ -534,8 +534,33 @@ def base64_to_png(base64_encoded_png,file_name="test.png"):
     return file_name
 
 
+def png_to_ndarray(file_name):
+    nd_array=misc.imread(file_name)
+    return nd_array
 
+def ndarray_to_png(nd_array,file_name="test.png"):
+    misc.imsave(file_name,nd_array)
+    return file_name
 
+# change this to base64png
+def base64png_to_embeded_html(base64_encoded_png):
+    html_string="<img src='data:image/png;base64,{0}' />".format(base64_encoded_png)
+    return html_string
+
+def embeded_html_to_base64png(html_string):
+    pattern=re.compile("<img src='data:image/png;base64,(?P<data>.+)' />")
+    match=re.search(pattern,html_string)
+    if match:
+        encoded=match.groupdict()["data"]
+    else:
+        raise
+    return encoded
+
+def ndarray_to_matplotlib(nd_array):
+    figure=plt.imshow(nd_array)
+    figure.axes.get_xaxis().set_visible(False)
+    figure.axes.get_yaxis().set_visible(False)
+    plt.show()
 #-----------------------------------------------------------------------------
 # Module Classes
 

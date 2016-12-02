@@ -83,17 +83,30 @@ def remove_circular_paths(path):
         node=past_locations[node_index]
         old_path=new_path
         new_path=[]
-
-        if past_locations.count(node)>1:
+        # if you visit a location more than one
+        number_of_visits=past_locations.count(node)
+        if number_of_visits>1:
             #print("{0} is {1}".format("node",node))
             #print("{0} is {1}".format("past_locations",past_locations))
+            # Now find all the visits to that location
             equality_list=map(lambda x:x==node,past_locations)
-            #print("{0} is {1}".format("equality_list",equality_list))
+            print("{0} is {1}".format("equality_list",equality_list))
+            # You are intially not between visits
             between=False
+
+            # every time you cross that node you flip between, as long as there are
+            visit_number=0
             for index,equality in enumerate(equality_list):
-                if equality and equality_list[index:].count(True)%2==1:
-                    between=not between
-                    between_list[index]=between or between_list[index]
+                if equality:
+                    # add one to the visit number
+                    visit_number+=1
+                    # Flip the between truth value if it is the first or last
+                    # visits only
+                    if visit_number==1 or visit_number==number_of_visits:
+                        between=not between
+                        between_list[index]=between or between_list[index]
+                    else:
+                        between_list[index]=between or between_list[index]
                 else:
                     between_list[index]=between or between_list[index]
         #print("{0} is {1}".format("between_list",between_list))
@@ -101,10 +114,8 @@ def remove_circular_paths(path):
             if not item:
                 new_path.append(path[index])
         node_index+=1
-
     if new_path in [[]]:
         new_path=path
-
     return new_path
 #-----------------------------------------------------------------------------
 # Module Classes
@@ -244,7 +255,7 @@ class Graph():
         return str(self.data)
 
     def add_node(self,node_name,edge_into_node_begin,edge_into_node_function,edge_out_node_end,
-                 edge_out_node_function):
+                 edge_out_node_function,node_description=None):
         """Adds a node to the graph. Required input is node_name (a string with no spaces),
         a reference to an entering node,the function mapping the entering node to the new node,
         a reference to an exiting node and the function mapping the
@@ -262,14 +273,18 @@ class Graph():
             self.edge_matrices[index]=new_matrix
         self.add_edge(begin_node=node_name,end_node=edge_out_node_end,edge_function=edge_out_node_function)
         self.add_edge(begin_node=edge_into_node_begin,end_node=node_name,edge_function=edge_into_node_function)
+        if node_description:
+            self.node_descriptions.append(node_description)
 
-    def add_external_node(self,external_node_name,jump_into_node_begin,jump_into_node_function):
+    def add_external_node(self,external_node_name,jump_into_node_begin,
+                          jump_into_node_function,external_node_description=None):
         """Adds an external node to the graph. Required input is node_name (a string with no spaces),
         a reference to an entering node,the function mapping the entering node to the new external node"""
         # first check if node into and out of node is good
         self.external_node_names.append(external_node_name)
         self.add_jump(begin_node=jump_into_node_begin,end_node=external_node_name,jump_function=jump_into_node_function)
-
+        if external_node_description:
+            self.external_node_descriptions.append(external_node_description)
     def jump_to_external_node(self,external_node_name):
         """Returns the result of the jump, the graph is left in the node that is the begining of the jump"""
         end_node=external_node_name
@@ -369,7 +384,7 @@ class Graph():
         for exit_path in exit_paths:
             possible_paths.append([exit_path])
         #print("{0} is {1}".format('possible_paths',possible_paths))
-        for i in range(len(self.node_names)):
+        for i in range(len(self.node_names)**2):
             #print("{0} is {1}".format('i',i))
             #print("{0} is {1}".format('possible_paths',possible_paths))
             for index,path in enumerate(possible_paths):
@@ -406,7 +421,7 @@ class Graph():
                     if next_node==last_node and begin_node_next_edge==end_node:
                         next_path.append(next_edge)
                         #print("The path found is {0}".format(next_path))
-                        return next_path
+                        return remove_circular_paths(next_path)
                     elif begin_node_next_edge==end_node:
                         next_path.append(next_edge)
                         # This keeps it from getting stuck on circular paths
@@ -459,13 +474,17 @@ class Graph():
     def show(self,**options):
         """Shows the graph using matplotlib and networkx"""
         # Should be seperated to allow for fixed presentation?
-        defaults={"descriptions":False,"save_figure":False,"path":None,"active_node":True,
+        defaults={"descriptions":False,"edge_descriptions":False,"save_plot":False,
+                 "path":None,"active_node":True,"directory":None,"specific_descriptor":self.graph_name.replace(" ","_"),
+                  "general_descriptor":"plot","file_name":None,
                  "arrows":True,"node_size":1000,"font_size":10}
         show_options={}
         for key,value in defaults.iteritems():
             show_options[key]=value
         for key,value in options.iteritems():
             show_options[key]=value
+        if show_options["directory"] is None:
+            show_options["directory"]=os.getcwd()
         new_graph=networkx.DiGraph()
         edge_pattern=re.compile("edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
         jump_pattern=re.compile("jump_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
@@ -516,7 +535,22 @@ class Graph():
                                   node_size=show_options["node_size"],font_size=show_options["font_size"])
 
         plt.suptitle(self.options["graph_name"])
-        plt.show()
+        if show_options["file_name"] is None:
+            file_name=auto_name(specific_descriptor=show_options["specific_descriptor"],
+                                general_descriptor=show_options["general_descriptor"],
+                                directory=show_options["directory"],extension='png',padding=3)
+        else:
+            file_name=show_options["file_name"]
+        if show_options["save_plot"]:
+            #print file_name
+            if show_options["path"]:
+                plt.savefig(show_options["path"])
+            else:
+                plt.savefig(os.path.join(show_options["directory"],file_name))
+        else:
+            plt.show()
+
+
 
 class StringGraph(Graph):
     """String Graph is  a graph relating different string forms"""
