@@ -61,7 +61,7 @@ def check_arg_type(arg,arg_type):
     if type(arg) is arg_type:
         return
     else:
-        print("{0} was not {1}".format(arg,arg_type))
+        print("{0} was not {1} but {2}".format(arg,arg_type,type(arg)))
 
 def string_list_collapse(list_of_strings,string_delimiter='\n'):
     """ Makes a list of strings a single string"""
@@ -981,7 +981,8 @@ class AsciiDataTable():
         if self.options['data_table_element_separator'] is None:
             inner_element_spacing=0
         else:
-            inner_element_spacing=self.options['data_table_element_separator'].count('\n')-1
+            # if header does not end in "\n" and
+            inner_element_spacing=self.options['data_table_element_separator'].count('\n')
         string_out=""
         between_section=""
         if self.options['data_table_element_separator'] is not None:
@@ -996,8 +997,15 @@ class AsciiDataTable():
                 self.options["header_end_line"]=None
             else:
                 string_out=self.get_header_string()+between_section
-
-                last_header_line=self.get_header_string().count('\n')+1
+                header_end=self.get_header_string()[-1]
+                print("{0} is {1}".format("header_end",header_end))
+                if header_end in ["\n"]:
+                    adjust_header_lines=0
+                else:
+                    adjust_header_lines=1
+                # I think this is wrong If header string ends in an "\n"
+                inner_element_spacing=inner_element_spacing-adjust_header_lines
+                last_header_line=self.get_header_string().count('\n')+adjust_header_lines
                 self.options["header_end_line"]=last_header_line
                 next_section_begin=last_header_line+inner_element_spacing
 
@@ -2177,7 +2185,7 @@ def test_get_item():
 # Module Runner
 if __name__ == '__main__':
     # test_AsciiDataTable()
-    # test_open_existing_AsciiDataTable()
+    test_open_existing_AsciiDataTable()
     #test_AsciiDataTable_equality()
     #test_inline_comments()
     #test_add_row()
