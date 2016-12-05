@@ -541,8 +541,8 @@ class AsciiDataTable():
     def __init__(self,file_path=None,**options):
         " Initializes the AsciiDataTable class "
         # This is a general pattern for adding a lot of options
-        defaults={"data_delimiter":None,
-                  "column_names_delimiter":None,
+        defaults={"data_delimiter":",",
+                  "column_names_delimiter":",",
                   "specific_descriptor":'Data',
                   "general_descriptor":'Table',
                   "directory":None,
@@ -849,7 +849,7 @@ class AsciiDataTable():
             # print("The result of parsing is self.{0} = {1}".format('column_names',self.column_names))
             self.column_names=split_all_rows(self.column_names,delimiter=self.options["column_names_delimiter"],
                                         escape_character=self.options["escape_character"])
-            # print("The result of parsing is self.{0} = {1}".format('column_names',self.column_names))
+            #print("The result of parsing is self.{0} = {1}".format('column_names',self.column_names))
             self.column_names=self.column_names[0]
             for index,line in enumerate(self.column_names):
                 self.column_names[index]=line.replace('\n',"")
@@ -987,7 +987,7 @@ class AsciiDataTable():
         between_section=""
         if self.options['data_table_element_separator'] is not None:
             between_section=self.options['data_table_element_separator']
-        if self.header is None:
+        if not self.header:
             self.options['header_begin_line']=self.options['header_end_line']=None
             pass
         else:
@@ -997,19 +997,20 @@ class AsciiDataTable():
                 self.options["header_end_line"]=None
             else:
                 string_out=self.get_header_string()+between_section
+                #print("{0} is {1}".format("self.get_header_string()",self.get_header_string()))
                 header_end=self.get_header_string()[-1]
-                print("{0} is {1}".format("header_end",header_end))
+                #print("{0} is {1}".format("header_end",header_end))
                 if header_end in ["\n"]:
                     adjust_header_lines=0
                 else:
                     adjust_header_lines=1
-                # I think this is wrong If header string ends in an "\n"
-                inner_element_spacing=inner_element_spacing-adjust_header_lines
+                # I think this is wrong If header string ends in an "\n" fixed for now
+                inner_element_spacing=inner_element_spacing
                 last_header_line=self.get_header_string().count('\n')+adjust_header_lines
                 self.options["header_end_line"]=last_header_line
-                next_section_begin=last_header_line+inner_element_spacing
+                next_section_begin=last_header_line+inner_element_spacing-adjust_header_lines
 
-        if self.column_names is None:
+        if not self.column_names:
             self.options['column_names_begin_line']=self.options['column_names_end_line']=None
             pass
         else:
@@ -1019,11 +1020,17 @@ class AsciiDataTable():
                 string_out=string_out+self.get_column_names_string()
             else:
                 string_out=string_out+self.get_column_names_string()+between_section
+                column_names_end=self.get_column_names_string()[-1]
+                #print("{0} is {1}".format("column_names_end",column_names_end))
+                if column_names_end in ["\n"]:
+                    adjust_column_names_lines=0
+                else:
+                    adjust_column_names_lines=1
                 last_column_names_line=self.get_column_names_string().count('\n')+\
-                                       self.options["column_names_begin_line"]+1
+                                       self.options["column_names_begin_line"]+adjust_column_names_lines
                 self.options["column_names_end_line"]=last_column_names_line
-                next_section_begin=last_column_names_line+inner_element_spacing
-        if self.data is None:
+                next_section_begin=last_column_names_line+inner_element_spacing-adjust_column_names_lines
+        if not self.data:
             self.options['data_begin_line']=self.options['data_end_line']=None
             pass
         else:
@@ -1033,11 +1040,17 @@ class AsciiDataTable():
                 string_out=string_out+self.get_data_string()
             else:
                 string_out=string_out+self.get_data_string()+between_section
+                data_end=self.get_data_string()[-1]
+                #print("{0} is {1}".format("column_names_end",column_names_end))
+                if data_end in ["\n"]:
+                    adjust_data_lines=0
+                else:
+                    adjust_data_lines=1
                 last_data_line=self.get_data_string().count("\n")+\
-                                self.options["data_begin_line"]+1
+                                self.options["data_begin_line"]+adjust_data_lines
                 self.options["data_end_line"]=last_data_line
-                next_section_begin=last_data_line+inner_element_spacing
-        if self.footer is None:
+                next_section_begin=last_data_line+inner_element_spacing-adjust_data_lines
+        if not self.footer:
             self.options['footer_begin_line']=self.options['footer_end_line']=None
             pass
         else:
@@ -1283,51 +1296,65 @@ class AsciiDataTable():
             string_out= ""
         elif self.options["footer_line_types"] is not None:
             for index,line in enumerate(self.options["footer_line_types"]):
+                if index == len(self.options["footer_line_types"])-1:
+                    end=''
+                else:
+                    end='\n'
                 if line in ['footer','footer_line','normal']:
-                    string_out=string_out+self.footer[index]+'\n'
+                    string_out=string_out+self.footer[index]+end
                 elif line in ['line_comment','comment']:
                     string_out=string_out+line_comment_string(self.footer[index],
                                                comment_begin=self.options["comment_begin"],
-                                               comment_end=self.options["comment_end"])
+                                               comment_end=self.options["comment_end"])+end
                 elif line in ['block_comment','block']:
                     if index-1<0:
                         block_comment_begin=index
+                        block_comment_end=index+2
                         continue
                     elif self.options["footer_line_types"][index-1] not in ['block_comment','block']:
                         block_comment_begin=index
+                        block_comment_end=index+2
                         continue
                     else:
                         if index+1>len(self.options["footer_line_types"])-1:
                             string_out=string_out+line_list_comment_string(self.footer[block_comment_begin:],
                                                                            comment_begin=self.options['block_comment_begin'],
                                                                              comment_end=self.options['block_comment_end'],
-                                                                           block=True)
+                                                                           block=True)+end
                         elif self.options["footer_line_types"][index+1] in ['block_comment','block']:
                             block_comment_end+=1
                         else:
-                            string_out=string_out+line_list_comment_string(self.footer[block_comment_begin:block_comment_end],
-                                                                           comment_begin=self.options['block_comment_begin'],
-                                                                             comment_end=self.options['block_comment_end'],
-                                                                           block=True)
+                            string_out=string_out+\
+                                       line_list_comment_string(self.footer[block_comment_begin:block_comment_end],
+                                                                comment_begin=self.options['block_comment_begin'],
+                                                                comment_end=self.options['block_comment_end'],
+                                                                block=True)+end
                 else:
                     string_out=string_out+line
-
-        elif self.options['treat_footer_as_comment'] is None or self.options['treat_footer_as_comment'] is True:
+        elif self.options['treat_footer_as_comment'] in [None,True] and self.options["footer_line_types"] in [None]:
+            # Just happens if the user has set self.footer manually
             if type(self.footer) is StringType:
                 string_out=line_comment_string(self.footer,
                                                comment_begin=self.options["comment_begin"],
                                                comment_end=self.options["comment_end"])
+                #string_out=re.sub('\n','',string_out,count=1)
             elif type(self.footer) is ListType:
                 if self.options['block_comment_begin'] is None:
-                    string_out=line_list_comment_string(self.footer,comment_begin=self.options['comment_begin'],
+                    if self.options['comment_begin'] is None:
+                        string_out=string_list_collapse(self.footer)
+
+                    else:
+                        string_out=line_list_comment_string(self.footer,comment_begin=self.options['comment_begin'],
                                                         comment_end=self.options['comment_end'])
+                        lines_out=string_out.splitlines()
+
+                        # if re.search('\n',self.options['comment_end']):
+                        #     string_out=re.sub('\n','',string_out,count=1)
+                        #self.options["footer_line_types"]=["line_comment" for line in self.footer]
                 else:
                     string_out=line_list_comment_string(self.footer,comment_begin=self.options['block_comment_begin'],
                                                         comment_end=self.options['block_comment_end'],block=True)
-            else:
-                try:
-                    string_out=str(self.footer)
-                except:raise
+                    #self.options["footer_line_types"]=["block_comment" for line in self.footer]
         else:
             string_out=ensure_string(self.footer,list_delimiter="\n",end_if_list="")
         return footer_begin+string_out+footer_end
@@ -2176,6 +2203,8 @@ def test_get_item():
              "row_formatter_string":"{0:.2e}{delimiter}{1}{delimiter}{2}",
              "treat_header_as_comment":True}
     new_table=AsciiDataTable(None,**options)
+
+
 
     print new_table["Frequency"]
     print new_table[("Frequency",1)]
