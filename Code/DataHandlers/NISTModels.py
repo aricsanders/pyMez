@@ -54,10 +54,10 @@ except:
           "please put it on the python path")
 #-----------------------------------------------------------------------------
 # Module Constants
-DUT_COLUMN_NAMES=["Frequency", "magS11", "argS11","uMb", "uMa", "uMd", "uMg",
-                                    "uAb", "uAa", "uAd", "uAg"]
-ONE_PORT_COLUMN_NAMES=["Frequency", "magS11", "uMb", "uMa", "uMd", "uMg", "argS11",
-                                    "uAb", "uAa", "uAd", "uAg"]
+DUT_COLUMN_NAMES=["Frequency", "magS11", "argS11","uMbS11", "uMaS11", "uMdS11", "uMgS11",
+                                    "uAbS11", "uAaS11", "uAdS11", "uAgS11"]
+ONE_PORT_COLUMN_NAMES=["Frequency", "magS11", "uMbS11", "uMa11", "uMdS11", "uMgS11", "argS11",
+                                    "uAbS11", "uAaS11", "uAdS11", "uAgS11"]
 #Note there are 2 power models!!! one with 4 error terms and one with 3
 POWER_4TERM_COLUMN_NAMES=['Frequency','Efficiency','uEb', 'uEa','uEd','uEg',
                     'Calibration_Factor','uCb','uCa','uCd','uCg']
@@ -926,7 +926,7 @@ class PowerRawModel(AsciiDataTable):
         for index,key in enumerate(keys):
             self.metadata[key]=self.header[index].rstrip().lstrip()
 
-class TwoPortCalrepModel():
+class TwoPortCalrepModel(object):
     """TwoPortCalrepModel is a model that holds data output by analyzing several datafiles using the HPBasic program
     Calrep. The data is stored in 3 tables: a S11 table, a S21 table and a S22 table. The data is in linear
     magnitude and angle in degrees. There are 2 types of files, one is a single file with .asc extension
@@ -1119,7 +1119,7 @@ class TwoPortCalrepModel():
         plt.tight_layout()
         plt.show()
 
-class PowerCalrepModel():
+class PowerCalrepModel(object):
     """PowerCalrep is a model that holds data output by analyzing several datafiles using the HPBasic program
     Calrep. The data is stored in 2 tables: a S11 table, and a power table. The data is in linear
     magnitude and angle in degrees. There are 2 types of files, one is a single file with .asc extension

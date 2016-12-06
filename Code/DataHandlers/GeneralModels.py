@@ -1556,7 +1556,34 @@ class AsciiDataTable():
     def remove_column(self,column_name=None,column_index=None):
         """Removes the column specified by column_name or column_index and updates the model. The column is removed from
         column_names, data and if present column_types, column_descriptions and row formatter"""
-        pass
+        if self.column_names:
+            number_of_columns=len(self.column_names[:])
+        elif self.data:
+            number_of_columns=len(self.data[0])
+        else:
+            raise
+        if column_name:
+            column_index=self.column_names.index(column_name)
+        elif column_index:
+            pass
+        else:
+            raise TypeError("To remove a column either the name or index must be specified")
+        #print("{0} is {1}".format("column_index",column_index))
+        #print("{0} is {1}".format("type(column_index)",type(column_index)))
+        self.column_names.pop(column_index)
+        for row in self.data:
+            row.pop(column_index)
+        if self.options["row_formatter_string"]:
+            format_string="{"+str(column_index)+"}"+"{delimiter}"
+            self.options["row_formatter_string"]=\
+                self.options["row_formatter_string"].replace(format_string,"")
+            for index in range(column_index+1,number_of_columns):
+
+                old_format_string="{"+str(index)
+                new_format_string="{"+str(index-1)
+                self.options["row_formatter_string"]=\
+                    self.options["row_formatter_string"].replace(old_format_string,new_format_string)
+
         #Todo:Add remove column functionality
 
     def add_index(self):

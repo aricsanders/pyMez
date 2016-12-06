@@ -64,10 +64,13 @@ def frequency_model_collapse_multiple_measurements(model,**options):
     for option,value in model.options.iteritems():
         if not re.search('begin_line|end_line',option):
             defaults[option]=value
-    defaults["header"]=model.header
-    defaults["column_names"]=model.column_names
-    defaults["footer"]=model.footer
-    defaults["metadata"]=model.metadata
+    for element in model.elements:
+        if model.__dict__[element]:
+            if re.search("meta",element,re.IGNORECASE):
+                defaults["metadata"]=model.metadata.copy()
+            else:
+                defaults[element]=model.__dict__[element][:]
+
 
     collapse_options={}
     for key,value in defaults.iteritems():
@@ -78,7 +81,7 @@ def frequency_model_collapse_multiple_measurements(model,**options):
     frequency_selector=model.column_names.index("Frequency")
     out_data=[]
     for index, frequency in enumerate(unique_frequency_list):
-        data_row=filter(lambda x: x[frequency_selector]==frequency,model.data)
+        data_row=filter(lambda x: x[frequency_selector]==frequency,model.data[:])
         if re.search('mean|av',collapse_options["method"],re.IGNORECASE):
             new_row=np.mean(np.array(data_row),axis=0).tolist()
         elif re.search('median',collapse_options["method"],re.IGNORECASE):

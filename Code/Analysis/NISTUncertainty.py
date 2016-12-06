@@ -26,6 +26,9 @@ except:
 # Module Constants
 CONNECTOR_TYPES=['14 mm','7 mm', 'Type-N','3.5 mm', '2.92 mm', '2.4mm', '1.85 mm','1.0 mm',
                  'WR90','WR62','WR42','WR28','WR22','WR15','WR10']
+# the smallest value allowed in dB (0 in linear magnitude)
+MINIMUM_DB=100
+
 #-----------------------------------------------------------------------------
 # Module Functions
 def coax_s11_S_NIST(connector_type='Type-N',frequency=1.0):
@@ -47,6 +50,9 @@ def coax_s11_S_NIST(connector_type='Type-N',frequency=1.0):
         uncertainty_phase=math.atan(uncertainty_magnitude)
     elif re.search('2.4',connector_type,re.IGNORECASE):
         # TODO: Fix this, the printed version is blurry
+        uncertainty_magnitude=1/(400.-.75*frequency*math.exp(.04*frequency))
+        uncertainty_phase=math.atan(uncertainty_magnitude)
+    else:
         uncertainty_magnitude=1/(400.-.75*frequency*math.exp(.04*frequency))
         uncertainty_phase=math.atan(uncertainty_magnitude)
     return [uncertainty_magnitude,uncertainty_phase]
@@ -81,6 +87,9 @@ def coax_s11_type_b(connector_type='Type-N',frequency=1.0,magnitude_S11=1.0):
     elif re.search('2.4',connector_type,re.IGNORECASE):
         uncertainty_magnitude=2.92*delta
         uncertainty_phase=2.92*delta_arg
+    else:
+        uncertainty_magnitude=2.92*delta
+        uncertainty_phase=2.92*delta_arg
     return [uncertainty_magnitude,uncertainty_phase]
 
 def waveguide_s11_S_NIST(waveguide_type='WR90'):
@@ -92,6 +101,9 @@ def waveguide_s11_S_NIST(waveguide_type='WR90'):
         uncertainty_magnitude=.003
         uncertainty_phase=.17
     elif re.search('10',waveguide_type,re.IGNORECASE):
+        uncertainty_magnitude=.004
+        uncertainty_phase=.23
+    else:
         uncertainty_magnitude=.004
         uncertainty_phase=.23
     return [uncertainty_magnitude,uncertainty_phase]
@@ -119,6 +131,9 @@ def waveguide_s11_type_b(waveguide_type='WR90',magnitude_S11=1.0):
     elif re.search('10',waveguide_type,re.IGNORECASE):
         uncertainty_magnitude=.005*(1.0+magnitude_S11**2)/math.sqrt(3.)
         uncertainty_phase=math.sqrt(math.atan(uncertainty_magnitude/(magnitude_S11+.001))**2+3.36**2/3.)
+    else:
+        uncertainty_magnitude=.005*(1.0+magnitude_S11**2)/math.sqrt(3.)
+        uncertainty_phase=math.sqrt(math.atan(uncertainty_magnitude/(magnitude_S11+.001))**2+3.36**2/3.)
     return [uncertainty_magnitude,uncertainty_phase]
 
 
@@ -127,8 +142,10 @@ def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
     if re.search('mag',format,re.IGNORECASE):
         # if the format is mag then change the number to db
         magnitude=magnitude_S12
-        magnitude_S12=-20.*math.log10(magnitude_S12)
-
+        try:
+            magnitude_S12=-20.*math.log10(magnitude_S12)
+        except:
+            magnitude_S12=MINIMUM_DB
     if re.search('14',connector_type,re.IGNORECASE):
         if magnitude_S12>=0 and magnitude_S12<25:
             uncertainty_magnitude=.0005+.00035*frequency
@@ -137,8 +154,10 @@ def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
             uncertainty_magnitude=.02
             uncertainty_phase=.1+.017*frequency
         elif magnitude_S12>=40 and magnitude_S12<65:
-            uncertainty_magnitude=.02+.00015(magnitude_S12-40.)**2
+            uncertainty_magnitude=.02+.00015*(magnitude_S12-40.)**2
             uncertainty_phase=.1+.017*frequency
+        else:
+            uncertainty_magnitude=.004
         #enforce min uncertainties
         if uncertainty_magnitude<.004:
             uncertainty_magnitude=.004
@@ -165,6 +184,9 @@ def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
             elif frequency>=1. and frequency<=18.:
                 uncertainty_magnitude=.02+.00015*(magnitude_S12-40)**2
                 uncertainty_phase=.1+.017*frequency
+        else:
+            uncertainty_phase=.1+.017*frequency
+            uncertainty_magnitude=.004
         #enforce min uncertainties
         if uncertainty_magnitude<.004:
             uncertainty_magnitude=.004
@@ -177,7 +199,10 @@ def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
             uncertainty_magnitude=.02
             uncertainty_phase=.1+.017*frequency
         elif magnitude_S12>=40 and magnitude_S12<65:
-            uncertainty_magnitude=.02+.00015(magnitude_S12-40.)**2
+            uncertainty_magnitude=.02+.00015*(magnitude_S12-40.)**2
+            uncertainty_phase=.1+.017*frequency
+        else:
+            uncertainty_magnitude=.02+.00015*(magnitude_S12-40.)**2
             uncertainty_phase=.1+.017*frequency
         #enforce min uncertainties
         if uncertainty_magnitude<.004:
@@ -192,7 +217,7 @@ def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
             elif magnitude_S12>=25 and magnitude_S12<40:
                 uncertainty_magnitude=.02
             elif magnitude_S12>=40 and magnitude_S12<65:
-                uncertainty_magnitude=.02+.00015(magnitude_S12-40.)**2
+                uncertainty_magnitude=.02+.00015*(magnitude_S12-40.)**2
         elif re.search('2.4',connector_type,re.IGNORECASE):
             # 3.5mm and 2.92mm have the same mag relations
             if magnitude_S12>=0 and magnitude_S12<25:
@@ -200,10 +225,13 @@ def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
             elif magnitude_S12>=25 and magnitude_S12<40:
                 uncertainty_magnitude=.03
             elif magnitude_S12>=40 and magnitude_S12<65:
-                uncertainty_magnitude=.03+.00015(magnitude_S12-40.)**2
+                uncertainty_magnitude=.03+.00015*(magnitude_S12-40.)**2
+    else:
+        uncertainty_magnitude=.002
+        uncertainty_phase=.01
         #enforce min uncertainties
-        if uncertainty_magnitude<.002:
-            uncertainty_magnitude=.002
+    if uncertainty_magnitude<.002:
+        uncertainty_magnitude=.002
     #enforce min uncertainties
     if uncertainty_phase<.01:
         uncertainty_phase=.01
@@ -214,6 +242,13 @@ def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
 
 def coax_s12_type_b(connector_type='N',frequency=1,magnitude_S12=10,format='DB'):
     """Calculates the type-b uncertainty for coax connecters"""
+    if re.search('mag',format,re.IGNORECASE):
+        # if the format is mag then change the number to db
+        magnitude=magnitude_S12
+        try:
+            magnitude_S12=-20.*math.log10(magnitude_S12)
+        except:
+            magnitude_S12=MINIMUM_DB
     uncertainty_m4=.0006*math.sqrt(frequency)+.0011
     uncertainty_m5=(1.434*math.sqrt(frequency)*5.*6.*10**6)/(.35*math.sqrt((1.4*10**7)**3))
     delta=math.sqrt((uncertainty_m4**2+uncertainty_m5**2)/3)
@@ -233,6 +268,9 @@ def coax_s12_type_b(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
             uncertainty_magnitude=2.4*delta
         elif re.search('2.4',connector_type,re.IGNORECASE):
             uncertainty_magnitude=2.92*delta
+    else :
+        uncertainty_magnitude=delta
+        uncertainty_phase=delta_arg
     if re.search('mag',format,re.IGNORECASE):
         # if the format is mag then change the uncertainty back to mag
         uncertainty_magnitude=abs((1/math.log10(math.e))*magnitude_S12*uncertainty_magnitude/20.)
@@ -243,7 +281,10 @@ def waveguide_s21_S_NIST(magnitude_S12=1,format='DB'):
     if re.search('mag',format,re.IGNORECASE):
         # if the format is mag then change the number to db
         magnitude=magnitude_S12
-        magnitude_S12=-20.*math.log10(magnitude_S12)
+        try:
+            magnitude_S12=-20.*math.log10(magnitude_S12)
+        except:
+            magnitude_S12=MINIMUM_DB
     uncertainty_phase=.15
     if magnitude_S12>=0 and magnitude_S12<25:
         uncertainty_magnitude=.01
@@ -251,7 +292,8 @@ def waveguide_s21_S_NIST(magnitude_S12=1,format='DB'):
         uncertainty_magnitude=.02
     elif magnitude_S12>40:
         uncertainty_magnitude=.02+.00015(magnitude_S12-40)**2
-
+    else:
+        uncertainty_magnitude=.02+.00015(magnitude_S12-40)**2
     if re.search('mag',format,re.IGNORECASE):
         # if the format is mag then change the uncertainty back to mag
         uncertainty_magnitude=abs((1/math.log10(math.e))*magnitude*uncertainty_magnitude/20.)
@@ -259,6 +301,13 @@ def waveguide_s21_S_NIST(magnitude_S12=1,format='DB'):
 
 def waveguide_s21_type_b(waveguide_type='WR90',magnitude_S21=1,format='DB'):
     """Calculates type B uncertainty for S21 in Waveguides"""
+    if re.search('mag',format,re.IGNORECASE):
+        # if the format is mag then change the number to db
+        magnitude=magnitude_S21
+        try:
+            magnitude_S21=-20.*math.log10(magnitude_S21)
+        except:
+            magnitude_S21=MINIMUM_DB
     if re.search('90',waveguide_type,re.IGNORECASE):
         uncertainty_magnitude=.02/math.sqrt(3)
         uncertainty_phase=.2/math.sqrt(3)
@@ -280,6 +329,10 @@ def waveguide_s21_type_b(waveguide_type='WR90',magnitude_S21=1,format='DB'):
     elif re.search('10',waveguide_type,re.IGNORECASE):
         uncertainty_magnitude=.022/math.sqrt(3)
         uncertainty_phase=3.36/math.sqrt(3)
+    else:
+        uncertainty_magnitude=.022/math.sqrt(3)
+        uncertainty_phase=3.36/math.sqrt(3)
+
     if re.search('mag',format,re.IGNORECASE):
         # if the format is mag then change the uncertainty back to mag
         uncertainty_magnitude=abs((1/math.log10(math.e))*magnitude_S21*uncertainty_magnitude/20.)
@@ -296,7 +349,9 @@ def coax_power_S_NIST(connector_type='N',frequency=1.):
             uncertainty_eff=10**(-1.4+.04*frequency)
         elif frequency>=.05 and frequency<=18.:
             uncertainty_eff=.25
-    return uncertainty_eff
+    else:
+        uncertainty_eff=.25
+    return [uncertainty_eff]
 
 def coax_power_type_b(connector_type='N',frequency=1.):
     """Calculates type b for coax power measurements"""
@@ -312,7 +367,10 @@ def coax_power_type_b(connector_type='N',frequency=1.):
             uncertainty_eff=.0103*frequency+.582
         elif frequency>=.05 and frequency<=18.:
             uncertainty_eff=.7
-    return uncertainty_eff
+    else:
+        uncertainty_eff=.7
+
+    return [uncertainty_eff]
 
 def waveguide_power_S_NIST(waveguide_type='WR90'):
     """Calculates SNIST for waveguide systems"""
@@ -322,7 +380,9 @@ def waveguide_power_S_NIST(waveguide_type='WR90'):
         uncertainty_eff = .5
     elif re.search('15',waveguide_type,re.IGNORECASE):
         uncertainty_eff = .75
-    return uncertainty_eff
+    else:
+        uncertainty_eff = .75
+    return [uncertainty_eff]
 
 def waveguide_power_type_b(waveguide_type='WR90'):
     """Calculates type b for waveguide systems"""
@@ -332,31 +392,35 @@ def waveguide_power_type_b(waveguide_type='WR90'):
         uncertainty_eff = .4
     elif re.search('10',waveguide_type,re.IGNORECASE):
         uncertainty_eff = .9
-    return uncertainty_eff
+    else:
+        uncertainty_eff = .9
+    return [uncertainty_eff]
 
 def S_NIST(wr_connector_type='Type-N', frequency=1, parameter='S11', magnitude=1.0, phase=0, format='mag'):
     """S_NIST calculates the Standard NIST uncertainty given the connector_type, parameter (S11,S12 or Power)
      frequency, magnitude and phase"""
+    out=[0]
     if re.search('14|7|N|3|2', wr_connector_type, re.IGNORECASE):
         if re.search('11',parameter,re.IGNORECASE):
             out=coax_s11_S_NIST(connector_type=wr_connector_type, frequency=frequency)
         elif re.search('2',parameter,re.IGNORECASE):
             out=coax_s12_S_NIST(connector_type=wr_connector_type, magnitude_S12=magnitude,
                                 frequency=frequency, format=format)
-        elif re.search('p',parameter,re.IGNORECASE):
+        elif re.search('p|eff',parameter,re.IGNORECASE):
             out=coax_power_S_NIST(connector_type=wr_connector_type, frequency=frequency)
     elif re.search('w', wr_connector_type, re.IGNORECASE):
         if re.search('11',parameter,re.IGNORECASE):
             out=waveguide_s11_S_NIST(wr_connector_type)
         elif re.search('2',parameter,re.IGNORECASE):
             out=waveguide_s21_S_NIST(magnitude_S12=magnitude,format=format)
-        elif re.search('p',parameter,re.IGNORECASE):
+        elif re.search('p|eff',parameter,re.IGNORECASE):
             out=waveguide_power_S_NIST(waveguide_type=wr_connector_type)
     return out
 
 def type_b(wr_connector_type='Type-N', frequency=1, parameter='S11', magnitude=1.0, phase=0, format='mag'):
     """type_b calculates the Standard type_b uncertainty given the connector_type, parameter (S11,S12 or Power)
      frequency, magnitude and phase"""
+    out=[0]
     if re.search('14|7|N|3|2', wr_connector_type, re.IGNORECASE):
         if re.search('11',parameter,re.IGNORECASE):
             out=coax_s11_type_b(connector_type=wr_connector_type, frequency=frequency,
@@ -364,14 +428,14 @@ def type_b(wr_connector_type='Type-N', frequency=1, parameter='S11', magnitude=1
         elif re.search('2',parameter,re.IGNORECASE):
             out=coax_s12_type_b(connector_type=wr_connector_type,
                                 magnitude_S12=magnitude, frequency=frequency, format=format)
-        elif re.search('p',parameter,re.IGNORECASE):
+        elif re.search('p|eff',parameter,re.IGNORECASE):
             out=coax_power_type_b(connector_type=wr_connector_type, frequency=frequency)
     elif re.search('w', wr_connector_type, re.IGNORECASE):
         if re.search('11',parameter,re.IGNORECASE):
             out=waveguide_s11_type_b(wr_connector_type)
         elif re.search('2',parameter,re.IGNORECASE):
             out=waveguide_s21_type_b(magnitude_S12=magnitude,format=format)
-        elif re.search('p',parameter,re.IGNORECASE):
+        elif re.search('p|eff',parameter,re.IGNORECASE):
             out=waveguide_power_type_b(waveguide_type=wr_connector_type)
     return out
 
