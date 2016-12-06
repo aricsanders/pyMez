@@ -646,6 +646,7 @@ class AsciiDataTable():
             # we can just return an error right now and then have an __autoload__ method
             # we can assume it is in ascii or utf-8
             # set any attribute that has no options to None
+            self.structure_metadata()
             import_table=[]
             for item in self.elements:
                 if len(filter(lambda x: None!=x,self.get_options_by_element(item).values()))==0:
@@ -736,7 +737,10 @@ class AsciiDataTable():
                             else:
                                 print("FAILED to import file!")
                                 raise
-
+    def structure_metadata(self):
+        """Function that should be overidden by whatever model the datatable has, it only responds with a self.metadata
+        attribute in its base state derrived from self.options["metadata]"""
+        self.metadata=self.options["metadata"]
     def find_line(self,begin_token):
         """Finds the first line that has begin token in it"""
         for index,line in enumerate(self.lines):
@@ -1100,6 +1104,7 @@ class AsciiDataTable():
                 if line in ['header','header_line','normal']:
                     string_out=string_out+self.header[index]+end
                 elif line in ['line_comment','comment']:
+                    #print("{0} is {1}".format("index",index))
                     string_out=string_out+line_comment_string(self.header[index],
                                                comment_begin=self.options["comment_begin"],
                                                comment_end=self.options["comment_end"])+end
@@ -1244,6 +1249,12 @@ class AsciiDataTable():
                                                                    row_formatter_string=self.options['row_formatter_string'],
                                                                    line_begin=self.options["row_begin_token"],
                                                                    line_end=self.options["row_end_token"])
+                                else:
+                                    string_out=list_list_to_string(self.data,data_delimiter=self.options['data_delimiter'],
+                                                                   row_formatter_string=self.options['row_formatter_string'],
+                                                                   line_begin=self.options["row_begin_token"],
+                                                                   line_end=self.options["row_end_token"])+\
+                                                                    self.options['data_end_token']
                             else:
                                 if self.options['data_end_token'] is None:
                                     string_out=self.options['data_begin_token']+\
@@ -1272,6 +1283,8 @@ class AsciiDataTable():
                     pass
             else:
                 string_out=ensure_string(self.data)
+        if string_out[-1] not in ["\n"] and self.footer is not None and self.options["data_table_element_separator"] is None:
+            string_out=string_out+"\n"
         return string_out
 
     def get_footer_string(self):
@@ -1303,6 +1316,7 @@ class AsciiDataTable():
                 if line in ['footer','footer_line','normal']:
                     string_out=string_out+self.footer[index]+end
                 elif line in ['line_comment','comment']:
+                    end=""
                     string_out=string_out+line_comment_string(self.footer[index],
                                                comment_begin=self.options["comment_begin"],
                                                comment_end=self.options["comment_end"])+end
@@ -1450,7 +1464,7 @@ class AsciiDataTable():
 
     def __eq__(self, other):
         """Defines what being equal means for the AsciiDataTable Class"""
-        compare_elements=['options','header','column_names','data','footer']
+        compare_elements=['metadata','header','column_names','data','footer']
         truth_table=[]
         output=False
         for item in compare_elements:
@@ -1462,12 +1476,13 @@ class AsciiDataTable():
             output=False
         else:
             output=True
-        #print(truth_table)
+        #print("{0} is {1}".format("truth_table",truth_table))
+
         return output
 
     def __ne__(self,other):
         """Defines what being not equal means for the AsciiDataTable Class"""
-        compare_elements=['options','header','column_names','data','footer']
+        compare_elements=['metadata','header','column_names','data','footer']
         truth_table=[]
         output=True
         for item in compare_elements:
@@ -1833,7 +1848,6 @@ def test_open_existing_AsciiDataTable():
                   "header_line_types":["block_comment","block_comment","line_comment","header","header","line_comment"],
                   "column_types":["str","string","STR","float"],
                   "row_formatter_string":"{0}{delimiter}{1}{delimiter}{2}{delimiter}{3:.2f}"
-
                   }
     os.chdir(TESTS_DIRECTORY)
     new_table=AsciiDataTable(None,**options)
@@ -1858,6 +1872,8 @@ def test_open_existing_AsciiDataTable():
     print("-"*80)
     for index,line in enumerate(table_string_2.splitlines()):
         print("{0} {1}".format(index,line==table_string_1.splitlines()[index]))
+    print("table_1 header is {0}".format(new_table.header))
+    print("new_table_1 header is {0}".format(new_table_1.header))
     print("The assertion that the built table is equal to the opened table is {0}".format(new_table==new_table_1))
     # new_table.get_options_by_element('columns')
     # print new_table.lines
@@ -2216,14 +2232,14 @@ if __name__ == '__main__':
     # test_AsciiDataTable()
     test_open_existing_AsciiDataTable()
     #test_AsciiDataTable_equality()
-    #test_inline_comments()
-    #test_add_row()
-    # test_add_index()
+    test_inline_comments()
+    test_add_row()
+    test_add_index()
     #show_structure_script()
     #test_save_schema()
     #test_read_schema()
-    #test_change_unit_prefix()
-    #test_add_column()
+    test_change_unit_prefix()
+    test_add_column()
     # test_AsciiDataTable_get_column_and_getitem()
     # test_copy_method()
     # test_add_method()

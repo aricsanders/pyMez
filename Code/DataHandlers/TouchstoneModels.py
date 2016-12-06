@@ -1246,7 +1246,7 @@ class SNP(SNPBase):
                     self.number_ports=number_ports_from_file_name(self.options["path"])
                 elif file_path is not None:
                     self.number_ports=number_ports_from_file_name(file_path)
-        self.elements=['data','noise_parameters','comments','option_line']
+        self.elements=['data','noiseparameter_data','comments','option_line']
         self.noiseparameter_data=[]
         self.metadata=self.options["metadata"]
         # Determine the number of lines per sparameter
@@ -1328,6 +1328,7 @@ class SNP(SNPBase):
         any white space or combination of white space as data delimiters it reads the data and creates
         a uniform delimter. This means a file saved with save() will not be the same as the original if the
         whitespace is not uniform. This function removes empty lines """
+        self.noiseparameter_data=self.options["noiseparameter_data"]
         default_option_line=self.options["option_line"]
 
 
