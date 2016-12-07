@@ -334,12 +334,13 @@ class OnePortCalrepModel(AsciiDataTable):
     def show(self):
         fig, (ax0, ax1) = plt.subplots(nrows=2, sharex=True)
         ax0.errorbar(self.get_column('Frequency'),self.get_column('magS11'),
-             yerr=self.get_column('uMg'),fmt='k--')
+             yerr=self.get_column('uMgS11'),fmt='k--')
         ax0.set_title('Magnitude S11')
         ax1.errorbar(self.get_column('Frequency'),self.get_column('argS11'),
-             yerr=self.get_column('uAg'),fmt='ro')
+             yerr=self.get_column('uAgS11'),fmt='ro')
         ax1.set_title('Phase S11')
         plt.show()
+        return fig
 
 class OnePortDUTModel(AsciiDataTable):
     """OnePortDUTModel is a container for .dut measurements"""
@@ -590,6 +591,7 @@ class OnePortRawModel(AsciiDataTable):
         ax0.set_title('Magnitude S11')
         ax1.set_title('Phase S11')
         plt.show()
+        return fig
 
 class TwoPortRawModel(AsciiDataTable):
     """ Class that deals with the TwoPort Raw Files after conversion to Ascii using Ron Ginley's converter.
@@ -708,6 +710,7 @@ class TwoPortRawModel(AsciiDataTable):
         ax5.set_title('Phase S22')
         plt.tight_layout()
         plt.show()
+        return fig
 
 class TwoPortNRRawModel(AsciiDataTable):
     """ Class that deals with the TwoPort Raw Files after conversion to Ascii using Ron Ginley's converter.
@@ -833,6 +836,7 @@ class TwoPortNRRawModel(AsciiDataTable):
         ax5.set_title('Phase S22')
         plt.tight_layout()
         plt.show()
+        return fig
 
 class PowerRawModel(AsciiDataTable):
     """ Class that deals with the PowerRaw Files after conversion to Ascii using Ron Ginley's converter.
@@ -1119,6 +1123,7 @@ class TwoPortCalrepModel(object):
         ax5.set_title('Phase S22')
         plt.tight_layout()
         plt.show()
+        return fig
 
 class PowerCalrepModel(object):
     """PowerCalrep is a model that holds data output by analyzing several datafiles using the HPBasic program
@@ -1283,6 +1288,7 @@ class PowerCalrepModel(object):
             ax3.set_title('Calibration Factor')
         plt.tight_layout()
         plt.show()
+        return fig
 
 class ResultFileModel(AsciiDataTable):
     """Class to hold the results file created by the SAS database for CALREP comparisions.
@@ -1412,6 +1418,7 @@ class JBSparameter(AsciiDataTable):
         plt.tight_layout()
 
         plt.show()
+        return fig
 
 
 

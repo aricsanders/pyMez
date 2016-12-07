@@ -278,6 +278,7 @@ def one_port_robin_comparision_plot(input_asc_file,input_res_file,**options):
     ax1.set_title('Phase S11')
     ax0.legend(loc='lower left', shadow=True)
     plt.show()
+    return fig
 
 def two_port_swap_ports(complex_data):
     """Accepts data in [[frequency, S11, S21, S12, S22]..] format and returns
@@ -624,6 +625,7 @@ def two_port_comparision_plot_with_residuals(two_port_raw,mean_frame,difference_
     fig.suptitle(two_port_raw.metadata["Device_Id"]+"\n",fontsize=18,fontweight='bold')
     plt.tight_layout()
     plt.show()
+    return fig
 
 def two_port_difference_frame(two_port_raw,mean_frame):
     """Creates a difference pandas.DataFrame given a two port raw file and a mean pandas.DataFrame"""
@@ -800,6 +802,7 @@ def raw_comparision_plot_with_residuals(raw_nist,mean_frame,difference_frame,**o
         plt.savefig(os.path.join(comparison_plot_options["directory"],file_name))
     else:
         plt.show()
+    return fig
 
 def calrep_history_plot(calrep_model,history_frame,**options):
     """Given a calrep_model and a history frame calrep_history_plot plots the file against any other in history
@@ -914,6 +917,7 @@ def calrep_history_plot(calrep_model,history_frame,**options):
         plt.savefig(os.path.join(history_plot_options["directory"],file_name))
     else:
         plt.show()
+    return fig
 
 def compare_s2p_plots(list_S2PV1,**options):
     """compare_s2p_plot compares a list of s2p files plotting each on the same axis for all
@@ -974,6 +978,8 @@ def compare_s2p_plots(list_S2PV1,**options):
         plt.savefig(os.path.join(comparision_plot_options["directory"],file_name))
     else:
         plt.show()
+    return fig
+
 def plot_calrep(calrep_model):
     """Plots a calrep model with uncertainities"""
     if type(calrep_model) in [PowerCalrepModel,TwoPortCalrepModel]:
@@ -1029,6 +1035,7 @@ def plot_calrep(calrep_model):
     fig.suptitle(calrep_model.metadata["Device_Id"])
     plt.tight_layout()
     plt.show()
+    return fig
 
 
 
@@ -1089,6 +1096,7 @@ def plot_calrep_comparision(calrep_model_list):
                 break
     plt.tight_layout()
     plt.show()
+    return fig
 #-----------------------------------------------------------------------------
 # Module Classes
 

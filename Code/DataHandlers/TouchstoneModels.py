@@ -739,7 +739,9 @@ class S1PV1(SNPBase):
            #ax.plot_vswr_circle(0.3 - 0.7j, real=1, solution2=True, label="Re(Z)->1")
             plt.legend(loc="lower right")
             plt.title("Matplotlib Smith Chart Projection")
+            fig=plt.gcf()
             plt.show()
+            return fig
         else:
             current_format=self.format
             self.change_data_format('MA')
@@ -750,6 +752,7 @@ class S1PV1(SNPBase):
             ax1.set_title('Phase S11')
             self.change_data_format(current_format)
             plt.show()
+            return fig
 
 class S2PV1(SNPBase):
     """A container for s2p version 1 files. Files consist of comments, option line, S parameter data
@@ -1168,7 +1171,9 @@ class S2PV1(SNPBase):
            #ax.plot_vswr_circle(0.3 - 0.7j, real=1, solution2=True, label="Re(Z)->1")
             plt.legend(loc="lower right")
             plt.title("Matplotlib Smith Chart Projection")
+            fig=plt.gcf()
             plt.show()
+            return fig
         else:
             current_format=self.format
             self.change_data_format('MA')
@@ -1191,6 +1196,7 @@ class S2PV1(SNPBase):
             plt.tight_layout()
             self.change_data_format(current_format)
             plt.show()
+            return fig
 
 class SNP(SNPBase):
     """SNP is a class that holds touchstone files of more than 2 ports. Use S1PV1 and S2PV2
@@ -1666,6 +1672,7 @@ class SNP(SNPBase):
             plt.tight_layout()
             self.change_data_format(current_format)
             plt.show()
+            return fig
 
 #-----------------------------------------------------------------------------
 # Module Scripts
