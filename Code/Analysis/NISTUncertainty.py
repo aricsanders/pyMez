@@ -139,6 +139,7 @@ def waveguide_s11_type_b(waveguide_type='WR90',magnitude_S11=1.0):
 
 def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB'):
     """Calculates SNIST for connector type, power and frequency"""
+    frequency=float(frequency)
     if re.search('mag',format,re.IGNORECASE):
         # if the format is mag then change the number to db
         magnitude=magnitude_S12
@@ -237,7 +238,7 @@ def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
         uncertainty_phase=.01
     if re.search('mag',format,re.IGNORECASE):
         # if the format is mag then change the uncertainty back to mag
-        uncertainty_magnitude=abs((1/math.log10(math.e))*magnitude*uncertainty_magnitude/20.)
+        uncertainty_magnitude=abs((1./math.log10(math.e))*magnitude*uncertainty_magnitude/20.)
     return [uncertainty_magnitude,uncertainty_phase]
 
 def coax_s12_type_b(connector_type='N',frequency=1,magnitude_S12=10,format='DB'):
@@ -272,8 +273,10 @@ def coax_s12_type_b(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
         uncertainty_magnitude=delta
         uncertainty_phase=delta_arg
     if re.search('mag',format,re.IGNORECASE):
+        #print("Converting Back to Mag")
         # if the format is mag then change the uncertainty back to mag
-        uncertainty_magnitude=abs((1/math.log10(math.e))*magnitude_S12*uncertainty_magnitude/20.)
+        uncertainty_magnitude=abs((1/math.log10(math.e))*magnitude*uncertainty_magnitude/20.)
+        #print("Type B Uncertainty magnitude is {0} ".format(uncertainty_magnitude))
     return [uncertainty_magnitude,uncertainty_phase]
 
 def waveguide_s21_S_NIST(magnitude_S12=1,format='DB'):
@@ -401,17 +404,17 @@ def S_NIST(wr_connector_type='Type-N', frequency=1, parameter='S11', magnitude=1
      frequency, magnitude and phase"""
     out=[0]
     if re.search('14|7|N|3|2', wr_connector_type, re.IGNORECASE):
-        if re.search('11',parameter,re.IGNORECASE):
+        if re.search('11|22',parameter,re.IGNORECASE):
             out=coax_s11_S_NIST(connector_type=wr_connector_type, frequency=frequency)
-        elif re.search('2',parameter,re.IGNORECASE):
+        elif re.search('12|21',parameter,re.IGNORECASE):
             out=coax_s12_S_NIST(connector_type=wr_connector_type, magnitude_S12=magnitude,
                                 frequency=frequency, format=format)
         elif re.search('p|eff',parameter,re.IGNORECASE):
             out=coax_power_S_NIST(connector_type=wr_connector_type, frequency=frequency)
     elif re.search('w', wr_connector_type, re.IGNORECASE):
-        if re.search('11',parameter,re.IGNORECASE):
+        if re.search('11|22',parameter,re.IGNORECASE):
             out=waveguide_s11_S_NIST(wr_connector_type)
-        elif re.search('2',parameter,re.IGNORECASE):
+        elif re.search('21|12',parameter,re.IGNORECASE):
             out=waveguide_s21_S_NIST(magnitude_S12=magnitude,format=format)
         elif re.search('p|eff',parameter,re.IGNORECASE):
             out=waveguide_power_S_NIST(waveguide_type=wr_connector_type)
@@ -422,18 +425,18 @@ def type_b(wr_connector_type='Type-N', frequency=1, parameter='S11', magnitude=1
      frequency, magnitude and phase"""
     out=[0]
     if re.search('14|7|N|3|2', wr_connector_type, re.IGNORECASE):
-        if re.search('11',parameter,re.IGNORECASE):
+        if re.search('11|22',parameter,re.IGNORECASE):
             out=coax_s11_type_b(connector_type=wr_connector_type, frequency=frequency,
                                 magnitude_S11=magnitude)
-        elif re.search('2',parameter,re.IGNORECASE):
+        elif re.search('12|21',parameter,re.IGNORECASE):
             out=coax_s12_type_b(connector_type=wr_connector_type,
                                 magnitude_S12=magnitude, frequency=frequency, format=format)
         elif re.search('p|eff',parameter,re.IGNORECASE):
             out=coax_power_type_b(connector_type=wr_connector_type, frequency=frequency)
     elif re.search('w', wr_connector_type, re.IGNORECASE):
-        if re.search('11',parameter,re.IGNORECASE):
+        if re.search('11|22',parameter,re.IGNORECASE):
             out=waveguide_s11_type_b(wr_connector_type)
-        elif re.search('2',parameter,re.IGNORECASE):
+        elif re.search('21|12',parameter,re.IGNORECASE):
             out=waveguide_s21_type_b(magnitude_S12=magnitude,format=format)
         elif re.search('p|eff',parameter,re.IGNORECASE):
             out=waveguide_power_type_b(waveguide_type=wr_connector_type)

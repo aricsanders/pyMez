@@ -56,7 +56,7 @@ except:
 # Module Constants
 DUT_COLUMN_NAMES=["Frequency", "magS11", "argS11","uMbS11", "uMaS11", "uMdS11", "uMgS11",
                                     "uAbS11", "uAaS11", "uAdS11", "uAgS11"]
-ONE_PORT_COLUMN_NAMES=["Frequency", "magS11", "uMbS11", "uMa11", "uMdS11", "uMgS11", "argS11",
+ONE_PORT_COLUMN_NAMES=["Frequency", "magS11", "uMbS11", "uMaS11", "uMdS11", "uMgS11", "argS11",
                                     "uAbS11", "uAaS11", "uAdS11", "uAgS11"]
 #Note there are 2 power models!!! one with 4 error terms and one with 3
 POWER_4TERM_COLUMN_NAMES=['Frequency','Efficiency','uEb', 'uEa','uEd','uEg',
@@ -1081,7 +1081,8 @@ class TwoPortCalrepModel(object):
                         #print("{0} is {1}".format("self.table_names[index]",self.table_names[index]))
                         #print("{0} is {1}".format("column",column))
                         else:
-                            column_names.append(column+self.table_names[:][index])
+                            error_name=column.replace("S11","")+self.table_names[:][index]
+                            column_names.append(error_name)
                     else:
                         column_names.append(column)
                 self.tables[index].column_names=column_names
@@ -1261,10 +1262,10 @@ class PowerCalrepModel(object):
         fig, axes = plt.subplots(nrows=2, ncols=2)
         ax0, ax1, ax2, ax3 = axes.flat
         ax0.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('magS11'),
-                     yerr=self.joined_table.get_column('uMg'),fmt='k--')
+                     yerr=self.joined_table.get_column('uMgS11'),fmt='k--')
         ax0.set_title('Magnitude S11')
         ax1.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('argS11'),
-                     yerr=self.joined_table.get_column('uAg'),fmt='ro')
+                     yerr=self.joined_table.get_column('uAgS11'),fmt='ro')
         ax1.set_title('Phase S11')
         if self.tables[2].column_names==POWER_3TERM_COLUMN_NAMES:
             ax2.errorbar(self.joined_table.get_column('Frequency'),self.joined_table.get_column('Efficiency'),

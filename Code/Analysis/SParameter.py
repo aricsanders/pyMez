@@ -38,6 +38,7 @@ try:
     from Code.DataHandlers.NISTModels import *
     from Code.DataHandlers.TouchstoneModels import *
     from Code.DataHandlers.GeneralModels import *
+    from Code.Analysis.NISTUncertainty import *
     from Code.DataHandlers.Translations import AsciiDataTable_to_DataFrame,DataFrame_to_AsciiDataTable
     #from pyMeasure import *
 except:
@@ -164,6 +165,78 @@ def frequency_model_difference(model_1,model_2,**options):
     difference_options["data"]=difference_data      
     result=AsciiDataTable(None,**difference_options)
     return result
+
+def calrep(raw_model,**options):
+    """ Performs the calrep analysis routine on a raw data format (such as OnePortRawModel, TwoPortRawModel,PowerRawModel)
+    Differs from the HP BASIC program in that it keeps the metadata Needs to be checked, returns 4 error terms for power
+    Also does not calculate all the same rows for power, exapnsion factor is set to 2"""
+    mean_file=frequency_model_collapse_multiple_measurements(raw_model)
+    standard_deviation_file=frequency_model_collapse_multiple_measurements(raw_model,method="std")
+    mean_file.remove_column("Direction")
+    mean_file.remove_column("Connect")
+    standard_deviation_file.remove_column("Direction")
+    standard_deviation_file.remove_column("Connect")
+    new_data=[]
+    new_column_names=[]
+    expansion_factor=2
+    frequency_index=mean_file.column_names.index("Frequency")
+    for row_index,row in enumerate(mean_file.data[:]):
+        new_data_row=[]
+        for column_index,column_name in enumerate(mean_file.column_names[:]):
+            if re.search("frequency",column_name,re.IGNORECASE):
+                if row_index==0:
+                    new_column_names.append("Frequency")
+                new_data_row.append(row[column_index])
+            else:
+                if re.search("mag",column_name,re.IGNORECASE):
+                    error_selector=0
+                    error_letter="M"
+                    error_parameter=column_name.replace("mag","")
+                elif re.search("arg|phase",column_name,re.IGNORECASE):
+                    error_selector=1
+                    error_letter="A"
+                    error_parameter=column_name.replace("arg","")
+                elif re.search("Eff",column_name,re.IGNORECASE):
+                    error_selector=0
+                    error_letter="E"
+                    error_parameter=""
+                else:
+                    error_selector=0
+                if row_index==0:
+                    # If this is the first row build the column names list
+                    new_column_names.append(column_name)
+                    new_column_names.append("u"+error_letter+"b"+error_parameter)
+                    new_column_names.append("u"+error_letter+"a"+error_parameter)
+                    new_column_names.append("u"+error_letter+"d"+error_parameter)
+                    new_column_names.append("u"+error_letter+"g"+error_parameter)
+
+                # Mean Value
+                new_data_row.append(row[column_index])
+                # Type B
+                ub=type_b(wr_connector_type=mean_file.metadata["Connector_Type_Measurement"],
+                         frequency=row[frequency_index],parameter=column_name,magnitude=row[column_index],format="mag")
+                #print("{0} is {1}".format("ub",ub))
+                new_data_row.append(ub[error_selector])
+                # Type A or SNIST
+                ua=S_NIST(wr_connector_type=mean_file.metadata["Connector_Type_Measurement"],
+                         frequency=row[frequency_index],parameter=column_name,magnitude=row[column_index],format="mag")
+                new_data_row.append(ua[error_selector])
+
+                # Standard Deviation
+                ud=standard_deviation_file.data[row_index][column_index]
+                new_data_row.append(ud)
+                # Total Uncertainty
+                #print(" ua is {0}, ub is {1} and ud is {2}".format(ua,ub,ud))
+                total_uncertainty=expansion_factor*math.sqrt(ua[error_selector]**2+ub[error_selector]**2+ud**2)
+                new_data_row.append(total_uncertainty)
+        new_data.append(new_data_row)
+    sorted_keys=sorted(mean_file.metadata.keys())
+    header=["{0} = {1}".format(key,mean_file.metadata[key]) for key in sorted_keys]
+    column_types=["float" for column in new_column_names]
+    calrep=AsciiDataTable(None,data=new_data,column_types=column_types,
+                          column_names=new_column_names,header=header,metadata=mean_file.metadata)
+    return calrep
+
 def one_port_robin_comparision_plot(input_asc_file,input_res_file,**options):
     """one_port_robin_comparision_plot plots a one port.asc file against a given .res file,
     use device_history=True in options to show device history"""
@@ -901,6 +974,121 @@ def compare_s2p_plots(list_S2PV1,**options):
         plt.savefig(os.path.join(comparision_plot_options["directory"],file_name))
     else:
         plt.show()
+def plot_calrep(calrep_model):
+    """Plots a calrep model with uncertainities"""
+    if type(calrep_model) in [PowerCalrepModel,TwoPortCalrepModel]:
+        calrep_model.joined_table.metadata=calrep_model.metadata
+        calrep_model=calrep_model.joined_table
+
+    # Uncertainties all have u in them
+    average_columns=[]
+    for column_name in calrep_model.column_names[:]:
+        if re.search("mag|arg|eff",column_name,re.IGNORECASE):
+            average_columns.append(column_name)
+    print("{0} is {1}".format("average_columns",average_columns))
+    number_plots=len(average_columns)
+    number_rows=int(round(number_plots/2.))
+    fig, axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col')
+    for plot_index,ax in enumerate(axes.flat):
+        column_name=average_columns[plot_index]
+        ax.set_title(column_name)
+        if re.search("mag",column_name,re.IGNORECASE):
+            error_letter="M"
+            error_parameter=column_name.replace("mag","")
+            error_name="u"+error_letter+"g"+error_parameter
+            error=calrep_model[error_name]
+            x=calrep_model["Frequency"]
+            y=calrep_model[column_name]
+            print("Length of x is {0}, Length of y is {1}, Length of error is {2}".format(len(x),len(y),len(error)))
+            ax.errorbar(x,y,yerr=error,fmt='k--')
+            ax.set_ylabel(r'|${\Gamma} $|',color='green')
+        elif re.search("arg",column_name,re.IGNORECASE):
+            error_letter="A"
+            error_parameter=column_name.replace("arg","")
+            error_name="u"+error_letter+"g"+error_parameter
+            error=calrep_model[error_name]
+            x=calrep_model["Frequency"]
+            y=calrep_model[column_name]
+            ax.errorbar(x,y,yerr=error,fmt='k--')
+            ax.set_ylabel('Phase(Degrees)',color='green')
+        elif re.search("eff",column_name,re.IGNORECASE):
+            error_letter="E"
+            error_parameter=""
+            try:
+                error_name="u"+error_letter+"g"+error_parameter
+                error=calrep_model[error_name]
+            except:
+                error_name="u"+error_letter+"e"+error_parameter
+                error=calrep_model[error_name]
+
+            x=calrep_model["Frequency"]
+            y=calrep_model[column_name]
+            ax.errorbar(x,y,yerr=error,fmt='k--')
+            ax.set_ylabel('Phase(Degrees)',color='green')
+            break
+    fig.suptitle(calrep_model.metadata["Device_Id"])
+    plt.tight_layout()
+    plt.show()
+
+
+
+
+
+def plot_calrep_comparision(calrep_model_list):
+    """Plots many calrep models on the same axis with uncertainities"""
+    for index,calrep_model in enumerate(calrep_model_list):
+        if type(calrep_model) in [PowerCalrepModel,TwoPortCalrepModel]:
+            calrep_model_list[index].joined_table.metadata=calrep_model.metadata
+            calrep_model_list[index]=calrep_model.joined_table
+
+        # Uncertainties all have u in them
+    average_columns=[]
+    for column_name in calrep_model_list[0].column_names[:]:
+            if re.search("mag|arg|eff",column_name,re.IGNORECASE):
+                average_columns.append(column_name)
+    print("{0} is {1}".format("average_columns",average_columns))
+    number_plots=len(average_columns)
+    number_rows=int(round(number_plots/2.))
+    fig, axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col')
+    for calrep_model in calrep_model_list:
+        for plot_index,ax in enumerate(axes.flat):
+            column_name=average_columns[plot_index]
+            ax.set_title(column_name)
+            if re.search("mag",column_name,re.IGNORECASE):
+                error_letter="M"
+                error_parameter=column_name.replace("mag","")
+                error_name="u"+error_letter+"g"+error_parameter
+                error=calrep_model[error_name]
+                x=calrep_model["Frequency"]
+                y=calrep_model[column_name]
+                ax.errorbar(x,y,yerr=error)
+                ax.set_ylabel(r'|${\Gamma} $|',color='green')
+            elif re.search("arg",column_name,re.IGNORECASE):
+                error_letter="A"
+                error_parameter=column_name.replace("arg","")
+                error_name="u"+error_letter+"g"+error_parameter
+                error=calrep_model[error_name]
+                x=calrep_model["Frequency"]
+                y=calrep_model[column_name]
+                ax.errorbar(x,y,yerr=error)
+                ax.set_ylabel('Phase(Degrees)',color='green')
+            elif re.search("eff",column_name,re.IGNORECASE):
+                error_letter="E"
+                error_parameter=""
+                try:
+                    error_name="u"+error_letter+"g"+error_parameter
+                    error=calrep_model[error_name]
+                except:
+                    error_name="u"+error_letter+"e"+error_parameter
+                    error=calrep_model[error_name]
+
+                x=calrep_model["Frequency"]
+                y=calrep_model[column_name]
+                ax.errorbar(x,y,yerr=error)
+                ax.set_ylabel('Phase(Degrees)',color='green')
+                break
+    plt.tight_layout()
+    plt.show()
 #-----------------------------------------------------------------------------
 # Module Classes
 
