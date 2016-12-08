@@ -830,15 +830,15 @@ def calrep_history_plot(calrep_model,history_frame,**options):
         number_rows=2
         column_names=['magS11','argS11','Efficiency','Calibration_Factor']
         if calrep_model.options["column_names"]==POWER_3TERM_COLUMN_NAMES:
-            error_names=['uMg','uAg','uEe','uCe']
+            error_names=['uMgS11','uAgS11','uEe','uCe']
         elif calrep_model.options["column_names"]==POWER_4TERM_COLUMN_NAMES:
-            error_names=['uMg','uAg','uEg','uCg']
+            error_names=['uMgS11','uAgS11','uEg','uCg']
         table=calrep_model.joined_table
 
     elif re.search('OnePort',model):
         number_rows=1
         column_names=['magS11','argS11']
-        error_names=['uMg','uAg']
+        error_names=['uMgS11','uAgS11']
         table=calrep_model
 
     elif re.search('TwoPort',model):
@@ -938,6 +938,7 @@ def compare_s2p_plots(list_S2PV1,**options):
         comparision_plot_options[key]=value
 
     # create a set of 8 subplots
+    plt.hold(True)
     fig, compare_axes = plt.subplots(nrows=4, ncols=2, figsize=(8,6),dpi=80)
     if comparision_plot_options["labels"] is None:
         labels=[s2p.path for s2p in list_S2PV1]
@@ -1056,6 +1057,7 @@ def plot_calrep_comparision(calrep_model_list):
     print("{0} is {1}".format("average_columns",average_columns))
     number_plots=len(average_columns)
     number_rows=int(round(number_plots/2.))
+    plt.hold(True)
     fig, axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col')
     for calrep_model in calrep_model_list:
         for plot_index,ax in enumerate(axes.flat):

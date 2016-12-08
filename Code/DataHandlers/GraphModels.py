@@ -384,7 +384,7 @@ class Graph():
         for exit_path in exit_paths:
             possible_paths.append([exit_path])
         #print("{0} is {1}".format('possible_paths',possible_paths))
-        for i in range(len(self.node_names)**2):
+        for i in range(len(self.node_names)**3):
             #print("{0} is {1}".format('i',i))
             #print("{0} is {1}".format('possible_paths',possible_paths))
             for index,path in enumerate(possible_paths):
@@ -477,7 +477,7 @@ class Graph():
         defaults={"descriptions":False,"edge_descriptions":False,"save_plot":False,
                  "path":None,"active_node":True,"directory":None,"specific_descriptor":self.graph_name.replace(" ","_"),
                   "general_descriptor":"plot","file_name":None,
-                 "arrows":True,"node_size":1000,"font_size":10}
+                 "arrows":True,"node_size":1000,"font_size":10,"fix_layout":True}
         show_options={}
         for key,value in defaults.iteritems():
             show_options[key]=value
@@ -549,6 +549,8 @@ class Graph():
                 plt.savefig(os.path.join(show_options["directory"],file_name))
         else:
             plt.show()
+            fig=plt.gcf()
+            return fig
 
 
 
