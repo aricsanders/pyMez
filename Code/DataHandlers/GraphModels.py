@@ -145,11 +145,14 @@ class Graph():
         self.edge_matrices=[]
         self.state_matrix=np.matrix(self.state).T
         # Add the first 2 edges, required to intialize the graph properly
+        self.display_graph=networkx.DiGraph()
+
         self.add_edge(self.node_names[0],self.node_names[1],self.options["edge_1_to_2"])
         self.add_edge(self.node_names[1],self.node_names[0],self.options["edge_2_to_1"])
         self.jumps=[]
         self.external_node_names=[]
         self.external_node_descriptions=[]
+        self.display_layout=networkx.spring_layout(self.display_graph)
 
     def get_description_dictionary(self):
         dictionary={node_name:self.node_descriptions[index] for index,node_name in enumerate(self.node_names)}
@@ -188,6 +191,8 @@ class Graph():
         edge_matrix[end_position][begin_position]=1
         edge_matrix=np.matrix(edge_matrix)
         self.edge_matrices.append(edge_matrix)
+        self.display_graph.add_edge(begin_node,end_node)
+        self.display_layout=networkx.spring_layout(self.display_graph)
 
     def add_jump(self,begin_node=None,end_node=None,jump_function=None):
         """Adds a jump mapping one internal node to an external node, required input is begin_node (it's name)
@@ -203,8 +208,8 @@ class Graph():
         jump_name="jump_{0}_{1}_{2:0>3d}".format(begin_node,end_node,iterator)
         self.__dict__[jump_name]=jump_function
         self.jumps.append(jump_name)
-
-
+        self.display_graph.add_edge(begin_node,end_node)
+        self.display_layout=networkx.spring_layout(self.display_graph)
     def move_to(self,path):
         """Changes the state of the graph by moving along the path specified"""
         print path
@@ -275,6 +280,10 @@ class Graph():
         self.add_edge(begin_node=edge_into_node_begin,end_node=node_name,edge_function=edge_into_node_function)
         if node_description:
             self.node_descriptions.append(node_description)
+        self.display_graph.add_node(node_name)
+        self.display_graph.add_edge(node_name,edge_out_node_end)
+        self.display_graph.add_edge(edge_into_node_begin,node_name)
+        self.display_layout=networkx.spring_layout(self.display_graph)
 
     def add_external_node(self,external_node_name,jump_into_node_begin,
                           jump_into_node_function,external_node_description=None):
@@ -285,6 +294,10 @@ class Graph():
         self.add_jump(begin_node=jump_into_node_begin,end_node=external_node_name,jump_function=jump_into_node_function)
         if external_node_description:
             self.external_node_descriptions.append(external_node_description)
+        self.display_graph.add_node(external_node_name)
+        self.display_graph.add_edge(jump_into_node_begin,external_node_name)
+        self.display_layout=networkx.spring_layout(self.display_graph)
+
     def jump_to_external_node(self,external_node_name):
         """Returns the result of the jump, the graph is left in the node that is the begining of the jump"""
         end_node=external_node_name
@@ -375,7 +388,7 @@ class Graph():
 
     def get_path(self,first_node,last_node):
         """Returns the first path found between first node and last node, three step paths are broken"""
-        #TODO: Remove Circular Paths
+        #Remove circular paths added 12/2016
         edge_pattern=re.compile('edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)')
         exit_paths=self.get_exiting_edges(first_node)
         next_nodes=self.get_exiting_nodes(first_node)
@@ -485,31 +498,9 @@ class Graph():
             show_options[key]=value
         if show_options["directory"] is None:
             show_options["directory"]=os.getcwd()
-        new_graph=networkx.DiGraph()
-        edge_pattern=re.compile("edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
-        jump_pattern=re.compile("jump_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
-        for node in self.node_names:
-            new_graph.add_node(node)
-        for node in self.external_node_names:
-            new_graph.add_node(node)
-        for edge in self.edges:
-            match=re.match(edge_pattern,edge)
-            if match:
-                begin_node=match.groupdict()["begin_node"]
-                end_node=match.groupdict()["end_node"]
-                new_graph.add_edge(begin_node,end_node)
-                #print("Begin Node = {0}, End Node= {1}".format(begin_node,end_node))
-        #print("{0} is {1}".format('new_graph.nodes()',new_graph.nodes()))
-        for jump in self.jumps:
-            match=re.match(jump_pattern,jump)
-            if match:
-                begin_node=match.groupdict()["begin_node"]
-                end_node=match.groupdict()["end_node"]
-                new_graph.add_edge(begin_node,end_node)
-
         if show_options["active_node"]:
             node_colors=[]
-            for node in new_graph.nodes():
+            for node in self.display_graph.nodes():
                 if node==self.current_node:
                     node_colors.append('b')
                 else:
@@ -526,13 +517,15 @@ class Graph():
             if self.external_node_names:
                 for index,node in enumerate(self.external_node_names):
                     node_labels[node]=self.external_node_descriptions[index]
-            networkx.draw_networkx(new_graph,arrows=show_options["arrows"],
+            networkx.draw_networkx(self.display_graph,arrows=show_options["arrows"],
                        labels=node_labels,node_color=node_colors,
-                                   node_size=show_options["node_size"],font_size=show_options["font_size"])
+                                   node_size=show_options["node_size"],font_size=show_options["font_size"],
+                                   pos=self.display_layout)
             #print("{0} is {1}".format('node_labels',node_labels))
         else:
-            networkx.draw_networkx(new_graph,arrows=show_options["arrows"],node_color=node_colors,
-                                  node_size=show_options["node_size"],font_size=show_options["font_size"])
+            networkx.draw_networkx(self.display_graph,arrows=show_options["arrows"],node_color=node_colors,
+                                  node_size=show_options["node_size"],font_size=show_options["font_size"],
+                                   pos=self.display_layout)
 
         plt.suptitle(self.options["graph_name"])
         if show_options["file_name"] is None:
