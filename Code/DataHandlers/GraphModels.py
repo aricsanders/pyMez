@@ -615,6 +615,43 @@ class ColumnModeledGraph(Graph):
         self.add_edge("n1","n12",DataFrame_to_html_file)
         self.add_edge("n7","n4",json_to_DataTable)
 
+class ImageGraph(Graph):
+    """A transformation graph for images node types are image formats and external nodes are
+    common image processing functions"""
+    def __init__(self,**options):
+        defaults={"graph_name":"Image Graph",
+                  "node_names":['Image','png'],
+                  "node_descriptions":["PIL Image","png"],
+                  "current_node":'Image',
+                  "state":[1,0],
+                  "data":PIL.Image.open(os.path.join(TESTS_DIRECTORY,'test.png')),
+                  "edge_2_to_1":file_to_Image,
+                  "edge_1_to_2":lambda x: Image_to_file_type(x,file_path="test",extension="png")}
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        Graph.__init__(self,**self.options)
+        self.add_node("jpg","Image",lambda x: Image_to_file_type(x,file_path="test",extension="jpg"),
+                             "Image",file_to_Image,node_description="Jpg File")
+        self.add_node("tiff","Image",lambda x: Image_to_file_type(x,file_path="test",extension="tiff"),
+                             "Image",file_to_Image,node_description="Tif File")
+        self.add_node("gif","Image",lambda x: Image_to_file_type(x,file_path="test",extension="gif"),
+                             "Image",file_to_Image,node_description="Gif File")
+        self.add_node("bmp","Image",lambda x: Image_to_file_type(x,file_path="test",extension="bmp"),
+                             "Image",file_to_Image,node_description="BMP File")
+        self.add_node("base64","png",png_to_base64,
+                             "png",base64_to_png,node_description="Base 64 PNG")
+        self.add_node("embededHTML","base64",base64png_to_embeded_html,
+                             "base64",embeded_html_to_base64png,node_description="Embeded HTML of PNG")
+        self.add_node("ndarray","png",png_to_ndarray,
+                             "png",ndarray_to_png,node_description="Numpy Array")
+        self.add_node("MatplotlibFigure","ndarray",ndarray_to_MatplotlibFigure,
+                             "png",MatplotlibFigure_to_png,node_description="MatplotlibFigure")
+        self.add_external_node("thumbnail","Image",Image_to_thumbnail,external_node_description="JPEG Thumbnail")
+        self.add_external_node("matplotlib","ndarray",ndarray_to_matplotlib,
+                                      external_node_description="Matplotlib Plot")
 
 
 #-----------------------------------------------------------------------------

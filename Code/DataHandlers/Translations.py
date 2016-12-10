@@ -12,6 +12,9 @@
 import timeit
 import os
 import sys
+import json
+import subprocess
+import base64
 #-----------------------------------------------------------------------------
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
@@ -62,6 +65,13 @@ try:
 except:
     print("The module PIL was not found or had an error,"
           "please check module or put it on the python path")
+    raise ImportError
+try:
+    import pdfkit
+except:
+    print("The module pdfkit was not found or had an error,"
+          "please check module or put it on the python path use pip install pdfkit and also install "
+          "wkhtmltopdf")
     raise ImportError
 try:
     from scipy import misc
@@ -481,6 +491,12 @@ def DataFrame_to_html_file(pandas_data_frame,file_name="test.html"):
     pandas_data_frame.to_html(out_file,index=False)
     return file_name
 
+def html_file_to_pdf_file(html_file_name,pdf_file_name="test.pdf"):
+    """Takes an html page and converts it to pdf using wkhtmltopdf and pdfkit"""
+    config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+    pdfkit.from_file(html_file_name,pdf_file_name,configuration=config)
+    return pdf_file_name
+
 def json_to_DataTable(json_file_name):
     data_dictionary_list=json.load(open(json_file_name,'r'))
     xml=DataTable(None,data_dictionary={"data":data_dictionary_list})
@@ -563,11 +579,47 @@ def embeded_html_to_base64png(html_string):
     return encoded
 
 def ndarray_to_matplotlib(nd_array):
-    """Converts an ndarray of an image to a matplotlib"""
     figure=plt.imshow(nd_array)
     figure.axes.get_xaxis().set_visible(False)
     figure.axes.get_yaxis().set_visible(False)
     plt.show()
+
+def ndarray_to_MatplotlibFigure(nd_array):
+    plt.close()
+    figure=plt.figure("Image",frameon=False)
+    plt.figimage(nd_array,resize=True)
+    return figure
+
+def MatplotlibFigure_to_file(figure,file_name):
+    """Saves the figure to file name"""
+    figure.savefig(file_name,bbox_inches='tight', pad_inches=0,dpi="figure")
+    return file_name
+
+def MatplotlibFigure_to_png(figure,file_name="test.png"):
+    figure.savefig(file_name,bbox_inches='tight', pad_inches=0,dpi="figure")
+    return file_name
+
+def MatplotlibFigure_to_svg(figure,file_name="test.svg"):
+    figure.savefig(file_name,bbox_inches='tight', pad_inches=0,dpi="figure")
+    return file_name
+
+def svg_to_png(svg_file_path,export_file_path="test.png"):
+    inkscape_path=r'c:\PROGRA~1\Inkscape\inkscape.exe'
+    p=subprocess.call([inkscape_path,svg_file_path,
+                       '--export-png',export_file_path])
+    return export_file_path
+
+def svg_to_eps(svg_file_path,export_file_path="test.eps"):
+    inkscape_path=r'c:\PROGRA~1\Inkscape\inkscape.exe'
+    p=subprocess.call([inkscape_path,svg_file_path,
+                       '--export-eps',export_file_path])
+    return export_file_path
+
+def svg_to_pdf(svg_file_path,export_file_path="test.pdf"):
+    inkscape_path=r'c:\PROGRA~1\Inkscape\inkscape.exe'
+    p=subprocess.call([inkscape_path,svg_file_path,
+                       '--export-pdf',export_file_path])
+    return export_file_path
 
 def fig_to_matplotlib(filename,fignr=1):
     "Function that uses loadmat to create a matplotlib plot of a matlab fig file"
@@ -631,6 +683,149 @@ def fig_to_matplotlib(filename,fignr=1):
         legend(leg_entries,loc=Mat2py[location])
     hold(False)
     show()
+def replace_None(string):
+    """Replaces the string 'None' with the python value None"""
+    if string:
+        if re.match("None",string):
+            return None
+        else:
+            return string
+    else:
+        return string
+
+def dict_to_json_string(python_dictionary):
+    """Uses json module to create a json string from a python dictionary"""
+    return json.dumps(python_dictionary)
+
+def json_string_to_dict(json_string):
+    """Uses json module to return a python dictionary"""
+    out_dictionary=json.loads(json_string)
+    for key,value in out_dictionary.iteritems():
+        out_dictionary[key]=replace_None(value)
+    return out_dictionary
+
+def json_string_to_json_file(json_string,file_name="test.json"):
+    out_file=open(file_name,'w')
+    out_file.write(json_string)
+    out_file.close()
+    return file_name
+
+def json_file_to_json_string(json_file_name):
+    in_file=open(json_file_name,'r')
+    json_string=in_file.read()
+    in_file.close()
+    return json_string
+
+def dictionary_to_xml(dictionary=None,char_between='\n'):
+    string_output=''
+    for key,value in dictionary.iteritems():
+        xml_open="<"+str(key)+">"
+        xml_close="</"+str(key)+">"
+        string_output=string_output+xml_open+str(value)+xml_close+char_between
+    return string_output
+
+def xml_to_dictionary(xml_string):
+    """XML string must be in the format <key>value</key>\n<key2>.. to work"""
+    pattern='<(?P<XML_tag>.+)>(?P<XML_text>.+)</.+>'
+    lines=xml_string.splitlines()
+    out_dictionary={}
+    for line in lines:
+        match=re.search(pattern,line)
+        if match:
+            key=match.groupdict()["XML_tag"].rstrip().lstrip().replace("\'","")
+            value=match.groupdict()["XML_text"].rstrip().lstrip().replace("\'","")
+            out_dictionary[key]=value
+    return out_dictionary
+
+
+def dictionary_to_HTML_meta(python_dictionary):
+    """Converts a python dictionary to meta tags for html"""
+    out_string=""
+    for key,value in python_dictionary.iteritems():
+        out_string=out_string+"<meta name="+'"{0}"'.format(key)+" content="+'"{0}"'.format(value)+" />\n"
+    return out_string
+
+def HTML_meta_to_dictionary(HTML_meta_tags_string):
+    """Converts a python dictionary to meta tags for html"""
+    pattern='<meta name="(?P<key>.+)" content="(?P<value>.+)" />'
+    lines=HTML_meta_tags_string.splitlines()
+    out_dictionary={}
+    for line in lines:
+        match=re.search(pattern,line)
+        if match:
+            key=match.groupdict()["key"]
+            value=match.groupdict()["value"]
+            out_dictionary[key]=value
+    return out_dictionary
+
+def dictionary_to_tuple_line(python_dictionary):
+    """transforms a python dictionary into a xml line in the form <Tuple key1=value1 key2=value2..keyN=valueN />"""
+    prefix="<Tuple "
+    postfix=" />"
+    inner=""
+    for key,value in python_dictionary.iteritems():
+        inner=inner+'{0}="{1}" ' .format(key,value)
+        xml_out=prefix+inner+postfix
+    return xml_out
+
+def tuple_line_to_dictionary(tuple_line):
+    """Takes a line in the form of <Tuple key1=value1 key2=Value2 ...KeyN=ValueN /> and returns a dictionary"""
+    stripped_string=tuple_line.replace("<Tuple","")
+    stripped_string=stripped_string.replace("/>","")
+    pattern="(?<=\")(?<!,|:)\s+(?!,+)"
+    lines=re.split(pattern,stripped_string)
+    out_dictionary={}
+    for line in lines:
+        split_line=line.split("=")
+        print split_line
+        if len(split_line)==2:
+            key=split_line[0].rstrip().lstrip().replace("\"","")
+            value=split_line[1].rstrip().lstrip().replace("\"","")
+            out_dictionary[key]=value
+    return out_dictionary
+
+def dictionary_to_pickle(python_dictionary,file_name="dictionary.pkl"):
+    """Python Dictionary to pickled file"""
+    pickle.dump(python_dictionary,open(file_name,'wb'))
+    return file_name
+
+def pickle_to_python_dictionary(pickle_file_name):
+    """open and read a pickled file with only a single python dictionary in it"""
+    dictionary_out=pickle.load(open(pickle_file_name,'rb'))
+    return dictionary_out
+
+def dictionary_to_list_list(python_dictionary):
+    """Returns a list with two lists : [[key_list][item_list]]"""
+    key_list=[]
+    value_list=[]
+    for key,value in python_dictionary.iteritems():
+        key_list.append(key)
+        value_list.append(value)
+    out_list=[key_list,value_list]
+    return out_list
+
+def list_list_to_dictionary(list_list):
+    """takes a list of [[keys],[items]] and returns a dictionary """
+    keys=list_list[0]
+    items=list_list[1]
+    out_dictionary={}
+    for index,key in enumerate(keys):
+        out_dictionary[key]=items[index]
+    return out_dictionary
+
+def dictionary_to_DataFrame(python_dictionary):
+    """Takes a python dictionary and maps it to a pandas dataframe"""
+    data_frame=pandas.DataFrame([[key,value] for key,value in python_dictionary.iteritems()],
+                                columns=["Property","Value"])
+    data_frame.fillna("None")
+    return data_frame
+
+def DataFrame_to_dictionary(pandas_data_frame):
+    """Takes a pandas.DataFrame with column names ["Property","Value"] and returns a python dictionary"""
+    list_of_lists=pandas_data_frame.as_matrix().tolist()
+    dictionary={row[0]:replace_None(row[1]) for row in list_of_lists}
+    return dictionary
+
 #-----------------------------------------------------------------------------
 # Module Classes
 
