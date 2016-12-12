@@ -172,10 +172,12 @@ def calrep(raw_model,**options):
     Also does not calculate all the same rows for power, exapnsion factor is set to 2"""
     mean_file=frequency_model_collapse_multiple_measurements(raw_model)
     standard_deviation_file=frequency_model_collapse_multiple_measurements(raw_model,method="std")
-    mean_file.remove_column("Direction")
-    mean_file.remove_column("Connect")
-    standard_deviation_file.remove_column("Direction")
-    standard_deviation_file.remove_column("Connect")
+    if "Direction" in mean_file.column_names and "Connect" in mean_file.column_names:
+        mean_file.remove_column("Direction")
+        mean_file.remove_column("Connect")
+    if "Direction" in standard_deviation_file.column_names and "Connect" in standard_deviation_file.column_names:
+        standard_deviation_file.remove_column("Direction")
+        standard_deviation_file.remove_column("Connect")
     new_data=[]
     new_column_names=[]
     expansion_factor=2

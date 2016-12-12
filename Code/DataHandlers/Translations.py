@@ -79,6 +79,12 @@ except:
     print("The module scipy.misc was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
+try:
+    from scipy.io import savemat
+except:
+    print("The module scipy.io was not found or had an error,"
+          "please check module or put it on the python path")
+    raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants
 
@@ -497,6 +503,12 @@ def html_file_to_pdf_file(html_file_name,pdf_file_name="test.pdf"):
     pdfkit.from_file(html_file_name,pdf_file_name,configuration=config)
     return pdf_file_name
 
+def html_string_to_pdf_file(html_string,pdf_file_name="test.pdf"):
+    """Takes an html string and converts it to pdf using wkhtmltopdf and pdfkit"""
+    config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+    pdfkit.from_string(html_string,pdf_file_name,configuration=config)
+    return pdf_file_name
+
 def json_to_DataTable(json_file_name):
     data_dictionary_list=json.load(open(json_file_name,'r'))
     xml=DataTable(None,data_dictionary={"data":data_dictionary_list})
@@ -512,6 +524,7 @@ def png_to_jpg(png_file_name):
     jpeg_file_name=root_name+".jpg"
     PIL.Image.open(png_file_name).save(jpeg_file_name)
     return jpeg_file_name
+
 def file_to_Image(file_path):
     new_image=PIL.Image.open(file_path)
     if re.search(".gif",file_path,re.IGNORECASE):
