@@ -294,9 +294,9 @@ def waveguide_s21_S_NIST(magnitude_S12=1,format='DB'):
     elif magnitude_S12>=25 and magnitude_S12<=40:
         uncertainty_magnitude=.02
     elif magnitude_S12>40:
-        uncertainty_magnitude=.02+.00015(magnitude_S12-40)**2
+        uncertainty_magnitude=.02+.00015*(magnitude_S12-40)**2
     else:
-        uncertainty_magnitude=.02+.00015(magnitude_S12-40)**2
+        uncertainty_magnitude=.02+.00015*(magnitude_S12-40)**2
     if re.search('mag',format,re.IGNORECASE):
         # if the format is mag then change the uncertainty back to mag
         uncertainty_magnitude=abs((1/math.log10(math.e))*magnitude*uncertainty_magnitude/20.)
