@@ -1056,7 +1056,7 @@ def plot_calrep_comparision(calrep_model_list):
     for column_name in calrep_model_list[0].column_names[:]:
             if re.search("mag|arg|eff",column_name,re.IGNORECASE):
                 average_columns.append(column_name)
-    print("{0} is {1}".format("average_columns",average_columns))
+    #print("{0} is {1}".format("average_columns",average_columns))
     number_plots=len(average_columns)
     number_rows=int(round(number_plots/2.))
     plt.hold(True)

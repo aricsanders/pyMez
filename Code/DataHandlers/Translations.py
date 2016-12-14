@@ -85,6 +85,14 @@ except:
     print("The module scipy.io was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
+try:
+    from win32com import client
+    WINDOWS_COM=True
+except:
+    print("The module win32com was not found or had an error,"
+          "please check module or put it on the python path")
+    WINDOWS_COM=False
+    #raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants
 
@@ -238,6 +246,7 @@ def S2PV1_to_XMLDataTable(s2p,**options):
     XML_options["data_dictionary"]=data_dictionary
     new_xml_data_table=DataTable(None,**XML_options)
     return new_xml_data_table
+
 def SNP_to_XMLDataTable(snp,**options):
     """Transforms a snp's sparameters to a XMLDataTable. Converts the format to #GHz DB first"""
     defaults={"specific_descriptor":snp.options["specific_descriptor"],
@@ -402,22 +411,26 @@ def PowerRawModel_to_XMLDataTable(power_raw_table,**options):
         XML_options[key]=value
     new_xml=AsciiDataTable_to_XMLDataTable(table,**XML_options)
     return new_xml
-
+# Table Translations
 def DataFrame_to_hdf(pandas_data_frame):
     pandas_data_frame.to_hdf("Test.hdf","table")
     return "Test.hdf"
+
 def hdf_to_DataFrame(hdf_file_name):
     df=pandas.read_hdf(hdf_file_name,"table")
     return df
+
 def XMLDataTable_to_AsciiDataTable(xml_table):
 
     table=AsciiDataTable(None,
                          column_names=xml_table.attribute_names,
                          data=xml_table.data)
     return table
+
 def AsciiDataTable_to_XMLDataTable_2(data_table):
     xml=AsciiDataTable_to_XMLDataTable(data_table)
     return xml
+
 def DataFrame_to_excel(pandas_data_frame,file_name="Test.xlsx"):
     pandas_data_frame.to_excel(file_name,index=False)
     return file_name
@@ -519,6 +532,8 @@ def csv_to_AsciiDataTable(csv_file_name):
              "data_begin_line":1,"data_end_line":-1,"data_delimiter":",","column_names_delimiter":","}
     table=AsciiDataTable(csv_file_name,**options)
     return table
+
+# Image Translations
 def png_to_jpg(png_file_name):
     [root_name,extension]=png_file_name.split(".")
     jpeg_file_name=root_name+".jpg"
@@ -605,15 +620,15 @@ def ndarray_to_MatplotlibFigure(nd_array):
 
 def MatplotlibFigure_to_file(figure,file_name):
     """Saves the figure to file name"""
-    figure.savefig(file_name,bbox_inches='tight', pad_inches=0,dpi="figure")
+    figure.savefig(file_name,bbox_inches='tight', pad_inches=.1,dpi="figure")
     return file_name
 
 def MatplotlibFigure_to_png(figure,file_name="test.png"):
-    figure.savefig(file_name,bbox_inches='tight', pad_inches=0,dpi="figure")
+    figure.savefig(file_name,bbox_inches='tight', pad_inches=.1,dpi="figure")
     return file_name
 
 def MatplotlibFigure_to_svg(figure,file_name="test.svg"):
-    figure.savefig(file_name,bbox_inches='tight', pad_inches=0,dpi="figure")
+    figure.savefig(file_name,bbox_inches='tight', pad_inches=.1,dpi="figure")
     return file_name
 
 def svg_to_png(svg_file_path,export_file_path="test.png"):
@@ -634,6 +649,7 @@ def svg_to_pdf(svg_file_path,export_file_path="test.pdf"):
                        '--export-pdf',export_file_path])
     return export_file_path
 
+# Matlab Figure Translation
 def fig_to_matplotlib(filename,fignr=1):
     "Function that uses loadmat to create a matplotlib plot of a matlab fig file"
     from scipy.io import loadmat
@@ -696,6 +712,8 @@ def fig_to_matplotlib(filename,fignr=1):
         legend(leg_entries,loc=Mat2py[location])
     hold(False)
     show()
+
+# Metadata Translations
 def replace_None(string):
     """Replaces the string 'None' with the python value None"""
     if string:
@@ -839,6 +857,37 @@ def DataFrame_to_dictionary(pandas_data_frame):
     dictionary={row[0]:replace_None(row[1]) for row in list_of_lists}
     return dictionary
 
+# Word Translations
+if WINDOWS_COM:
+    def doc_file_to_pdf_file(doc_file_name,pdf_file_name="test.pdf"):
+        """Converts a microsoft doc or docx file to a pdf using word.
+        Requires word and win32com to be installed. Returns the new file name"""
+        word=client.DispatchEx("Word.Application")
+        doc=word.Documents.Open(doc_file_name)
+        doc.SaveAs(pdf_file_name,FileFormat=17)
+        doc.Close()
+        word.Quit()
+        return pdf_file_name
+
+    def doc_file_to_html_file(doc_file_name,html_file_name="test.html"):
+        """Converts a microsoft doc or docx file to a filtered html file using word.
+        Requires word and win32com to be installed. Returns the new file name"""
+        word=client.DispatchEx("Word.Application")
+        doc=word.Documents.Open(doc_file_name)
+        doc.SaveAs(html_file_name,FileFormat=10)
+        doc.Close()
+        word.Quit()
+        return html_file_name
+
+    def doc_file_to_odt_file(doc_file_name,odt_file_name="test.odt"):
+        """Converts a microsoft doc or docx file to a open document format file using word.
+        Requires word and win32com to be installed. Returns the new file name"""
+        word=client.DispatchEx("Word.Application")
+        doc=word.Documents.Open(doc_file_name)
+        doc.SaveAs(odt_file_name,FileFormat=23)
+        doc.Close()
+        word.Quit()
+        return odt_file_name
 #-----------------------------------------------------------------------------
 # Module Classes
 

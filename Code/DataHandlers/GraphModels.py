@@ -120,7 +120,7 @@ def remove_circular_paths(path):
 #-----------------------------------------------------------------------------
 # Module Classes
 
-class Graph():
+class Graph(object):
     def __init__(self,**options):
         """Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required"""
         defaults={"graph_name":"Graph",
@@ -653,7 +653,54 @@ class ImageGraph(Graph):
         self.add_external_node("matplotlib","ndarray",ndarray_to_matplotlib,
                                       external_node_description="Matplotlib Plot")
 
-
+class MetadataGraph(Graph):
+    """Metadata Graph is a graph representing the content of key,value metadata"""
+    def __init__(self,**options):
+        """Intializes the metadata graph class"""
+        defaults={"graph_name":"Metadata Graph",
+                  "node_names":['dict','json'],
+                  "node_descriptions":["Python Dictionary","Json string"],
+                  "current_node":'dict',
+                  "state":[1,0],
+                  "data":{"a":"First","b":"Second"},
+                  "edge_2_to_1":json_string_to_dict,
+                  "edge_1_to_2":dict_to_json_string}
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        Graph.__init__(self,**self.options)
+        self.add_node("jsonFile","json",json_string_to_json_file,
+                             "json",json_file_to_json_string,node_description="JSON File")
+        self.add_node("xml","dict",dictionary_to_xml,
+                             "dict",xml_to_dictionary,node_description="xml string")
+        self.add_node("HTMLMetaTag","dict",dictionary_to_HTML_meta,
+                             "dict",HTML_meta_to_dictionary,node_description="HTML meta tags")
+        self.add_node("XMLTupleLine","dict",dictionary_to_tuple_line,
+                             "dict",tuple_line_to_dictionary,node_description="Tuple Line")
+        self.add_node("pickle","dict",dictionary_to_pickle,
+                             "dict",pickle_to_python_dictionary,node_description="Pickled File")
+        self.add_node("listList","dict",dictionary_to_list_list,
+                             "dict",list_list_to_dictionary,node_description="List of lists")
+        self.add_node("headerList","dict",dict_to_header_list,
+                             "dict",header_list_to_dict,node_description="Header List")
+        self.add_node("DataFrame","dict",dictionary_to_DataFrame,
+                             "dict",DataFrame_to_dictionary,node_description="Pandas DataFrame")
+        self.add_node("AsciiDataTable","DataFrame",DataFrame_to_AsciiDataTable,
+                             "DataFrame",AsciiDataTable_to_DataFrame,node_description="AsciiDataTable")
+        self.add_node("matlab","AsciiDataTable",AsciiDataTable_to_Matlab_key_value,
+                             "AsciiDataTable",Matlab_to_AsciiDataTable_key_value,node_description="Matlab")
+        self.add_node("excel","DataFrame",DataFrame_to_excel,
+                             "DataFrame",excel_to_DataFrame,node_description="excel")
+        self.add_node("hdf","DataFrame",DataFrame_to_hdf,
+                             "DataFrame",hdf_to_DataFrame,node_description="hdf file")
+        self.add_node("csv","DataFrame",DataFrame_to_csv,
+                             "DataFrame",csv_to_DataFrame,node_description="CSV File")
+        self.add_node("htmlFile","DataFrame",DataFrame_to_html_file,
+                             "DataFrame",html_file_to_pandas,node_description="HTML Table File")
+        self.add_node("htmlTableString","htmlFile",html_file_to_html_string,
+                             "htmlFile",html_string_to_html_file,node_description="HTML Table String")
 #-----------------------------------------------------------------------------
 # Module Scripts
 #TODO: Add test_Graph script currently lives in jupyter-notebooks
