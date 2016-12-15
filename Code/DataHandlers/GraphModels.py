@@ -597,7 +597,7 @@ class TableGraph(Graph):
             self.options[key]=value
         Graph.__init__(self,**self.options)
         self.add_node("HdfFile","DataFrame",DataFrame_to_HdfFile,
-                      "DataFrame",HtmlFile_to_DataFrame,
+                      "DataFrame",HdfFile_to_DataFrame,
                       node_description="HDF File")
         self.add_node("XmlDataTable","AsciiDataTable",AsciiDataTable_to_XmlDataTable,
                       "AsciiDataTable",XmlDataTable_to_AsciiDataTable,
@@ -636,7 +636,10 @@ class TableGraph(Graph):
                       node_description="HTML File")
         self.add_edge("DataFrame","HtmlFile",DataFrame_to_HtmlFile)
         self.add_edge("JsonFile","XmlDataTable",JsonFile_to_XmlDataTable)
-
+        self.add_external_node("XsltResultString","XmlDataTable",XmlBase_to_XsltResultString,
+                               external_node_description="XSLT Results String")
+        self.add_external_node("XsltResultFile","XmlDataTable",XmlBase_to_XsltResultFile,
+                               external_node_description="XSLT Results File")
 class ImageGraph(Graph):
     """A transformation graph for images node types are image formats and external nodes are
     common image processing functions"""

@@ -977,6 +977,15 @@ if WINDOWS_COM:
         Requires word and win32com to be installed.
         FileFormat=17 is pdf for SaveAs, search for WdSaveFormat Enumeration to see more details.
         Returns the new file name"""
+        split_doc_name=list(os.path.split(doc_file_name))
+        split_pdf_name=list(os.path.split(pdf_file_name))
+        if not split_doc_name[0]:
+            split_doc_name[0]=os.getcwd()
+            doc_file_name=os.path.join(*split_doc_name)
+        if not split_pdf_name[0]:
+            split_pdf_name[0]=os.getcwd()
+            pdf_file_name=os.path.join(*split_pdf_name)
+
         word=client.DispatchEx("Word.Application")
         doc=word.Documents.Open(doc_file_name)
         doc.SaveAs(pdf_file_name,FileFormat=17)
@@ -989,6 +998,15 @@ if WINDOWS_COM:
         Requires word and win32com to be installed.
         FileFormat=10 is filtered html for SaveAs, search for WdSaveFormat Enumeration to see more details.
         Returns the new file name"""
+        split_doc_name=list(os.path.split(doc_file_name))
+        split_html_name=list(os.path.split(html_file_name))
+        if not split_doc_name[0]:
+            split_doc_name[0]=os.getcwd()
+            doc_file_name=os.path.join(*split_doc_name)
+        if not split_html_name[0]:
+            split_html_name[0]=os.getcwd()
+            html_file_name=os.path.join(*split_html_name)
+
         word=client.DispatchEx("Word.Application")
         doc=word.Documents.Open(doc_file_name)
         doc.SaveAs(html_file_name,FileFormat=10)
@@ -1002,6 +1020,14 @@ if WINDOWS_COM:
         FileFormat=23 is odt for SaveAs, search for WdSaveFormat Enumeration to see more details.
         This one required guessing at the integer value.
         Returns the new file name"""
+        split_doc_name=list(os.path.split(doc_file_name))
+        split_odt_name=list(os.path.split(odt_file_name))
+        if not split_doc_name[0]:
+            split_doc_name[0]=os.getcwd()
+            doc_file_name=os.path.join(*split_doc_name)
+        if not split_odt_name[0]:
+            split_odt_name[0]=os.getcwd()
+            odt_file_name=os.path.join(*split_odt_name)
         word=client.DispatchEx("Word.Application")
         doc=word.Documents.Open(doc_file_name)
         doc.SaveAs(odt_file_name,FileFormat=23)
@@ -1014,21 +1040,37 @@ if WINDOWS_COM:
         Requires word and win32com to be installed.
         FileFormat=60 is ods for SaveAs, search for XlFileFormat Enumeration to see more details.
         Returns the new file name"""
+        split_excel_name=list(os.path.split(excel_file_name))
+        split_ods_name=list(os.path.split(ods_file_name))
+        if not split_excel_name[0]:
+            split_excel_name[0]=os.getcwd()
+            excel_file_name=os.path.join(*split_excel_name)
+        if not split_ods_name[0]:
+            split_ods_name[0]=os.getcwd()
+            ods_file_name=os.path.join(*split_ods_name)
         excel=client.DispatchEx("Excel.Application")
         workbook=excel.Workbooks.Open(excel_file_name)
-        workbook.SaveAs(ods_file_name,FileFormat=60)
+        workbook.SaveAs(ods_file_name,FileFormat=60,ConflictResolution=2)
         workbook.Close()
         excel.Quit()
         return ods_file_name
 
     def OdsFile_to_ExcelFile(ods_file_name,excel_file_name="test.xlsx"):
-        """Converts a microsoft doc or docx file to a open document format file using excel.
+        """Converts a microsoft excel or excelx file to a open document format file using excel.
         Requires word and win32com to be installed.
         FileFormat=51 is Workbook default for SaveAs, search for XlFileFormat Enumeration to see more details.
         Returns the new file name"""
+        split_excel_name=list(os.path.split(excel_file_name))
+        split_ods_name=list(os.path.split(ods_file_name))
+        if not split_excel_name[0]:
+            split_excel_name[0]=os.getcwd()
+            excel_file_name=os.path.join(*split_excel_name)
+        if not split_ods_name[0]:
+            split_ods_name[0]=os.getcwd()
+            ods_file_name=os.path.join(*split_ods_name)
         excel=client.DispatchEx("Excel.Application")
         workbook=excel.Workbooks.Open(ods_file_name)
-        workbook.SaveAs(excel_file_name,FileFormat=51)
+        workbook.SaveAs(excel_file_name,FileFormat=51,ConflictResolution=2)
         workbook.Close()
         excel.Quit()
         return excel_file_name
@@ -1039,6 +1081,14 @@ if WINDOWS_COM:
         FileFormat=35 is odp  default for SaveAs,
         search for PowerPointFileFormat Enumeration to see more details.
         Returns the new file name"""
+        split_power_point_name=list(os.path.split(power_point_file_name))
+        split_odp_name=list(os.path.split(odp_file_name))
+        if not split_power_point_name[0]:
+            split_power_point_name[0]=os.getcwd()
+            power_point_file_name=os.path.join(*split_power_point_name)
+        if not split_odp_name[0]:
+            split_odp_name[0]=os.getcwd()
+            odp_file_name=os.path.join(*split_odp_name)
         power_point=client.DispatchEx("PowerPoint.Application")
         presentation=power_point.Presentations.Open(power_point_file_name)
         presentation.SaveAs(odp_file_name,FileFormat=35)
@@ -1052,6 +1102,14 @@ if WINDOWS_COM:
         FileFormat=11 is DefaultPresentation  default for SaveAs,
         search for PowerPointFileFormat Enumeration to see more details.
         Returns the new file name"""
+        split_power_point_name=list(os.path.split(power_point_file_name))
+        split_odp_name=list(os.path.split(odp_file_name))
+        if not split_power_point_name[0]:
+            split_power_point_name[0]=os.getcwd()
+            power_point_file_name=os.path.join(*split_power_point_name)
+        if not split_odp_name[0]:
+            split_odp_name[0]=os.getcwd()
+            odp_file_name=os.path.join(*split_odp_name)
         power_point=client.DispatchEx("PowerPoint.Application")
         presentation=power_point.Presentations.Open(odp_file_name)
         presentation.SaveAs(power_point_file_name,FileFormat=11)
