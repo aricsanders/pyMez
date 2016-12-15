@@ -100,7 +100,8 @@ ul.tab li a:focus, .active {
             </xsl:if>
 
             <xsl:if test="name()='Instrument_Description'">
-            <tr><th bgcolor='silver'><b><xsl:value-of select="name()"/></b></th><td><a><xsl:attribute name="href"> <xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a></td></tr>
+            <tr><th bgcolor='silver'><b><xsl:value-of select="name()"/></b></th><td><a><xsl:attribute name="href">
+                <xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a></td></tr>
             </xsl:if> 
             </xsl:for-each>
          </table>

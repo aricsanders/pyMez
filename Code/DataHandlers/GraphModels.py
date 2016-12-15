@@ -60,11 +60,15 @@ except:
 
 #-----------------------------------------------------------------------------
 # Module Functions
+
+# as an example these functions are left.
+#todo: Change the names
 def edge_1_to_2(in_string):
     return in_string.splitlines()
 
 def edge_2_to_1(string_list):
     return string_list_collapse(string_list)
+
 def remove_circular_paths(path):
     """Removes pieces of the path that just end on the same node"""
     edge_pattern=re.compile("edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
@@ -298,7 +302,7 @@ class Graph(object):
         self.display_graph.add_edge(jump_into_node_begin,external_node_name)
         self.display_layout=networkx.spring_layout(self.display_graph)
 
-    def jump_to_external_node(self,external_node_name):
+    def jump_to_external_node(self,external_node_name,**options):
         """Returns the result of the jump, the graph is left in the node that is the begining of the jump"""
         end_node=external_node_name
         jump_pattern='jump_(?P<begin_node>\w+)_{0}_(?P<iterator>\w+)'.format(end_node)
@@ -309,7 +313,7 @@ class Graph(object):
                 begin_node=jump_match.groupdict()["begin_node"]
 
         self.move_to_node(begin_node)
-        return self.__dict__[jump_to_use](self.data)
+        return self.__dict__[jump_to_use](self.data,**options)
 
 
 
@@ -552,10 +556,10 @@ class StringGraph(Graph):
     def __init__(self,**options):
         """Intializes the StringGraph Class by defining nodes and edges"""
         defaults={"graph_name":"StringGraph",
-                  "node_names":['n1','n2'],
-                  "node_descriptions":{'n1':"A plain string",
-                                       'n2':"A list of strings with no \\n, created with string.splitlines()"},
-                  "current_node":'n1',
+                  "node_names":['String','StringList'],
+                  "node_descriptions":["A plain string",
+                                       "A list of strings with no \\n, created with string.splitlines()"],
+                  "current_node":'String',
                   "state":[1,0],
                   "data":"This is a test string\n it has to have multiple lines \n and many characters 34%6\n^",
                   "edge_2_to_1":edge_2_to_1,
@@ -567,15 +571,21 @@ class StringGraph(Graph):
         for key,value in options.iteritems():
             self.options[key]=value
         Graph.__init__(self,**self.options)
+        self.add_node("File","String",String_to_File,"String",File_to_String,node_description="Plain File")
+        self.add_node("CStringIo","String",String_to_CStringIo,"String",CStringIo_to_String,node_description="C File Like Object")
+        self.add_node("StringIo","String",String_to_StringIo,"String",StringIo_to_String,node_description="File Like Object")
+        self.add_edge(begin_node="StringList",end_node="File",edge_function=StringList_to_File)
 
-class ColumnModeledGraph(Graph):
-    """Class that transforms column modeled data from one format to another, use set_state to intialize to
+
+# Changed from ColumnModeledGraph to TableGraph 12/14/2016 by AWS
+class TableGraph(Graph):
+    """Class that transforms column modeled data (table) from one format to another, use set_state to initialize to
     your data"""
     def __init__(self,**options):
-        defaults={"graph_name":"Column Modeled Graph",
-                  "node_names":['n1','n2'],
+        defaults={"graph_name":"Table Graph",
+                  "node_names":['DataFrame','AsciiDataTable'],
                   "node_descriptions":["Pandas Data Frame","AsciiDataTable"],
-                  "current_node":'n1',
+                  "current_node":'DataFrame',
                   "state":[1,0],
                   "data":pandas.DataFrame([[1,2,3],[3,4,5]],columns=["a","b","c"]),
                   "edge_2_to_1":AsciiDataTable_to_DataFrame,
@@ -586,34 +596,46 @@ class ColumnModeledGraph(Graph):
         for key,value in options.iteritems():
             self.options[key]=value
         Graph.__init__(self,**self.options)
-        self.add_node("n3","n1",DataFrame_to_hdf,"n1",hdf_to_DataFrame)
-        self.node_descriptions.append("HDF File")
-        self.add_node("n4","n2",AsciiDataTable_to_XMLDataTable_2,"n2",XMLDataTable_to_AsciiDataTable)
-        self.node_descriptions.append("XML Data Table")
-
+        self.add_node("HdfFile","DataFrame",DataFrame_to_HdfFile,
+                      "DataFrame",HtmlFile_to_DataFrame,
+                      node_description="HDF File")
+        self.add_node("XmlDataTable","AsciiDataTable",AsciiDataTable_to_XmlDataTable,
+                      "AsciiDataTable",XmlDataTable_to_AsciiDataTable,
+                      node_description="XML Data Table")
         # Need to add XML File and Html File using save and save_HTML()
-        self.add_node("n5","n1",DataFrame_to_excel,"n1",excel_to_DataFrame)
-        self.node_descriptions.append("Excel File")
-        self.add_node("n6","n1",DataFrame_to_HTML_string,"n1",HTML_string_to_DataFrame)
-        self.node_descriptions.append("HTML String")
+        self.add_node("ExcelFile","DataFrame",DataFrame_to_ExcelFile,
+                      "DataFrame",ExcelFile_to_DataFrame,
+                      node_description="Excel File")
 
+        self.add_node("OdsFile","ExcelFile",ExcelFile_to_OdsFile,
+                      "ExcelFile",OdsFile_to_ExcelFile,"Open Office Spreadsheet")
+
+        self.add_node("HtmlString","DataFrame",DataFrame_to_HtmlString,
+                      "DataFrame",HtmlString_to_DataFrame,
+                      node_description="HTML String")
         # Note a lot of the pandas reading and writing cause float64 round off errors
         # applymap(lambda x: np.around(x,10) any all float fields will fix this
         # also the column names move about in order
-        self.add_node("n7","n1",DataFrame_to_json,"n1",json_to_DataFrame)
-        self.node_descriptions.append("JSON File")
-        self.add_node("n8","n1",DataFrame_to_json_string,"n1",json_string_to_DataFrame)
-        self.node_descriptions.append("JSON String")
-        self.add_node("n9","n1",DataFrame_to_csv,"n1",csv_to_DataFrame)
-        self.node_descriptions.append("CSV File")
-        self.add_node("n10","n2",AsciiDataTable_to_Matlab,"n2",Matlab_to_AsciiDataTable)
-        self.node_descriptions.append("Matlab File")
-        self.add_node("n11","n4",DataTable_to_XML,"n4",XML_to_DataTable)
-        self.node_descriptions.append("XML File")
-        self.add_node("n12","n6",html_string_to_html_file,"n6",html_file_to_html_string)
-        self.node_descriptions.append("HTML File")
-        self.add_edge("n1","n12",DataFrame_to_html_file)
-        self.add_edge("n7","n4",json_to_DataTable)
+        self.add_node("JsonFile","DataFrame",DataFrame_to_JsonFile,
+                      "DataFrame",JsonFile_to_DataFrame,
+                      node_description="JSON File")
+        self.add_node("JsonString","DataFrame",DataFrame_to_JsonString,
+                      "DataFrame",JsonString_to_DataFrame,
+                      node_description="JSON String")
+        self.add_node("CsvFile","DataFrame",DataFrame_to_CsvFile,
+                      "DataFrame",CsvFile_to_DataFrame,
+                      node_description="CSV File")
+        self.add_node("MatFile","AsciiDataTable",AsciiDataTable_to_MatFile,
+                      "AsciiDataTable",MatFile_to_AsciiDataTable,
+                      node_description="Matlab File")
+        self.add_node("XmlFile","XmlDataTable",XmlDataTable_to_XmlFile,
+                      "XmlDataTable",XmlFile_to_XmlDataTable,
+                      node_description="XML DataTable Saved As a File")
+        self.add_node("HtmlFile","HtmlString",HtmlString_to_HtmlFile,
+                      "HtmlString",HtmlFile_to_HtmlString,
+                      node_description="HTML File")
+        self.add_edge("DataFrame","HtmlFile",DataFrame_to_HtmlFile)
+        self.add_edge("JsonFile","XmlDataTable",JsonFile_to_XmlDataTable)
 
 class ImageGraph(Graph):
     """A transformation graph for images node types are image formats and external nodes are
@@ -625,32 +647,32 @@ class ImageGraph(Graph):
                   "current_node":'Image',
                   "state":[1,0],
                   "data":PIL.Image.open(os.path.join(TESTS_DIRECTORY,'test.png')),
-                  "edge_2_to_1":file_to_Image,
-                  "edge_1_to_2":lambda x: Image_to_file_type(x,file_path="test",extension="png")}
+                  "edge_2_to_1":File_to_Image,
+                  "edge_1_to_2":lambda x: Image_to_FileType(x,file_path="test",extension="png")}
         self.options={}
         for key,value in defaults.iteritems():
             self.options[key]=value
         for key,value in options.iteritems():
             self.options[key]=value
         Graph.__init__(self,**self.options)
-        self.add_node("jpg","Image",lambda x: Image_to_file_type(x,file_path="test",extension="jpg"),
-                             "Image",file_to_Image,node_description="Jpg File")
-        self.add_node("tiff","Image",lambda x: Image_to_file_type(x,file_path="test",extension="tiff"),
-                             "Image",file_to_Image,node_description="Tif File")
-        self.add_node("gif","Image",lambda x: Image_to_file_type(x,file_path="test",extension="gif"),
-                             "Image",file_to_Image,node_description="Gif File")
-        self.add_node("bmp","Image",lambda x: Image_to_file_type(x,file_path="test",extension="bmp"),
-                             "Image",file_to_Image,node_description="BMP File")
-        self.add_node("base64","png",png_to_base64,
-                             "png",base64_to_png,node_description="Base 64 PNG")
-        self.add_node("embededHTML","base64",base64png_to_embeded_html,
-                             "base64",embeded_html_to_base64png,node_description="Embeded HTML of PNG")
-        self.add_node("ndarray","png",png_to_ndarray,
-                             "png",ndarray_to_png,node_description="Numpy Array")
-        self.add_node("MatplotlibFigure","ndarray",ndarray_to_MatplotlibFigure,
-                             "png",MatplotlibFigure_to_png,node_description="MatplotlibFigure")
-        self.add_external_node("thumbnail","Image",Image_to_thumbnail,external_node_description="JPEG Thumbnail")
-        self.add_external_node("matplotlib","ndarray",ndarray_to_matplotlib,
+        self.add_node("jpg","Image",lambda x: Image_to_FileType(x,file_path="test",extension="jpg"),
+                             "Image",File_to_Image,node_description="Jpg File")
+        self.add_node("tiff","Image",lambda x: Image_to_FileType(x,file_path="test",extension="tiff"),
+                             "Image",File_to_Image,node_description="Tif File")
+        self.add_node("gif","Image",lambda x: Image_to_FileType(x,file_path="test",extension="gif"),
+                             "Image",File_to_Image,node_description="Gif File")
+        self.add_node("bmp","Image",lambda x: Image_to_FileType(x,file_path="test",extension="bmp"),
+                             "Image",File_to_Image,node_description="BMP File")
+        self.add_node("base64","png",PngFile_to_Base64,
+                             "png",Base64_to_PngFile,node_description="Base 64 PNG")
+        self.add_node("embeddedHTML","base64",Base64Png_to_EmbeddedHtmlString,
+                             "base64",EmbeddedHtmlString_to_Base64Png,node_description="Embedded HTML of PNG")
+        self.add_node("ndarray","png",PngFile_to_Ndarray,
+                             "png",Ndarray_to_PngFile,node_description="Numpy Array")
+        self.add_node("MatplotlibFigure","ndarray",Ndarray_to_MatplotlibFigure,
+                             "png",MatplotlibFigure_to_PngFile,node_description="MatplotlibFigure")
+        self.add_external_node("thumbnail","Image",Image_to_ThumbnailFile,external_node_description="JPEG Thumbnail")
+        self.add_external_node("matplotlib","ndarray",Ndarray_to_Matplotlib,
                                       external_node_description="Matplotlib Plot")
 
 class MetadataGraph(Graph):
@@ -658,49 +680,49 @@ class MetadataGraph(Graph):
     def __init__(self,**options):
         """Intializes the metadata graph class"""
         defaults={"graph_name":"Metadata Graph",
-                  "node_names":['dict','json'],
+                  "node_names":['Dictionary','JsonString'],
                   "node_descriptions":["Python Dictionary","Json string"],
-                  "current_node":'dict',
+                  "current_node":'Dictionary',
                   "state":[1,0],
                   "data":{"a":"First","b":"Second"},
-                  "edge_2_to_1":json_string_to_dict,
-                  "edge_1_to_2":dict_to_json_string}
+                  "edge_2_to_1":JsonString_to_Dictionary,
+                  "edge_1_to_2":Dictionary_to_JsonString}
         self.options={}
         for key,value in defaults.iteritems():
             self.options[key]=value
         for key,value in options.iteritems():
             self.options[key]=value
         Graph.__init__(self,**self.options)
-        self.add_node("jsonFile","json",json_string_to_json_file,
-                             "json",json_file_to_json_string,node_description="JSON File")
-        self.add_node("xml","dict",dictionary_to_xml,
-                             "dict",xml_to_dictionary,node_description="xml string")
-        self.add_node("HTMLMetaTag","dict",dictionary_to_HTML_meta,
-                             "dict",HTML_meta_to_dictionary,node_description="HTML meta tags")
-        self.add_node("XMLTupleLine","dict",dictionary_to_tuple_line,
-                             "dict",tuple_line_to_dictionary,node_description="Tuple Line")
-        self.add_node("pickle","dict",dictionary_to_pickle,
-                             "dict",pickle_to_python_dictionary,node_description="Pickled File")
-        self.add_node("listList","dict",dictionary_to_list_list,
-                             "dict",list_list_to_dictionary,node_description="List of lists")
-        self.add_node("headerList","dict",dict_to_header_list,
-                             "dict",header_list_to_dict,node_description="Header List")
-        self.add_node("DataFrame","dict",dictionary_to_DataFrame,
-                             "dict",DataFrame_to_dictionary,node_description="Pandas DataFrame")
+        self.add_node("JsonFile","JsonString",JsonString_to_JsonFile,
+                             "JsonString",JsonFile_to_JsonString,node_description="JSON File")
+        self.add_node("XmlString","Dictionary",Dictionary_to_XmlString,
+                             "Dictionary",XmlString_to_Dictionary,node_description="XML string")
+        self.add_node("HtmlMetaString","Dictionary",Dictionary_to_HtmlMetaString,
+                             "Dictionary",HtmlMetaString_to_Dictionary,node_description="HTML meta tags")
+        self.add_node("XmlTupleString","Dictionary",Dictionary_to_XmlTupleString,
+                             "Dictionary",XmlTupleString_to_Dictionary,node_description="Tuple Line")
+        self.add_node("PickleFile","Dictionary",Dictionary_to_PickleFile,
+                             "Dictionary",PickleFile_to_Dictionary,node_description="Pickled File")
+        self.add_node("ListList","Dictionary",Dictionary_to_ListList,
+                             "Dictionary",ListList_to_Dictionary,node_description="List of lists")
+        self.add_node("HeaderList","Dictionary",Dictionary_to_HeaderList,
+                             "Dictionary",HeaderList_to_Dictionary,node_description="Header List")
+        self.add_node("DataFrame","Dictionary",Dictionary_to_DataFrame,
+                             "Dictionary",DataFrame_to_Dictionary,node_description="Pandas DataFrame")
         self.add_node("AsciiDataTable","DataFrame",DataFrame_to_AsciiDataTable,
                              "DataFrame",AsciiDataTable_to_DataFrame,node_description="AsciiDataTable")
-        self.add_node("matlab","AsciiDataTable",AsciiDataTable_to_Matlab_key_value,
-                             "AsciiDataTable",Matlab_to_AsciiDataTable_key_value,node_description="Matlab")
-        self.add_node("excel","DataFrame",DataFrame_to_excel,
-                             "DataFrame",excel_to_DataFrame,node_description="excel")
-        self.add_node("hdf","DataFrame",DataFrame_to_hdf,
-                             "DataFrame",hdf_to_DataFrame,node_description="hdf file")
-        self.add_node("csv","DataFrame",DataFrame_to_csv,
-                             "DataFrame",csv_to_DataFrame,node_description="CSV File")
-        self.add_node("htmlFile","DataFrame",DataFrame_to_html_file,
-                             "DataFrame",html_file_to_pandas,node_description="HTML Table File")
-        self.add_node("htmlTableString","htmlFile",html_file_to_html_string,
-                             "htmlFile",html_string_to_html_file,node_description="HTML Table String")
+        self.add_node("MatFile","AsciiDataTable",AsciiDataTable_to_MatFile,
+                             "AsciiDataTable",MatFile_to_AsciiDataTableKeyValue,node_description="Matlab")
+        self.add_node("ExcelFile","DataFrame",DataFrame_to_ExcelFile,
+                             "DataFrame",ExcelFile_to_DataFrame,node_description="excel")
+        self.add_node("HdfFile","DataFrame",DataFrame_to_HdfFile,
+                             "DataFrame",HdfFile_to_DataFrame,node_description="hdf file")
+        self.add_node("CsvFile","DataFrame",DataFrame_to_CsvFile,
+                             "DataFrame",CsvFile_to_DataFrame,node_description="CSV File")
+        self.add_node("HtmlFile","DataFrame",DataFrame_to_HtmlFile,
+                             "DataFrame",HtmlFile_to_DataFrame,node_description="HTML Table File")
+        self.add_node("HtmlTableString","HtmlFile",HtmlFile_to_HtmlString,
+                             "HtmlFile",HtmlString_to_HtmlFile,node_description="HTML Table String")
 #-----------------------------------------------------------------------------
 # Module Scripts
 #TODO: Add test_Graph script currently lives in jupyter-notebooks
