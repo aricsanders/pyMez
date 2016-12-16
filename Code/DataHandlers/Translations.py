@@ -13,7 +13,12 @@ pyMeasure.Code.DataHandlers.GraphModels. Normal naming rules about
  HTML and XML abbreviations are not followed. (XmlList not XMLList)
  All types that end with File are on-disk file types,
 composite types are denoted by ending the UpperCamelCase name with a full english version of the python
-class name, such as DataFrameDictionary or DataFrameList"""
+class name, such as DataFrameDictionary or DataFrameList.Full translations requires the following third party
+software:
+Inkscape
+Microsoft Office
+Wkhtmltopdf
+"""
 
 #-----------------------------------------------------------------------------
 # Standard Imports
@@ -106,6 +111,7 @@ except:
 #-----------------------------------------------------------------------------
 # Module Constants
 INKSCAPE_PATH=r'c:\PROGRA~1\Inkscape\inkscape.exe'
+WKHTML_PATH=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
 #-----------------------------------------------------------------------------
 # Module Functions
 # todo: rename all translations as UpperCamelCase_to_UpperCamelCase
@@ -592,13 +598,13 @@ def DataFrame_to_HtmlFile(pandas_data_frame,file_name="test.html"):
 
 def HtmlFile_to_PdfFile(html_file_name,pdf_file_name="test.pdf"):
     """Takes an html page and converts it to pdf using wkhtmltopdf and pdfkit"""
-    config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+    config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
     pdfkit.from_file(html_file_name,pdf_file_name,configuration=config)
     return pdf_file_name
 
 def HtmlString_to_PdfFile(html_string,pdf_file_name="test.pdf"):
     """Takes an html string and converts it to pdf using wkhtmltopdf and pdfkit"""
-    config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+    config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
     pdfkit.from_string(html_string,pdf_file_name,configuration=config)
     return pdf_file_name
 

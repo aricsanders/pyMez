@@ -64,7 +64,15 @@ def split_filename(filename):
     out_string=re.sub("([\a-z])([\A-Z])",r'\1 \2',filename)
     out_list=re.split("[\W|\.|_]+",out_string)
     return out_list
-    
+
+def change_extension(file_path,new_extension=None):
+    "Changes the extension of file path to the new one"
+    if new_extension is None:
+        return file_path
+    else:
+    # just to make it uniform, remove any . and add it back in
+        new_extension="."+new_extension.replace(".","")
+        return re.sub("\.\w+",new_extension,file_path)
     
             
 #-------------------------------------------------------------------------------
