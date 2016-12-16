@@ -554,12 +554,13 @@ def CsvFile_to_DataFrame(csv_file_name):
     data_frame=pandas.read_csv(csv_file_name)
     return data_frame
 
-def AsciiDataTable_to_MatFile(ascii_data_table,file_name="test.mat"):
+def AsciiTable_to_MatFile(ascii_data_table,file_name="test.mat"):
+    """Transforms an asciid data table without a header or footer to a matlab form"""
     matlab_data_dictionary={"data":ascii_data_table.data,"column_names":ascii_data_table.column_names}
     savemat(file_name,matlab_data_dictionary)
     return file_name
 
-def MatFile_to_AsciiDataTable(matlab_file_name):
+def MatFile_to_AsciiTable(matlab_file_name):
     matlab_data_dictionary=loadmat(matlab_file_name)
     ascii_data_table=AsciiDataTable(None,
                                     column_names=map(lambda x: x.rstrip().lstrip(),
@@ -592,9 +593,27 @@ def HtmlFile_to_HtmlString(html_file_name):
     return html_string
 
 def DataFrame_to_HtmlFile(pandas_data_frame,file_name="test.html"):
+    # need to supress all the styles and what not
     out_file=open(file_name,'w')
     pandas_data_frame.to_html(out_file,index=False)
     return file_name
+
+def AsciiTable_to_HtmlString(ascii_table):
+    """Converts an AsciiDataTable with no header or footer to a html table."""
+    # it would be best if this resulted in identical html, but I think it might be close enough
+    ascii_table_original_options=ascii_table.options.copy()
+    ascii_table.options["data_begin_token"]="<tbody>"
+    ascii_table.options["data_end_token"]="</tbody></table>"
+    ascii_table.options["data_delimiter"]="</td><td>"
+    ascii_table.options["row_begin_token"]="<tr><td>"
+    ascii_table.options["row_end_token"]="</td></tr>"
+    ascii_table.options["column_names_begin_token"]="<table><thead><tr><th>"
+    ascii_table.options["column_names_end_token"]="</th></tr></thead>"
+    ascii_table.options["column_names_delimiter"]="</th><th>"
+    out_string=str(ascii_table)
+    ascii_table.options=ascii_table_original_options
+    return out_string
+
 
 def HtmlFile_to_PdfFile(html_file_name,pdf_file_name="test.pdf"):
     """Takes an html page and converts it to pdf using wkhtmltopdf and pdfkit"""

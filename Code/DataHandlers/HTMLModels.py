@@ -56,7 +56,7 @@ WKHTML_PATH=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
 TESTS_DIRECTORY=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
 #-----------------------------------------------------------------------------
 # Module Functions
-def make_element(tag,content=None,**attribute_dictionary):
+def make_html_element(tag,content=None,**attribute_dictionary):
     """Creates an lxml.html.HtmlElement given a tag, content and attribute dictionary
      <tag key1="value2" key2="value2">content</tag> """
     position_arguments=[tag]

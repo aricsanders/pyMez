@@ -28,6 +28,7 @@ sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 #print(__package__)
 try:
     import lxml
+    import lxml.builder
     from lxml import etree
     XSLT_CAPABLE=1
 except:
@@ -104,14 +105,23 @@ def join_xml(new_root="root",xml_document_list=None,**options):
             new_entry.setAttribute('Index',str(index))
             new_xml.document.documentElement.appendChild(new_entry)
         return new_xml
+def make_xml_element(tag,content=None,**attribute_dictionary):
+    """Creates an lxml.html.HtmlElement given a tag, content and attribute dictionary
+     <tag key1="value2" key2="value2">content</tag> """
+    position_arguments=[tag]
+    if content:
+        position_arguments.append(content)
+    new_tag=lxml.builder.E(*position_arguments,**attribute_dictionary)
+    return new_tag
+
 def make_xml_string(tag,content=None,**attribute_dictionary):
     """Creates the html string for tag, content and attribute dictionary
      <tag key1="value2" key2="value2">content</tag> """
     position_arguments=[tag]
     if content:
         position_arguments.append(content)
-    new_tag=lxml.builder(*position_arguments,**attribute_dictionary)
-    out_text=lxml.tostring(new_tag)
+    new_tag=lxml.builder.E(*position_arguments,**attribute_dictionary)
+    out_text=new_tag.toprettyxml()
     return out_text
 
 def dictionary_to_xml(dictionary=None,char_between='\n'):
