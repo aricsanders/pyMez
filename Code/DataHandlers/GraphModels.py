@@ -625,8 +625,8 @@ class TableGraph(Graph):
         self.add_node("CsvFile","DataFrame",DataFrame_to_CsvFile,
                       "DataFrame",CsvFile_to_DataFrame,
                       node_description="CSV File")
-        self.add_node("MatFile","AsciiDataTable",AsciiDataTable_to_MatFile,
-                      "AsciiDataTable",MatFile_to_AsciiDataTable,
+        self.add_node("MatFile","AsciiDataTable",AsciiTable_to_MatFile,
+                      "AsciiDataTable",MatFile_to_AsciiTable,
                       node_description="Matlab File")
         self.add_node("XmlFile","XmlDataTable",XmlDataTable_to_XmlFile,
                       "XmlDataTable",XmlFile_to_XmlDataTable,
@@ -714,7 +714,7 @@ class MetadataGraph(Graph):
                              "Dictionary",DataFrame_to_Dictionary,node_description="Pandas DataFrame")
         self.add_node("AsciiDataTable","DataFrame",DataFrame_to_AsciiDataTable,
                              "DataFrame",AsciiDataTable_to_DataFrame,node_description="AsciiDataTable")
-        self.add_node("MatFile","AsciiDataTable",AsciiDataTable_to_MatFile,
+        self.add_node("MatFile","AsciiDataTable",AsciiTable_to_MatFile,
                              "AsciiDataTable",MatFile_to_AsciiDataTableKeyValue,node_description="Matlab")
         self.add_node("ExcelFile","DataFrame",DataFrame_to_ExcelFile,
                              "DataFrame",ExcelFile_to_DataFrame,node_description="excel")
