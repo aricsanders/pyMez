@@ -115,6 +115,21 @@ WKHTML_PATH=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
 #-----------------------------------------------------------------------------
 # Module Functions
 # todo: rename all translations as UpperCamelCase_to_UpperCamelCase
+def Model_to_File(model,file_path=None):
+    """Uses the save method of a model to create file, default path is save default for the model"""
+    if file_path:
+        old_path=model.path
+        model.path=file_path
+        out=model.save()
+        model.path=old_path
+    else:
+        out=model.save()
+    return out
+
+def File_to_Model(file_path,model_class_name):
+    """Uses a class to open the File and returns an object of type model_class_name"""
+    return globals()[model_class_name](file_path)
+
 def String_to_StringList(string):
     """Converts a string to a list of strings using splitlines"""
     string_list=string.splitlines()
