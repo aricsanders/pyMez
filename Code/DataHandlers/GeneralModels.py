@@ -1499,6 +1499,8 @@ class AsciiDataTable():
     def add_row(self,row_data):
         """Adds a single row given row_data which can be an ordered list/tuple or a dictionary with
         column names as keys"""
+        if self.data is None:
+            self.data=[]
         if len(row_data) not in [len(self.column_names),len(self.column_names)]:
             print(" could not add the row, dimensions do not match")
             return
