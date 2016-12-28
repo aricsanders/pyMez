@@ -1810,6 +1810,116 @@ class AsciiDataTableCollection():
             out_string_list.append(table.build_string())
         out_string=string_list_collapse(out_string_list,self.options["table_delimiter"])
         return out_string
+class KnowledgeSystem(AsciiDataTable):
+    """A Knowledge System is a collection of properties (context) and a collection of metadata about those properties
+    (obligate contexts). """
+    def __init__(self,file_path=None,**options):
+        """Intializes a knowledge system"""
+        defaults={"context":None,"key_formatter_string":"{context}.{obligate}:{property}"}
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        if file_path is None:
+            self.options["column_names"]=["Property"]
+            self.options["data"]=[["Self"],["Default"]]
+            AsciiDataTable.__init__(self,None,**self.options)
+        else:
+            AsciiDataTable.__init__(self,file_path,**self.options)
+        self.context=self.options["context"]
+        self.obligate_names=self.column_names
+        self.properties=self["Property"]
+    #get a row of a knowledge system based on property
+    def get_property_defintion(self,property_name):
+        """Retrieves a row of the knowledge system based on the property_name"""
+        row_index=self["Property"].index(property_name)
+        return self.get_row(row_index)
+
+    def get_property_dictionary(self,property_name):
+        """Returns a dictionary of the form {obligate_name:obligate_value}"""
+        row_index=self["Property"].index(property_name)
+        property_dictionary={self.column_names[index]:value for index,value in enumerate(self.data[:][row_index])}
+        return  property_dictionary
+
+    def add_property(self,property_name,**obilgate_values):
+        """Adds a new row to the knowledge system, obilgate values should be in the form of a dictionary, or key
+        word arguments like obligate=value.
+        obligate_values={obligate:value}, if an obligate is not specified, the value defaults to the default property
+        or to None if not specified"""
+        if property_name in self["Property"]:
+            print("Property Exists Use edit_entry to modify values")
+            return None
+        defaults={}
+        obligate_dictionary={}
+        for key,value in defaults.iteritems():
+            obligate_dictionary[key]=value
+        for key,value in obilgate_values.iteritems():
+            obligate_dictionary[key]=value
+        new_row=[]
+        column_names=self.column_names[:]
+        for column_index,column_name in enumerate(column_names):
+            if column_name in obligate_dictionary.keys():
+                new_row.append(obligate_dictionary[column_name])
+            elif re.match("property",column_name,re.IGNORECASE):
+                new_row.append(property_name)
+            else:
+                if self.data[1][column_index]:
+                    new_row.append(self.data[1][column_index])
+                else:
+                    new_row.append(None)
+        self.add_row(new_row)
+
+    def edit_entry(self,property_name,obligate_name,new_value):
+        """Edit a value for a specific property and obligate"""
+        column_index=self.column_names.index(obligate_name)
+        row_index=self["Property"].index(property_name)
+        self.data[row_index][column_index]=new_value
+
+    def get_entry(self,property_name,obligate_name):
+        """returns a value for a specific property and obligate"""
+        column_index=self.column_names.index(obligate_name)
+        row_index=self["Property"].index(property_name)
+        out=self.data[:][row_index][column_index]
+        return out
+
+
+    def to_row_modelled(self):
+        """Returns a sparse, row modelled version of the knowledge system"""
+        out_dictionary={}
+        for property_name in self["Property"][:]:
+            for obligate_name in self.column_names[:]:
+                if obligate_name is not "Property":
+                    key=self.options["key_formatter_string"].format(**{"context":self.context,
+                                                                       "obligate":obligate_name,"property":property_name})
+                    # this leaves out Nones
+                    if self.get_entry(property_name,obligate_name):
+                        out_dictionary[key]=self.get_entry(property_name,obligate_name)
+        return out_dictionary
+    def add_obligate(self,obligate_name,**property_value_dictionary):
+        """Adds an obligate-context to the knowledge system. Optional default and self values. Default will be assumed
+        for all properties without an obligate value defined, self holds a description of the obligate.
+        care must be taken not to try to assign the value as self but use Self"""
+        # adds a column to the table where the first two rows are obligate_self and obligate_default
+        defaults={"Self":None,"Default":None}
+        obligate_dictionary={}
+        for key,value in defaults.iteritems():
+            obligate_dictionary[key]=value
+        for key,value in property_value_dictionary.iteritems():
+            obligate_dictionary[key]=value
+        column_data=[]
+        properties=self.get_column("Property")
+        for property_name in properties:
+            if property_name in obligate_dictionary.keys():
+                column_data.append(obligate_dictionary[property_name])
+            else:
+                if obligate_dictionary["Default"]:
+                    column_data.append(obligate_dictionary["Default"])
+                else:
+                    column_data.append(None)
+
+        self.add_column(column_name=obligate_name,column_data=column_data)
+
 class ECPVModel():
     """ECPVmodel is a class that deals with Entity-Context-Property-Value models. An ECPV model is a model
      for providing a description of an entity. It can be thought of a virtual file system, in which its members
