@@ -11,6 +11,7 @@
 # Standard Imports
 import os
 import sys
+from types import *
 #-----------------------------------------------------------------------------
 # Third Party Imports
 
@@ -92,6 +93,135 @@ class FittingFunction():
     def __init__(self):pass
     def __call__(self, *args, **kwargs):pass
 
+class FunctionalModel(object):
+    """FittingModel is a class that holds a fitting function, it uses sympy to provide
+     symbolic manipulation of the function and formatted output. If called it acts like a
+     tradional python function"""
+    def __init__(self,**options):
+        defaults= {"parameters":None,"variables":None,"equation":None,"parameter_values":{}}
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        # fix any lists
+        for item in ["parameters","variables"]:
+            if type(self.options[item]) is StringType:
+                self.options[item]=re.split("\s+",self.options[item])
+            self.__dict__[item]=self.options[item]
+            self.__dict__[item+"_symbols"]=sympy.symbols(self.options[item])
+            # this creates the python variables in the global namespace, may back fire with lots of variables
+            for index,symbol in enumerate(self.__dict__[item+"_symbols"][:]):
+                globals()[item[index]]=symbol
+            self.options[item]=None
+        self.equation=sympy.sympify(self.options["equation"])
+        self.function=sympy.lambdify(self.parameters+self.variables,self.equation,'numpy')
+        self.parameter_values=self.options["parameter_values"]
+        self.options["parameter_values"]={}
+    def __call__(self,*args,**keywordargs):
+        """Controls the behavior when called as a function"""
+        return self.function(*args,**keywordargs)
+
+    def set_parameters(self,parameter_dictionary=None,**parameter_dictionary_keyword):
+        """Sets the parameters to values in dictionary"""
+        if parameter_dictionary is None:
+            try:
+                parameter_dictionary=parameter_dictionary_keyword
+            except:
+                pass
+        self.parameter_values=parameter_dictionary
+        self.function=sympy.lambdify(self.variables,self.equation.subs(self.parameter_values),'numpy')
+
+
+    def clear_parameters(self):
+        """Clears the parmeters specified by set_parameters"""
+        self.function=sympy.lambdify(self.parameters+self.variables,self.equation,'numpy')
+        self.parameter_values={}
+
+    def fit_data(self,x_data,y_data,**options):
+        defaults= {"initial_guess":{parameter:0 for parameter in self.parameters},"fixed_parameters":None}
+        self.fit_options={}
+        for key,value in defaults.iteritems():
+            self.fit_options[key]=value
+        for key,value in options.iteritems():
+            self.fit_options[key]=value
+
+        def fit_f(a,x):
+            self.clear_parameters()
+            input_list=[]
+            for parameter in a:
+                input_list.append(parameter)
+            input_list.append(x)
+            return self.function(*input_list)
+        # this needs to be reflected in fit_parameters
+        a0=[]
+        for key in self.parameters[:]:
+            a0.append(self.fit_options["initial_guess"][key])
+        result=fit(fit_f,x_list,y_data,a0)
+        fit_parameters=result.tolist()
+        fit_parameter_dictionary={parameter:fit_parameters[index] for index,parameter in enumerate(self.parameters)}
+        self.set_parameters(fit_parameter_dictionary)
+
+    def __add__(self,other):
+        """Defines Addition for the class"""
+        parameters=list(set(self.parameters+other.parameters))
+        variables=list(set(self.variables+other.variables))
+        #print("{0} is {1}".format("parameters",parameters))
+        #print("{0} is {1}".format("variables",variables))
+        equation=self.equation+other.equation
+        #print("{0} is {1}".format("equation",equation))
+        new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+        return new_function
+    def __sub__(self,other):
+        """Defines Addition for the class"""
+        parameters=list(set(self.parameters+other.parameters))
+        variables=list(set(self.variables+other.variables))
+        #print("{0} is {1}".format("parameters",parameters))
+        #print("{0} is {1}".format("variables",variables))
+        equation=self.equation-other.equation
+        #print("{0} is {1}".format("equation",equation))
+        new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+        return new_function
+    def __mul__(self,other):
+        """Defines Addition for the class"""
+        parameters=list(set(self.parameters+other.parameters))
+        variables=list(set(self.variables+other.variables))
+        #print("{0} is {1}".format("parameters",parameters))
+        #print("{0} is {1}".format("variables",variables))
+        equation=self.equation*other.equation
+        #print("{0} is {1}".format("equation",equation))
+        new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+        return new_function
+
+    def __pow__(self,other):
+        """Defines Addition for the class"""
+        parameters=list(set(self.parameters+other.parameters))
+        variables=list(set(self.variables+other.variables))
+        #print("{0} is {1}".format("parameters",parameters))
+        #print("{0} is {1}".format("variables",variables))
+        equation=self.equation**other.equation
+        #print("{0} is {1}".format("equation",equation))
+        new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+        return new_function
+
+    def __div__(self,other):
+        """Defines Addition for the class"""
+        parameters=list(set(self.parameters+other.parameters))
+        variables=list(set(self.variables+other.variables))
+        #print("{0} is {1}".format("parameters",parameters))
+        #print("{0} is {1}".format("variables",variables))
+        equation=self.equation/other.equation
+        #print("{0} is {1}".format("equation",equation))
+        new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+        return new_function
+
+    def __str__(self):
+        """Controls the strign behavior of the function"""
+        return str(self.equation.subs(self.parameter_values))
+
+    def to_latek(self):
+        """Returns a Latek form of the equation using current parameters"""
+        return sympy.latex(self.equation.subs(self.parameter_values))
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_linear_fit(data=None):
