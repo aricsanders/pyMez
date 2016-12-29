@@ -29,11 +29,11 @@ import pyMeasure.Code.Utils.Names
 
 #-----------------------------------------------------------------------------
 # Module Constants
-TEST_CASE_CLASSES=["TestNames","TestXMLModels"]
-IN_MODULE_TESTS=[]
-for key,value in globals().copy()["pyMeasure"].__dict__.iteritems():
-        if re.match("test_",key):
-            IN_MODULE_TESTS.append(key)
+TEST_CASE_CLASSES=["TestNames","TestXMLModels","TestGeneralModels"]
+# IN_MODULE_TESTS=[]
+# for key,value in globals().copy()["pyMeasure"].__dict__.iteritems():
+#         if re.match("test_",key):
+#             IN_MODULE_TESTS.append(key)
 # print(IN_MODULE_TESTS)
 #-----------------------------------------------------------------------------
 # Module Functions
@@ -78,13 +78,23 @@ class TestXMLModels(unittest.TestCase):
         xml="<li>My list element</li>"
         self.assertEqual(pyMeasure.dictionary_to_xml({"li":"My list element"},char_between=''),
                          xml,"pyMeasure.dictionary_to_xml did not work")
-    def run_tests(self):
-        print self.module_tests
-        for item in self.module_tests:
-            self.assertEqual(globals().copy()["pyMeasure"].__dict__[item](),
-                             True,"{0} failed".format(item))
+    # def run_tests(self):
+    #     print self.module_tests
+    #     for item in self.module_tests:
+    #         self.assertEqual(globals().copy()["pyMeasure"].__dict__[item](),
+    #                          True,"{0} failed".format(item))
 
+class TestGeneralModels(unittest.TestCase):
+    """Unit tests for the General Models Module"""
+    def setUp(self):
+        self.test_string="This is a test string"
+        self.test_string_list=["A first","A second", "A third list element"]
+        self.test_data_list=[[1,2,3],[4,5,6]]
 
+    def test_collapse_list(self):
+        test_collapse=pyMeasure.Code.DataHandlers.GeneralModels.string_list_collapse(self.test_string_list)
+        collapsed_string="A first\nA second\nA third list element"
+        self.assertEqual(test_collapse,collapsed_string)
 #-----------------------------------------------------------------------------
 # Module Scripts
 
