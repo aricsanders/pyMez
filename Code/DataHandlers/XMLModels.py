@@ -258,7 +258,9 @@ class HTMLEcho():
     def to_HTML(self):
         return str(self.text)
 class XMLBase():
-    """ The XMLBase Class is designed to be a container for xml data
+    """ The XMLBase Class is designed to be a container for xml data. It opens and parses any well formed XML
+    document, putting an lxml.document object in self.document. In addition it has helper methods for standard
+    operations including display as a string.
     """
     def __init__(self,file_path=None,**options):
         "Initializes the XML Base Class "

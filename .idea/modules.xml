@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$USER_HOME$/PyCharm Projects/Jupyter-Notebooks/.idea/Jupyter-Notebooks.iml" filepath="$USER_HOME$/PyCharm Projects/Jupyter-Notebooks/.idea/Jupyter-Notebooks.iml" />
       <module fileurl="file://$USER_HOME$/PyCharm Projects/check_standard/.idea/check_standard.iml" filepath="$USER_HOME$/PyCharm Projects/check_standard/.idea/check_standard.iml" />
+      <module fileurl="file://$USER_HOME$/PyCharm Projects/html-examples/.idea/html-examples.iml" filepath="$USER_HOME$/PyCharm Projects/html-examples/.idea/html-examples.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/pyMeasure.iml" filepath="$PROJECT_DIR$/.idea/pyMeasure.iml" />
     </modules>
   </component>
