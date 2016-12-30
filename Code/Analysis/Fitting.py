@@ -12,6 +12,7 @@
 import os
 import sys
 from types import *
+import re
 #-----------------------------------------------------------------------------
 # Third Party Imports
 
@@ -36,6 +37,11 @@ except:
           "Please scipy on the python path, or resolve the error "
           "(http://docs.scipy.org/doc/scipy/reference/index.html)")
     raise
+try:
+    import matplotlib.pyplot as plt
+except:
+    print("The module matplotlib was not found,"
+          "please put it on the python path")
 #-----------------------------------------------------------------------------
 # Module Constants
 
@@ -86,17 +92,12 @@ def build_modeled_data_set(x_list,function_list):
     return out_data
 #-----------------------------------------------------------------------------
 # Module Classes
-class FittingFunction():
-    """FittingFunction is a class that holds a fitting function, it uses sympy to provide
-     symbolic manipulation of the function and formatted output. If called it acts like a
-     tradional python function"""
-    def __init__(self):pass
-    def __call__(self, *args, **kwargs):pass
 
 class FunctionalModel(object):
     """FittingModel is a class that holds a fitting function, it uses sympy to provide
      symbolic manipulation of the function and formatted output. If called it acts like a
-     tradional python function"""
+     traditional python function. Initialize the class with parameters, variables and an equation.
+     Ex. line=FunctionalModel(variables='x', parameters='m b', equation='m*x+b')"""
     def __init__(self,**options):
         defaults= {"parameters":None,"variables":None,"equation":None,"parameter_values":{}}
         self.options={}
@@ -118,6 +119,7 @@ class FunctionalModel(object):
         self.function=sympy.lambdify(self.parameters+self.variables,self.equation,'numpy')
         self.parameter_values=self.options["parameter_values"]
         self.options["parameter_values"]={}
+
     def __call__(self,*args,**keywordargs):
         """Controls the behavior when called as a function"""
         return self.function(*args,**keywordargs)
@@ -139,7 +141,9 @@ class FunctionalModel(object):
         self.parameter_values={}
 
     def fit_data(self,x_data,y_data,**options):
-        defaults= {"initial_guess":{parameter:0 for parameter in self.parameters},"fixed_parameters":None}
+        """Uses the equation to fit the data, after fitting the data sets the parameters.
+        """
+        defaults= {"initial_guess":{parameter:0.0 for parameter in self.parameters},"fixed_parameters":None}
         self.fit_options={}
         for key,value in defaults.iteritems():
             self.fit_options[key]=value
@@ -157,7 +161,8 @@ class FunctionalModel(object):
         a0=[]
         for key in self.parameters[:]:
             a0.append(self.fit_options["initial_guess"][key])
-        result=fit(fit_f,x_list,y_data,a0)
+        a0=np.array(a0)
+        result=least_squares_fit(fit_f,x_data,y_data,a0)
         fit_parameters=result.tolist()
         fit_parameter_dictionary={parameter:fit_parameters[index] for index,parameter in enumerate(self.parameters)}
         self.set_parameters(fit_parameter_dictionary)
@@ -173,7 +178,7 @@ class FunctionalModel(object):
         new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
         return new_function
     def __sub__(self,other):
-        """Defines Addition for the class"""
+        """Defines subtraction for the class"""
         parameters=list(set(self.parameters+other.parameters))
         variables=list(set(self.variables+other.variables))
         #print("{0} is {1}".format("parameters",parameters))
@@ -183,7 +188,7 @@ class FunctionalModel(object):
         new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
         return new_function
     def __mul__(self,other):
-        """Defines Addition for the class"""
+        """Defines multiplication for the class"""
         parameters=list(set(self.parameters+other.parameters))
         variables=list(set(self.variables+other.variables))
         #print("{0} is {1}".format("parameters",parameters))
@@ -194,7 +199,7 @@ class FunctionalModel(object):
         return new_function
 
     def __pow__(self,other):
-        """Defines Addition for the class"""
+        """Defines power for the class"""
         parameters=list(set(self.parameters+other.parameters))
         variables=list(set(self.variables+other.variables))
         #print("{0} is {1}".format("parameters",parameters))
@@ -205,7 +210,7 @@ class FunctionalModel(object):
         return new_function
 
     def __div__(self,other):
-        """Defines Addition for the class"""
+        """Defines division for the class"""
         parameters=list(set(self.parameters+other.parameters))
         variables=list(set(self.variables+other.variables))
         #print("{0} is {1}".format("parameters",parameters))
@@ -216,12 +221,190 @@ class FunctionalModel(object):
         return new_function
 
     def __str__(self):
-        """Controls the strign behavior of the function"""
+        """Controls the string behavior of the function"""
         return str(self.equation.subs(self.parameter_values))
 
     def to_latek(self):
         """Returns a Latek form of the equation using current parameters"""
         return sympy.latex(self.equation.subs(self.parameter_values))
+
+    def plot_fit(self,x_data,y_data,**options):
+        """Fit a data set and show the results"""
+        defaults={"title":True}
+        plot_options={}
+        for key,value in defaults.iteritems():
+            plot_options[key]=value
+        for key,value in options.iteritems():
+            plot_options[key]=value
+
+        self.fit_data(x_data,y_data,**plot_options)
+        figure=plt.figure("Fit")
+        plt.plot(x_data,y_data,label="Raw Data")
+        plt.plot(x_data,self.function(x_data),'ro',label="Fit")
+        plt.legend(loc=0)
+        if plot_options["title"]:
+            if plot_options["title"] is True:
+                plt.title(str(self))
+            else:
+                plt.title(plot_options["title"])
+        plt.show()
+        return figure
+
+    def d(self,respect_to=None,order=1):
+        """Takes the derivative with respect to variable or parameter provided or defaults to first variable"""
+        if respect_to is None:
+            respect_to=self.variables[0]
+        equation=self.equation.copy()
+        for i in range(order):
+            equation=sympy.diff(equation,respect_to)
+        return FunctionalModel(parameters=self.parameters[:],variables=self.variables[:],equation=str(equation))
+
+    def integrate(self,respect_to=None,order=1):
+        """Integrates with respect to variable or parameter provided or defaults to first variable.
+        Does not add a constant of integration."""
+        if respect_to is None:
+            respect_to=self.variables_symbols[0]
+        equation=self.equation.copy()
+        for i in range(order):
+            equation=sympy.integrate(equation,respect_to)
+        return FunctionalModel(parameters=self.parameters[:],variables=self.variables[:],equation=str(equation))
+
+class DataSimulator(object):
+    """A class that simulates data."""
+    def __init__(self,**options):
+        """Intializes the DataSimulator class"""
+        defaults= {"parameters":None,
+                   "variables":None,
+                   "equation":None,
+                   "parameter_values":{},
+                   "model":None,
+                   "variable_min":None,
+                   "variable_max":None,
+                   "number_points":None,
+                   "variable_step":None,
+                   "output_noise_type":None,
+                   "output_noise_width":None,
+                   "output_noise_center":None,
+                   "output_noise_amplitude":1.,
+                   "random_seed":None,
+                   "x":np.array([])}
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        # set the self.model attribute
+        if self.options["model"]:
+            self.model=self.options["model"]
+        else:
+            # try and create the model from the options
+            try:
+                self.model=FunctionalModel(variables=self.options["variables"],
+                                           parameters=self.options["parameters"],
+                                          equation=self.options["equation"])
+            except:
+                print("Could not form a model from the information given, either model has to be specified or"
+                     "parameters, variables and equation has to be specified")
+                # todo: make an error specific to this case
+                raise
+        if self.options["parameter_values"]:
+            self.model.set_parameters(self.options["parameter_values"])
+        self.x=self.options["x"]
+        self.random_seed=self.options["random_seed"]
+        output_noise_names=["type","center","width","amplitude"]
+        for index,output_noise_name in enumerate(output_noise_names):
+            self.__dict__["output_noise_{0}".format(output_noise_name)]=self.options["output_noise_{0}".format(output_noise_name)]
+        self.set_output_noise()
+        if self.options["variable_min"] and self.options["variable_max"]:
+            self.set_x(variable_min=self.options["variable_min"],
+                       variable_max=self.options["variable_max"],
+                       number_points=self.options["number_points"],
+                       variable_step=self.options["variable_step"])
+
+
+
+        self.set_parameters=self.model.set_parameters
+        self.clear_parameters=self.model.clear_parameters
+        self.set_data()
+
+
+
+    def set_x(self, variable_min=None, variable_max=None,number_points=None,variable_step=None):
+        """Sets the dependent variable values, min, max and number of points or step"""
+        if [variable_min,variable_max]==[None,None]:
+            self.x=np.array([])
+        else:
+            if variable_step:
+                number_points=(variable_max-variable_min)/variable_step
+            self.x=np.linspace(variable_max,variable_min,number_points)
+        self.set_output_noise()
+
+
+    def set_output_noise(self,output_noise_type=None,output_noise_center=None,output_noise_width=None,output_noise_amplitude=1.):
+        """Set the output noise distribution. Possible types are gaussian, uniform, triangular, lognormal, with the
+        assumption all are symmetric
+        """
+        output_noise_characteristics=[output_noise_type,output_noise_center,output_noise_width,output_noise_amplitude]
+        output_noise_names=["type","center","width","amplitude"]
+        for index,output_noise_characteristic in enumerate(output_noise_characteristics):
+            if output_noise_characteristic:
+                self.__dict__["output_noise_{0}".format(output_noise_names[index])]=output_noise_characteristic
+        if self.output_noise_type is None or not self.x.any():
+            self.output_noise=np.array([])
+        else:
+            # set the random seed
+            np.random.seed(self.random_seed)
+
+            # now handle the output types, all in np.random
+            if re.search("gauss|normal",self.output_noise_type,re.IGNORECASE):
+                self.output_noise=output_noise_amplitude*np.random.normal(self.output_noise_center,
+                                                                    self.output_noise_width,len(self.x))
+            elif re.search("uni|square|rect",self.output_noise_type,re.IGNORECASE):
+                self.output_noise=output_noise_amplitude*np.random.uniform(self.output_noise_center-self.output_noise_width/2,
+                                                                     self.output_noise_width+self.output_noise_width/2,
+                                                                     len(self.x))
+            elif re.search("tri",self.output_noise_type,re.IGNORECASE):
+                self.output_noise=output_noise_amplitude*np.random.triangular(self.output_noise_center-self.output_noise_width/2,
+                                                                     self.output_noise_center,
+                                                                     self.output_noise_width+self.output_noise_width/2,
+                                                                    len(self.x))
+        self.set_data()
+
+
+
+    def set_data(self):
+        if self.model.parameter_values:
+            if self.output_noise.any():
+                out_data=self.model(self.x)+self.output_noise
+            else:
+                if self.x.any():
+                    out_data=self.model(self.x)
+                else:
+                    out_data=[]
+        else:
+            out_data=[]
+        self.data=out_data
+
+    def get_data(self):
+        return self.data[:]
+
+    def __call__(self,x_data):
+        """Returns the simulated data for x=x_data, to have deterministic responses, set self.random_seed"""
+        if type(x_data) not in [np.array]:
+            if type(x_data) is ListType:
+                x_data=np.array(x_data)
+            else:
+                x_data=np.array([x_data])
+        #print("{0} is {1}".format("x_data",x_data))
+        self.x=x_data
+        self.set_output_noise()
+        self.set_data()
+        out=self.data[:]
+        if len(out)==1:
+            out=out[0]
+        return out
+
+
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_linear_fit(data=None):
