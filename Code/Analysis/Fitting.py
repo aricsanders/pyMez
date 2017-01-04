@@ -97,7 +97,11 @@ class FunctionalModel(object):
     """FittingModel is a class that holds a fitting function, it uses sympy to provide
      symbolic manipulation of the function and formatted output. If called it acts like a
      traditional python function. Initialize the class with parameters, variables and an equation.
-     Ex. line=FunctionalModel(variables='x', parameters='m b', equation='m*x+b')"""
+     Ex. line=FunctionalModel(variables='x', parameters='m b', equation='m*x+b'), to call as a function
+     the parameters must be set. line(m=2,b=1,x=1)
+     or
+     line.set_parameters(m=1,b=2)
+     line(1)"""
     def __init__(self,**options):
         defaults= {"parameters":None,"variables":None,"equation":None,"parameter_values":{}}
         self.options={}
@@ -168,55 +172,81 @@ class FunctionalModel(object):
         self.set_parameters(fit_parameter_dictionary)
 
     def __add__(self,other):
-        """Defines Addition for the class"""
-        parameters=list(set(self.parameters+other.parameters))
-        variables=list(set(self.variables+other.variables))
-        #print("{0} is {1}".format("parameters",parameters))
-        #print("{0} is {1}".format("variables",variables))
-        equation=self.equation+other.equation
-        #print("{0} is {1}".format("equation",equation))
+        """Defines addition for the class, if it is another functional model add the models else just change the
+        equation"""
+        if type(other) in [FunctionalModel]:
+            parameters=list(set(self.parameters+other.parameters))
+            variables=list(set(self.variables+other.variables))
+            #print("{0} is {1}".format("parameters",parameters))
+            #print("{0} is {1}".format("variables",variables))
+            equation=self.equation+other.equation
+            #print("{0} is {1}".format("equation",equation))
+        else:
+            parameters=self.parameters
+            variables=self.variables
+            equation=self.equation+other
         new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
         return new_function
     def __sub__(self,other):
         """Defines subtraction for the class"""
-        parameters=list(set(self.parameters+other.parameters))
-        variables=list(set(self.variables+other.variables))
-        #print("{0} is {1}".format("parameters",parameters))
-        #print("{0} is {1}".format("variables",variables))
-        equation=self.equation-other.equation
-        #print("{0} is {1}".format("equation",equation))
+        if type(other) in [FunctionalModel]:
+            parameters=list(set(self.parameters+other.parameters))
+            variables=list(set(self.variables+other.variables))
+            #print("{0} is {1}".format("parameters",parameters))
+            #print("{0} is {1}".format("variables",variables))
+            equation=self.equation-other.equation
+            #print("{0} is {1}".format("equation",equation))
+        else:
+            parameters=self.parameters
+            variables=self.variables
+            equation=self.equation-other
         new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
         return new_function
     def __mul__(self,other):
         """Defines multiplication for the class"""
-        parameters=list(set(self.parameters+other.parameters))
-        variables=list(set(self.variables+other.variables))
-        #print("{0} is {1}".format("parameters",parameters))
-        #print("{0} is {1}".format("variables",variables))
-        equation=self.equation*other.equation
-        #print("{0} is {1}".format("equation",equation))
+        if type(other) in [FunctionalModel]:
+            parameters=list(set(self.parameters+other.parameters))
+            variables=list(set(self.variables+other.variables))
+            #print("{0} is {1}".format("parameters",parameters))
+            #print("{0} is {1}".format("variables",variables))
+            equation=self.equation*other.equation
+            #print("{0} is {1}".format("equation",equation))
+        else:
+            parameters=self.parameters
+            variables=self.variables
+            equation=self.equation*other
         new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
         return new_function
 
     def __pow__(self,other):
         """Defines power for the class"""
-        parameters=list(set(self.parameters+other.parameters))
-        variables=list(set(self.variables+other.variables))
-        #print("{0} is {1}".format("parameters",parameters))
-        #print("{0} is {1}".format("variables",variables))
-        equation=self.equation**other.equation
-        #print("{0} is {1}".format("equation",equation))
+        if type(other) in [FunctionalModel]:
+            parameters=list(set(self.parameters+other.parameters))
+            variables=list(set(self.variables+other.variables))
+            #print("{0} is {1}".format("parameters",parameters))
+            #print("{0} is {1}".format("variables",variables))
+            equation=self.equation**other.equation
+            #print("{0} is {1}".format("equation",equation))
+        else:
+            parameters=self.parameters
+            variables=self.variables
+            equation=self.equation**other
         new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
         return new_function
 
     def __div__(self,other):
         """Defines division for the class"""
-        parameters=list(set(self.parameters+other.parameters))
-        variables=list(set(self.variables+other.variables))
-        #print("{0} is {1}".format("parameters",parameters))
-        #print("{0} is {1}".format("variables",variables))
-        equation=self.equation/other.equation
-        #print("{0} is {1}".format("equation",equation))
+        if type(other) in [FunctionalModel]:
+            parameters=list(set(self.parameters+other.parameters))
+            variables=list(set(self.variables+other.variables))
+            #print("{0} is {1}".format("parameters",parameters))
+            #print("{0} is {1}".format("variables",variables))
+            equation=self.equation/other.equation
+            #print("{0} is {1}".format("equation",equation))
+        else:
+            parameters=self.parameters
+            variables=self.variables
+            equation=self.equation/other
         new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
         return new_function
 
@@ -224,7 +254,18 @@ class FunctionalModel(object):
         """Controls the string behavior of the function"""
         return str(self.equation.subs(self.parameter_values))
 
-    def to_latek(self):
+    def compose(self,other):
+        """Returns self.equation.sub(variable=other)"""
+        if len(self.variables)==1:
+            variables=other.variables
+            parameters=list(set(self.parameters+other.parameters))
+            equation=self.equation.subs({self.variables[0]:other})
+            new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+            return new_function
+        else:
+            return None
+
+    def to_latex(self):
         """Returns a Latek form of the equation using current parameters"""
         return sympy.latex(self.equation.subs(self.parameter_values))
 
@@ -270,7 +311,9 @@ class FunctionalModel(object):
         return FunctionalModel(parameters=self.parameters[:],variables=self.variables[:],equation=str(equation))
 
 class DataSimulator(object):
-    """A class that simulates data."""
+    """A class that simulates data. It creates a data set from a FunctionalModel with the parameters set,
+    and an optional output noise. The attribute self.x has the x data and self.data has the result. The simulator may be
+    called as a function on a single point or an numpy array."""
     def __init__(self,**options):
         """Intializes the DataSimulator class"""
         defaults= {"parameters":None,
@@ -341,7 +384,7 @@ class DataSimulator(object):
 
 
     def set_output_noise(self,output_noise_type=None,output_noise_center=None,output_noise_width=None,output_noise_amplitude=1.):
-        """Set the output noise distribution. Possible types are gaussian, uniform, triangular, lognormal, with the
+        """Set the output noise distrubution. Possible types are gaussian, uniform, triangular, lognormal, with the
         assumption all are symmetric
         """
         output_noise_characteristics=[output_noise_type,output_noise_center,output_noise_width,output_noise_amplitude]
@@ -403,6 +446,7 @@ class DataSimulator(object):
         if len(out)==1:
             out=out[0]
         return out
+
 
 
 #-----------------------------------------------------------------------------
