@@ -71,6 +71,9 @@ def edge_2_to_1(string_list):
 
 def remove_circular_paths(path):
     """Removes pieces of the path that just end on the same node"""
+    # Todo: Track the error that leaves out a needed path sometimes
+    # See http://localhost:8888/notebooks/Two_Port_Matrix_Parameters_Debug_20170105_001.ipynb
+
     edge_pattern=re.compile("edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)")
     past_locations=[]
 
@@ -391,7 +394,8 @@ class Graph(object):
         return exit_nodes
 
     def get_path(self,first_node,last_node):
-        """Returns the first path found between first node and last node, three step paths are broken"""
+        """Returns the first path found between first node and last node, five step paths are broken"""
+        #todo: long paths are not found have to add a follow right hand side algorithm
         #Remove circular paths added 12/2016
         edge_pattern=re.compile('edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)')
         exit_paths=self.get_exiting_edges(first_node)
