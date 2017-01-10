@@ -1156,6 +1156,268 @@ if WINDOWS_COM:
         presentation.Close()
         power_point.Quit()
         return power_point_file_name
+# first we define matrix to list conversions
+def FrequencyList_to_FrequencyMatrixList(frequency_list):
+    """Converts a list of form [f,m11,m12,m21,m22] to a list of form [f,np.matrix([[m11,m12],[m12,m22]])]
+    inverse of FrequencyMatrixList_to_FrequencyList """
+    matrix_list=[]
+    for row in frequency_list[:]:
+        frequency=row[0]
+        [m11,m12,m21,m22]=row[1:]
+        matrix=np.matrix([[m11,m12],[m21,m22]])
+        matrix_list.append([frequency,matrix])
+    return matrix_list
+
+def FrequencyMatrixList_to_FrequencyList(frequency_matrix_list):
+    """Converts a list of form [f,np.matrix([[m11,m12],[m12,m22]])] to a list of form [f,m11,m12,m21,m22]
+    inverse of FrequencyList_to_FrequencyMatrixList"""
+    frequency_list=[]
+    for row in frequency_matrix_list[:]:
+        frequency=row[0]
+        matrix=row[1]
+        [m11,m12,m21,m22]=[matrix[0,0],matrix[0,1],matrix[1,0],matrix[1,1]]
+        frequency_list.append([frequency,m11,m12,m21,m22])
+    return frequency_list
+
+# now for each set of parameters we need a single conversion into and out of the format
+
+# This was copied and needs to be refactored to be consitent with the other tranforms
+def SFrequencyMatrixList_to_TFrequencyMatrixList(s_frequency_matrix_list):
+    """Converts S-parameters into a T Matrix. Input form should be in frequency, np.matrix([[S11,S12],[S21,S22]])
+    format. Returns a list in [frequency, np.matrix] format.
+    Is the inverse of TFrequencyMatrixList_to_SFrequencyMatrixList"""
+    t_frequency_matrix_list=[]
+    for row in s_frequency_matrix_list:
+        frequency=row[0]
+        m=row[1]
+        T11=-np.linalg.det(m)/m[1,0]
+        T12=m[0,0]/m[1,0]
+        T21=-m[1,1]/m[1,0]
+        T22=1/m[1,0]
+        t_frequency_matrix_list.append([frequency,np.matrix([[T11,T12],[T21,T22]])])
+    return t_frequency_matrix_list
+
+def TFrequencyMatrixList_to_SFrequencyMatrixList(t_frequency_matrix_list):
+    """Converts T Matrix into S parameters. Input form should be in frequency, np.matrix([[T11,T12],[T21,T22]])
+    format. Returns a list in [frequency, np.matrix] format.
+    Is the inverse of SFrequencyMatrixList_to_TFrequencyMatrixList"""
+    s_frequency_matrix_list=[]
+    for row in t_frequency_matrix_list:
+        frequency=row[0]
+        m=row[1]
+        S11=m[0,1]/m[1,1]
+        S12=np.linalg.det(m)/m[1,1]
+        S21=1/m[1,1]
+        S22=-m[1,0]/m[1,1]
+        s_frequency_matrix_list.append([frequency,np.matrix([[S11,S12],[S21,S22]])])
+    return s_frequency_matrix_list
+
+def SFrequencyList_to_ZFrequencyList(s_frequency_list,Z01=complex(50,0),Z02=complex(50,0)):
+    """ Converts s parameters into z-parameters. S-parameters should be in the form [[f,S11,S12,S21,S22],...]
+    the port 1 (Z01) and port 2 (Z01) impedances can be specified, default is 50. Returns data in the form
+    [[f,Z11,Z12,Z21,Z22],...]
+    """
+    z_frequency_list=[]
+    for row in s_frequency_list[:]:
+        [frequency,S11,S12,S21,S22]=row
+        denominator=-1*((1-S11)*(1-S22)-S12*S21)
+        Z11=((Z01.conjugate()+S11*Z01)*(1-S22)+S12*S21*Z01)/denominator
+        Z12=(2*S12*(Z01.real*Z02.real)**(.5))/denominator
+        Z21=(2*S21*(Z01.real*Z02.real)**(.5))/denominator
+        Z22=((1-S11)*(Z02.conjugate()+S22*Z02)+S21*S12*Z02)/denominator
+        z_frequency_list.append([frequency,complex(abs(Z11.real),Z11.imag),Z12,Z21,complex(abs(Z22.real),Z22.imag)])
+    return z_frequency_list
+
+def SFrequencyMatrixList_to_ZFrequencyMatrixList(s_frequency_matrix_list,Z01=complex(50,0),Z02=complex(50,0)):
+    """ Converts s parameters into z-parameters. S-parameters should be in the form
+    [[f,np.matrix([[S11,S12],S21,S22]],...]
+    the port 1 (Z01) and port 2 (Z01) impedances can be specified, default is 50. Returns data in the form
+    [[f,np.matrix([[Z11,Z12],[Z21,Z22]]),...]
+    """
+    z_frequency_matrix_list=[]
+    for row in s_frequency_matrix_list[:]:
+        [frequency,m]=row
+        [S11,S12,S21,S22]=[m[0,0],m[0,1],m[1,0],m[1,1]]
+        denominator=-1*((1-S11)*(1-S22)-S12*S21)
+        Z11=((Z01.conjugate()+S11*Z01)*(1-S22)+S12*S21*Z01)/denominator
+        Z12=(2*S12*(Z01.real*Z02.real)**(.5))/denominator
+        Z21=(2*S21*(Z01.real*Z02.real)**(.5))/denominator
+        Z22=((1-S11)*(Z02.conjugate()+S22*Z02)+S21*S12*Z02)/denominator
+        z_frequency_matrix_list.append([frequency,
+                                        np.matrix([[complex(abs(Z11.real),Z11.imag),Z12],
+                                                   [Z21,complex(abs(Z22.real),Z22.imag)]])])
+    return z_frequency_matrix_list
+
+
+def ZFrequencyList_to_TFrequencyList(Z_frequency_list,Z01=complex(50,0),Z02=complex(50,0)):
+    """ Converts z parameters into T parameters. Z-parameters should be in the form [[f,Z11,Z12,Z21,Z22],...]
+    the port 1 (Z01) and port 2 (Z01) impedances can be specified, default is 50. Returns data in the form
+    [[f,T11,T12,T21,T22],...]
+    """
+    t_frequency_list=[]
+    for row in Z_frequency_list[:]:
+        [frequency,Z11,Z12,Z21,Z22]=row
+        denominator=2*Z21*(Z01.real*Z02.real)**(.5)
+        T11= ((Z11+Z01)*(Z22+Z02)-Z12*Z21)/denominator
+        T12=((Z11+Z01)*(Z02.conjugate()-Z22)+Z12*Z21)/denominator
+        T21=((Z11-Z01.conjugate())*(Z22+Z02)-Z12*Z21)/denominator
+        T22=((Z01.conjugate()-Z11)*(Z22-Z02.conjugate())+Z12*Z21)/denominator
+        t_frequency_list.append([frequency,T11,T12,T21,T22])
+    return t_frequency_list
+
+def ZFrequencyMatrixList_to_TFrequencyMatrixList(Z_frequency_matrix_list,Z01=complex(50,0),Z02=complex(50,0)):
+    """ Converts z parameters into T parameters. Z-parameters should be in the form [[f,np.matrix([[Z11,Z12],[Z21,Z22]])],...]
+    the port 1 (Z01) and port 2 (Z01) impedances can be specified, default is 50. Returns data in the form
+    [[f,np.matrix([[T11,T12],[T21,T22]])],...]
+    """
+    t_frequency_matrix_list=[]
+    for row in Z_frequency_matrix_list[:]:
+        [frequency,m]=row
+        [Z11,Z12,Z21,Z22]=[m[0,0],m[0,1],m[1,0],m[1,1]]
+        denominator=2*Z21*(Z01.real*Z02.real)**(.5)
+        T11= ((Z11+Z01)*(Z22+Z02)-Z12*Z21)/denominator
+        T12=((Z11+Z01)*(Z02.conjugate()-Z22)+Z12*Z21)/denominator
+        T21=((Z11-Z01.conjugate())*(Z22+Z02)-Z12*Z21)/denominator
+        T22=((Z01.conjugate()-Z11)*(Z22-Z02.conjugate())+Z12*Z21)/denominator
+        t_frequency_matrix_list.append([frequency,np.matrix([[T11,T12],[T21,T22]])])
+    return t_frequency_matrix_list
+
+
+def ABCDFrequencyList_to_YFrequencyList(ABCD_frequency_list):
+    """ Converts ABCD parameters into Y-parameters. ABCD-parameters should be in the form [[f,A,B,C,D],...]
+    Returns data in the form
+    [[f,Y11,Y12,Y21,Y22],...]
+    """
+    y_frequency_list=[]
+    for row in ABCD_frequency_list[:]:
+        [frequency,A,B,C,D]=row
+        Y11=D/B
+        Y12=(B*C-A*D)/B
+        Y21=-1/B
+        Y22=A/B
+        y_frequency_list.append([frequency,Y11,Y12,Y21,Y22])
+    return y_frequency_list
+
+def YFrequencyList_to_HFrequencyList(y_frequency_list):
+    """ Converts Y parameters into h-parameters. ABCD-parameters should be in the form [[f,Y11,Y12,Y21,Y22],...]
+    Returns data in the form
+    [[f,h11,h12,h21,h22],...]
+    """
+    h_frequency_list=[]
+    for row in y_frequency_list[:]:
+        [frequency,Y11,Y12,Y21,Y22]=row
+        h11=1/Y11
+        h12=-1*Y12/Y11
+        h21=Y21/Y11
+        h22=(Y11*Y22-Y12*Y21)/Y11
+        h_frequency_list.append([frequency,h11,h12,h21,h22])
+    return h_frequency_list
+
+def ABCDFrequencyList_to_HFrequencyList(ABCD_frequency_list):
+    """ Converts ABCD parameters into h-parameters. ABCD-parameters should be in the form [[f,A,B,C,D],...]
+    Returns data in the form
+    [[f,h11,h12,h21,h22],...]
+    """
+    h_frequency_list=[]
+    for row in ABCD_frequency_list[:]:
+        [frequency,A,B,C,D]=row
+        h11=B/D
+        h12=(A*D-B*C)/D
+        h21=-1/D
+        h22=C/D
+        h_frequency_list.append([frequency,h11,h12,h21,h22])
+    return h_frequency_list
+
+def HFrequencyList_to_ZFrequencyList(h_frequency_list):
+    """ Converts h parameters into Z-parameters. h-parameters should be in the form [[f,h11,h12,h21,h22],...]
+    Returns data in the form
+    [[f,Z11,Z12,Z21,Z22],...]
+    """
+    z_frequency_list=[]
+    for row in h_frequency_list[:]:
+        [frequency,h11,h12,h21,h22]=row
+        Z11=(h11*h22-h12*h21)/h22
+        Z12=h12/h22
+        Z21=-1*h21/h22
+        Z22=1/h22
+        z_frequency_list.append([frequency,Z11,complex(abs(Z12.real),Z12.imag),complex(abs(Z21.real),Z21.imag),Z22])
+    return z_frequency_list
+
+def ZFrequencyMatrixList_to_YFrequencyMatrixList(z_frequency_matrix_list):
+    """ Converts Z parameters into Y-parameters. Z-parameters should be in the form
+    [[f,np.matrix([[Z11,Z12],[Z21,Z22]])],...]
+    Returns data in the form
+    [[f,np.matrix([[Y11,Y12],[Y21,Y22]])],...]
+    inverse of YFrequencyMatrixList_to_ZFrequencyMatrixList
+    """
+    y_frequency_matrix_list=[]
+    for row in z_frequency_matrix_list[:]:
+        frequency=row[0]
+        m=row[1]
+        y_frequency_matrix_list.append([frequency,m.I])
+    return y_frequency_matrix_list
+
+def YFrequencyMatrixList_to_ZFrequencyMatrixList(y_frequency_matrix_list):
+    """ Converts Z parameters into Y-parameters. Z-parameters should be in the form
+    [[f,np.matrix([[Y11,Y12],[Y21,Y22]])],...]
+    Returns data in the form
+    [[f,np.matrix([[Z11,Z12],[Z21,Z22]])],...]
+    inverse of ZFrequencyMatrixList_to_YFrequencyMatrixList
+    """
+    z_frequency_matrix_list=[]
+    for row in y_frequency_matrix_list[:]:
+        frequency=row[0]
+        m=row[1]
+        z_frequency_matrix_list.append([frequency,m.I])
+    return z_frequency_matrix_list
+
+def ZFrequencyList_to_ABCDFrequencyList(z_frequency_list):
+    """ Converts z parameters into ABCD-parameters. Z-parameters should be in the form [[f,Z11,Z12,Z21,Z22],...]
+    Returns data in the form
+    [[f,A,B,C,D],...]
+    inverse of ABCDFrequencyList_to_ZFrequencyList
+    """
+    ABCD_frequency_list=[]
+    for row in z_frequency_list[:]:
+        [frequency,Z11,Z12,Z21,Z22]=row
+        A=Z11/Z21
+        B=(Z11*Z22-Z12*Z21)/Z21
+        C=1/Z21
+        D=Z22/Z21
+        ABCD_frequency_list.append([frequency,A,B,C,D])
+    return ABCD_frequency_list
+
+def ABCDFrequencyList_to_ZFrequencyList(ABCD_frequency_list):
+    """ Converts ABCD parameters into z-parameters. ABCD-parameters should be in the form [[f,A,B,C,D],...]
+    Returns data in the form
+    [[f,Z11,Z12,Z21,Z22],...],
+    inverse of ZFrequencyList_to_ABCDFrequencyList
+    """
+    z_frequency_list=[]
+    for row in ABCD_frequency_list[:]:
+        [frequency,A,B,C,D]=row
+        Z11=A/C
+        Z12=(A*D-B*C)/C
+        Z21=1/C
+        Z22=D/C
+        z_frequency_list.append([frequency,complex(abs(Z11.real),Z11.imag),Z12,Z21,complex(abs(Z22.real),Z22.imag)])
+    return z_frequency_list
+
+def ABCDFrequencyList_to_SFrequencyList(ABCD_frequency_list,Z01=complex(50,0),Z02=complex(50,0)):
+    """ Converts ABCD parameters into s-parameters. ABCD-parameters should be in the form [[f,A,B,C,D],...]
+    Returns data in the form
+    [[f,S11,S12,S21,S22],...],
+    """
+    s_frequency_list=[]
+    for row in ABCD_frequency_list[:]:
+        [frequency,A,B,C,D]=row
+        denominator=A*Z02+B+C*Z01*Z02+D*Z01
+        S11=(A*Z02+B-C*Z01.conjugate()*Z02-D*Z01.conjugate())/denominator
+        S12=-1*(2*(Z01.real*Z02.real)**(.5))/denominator
+        S21=-1*(2*(Z01.real*Z02.real)**(.5))/denominator
+        S22=(-1*A*Z02.conjugate()+B-C*Z01*Z02+D*Z01)/denominator
+        s_frequency_list.append([frequency,S11,S12,S21,S22])
+    return s_frequency_list
 #-----------------------------------------------------------------------------
 # Module Classes
 

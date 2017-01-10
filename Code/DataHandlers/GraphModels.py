@@ -730,6 +730,94 @@ class MetadataGraph(Graph):
                              "DataFrame",HtmlFile_to_DataFrame,node_description="HTML Table File")
         self.add_node("HtmlTableString","HtmlFile",HtmlFile_to_HtmlString,
                              "HtmlFile",HtmlString_to_HtmlFile,node_description="HTML Table String")
+class TwoPortParameterGraph(Graph):
+    """TwoPortParamterGraph is a content graph for two-port parameters,
+    it transforms between S,T,Y,Z,ABCD and H parameters and matrix versions"""
+    def __init__(self,**options):
+
+        defaults={"graph_name":"Two Port Parameter Graph",
+                          "node_names":["SFrequencyList",'SFrequencyMatrixList'],
+                          "node_descriptions":["S Parameters","S Parameters in a Matrix"],
+                          "current_node":'SFrequencyList',
+                          "state":[1,0],
+                          "data":[[1.0,.9,.436,.436,.9]],
+                          "edge_2_to_1":FrequencyMatrixList_to_FrequencyList,
+                          "edge_1_to_2":FrequencyList_to_FrequencyMatrixList,
+                          "frequency_units":"GHz",
+                          "Z01":50,
+                          "Z02":50 }
+        graph_options={}
+        for key,value in defaults.iteritems():
+            graph_options[key]=value
+        for key,value in options.iteritems():
+            graph_options[key]=value
+        Graph.__init__(self,**graph_options)
+
+        self.add_node("TFrequencyMatrixList",
+                        "SFrequencyMatrixList",SFrequencyMatrixList_to_TFrequencyMatrixList,
+                        "SFrequencyMatrixList",TFrequencyMatrixList_to_SFrequencyMatrixList,
+                        "T Parameters in a Matrix")
+
+        self.add_node("TFrequencyList",
+                        "TFrequencyMatrixList",FrequencyMatrixList_to_FrequencyList,
+                        "TFrequencyMatrixList",FrequencyList_to_FrequencyMatrixList,
+                        "T Parameters")
+
+        self.add_node("ZFrequencyList",
+                        "SFrequencyList",SFrequencyList_to_ZFrequencyList,
+                        "TFrequencyList",ZFrequencyList_to_TFrequencyList,
+                        "Z Parameters")
+
+        self.add_node("ZFrequencyMatrixList",
+                        "ZFrequencyList",FrequencyList_to_FrequencyMatrixList,
+                        "ZFrequencyList",FrequencyMatrixList_to_FrequencyList,
+                        "Z Parameters in a matrix")
+
+        self.add_node("ABCDFrequencyList",
+                        "ZFrequencyList",ZFrequencyList_to_ABCDFrequencyList,
+                        "ZFrequencyList",ABCDFrequencyList_to_ZFrequencyList,
+                        "ABCD Parameters")
+
+        self.add_node("ABCDFrequencyMatrixList",
+                        "ABCDFrequencyList",FrequencyList_to_FrequencyMatrixList,
+                        "ABCDFrequencyList",FrequencyMatrixList_to_FrequencyList,
+                        "ABCD Parameters in a matrix")
+
+        self.add_node("HFrequencyList",
+                        "ABCDFrequencyList",ABCDFrequencyList_to_HFrequencyList,
+                        "ZFrequencyList",HFrequencyList_to_ZFrequencyList,
+                        "h Parameters")
+
+        self.add_node("HFrequencyMatrixList",
+                        "HFrequencyList",FrequencyList_to_FrequencyMatrixList,
+                        "HFrequencyList",FrequencyMatrixList_to_FrequencyList,
+                        "H Parameters in a matrix")
+        self.add_node("YFrequencyList",
+                        "ABCDFrequencyList",ABCDFrequencyList_to_YFrequencyList,
+                        "HFrequencyList",YFrequencyList_to_HFrequencyList,
+                        "Y Parameters")
+
+        self.add_node("YFrequencyMatrixList",
+                        "YFrequencyList",FrequencyList_to_FrequencyMatrixList,
+                        "YFrequencyList",FrequencyMatrixList_to_FrequencyList,
+                        "Y Parameters in a matrix")
+
+        self.add_edge(begin_node="ZFrequencyMatrixList",
+                        end_node="YFrequencyMatrixList",
+                        edge_function=ZFrequencyMatrixList_to_YFrequencyMatrixList)
+
+        self.add_edge(begin_node="SFrequencyMatrixList",
+                        end_node="ZFrequencyMatrixList",
+                        edge_function=SFrequencyMatrixList_to_ZFrequencyMatrixList)
+
+        self.add_edge(begin_node="ZFrequencyMatrixList",
+                        end_node="TFrequencyMatrixList",
+                        edge_function=ZFrequencyMatrixList_to_TFrequencyMatrixList)
+
+        self.add_edge(begin_node="ABCDFrequencyList",
+                        end_node="SFrequencyList",
+                        edge_function=ABCDFrequencyList_to_SFrequencyList)
+
 #-----------------------------------------------------------------------------
 # Module Scripts
 #TODO: Add test_Graph script currently lives in jupyter-notebooks

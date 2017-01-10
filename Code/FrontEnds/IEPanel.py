@@ -103,6 +103,9 @@ class IEPanel(wx.Panel):
     def write(self,string=None):
         """Writes test to the ie window"""
         self.ie.LoadString(str(string))
+
+    def read(self):
+        return self.ie.GetText()
         
     def ShutdownDemo(self):
         # put the frame title back
