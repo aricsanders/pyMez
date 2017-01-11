@@ -5,7 +5,7 @@
 # Created:     3/3/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" Translations.py holds the functions that map from one form to another.
+""" Translations.py holds stateless functions that map from one form to another.
 Warning!!! The functions defined in this module break from normal naming practices to better
 reflect their purpose. A translation from one object or file takes the form UpperCamelCase_to_UpperCamelCase
 This change is meant to make consistent node names for graph models found in
@@ -13,7 +13,7 @@ pyMeasure.Code.DataHandlers.GraphModels. Normal naming rules about
  HTML and XML abbreviations are not followed. (XmlList not XMLList)
  All types that end with File are on-disk file types,
 composite types are denoted by ending the UpperCamelCase name with a full english version of the python
-class name, such as DataFrameDictionary or DataFrameList.Full translations requires the following third party
+class name, such as DataFrameDictionary or DataFrameList. Full translations requires the following third party
 software:
 Inkscape
 Microsoft Office
@@ -30,6 +30,7 @@ import subprocess
 import base64
 import StringIO
 import cStringIO
+import re
 #-----------------------------------------------------------------------------
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
@@ -105,7 +106,7 @@ try:
     WINDOWS_COM=True
 except:
     print("The module win32com was not found or had an error,"
-          "please check module or put it on the python path")
+          "please check module or put it on the python path, if OS is not Windows ignore this warning")
     WINDOWS_COM=False
     #raise ImportError
 #-----------------------------------------------------------------------------

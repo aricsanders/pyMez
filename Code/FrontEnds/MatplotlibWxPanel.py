@@ -8,16 +8,19 @@
 """
 An example of how to use wx or wxagg in an application with a custom
 toolbar, Modified to work inside of BOA by AWS. Serves as an advanced plot window for pyMeasure.
+The custom tool bar is MyNavigationToolBar
 """
 
 #-------------------------------------------------------------------------------
 # Standard Imports
 import wx
 import os
+import sys
 
 #-------------------------------------------------------------------------------
 # Third Party imports
 # Used to guarantee to use at least Wx2.8 Was removed.
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 
 try:
     from numpy import arange, sin, pi
@@ -31,11 +34,12 @@ try:
     from matplotlib.backends.backend_wx import _load_bitmap
     from matplotlib.figure import Figure
     from numpy.random import rand
+    import numpy as np
 
 except:
     print "Please make sure matplotlib package is installed and in sys.path"
 try:
-    import pyMeasure.Code.DataHandlers.XMLModels
+    from Code.DataHandlers.XMLModels import DataTable
 except: 
     print "import of pyMeasure.Code.DataHandlers.XMLModels failed"
     
@@ -64,8 +68,8 @@ class MyNavigationToolbar(NavigationToolbar2WxAgg):
                            'Plot measurement', 'Plot an XML data file')
         wx.EVT_TOOL(self, self.ON_CUSTOM, self._on_custom)
         
-        self.AddSimpleTool(self.ON_CUSTOM, wx.ArtProvider.GetBitmap(wx.ART_FOLDER_OPEN),
-                           'Click me', 'Activate custom contol')
+        # self.AddSimpleTool(self.ON_CUSTOM, wx.ArtProvider.GetBitmap(wx.ART_FOLDER_OPEN),
+        #                    'Click me', 'Activate custom contol')
         #wx.EVT_TOOL(self, self.ON_CUSTOM, self._on_custom)        
 
     def _on_custom(self, evt):
@@ -90,8 +94,7 @@ class MyNavigationToolbar(NavigationToolbar2WxAgg):
             if dlg.ShowModal() == wx.ID_OK:
                 filename = dlg.GetPath()
                 try:
-                    data_sheet=pyMeasure.Code.DataHandlers.XMLModels.DataTable(
-                    filename)
+                    data_sheet=DataTable(filename)
                     self.canvas.figure.clear()
                     self.axes = self.canvas.figure.add_subplot(111)
                     ax = self.canvas.figure.axes[0]
@@ -107,8 +110,8 @@ class MyNavigationToolbar(NavigationToolbar2WxAgg):
                     else:
                         y_name=data_sheet.get_attribute_names()[0]
                         x_name=data_sheet.get_attribute_names()[1]
-                    params={'axes.labelsize': 18,'text.font.size': 18,
-                    'legend.font.size': 18,
+                    params={'axes.labelsize': 18,"font.size":18,
+                    'legend.fontsize': 18,
                     'xtick.labelsize': 18,
                     'ytick.labelsize': 18,
                     }
@@ -119,7 +122,9 @@ class MyNavigationToolbar(NavigationToolbar2WxAgg):
                     #print x_name,y_name
                     self.axes.set_xlabel(x_name,fontsize=20)
                     self.axes.set_ylabel(y_name,fontsize=20)
-                    ax.plot(data_sheet.to_list(x_name),data_sheet.to_list(y_name))
+                    x_data=np.array(map(lambda x:float(x),data_sheet.to_list(x_name)))
+                    y_data=np.array(map(lambda x:float(x),data_sheet.to_list(y_name)))
+                    ax.plot(x_data,y_data)
                     self.canvas.draw()
                     # Set the Title
                     try:
@@ -128,8 +133,8 @@ class MyNavigationToolbar(NavigationToolbar2WxAgg):
                         pass
                     self.Update()
                 except:
-                    
-                    pass
+                    raise
+
         finally:
             dlg.Destroy()
         evt.Skip()

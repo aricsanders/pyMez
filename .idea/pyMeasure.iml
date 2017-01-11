@@ -6,6 +6,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Jupyter-Notebooks" />
     <orderEntry type="module" module-name="html-examples" />
+    <orderEntry type="module" module-name="Test_Server_2016" />
   </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="Nosetests" />

@@ -16,6 +16,7 @@ class LinkError(Exception):
     pass
 class HTMLWindow(wx.html.HtmlWindow):
     """ speciallized Html window """
+    # Overloading the method is deprecated, just intercept the event
     def OnLinkClicked(self,link_info):
         """This is the href handler"""
         
@@ -34,6 +35,7 @@ class HTMLWindow(wx.html.HtmlWindow):
             else:
                 raise LinkError
         except LinkError:
+            # This behavior is deprecated ...
             self.base_OnLinkedClicked(link_info)
 [wxID_PANEL1, wxID_PANEL1HTMLWINDOW1, 
 ] = [wx.NewId() for _init_ctrls in range(2)]
