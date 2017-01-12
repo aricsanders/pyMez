@@ -999,7 +999,7 @@ def compare_s2p_plots(list_S2PV1,**options):
     return fig
 
 def plot_calrep(calrep_model):
-    """Plots a calrep model with uncertainities"""
+    """Plots a calrep model with uncertainties"""
     if type(calrep_model) in [PowerCalrepModel,TwoPortCalrepModel]:
         calrep_model.joined_table.metadata=calrep_model.metadata
         calrep_model=calrep_model.joined_table
@@ -1060,7 +1060,7 @@ def plot_calrep(calrep_model):
 
 
 def plot_calrep_comparision(calrep_model_list):
-    """Plots many calrep models on the same axis with uncertainities"""
+    """Plots many calrep models on the same axis with uncertainties"""
     for index,calrep_model in enumerate(calrep_model_list):
         if type(calrep_model) in [PowerCalrepModel,TwoPortCalrepModel]:
             calrep_model_list[index].joined_table.metadata=calrep_model.metadata

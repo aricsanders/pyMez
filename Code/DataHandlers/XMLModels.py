@@ -324,7 +324,7 @@ class XMLBase():
             HTML=XSL_transform(etree.XML(self.document.toxml()))
             return str(HTML)
 
-        def save_HTML(self,XSLT=None,file_path=None):
+        def save_HTML(self,file_path=None,XSLT=None):
             """Saves a HTML transformation of the XML document using XLST at file_path. Defaults to
             an XLST in self.options["XSLT"] and file_path=self.path.replace('.xml','.html')"""
             if XSLT is None:
