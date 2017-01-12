@@ -310,14 +310,20 @@ class FunctionalModel(object):
             equation=sympy.integrate(equation,respect_to)
         return FunctionalModel(parameters=self.parameters[:],variables=self.variables[:],equation=str(equation))
 
-    def series(self,variable_or_parameter,value=0,order=6):
-        """Calculates the symbolic series expansion of order around the variable or parameter value
-        of the functional model. Returns a new FunctionalModel"""
-        return self.equation.series(variable_or_parameter,value,order).removeO()
+    # def series(self,variable_or_parameter,value=0,order=6):
+    #     """Calculates the symbolic series expansion of order around the variable or parameter value
+    #     of the functional model. Returns a new FunctionalModel"""
+    #     equation=sympy.series(self.equation,variable_or_parameter,value,order).removeO()
+    #     parameters=self.parameters[:]
+    #     variables=self.variables[:]
+    #     return FunctionalModel(equation=equation,variables=variables,parameters=parameters)
 
     def limit(self,variable_or_parameter,point):
         """Finds the symbolic limit of the FunctionalModel for the variable or parameter approaching point"""
-        return sympy.limit(self.equation,variable_or_parameter,point)
+        equation=sympy.limit(self.equation,variable_or_parameter,point)
+        parameters=self.parameters[:]
+        variables=self.variables[:]
+        return FunctionalModel(equation=equation,variables=variables,parameters=parameters)
 
 class DataSimulator(object):
     """A class that simulates data. It creates a data set from a FunctionalModel with the parameters set,
