@@ -310,6 +310,10 @@ class FunctionalModel(object):
             equation=sympy.integrate(equation,respect_to)
         return FunctionalModel(parameters=self.parameters[:],variables=self.variables[:],equation=str(equation))
 
+    def series(self,variable_or_parameter,value=0,order=6):
+        """Calculates the series expansion of order around the variable or parameter value of the functional model"""
+        return self.equation.series(variable_or_parameter,value,order).removeO()
+
 class DataSimulator(object):
     """A class that simulates data. It creates a data set from a FunctionalModel with the parameters set,
     and an optional output noise. The attribute self.x has the x data and self.data has the result. The simulator may be
