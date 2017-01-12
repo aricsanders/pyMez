@@ -266,7 +266,7 @@ class FunctionalModel(object):
             return None
 
     def to_latex(self):
-        """Returns a Latek form of the equation using current parameters"""
+        """Returns a Latex form of the equation using current parameters"""
         return sympy.latex(self.equation.subs(self.parameter_values))
 
     def plot_fit(self,x_data,y_data,**options):
@@ -312,7 +312,7 @@ class FunctionalModel(object):
 
     def series(self,variable_or_parameter,value=0,order=6):
         """Calculates the symbolic series expansion of order around the variable or parameter value
-        of the functional model"""
+        of the functional model. Returns a new FunctionalModel"""
         return self.equation.series(variable_or_parameter,value,order).removeO()
 
     def limit(self,variable_or_parameter,point):
