@@ -827,6 +827,19 @@ def calrep_history_plot(calrep_model,history_frame,**options):
         history_plot_options[key]=value
     # The way we plot depends on the models
     model=calrep_model.__class__.__name__
+    # The new method relies on metadata and not the class
+    if re.search("DataTable",model,re.IGNORECASE):
+        try:
+            if calrep_model.metadata["Measurement_Type"] in ['1-port']:
+                model="OnePort"
+            elif calrep_model.metadata["Measurement_Type"] in ['2-port']:
+                model="TwoPort"
+            elif re.search('Dry Cal|Thermistor|power',calrep_model.metadata["Measurement_Type"]):
+                model="Power"
+        except:
+            pass
+
+
     device_history=history_frame[history_frame["Device_Id"]==calrep_model.metadata["Device_Id"]]
     unique_analysis_dates=sorted(device_history["Analysis_Date"].unique().tolist())
     print("{0} are {1}".format("unique_analysis_dates",unique_analysis_dates))
