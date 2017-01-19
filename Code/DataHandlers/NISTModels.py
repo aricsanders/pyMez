@@ -1298,7 +1298,7 @@ class ResultFileModel(AsciiDataTable):
     def __init__(self, file_path=None,**options):
         """Intializes the ResultFileModel class, if a file path is given, creates the appropriate model"""
         defaults={"data_delimiter":'  ',"data":None,"header":None,"column_names":None,
-          "row_end_token":"\n","metadata":{},"Measurement_Type":None}
+          "row_end_token":"\n","metadata":{},"Measurement_Type":None,"column_names_delimiter":None}
         self.options={}
         for key,value in defaults.iteritems():
             self.options[key]=value

@@ -738,8 +738,8 @@ class AsciiDataTable():
                                 print("FAILED to import file!")
                                 raise
     def structure_metadata(self):
-        """Function that should be overidden by whatever model the datatable has, it only responds with a self.metadata
-        attribute in its base state derrived from self.options["metadata]"""
+        """Function that should be overridden by whatever model the datatable has, it only responds with a self.metadata
+        attribute in its base state derived from self.options["metadata]"""
         self.metadata=self.options["metadata"]
     def find_line(self,begin_token):
         """Finds the first line that has begin token in it"""
@@ -749,15 +749,20 @@ class AsciiDataTable():
 
     def update_import_options(self,import_table):
         """Updates the options in the import table"""
+        # discovered slight bug 2017-01-18 the variable index is not the right one to have here
+        # it should be i from 0 to len(import_table)
+        defined_element_index=0
         for index,element in enumerate(['header','column_names','data','footer']):
             if self.__dict__[element] is not None:
+
                 print("The {0} variable is {1}".format('index',index))
                 print("The {0} variable is {1}".format('element',element))
                 print("The {0} variable is {1}".format('import_table',import_table))
                 [self.options['%s_begin_line'%element],
                                 self.options['%s_end_line'%element],
                                 self.options['%s_begin_token'%element],
-                                self.options['%s_end_token'%element]]=import_table[index][:]
+                                self.options['%s_end_token'%element]]=import_table[defined_element_index][:]
+                defined_element_index+=1
                 #self.get_options_by_element(element)
 
     def lines_defined(self):
