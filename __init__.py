@@ -1,3 +1,11 @@
+"""pyMeasure is an open source package for scientific data handling, analysis and acquisition. By loading the pyMeasure
+package with the from pyMeasure import *, the user gets the designed API with finished functionality. The
+pyMeasure library itself has other helper modules that are directly accessible by importing them in the standard
+fashion (from pyMeasure.Code.Subpackage.Module import class_or_function. For optimization purposes the pyMeasure
+package importer (this file) has a constant VERBOSE_IMPORT = True that prints a list of each of the packages as it is
+imported.
+Designed by Aric Sanders 2016
+"""
 #TODO: Fix any circular imports, I am not sure if __all__ is the right way to do this
 # It appears any import of pyMeasure. causes this file to execute, creating a circular import
 import os
