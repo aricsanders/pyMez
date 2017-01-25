@@ -33,13 +33,15 @@ except:
     print("Setting Default file name to New_XML.xml")
     DEFAULT_FILE_NAME='New_XML.xml'
     pass
-try:
-    import lxml.html.csselect
-except:
-    print("The module lxml.html.cssselect was not found or had an error. If it is not installed"
-          "Install it with pip install cssselect")
-    #raise
-    pass
+# TODO: decide if I am going to use cssselect
+# try:
+#     import cssselect
+# except:
+#     print("The module lxml.html.cssselect was not found or had an error. If it is not installed"
+#           "Install it with pip install cssselect")
+#     #raise
+#     pass
+
 try:
     import pdfkit
     PDF_CONVERT=True
@@ -152,22 +154,24 @@ class HTMLBase(object):
     def show(self):
         """Saves html to a temp file and shows it in a browser"""
         lxml.html.open_in_browser(self.document)
-
-    def to_pdf(self,file_path=None,**options):
-        """Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name
-        the resulting file to self.path with pdf as the extension"""
-        if file_path is None:
-            file_path=change_extension(self.path,"pdf")
-        config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
-        pdfkit.from_string(str(self),file_path,configuration=config)
-        return file_path
+    if PDF_CONVERT:
+        def to_pdf(self,file_path=None,**options):
+            """Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name
+            the resulting file to self.path with pdf as the extension"""
+            if file_path is None:
+                file_path=change_extension(self.path,"pdf")
+            config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
+            pdfkit.from_string(str(self),file_path,configuration=config)
+            return file_path
 
     def to_HTML(self):
         """Convenience function that echos the content updates the attribute self.text"""
         self.text=str(self)
         return str(self.text)
 
-
+class HTMLHelpPage(HTMLBase):
+    """Model for a HTMLHelp page for a given module, class or function"""
+    pass
 
 #-----------------------------------------------------------------------------
 # Module Scripts
@@ -176,8 +180,9 @@ def test_HTMLBase(file_name="One_Port_Raw_Sparameter_20160307_001.html"):
     os.chdir(TESTS_DIRECTORY)
     html=HTMLBase(file_name)
     print html
-    html.to_pdf()
+    #html.to_pdf()
     html.show()
+
 def test_HTMLBase_no_file(head=None,body=None):
     """Tests the HTMLBase Class"""
     os.chdir(TESTS_DIRECTORY)
@@ -188,10 +193,18 @@ def test_HTMLBase_no_file(head=None,body=None):
 
     html=HTMLBase(None,head=head,body=body)
     print html
-    html.to_pdf()
+    # saves a pdf
+    #html.to_pdf()
     html.show()
+def test_make_html_element():
+    """Tests both the make_html_string function
+    """
+    [tag,content,id_attribute]=["h3","A level 3 heading",{"id":"heading-here"}]
+    print("The input of the function is tag = {0}, content = {1}, attribute dictionary = {2}".format(tag,content,                                                                                               id_attribute))
+    print("The resulting html string is {0}".format(make_html_string(tag,content,**id_attribute)))
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
     #test_HTMLBase(file_name="One_Port_Raw_Sparameter_20160307_001.html")
-    test_HTMLBase_no_file()
+    #test_HTMLBase_no_file()
+    test_make_html_element()
