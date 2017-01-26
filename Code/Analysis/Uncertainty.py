@@ -11,7 +11,7 @@
 # Standard Imports
 import os
 import sys
-
+import math
 #-----------------------------------------------------------------------------
 # Third Party Imports
 
@@ -30,6 +30,14 @@ def normalized_error_test(value_1,value_2,uncertainty,expansion_factor=1):
         return True
     else:
         return False
+
+def standard_error(value_1,uncertainty_value_1,value_2,uncertainty_value_2=0,expansion_factor=2):
+    """calculates the standard errror (delta value/ (expansion factor * Sqrt(ua^2+ub^2)))"""
+    return abs((value_2-value_1))/(math.sqrt(uncertainty_value_1**2+uncertainty_value_2**2)*expansion_factor)
+
+def standard_error_data_table(table_1,table_2 ,**options):
+    """Given two data tables finds the standard error for the intersection of the independent variable."""
+    pass
 
 
 
