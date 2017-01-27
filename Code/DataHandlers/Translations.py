@@ -84,11 +84,14 @@ except:
     raise ImportError
 try:
     import pdfkit
+    PDF_CONVERT=True
 except:
     print("The module pdfkit was not found or had an error,"
           "please check module or put it on the python path use pip install pdfkit and also install "
           "wkhtmltopdf")
-    raise ImportError
+    #raise ImportError
+    PDF_CONVERT=False
+    pass
 try:
     from scipy import misc
 except:
@@ -630,18 +633,18 @@ def AsciiTable_to_HtmlString(ascii_table):
     ascii_table.options=ascii_table_original_options
     return out_string
 
-
-def HtmlFile_to_PdfFile(html_file_name,pdf_file_name="test.pdf"):
-    """Takes an html page and converts it to pdf using wkhtmltopdf and pdfkit"""
-    config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
-    pdfkit.from_file(html_file_name,pdf_file_name,configuration=config)
-    return pdf_file_name
-
-def HtmlString_to_PdfFile(html_string,pdf_file_name="test.pdf"):
-    """Takes an html string and converts it to pdf using wkhtmltopdf and pdfkit"""
-    config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
-    pdfkit.from_string(html_string,pdf_file_name,configuration=config)
-    return pdf_file_name
+if PDF_CONVERT:
+    def HtmlFile_to_PdfFile(html_file_name,pdf_file_name="test.pdf"):
+        """Takes an html page and converts it to pdf using wkhtmltopdf and pdfkit"""
+        config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
+        pdfkit.from_file(html_file_name,pdf_file_name,configuration=config)
+        return pdf_file_name
+    
+    def HtmlString_to_PdfFile(html_string,pdf_file_name="test.pdf"):
+        """Takes an html string and converts it to pdf using wkhtmltopdf and pdfkit"""
+        config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
+        pdfkit.from_string(html_string,pdf_file_name,configuration=config)
+        return pdf_file_name
 
 def JsonFile_to_XmlDataTable(json_file_name):
     data_dictionary_list=json.load(open(json_file_name,'r'))
