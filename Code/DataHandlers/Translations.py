@@ -639,7 +639,7 @@ if PDF_CONVERT:
         config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
         pdfkit.from_file(html_file_name,pdf_file_name,configuration=config)
         return pdf_file_name
-    
+
     def HtmlString_to_PdfFile(html_string,pdf_file_name="test.pdf"):
         """Takes an html string and converts it to pdf using wkhtmltopdf and pdfkit"""
         config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
