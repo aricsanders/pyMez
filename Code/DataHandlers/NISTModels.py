@@ -1473,6 +1473,21 @@ class StandardErrorModel(AsciiDataTable):
     def __init__(self,file_path,**options):
         """Intializes the StandardErrorModel Class"""
         AsciiDataTable.__init__(self,file_path,**options)
+
+    def column_conforms(self,column_name):
+        "For a given column_name returns true if all values have an absolute value less than one"
+        column_data=self.get_column(column_name)
+        filtered_list=filter(lambda x: abs(x)>1,column_data)
+        if filtered_list:
+            return False
+        else:
+            return True
+    def get_conformation_dictionary(self):
+        """Returns a dictionary of the form {column_name:column_comforms(column_name)}"""
+        conformation_dictionary={column_name:self.column_conforms(column_name) for column_name in self.column_names[:]}
+        conformation_dictionary[self.column_names[0]]=True
+        return conformation_dictionary
+
     def show(self,**options):
         """Shows a plot of the StandardErrorModel"""
         defaults={"display_legend":False,
@@ -1483,7 +1498,11 @@ class StandardErrorModel(AsciiDataTable):
                   "file_name":None,
                   "plots_per_column":2,
                   "plot_format":'r--x',
-                 "fill_unit_rectangle":True}
+                 "fill_unit_rectangle":True,
+                 "fill_color":'b',
+                 "fill_opacity":.25,
+                 "fill_edge_color":'r'}
+
         plot_options={}
         for key,value in defaults.iteritems():
             plot_options[key]=value
@@ -1511,7 +1530,9 @@ class StandardErrorModel(AsciiDataTable):
                 rect__x=np.array([x_min,x_max])
 
                 ax.fill_between(rect__x,np.array([1.0,1.0]),np.array([-1.0,-1.0]),
-                                color='blue', alpha=0.2, edgecolor='r')
+                                color=plot_options["fill_color"],
+                                alpha=plot_options["fill_opacity"],
+                                edgecolor=plot_options["fill_edge_color"])
         plt.tight_layout()
         # Dealing with the save option
         if plot_options["file_name"] is None:

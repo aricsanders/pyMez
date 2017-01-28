@@ -62,6 +62,14 @@ def build_interpolated_data_set(x_list,interpolated_function_list):
                 new_row.append(function(x))
         out_data.append(new_row)
     return out_data
+
+def interpolate_table(table,independent_variable_list):
+    """Returns a copy of the table interpolated to the independent variable list"""
+    functions=interpolate_data(table.data)
+    new_data=build_interpolated_data_set(independent_variable_list,functions)
+    new_table=table.copy()
+    new_table.data=new_data
+    return new_table
 #-----------------------------------------------------------------------------
 # Module Classes
 
