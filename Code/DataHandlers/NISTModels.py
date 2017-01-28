@@ -237,6 +237,9 @@ def build_csv_from_raw(input_file_names_list,output_file_name,model_name):
 
 #-----------------------------------------------------------------------------
 # Module Classes
+class StandardErrorError(Exception):
+    "Error class for standard error functions and classes"
+    pass
 class OnePortCalrepModel(AsciiDataTable):
     def __init__(self,file_path,**options):
         "Intializes the OnePortCalrepModel Class, it is assumed that the file is of the .asc or table type"
@@ -1464,6 +1467,65 @@ class TwelveTermErrorModel(AsciiDataTable):
                 #print np.array(complex_numbers[1::2])
                 complex_array=np.array(complex_numbers[0::2])+1.j*np.array(complex_numbers[1::2])
                 self.complex_data.append(frequency+complex_array.tolist())
+class StandardErrorModel(AsciiDataTable):
+    """Model that stores data for standard error in the form [[independent_variable,SEValue1,..,SEValueN]..]
+    See function `pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table`"""
+    def __init__(self,file_path,**options):
+        """Intializes the StandardErrorModel Class"""
+        AsciiDataTable.__init__(self,file_path,**options)
+    def show(self,**options):
+        """Shows a plot of the StandardErrorModel"""
+        defaults={"display_legend":False,
+                  "save_plot":False,
+                  "directory":None,
+                  "specific_descriptor":self.options["specific_descriptor"],
+                  "general_descriptor":self.options["general_descriptor"]+"Plot",
+                  "file_name":None,
+                  "plots_per_column":2,
+                  "plot_format":'r--x',
+                 "fill_unit_rectangle":True}
+        plot_options={}
+        for key,value in defaults.iteritems():
+            plot_options[key]=value
+        for key,value in options.iteritems():
+            plot_options[key]=value
+
+        x_data=self.get_column(column_index=0)
+        y_columns=self.column_names[1:]
+        number_plots=int(len(self.column_names)-1)
+        number_columns=int(plot_options["plots_per_column"])
+        number_rows=int(round(float(number_plots)/float(number_columns)))
+
+        fig, axes = plt.subplots(nrows=number_rows,ncols=number_columns, figsize=(8,6),dpi=80)
+        for plot_index,ax in enumerate(axes.flat):
+            y_data=self.get_column(column_name=y_columns[plot_index])
+            ax.plot(x_data,y_data,plot_options["plot_format"],label=y_columns[plot_index])
+            ax.set_xlabel(self.column_names[0])
+            ax.set_ylabel("Standard Error")
+            ax.set_title(y_columns[plot_index])
+            if plot_options["display_legend"]:
+                ax.legend()
+            if plot_options["fill_unit_rectangle"]:
+                x_min=min(x_data)
+                x_max=max(x_data)
+                rect__x=np.array([x_min,x_max])
+
+                ax.fill_between(rect__x,np.array([1.0,1.0]),np.array([-1.0,-1.0]),
+                                color='blue', alpha=0.2, edgecolor='r')
+        plt.tight_layout()
+        # Dealing with the save option
+        if plot_options["file_name"] is None:
+            file_name=auto_name(specific_descriptor=plot_options["specific_descriptor"],
+                                general_descriptor=plot_options["general_descriptor"],
+                                directory=plot_options["directory"],extension='png',padding=3)
+        else:
+            file_name=plot_options["file_name"]
+        if plot_options["save_plot"]:
+            #print file_name
+            plt.savefig(os.path.join(plot_options["directory"],file_name))
+        else:
+            plt.show()
+        return fig
 
 class SwitchTermsFR():
     pass
