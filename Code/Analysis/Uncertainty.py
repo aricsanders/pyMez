@@ -43,7 +43,7 @@ def standard_error(value_1,uncertainty_value_1,value_2,uncertainty_value_2=0,exp
 def standard_error_data_table(table_1,table_2,**options):
     """standard error data table takes two tables and creates a table that is the standard error of the two tables,
     at least one table must have uncertainties associated with it. The input tables are assumed to have data
-    in the form [[x, y1, y2,...]..] Uncertatinties can be specified as a column name in the respective
+    in the form [[x, y1, y2,...]..] Uncertainties can be specified as a column name in the respective
     table, fractional, constant, or a function of the values. The returned table is an object
     of the class StandardErrorModel(AsciiDataTable) that has data in the form
     [[independent_varaible,SEValue1,SEValue2...]...] where column names are formed by
@@ -66,7 +66,7 @@ def standard_error_data_table(table_1,table_2,**options):
                    "table_1_uncertainty_type":"table",
                    "table_2_uncertainty_type":None,
                    "expansion_factor":1,
-                   'debug':True}
+                   'debug':False}
 
     for key,value in defaults.iteritems():
         error_options[key]=value
@@ -108,7 +108,9 @@ def standard_error_data_table(table_1,table_2,**options):
         # here if there are multiple values for x_value we ignore them
         table_1_row=filter(lambda x: x[x_column_index_table_1]==x_value,table_1.data)[0]
         # we begin a new_row
-        table_2_rows=filter(lambda x: x[x_column_index_table_1]==x_value,table_2.data)
+        table_2_rows=filter(lambda x: x[x_column_index_table_2]==x_value,table_2.data)
+        if error_options["debug"]:
+            print("{0} is {1}".format("table_2_rows",table_2_rows))
         for table_2_row in table_2_rows:
             new_row=[x_value]
             for column_index,column_name in enumerate(error_options["value_column_names"]):
@@ -154,11 +156,13 @@ def standard_error_data_table(table_1,table_2,**options):
     for column_name in error_options["value_column_names"]:
         standard_error_column_names.append("SE"+column_name)
     error_options["column_names"]=standard_error_column_names[:]
+    if error_options["debug"]:
+        print("{0} is {1}".format("standard_error_column_names",standard_error_column_names))
+        print("{0} is {1}".format("out_data",out_data))
     error_options["column_types"]=['float' for column in  standard_error_column_names[:]]
     error_options["data"]=out_data[:]
     out_table=StandardErrorModel(None,**error_options)
     return out_table
-
 
 
 
