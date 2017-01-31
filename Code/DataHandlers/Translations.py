@@ -534,26 +534,35 @@ def XmlDataTable_to_AsciiDataTable(xml_table):
 #     return xml
 
 def DataFrame_to_ExcelFile(pandas_data_frame,file_name="Test.xlsx"):
+    "Converts a pandas.DataFrame to an excel file using to_excel with index=False"
     pandas_data_frame.to_excel(file_name,index=False)
     return file_name
 
 def ExcelFile_to_DataFrame(excel_file_name):
+    "Converts an excel file to a pandas.DataFrame"
     df=pandas.read_excel(excel_file_name)
     return df
 
 def DataFrame_to_HtmlString(pandas_data_frame):
+    """Converts a pandas.DataFrame to a html table using index=False
+    inverse of HtmlString_to_DataFrame"""
     html=pandas_data_frame.to_html(index=False)
     return html
 
 def HtmlString_to_DataFrame(html_string):
+    "Converts a Html String to a pandas.DataFrame, inverse of DataFrame_to_HtmlString  "
     list_df=pandas.read_html(html_string)
     return list_df[0]
 
 def DataFrame_to_JsonFile(pandas_data_frame,file_name="test.json"):
+    """Converts a pandas.DataFrame to a JsonFile using orient='records'
+    inverse of JsonFile_to_DataFrame"""
     json=pandas_data_frame.to_json(file_name,orient='records')
     return file_name
 
 def JsonFile_to_DataFrame(json_file_name):
+    """Converts a JsonFile to a pandas.DataFrame using orient='records'
+    inverse of DataFrame_to_JsonFile"""
     data_frame=pandas.read_json(json_file_name,orient='records')
     return data_frame
 
@@ -574,7 +583,7 @@ def CsvFile_to_DataFrame(csv_file_name):
     return data_frame
 
 def AsciiTable_to_MatFile(ascii_data_table,file_name="test.mat"):
-    """Transforms an asciid data table without a header or footer to a matlab form"""
+    """Transforms an ascii data table without a header or footer to a matlab form"""
     matlab_data_dictionary={"data":ascii_data_table.data,"column_names":ascii_data_table.column_names}
     savemat(file_name,matlab_data_dictionary)
     return file_name
@@ -659,25 +668,31 @@ def CsvFile_to_AsciiDataTable(csv_file_name):
 
 # Image Translations
 def PngFile_to_JpgFile(png_file_name):
+    "Convets png file t a jpg using PIL "
     [root_name,extension]=png_file_name.split(".")
     jpeg_file_name=root_name+".jpg"
     PIL.Image.open(png_file_name).save(jpeg_file_name)
     return jpeg_file_name
 
 def File_to_Image(file_path):
+    """Converts an image file to the Image class of PIL
+    Inverse of Image_to_File"""
     new_image=PIL.Image.open(file_path)
     if re.search(".gif",file_path,re.IGNORECASE):
         new_image=new_image.convert("RGB")
     return new_image
 
 def Image_to_File(pil_image,file_path=None):
+    """Converts the Image class of PIL to a file
+    Inverse of File_to_Image"""
     if file_path is None:
         file_path=pil_image.filename
     pil_image.save(file_path)
     return file_path
 
 def Image_to_FileType(pil_image,file_path=None,extension="png"):
-
+    """More specific conversion of the Image class of PIL to a file, sets the output to RGB if possible
+    returns the new file name"""
     if file_path is None:
         file_path=pil_image.filename
     root_name=file_path.split(".")[0]
@@ -689,6 +704,7 @@ def Image_to_FileType(pil_image,file_path=None,extension="png"):
     return new_file_name
 
 def Image_to_ThumbnailFile(pil_image,file_path="thumbnail.jpg"):
+    """Converts an Image to a 64x64 pixel jpg thumbnail file. Returns the new file name"""
     size = (64, 64)
     temp_image=pil_image.copy()
     temp_image.thumbnail(size)
@@ -696,6 +712,7 @@ def Image_to_ThumbnailFile(pil_image,file_path="thumbnail.jpg"):
     return file_path
 
 def PngFile_to_Base64(file_name):
+    """Converts a png file to a base 64 encoded string"""
     in_file=open(file_name, "rb")
     encoded=base64.b64encode(in_file.read())
     return encoded
@@ -862,12 +879,14 @@ def JsonString_to_Dictionary(json_string):
     return out_dictionary
 
 def JsonString_to_JsonFile(json_string,file_name="test.json"):
+    """Transforms a json string to a json file"""
     out_file=open(file_name,'w')
     out_file.write(json_string)
     out_file.close()
     return file_name
 
 def JsonFile_to_JsonString(json_file_name):
+    "Transforms a Json file to a json string"
     in_file=open(json_file_name,'r')
     json_string=in_file.read()
     in_file.close()
@@ -876,6 +895,7 @@ def JsonFile_to_JsonString(json_file_name):
 
 
 def Dictionary_to_XmlString(dictionary=None,char_between='\n'):
+    """Transforms a python dictionary to a XML string of the form <key>value</key>"""
     string_output=''
     for key,value in dictionary.iteritems():
         xml_open="<"+str(key)+">"
