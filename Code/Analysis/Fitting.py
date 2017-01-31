@@ -5,7 +5,7 @@
 # Created:     9/9/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" Fitting is a module containing classes and fucntions for fitting data """
+""" Fitting is a module containing classes and functions for fitting data """
 
 #-----------------------------------------------------------------------------
 # Standard Imports
@@ -309,7 +309,8 @@ class FunctionalModel(object):
         for i in range(order):
             equation=sympy.integrate(equation,respect_to)
         return FunctionalModel(parameters=self.parameters[:],variables=self.variables[:],equation=str(equation))
-
+    # todo: This feature does not work because of the namspace of the parameters and variables
+    # I don't know what name sympify uses when it creates the equation
     # def series(self,variable_or_parameter,value=0,order=6):
     #     """Calculates the symbolic series expansion of order around the variable or parameter value
     #     of the functional model. Returns a new FunctionalModel"""

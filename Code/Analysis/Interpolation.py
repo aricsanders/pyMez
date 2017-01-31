@@ -64,7 +64,8 @@ def build_interpolated_data_set(x_list,interpolated_function_list):
     return out_data
 
 def interpolate_table(table,independent_variable_list):
-    """Returns a copy of the table interpolated to the independent variable list"""
+    """Returns a copy of the table interpolated to the independent variable list
+    Assumes there is a single independent variable in the first column"""
     functions=interpolate_data(table.data)
     new_data=build_interpolated_data_set(independent_variable_list,functions)
     new_table=table.copy()

@@ -24,7 +24,7 @@ if os.name=='nt':
         
     except:
         print 'Error in importing pythoncom, win32com. Check that pywintypes27 snf pythoncom27 dlls are in win32/lib'
-        raise
+        pass
 # Try to import EXIF for Jpeg and Tiff stuff
 try:
     import EXIF

@@ -128,6 +128,12 @@ def remove_circular_paths(path):
 # Module Classes
 
 class Graph(object):
+    """The Graph class creates a content graph that has as nodes different formats. As
+    a format is added via graph.add_node() by specifying a node name and a function from an
+    existing node into the new one, and one exiting the node. Once a series of nodes exists
+    to enter the graph at a node use graph.set_state() the current data representing the
+    state is in the attribute graph.data. To move among the formats use graph.move_to_node('NodeName')
+    """
     def __init__(self,**options):
         """Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required"""
         defaults={"graph_name":"Graph",
@@ -162,6 +168,7 @@ class Graph(object):
         self.display_layout=networkx.spring_layout(self.display_graph)
 
     def get_description_dictionary(self):
+        "returns a dictionary of the form {NodeName:Node Description for all of the current nodes"
         dictionary={node_name:self.node_descriptions[index] for index,node_name in enumerate(self.node_names)}
         return dictionary
 

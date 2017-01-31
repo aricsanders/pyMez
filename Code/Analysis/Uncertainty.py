@@ -12,6 +12,7 @@
 import os
 import sys
 import math
+import re
 #-----------------------------------------------------------------------------
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))

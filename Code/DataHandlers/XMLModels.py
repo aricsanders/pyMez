@@ -238,7 +238,8 @@ def determine_instrument_type(object):
 #-----------------------------------------------------------------------------
 # Module Classes
 class HTMLEcho():
-    """ A class that allows the reading and echoing of html files
+    """ A class that allows the reading and echoing of html files for a fully functional
+    HTML class see HTMLModels/HTMLBase
     """
     def __init__(self,file_path=None,**options):
         "Initializes the HTMLEcho() "
