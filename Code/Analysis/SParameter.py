@@ -171,7 +171,7 @@ def frequency_model_difference(model_1,model_2,**options):
 def calrep(raw_model,**options):
     """ Performs the calrep analysis routine on a raw data format (such as OnePortRawModel, TwoPortRawModel,PowerRawModel)
     Differs from the HP BASIC program in that it keeps the metadata Needs to be checked, returns 4 error terms for power
-    Also does not calculate all the same rows for power, exapnsion factor is set to 2"""
+    Also does not calculate all the same rows for power, expansion factor is set to 2"""
     mean_file=frequency_model_collapse_multiple_measurements(raw_model)
     standard_deviation_file=frequency_model_collapse_multiple_measurements(raw_model,method="std")
     if "Direction" in mean_file.column_names and "Connect" in mean_file.column_names:
