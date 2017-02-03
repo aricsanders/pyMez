@@ -24,17 +24,12 @@ import pyMeasure.Code.DataHandlers.GeneralModels
 import pyMeasure.Code.DataHandlers.StatistiCALModels
 import pyMeasure.Code.DataHandlers.TouchstoneModels
 import pyMeasure.Code.Utils.Names
-# for key,value in globals().copy()["pyMeasure"].__dict__.iteritems():
-#     print(key,value)
+
 
 #-----------------------------------------------------------------------------
 # Module Constants
 TEST_CASE_CLASSES=["TestNames","TestXMLModels","TestGeneralModels"]
-# IN_MODULE_TESTS=[]
-# for key,value in globals().copy()["pyMeasure"].__dict__.iteritems():
-#         if re.match("test_",key):
-#             IN_MODULE_TESTS.append(key)
-# print(IN_MODULE_TESTS)
+
 #-----------------------------------------------------------------------------
 # Module Functions
 def build_suite(*test_classes):
@@ -65,7 +60,6 @@ class TestXMLModels(unittest.TestCase):
     """This Test case sees if all the tests in the modules in pyMeasure.Code.Utils.Names function properly"""
     def setUp(self):
         "Sets up the unit test"
-
         self.module_tests=[]
         for key,value in globals().copy()["pyMeasure"].__dict__.iteritems():
             if re.match("test_",key):
@@ -78,11 +72,7 @@ class TestXMLModels(unittest.TestCase):
         xml="<li>My list element</li>"
         self.assertEqual(pyMeasure.dictionary_to_xml({"li":"My list element"},char_between=''),
                          xml,"pyMeasure.dictionary_to_xml did not work")
-    # def run_tests(self):
-    #     print self.module_tests
-    #     for item in self.module_tests:
-    #         self.assertEqual(globals().copy()["pyMeasure"].__dict__[item](),
-    #                          True,"{0} failed".format(item))
+
 
 class TestGeneralModels(unittest.TestCase):
     """Unit tests for the General Models Module"""
