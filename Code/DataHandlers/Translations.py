@@ -711,6 +711,14 @@ def Image_to_ThumbnailFile(pil_image,file_path="thumbnail.jpg"):
     temp_image.save(file_path)
     return file_path
 
+def Image_to_FaviconFile(pil_image,file_path="favicon.png"):
+    """Converts an Image to a 32x32 pixel png thumbnail file. Returns the new file name"""
+    size = (32, 32)
+    temp_image=pil_image.copy()
+    temp_image.thumbnail(size)
+    temp_image.save(file_path)
+    return file_path
+
 def PngFile_to_Base64(file_name):
     """Converts a png file to a base 64 encoded string"""
     in_file=open(file_name, "rb")
