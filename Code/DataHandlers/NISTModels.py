@@ -1467,6 +1467,7 @@ class TwelveTermErrorModel(AsciiDataTable):
                 #print np.array(complex_numbers[1::2])
                 complex_array=np.array(complex_numbers[0::2])+1.j*np.array(complex_numbers[1::2])
                 self.complex_data.append(frequency+complex_array.tolist())
+
 class StandardErrorModel(AsciiDataTable):
     """Model that stores data for standard error in the form [[independent_variable,SEValue1,..,SEValueN]..]
     See function `pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table`"""

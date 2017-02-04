@@ -34,6 +34,8 @@ if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.MUFModels"))
 from Code.DataHandlers.MUFModels import *
 if VERBOSE_IMPORT:print("Importing {0}".format("Code.Analysis.SParameter"))
 from Code.Analysis.SParameter import *
+if VERBOSE_IMPORT:print("Importing {0}".format("Code.Analysis.Uncertainty"))
+from Code.Analysis.Uncertainty import *
 if VERBOSE_IMPORT:print("Importing {0}".format("Code.InstrumentControl.Instruments"))
 from Code.InstrumentControl.Instruments import *
 if VERBOSE_IMPORT:print("Importing {0}".format("Code.InstrumentControl.Experiments"))

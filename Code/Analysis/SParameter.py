@@ -106,66 +106,68 @@ def frequency_model_collapse_multiple_measurements(model,**options):
     resulting_model=AsciiDataTable(None,**collapse_options)
     return resulting_model
 
-def frequency_model_difference(model_1,model_2,**options):
-    """Takes the difference of two models that both have frequency and a similar set of columns. Returns an object that is 
-    a list of [[frequency,column_1,..column_n],...] where columns are the same in the models. If  a particular subset of 
-    columns is desired use columns=["Frequency","magS11] models can be any subclass of AsciiDataTable, SNP, or 
-    pandas.DataFrame, if a column is a non-numeric type it drops it. The frequency list should be unique 
+
+def frequency_model_difference(model_1, model_2, **options):
+    """Takes the difference of two models that both have frequency and a similar set of columns. Returns an object that is
+    a list of [[frequency,column_1,..column_n],...] where columns are the same in the models. If  a particular subset of
+    columns is desired use columns=["Frequency","magS11] models can be any subclass of AsciiDataTable, SNP, or
+    pandas.DataFrame, if a column is a non-numeric type it drops it. The frequency list should be unique
     (no multiple frequencies) for at least one model"""
     # Set up defaults and pass options
-    defaults={"columns":"all","interpolate":False,"average":True}
-    difference_options={}
-    for key,value in defaults.iteritems():
-        difference_options[key]=value
-    for key,value in options.iteritems():
-        difference_options[key]=value
-        
+    defaults = {"columns": "all", "interpolate": False, "average": True}
+    difference_options = {}
+    for key, value in defaults.iteritems():
+        difference_options[key] = value
+    for key, value in options.iteritems():
+        difference_options[key] = value
+
     # first check type, if it is a panadas data frame a little conversion is needed, else is for all other models
     if type(model_1) in [pandas.DataFrame]:
-        model_1=DataFrame_to_AsciiDataTable(model_1)
+        model_1 = DataFrame_to_AsciiDataTable(model_1)
     if type(model_2) in [pandas.DataFrame]:
-        model_2=DataFrame_to_AsciiDataTable(model_2)
+        model_2 = DataFrame_to_AsciiDataTable(model_2)
     # now start with a set of frequencies (unique values from both)
-    frequency_set_1=set(model_1["Frequency"])
-    frequency_set_2=set(model_2["Frequency"])
-    model_2_frequency_selector=model_2.column_names.index('Frequency')
-    column_names_set_1=set(model_1.column_names)
-    column_names_set_2=set(model_2.column_names)
-    
+    frequency_set_1 = set(model_1["Frequency"])
+    frequency_set_2 = set(model_2["Frequency"])
+    model_2_frequency_selector = model_2.column_names.index('Frequency')
+    column_names_set_1 = set(model_1.column_names)
+    column_names_set_2 = set(model_2.column_names)
 
     # All points must be in the intersection to be used
-    frequency_intersection=list(frequency_set_1.intersection(frequency_set_2))
-    column_names_intersection=list(column_names_set_1.intersection(column_names_set_2))
-    
+    frequency_intersection = list(frequency_set_1.intersection(frequency_set_2))
+    column_names_intersection = list(column_names_set_1.intersection(column_names_set_2))
+
     if not frequency_intersection:
         print("The models do not have any frequency points in common")
         return None
-    
-    difference_data=[]
-    for row_index,frequency in enumerate(model_1["Frequency"]):
-        new_row=[frequency]
-        new_column_names=["Frequency"]
+    new_column_names = ["Frequency"]
+    difference_data = []
+    for row_index, frequency in enumerate(model_1["Frequency"]):
+        new_row = [frequency]
         if frequency in frequency_intersection:
-            model_2_frequency_row=filter(lambda x: x[model_2_frequency_selector]==frequency,model_2.data)[0]
-            #print("{0} is {1}".format("model_2_frequency_row",model_2_frequency_row))
-            for column_index,column in enumerate(model_1.column_names):
+            model_2_frequency_row = filter(lambda x: x[model_2_frequency_selector] == frequency, model_2.data)[0]
+            # print("{0} is {1}".format("model_2_frequency_row",model_2_frequency_row))
+            for column_index, column in enumerate(model_1.column_names):
                 if column in column_names_intersection and column not in ["Frequency"]:
-                    model_2_column_selector=model_2.column_names.index(column)
+                    model_2_column_selector = model_2.column_names.index(column)
                     if re.search('int|float',
                                  model_1.options["column_types"][column_index],
                                  re.IGNORECASE) and re.search('int|float',
                                                               model_2.options["column_types"][model_2_column_selector],
                                                               re.IGNORECASE):
-                        
-                        new_row.append(model_1.data[row_index][column_index]-model_2_frequency_row[model_2_column_selector])
+
+                        new_row.append(
+                            model_1.data[row_index][column_index] - model_2_frequency_row[model_2_column_selector])
                         new_column_names.append(column)
+                        # Print("New Column Names are {0}".format(new_column_names))
                     elif difference_options["columns"] in ["all"]:
                         new_row.append(model_1.data[row_index][column_index])
                         new_column_names.append(column)
             difference_data.append(new_row)
-    difference_options["column_names"]=new_column_names
-    difference_options["data"]=difference_data      
-    result=AsciiDataTable(None,**difference_options)
+    difference_options["column_names"] = new_column_names
+    # print("New Column Names are {0}".format(new_column_names))
+    difference_options["data"] = difference_data
+    result = AsciiDataTable(None, **difference_options)
     return result
 
 def calrep(raw_model,**options):
@@ -241,8 +243,8 @@ def calrep(raw_model,**options):
                           column_names=new_column_names,header=header,metadata=mean_file.metadata)
     return calrep
 
-def one_port_robin_comparision_plot(input_asc_file,input_res_file,**options):
-    """one_port_robin_comparision_plot plots a one port.asc file against a given .res file,
+def one_port_robin_comparison_plot(input_asc_file,input_res_file,**options):
+    """one_port_robin_comparison_plot plots a one port.asc file against a given .res file,
     use device_history=True in options to show device history"""
     defaults={"device_history":False,"mag_res":False}
     plot_options={}
@@ -594,8 +596,8 @@ def average_one_port_sparameters(table_list,**options):
         average_data.append(np.mean(new_row,axis=0).tolist())
     return average_data
 
-def two_port_comparision_plot_with_residuals(two_port_raw,mean_frame,difference_frame):
-    """Creates a comparision plot given a TwoPortRawModel object and a pandas.DataFrame mean frame"""
+def two_port_comparison_plot_with_residuals(two_port_raw,mean_frame,difference_frame):
+    """Creates a comparison plot given a TwoPortRawModel object and a pandas.DataFrame mean frame"""
     fig, axes = plt.subplots(nrows=3, ncols=2, sharex='col',figsize=(8,6),dpi=80)
     measurement_date=two_port_raw.metadata["Measurement_Date"]
     ax0,ax1,ax2,ax3,ax4,ax5 = axes.flat
@@ -745,8 +747,8 @@ def return_history_key(calrep_model):
     else:
         raise TypeError("Must be a calrep model, such as OnePortCalrepModel, etc. ")
 
-def raw_comparision_plot_with_residuals(raw_nist,mean_frame,difference_frame,**options):
-    """Creates a comparision plot given a RawModel object and a pandas.DataFrame mean frame and difference frame"""
+def raw_comparison_plot_with_residuals(raw_nist,mean_frame,difference_frame,**options):
+    """Creates a comparison plot given a RawModel object and a pandas.DataFrame mean frame and difference frame"""
     defaults={"display_mean":True,
               "display_difference":True,
               "display_raw":True,
@@ -944,26 +946,26 @@ def compare_s2p_plots(list_S2PV1,**options):
               "display_legend":True,
               "save_plot":False,
               "directory":None,
-              "specific_descriptor":"Comparision_Plot",
+              "specific_descriptor":"comparison_Plot",
               "general_descriptor":"Plot",
               "file_name":None,
               "labels":None}
-    comparision_plot_options={}
+    comparison_plot_options={}
     for key,value in defaults.iteritems():
-        comparision_plot_options[key]=value
+        comparison_plot_options[key]=value
     for key,value in options.iteritems():
-        comparision_plot_options[key]=value
+        comparison_plot_options[key]=value
 
     # create a set of 8 subplots
     plt.hold(True)
     fig, compare_axes = plt.subplots(nrows=4, ncols=2, figsize=(8,6),dpi=80)
-    if comparision_plot_options["labels"] is None:
+    if comparison_plot_options["labels"] is None:
         labels=[s2p.path for s2p in list_S2PV1]
     else:
-        labels=comparision_plot_options["labels"]
+        labels=comparison_plot_options["labels"]
     for s2p_index,s2p in enumerate(list_S2PV1):
         # start by changing the format of all the s2p
-        s2p.change_data_format(comparision_plot_options["format"])
+        s2p.change_data_format(comparison_plot_options["format"])
         column_names=s2p.column_names[1:]
         for index, ax in enumerate(compare_axes.flat):
             #ax.xaxis.set_visible(False)
@@ -976,7 +978,7 @@ def compare_s2p_plots(list_S2PV1,**options):
             x=s2p.get_column('Frequency')
             y=np.array(s2p.get_column(column_names[index]))
             ax.plot(x,y,label=labels[s2p_index])
-            if comparision_plot_options["display_legend"]:
+            if comparison_plot_options["display_legend"]:
                 ax.legend(loc=1,fontsize='8')
 
     compare_axes.flat[-2].set_xlabel('Frequency(GHz)',color='k')
@@ -984,16 +986,16 @@ def compare_s2p_plots(list_S2PV1,**options):
     fig.subplots_adjust(hspace=0)
     plt.tight_layout()
     # Dealing with the save option
-    if comparision_plot_options["file_name"] is None:
-        file_name=auto_name(specific_descriptor=comparision_plot_options["specific_descriptor"],
-                            general_descriptor=comparision_plot_options["general_descriptor"],
-                            directory=comparision_plot_options["directory"]
+    if comparison_plot_options["file_name"] is None:
+        file_name=auto_name(specific_descriptor=comparison_plot_options["specific_descriptor"],
+                            general_descriptor=comparison_plot_options["general_descriptor"],
+                            directory=comparison_plot_options["directory"]
                             ,extension='png',padding=3)
     else:
-        file_name=comparision_plot_options["file_name"]
-    if comparision_plot_options["save_plot"]:
+        file_name=comparison_plot_options["file_name"]
+    if comparison_plot_options["save_plot"]:
         #print file_name
-        plt.savefig(os.path.join(comparision_plot_options["directory"],file_name))
+        plt.savefig(os.path.join(comparison_plot_options["directory"],file_name))
     else:
         plt.show()
     return fig
@@ -1057,9 +1059,166 @@ def plot_calrep(calrep_model):
 
 
 
+def plot_calrep_results_comparison(calrep_model, results_model, **options):
+    """Plots a calrep file and a results file on the same axis. Input is a calrep table from the sparameter
+    function calrep and a
+    results file, with options. """
+    defaults = {"display_legend": True,
+                "save_plot": False,
+                "directory": None,
+                "specific_descriptor": "comparison_Plot",
+                "general_descriptor": "Plot",
+                "file_name": None,
+                "labels": None,
+                "error_suffix": 'g',
+                "calrep_format": 'k-x',
+                "results_format": 'r-x'}
+    comparison_plot_options = {}
+    for key, value in defaults.iteritems():
+        comparison_plot_options[key] = value
+    for key, value in options.iteritems():
+        comparison_plot_options[key] = value
+    # figure out the number of plots based on the measurement type
+    measurement_type = calrep_model.metadata["Measurement_Type"]
+    if re.search('1|one', measurement_type, re.IGNORECASE):
+        number_plots = 2
+        column_names = ['magS11', 'argS11']
+    elif re.search('2|two', measurement_type, re.IGNORECASE):
+        if re.search('NR', measurement_type, re.IGNORECASE):
+            number_plots = 8
+            column_names = ['magS11', 'argS11', 'magS12', 'argS12', 'magS21', 'argS21', 'magS22', 'argS22']
+        else:
+            number_plots = 6
+            column_names = ['magS11', 'argS11', 'magS21', 'argS21', 'magS22', 'argS22']
+    else:
+        number_plots = 3
+        column_names = ['magS11', 'argS11', 'Efficiency']
+    # create the error column names
+    error_columns = []
+    for column in column_names[:]:
+        error_column = column.replace("mag", "uM" + comparison_plot_options["error_suffix"])
+        error_column = error_column.replace("arg", "uA" + comparison_plot_options["error_suffix"])
+        error_column = error_column.replace("Efficiency", "uE" + comparison_plot_options["error_suffix"])
+        error_columns.append(error_column)
+
+    # We want plots that have frequency as the x-axis and y that has an error
+    calrep_x = calrep_model["Frequency"]
+    results_x = results_model["Frequency"]
+    number_rows = int(round(float(number_plots) / 2))
+    fig, compare_axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col', figsize=(8, 6), dpi=80)
+    # each axis has an error column
+    for plot_index, ax in enumerate(compare_axes.flat[:]):
+        calrep_y = np.array(calrep_model[column_names[plot_index]])
+        results_y = np.array(results_model[column_names[plot_index]])
+        error = np.array(calrep_model[error_columns[plot_index]])
+        ax.plot(calrep_x, calrep_y, comparison_plot_options['calrep_format'],
+                label='Calrep of {0}'.format(calrep_model.metadata["Device_Id"]))
+        ax.fill_between(calrep_x, calrep_y - error, calrep_y + error, edgecolor=(0, .0, .0, .25),
+                        facecolor=(.25, .25, .25, .1),
+                        linewidth=1)
+        ax.plot(results_x, results_y, comparison_plot_options['results_format'], label="Reference File")
+        if comparison_plot_options["display_legend"]:
+            ax.legend()
+
+    # Dealing with the save option
+    if comparison_plot_options["file_name"] is None:
+        file_name = auto_name(specific_descriptor=comparison_plot_options["specific_descriptor"],
+                              general_descriptor=comparison_plot_options["general_descriptor"],
+                              directory=comparison_plot_options["directory"]
+                              , extension='png', padding=3)
+    else:
+        file_name = comparison_plot_options["file_name"]
+    if comparison_plot_options["save_plot"]:
+        # print file_name
+        plt.savefig(os.path.join(comparison_plot_options["directory"], file_name))
+    else:
+        plt.show()
+    return fig
 
 
-def plot_calrep_comparision(calrep_model_list):
+def plot_calrep_results_difference_comparison(calrep_model, results_model, **options):
+    """Plots a calrep file and a results file on the same axis. Input is a calrep table from the sparameter
+    function calrep and a
+    results file, with options. """
+    defaults = {"display_legend": False,
+                "save_plot": False,
+                "directory": None,
+                "specific_descriptor": "comparison_Plot",
+                "general_descriptor": "Plot",
+                "file_name": None,
+                "labels": None,
+                "error_suffix": 'g',
+                "calrep_format": 'r-x',
+                "results_format": 'r-x',
+                "debug": False,
+                "title": 'Calrep diiference of {0}'.format(calrep_model.metadata["Device_Id"])}
+    comparison_plot_options = {}
+    for key, value in defaults.iteritems():
+        comparison_plot_options[key] = value
+    for key, value in options.iteritems():
+        comparison_plot_options[key] = value
+    # figure out the number of plots based on the measurement type
+    measurement_type = calrep_model.metadata["Measurement_Type"]
+    if re.search('1|one', measurement_type, re.IGNORECASE):
+        number_plots = 2
+        column_names = ['magS11', 'argS11']
+    elif re.search('2|two', measurement_type, re.IGNORECASE):
+        if re.search('NR', measurement_type, re.IGNORECASE):
+            number_plots = 8
+            column_names = ['magS11', 'argS11', 'magS12', 'argS12', 'magS21', 'argS21', 'magS22', 'argS22']
+        else:
+            number_plots = 6
+            column_names = ['magS11', 'argS11', 'magS21', 'argS21', 'magS22', 'argS22']
+    else:
+        number_plots = 3
+        column_names = ['magS11', 'argS11', 'Efficiency']
+    # create the error column names
+    error_columns = []
+    for column in column_names[:]:
+        error_column = column.replace("mag", "uM" + comparison_plot_options["error_suffix"])
+        error_column = error_column.replace("arg", "uA" + comparison_plot_options["error_suffix"])
+        error_column = error_column.replace("Efficiency", "uE" + comparison_plot_options["error_suffix"])
+        error_columns.append(error_column)
+    difference_model = frequency_model_difference(calrep_model, results_model)
+    if comparison_plot_options["debug"]:
+        print("{0} is {1}".format("difference_model.column_names", difference_model.column_names))
+    # We want plots that have frequency as the x-axis and y that has an error
+    difference_x = difference_model["Frequency"]
+    calrep_x = calrep_model["Frequency"]
+    number_rows = int(round(float(number_plots) / 2))
+    fig, compare_axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col', figsize=(8, 6), dpi=80)
+    # each axis has an error column
+    for plot_index, ax in enumerate(compare_axes.flat[:]):
+
+        difference_y = np.array(difference_model[column_names[plot_index]])
+        error = np.array(calrep_model[error_columns[plot_index]])
+        ax.plot(difference_x, difference_y, comparison_plot_options['calrep_format'],
+                label='Calrep diiference of {0}'.format(calrep_model.metadata["Device_Id"]))
+        ax.fill_between(calrep_x, - error, error, edgecolor=(0, .0, .0, .25),
+                        facecolor=(.25, .25, .25, .1),
+                        linewidth=1)
+        if comparison_plot_options["display_legend"]:
+            ax.legend()
+
+    if comparison_plot_options["title"]:
+        fig.suptitle(comparison_plot_options["title"])
+
+    # Dealing with the save option
+    if comparison_plot_options["file_name"] is None:
+        file_name = auto_name(specific_descriptor=comparison_plot_options["specific_descriptor"],
+                              general_descriptor=comparison_plot_options["general_descriptor"],
+                              directory=comparison_plot_options["directory"]
+                              , extension='png', padding=3)
+    else:
+        file_name = comparison_plot_options["file_name"]
+    if comparison_plot_options["save_plot"]:
+        # print file_name
+        plt.savefig(os.path.join(comparison_plot_options["directory"], file_name))
+    else:
+        plt.show()
+    return fig
+
+def plot_calrep_comparison(calrep_model_list):
     """Plots many calrep models on the same axis with uncertainties"""
     for index,calrep_model in enumerate(calrep_model_list):
         if type(calrep_model) in [PowerCalrepModel,TwoPortCalrepModel]:
@@ -1139,7 +1298,7 @@ def test_average_one_port_sparameters():
     print out_table
 
 def test_comparison(input_file=None):
-    """test_comparision tests the raw_mean,difference and comparison plot functionality"""
+    """test_comparison tests the raw_mean,difference and comparison plot functionality"""
     # Data sources, to be replaced as project_files in Django
     # Todo: These are not robust tests fix them?
     TWO_PORT_NR_CHKSTD_CSV=r"C:\Share\Converted_Check_Standard\Two_Port_NR_Check_Standard.csv"
@@ -1194,7 +1353,7 @@ def test_comparison(input_file=None):
     #print difference_frame
     stop_time=datetime.datetime.now()
     plot_options={"display_difference":False,"display_mean":True,"display_raw":True,"display_legend":False}
-    raw_comparision_plot_with_residuals(table,mean_frame,difference_frame,**plot_options)
+    raw_comparison_plot_with_residuals(table,mean_frame,difference_frame,**plot_options)
     #stop_time=datetime.datetime.now()
     diff=stop_time-start_time
     print("It took {0} seconds to process".format(diff.total_seconds()))
