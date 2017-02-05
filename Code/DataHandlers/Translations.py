@@ -482,6 +482,14 @@ def TwoPortRawModel_to_S2PV1(two_port_raw_table,**options):
     s2p_file=S2PV1(None,**s2p_options)
     return s2p_file
 
+def Snp_to_AsciiDataTable(snp_model):
+    """Converts snp files to AsciiDataTable"""
+    options=snp_model.options
+    options['data']=snp_model.data
+    options['column_names']=snp_model.column_names
+    new_table=AsciiDataTable(None,**options)
+    return new_table
+
 def JBSparameter_to_S2PV1(jb_model,**options):
     """Transforms a JBSparameter file to S2PV1 """
     table=jb_model

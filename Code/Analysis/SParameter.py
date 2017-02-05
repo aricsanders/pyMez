@@ -999,6 +999,31 @@ def compare_s2p_plots(list_S2PV1,**options):
     else:
         plt.show()
     return fig
+def return_calrep_value_column_names(calrep_model):
+    """Returns the column names for values in a calrep model. For example if the
+    calrep model is a 1-port, then it returns ["magS11","argS11"] """
+    measurement_type = calrep_model.metadata["Measurement_Type"]
+    if re.search('1|one', measurement_type, re.IGNORECASE):
+        column_names = ['magS11', 'argS11']
+    elif re.search('2|two', measurement_type, re.IGNORECASE):
+        if re.search('NR', measurement_type, re.IGNORECASE):
+            column_names = ['magS11', 'argS11', 'magS12', 'argS12', 'magS21', 'argS21', 'magS22', 'argS22']
+        else:
+            column_names = ['magS11', 'argS11', 'magS21', 'argS21', 'magS22', 'argS22']
+    else:
+        column_names = ['magS11', 'argS11', 'Efficiency']
+    return column_names
+
+def return_calrep_error_column_names(calrep_model_value_columns,error_suffix='g'):
+    """Returns the column names for errors in a calrep model. For example if the
+    calrep model value column names are ["magS11","argS11"], then it returns ["uMgS11","uAgS11"] """
+    error_columns = []
+    for column in column_names[:]:
+        error_column = column.replace("mag", "uM" + error_suffix)
+        error_column = error_column.replace("arg", "uA" + error_suffix)
+        error_column = error_column.replace("Efficiency", "uE" + error_suffix)
+        error_columns.append(error_column)
+    return error_columns
 
 def plot_calrep(calrep_model):
     """Plots a calrep model with uncertainties"""
@@ -1011,7 +1036,7 @@ def plot_calrep(calrep_model):
     for column_name in calrep_model.column_names[:]:
         if re.search("mag|arg|eff",column_name,re.IGNORECASE):
             average_columns.append(column_name)
-    print("{0} is {1}".format("average_columns",average_columns))
+    #print("{0} is {1}".format("average_columns",average_columns))
     number_plots=len(average_columns)
     number_rows=int(round(number_plots/2.))
     fig, axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col')
@@ -1025,8 +1050,8 @@ def plot_calrep(calrep_model):
             error=calrep_model[error_name]
             x=calrep_model["Frequency"]
             y=calrep_model[column_name]
-            print("Length of x is {0}, Length of y is {1}, Length of error is {2}".format(len(x),len(y),len(error)))
-            ax.errorbar(x,y,yerr=error,fmt='k--')
+            #print("Length of x is {0}, Length of y is {1}, Length of error is {2}".format(len(x),len(y),len(error)))
+            ax.errorbar(x,y,yerr=error,fmt='r-x')
             ax.set_ylabel(r'|${\Gamma} $|',color='green')
         elif re.search("arg",column_name,re.IGNORECASE):
             error_letter="A"
@@ -1035,7 +1060,7 @@ def plot_calrep(calrep_model):
             error=calrep_model[error_name]
             x=calrep_model["Frequency"]
             y=calrep_model[column_name]
-            ax.errorbar(x,y,yerr=error,fmt='k--')
+            ax.errorbar(x,y,yerr=error,fmt='r-x')
             ax.set_ylabel('Phase(Degrees)',color='green')
         elif re.search("eff",column_name,re.IGNORECASE):
             error_letter="E"
@@ -1049,7 +1074,7 @@ def plot_calrep(calrep_model):
 
             x=calrep_model["Frequency"]
             y=calrep_model[column_name]
-            ax.errorbar(x,y,yerr=error,fmt='k--')
+            ax.errorbar(x,y,yerr=error,fmt='r-x')
             ax.set_ylabel('Phase(Degrees)',color='green')
             break
     fig.suptitle(calrep_model.metadata["Device_Id"])

@@ -219,6 +219,8 @@ def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
                 uncertainty_magnitude=.02
             elif magnitude_S12>=40 and magnitude_S12<65:
                 uncertainty_magnitude=.02+.00015*(magnitude_S12-40.)**2
+            else:
+                uncertainty_magnitude = .0005 + .00027 * frequency
         elif re.search('2.4',connector_type,re.IGNORECASE):
             # 3.5mm and 2.92mm have the same mag relations
             if magnitude_S12>=0 and magnitude_S12<25:
@@ -227,6 +229,8 @@ def coax_s12_S_NIST(connector_type='N',frequency=1,magnitude_S12=10,format='DB')
                 uncertainty_magnitude=.03
             elif magnitude_S12>=40 and magnitude_S12<65:
                 uncertainty_magnitude=.03+.00015*(magnitude_S12-40.)**2
+            else:
+                uncertainty_magnitude = .01 + .0004 * frequency
     else:
         uncertainty_magnitude=.002
         uncertainty_phase=.01
