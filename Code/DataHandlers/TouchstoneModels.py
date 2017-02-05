@@ -1313,11 +1313,11 @@ class SNP(SNPBase):
         for row in self.data[:]:
             for line_number in range(self.number_lines_per_sparameter):
                 if line_number is 0:
-                    row_formatter=build_row_formatter(precision=5,number_columns=self.wrap_value+1)
+                    row_formatter=build_row_formatter(precision=9,number_columns=self.wrap_value+1)
                     self.sparameter_lines.append(row_formatter.format(delimiter=self.options["data_delimiter"],
                                                                       *row[:self.wrap_value+1]))
                 elif line_number>0 and line_number<self.number_lines_per_sparameter:
-                    row_formatter=build_row_formatter(precision=5,number_columns=self.wrap_value)
+                    row_formatter=build_row_formatter(precision=9,number_columns=self.wrap_value)
                     offset=1+self.wrap_value*(line_number)
                     span=self.wrap_value
                     self.sparameter_lines.append(row_formatter.format(delimiter=self.options["data_delimiter"],
@@ -1325,7 +1325,7 @@ class SNP(SNPBase):
                 elif line_number<self.number_lines_per_sparameter-1:
                     offset=1+self.wrap_value*(line_number)
                     span=len(row)-offset
-                    row_formatter=build_row_formatter(precision=5,number_columns=span)
+                    row_formatter=build_row_formatter(precision=9,number_columns=span)
                     self.sparameter_lines.append(row_formatter.format(delimiter=self.options["data_delimiter"],
                                                                       *row[offset:offset+span]))
         #print("{0} is {1}".format("len(self.sparameter_lines)",len(self.sparameter_lines)))

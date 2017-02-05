@@ -26,10 +26,12 @@ def get_date():
     today=datetime.date.today()
     return today.strftime('%Y%m%d')
     
-def get_filename_iterator(base_name=None,directory=None,extension='xml',padding=3):
+def get_filename_iterator(base_name=None,directory=None,extension=None,padding=3):
     """ Returns the number of files in directory with base_name +1, padded by padding"""
     iterator=0
     replacement_string="{:0"+str(padding)+"d}"
+    if extension is None:
+        extension="*"
     if base_name is None:
         return replacement_string.format(1)
     elif directory is None:

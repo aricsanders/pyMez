@@ -487,6 +487,8 @@ def Snp_to_AsciiDataTable(snp_model):
     options=snp_model.options
     options['data']=snp_model.data
     options['column_names']=snp_model.column_names
+    options['column_types']=['float' for i in snp_model.column_names]
+    options["extension"]="txt"
     new_table=AsciiDataTable(None,**options)
     return new_table
 

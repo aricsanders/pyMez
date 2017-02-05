@@ -170,6 +170,32 @@ def frequency_model_difference(model_1, model_2, **options):
     result = AsciiDataTable(None, **difference_options)
     return result
 
+def monte_carlo_reference_curve(monte_carlo_directory,**options):
+    """Creates a standard curve from a montecarlo directory (from MUF). The standard curve
+    has a mean or median and a standard deviation for the uncertainty"""
+    defaults={"method":mean,"format":"RI"}
+    reference_options={}
+    for key,value in defaults.iteritems():
+        reference_options[key]=value
+    for key,value in options.iteritems():
+        reference_options[key]=value
+    file_names=os.listdir(monte_carlo_directory)
+    initial_file=SNP(os.path.join(monte_carlo_directory,file_names[0]))
+    initial_file.change_data_format(reference_options["format"])
+    combined_table=Snp_to_AsciiDataTable(initial_file)
+    for file_name in file_names[1:]:
+        snp_file=SNP(os.path.join(MONTECARLo_DIRECTORY,file_name))
+        snp_file.change_data_format(reference_options["format"])
+        table=Snp_to_AsciiDataTable(snp_file)
+        combined_table+table
+    mean_table=frequency_model_collapse_multiple_measurements(combined_table,method=results_options["method"])
+    standard_deviation=frequency_model_collapse_multiple_measurements(combined_table,
+                                                                      method='std')
+    new_column_names=['Frequency']+['u'+name for name in standard_deviation.column_names[1:]]
+    standard_deviation.column_names=new_column_names
+    reference_curve=ascii_data_table_join("Frequency",mean_table,standard_deviation)
+    return reference_curve
+
 def calrep(raw_model,**options):
     """ Performs the calrep analysis routine on a raw data format (such as OnePortRawModel, TwoPortRawModel,PowerRawModel)
     Differs from the HP BASIC program in that it keeps the metadata Needs to be checked, returns 4 error terms for power
