@@ -148,8 +148,10 @@ def standard_error_data_table(table_1,table_2,**options):
                 else:
                     error_2=0
                 # now calculate the value and append
-
-                standard_error=(value_1-value_2)/(expansion_factor*math.sqrt(error_1**2+error_2**2))
+                try:
+                    standard_error=(value_1-value_2)/(expansion_factor*math.sqrt(error_1**2+error_2**2))
+                except:
+                    standard_error=0
                 new_row.append(standard_error)
             out_data.append(new_row)
         # now we handle the standard error table creation

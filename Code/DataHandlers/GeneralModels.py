@@ -1393,7 +1393,7 @@ class AsciiDataTable():
         footers are different it appends them to the left most object."""
         if self==other:
             return
-        if self.column_names is other.column_names:
+        if self.column_names == other.column_names:
             for row in other.data:
                 self.add_row(row)
         elif len(self.data)==len(other.data):

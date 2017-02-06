@@ -1329,6 +1329,7 @@ class SNP(SNPBase):
                     self.sparameter_lines.append(row_formatter.format(delimiter=self.options["data_delimiter"],
                                                                       *row[offset:offset+span]))
         #print("{0} is {1}".format("len(self.sparameter_lines)",len(self.sparameter_lines)))
+        self.options["column_types"]=["float" for column in self.column_names[:]]
     def __read_and_fix__(self):
         """Reads a snp v1 file and fixes any problems with delimiters. Since snp files may use
         any white space or combination of white space as data delimiters it reads the data and creates

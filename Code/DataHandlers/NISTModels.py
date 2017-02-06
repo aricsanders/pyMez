@@ -1516,7 +1516,7 @@ class StandardErrorModel(AsciiDataTable):
         number_columns=int(plot_options["plots_per_column"])
         number_rows=int(round(float(number_plots)/float(number_columns)))
 
-        fig, axes = plt.subplots(nrows=number_rows,ncols=number_columns, figsize=(8,6),dpi=80)
+        fig, axes = plt.subplots(nrows=number_rows,ncols=number_columns)
         for plot_index,ax in enumerate(axes.flat):
             y_data=self.get_column(column_name=y_columns[plot_index])
             ax.plot(x_data,y_data,plot_options["plot_format"],label=y_columns[plot_index])
