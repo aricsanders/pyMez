@@ -1502,7 +1502,9 @@ class StandardErrorModel(AsciiDataTable):
                  "fill_unit_rectangle":True,
                  "fill_color":'b',
                  "fill_opacity":.25,
-                 "fill_edge_color":'r'}
+                 "fill_edge_color":'r',
+                  "plot_size":(8, 10),
+                  "dpi":80}
 
         plot_options={}
         for key,value in defaults.iteritems():
@@ -1516,7 +1518,8 @@ class StandardErrorModel(AsciiDataTable):
         number_columns=int(plot_options["plots_per_column"])
         number_rows=int(round(float(number_plots)/float(number_columns)))
 
-        fig, axes = plt.subplots(nrows=number_rows,ncols=number_columns)
+        fig, axes = plt.subplots(nrows=number_rows,ncols=number_columns,
+                                 figsize=plot_options["plot_size"],dpi=plot_options["dpi"])
         for plot_index,ax in enumerate(axes.flat):
             y_data=self.get_column(column_name=y_columns[plot_index])
             ax.plot(x_data,y_data,plot_options["plot_format"],label=y_columns[plot_index])

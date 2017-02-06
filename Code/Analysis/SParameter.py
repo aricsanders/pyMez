@@ -265,8 +265,10 @@ def calrep(raw_model,**options):
     sorted_keys=sorted(mean_file.metadata.keys())
     header=["{0} = {1}".format(key,mean_file.metadata[key]) for key in sorted_keys]
     column_types=["float" for column in new_column_names]
+    #todo: Add value_column_names and uncertainty_column_names to conform to reference curve
     calrep=AsciiDataTable(None,data=new_data,column_types=column_types,
-                          column_names=new_column_names,header=header,metadata=mean_file.metadata)
+                          column_names=new_column_names,header=header,
+                          metadata=mean_file.metadata)
     return calrep
 
 def one_port_robin_comparison_plot(input_asc_file,input_res_file,**options):
