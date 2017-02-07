@@ -170,31 +170,105 @@ def frequency_model_difference(model_1, model_2, **options):
     result = AsciiDataTable(None, **difference_options)
     return result
 
-def monte_carlo_reference_curve(monte_carlo_directory,**options):
+
+def create_monte_carlo_reference_curve(monte_carlo_directory, **options):
     """Creates a standard curve from a montecarlo directory (from MUF). The standard curve
     has a mean or median and a standard deviation for the uncertainty"""
-    defaults={"method":mean,"format":"RI"}
-    reference_options={}
-    for key,value in defaults.iteritems():
-        reference_options[key]=value
-    for key,value in options.iteritems():
-        reference_options[key]=value
-    file_names=os.listdir(monte_carlo_directory)
-    initial_file=SNP(os.path.join(monte_carlo_directory,file_names[0]))
+    defaults = {"method": "mean", "format": "RI", "filter": "s\d+p"}
+    reference_options = {}
+    for key, value in defaults.iteritems():
+        reference_options[key] = value
+    for key, value in options.iteritems():
+        reference_options[key] = value
+    file_names = os.listdir(monte_carlo_directory)
+    filtered_file_names = []
+    for file_name in file_names[:]:
+        if re.search(reference_options["filter"], file_name, re.IGNORECASE):
+            filtered_file_names.append(file_name)
+    file_names = filtered_file_names
+    # print file_names
+    initial_file = SNP(os.path.join(monte_carlo_directory, file_names[0]))
     initial_file.change_data_format(reference_options["format"])
-    combined_table=Snp_to_AsciiDataTable(initial_file)
+    combined_table = Snp_to_AsciiDataTable(initial_file)
+
     for file_name in file_names[1:]:
-        snp_file=SNP(os.path.join(MONTECARLo_DIRECTORY,file_name))
+        snp_file = SNP(os.path.join(monte_carlo_directory, file_name))
         snp_file.change_data_format(reference_options["format"])
-        table=Snp_to_AsciiDataTable(snp_file)
-        combined_table+table
-    mean_table=frequency_model_collapse_multiple_measurements(combined_table,method=results_options["method"])
-    standard_deviation=frequency_model_collapse_multiple_measurements(combined_table,
-                                                                      method='std')
-    new_column_names=['Frequency']+['u'+name for name in standard_deviation.column_names[1:]]
-    standard_deviation.column_names=new_column_names
-    reference_curve=ascii_data_table_join("Frequency",mean_table,standard_deviation)
+        table = Snp_to_AsciiDataTable(snp_file)
+        combined_table + table
+    mean_table = frequency_model_collapse_multiple_measurements(combined_table, method=reference_options["method"])
+    standard_deviation = frequency_model_collapse_multiple_measurements(combined_table,
+                                                                        method='std')
+    new_column_names = ['Frequency'] + ['u' + name for name in standard_deviation.column_names[1:]]
+    standard_deviation.column_names = new_column_names
+    reference_curve = ascii_data_table_join("Frequency", mean_table, standard_deviation)
+    reference_curve.options["value_column_names"] = mean_table.column_names[1:]
+    reference_curve.options["uncertainty_column_names"] = new_column_names[1:]
     return reference_curve
+
+
+def plot_reference_curve(reference_curve, **options):
+    """Plots a frequency based reference curve by using the options
+    value_column_names and uncertainty_column_names."""
+    defaults = {"display_legend": False,
+                "save_plot": False,
+                "directory": os.getcwd(),
+                "specific_descriptor": "Reference_Curve",
+                "general_descriptor": "Plot",
+                "file_name": None,
+                "plots_per_column": 2,
+                "plot_format": 'b-',
+                "fill_color": 'k',
+                "fill_opacity": .25,
+                "fill_edge_color": 'k',
+                "plot_size": (8, 10),
+                "dpi": 80,
+                "independent_axis_column_name": "Frequency",
+                "plot_size": (8, 6),
+                "dpi": 80,
+                "share_x": "col"}
+    plot_options = {}
+
+    for key, value in defaults.iteritems():
+        plot_options[key] = value
+    for key, value in options.iteritems():
+        plot_options[key] = value
+
+    value_columns = reference_curve.options["value_column_names"]
+    uncertainty_columns = reference_curve.options["uncertainty_column_names"]
+    number_plots = len(value_columns)
+    number_columns = int(plot_options["plots_per_column"])
+    number_rows = int(round(float(number_plots) / float(number_columns)))
+    fig, reference_axes = plt.subplots(nrows=number_rows, ncols=number_columns,
+                                       sharex=plot_options["share_x"],
+                                       figsize=plot_options["plot_size"],
+                                       dpi=plot_options["dpi"])
+    x_data = reference_curve[plot_options["independent_axis_column_name"]]
+    for axes_index, ax in enumerate(reference_axes.flat):
+        y_data = np.array(reference_curve[value_columns[axes_index]])
+        error = np.array(reference_curve[uncertainty_columns[axes_index]])
+        ax.plot(x_data, y_data, plot_options["plot_format"])
+        ax.fill_between(x_data, y_data - error, y_data + error,
+                        color=plot_options["fill_color"],
+                        alpha=plot_options["fill_opacity"],
+                        edgecolor=plot_options["fill_edge_color"])
+        ax.set_title(value_columns[axes_index])
+
+    plt.tight_layout()
+    # Dealing with the save option
+    if plot_options["file_name"] is None:
+        file_name = auto_name(specific_descriptor=plot_options["specific_descriptor"],
+                              general_descriptor=plot_options["general_descriptor"],
+                              directory=plot_options["directory"], extension='png', padding=3)
+    else:
+        file_name = plot_options["file_name"]
+    if plot_options["save_plot"]:
+        # print file_name
+        plt.savefig(os.path.join(plot_options["directory"], file_name))
+    else:
+        plt.show()
+    return fig
+
 
 def calrep(raw_model,**options):
     """ Performs the calrep analysis routine on a raw data format (such as OnePortRawModel, TwoPortRawModel,PowerRawModel)
