@@ -2,13 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$USER_HOME$/Jupyter-Notebooks" vcs="Git" />
-    <mapping directory="$USER_HOME$/PyCharm Projects/Jupyter-Notebooks" vcs="Git" />
-    <mapping directory="$USER_HOME$/PyCharm Projects/Test_Server_2016" vcs="Git" />
-    <mapping directory="$USER_HOME$/PyCharm Projects/check_standard" vcs="Git" />
-    <mapping directory="$USER_HOME$/PyCharm Projects/html-examples" vcs="Git" />
     <mapping directory="$USER_HOME$/PyCharmProjects/Jupyter-Notebooks" vcs="Git" />
     <mapping directory="$USER_HOME$/PyCharmProjects/html-examples" vcs="Git" />
-    <mapping directory="$USER_HOME$/html-examples" vcs="Git" />
   </component>
 </project>

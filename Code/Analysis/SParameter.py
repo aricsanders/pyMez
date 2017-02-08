@@ -61,7 +61,7 @@ ONE_PORT_DUT=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
 # Module Functions
 def frequency_model_collapse_multiple_measurements(model,**options):
     """Returns a model with a single set of frequencies. Default is to average values together
-    but geometric mean, std and median are options. Geometric means of odd number of negative values fails"""
+    but geometric mean, std, variance and median are options. Geometric means of odd number of negative values fails"""
     defaults={"method":"mean"}
     # load other options from model
     for option,value in model.options.iteritems():
@@ -93,7 +93,8 @@ def frequency_model_collapse_multiple_measurements(model,**options):
             new_row=gmean(np.array(data_row),axis=0).tolist()
         elif re.search('st',collapse_options["method"],re.IGNORECASE):
             new_row=np.std(np.array(data_row),axis=0).tolist()
-        
+        elif re.search('var',collapse_options["method"],re.IGNORECASE):
+            new_row=np.var(np.array(data_row),axis=0,dtype=np.float64).tolist()
         out_data.append(new_row)
 
     collapse_options["data"]=out_data
@@ -141,6 +142,12 @@ def frequency_model_difference(model_1, model_2, **options):
         print("The models do not have any frequency points in common")
         return None
     new_column_names = ["Frequency"]
+    column_types=['float']
+    for column_index, column in enumerate(model_1.column_names):
+        if column in column_names_intersection and column not in ["Frequency"]:
+            new_column_names.append(column)
+            column_types.append(model_1.options["column_types"])
+
     difference_data = []
     for row_index, frequency in enumerate(model_1["Frequency"]):
         new_row = [frequency]
@@ -158,15 +165,15 @@ def frequency_model_difference(model_1, model_2, **options):
 
                         new_row.append(
                             model_1.data[row_index][column_index] - model_2_frequency_row[model_2_column_selector])
-                        new_column_names.append(column)
+
                         # Print("New Column Names are {0}".format(new_column_names))
                     elif difference_options["columns"] in ["all"]:
                         new_row.append(model_1.data[row_index][column_index])
-                        new_column_names.append(column)
             difference_data.append(new_row)
     difference_options["column_names"] = new_column_names
     # print("New Column Names are {0}".format(new_column_names))
     difference_options["data"] = difference_data
+    difference_options["column_types"]=column_types
     result = AsciiDataTable(None, **difference_options)
     return result
 
@@ -206,6 +213,44 @@ def create_monte_carlo_reference_curve(monte_carlo_directory, **options):
     reference_curve.options["uncertainty_column_names"] = new_column_names[1:]
     return reference_curve
 
+def create_sensitivity_reference_curve(sensitivity_directory,nominal_file_path="../DUT_0.s2p"):
+    """Creates a standard curve from a sensitivity_directory usually called Covariance(from MUF). The standard curve
+    has a mean or median and a RMS variance from the nominal value for the uncertainty"""
+    defaults = {"format": "RI", "filter": "s\d+p"}
+    reference_options = {}
+    for key, value in defaults.iteritems():
+        reference_options[key] = value
+    for key, value in options.iteritems():
+        reference_options[key] = value
+    file_names = os.listdir(sensitivity_directory)
+    filtered_file_names = []
+    for file_name in file_names[:]:
+        if re.search(reference_options["filter"], file_name, re.IGNORECASE):
+            filtered_file_names.append(file_name)
+    file_names = filtered_file_names
+    # print file_names
+    nominal_file=SNP(os.path.join(sensitivity_directory, nominal_file_path))
+    nominal_file.change_data_format(reference_options["format"])
+    initial_file = SNP(os.path.join(sensitivity_directory, file_names[0]))
+    initial_file.change_data_format(reference_options["format"])
+    initial_difference=frequency_model_difference(nominal_file,initial_file)
+    combined_table = Snp_to_AsciiDataTable(initial_difference)
+
+    for file_name in file_names[1:]:
+        snp_file = SNP(os.path.join(monte_carlo_directory, file_name))
+        snp_file.change_data_format(reference_options["format"])
+        difference=frequency_model_difference(nominal_file,snp_file)
+        table = Snp_to_AsciiDataTable(difference)
+        combined_table + table
+    variance = frequency_model_collapse_multiple_measurements(combined_table,
+                                                                        method='var')
+    new_column_names = ['Frequency'] + ['u' + name for name in standard_deviation.column_names[1:]]
+    mean_table=Snp_to_AsciiDataTable(nominal_file)
+    variance.column_names = new_column_names
+    reference_curve = ascii_data_table_join("Frequency", mean_table, standard_deviation)
+    reference_curve.options["value_column_names"] = mean_table.column_names[1:]
+    reference_curve.options["uncertainty_column_names"] = new_column_names[1:]
+    return reference_curve
 
 def plot_reference_curve(reference_curve, **options):
     """Plots a frequency based reference curve by using the options
@@ -224,8 +269,6 @@ def plot_reference_curve(reference_curve, **options):
                 "plot_size": (8, 10),
                 "dpi": 80,
                 "independent_axis_column_name": "Frequency",
-                "plot_size": (8, 6),
-                "dpi": 80,
                 "share_x": "col"}
     plot_options = {}
 
