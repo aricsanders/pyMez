@@ -1129,6 +1129,7 @@ def return_calrep_error_column_names(calrep_model_value_columns,error_suffix='g'
 
 def plot_calrep(calrep_model):
     """Plots a calrep model with uncertainties"""
+    # todo: add options to this plot
     if type(calrep_model) in [PowerCalrepModel,TwoPortCalrepModel]:
         calrep_model.joined_table.metadata=calrep_model.metadata
         calrep_model=calrep_model.joined_table
@@ -1153,7 +1154,7 @@ def plot_calrep(calrep_model):
             x=calrep_model["Frequency"]
             y=calrep_model[column_name]
             #print("Length of x is {0}, Length of y is {1}, Length of error is {2}".format(len(x),len(y),len(error)))
-            ax.errorbar(x,y,yerr=error,fmt='r-x')
+            ax.errorbar(x,y,yerr=error,fmt='k-x')
             ax.set_ylabel(r'|${\Gamma} $|',color='green')
         elif re.search("arg",column_name,re.IGNORECASE):
             error_letter="A"
@@ -1162,7 +1163,7 @@ def plot_calrep(calrep_model):
             error=calrep_model[error_name]
             x=calrep_model["Frequency"]
             y=calrep_model[column_name]
-            ax.errorbar(x,y,yerr=error,fmt='r-x')
+            ax.errorbar(x,y,yerr=error,fmt='k-x')
             ax.set_ylabel('Phase(Degrees)',color='green')
         elif re.search("eff",column_name,re.IGNORECASE):
             error_letter="E"
@@ -1176,7 +1177,7 @@ def plot_calrep(calrep_model):
 
             x=calrep_model["Frequency"]
             y=calrep_model[column_name]
-            ax.errorbar(x,y,yerr=error,fmt='r-x')
+            ax.errorbar(x,y,yerr=error,fmt='k-x')
             ax.set_ylabel('Phase(Degrees)',color='green')
             break
     fig.suptitle(calrep_model.metadata["Device_Id"])

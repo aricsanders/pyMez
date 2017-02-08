@@ -932,6 +932,18 @@ class PowerRawModel(AsciiDataTable):
         self.metadata={}
         for index,key in enumerate(keys):
             self.metadata[key]=self.header[index].rstrip().lstrip()
+    def show(self):
+        fig, axes = plt.subplots(nrows=2, ncols=2)
+        ax0, ax1, ax2, ax3 = axes.flat
+        ax0.plot(self.get_column('Frequency'),self.get_column('magS11'),'k-o')
+        ax0.set_title('Magnitude S11')
+        ax1.plot(self.get_column('Frequency'),self.get_column('argS11'),'ro')
+        ax1.set_title('Phase S11')
+        ax2.plot(self.get_column('Frequency'),self.get_column('Efficiency'),'b-o')
+        ax2.set_title('Efficiency')
+        plt.tight_layout()
+        plt.show()
+        return fig
 
 class TwoPortCalrepModel(object):
     """TwoPortCalrepModel is a model that holds data output by analyzing several datafiles using the HPBasic program
