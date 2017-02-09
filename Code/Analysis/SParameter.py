@@ -59,54 +59,52 @@ except:
 ONE_PORT_DUT=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
 #-----------------------------------------------------------------------------
 # Module Functions
-def frequency_model_collapse_multiple_measurements(model,**options):
+def frequency_model_collapse_multiple_measurements(model, **options):
     """Returns a model with a single set of frequencies. Default is to average values together
     but geometric mean, std, variance and median are options. Geometric means of odd number of negative values fails"""
-    defaults={"method":"mean"}
+    defaults = {"method": "mean"}
     # load other options from model
-    for option,value in model.options.iteritems():
-        if not re.search('begin_line|end_line',option):
-            defaults[option]=value
+    for option, value in model.options.iteritems():
+        if not re.search('begin_line|end_line', option):
+            defaults[option] = value
     for element in model.elements:
         if model.__dict__[element]:
-            if re.search("meta",element,re.IGNORECASE):
-                defaults["metadata"]=model.metadata.copy()
+            if re.search("meta", element, re.IGNORECASE):
+                defaults["metadata"] = model.metadata.copy()
             else:
-                defaults[element]=model.__dict__[element][:]
-
-
-    collapse_options={}
-    for key,value in defaults.iteritems():
-        collapse_options[key]=value
-    for key,value in options.iteritems():
-        collapse_options[key]=value    
-    unique_frequency_list=sorted(list(set(model["Frequency"])))
-    frequency_selector=model.column_names.index("Frequency")
-    out_data=[]
+                defaults[element] = model.__dict__[element][:]
+    # We need to preserve the frequency column some how
+    collapse_options = {}
+    for key, value in defaults.iteritems():
+        collapse_options[key] = value
+    for key, value in options.iteritems():
+        collapse_options[key] = value
+    unique_frequency_list = sorted(list(set(model["Frequency"])))
+    frequency_selector = model.column_names.index("Frequency")
+    out_data = []
     for index, frequency in enumerate(unique_frequency_list):
-        data_row=filter(lambda x: x[frequency_selector]==frequency,model.data[:])
-        if re.search('mean|av',collapse_options["method"],re.IGNORECASE):
-            new_row=np.mean(np.array(data_row),axis=0).tolist()
-        elif re.search('median',collapse_options["method"],re.IGNORECASE):
-            new_row=np.median(np.array(data_row),axis=0).tolist()
-        elif re.search('geometric',collapse_options["method"],re.IGNORECASE):
-            new_row=gmean(np.array(data_row),axis=0).tolist()
-        elif re.search('st',collapse_options["method"],re.IGNORECASE):
-            new_row=np.std(np.array(data_row),axis=0).tolist()
-        elif re.search('var',collapse_options["method"],re.IGNORECASE):
-            new_row=np.var(np.array(data_row),axis=0,dtype=np.float64).tolist()
+        data_row = filter(lambda x: x[frequency_selector] == frequency, model.data[:])
+        if re.search('mean|av', collapse_options["method"], re.IGNORECASE):
+            new_row = np.mean(np.array(data_row), axis=0).tolist()
+        elif re.search('median', collapse_options["method"], re.IGNORECASE):
+            new_row = np.median(np.array(data_row), axis=0).tolist()
+        elif re.search('geometric', collapse_options["method"], re.IGNORECASE):
+            new_row = gmean(np.array(data_row), axis=0).tolist()
+        elif re.search('st', collapse_options["method"], re.IGNORECASE):
+            new_row = np.std(np.array(data_row), axis=0).tolist()
+        elif re.search('var', collapse_options["method"], re.IGNORECASE):
+            new_row = np.var(np.array(data_row), axis=0, dtype=np.float64).tolist()
+        elif re.search('rms', collapse_options["method"], re.IGNORECASE):
+            new_row = np.sqrt(np.mean(np.square(np.array(data_row)), axis=0, dtype=np.float64)).tolist()
         out_data.append(new_row)
 
-    collapse_options["data"]=out_data
+    collapse_options["data"] = out_data
 
     if collapse_options["specific_descriptor"]:
-        collapse_options["specific_descriptor"]=collapse_options["method"]+"_"+\
-        collapse_options["specific_descriptor"]
-        
-    
-    resulting_model=AsciiDataTable(None,**collapse_options)
+        collapse_options["specific_descriptor"] = collapse_options["method"] + "_" + \
+                                                  collapse_options["specific_descriptor"]
+    resulting_model = AsciiDataTable(None, **collapse_options)
     return resulting_model
-
 
 def frequency_model_difference(model_1, model_2, **options):
     """Takes the difference of two models that both have frequency and a similar set of columns. Returns an object that is
@@ -146,7 +144,7 @@ def frequency_model_difference(model_1, model_2, **options):
     for column_index, column in enumerate(model_1.column_names):
         if column in column_names_intersection and column not in ["Frequency"]:
             new_column_names.append(column)
-            column_types.append(model_1.options["column_types"])
+            column_types.append(model_1.options["column_types"][column_index])
 
     difference_data = []
     for row_index, frequency in enumerate(model_1["Frequency"]):
@@ -174,6 +172,7 @@ def frequency_model_difference(model_1, model_2, **options):
     # print("New Column Names are {0}".format(new_column_names))
     difference_options["data"] = difference_data
     difference_options["column_types"]=column_types
+    print column_types
     result = AsciiDataTable(None, **difference_options)
     return result
 
@@ -213,7 +212,7 @@ def create_monte_carlo_reference_curve(monte_carlo_directory, **options):
     reference_curve.options["uncertainty_column_names"] = new_column_names[1:]
     return reference_curve
 
-def create_sensitivity_reference_curve(sensitivity_directory,nominal_file_path="../DUT_0.s2p"):
+def create_sensitivity_reference_curve(sensitivity_directory,nominal_file_path="../DUT_0.s2p",**options):
     """Creates a standard curve from a sensitivity_directory usually called Covariance(from MUF). The standard curve
     has a mean or median and a RMS variance from the nominal value for the uncertainty"""
     defaults = {"format": "RI", "filter": "s\d+p"}
@@ -234,20 +233,22 @@ def create_sensitivity_reference_curve(sensitivity_directory,nominal_file_path="
     initial_file = SNP(os.path.join(sensitivity_directory, file_names[0]))
     initial_file.change_data_format(reference_options["format"])
     initial_difference=frequency_model_difference(nominal_file,initial_file)
-    combined_table = Snp_to_AsciiDataTable(initial_difference)
-
+    #print initial_difference.column_names
+    combined_table = initial_difference
     for file_name in file_names[1:]:
-        snp_file = SNP(os.path.join(monte_carlo_directory, file_name))
+        snp_file = SNP(os.path.join(sensitivity_directory, file_name))
         snp_file.change_data_format(reference_options["format"])
         difference=frequency_model_difference(nominal_file,snp_file)
-        table = Snp_to_AsciiDataTable(difference)
-        combined_table + table
+        #print difference.column_names
+#         table = Snp_to_AsciiDataTable(difference)
+        combined_table + difference
+    #print combined_table.options["column_types"]
     variance = frequency_model_collapse_multiple_measurements(combined_table,
-                                                                        method='var')
-    new_column_names = ['Frequency'] + ['u' + name for name in standard_deviation.column_names[1:]]
+                                                                        method='rms')
+    new_column_names = ['Frequency'] + ['u' + name for name in variance.column_names[1:]]
     mean_table=Snp_to_AsciiDataTable(nominal_file)
     variance.column_names = new_column_names
-    reference_curve = ascii_data_table_join("Frequency", mean_table, standard_deviation)
+    reference_curve = ascii_data_table_join("Frequency", mean_table, variance)
     reference_curve.options["value_column_names"] = mean_table.column_names[1:]
     reference_curve.options["uncertainty_column_names"] = new_column_names[1:]
     return reference_curve
