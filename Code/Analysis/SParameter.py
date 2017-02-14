@@ -1200,7 +1200,7 @@ def return_calrep_error_column_names(calrep_model_value_columns,error_suffix='g'
     """Returns the column names for errors in a calrep model. For example if the
     calrep model value column names are ["magS11","argS11"], then it returns ["uMgS11","uAgS11"] """
     error_columns = []
-    for column in column_names[:]:
+    for column in calrep_model_value_columns[:]:
         error_column = column.replace("mag", "uM" + error_suffix)
         error_column = error_column.replace("arg", "uA" + error_suffix)
         error_column = error_column.replace("Efficiency", "uE" + error_suffix)
