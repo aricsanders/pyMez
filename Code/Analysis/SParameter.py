@@ -851,6 +851,42 @@ def mean_from_history(history_frame,**options):
         mean_array.append(row)
     mean_frame=pandas.DataFrame(mean_array,columns=mean_options["column_names"])
     return mean_frame
+def median_from_history(history_frame,**options):
+    """median_from_history creates a median_frame given a full history frame (pandas.DataFrame object),
+    by setting options it selects column names
+    to output and input values to filter on. Returns a pandas.DataFrame object with column names = column_names,
+    and filtered by any of the following: "Device_Id","System_Id","Measurement_Timestamp",
+    "Connector_Type_Measurement", "Measurement_Date" or "Measurement_Time" """
+
+    defaults={"Device_Id":None, "System_Id":None,"Measurement_Timestamp":None,
+              "Connector_Type_Measurement":None,
+             "Measurement_Date":None,"Measurement_Time":None,
+              "column_names":['Frequency','magS11','argS11']}
+    median_options={}
+    for key,value in defaults.iteritems():
+        median_options[key]=value
+    for key,value in options.iteritems():
+            median_options[key]=value
+
+    filters=["Device_Id","System_Id","Measurement_Timestamp","Connector_Type_Measurement",
+             "Measurement_Date","Measurement_Time"]
+    temp_frame=history_frame.copy()
+    for index,filter_type in enumerate(filters):
+        if median_options[filter_type] is not None:
+            temp_frame=temp_frame[temp_frame[filter_type]==median_options[filter_type]]
+#     temp_frame=temp_frame[temp_frame["Device_Id"]==median_options["Device_Id"]]
+#     temp_frame=temp_frame[temp_frame["System_Id"]==median_options["System_Id"]]
+    unique_frequency_list=temp_frame["Frequency"].unique()
+    median_array=[]
+    for index,freq in enumerate(unique_frequency_list):
+        row=[]
+        for column in median_options["column_names"]:
+            values=np.median(temp_frame[temp_frame["Frequency"]==unique_frequency_list[index]][column].as_matrix())
+            median_value=np.median(values)
+            row.append(median_value)
+        median_array.append(row)
+    median_frame=pandas.DataFrame(median_array,columns=median_options["column_names"])
+    return median_frame
 
 def raw_difference_frame(raw_model,mean_frame,**options):
     """Creates a difference pandas.DataFrame given a raw NIST model and a mean pandas.DataFrame"""

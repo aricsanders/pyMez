@@ -205,6 +205,6 @@ def test_make_html_element():
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    #test_HTMLBase(file_name="One_Port_Raw_Sparameter_20160307_001.html")
+    test_HTMLBase(file_name="One_Port_Raw_Sparameter_20160307_001.html")
     #test_HTMLBase_no_file()
-    test_make_html_element()
+    #test_make_html_element()
