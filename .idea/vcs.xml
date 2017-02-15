@@ -2,8 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../boa" vcs="Git" />
     <mapping directory="$USER_HOME$/PyCharmProjects/Jupyter-Notebooks" vcs="Git" />
     <mapping directory="$USER_HOME$/PyCharmProjects/html-examples" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../boa" vcs="Git" />
   </component>
 </project>

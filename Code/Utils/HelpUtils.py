@@ -11,21 +11,23 @@
 # Standard Imports
 import os
 import inspect
+import sys
 #-----------------------------------------------------------------------------
 # Third Party Imports
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     import pdoc
 except:
     print("Could not import pdoc, add it to the python path or install it. pip install pdoc")
 try:
-    from pyMeasure.Code.Utils.Alias import *
+    from Code.Utils.Alias import *
     METHOD_ALIASES=1
 except:
     print("The module pyMeasure.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 try:
-    from pyMeasure.Code.Utils.Names import auto_name
+    from Code.Utils.Names import auto_name
     DEFAULT_FILE_NAME=None
 except:
     print("The function auto_name in pyMeasure.Code.Utils.Names was not found")
