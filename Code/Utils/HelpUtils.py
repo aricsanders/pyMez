@@ -12,6 +12,7 @@
 import os
 import inspect
 import sys
+import shutil
 #-----------------------------------------------------------------------------
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
@@ -37,6 +38,8 @@ except:
 #-----------------------------------------------------------------------------
 # Module Constants
 TESTS_DIRECTORY=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
+PYMEASURE_ROOT=os.path.join(os.path.dirname(os.path.realpath(__file__)),'..','..')
+DOCUMENTATION_DIRECTORY=os.path.join(PYMEASURE_ROOT,"Documentation")
 #-----------------------------------------------------------------------------
 # Module Functions
 def return_help(object):
@@ -62,6 +65,7 @@ def create_examples_page(ipynb_path):
     os.system("jupyter nbconvert --to html %s"%ipynb_path)
 
 
+
 #-----------------------------------------------------------------------------
 # Module Classes
 
@@ -75,11 +79,25 @@ def test_create_examples_page(ipynb_path='Development_Stack_Installation_Example
     """Tests the create_examples_page function, really nb convert on the command line"""
     os.chdir(TESTS_DIRECTORY)
     create_examples_page(ipynb_path)
+
+def autogenerate_api_documentation_script():
+    """Autogenerates the api help files. It requires that pdoc is installed and that the pdoc script is in
+    the Documentation folder under pyMeasure. If the folder exists it first deletes the folder and then creates a
+     new one."""
+
+    os.chdir(DOCUMENTATION_DIRECTORY)
+    try:
+        shutil.rmtree(os.path.join(DOCUMENTATION_DIRECTORY,"pyMeasure"))
+    except:
+        print("Could not delete existing API documentation")
+        pass
+    os.system("python pdoc --html pyMeasure")
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
     #test_create_help_page()
     #test_create_help_page('pyMeasure')
     #test_create_help_page('pyMeasure.Code.DataHandlers.NISTModels')
-    test_create_help_page('pyMeasure.Code.DataHandlers.NISTModels')
+    #test_create_help_page('pyMeasure.Code.DataHandlers.NISTModels')
     #test_create_examples_page()
+    autogenerate_api_documentation_script()
