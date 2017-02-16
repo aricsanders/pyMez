@@ -554,7 +554,7 @@ table {
   html, body {
     margin: 0;
     padding: 0;
-    min-height: 100%;
+    height: 100%;
   }
   body {
     background: #fff;
@@ -1109,6 +1109,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep_comparison">plot_calrep_comparison</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep_results_comparison">plot_calrep_results_comparison</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep_results_difference_comparison">plot_calrep_results_difference_comparison</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_frequency_model">plot_frequency_model</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_frequency_model_histogram">plot_frequency_model_histogram</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_reference_curve">plot_reference_curve</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.polar_average">polar_average</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.polar_geometric_average">polar_geometric_average</a></li>
@@ -1247,6 +1249,8 @@ table {
             <span class="n">new_row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_row</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;rms&#39;</span><span class="p">,</span> <span class="n">collapse_options</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
             <span class="n">new_row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_row</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;rss&#39;</span><span class="p">,</span> <span class="n">collapse_options</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">new_row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_row</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="n">out_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
 
     <span class="n">collapse_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_data</span>
@@ -2357,6 +2361,133 @@ table {
         <span class="n">error_column</span> <span class="o">=</span> <span class="n">error_column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Efficiency&quot;</span><span class="p">,</span> <span class="s2">&quot;uE&quot;</span> <span class="o">+</span> <span class="n">error_suffix</span><span class="p">)</span>
         <span class="n">error_columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">error_column</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">error_columns</span>
+
+
+<span class="k">def</span> <span class="nf">plot_frequency_model</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plots any table with frequency as its x-axis and column_names as the x-axis in a</span>
+<span class="sd">    series of subplots&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_legend&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;save_plot&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Frequency_Model&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Plot&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;plots_per_column&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s2">&quot;plot_format&quot;</span><span class="p">:</span> <span class="s1">&#39;b-o&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;share_x&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;subplots_title&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s2">&quot;plot_title&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;plot_size&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                <span class="s2">&quot;dpi&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span>
+    <span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="n">frequency_model</span> <span class="o">=</span> <span class="n">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">)</span>
+    <span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">])</span>
+    <span class="n">y_data_columns</span> <span class="o">=</span> <span class="n">frequency_model</span><span class="o">.</span><span class="n">column_names</span><span class="p">[:]</span>
+    <span class="n">y_data_columns</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+    <span class="n">number_plots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_data_columns</span><span class="p">)</span>
+    <span class="n">number_columns</span> <span class="o">=</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plots_per_column&quot;</span><span class="p">]</span>
+    <span class="n">number_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">number_plots</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">number_columns</span><span class="p">)))</span>
+    <span class="n">figure</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="n">number_columns</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="n">number_rows</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;share_x&quot;</span><span class="p">],</span>
+                                <span class="n">figsize</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_size&quot;</span><span class="p">],</span> <span class="n">dpi</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;dpi&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">plot_index</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">plot_index</span> <span class="o">&lt;</span> <span class="n">number_plots</span><span class="p">:</span>
+            <span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">[</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">]])</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_format&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;display_legend&quot;</span><span class="p">]:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;subplots_title&quot;</span><span class="p">]:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_title&quot;</span><span class="p">]:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_title&quot;</span><span class="p">])</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="c1"># Dealing with the save option</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
+                              <span class="n">general_descriptor</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
+                              <span class="n">directory</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;save_plot&quot;</span><span class="p">]:</span>
+        <span class="c1"># print file_name</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">file_name</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">figure</span>
+
+
+<span class="k">def</span> <span class="nf">plot_frequency_model_histogram</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plots any table with frequency as its x-axis and column_names as the x-axis in a</span>
+<span class="sd">    series of subplots&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_legend&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;save_plot&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Frequency_Model&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Plot&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;plots_per_column&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s2">&quot;plot_format&quot;</span><span class="p">:</span> <span class="s1">&#39;b-o&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;share_x&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;subplots_title&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s2">&quot;plot_title&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;plot_size&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                <span class="s2">&quot;dpi&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
+                <span class="s2">&quot;non_plotable_text&quot;</span><span class="p">:</span> <span class="s2">&quot;Not Plotable&quot;</span><span class="p">}</span>
+    <span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="n">frequency_model</span> <span class="o">=</span> <span class="n">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">)</span>
+    <span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">])</span>
+    <span class="n">y_data_columns</span> <span class="o">=</span> <span class="n">frequency_model</span><span class="o">.</span><span class="n">column_names</span><span class="p">[:]</span>
+    <span class="n">y_data_columns</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+    <span class="n">number_plots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_data_columns</span><span class="p">)</span>
+    <span class="n">number_columns</span> <span class="o">=</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plots_per_column&quot;</span><span class="p">]</span>
+    <span class="n">number_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">number_plots</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">number_columns</span><span class="p">)))</span>
+    <span class="n">figure</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="n">number_columns</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="n">number_rows</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;share_x&quot;</span><span class="p">],</span>
+                                <span class="n">figsize</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_size&quot;</span><span class="p">],</span> <span class="n">dpi</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;dpi&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">plot_index</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">plot_index</span> <span class="o">&lt;</span> <span class="n">number_plots</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">[</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">]])</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;display_legend&quot;</span><span class="p">]:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;subplots_title&quot;</span><span class="p">]:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">])</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;non_plotable_text&quot;</span><span class="p">]</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">Annotation</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;subplots_title&quot;</span><span class="p">]:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_title&quot;</span><span class="p">]:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_title&quot;</span><span class="p">])</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="c1"># Dealing with the save option</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
+                              <span class="n">general_descriptor</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
+                              <span class="n">directory</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;save_plot&quot;</span><span class="p">]:</span>
+        <span class="c1"># print file_name</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">file_name</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">figure</span>
 
 <span class="k">def</span> <span class="nf">plot_calrep</span><span class="p">(</span><span class="n">calrep_model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Plots a calrep model with uncertainties&quot;&quot;&quot;</span>
@@ -3949,6 +4080,8 @@ but geometric mean, std, variance and median are options. Geometric means of odd
             <span class="n">new_row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_row</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;rms&#39;</span><span class="p">,</span> <span class="n">collapse_options</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
             <span class="n">new_row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_row</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;rss&#39;</span><span class="p">,</span> <span class="n">collapse_options</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">new_row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_row</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="n">out_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
 
     <span class="n">collapse_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_data</span>
@@ -4622,6 +4755,171 @@ results file, with options.</p></div>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Analysis.SParameter.plot_frequency_model">
+    <p>def <span class="ident">plot_frequency_model</span>(</p><p>frequency_model, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Plots any table with frequency as its x-axis and column_names as the x-axis in a
+series of subplots</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.SParameter.plot_frequency_model', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Analysis.SParameter.plot_frequency_model" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">plot_frequency_model</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plots any table with frequency as its x-axis and column_names as the x-axis in a</span>
+<span class="sd">    series of subplots&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_legend&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;save_plot&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Frequency_Model&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Plot&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;plots_per_column&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s2">&quot;plot_format&quot;</span><span class="p">:</span> <span class="s1">&#39;b-o&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;share_x&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;subplots_title&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s2">&quot;plot_title&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;plot_size&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                <span class="s2">&quot;dpi&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">}</span>
+    <span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="n">frequency_model</span> <span class="o">=</span> <span class="n">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">)</span>
+    <span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">])</span>
+    <span class="n">y_data_columns</span> <span class="o">=</span> <span class="n">frequency_model</span><span class="o">.</span><span class="n">column_names</span><span class="p">[:]</span>
+    <span class="n">y_data_columns</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+    <span class="n">number_plots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_data_columns</span><span class="p">)</span>
+    <span class="n">number_columns</span> <span class="o">=</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plots_per_column&quot;</span><span class="p">]</span>
+    <span class="n">number_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">number_plots</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">number_columns</span><span class="p">)))</span>
+    <span class="n">figure</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="n">number_columns</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="n">number_rows</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;share_x&quot;</span><span class="p">],</span>
+                                <span class="n">figsize</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_size&quot;</span><span class="p">],</span> <span class="n">dpi</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;dpi&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">plot_index</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">plot_index</span> <span class="o">&lt;</span> <span class="n">number_plots</span><span class="p">:</span>
+            <span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">[</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">]])</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_format&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;display_legend&quot;</span><span class="p">]:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;subplots_title&quot;</span><span class="p">]:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_title&quot;</span><span class="p">]:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_title&quot;</span><span class="p">])</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="c1"># Dealing with the save option</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
+                              <span class="n">general_descriptor</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
+                              <span class="n">directory</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;save_plot&quot;</span><span class="p">]:</span>
+        <span class="c1"># print file_name</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">file_name</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">figure</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Analysis.SParameter.plot_frequency_model_histogram">
+    <p>def <span class="ident">plot_frequency_model_histogram</span>(</p><p>frequency_model, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Plots any table with frequency as its x-axis and column_names as the x-axis in a
+series of subplots</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.SParameter.plot_frequency_model_histogram', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Analysis.SParameter.plot_frequency_model_histogram" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">plot_frequency_model_histogram</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plots any table with frequency as its x-axis and column_names as the x-axis in a</span>
+<span class="sd">    series of subplots&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_legend&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;save_plot&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Frequency_Model&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Plot&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;plots_per_column&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s2">&quot;plot_format&quot;</span><span class="p">:</span> <span class="s1">&#39;b-o&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;share_x&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;subplots_title&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s2">&quot;plot_title&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;plot_size&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                <span class="s2">&quot;dpi&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
+                <span class="s2">&quot;non_plotable_text&quot;</span><span class="p">:</span> <span class="s2">&quot;Not Plotable&quot;</span><span class="p">}</span>
+    <span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="n">frequency_model</span> <span class="o">=</span> <span class="n">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">)</span>
+    <span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">])</span>
+    <span class="n">y_data_columns</span> <span class="o">=</span> <span class="n">frequency_model</span><span class="o">.</span><span class="n">column_names</span><span class="p">[:]</span>
+    <span class="n">y_data_columns</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+    <span class="n">number_plots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_data_columns</span><span class="p">)</span>
+    <span class="n">number_columns</span> <span class="o">=</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plots_per_column&quot;</span><span class="p">]</span>
+    <span class="n">number_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">number_plots</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">number_columns</span><span class="p">)))</span>
+    <span class="n">figure</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="n">number_columns</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="n">number_rows</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;share_x&quot;</span><span class="p">],</span>
+                                <span class="n">figsize</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_size&quot;</span><span class="p">],</span> <span class="n">dpi</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;dpi&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">plot_index</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">plot_index</span> <span class="o">&lt;</span> <span class="n">number_plots</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frequency_model</span><span class="p">[</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">]])</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;display_legend&quot;</span><span class="p">]:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;subplots_title&quot;</span><span class="p">]:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">])</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;non_plotable_text&quot;</span><span class="p">]</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">Annotation</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;subplots_title&quot;</span><span class="p">]:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">y_data_columns</span><span class="p">[</span><span class="n">plot_index</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_title&quot;</span><span class="p">]:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;plot_title&quot;</span><span class="p">])</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="c1"># Dealing with the save option</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
+                              <span class="n">general_descriptor</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
+                              <span class="n">directory</span><span class="o">=</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;save_plot&quot;</span><span class="p">]:</span>
+        <span class="c1"># print file_name</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">file_name</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">figure</span>
 </pre></div>
 
   </div>
@@ -5397,7 +5695,7 @@ by min_phase and radians or degrees can be specified by units</p></div>
   <footer id="footer">
     <p>
       Documentation generated by
-      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.2</a>
+      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.1</a>
     </p>
 
     <p>pdoc is in the public domain with the

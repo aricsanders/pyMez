@@ -554,7 +554,7 @@ table {
   html, body {
     margin: 0;
     padding: 0;
-    min-height: 100%;
+    height: 100%;
   }
   body {
     background: #fff;
@@ -2575,91 +2575,91 @@ Currently undefined (5 total)
 <li>Number of DUT measurements, ndut</li>
 <li>Number of isolation standards, niso</li>
 <li>number of switch-term standards, nswi</li>
-<li>Total number of standards and DUTs, ntot<div class="codehilite"><pre><span></span><span class="n">For</span> <span class="nb">each</span> <span class="k">of</span> <span class="n">the</span> <span class="mi">40</span> <span class="n">calibration</span> <span class="n">standards</span> <span class="n">i</span>=<span class="mi">1</span>,<span class="mi">2</span>,...,<span class="mi">40</span> <span class="n">listed</span> <span class="n">in</span> <span class="n">menu</span> <span class="s">&#39;Define calibration standards&#39;</span>
-<span class="n">we</span> <span class="n">have</span> <span class="n">the</span> <span class="n">following</span> <span class="mi">51</span> <span class="n">variables</span> <span class="n">stored</span> <span class="n">in</span> <span class="n">the</span> <span class="n">menu:</span>
+<li>Total number of standards and DUTs, ntot<div class="codehilite"><pre><span></span>For each of the 40 calibration standards i=1,2,...,40 listed in menu &#39;Define calibration standards&#39;
+we have the following 51 variables stored in the menu:
 
-<span class="mi">1</span>. <span class="n">Length</span> <span class="k">of</span> <span class="n">standard</span> <span class="n">in</span> <span class="n">cm</span>
-    <span class="mi">2</span>. <span class="n">Type</span> <span class="k">of</span> <span class="n">calibration</span> <span class="n">standard</span>, <span class="n">StdType</span>(<span class="n">i</span>)
-        <span class="n">Type</span> <span class="mi">0</span>: <span class="n">Ignore</span> <span class="n">standard</span>.
-        <span class="n">Type</span> <span class="mi">1</span>: <span class="n">Thru</span>. <span class="n">Must</span> <span class="n">have</span> <span class="n">zero</span> <span class="n">length</span>. (<span class="n">See</span> <span class="o">also</span> <span class="n">Thru</span> <span class="n">calibration</span> <span class="n">standard</span>)
-        <span class="n">Type</span> <span class="mi">2</span>: <span class="n">Line</span>. <span class="n">Requires</span> <span class="n">that</span> <span class="n">cap</span> <span class="n">be</span> <span class="n">set</span> <span class="nb">to</span> <span class="n">line</span> <span class="n">capacitance</span>. (<span class="n">See</span> <span class="o">also</span> <span class="n">Line</span> <span class="n">calibration</span> <span class="n">standard</span>)
-        <span class="n">Type</span> <span class="mi">3</span>: <span class="n">Reflect</span>. <span class="n">These</span> <span class="n">have</span> <span class="n">equal</span> <span class="k">but</span> <span class="n">unknown</span> <span class="n">reflection</span> <span class="n">coeficients</span> <span class="n">at</span> <span class="nb">each</span> <span class="n">port</span>. (<span class="n">S11</span>=<span class="n">S22</span>, <span class="n">S21</span>=<span class="n">S12</span>=<span class="mi">0</span>)
-                    <span class="n">Each</span> <span class="n">reflect</span> <span class="n">adds</span> <span class="n">in</span> <span class="n">two</span> <span class="n">unknown</span> <span class="n">elements</span>
-                    <span class="nb">to</span> <span class="n">the</span> <span class="n">beta</span> <span class="n">vector</span>. (<span class="n">See</span> <span class="o">also</span> <span class="n">Reflect</span> <span class="n">calibration</span> <span class="n">standard</span>)
+1. Length of standard in cm
+    2. Type of calibration standard, StdType(i)
+        Type 0: Ignore standard.
+        Type 1: Thru. Must have zero length. (See also Thru calibration standard)
+        Type 2: Line. Requires that cap be set to line capacitance. (See also Line calibration standard)
+        Type 3: Reflect. These have equal but unknown reflection coeficients at each port. (S11=S22, S21=S12=0)
+                    Each reflect adds in two unknown elements
+                    to the beta vector. (See also Reflect calibration standard)
 
-        <span class="n">Type</span> <span class="mi">4</span>: <span class="n">Load</span>. <span class="n">Like</span> <span class="n">reflects</span> <span class="n">except</span> <span class="n">that</span> <span class="n">reflection</span> <span class="n">coefficients</span> <span class="n">are</span> <span class="n">known</span>.
-        (<span class="n">S21</span>=<span class="n">S12</span>=<span class="mi">0</span>) (<span class="n">See</span> <span class="o">also</span> <span class="n">Load</span> <span class="n">calibration</span> <span class="n">standard</span>)
-        <span class="n">Type</span> <span class="mi">5</span>: <span class="n">Reciprocal</span> <span class="n">Adapter</span> <span class="n">calibration</span> <span class="n">standard</span>.
-        (<span class="n">S21</span>=<span class="n">S12</span> <span class="k">is</span> <span class="k">only</span> <span class="n">thing</span> <span class="n">known</span> <span class="n">about</span> <span class="n">this</span> <span class="n">standard</span>) (<span class="n">See</span> <span class="o">also</span> <span class="n">Reciprocal</span> <span class="n">calibration</span> <span class="n">standard</span>)
-        <span class="n">Type</span> <span class="mi">6</span>: <span class="n">Attenuator</span>.
-        <span class="n">Like</span> <span class="n">a</span> <span class="n">load</span> <span class="n">except</span> <span class="n">that</span> <span class="n">reflection</span> <span class="o">and</span> <span class="n">transmission</span> <span class="n">coeficients</span> <span class="n">are</span> <span class="n">known</span>.
-        (<span class="n">S21</span>=<span class="n">S12</span>) (<span class="n">See</span> <span class="o">also</span> <span class="n">Attenuator</span> <span class="n">calibration</span> <span class="n">standard</span>)
-        <span class="n">Type</span> <span class="mi">7</span>: <span class="n">Unknown</span> <span class="n">DUTs</span> (<span class="n">loads</span>) <span class="n">on</span> <span class="n">ports</span> <span class="mi">1</span><span class="nv">&amp;2</span> (<span class="n">S21</span>=<span class="n">S12</span>=<span class="mi">0</span>) (<span class="n">See</span> <span class="o">also</span> <span class="n">DUTs</span>)
+        Type 4: Load. Like reflects except that reflection coefficients are known.
+        (S21=S12=0) (See also Load calibration standard)
+        Type 5: Reciprocal Adapter calibration standard.
+        (S21=S12 is only thing known about this standard) (See also Reciprocal calibration standard)
+        Type 6: Attenuator.
+        Like a load except that reflection and transmission coeficients are known.
+        (S21=S12) (See also Attenuator calibration standard)
+        Type 7: Unknown DUTs (loads) on ports 1&amp;2 (S21=S12=0) (See also DUTs)
 
-<span class="n">Type</span> <span class="mi">8</span>: <span class="n">Reciprocal</span> <span class="k">but</span> <span class="n">otherwise</span> <span class="n">unknown</span> <span class="n">two-port</span> <span class="n">DUT</span>. (<span class="n">S21</span>=<span class="n">S12</span>)
-                    <span class="n">This</span> <span class="n">device</span> <span class="n">adds</span> <span class="n">some</span> <span class="n">calibration</span> <span class="n">information</span> (<span class="n">S21</span>=<span class="n">S12</span>).
-                     <span class="n">It</span> <span class="nb">can</span> <span class="n">be</span> <span class="n">used</span> <span class="k">as</span> <span class="n">a</span> <span class="n">standard</span><span class="o">/</span><span class="n">DUT</span> <span class="n">in</span> <span class="n">first-tier</span> <span class="n">calibrations</span> <span class="k">for</span> <span class="n">adapter</span> <span class="n">removal</span> <span class="n">problems</span>.
-        <span class="n">Type</span> <span class="mi">9</span>: <span class="n">Unknown</span> <span class="n">two-port</span> <span class="n">DUT</span>, <span class="n">no</span> <span class="n">restrictions</span>.
-        <span class="n">Type</span> <span class="mi">10</span>: <span class="n">Isolation</span> <span class="n">standard</span>. (<span class="n">See</span> <span class="o">also</span> <span class="n">Isolation</span> <span class="n">calibration</span> <span class="n">standard</span>)
-                       <span class="n">Note</span> <span class="n">that</span> <span class="n">type</span> <span class="mi">10</span> <span class="k">has</span> <span class="n">the</span> <span class="n">isolation</span> <span class="n">measurements</span> <span class="n">in</span> <span class="n">S21</span> <span class="o">and</span> <span class="n">S12</span>.
-        <span class="n">Type</span> <span class="mi">11</span>: <span class="n">Switch</span> <span class="n">terms</span>. (<span class="n">See</span> <span class="o">also</span> <span class="n">Switch-term</span> <span class="n">file</span> <span class="n">format</span>)
+Type 8: Reciprocal but otherwise unknown two-port DUT. (S21=S12)
+                    This device adds some calibration information (S21=S12).
+                     It can be used as a standard/DUT in first-tier calibrations for adapter removal problems.
+        Type 9: Unknown two-port DUT, no restrictions.
+        Type 10: Isolation standard. (See also Isolation calibration standard)
+                       Note that type 10 has the isolation measurements in S21 and S12.
+        Type 11: Switch terms. (See also Switch-term file format)
 
-    <span class="n">Type</span> <span class="mi">12</span>: <span class="n">Crosstalk</span> <span class="n">standard</span> (<span class="n">S21</span>=<span class="n">S12</span>=<span class="mi">0</span>) (<span class="n">See</span> <span class="o">also</span> <span class="n">Crosstalk</span> <span class="n">calibration</span> <span class="n">standard</span>)
-    <span class="n">Type</span> <span class="mi">13</span>: <span class="n">Crosstalk</span> <span class="n">standard</span> (<span class="n">S21</span>=<span class="n">S12</span>&lt;&gt;<span class="mi">0</span>) (<span class="n">See</span> <span class="o">also</span> <span class="n">Crosstalk</span> <span class="n">calibration</span> <span class="n">standard</span>)
-    <span class="n">Note</span> <span class="n">that</span> <span class="n">type</span> <span class="mi">11</span> <span class="k">has</span> <span class="n">Frequency</span> (<span class="n">GHz</span>), <span class="n">GammaF</span>=<span class="n">a2</span><span class="o">/</span><span class="n">b2</span>, <span class="n">GammaR</span>=<span class="n">a1</span><span class="o">/</span><span class="n">b1</span>, <span class="mi">0</span><span class="o">+</span><span class="n">j0</span>, <span class="mi">0</span><span class="o">+</span><span class="n">j0</span>, <span class="k">as</span> <span class="n">generated</span> <span class="nb">by</span> <span class="n">MultiCal</span>.
-    <span class="mi">3</span>. <span class="n">Raw</span> <span class="n">measurement</span> <span class="n">file</span>, <span class="n">nFile</span>(<span class="n">i</span>)
-    <span class="mi">4</span>. <span class="n">Error</span> <span class="n">in</span> <span class="n">raw</span> <span class="n">measurement</span> <span class="n">file</span>, <span class="n">nFile_e</span>(<span class="n">i</span>)
-    <span class="mi">5</span>. <span class="n">Standard</span> <span class="n">definition</span> <span class="n">file</span>, <span class="n">nFile_def</span>(<span class="n">i</span>)
-    <span class="mi">6</span>. <span class="n">Error</span> <span class="n">in</span> <span class="n">standard</span> <span class="n">definition</span>, <span class="n">nFile_def_e</span>(<span class="n">i</span>)
+    Type 12: Crosstalk standard (S21=S12=0) (See also Crosstalk calibration standard)
+    Type 13: Crosstalk standard (S21=S12&lt;&gt;0) (See also Crosstalk calibration standard)
+    Note that type 11 has Frequency (GHz), GammaF=a2/b2, GammaR=a1/b1, 0+j0, 0+j0, as generated by MultiCal.
+    3. Raw measurement file, nFile(i)
+    4. Error in raw measurement file, nFile_e(i)
+    5. Standard definition file, nFile_def(i)
+    6. Error in standard definition, nFile_def_e(i)
 
-    <span class="n">Logical</span> <span class="n">parameters</span> <span class="n">defining</span> <span class="n">file</span> <span class="o">or</span> <span class="n">model</span> <span class="n">status</span> (=<span class="mi">1</span> <span class="n">means</span> <span class="n">activated</span>, =<span class="mi">0</span> <span class="n">means</span> <span class="n">deactivated</span>)
-    <span class="mi">7</span>. <span class="n">Raw</span> <span class="n">measurement</span> <span class="n">file</span>, <span class="n">LFile</span>(<span class="n">i</span>)
-    <span class="mi">8</span>. <span class="n">Error</span> <span class="n">in</span> <span class="n">raw</span> <span class="n">measurement</span> <span class="n">file</span>, <span class="n">LFile_e</span>(<span class="n">i</span>)
-    <span class="mi">9</span>. <span class="n">Standard</span> <span class="n">definition</span> <span class="n">file</span>, <span class="n">LFile_def</span>(<span class="n">i</span>)
-    <span class="mi">10</span>. <span class="n">Error</span> <span class="n">in</span> <span class="n">standard</span> <span class="n">definition</span>, <span class="n">LFile_def_e</span>(<span class="n">i</span>)
-    <span class="mi">11</span>. <span class="n">Model</span>, <span class="n">LFile_def_model</span>(<span class="n">i</span>)
-    <span class="n">The</span> <span class="mi">40</span> <span class="n">model</span> <span class="n">parameters</span> <span class="n">defining</span> <span class="n">the</span> <span class="n">calibration</span> <span class="n">standard</span>
-    <span class="mi">12</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">t</span> (<span class="n">ps</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span> (<span class="o">or</span> <span class="n">entire</span> <span class="n">std</span> <span class="k">for</span> <span class="n">an</span> <span class="n">attenuator</span>)
-    <span class="mi">13</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">Z0</span> (<span class="n">ohms</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span> (<span class="o">or</span> <span class="n">entire</span> <span class="n">std</span> <span class="k">for</span> <span class="n">an</span> <span class="n">attenuator</span>)
-    <span class="mi">14</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">series</span> <span class="n">resistance</span> (<span class="n">Gohm</span><span class="o">/s</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span> (<span class="o">or</span> <span class="n">entire</span> <span class="n">std</span> <span class="k">for</span> <span class="n">an</span> <span class="n">attenuator</span>)
-    <span class="mi">15</span>. <span class="n">Use</span> <span class="n">HP</span> <span class="n">approximation</span> <span class="n">switch</span> (<span class="n">checked</span>=<span class="mi">1</span>, <span class="n">unchecked</span> =<span class="mi">0</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span> (<span class="o">or</span> <span class="n">entire</span> <span class="n">std</span> <span class="k">for</span> <span class="n">an</span> <span class="n">attenuator</span>)
-    <span class="mi">16</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C0 for port 1 load</span>
-    <span class="mi">17</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C1 for port 1 load</span>
-    <span class="mi">18</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C2 for port 1 load</span>
-    <span class="mi">19</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C3 for port 1 load</span>
-    <span class="mi">20</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C0 for port 1 load</span>
-    <span class="mi">21</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C1 for port 1 load</span>
-    <span class="mi">22</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C2 for port 1 load</span>
-    <span class="mi">23</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C3 for port 1 load</span>
-    <span class="mi">24</span>. <span class="n">Inductor</span> <span class="n">L0</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-    <span class="mi">25</span>. <span class="n">Inductor</span> <span class="n">L1</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-    <span class="mi">26</span>. <span class="n">Inductor</span> <span class="n">L2</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-    <span class="mi">27</span>. <span class="n">Inductor</span> <span class="n">L3</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-    <span class="mi">28</span>. <span class="n">Resistor</span> <span class="n">R0</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-    <span class="mi">29</span>. <span class="n">Resistor</span> <span class="n">R1</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-    <span class="mi">30</span>. <span class="n">Resistor</span> <span class="n">R2</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-    <span class="mi">31</span>. <span class="n">Resistor</span> <span class="n">R3</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-    <span class="mi">32</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">t</span> (<span class="n">ps</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">33</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">Z0</span> (<span class="n">ohms</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">34</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">series</span> <span class="n">resistance</span> (<span class="n">Gohm</span><span class="o">/s</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">35</span>. <span class="n">Use</span> <span class="n">HP</span> <span class="n">approximation</span> <span class="n">switch</span> (<span class="n">checked</span>=<span class="mi">1</span>, <span class="n">unchecked</span> =<span class="mi">0</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">36</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C0 for port 2 load</span>
-    <span class="mi">37</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C1 for port 2 load</span>
-    <span class="mi">38</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C2 for port 2 load</span>
-    <span class="mi">39</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C3 for port 2 load</span>
-    <span class="mi">40</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C0 for port 2 load</span>
-    <span class="mi">41</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C1 for port 2 load</span>
-    <span class="mi">42</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C2 for port 2 load</span>
-    <span class="mi">43</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C3 for port 2 load</span>
-    <span class="mi">44</span>. <span class="n">Inductor</span> <span class="n">L0</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">45</span>. <span class="n">Inductor</span> <span class="n">L1</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">46</span>. <span class="n">Inductor</span> <span class="n">L2</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">47</span>. <span class="n">Inductor</span> <span class="n">L3</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">48</span>. <span class="n">Resistor</span> <span class="n">R0</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">49</span>. <span class="n">Resistor</span> <span class="n">R1</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">50</span>. <span class="n">Resistor</span> <span class="n">R2</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-    <span class="mi">51</span>. <span class="n">Resistor</span> <span class="n">R3</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="n">Next</span> <span class="n">standard</span> <span class="n">i</span>
+    Logical parameters defining file or model status (=1 means activated, =0 means deactivated)
+    7. Raw measurement file, LFile(i)
+    8. Error in raw measurement file, LFile_e(i)
+    9. Standard definition file, LFile_def(i)
+    10. Error in standard definition, LFile_def_e(i)
+    11. Model, LFile_def_model(i)
+    The 40 model parameters defining the calibration standard
+    12. Transmission line t (ps) for port 1 load (or entire std for an attenuator)
+    13. Transmission line Z0 (ohms) for port 1 load (or entire std for an attenuator)
+    14. Transmission line series resistance (Gohm/s) for port 1 load (or entire std for an attenuator)
+    15. Use HP approximation switch (checked=1, unchecked =0) for port 1 load (or entire std for an attenuator)
+    16. Capacitor #1 C0 for port 1 load
+    17. Capacitor #1 C1 for port 1 load
+    18. Capacitor #1 C2 for port 1 load
+    19. Capacitor #1 C3 for port 1 load
+    20. Capacitor #2 C0 for port 1 load
+    21. Capacitor #2 C1 for port 1 load
+    22. Capacitor #2 C2 for port 1 load
+    23. Capacitor #2 C3 for port 1 load
+    24. Inductor L0 for port 1 load
+    25. Inductor L1 for port 1 load
+    26. Inductor L2 for port 1 load
+    27. Inductor L3 for port 1 load
+    28. Resistor R0 for port 1 load
+    29. Resistor R1 for port 1 load
+    30. Resistor R2 for port 1 load
+    31. Resistor R3 for port 1 load
+    32. Transmission line t (ps) for port 2 load
+    33. Transmission line Z0 (ohms) for port 2 load
+    34. Transmission line series resistance (Gohm/s) for port 2 load
+    35. Use HP approximation switch (checked=1, unchecked =0) for port 2 load
+    36. Capacitor #1 C0 for port 2 load
+    37. Capacitor #1 C1 for port 2 load
+    38. Capacitor #1 C2 for port 2 load
+    39. Capacitor #1 C3 for port 2 load
+    40. Capacitor #2 C0 for port 2 load
+    41. Capacitor #2 C1 for port 2 load
+    42. Capacitor #2 C2 for port 2 load
+    43. Capacitor #2 C3 for port 2 load
+    44. Inductor L0 for port 2 load
+    45. Inductor L1 for port 2 load
+    46. Inductor L2 for port 2 load
+    47. Inductor L3 for port 2 load
+    48. Resistor R0 for port 2 load
+    49. Resistor R1 for port 2 load
+    50. Resistor R2 for port 2 load
+    51. Resistor R3 for port 2 load
+Next standard i
 </pre></div>
 
 
@@ -3910,61 +3910,61 @@ we have the following 51 variables stored in the menu:</p>
         Type 10: Isolation standard. (See also Isolation calibration standard)
                        Note that type 10 has the isolation measurements in S21 and S12.
         Type 11: Switch terms. (See also Switch-term file format)</p>
-<div class="codehilite"><pre><span></span><span class="n">Type</span> <span class="mi">12</span>: <span class="n">Crosstalk</span> <span class="n">standard</span> (<span class="n">S21</span>=<span class="n">S12</span>=<span class="mi">0</span>) (<span class="n">See</span> <span class="o">also</span> <span class="n">Crosstalk</span> <span class="n">calibration</span> <span class="n">standard</span>)
-<span class="n">Type</span> <span class="mi">13</span>: <span class="n">Crosstalk</span> <span class="n">standard</span> (<span class="n">S21</span>=<span class="n">S12</span>&lt;&gt;<span class="mi">0</span>) (<span class="n">See</span> <span class="o">also</span> <span class="n">Crosstalk</span> <span class="n">calibration</span> <span class="n">standard</span>)
-<span class="n">Note</span> <span class="n">that</span> <span class="n">type</span> <span class="mi">11</span> <span class="k">has</span> <span class="n">Frequency</span> (<span class="n">GHz</span>), <span class="n">GammaF</span>=<span class="n">a2</span><span class="o">/</span><span class="n">b2</span>, <span class="n">GammaR</span>=<span class="n">a1</span><span class="o">/</span><span class="n">b1</span>, <span class="mi">0</span><span class="o">+</span><span class="n">j0</span>, <span class="mi">0</span><span class="o">+</span><span class="n">j0</span>, <span class="k">as</span> <span class="n">generated</span> <span class="nb">by</span> <span class="n">MultiCal</span>.
-<span class="mi">3</span>. <span class="n">Raw</span> <span class="n">measurement</span> <span class="n">file</span>, <span class="n">nFile</span>(<span class="n">i</span>)
-<span class="mi">4</span>. <span class="n">Error</span> <span class="n">in</span> <span class="n">raw</span> <span class="n">measurement</span> <span class="n">file</span>, <span class="n">nFile_e</span>(<span class="n">i</span>)
-<span class="mi">5</span>. <span class="n">Standard</span> <span class="n">definition</span> <span class="n">file</span>, <span class="n">nFile_def</span>(<span class="n">i</span>)
-<span class="mi">6</span>. <span class="n">Error</span> <span class="n">in</span> <span class="n">standard</span> <span class="n">definition</span>, <span class="n">nFile_def_e</span>(<span class="n">i</span>)
+<div class="codehilite"><pre><span></span>Type 12: Crosstalk standard (S21=S12=0) (See also Crosstalk calibration standard)
+Type 13: Crosstalk standard (S21=S12&lt;&gt;0) (See also Crosstalk calibration standard)
+Note that type 11 has Frequency (GHz), GammaF=a2/b2, GammaR=a1/b1, 0+j0, 0+j0, as generated by MultiCal.
+3. Raw measurement file, nFile(i)
+4. Error in raw measurement file, nFile_e(i)
+5. Standard definition file, nFile_def(i)
+6. Error in standard definition, nFile_def_e(i)
 
-<span class="n">Logical</span> <span class="n">parameters</span> <span class="n">defining</span> <span class="n">file</span> <span class="o">or</span> <span class="n">model</span> <span class="n">status</span> (=<span class="mi">1</span> <span class="n">means</span> <span class="n">activated</span>, =<span class="mi">0</span> <span class="n">means</span> <span class="n">deactivated</span>)
-<span class="mi">7</span>. <span class="n">Raw</span> <span class="n">measurement</span> <span class="n">file</span>, <span class="n">LFile</span>(<span class="n">i</span>)
-<span class="mi">8</span>. <span class="n">Error</span> <span class="n">in</span> <span class="n">raw</span> <span class="n">measurement</span> <span class="n">file</span>, <span class="n">LFile_e</span>(<span class="n">i</span>)
-<span class="mi">9</span>. <span class="n">Standard</span> <span class="n">definition</span> <span class="n">file</span>, <span class="n">LFile_def</span>(<span class="n">i</span>)
-<span class="mi">10</span>. <span class="n">Error</span> <span class="n">in</span> <span class="n">standard</span> <span class="n">definition</span>, <span class="n">LFile_def_e</span>(<span class="n">i</span>)
-<span class="mi">11</span>. <span class="n">Model</span>, <span class="n">LFile_def_model</span>(<span class="n">i</span>)
-<span class="n">The</span> <span class="mi">40</span> <span class="n">model</span> <span class="n">parameters</span> <span class="n">defining</span> <span class="n">the</span> <span class="n">calibration</span> <span class="n">standard</span>
-<span class="mi">12</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">t</span> (<span class="n">ps</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span> (<span class="o">or</span> <span class="n">entire</span> <span class="n">std</span> <span class="k">for</span> <span class="n">an</span> <span class="n">attenuator</span>)
-<span class="mi">13</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">Z0</span> (<span class="n">ohms</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span> (<span class="o">or</span> <span class="n">entire</span> <span class="n">std</span> <span class="k">for</span> <span class="n">an</span> <span class="n">attenuator</span>)
-<span class="mi">14</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">series</span> <span class="n">resistance</span> (<span class="n">Gohm</span><span class="o">/s</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span> (<span class="o">or</span> <span class="n">entire</span> <span class="n">std</span> <span class="k">for</span> <span class="n">an</span> <span class="n">attenuator</span>)
-<span class="mi">15</span>. <span class="n">Use</span> <span class="n">HP</span> <span class="n">approximation</span> <span class="n">switch</span> (<span class="n">checked</span>=<span class="mi">1</span>, <span class="n">unchecked</span> =<span class="mi">0</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span> (<span class="o">or</span> <span class="n">entire</span> <span class="n">std</span> <span class="k">for</span> <span class="n">an</span> <span class="n">attenuator</span>)
-<span class="mi">16</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C0 for port 1 load</span>
-<span class="mi">17</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C1 for port 1 load</span>
-<span class="mi">18</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C2 for port 1 load</span>
-<span class="mi">19</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C3 for port 1 load</span>
-<span class="mi">20</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C0 for port 1 load</span>
-<span class="mi">21</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C1 for port 1 load</span>
-<span class="mi">22</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C2 for port 1 load</span>
-<span class="mi">23</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C3 for port 1 load</span>
-<span class="mi">24</span>. <span class="n">Inductor</span> <span class="n">L0</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-<span class="mi">25</span>. <span class="n">Inductor</span> <span class="n">L1</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-<span class="mi">26</span>. <span class="n">Inductor</span> <span class="n">L2</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-<span class="mi">27</span>. <span class="n">Inductor</span> <span class="n">L3</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-<span class="mi">28</span>. <span class="n">Resistor</span> <span class="n">R0</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-<span class="mi">29</span>. <span class="n">Resistor</span> <span class="n">R1</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-<span class="mi">30</span>. <span class="n">Resistor</span> <span class="n">R2</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-<span class="mi">31</span>. <span class="n">Resistor</span> <span class="n">R3</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">1</span> <span class="n">load</span>
-<span class="mi">32</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">t</span> (<span class="n">ps</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">33</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">Z0</span> (<span class="n">ohms</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">34</span>. <span class="n">Transmission</span> <span class="n">line</span> <span class="n">series</span> <span class="n">resistance</span> (<span class="n">Gohm</span><span class="o">/s</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">35</span>. <span class="n">Use</span> <span class="n">HP</span> <span class="n">approximation</span> <span class="n">switch</span> (<span class="n">checked</span>=<span class="mi">1</span>, <span class="n">unchecked</span> =<span class="mi">0</span>) <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">36</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C0 for port 2 load</span>
-<span class="mi">37</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C1 for port 2 load</span>
-<span class="mi">38</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C2 for port 2 load</span>
-<span class="mi">39</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#1 C3 for port 2 load</span>
-<span class="mi">40</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C0 for port 2 load</span>
-<span class="mi">41</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C1 for port 2 load</span>
-<span class="mi">42</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C2 for port 2 load</span>
-<span class="mi">43</span>. <span class="n">Capacitor</span> <span class="c c-Singleline">#2 C3 for port 2 load</span>
-<span class="mi">44</span>. <span class="n">Inductor</span> <span class="n">L0</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">45</span>. <span class="n">Inductor</span> <span class="n">L1</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">46</span>. <span class="n">Inductor</span> <span class="n">L2</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">47</span>. <span class="n">Inductor</span> <span class="n">L3</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">48</span>. <span class="n">Resistor</span> <span class="n">R0</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">49</span>. <span class="n">Resistor</span> <span class="n">R1</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">50</span>. <span class="n">Resistor</span> <span class="n">R2</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
-<span class="mi">51</span>. <span class="n">Resistor</span> <span class="n">R3</span> <span class="k">for</span> <span class="n">port</span> <span class="mi">2</span> <span class="n">load</span>
+Logical parameters defining file or model status (=1 means activated, =0 means deactivated)
+7. Raw measurement file, LFile(i)
+8. Error in raw measurement file, LFile_e(i)
+9. Standard definition file, LFile_def(i)
+10. Error in standard definition, LFile_def_e(i)
+11. Model, LFile_def_model(i)
+The 40 model parameters defining the calibration standard
+12. Transmission line t (ps) for port 1 load (or entire std for an attenuator)
+13. Transmission line Z0 (ohms) for port 1 load (or entire std for an attenuator)
+14. Transmission line series resistance (Gohm/s) for port 1 load (or entire std for an attenuator)
+15. Use HP approximation switch (checked=1, unchecked =0) for port 1 load (or entire std for an attenuator)
+16. Capacitor #1 C0 for port 1 load
+17. Capacitor #1 C1 for port 1 load
+18. Capacitor #1 C2 for port 1 load
+19. Capacitor #1 C3 for port 1 load
+20. Capacitor #2 C0 for port 1 load
+21. Capacitor #2 C1 for port 1 load
+22. Capacitor #2 C2 for port 1 load
+23. Capacitor #2 C3 for port 1 load
+24. Inductor L0 for port 1 load
+25. Inductor L1 for port 1 load
+26. Inductor L2 for port 1 load
+27. Inductor L3 for port 1 load
+28. Resistor R0 for port 1 load
+29. Resistor R1 for port 1 load
+30. Resistor R2 for port 1 load
+31. Resistor R3 for port 1 load
+32. Transmission line t (ps) for port 2 load
+33. Transmission line Z0 (ohms) for port 2 load
+34. Transmission line series resistance (Gohm/s) for port 2 load
+35. Use HP approximation switch (checked=1, unchecked =0) for port 2 load
+36. Capacitor #1 C0 for port 2 load
+37. Capacitor #1 C1 for port 2 load
+38. Capacitor #1 C2 for port 2 load
+39. Capacitor #1 C3 for port 2 load
+40. Capacitor #2 C0 for port 2 load
+41. Capacitor #2 C1 for port 2 load
+42. Capacitor #2 C2 for port 2 load
+43. Capacitor #2 C3 for port 2 load
+44. Inductor L0 for port 2 load
+45. Inductor L1 for port 2 load
+46. Inductor L2 for port 2 load
+47. Inductor L3 for port 2 load
+48. Resistor R0 for port 2 load
+49. Resistor R1 for port 2 load
+50. Resistor R2 for port 2 load
+51. Resistor R3 for port 2 load
 </pre></div></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.StatistiCALModels.StatistiCALMenuModel.set_standard', this);">Show source &equiv;</a></p>
@@ -6608,7 +6608,7 @@ command successfully</p></div>
   <footer id="footer">
     <p>
       Documentation generated by
-      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.2</a>
+      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.1</a>
     </p>
 
     <p>pdoc is in the public domain with the

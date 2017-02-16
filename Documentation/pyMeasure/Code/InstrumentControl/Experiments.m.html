@@ -554,7 +554,7 @@ table {
   html, body {
     margin: 0;
     padding: 0;
-    min-height: 100%;
+    height: 100%;
   }
   body {
     background: #fff;
@@ -1062,7 +1062,7 @@ table {
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.__init__">__init__</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.calculate_resistance">calculate_resistance</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.intialize_keithley">intialize_keithley</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.initialize_keithley">initialize_keithley</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.make_voltage_list">make_voltage_list</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.plot_data">plot_data</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.save_data">save_data</a></li>
@@ -1133,8 +1133,10 @@ table {
 <span class="c1"># Module Constants</span>
 
 <span class="n">PYMEASURE_ROOT</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span> <span class="n">__file__</span> <span class="p">),</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
+<span class="s2">&quot;Root directory of pyMeasure&quot;</span>
 <span class="n">KEITHLEY_INSTRUMENT_SHEET</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PYMEASURE_ROOT</span><span class="p">,</span>
 <span class="s1">&#39;Instruments&#39;</span><span class="p">,</span><span class="s1">&#39;KEITHLEY6487_NSOM.xml&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="s2">&quot;The file path to the Keithley 6487 instrument sheet.&quot;</span>
 
 
 <span class="c1">#-------------------------------------------------------------------------------</span>
@@ -1145,7 +1147,7 @@ table {
 <span class="sd">    taking a two point measurement using its internal voltage source written 02/2011&quot;&quot;&quot;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Intializes the KeithleyIV experiment class&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; initializes the KeithleyIV experiment class&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">=</span><span class="n">Code</span><span class="o">.</span><span class="n">InstrumentControl</span><span class="o">.</span><span class="n">Instruments</span><span class="o">.</span><span class="n">VisaInstrument</span><span class="p">(</span><span class="s1">&#39;Keithley&#39;</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
@@ -1156,15 +1158,15 @@ table {
         <span class="bp">self</span><span class="o">.</span><span class="n">data_list</span><span class="o">=</span><span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_dictionary</span><span class="o">=</span><span class="p">{}</span>
         <span class="k">pass</span>
-    <span class="k">def</span> <span class="nf">intialize_keithley</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">initialize_keithley</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sends intialization string to Keithley picoammeter&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">intialize_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*RST&quot;</span><span class="p">,</span><span class="s2">&quot;FUNC &#39;CURR&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCH:STAT ON&quot;</span><span class="p">,</span>
+            <span class="n">initialize_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*RST&quot;</span><span class="p">,</span><span class="s2">&quot;FUNC &#39;CURR&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCH:STAT ON&quot;</span><span class="p">,</span>
             <span class="s2">&quot;CURR:RANG 2E-4&quot;</span><span class="p">,</span><span class="s2">&quot;INIT&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCOR:STAT OFF&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCOR:ACQ&quot;</span><span class="p">,</span>
             <span class="s2">&quot;SYST:ZCH:STAT OFF&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCOR ON&quot;</span><span class="p">,</span><span class="s2">&quot;SOUR:VOLT:STAT ON&quot;</span><span class="p">,</span>
             <span class="s2">&quot;FORM:ELEM ALL&quot;</span><span class="p">,</span><span class="s2">&quot;CURR:RANG:AUTO ON&quot;</span><span class="p">]</span>
             
-            <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">intialize_list</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">initialize_list</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
             <span class="c1"># TODO: Check for Instrument Errors</span>
             
@@ -1299,6 +1301,7 @@ table {
       <p id="pyMeasure.Code.InstrumentControl.Experiments.KEITHLEY_INSTRUMENT_SHEET" class="name">var <span class="ident">KEITHLEY_INSTRUMENT_SHEET</span></p>
       
   
+    <div class="desc"><p>The file path to the Keithley 6487 instrument sheet.</p></div>
   <div class="source_cont">
 </div>
 
@@ -1307,6 +1310,7 @@ table {
       <p id="pyMeasure.Code.InstrumentControl.Experiments.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
       
   
+    <div class="desc"><p>Root directory of pyMeasure</p></div>
   <div class="source_cont">
 </div>
 
@@ -1363,7 +1367,7 @@ taking a two point measurement using its internal voltage source written 02/2011
 <span class="sd">    taking a two point measurement using its internal voltage source written 02/2011&quot;&quot;&quot;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Intializes the KeithleyIV experiment class&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; initializes the KeithleyIV experiment class&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">=</span><span class="n">Code</span><span class="o">.</span><span class="n">InstrumentControl</span><span class="o">.</span><span class="n">Instruments</span><span class="o">.</span><span class="n">VisaInstrument</span><span class="p">(</span><span class="s1">&#39;Keithley&#39;</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
@@ -1374,15 +1378,15 @@ taking a two point measurement using its internal voltage source written 02/2011
         <span class="bp">self</span><span class="o">.</span><span class="n">data_list</span><span class="o">=</span><span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_dictionary</span><span class="o">=</span><span class="p">{}</span>
         <span class="k">pass</span>
-    <span class="k">def</span> <span class="nf">intialize_keithley</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">initialize_keithley</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sends intialization string to Keithley picoammeter&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">intialize_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*RST&quot;</span><span class="p">,</span><span class="s2">&quot;FUNC &#39;CURR&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCH:STAT ON&quot;</span><span class="p">,</span>
+            <span class="n">initialize_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*RST&quot;</span><span class="p">,</span><span class="s2">&quot;FUNC &#39;CURR&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCH:STAT ON&quot;</span><span class="p">,</span>
             <span class="s2">&quot;CURR:RANG 2E-4&quot;</span><span class="p">,</span><span class="s2">&quot;INIT&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCOR:STAT OFF&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCOR:ACQ&quot;</span><span class="p">,</span>
             <span class="s2">&quot;SYST:ZCH:STAT OFF&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCOR ON&quot;</span><span class="p">,</span><span class="s2">&quot;SOUR:VOLT:STAT ON&quot;</span><span class="p">,</span>
             <span class="s2">&quot;FORM:ELEM ALL&quot;</span><span class="p">,</span><span class="s2">&quot;CURR:RANG:AUTO ON&quot;</span><span class="p">]</span>
             
-            <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">intialize_list</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">initialize_list</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
             <span class="c1"># TODO: Check for Instrument Errors</span>
             
@@ -1543,12 +1547,12 @@ taking a two point measurement using its internal voltage source written 02/2011
 
     
   
-    <div class="desc"><p>Intializes the KeithleyIV experiment class</p></div>
+    <div class="desc"><p>initializes the KeithleyIV experiment class</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.__init__', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.__init__" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Intializes the KeithleyIV experiment class&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; initializes the KeithleyIV experiment class&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">=</span><span class="n">Code</span><span class="o">.</span><span class="n">InstrumentControl</span><span class="o">.</span><span class="n">Instruments</span><span class="o">.</span><span class="n">VisaInstrument</span><span class="p">(</span><span class="s1">&#39;Keithley&#39;</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
@@ -1595,8 +1599,8 @@ taking a two point measurement using its internal voltage source written 02/2011
   
             
   <div class="item">
-    <div class="name def" id="pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.intialize_keithley">
-    <p>def <span class="ident">intialize_keithley</span>(</p><p>self)</p>
+    <div class="name def" id="pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.initialize_keithley">
+    <p>def <span class="ident">initialize_keithley</span>(</p><p>self)</p>
     </div>
     
 
@@ -1604,17 +1608,17 @@ taking a two point measurement using its internal voltage source written 02/2011
   
     <div class="desc"><p>Sends intialization string to Keithley picoammeter</p></div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.intialize_keithley', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.intialize_keithley" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">intialize_keithley</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.initialize_keithley', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.InstrumentControl.Experiments.KeithleyIV.initialize_keithley" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">initialize_keithley</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Sends intialization string to Keithley picoammeter&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">intialize_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*RST&quot;</span><span class="p">,</span><span class="s2">&quot;FUNC &#39;CURR&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCH:STAT ON&quot;</span><span class="p">,</span>
+        <span class="n">initialize_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*RST&quot;</span><span class="p">,</span><span class="s2">&quot;FUNC &#39;CURR&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCH:STAT ON&quot;</span><span class="p">,</span>
         <span class="s2">&quot;CURR:RANG 2E-4&quot;</span><span class="p">,</span><span class="s2">&quot;INIT&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCOR:STAT OFF&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCOR:ACQ&quot;</span><span class="p">,</span>
         <span class="s2">&quot;SYST:ZCH:STAT OFF&quot;</span><span class="p">,</span><span class="s2">&quot;SYST:ZCOR ON&quot;</span><span class="p">,</span><span class="s2">&quot;SOUR:VOLT:STAT ON&quot;</span><span class="p">,</span>
         <span class="s2">&quot;FORM:ELEM ALL&quot;</span><span class="p">,</span><span class="s2">&quot;CURR:RANG:AUTO ON&quot;</span><span class="p">]</span>
         
-        <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">intialize_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">initialize_list</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
         <span class="c1"># TODO: Check for Instrument Errors</span>
         
@@ -1819,7 +1823,7 @@ and a boolen that determines if all sweeps begin and end on zero</p></div>
   <footer id="footer">
     <p>
       Documentation generated by
-      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.2</a>
+      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.1</a>
     </p>
 
     <p>pdoc is in the public domain with the

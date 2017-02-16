@@ -554,7 +554,7 @@ table {
   html, body {
     margin: 0;
     padding: 0;
-    min-height: 100%;
+    height: 100%;
   }
   body {
     background: #fff;
@@ -1728,7 +1728,7 @@ table {
             <span class="n">voltage_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">make_voltage_list</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">number_points</span><span class="p">,</span><span class="n">bowtie</span><span class="p">)</span>
             <span class="c1">#print voltage_list</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">intialize_keithley</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">initialize_keithley</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">take_IV</span><span class="p">(</span><span class="n">voltage_list</span><span class="p">,</span><span class="n">settle_time</span><span class="o">=</span><span class="n">settling_time</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Entering fake mode, keithley did not respond fake R=12000.1&#39;</span>
@@ -2351,7 +2351,7 @@ table {
             <span class="n">voltage_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">make_voltage_list</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">number_points</span><span class="p">,</span><span class="n">bowtie</span><span class="p">)</span>
             <span class="c1">#print voltage_list</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">intialize_keithley</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">initialize_keithley</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">take_IV</span><span class="p">(</span><span class="n">voltage_list</span><span class="p">,</span><span class="n">settle_time</span><span class="o">=</span><span class="n">settling_time</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Entering fake mode, keithley did not respond fake R=12000.1&#39;</span>
@@ -8421,7 +8421,7 @@ equivalient to self.GetParent().NavigateIn().</p></div>
         <span class="n">voltage_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">make_voltage_list</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">number_points</span><span class="p">,</span><span class="n">bowtie</span><span class="p">)</span>
         <span class="c1">#print voltage_list</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">intialize_keithley</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">initialize_keithley</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">take_IV</span><span class="p">(</span><span class="n">voltage_list</span><span class="p">,</span><span class="n">settle_time</span><span class="o">=</span><span class="n">settling_time</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Entering fake mode, keithley did not respond fake R=12000.1&#39;</span>
@@ -11927,7 +11927,7 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
   <footer id="footer">
     <p>
       Documentation generated by
-      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.2</a>
+      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.1</a>
     </p>
 
     <p>pdoc is in the public domain with the
