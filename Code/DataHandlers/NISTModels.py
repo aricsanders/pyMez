@@ -1511,6 +1511,7 @@ class StandardErrorModel(AsciiDataTable):
 
     def show(self,**options):
         """Shows a plot of the StandardErrorModel"""
+        #todo: plots per column is confusing
         defaults={"display_legend":False,
                   "save_plot":False,
                   "directory":None,

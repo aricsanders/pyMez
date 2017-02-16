@@ -1208,6 +1208,133 @@ def return_calrep_error_column_names(calrep_model_value_columns,error_suffix='g'
         error_columns.append(error_column)
     return error_columns
 
+
+def plot_frequency_model(frequency_model, **options):
+    """Plots any table with frequency as its x-axis and column_names as the x-axis in a
+    series of subplots"""
+    defaults = {"display_legend": False,
+                "save_plot": False,
+                "directory": None,
+                "specific_descriptor": "Frequency_Model",
+                "general_descriptor": "Plot",
+                "file_name": None,
+                "plots_per_column": 2,
+                "plot_format": 'b-o',
+                "share_x": False,
+                "subplots_title": True,
+                "plot_title": None,
+                "plot_size": (8, 6),
+                "dpi": 80}
+    plot_options = {}
+    for key, value in defaults.iteritems():
+        plot_options[key] = value
+    for key, value in options.iteritems():
+        plot_options[key] = value
+    if type(frequency_model) in [pandas.DataFrame]:
+        frequency_model = DataFrame_to_AsciiDataTable(frequency_model)
+    x_data = np.array(frequency_model["Frequency"])
+    y_data_columns = frequency_model.column_names[:]
+    y_data_columns.remove("Frequency")
+    number_plots = len(y_data_columns)
+    number_columns = plot_options["plots_per_column"]
+    number_rows = int(round(float(number_plots) / float(number_columns)))
+    figure, axes = plt.subplots(ncols=number_columns, nrows=number_rows, sharex=plot_options["share_x"],
+                                figsize=plot_options["plot_size"], dpi=plot_options["dpi"])
+    for plot_index, ax in enumerate(axes.flat):
+        if plot_index < number_plots:
+            y_data = np.array(frequency_model[y_data_columns[plot_index]])
+            ax.plot(x_data, y_data, plot_options["plot_format"], label=y_data_columns[plot_index])
+            if plot_options["display_legend"]:
+                ax.legend()
+            if plot_options["subplots_title"]:
+                ax.set_title(y_data_columns[plot_index])
+        else:
+            pass
+    if plot_options["plot_title"]:
+        plt.suptitle(plot_options["plot_title"])
+
+    plt.tight_layout()
+    # Dealing with the save option
+    if plot_options["file_name"] is None:
+        file_name = auto_name(specific_descriptor=plot_options["specific_descriptor"],
+                              general_descriptor=plot_options["general_descriptor"],
+                              directory=plot_options["directory"], extension='png', padding=3)
+    else:
+        file_name = plot_options["file_name"]
+    if plot_options["save_plot"]:
+        # print file_name
+        plt.savefig(os.path.join(plot_options["directory"], file_name))
+    else:
+        plt.show()
+    return figure
+
+
+def plot_frequency_model_histogram(frequency_model, **options):
+    """Plots any table with frequency as its x-axis and column_names as the x-axis in a
+    series of subplots"""
+    defaults = {"display_legend": False,
+                "save_plot": False,
+                "directory": None,
+                "specific_descriptor": "Frequency_Model",
+                "general_descriptor": "Plot",
+                "file_name": None,
+                "plots_per_column": 2,
+                "plot_format": 'b-o',
+                "share_x": False,
+                "subplots_title": True,
+                "plot_title": None,
+                "plot_size": (8, 6),
+                "dpi": 80,
+                "non_plotable_text": "Not Plotable"}
+    plot_options = {}
+    for key, value in defaults.iteritems():
+        plot_options[key] = value
+    for key, value in options.iteritems():
+        plot_options[key] = value
+    if type(frequency_model) in [pandas.DataFrame]:
+        frequency_model = DataFrame_to_AsciiDataTable(frequency_model)
+    x_data = np.array(frequency_model["Frequency"])
+    y_data_columns = frequency_model.column_names[:]
+    y_data_columns.remove("Frequency")
+    number_plots = len(y_data_columns)
+    number_columns = plot_options["plots_per_column"]
+    number_rows = int(round(float(number_plots) / float(number_columns)))
+    figure, axes = plt.subplots(ncols=number_columns, nrows=number_rows, sharex=plot_options["share_x"],
+                                figsize=plot_options["plot_size"], dpi=plot_options["dpi"])
+    for plot_index, ax in enumerate(axes.flat):
+        if plot_index < number_plots:
+            try:
+                y_data = np.array(frequency_model[y_data_columns[plot_index]])
+                ax.hist(y_data)
+                if plot_options["display_legend"]:
+                    ax.legend()
+                if plot_options["subplots_title"]:
+                    ax.set_title(y_data_columns[plot_index])
+            except:
+                text = plot_options["non_plotable_text"]
+                plt.text.Annotation(text, (0, 0))
+                if plot_options["subplots_title"]:
+                    ax.set_title(y_data_columns[plot_index])
+        else:
+            pass
+    if plot_options["plot_title"]:
+        plt.suptitle(plot_options["plot_title"])
+
+    plt.tight_layout()
+    # Dealing with the save option
+    if plot_options["file_name"] is None:
+        file_name = auto_name(specific_descriptor=plot_options["specific_descriptor"],
+                              general_descriptor=plot_options["general_descriptor"],
+                              directory=plot_options["directory"], extension='png', padding=3)
+    else:
+        file_name = plot_options["file_name"]
+    if plot_options["save_plot"]:
+        # print file_name
+        plt.savefig(os.path.join(plot_options["directory"], file_name))
+    else:
+        plt.show()
+    return figure
+
 def plot_calrep(calrep_model):
     """Plots a calrep model with uncertainties"""
     # todo: add options to this plot
