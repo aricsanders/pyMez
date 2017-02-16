@@ -59,9 +59,11 @@ DUT_COLUMN_NAMES=["Frequency", "magS11", "argS11","uMbS11", "uMaS11", "uMdS11", 
 "DUT_COLUMN_NAMES are the column names for the .dut files generated  by calrep for the direct comparison system"
 ONE_PORT_COLUMN_NAMES=["Frequency", "magS11", "uMbS11", "uMaS11", "uMdS11", "uMgS11", "argS11",
                                     "uAbS11", "uAaS11", "uAdS11", "uAgS11"]
+"Column names for a calrep one port table."
 #Note there are 2 power models!!! one with 4 error terms and one with 3
 POWER_4TERM_COLUMN_NAMES=['Frequency','Efficiency','uEb', 'uEa','uEd','uEg',
                     'Calibration_Factor','uCb','uCa','uCd','uCg']
+"Column names for the power table in the calrep data file with older analysis."
 #todo: change this description to reflect the column names
 POWER_4TERM_COLUMN_DESCRIPTIONS={"Frequency": "Frequency in GHz",
                                            "Efficiency":"Effective Efficiency",
@@ -95,8 +97,10 @@ RESULTS_FILE_POWER_COLUMN_NAMES=["Device_Id","Frequency","Number_Measurements","
 
 # Constant that determines if S21 is in db-angle or mag-angle format true is in mag-angle
 CONVERT_S21=True
+"Constant that determines if S21 is in db-angle or mag-angle format true is in mag-angle"
 # Constant that determines if 1-port raw files have S11 and S22 or just S11
 COMBINE_S11_S22=True
+"Constant that determines if 1-port raw files have S11 and S22 or just S11"
 # For documentation using pdoc
 __pdoc__={}
 __pdoc__['ONE_PORT_COLUMN_NAMES']="One port column names for the output of calrep such as .asc  "

@@ -85,6 +85,7 @@ except:
 try:
     import pdfkit
     PDF_CONVERT=True
+    "Constant that is set to True if the module pdfkit is available."
 except:
     print("The module pdfkit was not found or had an error,"
           "please check module or put it on the python path use pip install pdfkit and also install "
@@ -107,6 +108,7 @@ except:
 try:
     from win32com import client
     WINDOWS_COM=True
+    "Constant that is set to True if the module win32com is available."
 except:
     print("The module win32com was not found or had an error,"
           "please check module or put it on the python path, if OS is not Windows ignore this warning")
@@ -115,7 +117,9 @@ except:
 #-----------------------------------------------------------------------------
 # Module Constants
 INKSCAPE_PATH=r'c:\PROGRA~1\Inkscape\inkscape.exe'
+"Path to the Inkscape executable."
 WKHTML_PATH=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
+"Path to the wkhtmltopdf executable."
 #-----------------------------------------------------------------------------
 # Module Functions
 # todo: rename all translations as UpperCamelCase_to_UpperCamelCase

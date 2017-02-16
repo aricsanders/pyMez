@@ -1222,6 +1222,7 @@ changed to data to align better with other class models.</p>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">Code.Utils.Alias</span> <span class="kn">import</span> <span class="o">*</span>
     <span class="n">METHOD_ALIASES</span><span class="o">=</span><span class="mi">1</span>
+    <span class="s2">&quot;Constant that is set to True if Method Alias is available.&quot;</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module pyMeasure.Code.Utils.Alias was not found&quot;</span><span class="p">)</span>
     <span class="n">METHOD_ALIASES</span><span class="o">=</span><span class="mi">0</span>
@@ -1242,6 +1243,7 @@ changed to data to align better with other class models.</p>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">smithplot</span>
     <span class="n">SMITHPLOT</span><span class="o">=</span><span class="mi">1</span>
+    <span class="s2">&quot;Constant assigned as true if the module smithplot is present, this module is currently broken&quot;</span>
 
 <span class="k">except</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module smithplot was not found,&quot;</span>
@@ -1252,12 +1254,19 @@ changed to data to align better with other class models.</p>
 <span class="n">TOUCHSTONE_KEYWORDS</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Version&quot;</span><span class="p">,</span><span class="s2">&quot;Number of Ports&quot;</span><span class="p">,</span><span class="s2">&quot;Two-Port Order&quot;</span><span class="p">,</span><span class="s2">&quot;Number of Frequencies&quot;</span><span class="p">,</span>
                      <span class="s2">&quot;Number of Noise Frequencies&quot;</span><span class="p">,</span><span class="s2">&quot;Reference&quot;</span><span class="p">,</span><span class="s2">&quot;Matrix Format&quot;</span><span class="p">,</span><span class="s2">&quot;Mixed-Mode Order&quot;</span><span class="p">,</span>
                      <span class="s2">&quot;Network Data&quot;</span><span class="p">,</span><span class="s2">&quot;Noise Data&quot;</span><span class="p">,</span><span class="s2">&quot;End&quot;</span><span class="p">]</span>
+<span class="sd">&quot;&quot;&quot;Keywords for version 2 touchstone files, not currently implemented &quot;&quot;&quot;</span>
 <span class="n">OPTION_LINE_PATTERN</span><span class="o">=</span><span class="s2">&quot;#[\s]+(?P&lt;Frequency_Units&gt;\w+)[\s]+(?P&lt;Parameter&gt;\w+)[\s]+(?P&lt;Format&gt;\w+)[\s]+R[\s]+(?P&lt;Reference_Resistance&gt;[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)&quot;</span>
+<span class="s2">&quot;Regular expression string for the option line in touchstone files (# GHz S RI R 50)&quot;</span>
 <span class="n">COMMENT_PATTERN</span><span class="o">=</span><span class="s2">&quot;![\s]*(?P&lt;Comment&gt;.+)</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;Regular expression for comments in touchstone files.&quot;</span>
 <span class="n">EXTENSION_PATTERN</span><span class="o">=</span><span class="s2">&quot;s(?P&lt;Number_Ports&gt;\d+)p&quot;</span>
+<span class="s2">&quot;Regular expresion for snp extensions.&quot;</span>
 <span class="n">FREQUENCY_UNITS</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Hz&quot;</span><span class="p">,</span><span class="s2">&quot;kHz&quot;</span><span class="p">,</span><span class="s2">&quot;MHz&quot;</span><span class="p">,</span><span class="s2">&quot;GHz&quot;</span><span class="p">]</span>
+<span class="s2">&quot;Common frequency units .in touchstone files&quot;</span>
 <span class="n">PARAMETERS</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">,</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span><span class="s2">&quot;Z&quot;</span><span class="p">,</span><span class="s2">&quot;G&quot;</span><span class="p">,</span><span class="s2">&quot;H&quot;</span><span class="p">]</span>
+<span class="s2">&quot;Network parameters found in touchstone files&quot;</span>
 <span class="n">FORMATS</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RI&quot;</span><span class="p">,</span><span class="s2">&quot;DB&quot;</span><span class="p">,</span><span class="s2">&quot;MA&quot;</span><span class="p">]</span>
+<span class="s2">&quot;Format codes found in touchstone files.&quot;</span>
 <span class="n">S1P_MA_COLUMN_NAMES</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;magS11&quot;</span><span class="p">,</span><span class="s2">&quot;argS11&quot;</span><span class="p">]</span>
 <span class="n">S1P_DB_COLUMN_NAMES</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;dbS11&quot;</span><span class="p">,</span><span class="s2">&quot;argS11&quot;</span><span class="p">]</span>
 <span class="n">S1P_RI_COLUMN_NAMES</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;reS11&quot;</span><span class="p">,</span><span class="s2">&quot;imS11&quot;</span><span class="p">]</span>
@@ -1272,8 +1281,9 @@ changed to data to align better with other class models.</p>
 <span class="n">S2P_NOISE_PARAMETER_COLUMN_NAMES</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;NFMin&quot;</span><span class="p">,</span><span class="s2">&quot;mag&quot;</span><span class="p">,</span><span class="s2">&quot;arg&quot;</span><span class="p">,</span><span class="s2">&quot;Rn&quot;</span><span class="p">]</span>
 <span class="c1"># value to assign to any thing that is 0</span>
 <span class="n">MINIMUM_DB_VALUE</span><span class="o">=-</span><span class="mi">200</span>
+<span class="s2">&quot;Decibel value assigned to any linear value that is zero in a touchstone file&quot;</span>
 <span class="n">MINIMUM_DB_ARG_VALUE</span><span class="o">=</span><span class="mi">0</span>
-
+<span class="s2">&quot;Value assigned to the phase of a zero linear value in a touchstone file&quot;</span>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Functions</span>
@@ -3071,6 +3081,7 @@ changed to data to align better with other class models.</p>
       <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.COMMENT_PATTERN" class="name">var <span class="ident">COMMENT_PATTERN</span></p>
       
   
+    <div class="desc"><p>Regular expression for comments in touchstone files.</p></div>
   <div class="source_cont">
 </div>
 
@@ -3087,6 +3098,7 @@ changed to data to align better with other class models.</p>
       <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.EXTENSION_PATTERN" class="name">var <span class="ident">EXTENSION_PATTERN</span></p>
       
   
+    <div class="desc"><p>Regular expresion for snp extensions.</p></div>
   <div class="source_cont">
 </div>
 
@@ -3095,6 +3107,7 @@ changed to data to align better with other class models.</p>
       <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.FORMATS" class="name">var <span class="ident">FORMATS</span></p>
       
   
+    <div class="desc"><p>Format codes found in touchstone files.</p></div>
   <div class="source_cont">
 </div>
 
@@ -3103,6 +3116,7 @@ changed to data to align better with other class models.</p>
       <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.FREQUENCY_UNITS" class="name">var <span class="ident">FREQUENCY_UNITS</span></p>
       
   
+    <div class="desc"><p>Common frequency units .in touchstone files</p></div>
   <div class="source_cont">
 </div>
 
@@ -3119,6 +3133,7 @@ changed to data to align better with other class models.</p>
       <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.MINIMUM_DB_ARG_VALUE" class="name">var <span class="ident">MINIMUM_DB_ARG_VALUE</span></p>
       
   
+    <div class="desc"><p>Value assigned to the phase of a zero linear value in a touchstone file</p></div>
   <div class="source_cont">
 </div>
 
@@ -3127,6 +3142,7 @@ changed to data to align better with other class models.</p>
       <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.MINIMUM_DB_VALUE" class="name">var <span class="ident">MINIMUM_DB_VALUE</span></p>
       
   
+    <div class="desc"><p>Decibel value assigned to any linear value that is zero in a touchstone file</p></div>
   <div class="source_cont">
 </div>
 
@@ -3143,6 +3159,7 @@ changed to data to align better with other class models.</p>
       <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.OPTION_LINE_PATTERN" class="name">var <span class="ident">OPTION_LINE_PATTERN</span></p>
       
   
+    <div class="desc"><p>Regular expression string for the option line in touchstone files (# GHz S RI R 50)</p></div>
   <div class="source_cont">
 </div>
 
@@ -3151,6 +3168,7 @@ changed to data to align better with other class models.</p>
       <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.PARAMETERS" class="name">var <span class="ident">PARAMETERS</span></p>
       
   
+    <div class="desc"><p>Network parameters found in touchstone files</p></div>
   <div class="source_cont">
 </div>
 
@@ -3271,6 +3289,7 @@ changed to data to align better with other class models.</p>
       <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.TOUCHSTONE_KEYWORDS" class="name">var <span class="ident">TOUCHSTONE_KEYWORDS</span></p>
       
   
+    <div class="desc"><p>Keywords for version 2 touchstone files, not currently implemented</p></div>
   <div class="source_cont">
 </div>
 

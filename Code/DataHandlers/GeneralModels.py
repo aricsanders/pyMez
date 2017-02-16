@@ -40,8 +40,10 @@ except:
 #-----------------------------------------------------------------------------
 # Module Constants
 TESTS_DIRECTORY=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
+"Directory that holds files generated or used in module testing."
 # General Regular Expression For matching a number
 NUMBER_MATCH_STRING=r'[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?'
+"Regular expression that matches a number of any format."
 #-----------------------------------------------------------------------------
 # Module Functions
 

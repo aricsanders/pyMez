@@ -1112,8 +1112,11 @@ table {
 <span class="c1"># Module Constants</span>
 <span class="n">CONNECTOR_TYPES</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;14 mm&#39;</span><span class="p">,</span><span class="s1">&#39;7 mm&#39;</span><span class="p">,</span> <span class="s1">&#39;Type-N&#39;</span><span class="p">,</span><span class="s1">&#39;3.5 mm&#39;</span><span class="p">,</span> <span class="s1">&#39;2.92 mm&#39;</span><span class="p">,</span> <span class="s1">&#39;2.4mm&#39;</span><span class="p">,</span> <span class="s1">&#39;1.85 mm&#39;</span><span class="p">,</span><span class="s1">&#39;1.0 mm&#39;</span><span class="p">,</span>
                  <span class="s1">&#39;WR90&#39;</span><span class="p">,</span><span class="s1">&#39;WR62&#39;</span><span class="p">,</span><span class="s1">&#39;WR42&#39;</span><span class="p">,</span><span class="s1">&#39;WR28&#39;</span><span class="p">,</span><span class="s1">&#39;WR22&#39;</span><span class="p">,</span><span class="s1">&#39;WR15&#39;</span><span class="p">,</span><span class="s1">&#39;WR10&#39;</span><span class="p">]</span>
+<span class="sd">&quot;&quot;&quot;Constant containing acceptable connector and waveguide types&quot;&quot;&quot;</span>
 <span class="c1"># the smallest value allowed in dB (0 in linear magnitude)</span>
 <span class="n">MINIMUM_DB</span><span class="o">=</span><span class="mi">100</span>
+<span class="sd">&quot;&quot;&quot;The smallest value in dB for a linear magnitude of zero. Note this one is positive,</span>
+<span class="sd">which is different than touchstone models definition.&quot;&quot;&quot;</span>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Functions</span>
@@ -1559,6 +1562,7 @@ table {
       <p id="pyMeasure.Code.Analysis.NISTUncertainty.CONNECTOR_TYPES" class="name">var <span class="ident">CONNECTOR_TYPES</span></p>
       
   
+    <div class="desc"><p>Constant containing acceptable connector and waveguide types</p></div>
   <div class="source_cont">
 </div>
 
@@ -1567,6 +1571,8 @@ table {
       <p id="pyMeasure.Code.Analysis.NISTUncertainty.MINIMUM_DB" class="name">var <span class="ident">MINIMUM_DB</span></p>
       
   
+    <div class="desc"><p>The smallest value in dB for a linear magnitude of zero. Note this one is positive,
+which is different than touchstone models definition.</p></div>
   <div class="source_cont">
 </div>
 

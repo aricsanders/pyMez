@@ -19,6 +19,8 @@ try:
     import win32com.client
     import pythoncom
     WINDOWS_WRAPPER = True
+    """Constant set to true if win32com and pythoncom modules are available.
+    If they are not available the com interface is not defined."""
 except:
     print("The win32com package is required to run StatistiCAL models")
     WINDOWS_WRAPPER=False
@@ -39,6 +41,7 @@ SOLUTION_VECTOR_COLUMN_NAMES=["Frequency","rePort1S1_11","imPort1S1_11","rePort1
                               "reDUTS22","imDUTS22","reDUTS21","imDUTS21","reDUTS12","imDUTS12","reXTalkVNA-VNA",
                               "imXTalkVNA-VNA","reXTalkVNA-DUT","imXTalkVNA-DUT","reXTalkDUT-VNA","imXTalkDUT-VNA",
                               "reXTalkDUT-DUT","imXTalkDUT-DUT"]
+"Column names for the solution vector returned by statistiCAL"
 #-----------------------------------------------------------------------------
 # Module Functions
 

@@ -56,6 +56,7 @@ except:
 # Module Constants
 
 # Does this belong in tests or a Data folder
+#Todo: This should not be here..
 ONE_PORT_DUT=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
 #-----------------------------------------------------------------------------
 # Module Functions

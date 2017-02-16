@@ -1220,6 +1220,8 @@ information on statistical can be found at
     <span class="kn">import</span> <span class="nn">win32com.client</span>
     <span class="kn">import</span> <span class="nn">pythoncom</span>
     <span class="n">WINDOWS_WRAPPER</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="sd">&quot;&quot;&quot;Constant set to true if win32com and pythoncom modules are available.</span>
+<span class="sd">    If they are not available the com interface is not defined.&quot;&quot;&quot;</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The win32com package is required to run StatistiCAL models&quot;</span><span class="p">)</span>
     <span class="n">WINDOWS_WRAPPER</span><span class="o">=</span><span class="bp">False</span>
@@ -1240,6 +1242,7 @@ information on statistical can be found at
                               <span class="s2">&quot;reDUTS22&quot;</span><span class="p">,</span><span class="s2">&quot;imDUTS22&quot;</span><span class="p">,</span><span class="s2">&quot;reDUTS21&quot;</span><span class="p">,</span><span class="s2">&quot;imDUTS21&quot;</span><span class="p">,</span><span class="s2">&quot;reDUTS12&quot;</span><span class="p">,</span><span class="s2">&quot;imDUTS12&quot;</span><span class="p">,</span><span class="s2">&quot;reXTalkVNA-VNA&quot;</span><span class="p">,</span>
                               <span class="s2">&quot;imXTalkVNA-VNA&quot;</span><span class="p">,</span><span class="s2">&quot;reXTalkVNA-DUT&quot;</span><span class="p">,</span><span class="s2">&quot;imXTalkVNA-DUT&quot;</span><span class="p">,</span><span class="s2">&quot;reXTalkDUT-VNA&quot;</span><span class="p">,</span><span class="s2">&quot;imXTalkDUT-VNA&quot;</span><span class="p">,</span>
                               <span class="s2">&quot;reXTalkDUT-DUT&quot;</span><span class="p">,</span><span class="s2">&quot;imXTalkDUT-DUT&quot;</span><span class="p">]</span>
+<span class="s2">&quot;Column names for the solution vector returned by statistiCAL&quot;</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Functions</span>
 
@@ -2203,6 +2206,7 @@ information on statistical can be found at
       <p id="pyMeasure.Code.DataHandlers.StatistiCALModels.SOLUTION_VECTOR_COLUMN_NAMES" class="name">var <span class="ident">SOLUTION_VECTOR_COLUMN_NAMES</span></p>
       
   
+    <div class="desc"><p>Column names for the solution vector returned by statistiCAL</p></div>
   <div class="source_cont">
 </div>
 

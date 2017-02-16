@@ -26,8 +26,11 @@ except:
 # Module Constants
 CONNECTOR_TYPES=['14 mm','7 mm', 'Type-N','3.5 mm', '2.92 mm', '2.4mm', '1.85 mm','1.0 mm',
                  'WR90','WR62','WR42','WR28','WR22','WR15','WR10']
+"""Constant containing acceptable connector and waveguide types"""
 # the smallest value allowed in dB (0 in linear magnitude)
 MINIMUM_DB=100
+"""The smallest value in dB for a linear magnitude of zero. Note this one is positive,
+which is different than touchstone models definition."""
 
 #-----------------------------------------------------------------------------
 # Module Functions

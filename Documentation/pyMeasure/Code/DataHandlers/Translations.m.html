@@ -1358,6 +1358,7 @@ Wkhtmltopdf</p>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">pdfkit</span>
     <span class="n">PDF_CONVERT</span><span class="o">=</span><span class="bp">True</span>
+    <span class="s2">&quot;Constant that is set to True if the module pdfkit is available.&quot;</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module pdfkit was not found or had an error,&quot;</span>
           <span class="s2">&quot;please check module or put it on the python path use pip install pdfkit and also install &quot;</span>
@@ -1380,6 +1381,7 @@ Wkhtmltopdf</p>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">win32com</span> <span class="kn">import</span> <span class="n">client</span>
     <span class="n">WINDOWS_COM</span><span class="o">=</span><span class="bp">True</span>
+    <span class="s2">&quot;Constant that is set to True if the module win32com is available.&quot;</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module win32com was not found or had an error,&quot;</span>
           <span class="s2">&quot;please check module or put it on the python path, if OS is not Windows ignore this warning&quot;</span><span class="p">)</span>
@@ -1388,7 +1390,9 @@ Wkhtmltopdf</p>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Constants</span>
 <span class="n">INKSCAPE_PATH</span><span class="o">=</span><span class="s1">r&#39;c:\PROGRA~1\Inkscape\inkscape.exe&#39;</span>
+<span class="s2">&quot;Path to the Inkscape executable.&quot;</span>
 <span class="n">WKHTML_PATH</span><span class="o">=</span><span class="s1">r&#39;C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe&#39;</span>
+<span class="s2">&quot;Path to the wkhtmltopdf executable.&quot;</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Functions</span>
 <span class="c1"># todo: rename all translations as UpperCamelCase_to_UpperCamelCase</span>
@@ -2987,6 +2991,7 @@ Wkhtmltopdf</p>
       <p id="pyMeasure.Code.DataHandlers.Translations.INKSCAPE_PATH" class="name">var <span class="ident">INKSCAPE_PATH</span></p>
       
   
+    <div class="desc"><p>Path to the Inkscape executable.</p></div>
   <div class="source_cont">
 </div>
 
@@ -3307,6 +3312,7 @@ Wkhtmltopdf</p>
       <p id="pyMeasure.Code.DataHandlers.Translations.WKHTML_PATH" class="name">var <span class="ident">WKHTML_PATH</span></p>
       
   
+    <div class="desc"><p>Path to the wkhtmltopdf executable.</p></div>
   <div class="source_cont">
 </div>
 

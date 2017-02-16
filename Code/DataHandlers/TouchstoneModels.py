@@ -23,6 +23,7 @@ sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     from Code.Utils.Alias import *
     METHOD_ALIASES=1
+    "Constant that is set to True if Method Alias is available."
 except:
     print("The module pyMeasure.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
@@ -43,6 +44,7 @@ import matplotlib.pyplot as plt
 try:
     import smithplot
     SMITHPLOT=1
+    "Constant assigned as true if the module smithplot is present, this module is currently broken"
 
 except:
     print("The module smithplot was not found,"
@@ -53,12 +55,19 @@ except:
 TOUCHSTONE_KEYWORDS=["Version","Number of Ports","Two-Port Order","Number of Frequencies",
                      "Number of Noise Frequencies","Reference","Matrix Format","Mixed-Mode Order",
                      "Network Data","Noise Data","End"]
+"""Keywords for version 2 touchstone files, not currently implemented """
 OPTION_LINE_PATTERN="#[\s]+(?P<Frequency_Units>\w+)[\s]+(?P<Parameter>\w+)[\s]+(?P<Format>\w+)[\s]+R[\s]+(?P<Reference_Resistance>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)"
+"Regular expression string for the option line in touchstone files (# GHz S RI R 50)"
 COMMENT_PATTERN="![\s]*(?P<Comment>.+)\n"
+"Regular expression for comments in touchstone files."
 EXTENSION_PATTERN="s(?P<Number_Ports>\d+)p"
+"Regular expresion for snp extensions."
 FREQUENCY_UNITS=["Hz","kHz","MHz","GHz"]
+"Common frequency units .in touchstone files"
 PARAMETERS=["S","Y","Z","G","H"]
+"Network parameters found in touchstone files"
 FORMATS=["RI","DB","MA"]
+"Format codes found in touchstone files."
 S1P_MA_COLUMN_NAMES=["Frequency","magS11","argS11"]
 S1P_DB_COLUMN_NAMES=["Frequency","dbS11","argS11"]
 S1P_RI_COLUMN_NAMES=["Frequency","reS11","imS11"]
@@ -73,8 +82,9 @@ S2P_COMPLEX_COLUMN_NAMES=["Frequency","S11","S21","S12","S22"]
 S2P_NOISE_PARAMETER_COLUMN_NAMES=["Frequency","NFMin","mag","arg","Rn"]
 # value to assign to any thing that is 0
 MINIMUM_DB_VALUE=-200
+"Decibel value assigned to any linear value that is zero in a touchstone file"
 MINIMUM_DB_ARG_VALUE=0
-
+"Value assigned to the phase of a zero linear value in a touchstone file"
 
 #-----------------------------------------------------------------------------
 # Module Functions
