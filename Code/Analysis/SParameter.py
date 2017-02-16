@@ -97,6 +97,8 @@ def frequency_model_collapse_multiple_measurements(model, **options):
             new_row = np.var(np.array(data_row), axis=0, dtype=np.float64).tolist()
         elif re.search('rms', collapse_options["method"], re.IGNORECASE):
             new_row = np.sqrt(np.mean(np.square(np.array(data_row)), axis=0, dtype=np.float64)).tolist()
+        elif re.search('rss', collapse_options["method"], re.IGNORECASE):
+            new_row = np.sqrt(np.sum(np.square(np.array(data_row)), axis=0, dtype=np.float64)).tolist()
         out_data.append(new_row)
 
     collapse_options["data"] = out_data

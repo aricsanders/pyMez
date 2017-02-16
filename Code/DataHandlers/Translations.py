@@ -320,6 +320,7 @@ def AsciiDataTable_to_ExcelFile(ascii_data_table,file_path=None):
     if ascii_data_table.header:
         data_frame=pandas.DataFrame(data=ascii_data_table.data,columns=ascii_data_table.column_names,index=False)
 
+# todo: Fix naming convention here
 def S2PV1_to_XmlDataTable(s2p,**options):
     """Transforms a s2p's sparameters to a XmlDataTable. Converts the format to #GHz DB first"""
     defaults={"specific_descriptor":s2p.options["specific_descriptor"],
@@ -428,6 +429,16 @@ def TwoPortCalrepModel_to_XmlDataTable(two_port_calrep_table,**options):
         XML_options[key]=value
     new_xml=AsciiDataTable_to_XmlDataTable(table,**XML_options)
     return new_xml
+
+def Snp_to_AsciiDataTable(snp_model):
+    """Converts snp files to AsciiDataTable"""
+    options=snp_model.options
+    options['data']=snp_model.data
+    options['column_names']=snp_model.column_names
+    options['column_types']=['float' for i in snp_model.column_names]
+    options["extension"]="txt"
+    new_table=AsciiDataTable(None,**options)
+    return new_table
 
 def TwoPortCalrepModel_to_S2PV1(two_port_calrep_table,**options):
     """Transforms a TwoPortRawModel  to S2PV1"""
