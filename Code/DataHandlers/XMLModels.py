@@ -6,7 +6,8 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ XMLModels is dedicated to handling xml based models,
-requires lxml to be installed. """
+requires lxml to be installed.
+see also `pyMeasure.Code.DataHandlers.HTMLModels` """
 
 #-----------------------------------------------------------------------------
 # Standard Imports

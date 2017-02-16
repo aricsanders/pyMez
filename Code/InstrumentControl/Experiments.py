@@ -41,8 +41,10 @@ except:
 # Module Constants
 
 PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
+"Root directory of pyMeasure"
 KEITHLEY_INSTRUMENT_SHEET=os.path.join(PYMEASURE_ROOT,
 'Instruments','KEITHLEY6487_NSOM.xml').replace('\\','/')
+"The file path to the Keithley 6487 instrument sheet."
 
 
 #-------------------------------------------------------------------------------
@@ -53,7 +55,7 @@ class KeithleyIV():
     taking a two point measurement using its internal voltage source written 02/2011"""
     
     def __init__(self):
-        """ Intializes the KeithleyIV experiment class"""
+        """ initializes the KeithleyIV experiment class"""
         try:
             self.instrument=Code.InstrumentControl.Instruments.VisaInstrument('Keithley')
         except:
@@ -64,15 +66,15 @@ class KeithleyIV():
         self.data_list=[]
         self.data_dictionary={}
         pass
-    def intialize_keithley(self):
+    def initialize_keithley(self):
         """Sends intialization string to Keithley picoammeter"""
         try:
-            intialize_list=["*RST","FUNC 'CURR'","SYST:ZCH:STAT ON",
+            initialize_list=["*RST","FUNC 'CURR'","SYST:ZCH:STAT ON",
             "CURR:RANG 2E-4","INIT","SYST:ZCOR:STAT OFF","SYST:ZCOR:ACQ",
             "SYST:ZCH:STAT OFF","SYST:ZCOR ON","SOUR:VOLT:STAT ON",
             "FORM:ELEM ALL","CURR:RANG:AUTO ON"]
             
-            for command in intialize_list:
+            for command in initialize_list:
                 self.instrument.write(command)
             # TODO: Check for Instrument Errors
             

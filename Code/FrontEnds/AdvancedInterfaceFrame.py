@@ -506,7 +506,7 @@ class AdvancedInterfaceFrame(wx.Frame):
         self.NewPanel3.Show(False)
         
         
-        # This intializes the locals dictionary, needed to get output from 
+        # This initializes the locals dictionary, needed to get output from 
         # execfile command. This attribute needs to be asigned to locals() at 
         # the time that the frame is created. See Module Runner
         self.locals={}

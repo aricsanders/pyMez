@@ -323,7 +323,7 @@ class KeithleyIVPanel(wx.Panel):
             voltage_list=self.experiment.make_voltage_list(start,stop,number_points,bowtie)
             #print voltage_list
             try:
-                self.experiment.intialize_keithley()
+                self.experiment.initialize_keithley()
                 self.experiment.take_IV(voltage_list,settle_time=settling_time)
             except:
                 text='Entering fake mode, keithley did not respond fake R=12000.1'
