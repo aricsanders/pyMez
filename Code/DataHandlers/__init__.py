@@ -17,6 +17,10 @@ Import Structure
 ----------------
 DataHandlers typically import from Utils but __NOT__ from Analysis, InstrumentControl or FrontEnds
 
+Examples
+--------
+<a href="../../../Examples/How_To_Open_S2p.html"> How to open a s2p file </a>
+
 """
 
 
