@@ -1042,6 +1042,8 @@ table {
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.DOCUMENTATION_DIRECTORY">DOCUMENTATION_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_POSTFIX">INDEX_HTML_POSTFIX</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_PREFIX">INDEX_HTML_PREFIX</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.METHOD_ALIASES">METHOD_ALIASES</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
@@ -1055,9 +1057,11 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.autogenerate_api_documentation_script">autogenerate_api_documentation_script</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_examples_page">create_examples_page</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_help_page">create_help_page</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_index_html">create_index_html</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.return_help">return_help</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.test_create_examples_page">test_create_examples_page</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.test_create_help_page">test_create_help_page</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.test_create_index_html">test_create_index_html</a></li>
   </ul>
 
     </li>
@@ -1110,7 +1114,7 @@ auto-generated help</p>
     <span class="n">METHOD_ALIASES</span><span class="o">=</span><span class="mi">0</span>
     <span class="k">pass</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">Code.Utils.Names</span> <span class="kn">import</span> <span class="n">auto_name</span>
+    <span class="kn">from</span> <span class="nn">Code.Utils.Names</span> <span class="kn">import</span> <span class="n">auto_name</span><span class="p">,</span><span class="n">change_extension</span>
     <span class="n">DEFAULT_FILE_NAME</span><span class="o">=</span><span class="bp">None</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The function auto_name in pyMeasure.Code.Utils.Names was not found&quot;</span><span class="p">)</span>
@@ -1122,6 +1126,33 @@ auto-generated help</p>
 <span class="n">TESTS_DIRECTORY</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span><span class="s1">&#39;Tests&#39;</span><span class="p">)</span>
 <span class="n">PYMEASURE_ROOT</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span><span class="s1">&#39;..&#39;</span><span class="p">,</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="n">DOCUMENTATION_DIRECTORY</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PYMEASURE_ROOT</span><span class="p">,</span><span class="s2">&quot;Documentation&quot;</span><span class="p">)</span>
+<span class="n">INDEX_HTML_PREFIX</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;html&gt;</span>
+<span class="s2">&lt;head&gt;</span>
+
+<span class="s2">    &lt;style&gt;</span>
+<span class="s2">          body {</span>
+<span class="s2">    background: #fff;</span>
+<span class="s2">    font-family: &quot;Source Sans Pro&quot;, &quot;Helvetica Neueue&quot;, Helvetica, sans;</span>
+<span class="s2">    font-weight: 300;</span>
+<span class="s2">    font-size: 16px;</span>
+<span class="s2">    line-height: 1.6em;</span>
+<span class="s2">    background: #fff;</span>
+<span class="s2">    color: #000;</span>
+<span class="s2">  }</span>
+<span class="s2">  li {font-family: &quot;Ubuntu Mono&quot;, &quot;Cousine&quot;, &quot;DejaVu Sans Mono&quot;, monospace;}</span>
+<span class="s2">  h1 {</span>
+<span class="s2">    font-size: 2.5em;</span>
+<span class="s2">    line-height: 1.1em;</span>
+<span class="s2">    margin: 0 0 .50em 0;</span>
+<span class="s2">    font-weight: 300;</span>
+
+<span class="s2">}</span>
+<span class="s2">    &lt;/style&gt;</span>
+<span class="s2">&lt;/head&gt;</span>
+<span class="s2">&lt;body&gt;</span>
+
+<span class="s2">&lt;h1&gt;Index&lt;/h1&gt;&quot;&quot;&quot;</span>
+<span class="n">INDEX_HTML_POSTFIX</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;/ol&gt;&lt;/body&gt;&lt;/html&gt;&quot;&quot;&quot;</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Functions</span>
 <span class="k">def</span> <span class="nf">return_help</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -1173,16 +1204,79 @@ auto-generated help</p>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not delete existing API documentation&quot;</span><span class="p">)</span>
         <span class="k">pass</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python pdoc --html pyMeasure&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python pdoc --html --overwrite pyMeasure&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_index_html</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;create_index returns an html page with links to the autogenerated help page for all</span>
+<span class="sd">    functions and classes in .py files in the directory structure&quot;&quot;&quot;</span>
+    <span class="n">classes_and_functions</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">class_pattern</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;class (?P&lt;name&gt;\w+)\(&#39;</span><span class="p">)</span>
+    <span class="n">function_pattern</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;def (?P&lt;name&gt;\w+)\(&#39;</span><span class="p">)</span>
+    <span class="n">links_dictionary</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">link_template</span><span class="o">=</span><span class="s2">&quot;&lt;li&gt;&lt;a href=&#39;{0}&#39;&gt;{1}&lt;/a&gt;&lt;/li&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">links_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">file_names</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+        <span class="n">clean_directory</span><span class="o">=</span><span class="n">directory</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+            <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;py&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">class_pattern</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
+                        <span class="n">reference_file</span><span class="o">=</span><span class="s2">&quot;pyMeasure/&quot;</span><span class="o">+</span><span class="n">change_extension</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">clean_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;m&#39;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.html&quot;</span>
+                        <span class="n">reference_id</span> <span class="o">=</span> <span class="n">reference_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">reference_file</span><span class="o">=</span><span class="s2">&quot;./&quot;</span><span class="o">+</span><span class="n">reference_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">class_pattern</span><span class="p">,</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                        <span class="n">reference_id</span> <span class="o">=</span> <span class="n">reference_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                        <span class="n">reference_id</span><span class="o">=</span><span class="n">reference_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.&quot;</span><span class="o">+</span><span class="n">name</span>
+                        <span class="n">reference</span><span class="o">=</span><span class="n">reference_file</span><span class="o">+</span><span class="s2">&quot;#&quot;</span><span class="o">+</span><span class="n">reference_id</span>
+                        <span class="n">classes_and_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                        <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span> \
+                                     <span class="n">link_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span>
+                                                          <span class="n">name</span><span class="p">)</span>
+                        <span class="n">links_dictionary</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">=</span><span class="n">link_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span>
+                                                          <span class="n">name</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">function_pattern</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
+                        <span class="n">reference_file</span><span class="o">=</span><span class="s2">&quot;pyMeasure/&quot;</span><span class="o">+</span><span class="n">change_extension</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">clean_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;m&#39;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.html&quot;</span>
+                        <span class="n">reference_id</span> <span class="o">=</span> <span class="n">reference_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">reference_file</span><span class="o">=</span><span class="s2">&quot;./&quot;</span><span class="o">+</span><span class="n">reference_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">function_pattern</span><span class="p">,</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                        <span class="n">classes_and_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                        <span class="n">reference_id</span> <span class="o">=</span> <span class="n">reference_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                        <span class="n">reference_id</span><span class="o">=</span><span class="n">reference_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.&quot;</span><span class="o">+</span><span class="n">name</span>
+                        <span class="n">reference</span><span class="o">=</span><span class="n">reference_file</span><span class="o">+</span><span class="s2">&quot;#&quot;</span><span class="o">+</span><span class="n">reference_id</span>
+                        <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span>\
+                                     <span class="n">link_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span>
+                                                          <span class="n">name</span><span class="p">)</span>
+
+                        <span class="n">links_dictionary</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">=</span><span class="n">link_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span>
+                                                          <span class="n">name</span><span class="p">)</span>
+    <span class="c1">#print(&quot;{0} is {1}&quot;.format(&#39;classes_and_functions&#39;,classes_and_functions))</span>
+    <span class="c1">#print(&quot;{0} is {1}&quot;.format(&#39;links_string&#39;,links_string))</span>
+    <span class="n">links_string</span><span class="o">=</span><span class="s2">&quot;&lt;ol&gt;&quot;</span><span class="o">+</span><span class="n">links_string</span><span class="o">+</span><span class="s2">&quot;&lt;/ol&gt;&quot;</span>
+    <span class="n">sorted_keys</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">links_dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+    <span class="n">links_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sorted_keys</span><span class="p">:</span>
+        <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span><span class="n">links_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="n">links_string</span> <span class="o">=</span> <span class="n">INDEX_HTML_PREFIX</span> <span class="o">+</span> <span class="n">links_string</span> <span class="o">+</span> <span class="n">INDEX_HTML_POSTFIX</span>
+    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Reference_Index.html&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">links_string</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+
+<span class="k">def</span> <span class="nf">test_create_index_html</span><span class="p">(</span><span class="n">top_directory</span><span class="o">=</span><span class="n">PYMEASURE_ROOT</span><span class="p">):</span>
+    <span class="n">create_index_html</span><span class="p">(</span><span class="n">top_directory</span><span class="o">=</span><span class="n">top_directory</span><span class="p">)</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Runner</span>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="c1">#test_create_help_page()</span>
     <span class="c1">#test_create_help_page(&#39;pyMeasure&#39;)</span>
     <span class="c1">#test_create_help_page(&#39;pyMeasure.Code.DataHandlers.NISTModels&#39;)</span>
-    <span class="c1">#test_create_help_page(&#39;pyMeasure.Code.DataHandlers.NISTModels&#39;)</span>
+    <span class="c1">#test_create_help_page(&#39;pyMeasure.Code.DataHandlers&#39;)</span>
     <span class="c1">#test_create_examples_page()</span>
     <span class="n">autogenerate_api_documentation_script</span><span class="p">()</span>
+    <span class="c1">#test_create_index_html()</span>
 </pre></div>
 
   </div>
@@ -1201,6 +1295,22 @@ auto-generated help</p>
       </div>
       <div class="item">
       <p id="pyMeasure.Code.Utils.HelpUtils.DOCUMENTATION_DIRECTORY" class="name">var <span class="ident">DOCUMENTATION_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_POSTFIX" class="name">var <span class="ident">INDEX_HTML_POSTFIX</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_PREFIX" class="name">var <span class="ident">INDEX_HTML_PREFIX</span></p>
       
   
   <div class="source_cont">
@@ -1259,7 +1369,7 @@ the Documentation folder under pyMeasure. If the folder exists it first deletes 
     <span class="k">except</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not delete existing API documentation&quot;</span><span class="p">)</span>
         <span class="k">pass</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python pdoc --html pyMeasure&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python pdoc --html --overwrite pyMeasure&quot;</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -1314,6 +1424,83 @@ If file_path is not specified it auto names it and saves it in the current worki
         <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_text</span><span class="p">)</span>
         <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.HelpUtils.create_index_html">
+    <p>def <span class="ident">create_index_html</span>(</p><p>top_directory)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>create_index returns an html page with links to the autogenerated help page for all
+functions and classes in .py files in the directory structure</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.HelpUtils.create_index_html', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.HelpUtils.create_index_html" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">create_index_html</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;create_index returns an html page with links to the autogenerated help page for all</span>
+<span class="sd">    functions and classes in .py files in the directory structure&quot;&quot;&quot;</span>
+    <span class="n">classes_and_functions</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">class_pattern</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;class (?P&lt;name&gt;\w+)\(&#39;</span><span class="p">)</span>
+    <span class="n">function_pattern</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;def (?P&lt;name&gt;\w+)\(&#39;</span><span class="p">)</span>
+    <span class="n">links_dictionary</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">link_template</span><span class="o">=</span><span class="s2">&quot;&lt;li&gt;&lt;a href=&#39;{0}&#39;&gt;{1}&lt;/a&gt;&lt;/li&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">links_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">file_names</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+        <span class="n">clean_directory</span><span class="o">=</span><span class="n">directory</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+            <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;py&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">class_pattern</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
+                        <span class="n">reference_file</span><span class="o">=</span><span class="s2">&quot;pyMeasure/&quot;</span><span class="o">+</span><span class="n">change_extension</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">clean_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;m&#39;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.html&quot;</span>
+                        <span class="n">reference_id</span> <span class="o">=</span> <span class="n">reference_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">reference_file</span><span class="o">=</span><span class="s2">&quot;./&quot;</span><span class="o">+</span><span class="n">reference_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">class_pattern</span><span class="p">,</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                        <span class="n">reference_id</span> <span class="o">=</span> <span class="n">reference_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                        <span class="n">reference_id</span><span class="o">=</span><span class="n">reference_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.&quot;</span><span class="o">+</span><span class="n">name</span>
+                        <span class="n">reference</span><span class="o">=</span><span class="n">reference_file</span><span class="o">+</span><span class="s2">&quot;#&quot;</span><span class="o">+</span><span class="n">reference_id</span>
+                        <span class="n">classes_and_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                        <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span> \
+                                     <span class="n">link_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span>
+                                                          <span class="n">name</span><span class="p">)</span>
+                        <span class="n">links_dictionary</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">=</span><span class="n">link_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span>
+                                                          <span class="n">name</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">function_pattern</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
+                        <span class="n">reference_file</span><span class="o">=</span><span class="s2">&quot;pyMeasure/&quot;</span><span class="o">+</span><span class="n">change_extension</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">clean_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;m&#39;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.html&quot;</span>
+                        <span class="n">reference_id</span> <span class="o">=</span> <span class="n">reference_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">reference_file</span><span class="o">=</span><span class="s2">&quot;./&quot;</span><span class="o">+</span><span class="n">reference_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">function_pattern</span><span class="p">,</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                        <span class="n">classes_and_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                        <span class="n">reference_id</span> <span class="o">=</span> <span class="n">reference_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                        <span class="n">reference_id</span><span class="o">=</span><span class="n">reference_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.&quot;</span><span class="o">+</span><span class="n">name</span>
+                        <span class="n">reference</span><span class="o">=</span><span class="n">reference_file</span><span class="o">+</span><span class="s2">&quot;#&quot;</span><span class="o">+</span><span class="n">reference_id</span>
+                        <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span>\
+                                     <span class="n">link_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span>
+                                                          <span class="n">name</span><span class="p">)</span>
+
+                        <span class="n">links_dictionary</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">=</span><span class="n">link_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span>
+                                                          <span class="n">name</span><span class="p">)</span>
+    <span class="c1">#print(&quot;{0} is {1}&quot;.format(&#39;classes_and_functions&#39;,classes_and_functions))</span>
+    <span class="c1">#print(&quot;{0} is {1}&quot;.format(&#39;links_string&#39;,links_string))</span>
+    <span class="n">links_string</span><span class="o">=</span><span class="s2">&quot;&lt;ol&gt;&quot;</span><span class="o">+</span><span class="n">links_string</span><span class="o">+</span><span class="s2">&quot;&lt;/ol&gt;&quot;</span>
+    <span class="n">sorted_keys</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">links_dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+    <span class="n">links_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sorted_keys</span><span class="p">:</span>
+        <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span><span class="n">links_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="n">links_string</span> <span class="o">=</span> <span class="n">INDEX_HTML_PREFIX</span> <span class="o">+</span> <span class="n">links_string</span> <span class="o">+</span> <span class="n">INDEX_HTML_POSTFIX</span>
+    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Reference_Index.html&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">links_string</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
   </div>
@@ -1387,6 +1574,27 @@ If file_path is not specified it auto names it and saves it in the current worki
     <span class="s2">&quot;Tests the create help page function, it seems pretty slow&quot;</span>
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">)</span>
     <span class="n">create_help_page</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.HelpUtils.test_create_index_html">
+    <p>def <span class="ident">test_create_index_html</span>(</p><p>top_directory=&#39;C:\\ProgramData\\Anaconda2\\lib\\site-packages\\pyMeasure\\Code\\Utils\\..\\..&#39;)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.HelpUtils.test_create_index_html', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.HelpUtils.test_create_index_html" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">test_create_index_html</span><span class="p">(</span><span class="n">top_directory</span><span class="o">=</span><span class="n">PYMEASURE_ROOT</span><span class="p">):</span>
+    <span class="n">create_index_html</span><span class="p">(</span><span class="n">top_directory</span><span class="o">=</span><span class="n">top_directory</span><span class="p">)</span>
 </pre></div>
 
   </div>
