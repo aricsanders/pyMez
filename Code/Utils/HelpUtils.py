@@ -6,7 +6,10 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ The HelpUtils module has tools for interacting with help files. It uses pdoc for
-  auto-generated help"""
+  auto-generated help, and nb covert to change ipynb based examples to html. There is an
+  error when certain extensions are activated in jupyter for nbconvert that is solved by
+  changing the imports in three modules
+  see https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf24aa397aa8edc7b2b53"""
 #-----------------------------------------------------------------------------
 # Standard Imports
 import os
@@ -64,8 +67,11 @@ INDEX_HTML_PREFIX="""<html>
     </style>
 </head>
 <body>
-
-<h1>Index</h1>"""
+<a href="./pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="./pyMeasure/index.html">API Documentation Home</a> |
+<a href="./Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
+<h1>Index</h1>
+<ol>"""
 INDEX_HTML_POSTFIX="""</ol></body></html>"""
 #-----------------------------------------------------------------------------
 # Module Functions
@@ -189,5 +195,6 @@ if __name__ == '__main__':
     #test_create_help_page('pyMeasure.Code.DataHandlers.NISTModels')
     #test_create_help_page('pyMeasure.Code.DataHandlers')
     #test_create_examples_page()
+    #test_create_examples_page(os.path.join(DOCUMENTATION_DIRECTORY,"pyMeasure_Documentation.ipynb"))
     autogenerate_api_documentation_script()
     #test_create_index_html()

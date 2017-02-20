@@ -5,7 +5,15 @@
 # Created:     9/15/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-"""ZipModels holds classes and functions for manipulating zip files """
+"""
+<a href="../index.html">`pyMeasure.Code.DataHandlers`</a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
+</div>
+
+ZipModels holds classes and functions for manipulating zip files.  """
 
 #-----------------------------------------------------------------------------
 # Standard Imports

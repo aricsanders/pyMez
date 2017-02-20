@@ -1,4 +1,13 @@
-"""pyMeasure is an open source package for scientific data handling, analysis and acquisition. By loading the pyMeasure
+"""
+`pyMeasure`
+
+<div>
+<a href="../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="./index.html">API Documentation Home</a> |
+<a href="../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
+</div>
+
+pyMeasure is an open source package for scientific data handling, analysis and acquisition. By loading the pyMeasure
 package with the from pyMeasure import *, the user gets the designed API with finished functionality. The
 pyMeasure library itself has other helper modules that are directly accessible by importing them in the standard
 fashion (from pyMeasure.Code.Subpackage.Module import class_or_function. For optimization purposes the pyMeasure
