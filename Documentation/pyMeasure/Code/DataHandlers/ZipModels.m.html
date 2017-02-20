@@ -4,9 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
     <title>pyMeasure.Code.DataHandlers.ZipModels API documentation</title>
-    <meta name="description" content="<div>
-<a href="../index.html">`pyMeasure.Code.DataHandlers`</a>
-<a href="../../../../pyMeasure_Docum..." />
+    <meta name="description" content="ZipModels holds classes and functions for manipulating zip files. A zipped archive is represented
+by..." />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
@@ -1081,14 +1080,25 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMeasure.Code.DataHandlers.ZipModels</span> module</h1>
-  <div>
-<a href="../index.html">`pyMeasure.Code.DataHandlers`</a>
-<a href="../../../../pyMeasure_Documentation.html">Documentation Home</a> |
-<a href="../../../index.html">API Documentation Home</a> |
-<a href="../../../../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
-</div>
+  <p>ZipModels holds classes and functions for manipulating zip files. A zipped archive is represented
+by the class ZipArchive, you can open an existing file and extract_all, show the files contained zip_file.files
+or add files on disk, full directories, or strings as files.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pyMeasure</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;</span> <span class="n">zip_file</span><span class="o">=</span><span class="n">ZipArchive</span><span class="p">()</span>
+<span class="o">&gt;&gt;</span> <span class="n">zip_file</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;test.png&quot;</span><span class="p">))</span>
+<span class="o">&gt;&gt;</span> <span class="n">zip_file</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;test.zip&quot;</span><span class="p">)</span>
+</pre></div>
 
-<p>ZipModels holds classes and functions for manipulating zip files.</p>
+
+<p><a href="../../../Examples/Html/ZipModels_Example.html">ZipModels Example</a></p>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMeasure.Code.DataHandlers</code></a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.ZipModels', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.ZipModels" class="source">
@@ -1100,14 +1110,29 @@ table {
 <span class="c1"># License:     MIT License</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">&lt;div&gt;</span>
-<span class="sd">&lt;a href=&quot;../index.html&quot;&gt;`pyMeasure.Code.DataHandlers`&lt;/a&gt;</span>
-<span class="sd">&lt;a href=&quot;../../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
-<span class="sd">&lt;a href=&quot;../../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
-<span class="sd">&lt;a href=&quot;../../../../Reference_Index.html&quot;&gt;Index of all Functions and Classes in pyMeasure&lt;/a&gt;</span>
-<span class="sd">&lt;/div&gt;</span>
+<span class="sd">ZipModels holds classes and functions for manipulating zip files. A zipped archive is represented</span>
+<span class="sd">by the class ZipArchive, you can open an existing file and extract_all, show the files contained zip_file.files</span>
+<span class="sd">or add files on disk, full directories, or strings as files.</span>
 
-<span class="sd">ZipModels holds classes and functions for manipulating zip files.  &quot;&quot;&quot;</span>
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">    #!python</span>
+<span class="sd">    &gt;&gt; from pyMeasure import *</span>
+<span class="sd">    &gt;&gt; zip_file=ZipArchive()</span>
+<span class="sd">    &gt;&gt; zip_file.add_file(os.path.join(TESTS_DIRECTORY,&quot;test.png&quot;))</span>
+<span class="sd">    &gt;&gt; zip_file.save(os.path.join(TESTS_DIRECTORY,&quot;test.zip&quot;)</span>
+
+<span class="sd">&lt;a href=&quot;../../../Examples/Html/ZipModels_Example.html&quot;&gt;ZipModels Example&lt;/a&gt;</span>
+
+<span class="sd">Help</span>
+<span class="sd">---------------</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMeasure.Code.DataHandlers`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index of all Functions and Classes in pyMeasure&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Standard Imports</span>
@@ -1142,7 +1167,8 @@ table {
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Classes</span>
 <span class="k">class</span> <span class="nc">ZipArchive</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;A container for  zipped files&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;A container for zipped files, provides the ability to open, add files to, extract files from</span>
+<span class="sd">    and save zip archives. &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="s2">&quot; Initializes the ZipArchive class &quot;</span>
         <span class="c1"># This is a general pattern for adding a lot of options some with defaults</span>
@@ -1333,12 +1359,14 @@ table {
       <p id="pyMeasure.Code.DataHandlers.ZipModels.ZipArchive" class="name">class <span class="ident">ZipArchive</span></p>
       
   
-    <div class="desc"><p>A container for  zipped files</p></div>
+    <div class="desc"><p>A container for zipped files, provides the ability to open, add files to, extract files from
+and save zip archives.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.ZipModels.ZipArchive', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.ZipModels.ZipArchive" class="source">
     <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">ZipArchive</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;A container for  zipped files&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;A container for zipped files, provides the ability to open, add files to, extract files from</span>
+<span class="sd">    and save zip archives. &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="s2">&quot; Initializes the ZipArchive class &quot;</span>
         <span class="c1"># This is a general pattern for adding a lot of options some with defaults</span>

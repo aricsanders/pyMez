@@ -6,14 +6,29 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """
-<a href="../index.html">`pyMeasure.Code.DataHandlers`</a>
+ZipModels holds classes and functions for manipulating zip files. A zipped archive is represented
+by the class ZipArchive, you can open an existing file and extract_all, show the files contained zip_file.files
+or add files on disk, full directories, or strings as files.
+
+Examples
+--------
+    #!python
+    >> from pyMeasure import *
+    >> zip_file=ZipArchive()
+    >> zip_file.add_file(os.path.join(TESTS_DIRECTORY,"test.png"))
+    >> zip_file.save(os.path.join(TESTS_DIRECTORY,"test.zip")
+
+<a href="../../../Examples/Html/ZipModels_Example.html">ZipModels Example</a>
+
+Help
+---------------
+<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
 <div>
 <a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
 <a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
 </div>
-
-ZipModels holds classes and functions for manipulating zip files.  """
+"""
 
 #-----------------------------------------------------------------------------
 # Standard Imports
@@ -48,7 +63,8 @@ def extract_all(zipfile,directory):
 #-----------------------------------------------------------------------------
 # Module Classes
 class ZipArchive():
-    """A container for  zipped files"""
+    """A container for zipped files, provides the ability to open, add files to, extract files from
+    and save zip archives. """
     def __init__(self,file_path=None,**options):
         " Initializes the ZipArchive class "
         # This is a general pattern for adding a lot of options some with defaults

@@ -4,9 +4,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
     <title>pyMeasure.Code.DataHandlers API documentation</title>
-    <meta name="description" content="DataHandlers
-------------
-The DataHandlers subpackage is designed to manipulate data, by allowing di..." />
+    <meta name="description" content="The DataHandlers subpackage is designed to manipulate data.
+
+Help
+-----
+<a href="./index.html">`pyMe..." />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
@@ -1068,15 +1070,24 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMeasure.Code.DataHandlers</span> module</h1>
-  <h2>DataHandlers</h2>
+  <p>The DataHandlers subpackage is designed to manipulate data.</p>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMeasure.Code.DataHandlers</code></a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
+</div></p>
+<h2>DataHandlers</h2>
 <p>The DataHandlers subpackage is designed to manipulate data, by allowing different data types to be opened,
 created, saved and updated. The subpackage is further divided into modules grouped by a common theme. Classes for data
 that are already on disk normally follows the following pattern:
 <code>instance=ClassName(file_path,**options)</code>
 For Example to
-open a XML file that you don't know the model, use
-<code>xml=pyMeasure.Code.DataHandlers.XMLModels.XMLBase('MyXML.xml')'
-or</code>xml=XMLBase('MyXML.xml')`</p>
+open a XML file that you don't know the model, use</p>
+<p>`xml=pyMeasure.Code.DataHandlers.XMLModels.XMLBase('MyXML.xml')'</p>
+<p>or</p>
+<p><code>xml=XMLBase('MyXML.xml')</code></p>
 <p>All data models normally have save(), str() and if appropriate show() methods.</p>
 <h2>Import Structure</h2>
 <p>DataHandlers typically import from Utils but <strong>NOT</strong> from Analysis, InstrumentControl or FrontEnds</p>
@@ -1086,6 +1097,17 @@ or</code>xml=XMLBase('MyXML.xml')`</p>
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers" class="source">
     <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The DataHandlers subpackage is designed to manipulate data.</span>
+
+<span class="sd">Help</span>
+<span class="sd">-----</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMeasure.Code.DataHandlers`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index of all Functions and Classes in pyMeasure&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;</span>
+
 <span class="sd">DataHandlers</span>
 <span class="sd">------------</span>
 <span class="sd">The DataHandlers subpackage is designed to manipulate data, by allowing different data types to be opened,</span>
@@ -1094,8 +1116,11 @@ or</code>xml=XMLBase('MyXML.xml')`</p>
 <span class="sd">`instance=ClassName(file_path,**options)`</span>
 <span class="sd">For Example to</span>
 <span class="sd">open a XML file that you don&#39;t know the model, use</span>
+
 <span class="sd">`xml=pyMeasure.Code.DataHandlers.XMLModels.XMLBase(&#39;MyXML.xml&#39;)&#39;</span>
+
 <span class="sd">or</span>
+
 <span class="sd">`xml=XMLBase(&#39;MyXML.xml&#39;)`</span>
 
 <span class="sd">All data models normally have save(), str() and if appropriate show() methods.</span>
@@ -1208,14 +1233,12 @@ see also <a href="HTMLModels.m.html"><code>pyMeasure.Code.DataHandlers.HTMLModel
       <p class="name"><a href="ZipModels.m.html">pyMeasure.Code.DataHandlers.ZipModels</a></p>
       
   
-    <div class="desc"><div>
-<a href="../index.html">`pyMeasure.Code.DataHandlers`</a>
-<a href="../../../../pyMeasure_Documentation.html">Documentation Home</a> |
-<a href="../../../index.html">API Documentation Home</a> |
-<a href="../../../../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
-</div>
-
-<p>...</p></div>
+    <div class="desc"><p>ZipModels holds classes and functions for manipulating zip files. A zipped archive is represented
+by the class ZipArchive, you can open an existing file and extract_all, show the files contained zip_file.files
+or add files on disk, full directories, or strings as files.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span>
+</pre></div></div>
 
       </div>
   </section>

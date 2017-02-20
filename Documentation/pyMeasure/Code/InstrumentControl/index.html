@@ -1057,13 +1057,49 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMeasure.Code.InstrumentControl</span> module</h1>
-  <p>InstrumentControl is a subpackage designed for communication between a computer and the outside world.</p>
+  <p>InstrumentControl is a subpackage designed for communication between a computer and the outside world. It wraps NIVisa
+using the pyvisa module and integrates this wrapper with xml based instrument sheets found in
+<code>pyMeasure.Code.DataHandlers.XMLModels</code> examples of the xml can be found in pyMeasure/Instruments folder.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="err">!</span><span class="c1">#python</span>
+<span class="o">&gt;&gt;</span><span class="kn">from</span> <span class="nn">pyMeasure</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;</span><span class="n">new_instrument</span><span class="o">=</span><span class="n">VisaInstrument</span><span class="p">(</span><span class="s2">&quot;GPIB::21&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span><span class="k">print</span><span class="p">(</span><span class="n">new_instrument</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span><span class="k">print</span><span class="p">(</span><span class="n">instrument</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="s1">&#39;*IDN?&#39;</span><span class="p">))</span>
+</pre></div>
+
+
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMeasure.Code.DataHandlers</code></a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.InstrumentControl" class="source">
     <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">InstrumentControl is a subpackage designed for communication between a computer and the outside world.</span>
+<span class="sd">InstrumentControl is a subpackage designed for communication between a computer and the outside world. It wraps NIVisa</span>
+<span class="sd">using the pyvisa module and integrates this wrapper with xml based instrument sheets found in</span>
+<span class="sd">`pyMeasure.Code.DataHandlers.XMLModels` examples of the xml can be found in pyMeasure/Instruments folder.</span>
 
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">    !#python</span>
+<span class="sd">    &gt;&gt;from pyMeasure import *</span>
+<span class="sd">    &gt;&gt;new_instrument=VisaInstrument(&quot;GPIB::21&quot;)</span>
+<span class="sd">    &gt;&gt;print(new_instrument.idn)</span>
+<span class="sd">    &gt;&gt;print(instrument.ask(&#39;*IDN?&#39;))</span>
+
+<span class="sd">Help</span>
+<span class="sd">---------------</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMeasure.Code.DataHandlers`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index of all Functions and Classes in pyMeasure&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;</span>
 <span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 

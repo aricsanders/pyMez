@@ -1433,7 +1433,7 @@ see also <code>pyMeasure.Code.DataHandlers.HTMLModels</code></p>
 
 <span class="k">def</span> <span class="nf">join_xml</span><span class="p">(</span><span class="n">new_root</span><span class="o">=</span><span class="s2">&quot;root&quot;</span><span class="p">,</span><span class="n">xml_document_list</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;join XML returns a new XMLBase instance with nodes derived from a list of</span>
-<span class="sd">    xml documents xml_list&quot;&quot;&quot;</span>
+<span class="sd">    xml documents xml_list. Puts both documents under the new_root root tag&quot;&quot;&quot;</span>
     <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;root&quot;</span><span class="p">:</span><span class="n">new_root</span><span class="p">,</span>
               <span class="s2">&quot;style_sheet&quot;</span><span class="p">:</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">XSLT_REPOSITORY</span><span class="p">,</span><span class="s1">&#39;DEFAULT_STYLE.xsl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;/&#39;</span><span class="p">),</span>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>
@@ -3448,13 +3448,13 @@ or class instance</p></div>
     
   
     <div class="desc"><p>join XML returns a new XMLBase instance with nodes derived from a list of
-xml documents xml_list</p></div>
+xml documents xml_list. Puts both documents under the new_root root tag</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.join_xml', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.join_xml" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">join_xml</span><span class="p">(</span><span class="n">new_root</span><span class="o">=</span><span class="s2">&quot;root&quot;</span><span class="p">,</span><span class="n">xml_document_list</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;join XML returns a new XMLBase instance with nodes derived from a list of</span>
-<span class="sd">    xml documents xml_list&quot;&quot;&quot;</span>
+<span class="sd">    xml documents xml_list. Puts both documents under the new_root root tag&quot;&quot;&quot;</span>
     <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;root&quot;</span><span class="p">:</span><span class="n">new_root</span><span class="p">,</span>
               <span class="s2">&quot;style_sheet&quot;</span><span class="p">:</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">XSLT_REPOSITORY</span><span class="p">,</span><span class="s1">&#39;DEFAULT_STYLE.xsl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;/&#39;</span><span class="p">),</span>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>

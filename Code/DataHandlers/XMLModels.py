@@ -89,7 +89,7 @@ node types in lxml module."""
 
 def join_xml(new_root="root",xml_document_list=None,**options):
     """join XML returns a new XMLBase instance with nodes derived from a list of
-    xml documents xml_list"""
+    xml documents xml_list. Puts both documents under the new_root root tag"""
     defaults={"root":new_root,
               "style_sheet":os.path.join(XSLT_REPOSITORY,'DEFAULT_STYLE.xsl').replace('\\','/'),
               "specific_descriptor":'XML',
