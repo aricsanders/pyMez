@@ -4,11 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
     <title>pyMeasure.Code.DataHandlers API documentation</title>
-    <meta name="description" content="The DataHandlers subpackage is designed to manipulate data.
-
-Help
------
-<a href="./index.html">`pyMe..." />
+    <meta name="description" content="The DataHandlers subpackage is designed to manipulate data, by allowing different data types to be o..." />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
@@ -1070,50 +1066,37 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMeasure.Code.DataHandlers</span> module</h1>
-  <p>The DataHandlers subpackage is designed to manipulate data.</p>
-<h2>Help</h2>
-<p><a href="./index.html"><code>pyMeasure.Code.DataHandlers</code></a>
-<div>
-<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
-<a href="../../index.html">API Documentation Home</a> |
-<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
-</div></p>
-<h2>DataHandlers</h2>
-<p>The DataHandlers subpackage is designed to manipulate data, by allowing different data types to be opened,
+  <p>The DataHandlers subpackage is designed to manipulate data, by allowing different data types to be opened,
 created, saved and updated. The subpackage is further divided into modules grouped by a common theme. Classes for data
 that are already on disk normally follows the following pattern:
-<code>instance=ClassName(file_path,**options)</code>
-For Example to
+<code>instance=ClassName(file_path,**options)</code></p>
+<p>For Example to
 open a XML file that you don't know the model, use</p>
 <p>`xml=pyMeasure.Code.DataHandlers.XMLModels.XMLBase('MyXML.xml')'</p>
 <p>or</p>
 <p><code>xml=XMLBase('MyXML.xml')</code></p>
 <p>All data models normally have save(), str() and if appropriate show() methods.</p>
-<h2>Import Structure</h2>
-<p>DataHandlers typically import from Utils but <strong>NOT</strong> from Analysis, InstrumentControl or FrontEnds</p>
 <h2>Examples</h2>
 <p><a href="../../../Examples/How_To_Open_S2p.html"> How to open a s2p file </a></p>
+<h2>Import Structure</h2>
+<p>DataHandlers typically import from Utils but <strong>NOT</strong> from Analysis, InstrumentControl or FrontEnds</p>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMeasure.Code.DataHandlers</code></a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Example_Home.html">Examples</a> |
+<a href="../../../Reference_Index.html">Index </a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers" class="source">
     <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">The DataHandlers subpackage is designed to manipulate data.</span>
-
-<span class="sd">Help</span>
-<span class="sd">-----</span>
-<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMeasure.Code.DataHandlers`&lt;/a&gt;</span>
-<span class="sd">&lt;div&gt;</span>
-<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
-<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
-<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index of all Functions and Classes in pyMeasure&lt;/a&gt;</span>
-<span class="sd">&lt;/div&gt;</span>
-
-<span class="sd">DataHandlers</span>
-<span class="sd">------------</span>
 <span class="sd">The DataHandlers subpackage is designed to manipulate data, by allowing different data types to be opened,</span>
 <span class="sd">created, saved and updated. The subpackage is further divided into modules grouped by a common theme. Classes for data</span>
 <span class="sd">that are already on disk normally follows the following pattern:</span>
 <span class="sd">`instance=ClassName(file_path,**options)`</span>
+
 <span class="sd">For Example to</span>
 <span class="sd">open a XML file that you don&#39;t know the model, use</span>
 
@@ -1125,13 +1108,26 @@ open a XML file that you don't know the model, use</p>
 
 <span class="sd">All data models normally have save(), str() and if appropriate show() methods.</span>
 
-<span class="sd">Import Structure</span>
-<span class="sd">----------------</span>
-<span class="sd">DataHandlers typically import from Utils but __NOT__ from Analysis, InstrumentControl or FrontEnds</span>
+
 
 <span class="sd">Examples</span>
 <span class="sd">--------</span>
 <span class="sd">&lt;a href=&quot;../../../Examples/How_To_Open_S2p.html&quot;&gt; How to open a s2p file &lt;/a&gt;</span>
+
+<span class="sd">Import Structure</span>
+<span class="sd">----------------</span>
+<span class="sd">DataHandlers typically import from Utils but __NOT__ from Analysis, InstrumentControl or FrontEnds</span>
+
+<span class="sd">Help</span>
+<span class="sd">-----</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMeasure.Code.DataHandlers`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Examples/Example_Home.html&quot;&gt;Examples&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index &lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;</span>
+
 
 <span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
@@ -1156,7 +1152,10 @@ open a XML file that you don't know the model, use</p>
       <p class="name"><a href="GraphModels.m.html">pyMeasure.Code.DataHandlers.GraphModels</a></p>
       
   
-    <div class="desc"><p>Graph Models stores sub classes of graphs that define data translations</p></div>
+    <div class="desc"><p>Graph Models stores sub classes of graphs that define data translations. All edges
+or the functions that define translations from one format to another
+are found in <a href="./Translations.m.html"><a href="Translations.m.html"><code>pyMeasure.Code.DataHandlers.Translations</code></a></a>.
+Currently, the module networkx is used to display the g...</p></div>
 
       </div>
       <div class="item">

@@ -1269,6 +1269,7 @@ table {
         <span class="k">def</span> <span class="nf">to_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
             <span class="sd">&quot;&quot;&quot;Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name</span>
 <span class="sd">            the resulting file to self.path with pdf as the extension&quot;&quot;&quot;</span>
+            <span class="c1">#todo: add toc and other options in wkhtmltopdf</span>
             <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">file_path</span><span class="o">=</span><span class="n">change_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="s2">&quot;pdf&quot;</span><span class="p">)</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">pdfkit</span><span class="o">.</span><span class="n">configuration</span><span class="p">(</span><span class="n">wkhtmltopdf</span><span class="o">=</span><span class="n">WKHTML_PATH</span><span class="p">)</span>
@@ -1621,6 +1622,7 @@ can inherit from it</p></div>
         <span class="k">def</span> <span class="nf">to_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
             <span class="sd">&quot;&quot;&quot;Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name</span>
 <span class="sd">            the resulting file to self.path with pdf as the extension&quot;&quot;&quot;</span>
+            <span class="c1">#todo: add toc and other options in wkhtmltopdf</span>
             <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">file_path</span><span class="o">=</span><span class="n">change_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="s2">&quot;pdf&quot;</span><span class="p">)</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">pdfkit</span><span class="o">.</span><span class="n">configuration</span><span class="p">(</span><span class="n">wkhtmltopdf</span><span class="o">=</span><span class="n">WKHTML_PATH</span><span class="p">)</span>
@@ -1821,6 +1823,7 @@ the resulting file to self.path with pdf as the extension</p></div>
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">to_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name</span>
 <span class="sd">    the resulting file to self.path with pdf as the extension&quot;&quot;&quot;</span>
+    <span class="c1">#todo: add toc and other options in wkhtmltopdf</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">file_path</span><span class="o">=</span><span class="n">change_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="s2">&quot;pdf&quot;</span><span class="p">)</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">pdfkit</span><span class="o">.</span><span class="n">configuration</span><span class="p">(</span><span class="n">wkhtmltopdf</span><span class="o">=</span><span class="n">WKHTML_PATH</span><span class="p">)</span>
@@ -2062,6 +2065,7 @@ the resulting file to self.path with pdf as the extension</p></div>
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">to_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name</span>
 <span class="sd">    the resulting file to self.path with pdf as the extension&quot;&quot;&quot;</span>
+    <span class="c1">#todo: add toc and other options in wkhtmltopdf</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">file_path</span><span class="o">=</span><span class="n">change_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="s2">&quot;pdf&quot;</span><span class="p">)</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">pdfkit</span><span class="o">.</span><span class="n">configuration</span><span class="p">(</span><span class="n">wkhtmltopdf</span><span class="o">=</span><span class="n">WKHTML_PATH</span><span class="p">)</span>

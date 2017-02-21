@@ -158,6 +158,7 @@ class HTMLBase(object):
         def to_pdf(self,file_path=None,**options):
             """Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name
             the resulting file to self.path with pdf as the extension"""
+            #todo: add toc and other options in wkhtmltopdf
             if file_path is None:
                 file_path=change_extension(self.path,"pdf")
             config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)

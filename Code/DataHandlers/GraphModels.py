@@ -5,7 +5,43 @@
 # Created:     4/6/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" Graph Models stores sub classes of graphs that define data translations """
+"""
+Graph Models stores sub classes of graphs that define data translations. All edges
+or the functions that define translations from one format to another
+are found in <a href="./Translations.m.html">`pyMeasure.Code.DataHandlers.Translations`</a>.
+Currently, the module networkx is used to display the graph.
+
+Examples
+--------
+    #!python
+    >>from pyMeasure import *
+    >>image_graph=ImageGraph()
+    >>image_graph.set_state('png','my_png.png')
+    >>image_graph.move_to_node('EmbeddedHtml')
+    >>output=image_graph.data
+    >>print output
+
+
+<a href="../../../Examples/Html/GraphModels_Example.html">GraphModels Example</a>
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
++ [networkx](http://networkx.github.io/)
++ [numpy](http://www.numpy.org/)
++ [pyMeasure](https://github.com/aricsanders/pyMeasure)
+
+Help
+---------------
+<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>
+   """
 
 #-----------------------------------------------------------------------------
 # Standard Imports
@@ -133,6 +169,20 @@ class Graph(object):
     existing node into the new one, and one exiting the node. Once a series of nodes exists
     to enter the graph at a node use graph.set_state() the current data representing the
     state is in the attribute graph.data. To move among the formats use graph.move_to_node('NodeName')
+    need to recode the find_path method using a shortest path alogrithm like
+    https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm.
+
+        #!python
+            defaults={"graph_name":"Graph",
+                  "node_names":['n1','n2'],
+                  "node_descriptions":["A plain string",
+                                       "A list of strings with no \\n, created with string.splitlines()"],
+                  "current_node":'n1',
+                  "state":[1,0],
+                  "data":"This is a test string\n it has to have multiple lines \n and many characters 34%6\n^",
+                  "edge_2_to_1":edge_2_to_1,
+                  "edge_1_to_2":edge_1_to_2
+                 }
     """
     def __init__(self,**options):
         """Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required"""
@@ -591,7 +641,17 @@ class StringGraph(Graph):
 # Changed from ColumnModeledGraph to TableGraph 12/14/2016 by AWS
 class TableGraph(Graph):
     """Class that transforms column modeled data (table) from one format to another, use set_state to initialize to
-    your data"""
+    your data.
+        #!python
+        defaults={"graph_name":"Table Graph",
+                  "node_names":['DataFrame','AsciiDataTable'],
+                  "node_descriptions":["Pandas Data Frame","AsciiDataTable"],
+                  "current_node":'DataFrame',
+                  "state":[1,0],
+                  "data":pandas.DataFrame([[1,2,3],[3,4,5]],columns=["a","b","c"]),
+                  "edge_2_to_1":AsciiDataTable_to_DataFrame,
+                  "edge_1_to_2":DataFrame_to_AsciiDataTable}
+        """
     def __init__(self,**options):
         defaults={"graph_name":"Table Graph",
                   "node_names":['DataFrame','AsciiDataTable'],
@@ -653,7 +713,17 @@ class TableGraph(Graph):
                                external_node_description="XSLT Results File")
 class ImageGraph(Graph):
     """A transformation graph for images node types are image formats and external nodes are
-    common image processing functions"""
+    common image processing functions
+        #!python
+        defaults={"graph_name":"Image Graph",
+                  "node_names":['Image','png'],
+                  "node_descriptions":["PIL Image","png"],
+                  "current_node":'Image',
+                  "state":[1,0],
+                  "data":PIL.Image.open(os.path.join(TESTS_DIRECTORY,'test.png')),
+                  "edge_2_to_1":File_to_Image,
+                  "edge_1_to_2":lambda x: Image_to_FileType(x,file_path="test",extension="png")}
+        """
     def __init__(self,**options):
         defaults={"graph_name":"Image Graph",
                   "node_names":['Image','png'],
@@ -739,7 +809,20 @@ class MetadataGraph(Graph):
                              "HtmlFile",HtmlString_to_HtmlFile,node_description="HTML Table String")
 class TwoPortParameterGraph(Graph):
     """TwoPortParamterGraph is a content graph for two-port parameters,
-    it transforms between S,T,Y,Z,ABCD and H parameters and matrix versions"""
+    it transforms between S,T,Y,Z,ABCD and H parameters and matrix versions.
+        #!python
+        defaults={"graph_name":"Two Port Parameter Graph",
+                          "node_names":["SFrequencyList",'SFrequencyMatrixList'],
+                          "node_descriptions":["S Parameters","S Parameters in a Matrix"],
+                          "current_node":'SFrequencyList',
+                          "state":[1,0],
+                          "data":[[1.0,.9,.436,.436,.9]],
+                          "edge_2_to_1":FrequencyMatrixList_to_FrequencyList,
+                          "edge_1_to_2":FrequencyList_to_FrequencyMatrixList,
+                          "frequency_units":"GHz",
+                          "Z01":50,
+                          "Z02":50 }
+"""
     def __init__(self,**options):
 
         defaults={"graph_name":"Two Port Parameter Graph",

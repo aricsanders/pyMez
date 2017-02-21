@@ -4,7 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
     <title>pyMeasure.Code.DataHandlers.GraphModels API documentation</title>
-    <meta name="description" content="Graph Models stores sub classes of graphs that define data translations" />
+    <meta name="description" content="Graph Models stores sub classes of graphs that define data translations. All edges
+or the functions ..." />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
@@ -1299,7 +1300,37 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMeasure.Code.DataHandlers.GraphModels</span> module</h1>
-  <p>Graph Models stores sub classes of graphs that define data translations</p>
+  <p>Graph Models stores sub classes of graphs that define data translations. All edges
+or the functions that define translations from one format to another
+are found in <a href="./Translations.m.html"><code>pyMeasure.Code.DataHandlers.Translations</code></a>.
+Currently, the module networkx is used to display the graph.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="kn">from</span> <span class="nn">pyMeasure</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;</span><span class="n">image_graph</span><span class="o">=</span><span class="n">ImageGraph</span><span class="p">()</span>
+<span class="o">&gt;&gt;</span><span class="n">image_graph</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s1">&#39;png&#39;</span><span class="p">,</span><span class="s1">&#39;my_png.png&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span><span class="n">image_graph</span><span class="o">.</span><span class="n">move_to_node</span><span class="p">(</span><span class="s1">&#39;EmbeddedHtml&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span><span class="n">output</span><span class="o">=</span><span class="n">image_graph</span><span class="o">.</span><span class="n">data</span>
+<span class="o">&gt;&gt;</span><span class="k">print</span> <span class="n">output</span>
+</pre></div>
+
+
+<p><a href="../../../Examples/Html/GraphModels_Example.html">GraphModels Example</a></p>
+<h2>Requirements</h2>
+<ul>
+<li><a href="https://docs.python.org/2/library/sys.html">sys</a></li>
+<li><a href="https://docs.python.org/2/library/os.html?highlight=os#module-os">os</a></li>
+<li><a href="http://networkx.github.io/">networkx</a></li>
+<li><a href="http://www.numpy.org/">numpy</a></li>
+<li><a href="https://github.com/aricsanders/pyMeasure">pyMeasure</a></li>
+</ul>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMeasure.Code.DataHandlers</code></a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.GraphModels', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.GraphModels" class="source">
@@ -1310,7 +1341,43 @@ table {
 <span class="c1"># Created:     4/6/2016</span>
 <span class="c1"># License:     MIT License</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
-<span class="sd">&quot;&quot;&quot; Graph Models stores sub classes of graphs that define data translations &quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Graph Models stores sub classes of graphs that define data translations. All edges</span>
+<span class="sd">or the functions that define translations from one format to another</span>
+<span class="sd">are found in &lt;a href=&quot;./Translations.m.html&quot;&gt;`pyMeasure.Code.DataHandlers.Translations`&lt;/a&gt;.</span>
+<span class="sd">Currently, the module networkx is used to display the graph.</span>
+
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">    #!python</span>
+<span class="sd">    &gt;&gt;from pyMeasure import *</span>
+<span class="sd">    &gt;&gt;image_graph=ImageGraph()</span>
+<span class="sd">    &gt;&gt;image_graph.set_state(&#39;png&#39;,&#39;my_png.png&#39;)</span>
+<span class="sd">    &gt;&gt;image_graph.move_to_node(&#39;EmbeddedHtml&#39;)</span>
+<span class="sd">    &gt;&gt;output=image_graph.data</span>
+<span class="sd">    &gt;&gt;print output</span>
+
+
+<span class="sd">&lt;a href=&quot;../../../Examples/Html/GraphModels_Example.html&quot;&gt;GraphModels Example&lt;/a&gt;</span>
+
+<span class="sd">Requirements</span>
+<span class="sd">------------</span>
+<span class="sd">+ [sys](https://docs.python.org/2/library/sys.html)</span>
+<span class="sd">+ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)</span>
+<span class="sd">+ [networkx](http://networkx.github.io/)</span>
+<span class="sd">+ [numpy](http://www.numpy.org/)</span>
+<span class="sd">+ [pyMeasure](https://github.com/aricsanders/pyMeasure)</span>
+
+<span class="sd">Help</span>
+<span class="sd">---------------</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMeasure.Code.DataHandlers`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../Examples/Html/Examples_Home.html&quot;&gt;Examples Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;</span>
+<span class="sd">   &quot;&quot;&quot;</span>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Standard Imports</span>
@@ -1438,6 +1505,20 @@ table {
 <span class="sd">    existing node into the new one, and one exiting the node. Once a series of nodes exists</span>
 <span class="sd">    to enter the graph at a node use graph.set_state() the current data representing the</span>
 <span class="sd">    state is in the attribute graph.data. To move among the formats use graph.move_to_node(&#39;NodeName&#39;)</span>
+<span class="sd">    need to recode the find_path method using a shortest path alogrithm like</span>
+<span class="sd">    https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm.</span>
+
+<span class="sd">        #!python</span>
+<span class="sd">            defaults={&quot;graph_name&quot;:&quot;Graph&quot;,</span>
+<span class="sd">                  &quot;node_names&quot;:[&#39;n1&#39;,&#39;n2&#39;],</span>
+<span class="sd">                  &quot;node_descriptions&quot;:[&quot;A plain string&quot;,</span>
+<span class="sd">                                       &quot;A list of strings with no \\n, created with string.splitlines()&quot;],</span>
+<span class="sd">                  &quot;current_node&quot;:&#39;n1&#39;,</span>
+<span class="sd">                  &quot;state&quot;:[1,0],</span>
+<span class="sd">                  &quot;data&quot;:&quot;This is a test string\n it has to have multiple lines \n and many characters 34%6\n^&quot;,</span>
+<span class="sd">                  &quot;edge_2_to_1&quot;:edge_2_to_1,</span>
+<span class="sd">                  &quot;edge_1_to_2&quot;:edge_1_to_2</span>
+<span class="sd">                 }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required&quot;&quot;&quot;</span>
@@ -1896,7 +1977,17 @@ table {
 <span class="c1"># Changed from ColumnModeledGraph to TableGraph 12/14/2016 by AWS</span>
 <span class="k">class</span> <span class="nc">TableGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class that transforms column modeled data (table) from one format to another, use set_state to initialize to</span>
-<span class="sd">    your data&quot;&quot;&quot;</span>
+<span class="sd">    your data.</span>
+<span class="sd">        #!python</span>
+<span class="sd">        defaults={&quot;graph_name&quot;:&quot;Table Graph&quot;,</span>
+<span class="sd">                  &quot;node_names&quot;:[&#39;DataFrame&#39;,&#39;AsciiDataTable&#39;],</span>
+<span class="sd">                  &quot;node_descriptions&quot;:[&quot;Pandas Data Frame&quot;,&quot;AsciiDataTable&quot;],</span>
+<span class="sd">                  &quot;current_node&quot;:&#39;DataFrame&#39;,</span>
+<span class="sd">                  &quot;state&quot;:[1,0],</span>
+<span class="sd">                  &quot;data&quot;:pandas.DataFrame([[1,2,3],[3,4,5]],columns=[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]),</span>
+<span class="sd">                  &quot;edge_2_to_1&quot;:AsciiDataTable_to_DataFrame,</span>
+<span class="sd">                  &quot;edge_1_to_2&quot;:DataFrame_to_AsciiDataTable}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;graph_name&quot;</span><span class="p">:</span><span class="s2">&quot;Table Graph&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;node_names&quot;</span><span class="p">:[</span><span class="s1">&#39;DataFrame&#39;</span><span class="p">,</span><span class="s1">&#39;AsciiDataTable&#39;</span><span class="p">],</span>
@@ -1958,7 +2049,17 @@ table {
                                <span class="n">external_node_description</span><span class="o">=</span><span class="s2">&quot;XSLT Results File&quot;</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ImageGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A transformation graph for images node types are image formats and external nodes are</span>
-<span class="sd">    common image processing functions&quot;&quot;&quot;</span>
+<span class="sd">    common image processing functions</span>
+<span class="sd">        #!python</span>
+<span class="sd">        defaults={&quot;graph_name&quot;:&quot;Image Graph&quot;,</span>
+<span class="sd">                  &quot;node_names&quot;:[&#39;Image&#39;,&#39;png&#39;],</span>
+<span class="sd">                  &quot;node_descriptions&quot;:[&quot;PIL Image&quot;,&quot;png&quot;],</span>
+<span class="sd">                  &quot;current_node&quot;:&#39;Image&#39;,</span>
+<span class="sd">                  &quot;state&quot;:[1,0],</span>
+<span class="sd">                  &quot;data&quot;:PIL.Image.open(os.path.join(TESTS_DIRECTORY,&#39;test.png&#39;)),</span>
+<span class="sd">                  &quot;edge_2_to_1&quot;:File_to_Image,</span>
+<span class="sd">                  &quot;edge_1_to_2&quot;:lambda x: Image_to_FileType(x,file_path=&quot;test&quot;,extension=&quot;png&quot;)}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;graph_name&quot;</span><span class="p">:</span><span class="s2">&quot;Image Graph&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;node_names&quot;</span><span class="p">:[</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;png&#39;</span><span class="p">],</span>
@@ -2044,7 +2145,20 @@ table {
                              <span class="s2">&quot;HtmlFile&quot;</span><span class="p">,</span><span class="n">HtmlString_to_HtmlFile</span><span class="p">,</span><span class="n">node_description</span><span class="o">=</span><span class="s2">&quot;HTML Table String&quot;</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">TwoPortParameterGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;TwoPortParamterGraph is a content graph for two-port parameters,</span>
-<span class="sd">    it transforms between S,T,Y,Z,ABCD and H parameters and matrix versions&quot;&quot;&quot;</span>
+<span class="sd">    it transforms between S,T,Y,Z,ABCD and H parameters and matrix versions.</span>
+<span class="sd">        #!python</span>
+<span class="sd">        defaults={&quot;graph_name&quot;:&quot;Two Port Parameter Graph&quot;,</span>
+<span class="sd">                          &quot;node_names&quot;:[&quot;SFrequencyList&quot;,&#39;SFrequencyMatrixList&#39;],</span>
+<span class="sd">                          &quot;node_descriptions&quot;:[&quot;S Parameters&quot;,&quot;S Parameters in a Matrix&quot;],</span>
+<span class="sd">                          &quot;current_node&quot;:&#39;SFrequencyList&#39;,</span>
+<span class="sd">                          &quot;state&quot;:[1,0],</span>
+<span class="sd">                          &quot;data&quot;:[[1.0,.9,.436,.436,.9]],</span>
+<span class="sd">                          &quot;edge_2_to_1&quot;:FrequencyMatrixList_to_FrequencyList,</span>
+<span class="sd">                          &quot;edge_1_to_2&quot;:FrequencyList_to_FrequencyMatrixList,</span>
+<span class="sd">                          &quot;frequency_units&quot;:&quot;GHz&quot;,</span>
+<span class="sd">                          &quot;Z01&quot;:50,</span>
+<span class="sd">                          &quot;Z02&quot;:50 }</span>
+<span class="sd">&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
 
         <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;graph_name&quot;</span><span class="p">:</span><span class="s2">&quot;Two Port Parameter Graph&quot;</span><span class="p">,</span>
@@ -2712,10 +2826,29 @@ table {
       
   
     <div class="desc"><p>The Graph class creates a content graph that has as nodes different formats. As
-a format is added via graph.add_node() by specifying a node name and a function from an
-existing node into the new one, and one exiting the node. Once a series of nodes exists
-to enter the graph at a node use graph.set_state() the current data representing the
-state is in the attribute graph.data. To move among the formats use graph.move_to_node('NodeName')</p></div>
+    a format is added via graph.add_node() by specifying a node name and a function from an
+    existing node into the new one, and one exiting the node. Once a series of nodes exists
+    to enter the graph at a node use graph.set_state() the current data representing the
+    state is in the attribute graph.data. To move among the formats use graph.move_to_node('NodeName')
+    need to recode the find_path method using a shortest path alogrithm like
+    https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm.</p>
+<div class="codehilite"><pre><span></span>    #!python
+        defaults={&quot;graph_name&quot;:&quot;Graph&quot;,
+              &quot;node_names&quot;:[&#39;n1&#39;,&#39;n2&#39;],
+              &quot;node_descriptions&quot;:[&quot;A plain string&quot;,
+                                   &quot;A list of strings with no \n, created with string.splitlines()&quot;],
+              &quot;current_node&quot;:&#39;n1&#39;,
+              &quot;state&quot;:[1,0],
+              &quot;data&quot;:&quot;This is a test string
+</pre></div>
+
+
+<p>it has to have multiple lines 
+ and many characters 34%6
+^",
+                  "edge_2_to_1":edge_2_to_1,
+                  "edge_1_to_2":edge_1_to_2
+                 }</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.GraphModels.Graph', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.GraphModels.Graph" class="source">
@@ -2725,6 +2858,20 @@ state is in the attribute graph.data. To move among the formats use graph.move_t
 <span class="sd">    existing node into the new one, and one exiting the node. Once a series of nodes exists</span>
 <span class="sd">    to enter the graph at a node use graph.set_state() the current data representing the</span>
 <span class="sd">    state is in the attribute graph.data. To move among the formats use graph.move_to_node(&#39;NodeName&#39;)</span>
+<span class="sd">    need to recode the find_path method using a shortest path alogrithm like</span>
+<span class="sd">    https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm.</span>
+
+<span class="sd">        #!python</span>
+<span class="sd">            defaults={&quot;graph_name&quot;:&quot;Graph&quot;,</span>
+<span class="sd">                  &quot;node_names&quot;:[&#39;n1&#39;,&#39;n2&#39;],</span>
+<span class="sd">                  &quot;node_descriptions&quot;:[&quot;A plain string&quot;,</span>
+<span class="sd">                                       &quot;A list of strings with no \\n, created with string.splitlines()&quot;],</span>
+<span class="sd">                  &quot;current_node&quot;:&#39;n1&#39;,</span>
+<span class="sd">                  &quot;state&quot;:[1,0],</span>
+<span class="sd">                  &quot;data&quot;:&quot;This is a test string\n it has to have multiple lines \n and many characters 34%6\n^&quot;,</span>
+<span class="sd">                  &quot;edge_2_to_1&quot;:edge_2_to_1,</span>
+<span class="sd">                  &quot;edge_1_to_2&quot;:edge_1_to_2</span>
+<span class="sd">                 }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required&quot;&quot;&quot;</span>
@@ -4089,13 +4236,32 @@ moving around the closed path, False otherwise. Starting point is current_node</
       
   
     <div class="desc"><p>A transformation graph for images node types are image formats and external nodes are
-common image processing functions</p></div>
+common image processing functions
+    #!python
+    defaults={"graph_name":"Image Graph",
+              "node_names":['Image','png'],
+              "node_descriptions":["PIL Image","png"],
+              "current_node":'Image',
+              "state":[1,0],
+              "data":PIL.Image.open(os.path.join(TESTS_DIRECTORY,'test.png')),
+              "edge_2_to_1":File_to_Image,
+              "edge_1_to_2":lambda x: Image_to_FileType(x,file_path="test",extension="png")}</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.GraphModels.ImageGraph', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.GraphModels.ImageGraph" class="source">
     <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">ImageGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A transformation graph for images node types are image formats and external nodes are</span>
-<span class="sd">    common image processing functions&quot;&quot;&quot;</span>
+<span class="sd">    common image processing functions</span>
+<span class="sd">        #!python</span>
+<span class="sd">        defaults={&quot;graph_name&quot;:&quot;Image Graph&quot;,</span>
+<span class="sd">                  &quot;node_names&quot;:[&#39;Image&#39;,&#39;png&#39;],</span>
+<span class="sd">                  &quot;node_descriptions&quot;:[&quot;PIL Image&quot;,&quot;png&quot;],</span>
+<span class="sd">                  &quot;current_node&quot;:&#39;Image&#39;,</span>
+<span class="sd">                  &quot;state&quot;:[1,0],</span>
+<span class="sd">                  &quot;data&quot;:PIL.Image.open(os.path.join(TESTS_DIRECTORY,&#39;test.png&#39;)),</span>
+<span class="sd">                  &quot;edge_2_to_1&quot;:File_to_Image,</span>
+<span class="sd">                  &quot;edge_1_to_2&quot;:lambda x: Image_to_FileType(x,file_path=&quot;test&quot;,extension=&quot;png&quot;)}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;graph_name&quot;</span><span class="p">:</span><span class="s2">&quot;Image Graph&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;node_names&quot;</span><span class="p">:[</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;png&#39;</span><span class="p">],</span>
@@ -7406,13 +7572,32 @@ moving around the closed path, False otherwise. Starting point is current_node</
       
   
     <div class="desc"><p>Class that transforms column modeled data (table) from one format to another, use set_state to initialize to
-your data</p></div>
+your data.
+    #!python
+    defaults={"graph_name":"Table Graph",
+              "node_names":['DataFrame','AsciiDataTable'],
+              "node_descriptions":["Pandas Data Frame","AsciiDataTable"],
+              "current_node":'DataFrame',
+              "state":[1,0],
+              "data":pandas.DataFrame([[1,2,3],[3,4,5]],columns=["a","b","c"]),
+              "edge_2_to_1":AsciiDataTable_to_DataFrame,
+              "edge_1_to_2":DataFrame_to_AsciiDataTable}</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.GraphModels.TableGraph', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.GraphModels.TableGraph" class="source">
     <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">TableGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class that transforms column modeled data (table) from one format to another, use set_state to initialize to</span>
-<span class="sd">    your data&quot;&quot;&quot;</span>
+<span class="sd">    your data.</span>
+<span class="sd">        #!python</span>
+<span class="sd">        defaults={&quot;graph_name&quot;:&quot;Table Graph&quot;,</span>
+<span class="sd">                  &quot;node_names&quot;:[&#39;DataFrame&#39;,&#39;AsciiDataTable&#39;],</span>
+<span class="sd">                  &quot;node_descriptions&quot;:[&quot;Pandas Data Frame&quot;,&quot;AsciiDataTable&quot;],</span>
+<span class="sd">                  &quot;current_node&quot;:&#39;DataFrame&#39;,</span>
+<span class="sd">                  &quot;state&quot;:[1,0],</span>
+<span class="sd">                  &quot;data&quot;:pandas.DataFrame([[1,2,3],[3,4,5]],columns=[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]),</span>
+<span class="sd">                  &quot;edge_2_to_1&quot;:AsciiDataTable_to_DataFrame,</span>
+<span class="sd">                  &quot;edge_1_to_2&quot;:DataFrame_to_AsciiDataTable}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;graph_name&quot;</span><span class="p">:</span><span class="s2">&quot;Table Graph&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;node_names&quot;</span><span class="p">:[</span><span class="s1">&#39;DataFrame&#39;</span><span class="p">,</span><span class="s1">&#39;AsciiDataTable&#39;</span><span class="p">],</span>
@@ -8561,13 +8746,38 @@ moving around the closed path, False otherwise. Starting point is current_node</
       
   
     <div class="desc"><p>TwoPortParamterGraph is a content graph for two-port parameters,
-it transforms between S,T,Y,Z,ABCD and H parameters and matrix versions</p></div>
+it transforms between S,T,Y,Z,ABCD and H parameters and matrix versions.
+    #!python
+    defaults={"graph_name":"Two Port Parameter Graph",
+                      "node_names":["SFrequencyList",'SFrequencyMatrixList'],
+                      "node_descriptions":["S Parameters","S Parameters in a Matrix"],
+                      "current_node":'SFrequencyList',
+                      "state":[1,0],
+                      "data":[[1.0,.9,.436,.436,.9]],
+                      "edge_2_to_1":FrequencyMatrixList_to_FrequencyList,
+                      "edge_1_to_2":FrequencyList_to_FrequencyMatrixList,
+                      "frequency_units":"GHz",
+                      "Z01":50,
+                      "Z02":50 }</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.GraphModels.TwoPortParameterGraph', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.GraphModels.TwoPortParameterGraph" class="source">
     <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">TwoPortParameterGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;TwoPortParamterGraph is a content graph for two-port parameters,</span>
-<span class="sd">    it transforms between S,T,Y,Z,ABCD and H parameters and matrix versions&quot;&quot;&quot;</span>
+<span class="sd">    it transforms between S,T,Y,Z,ABCD and H parameters and matrix versions.</span>
+<span class="sd">        #!python</span>
+<span class="sd">        defaults={&quot;graph_name&quot;:&quot;Two Port Parameter Graph&quot;,</span>
+<span class="sd">                          &quot;node_names&quot;:[&quot;SFrequencyList&quot;,&#39;SFrequencyMatrixList&#39;],</span>
+<span class="sd">                          &quot;node_descriptions&quot;:[&quot;S Parameters&quot;,&quot;S Parameters in a Matrix&quot;],</span>
+<span class="sd">                          &quot;current_node&quot;:&#39;SFrequencyList&#39;,</span>
+<span class="sd">                          &quot;state&quot;:[1,0],</span>
+<span class="sd">                          &quot;data&quot;:[[1.0,.9,.436,.436,.9]],</span>
+<span class="sd">                          &quot;edge_2_to_1&quot;:FrequencyMatrixList_to_FrequencyList,</span>
+<span class="sd">                          &quot;edge_1_to_2&quot;:FrequencyList_to_FrequencyMatrixList,</span>
+<span class="sd">                          &quot;frequency_units&quot;:&quot;GHz&quot;,</span>
+<span class="sd">                          &quot;Z01&quot;:50,</span>
+<span class="sd">                          &quot;Z02&quot;:50 }</span>
+<span class="sd">&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
 
         <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;graph_name&quot;</span><span class="p">:</span><span class="s2">&quot;Two Port Parameter Graph&quot;</span><span class="p">,</span>

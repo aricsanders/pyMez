@@ -1168,7 +1168,16 @@ or add files on disk, full directories, or strings as files.</p>
 <span class="c1"># Module Classes</span>
 <span class="k">class</span> <span class="nc">ZipArchive</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;A container for zipped files, provides the ability to open, add files to, extract files from</span>
-<span class="sd">    and save zip archives. &quot;&quot;&quot;</span>
+<span class="sd">    and save zip archives.</span>
+<span class="sd">        !#python</span>
+<span class="sd">        defaults={&quot;specific_descriptor&quot;:&#39;Data&#39;,</span>
+<span class="sd">                  &quot;general_descriptor&quot;:&#39;Archive&#39;,</span>
+<span class="sd">                  &quot;directory&quot;:None,</span>
+<span class="sd">                  &quot;extension&quot;:&#39;zip&#39;,</span>
+<span class="sd">                  &quot;temp_directory&quot;:None,</span>
+<span class="sd">                  &quot;name&quot;:None,</span>
+<span class="sd">                  &quot;path&quot;:None,</span>
+<span class="sd">                  &quot;files&quot;:None}        &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="s2">&quot; Initializes the ZipArchive class &quot;</span>
         <span class="c1"># This is a general pattern for adding a lot of options some with defaults</span>
@@ -1360,13 +1369,31 @@ or add files on disk, full directories, or strings as files.</p>
       
   
     <div class="desc"><p>A container for zipped files, provides the ability to open, add files to, extract files from
-and save zip archives.</p></div>
+and save zip archives.
+    !#python
+    defaults={"specific_descriptor":'Data',
+              "general_descriptor":'Archive',
+              "directory":None,
+              "extension":'zip',
+              "temp_directory":None,
+              "name":None,
+              "path":None,
+              "files":None}</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.ZipModels.ZipArchive', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.ZipModels.ZipArchive" class="source">
     <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">ZipArchive</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;A container for zipped files, provides the ability to open, add files to, extract files from</span>
-<span class="sd">    and save zip archives. &quot;&quot;&quot;</span>
+<span class="sd">    and save zip archives.</span>
+<span class="sd">        !#python</span>
+<span class="sd">        defaults={&quot;specific_descriptor&quot;:&#39;Data&#39;,</span>
+<span class="sd">                  &quot;general_descriptor&quot;:&#39;Archive&#39;,</span>
+<span class="sd">                  &quot;directory&quot;:None,</span>
+<span class="sd">                  &quot;extension&quot;:&#39;zip&#39;,</span>
+<span class="sd">                  &quot;temp_directory&quot;:None,</span>
+<span class="sd">                  &quot;name&quot;:None,</span>
+<span class="sd">                  &quot;path&quot;:None,</span>
+<span class="sd">                  &quot;files&quot;:None}        &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="s2">&quot; Initializes the ZipArchive class &quot;</span>
         <span class="c1"># This is a general pattern for adding a lot of options some with defaults</span>

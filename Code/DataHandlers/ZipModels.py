@@ -64,7 +64,16 @@ def extract_all(zipfile,directory):
 # Module Classes
 class ZipArchive():
     """A container for zipped files, provides the ability to open, add files to, extract files from
-    and save zip archives. """
+    and save zip archives.
+        !#python
+        defaults={"specific_descriptor":'Data',
+                  "general_descriptor":'Archive',
+                  "directory":None,
+                  "extension":'zip',
+                  "temp_directory":None,
+                  "name":None,
+                  "path":None,
+                  "files":None}        """
     def __init__(self,file_path=None,**options):
         " Initializes the ZipArchive class "
         # This is a general pattern for adding a lot of options some with defaults
