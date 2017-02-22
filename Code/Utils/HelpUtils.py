@@ -9,7 +9,7 @@
   auto-generated help and nbcovert to change ipynb based examples to html. There is an
   error when certain extensions are activated in jupyter for nbconvert that is solved by
   changing the imports in three modules
-  see https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf24aa397aa8edc7b2b53"""
+  see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf24aa397aa8edc7b2b53)"""
 #-----------------------------------------------------------------------------
 # Standard Imports
 import os

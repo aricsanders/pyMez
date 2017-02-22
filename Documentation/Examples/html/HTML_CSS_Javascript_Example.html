@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>pyMeasure_Documentation</title>
+<title>HTML_CSS_Javascript_Example</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,98 +11751,29 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a id="top"></a></p>
-<h1 id="Welcome-to-pyMeasure,-an-open-source-python-library-for-science.">Welcome to pyMeasure, an open source python library for science.<a class="anchor-link" href="#Welcome-to-pyMeasure,-an-open-source-python-library-for-science.">&#182;</a></h1><p>This documentation is for the pyMeasure package, designed by Aric Sanders <a href="mailto:aric.sanders@gmail.com"> aric.sanders@gmail.com </a> 2016.</p>
-<p><a href="./pyMeasure/index.html">API Documentation </a> |
-<a href="./Examples/Html/Examples_Index.html">Examples</a> |
-<a href="./Reference_Index.html">Index </a></p>
-<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">&#182;</a></h2><p><hr style="border-top: 3px double #8c8b8b;"/></p>
-<ol style="list-style-type: upper-roman">
-<li><h3> <a href="#intro">Introduction</a> </h3></li>
-A brief introduction to pyMeasure and its motivation.
-<li><h3> <a href="#install">Installing and Loading pyMeasure</a></h3> </li>
-How to install pyMeasure and its requirements 
-<li><h3> <a href="#help">Getting Help</a></h3> </li>
-How to get help on the pyMeasure package and general.
-<li> <h3><a href="#design">The Design of pyMeasure</a> </h3></li>
-The overall design of pyMeasure, including how to contribute.
+<h1 id="HTML,-CSS,-and-JavaScript-Basics">HTML, CSS, and JavaScript Basics<a class="anchor-link" href="#HTML,-CSS,-and-JavaScript-Basics">&#182;</a></h1><p>This an example showing the basics of using the HTML, CSS, JavaScript technology.</p>
 
-<li> <h3><a href="#license">License</a></h3> </li>
-pyMeasure License Statement
-<!--
-<li><h3> <a href="#pyMeasure-examples">pyMeasure Specific Examples</a></h3> </li>
-Examples specific to the pyMeasure package.
-<li><h3> <a href="#general-examples">General Examples</a> </h3></li>
-Examples for general tasks in python and related packages.
-<li> <h3><a href="#nist-examples">NIST Examples</a> </h3></li>
-Examples pertinent to work at NIST in Boulder.-->
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-basic-structure-of-an-HTML-page">The basic structure of an HTML page<a class="anchor-link" href="#The-basic-structure-of-an-HTML-page">&#182;</a></h2><ol>
+<li>Above the HTML there can be a doctype declaration (which html standard you are using)</li>
+<li>The outer element is html</li>
+<li>There is a head and a body</li>
+<li>There are a lot of other tags that specify the content, layout and behavior of the page. Collectively all of these are referred to as the DOM or document object model.  </li>
 </ol>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#top"> <em>previous topic</em></a>  |  <a href="#intro"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="intro">Introduction</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>pyMeasure is a python package born out of the daily needs of a laboratory scientist. In particular, there is a constant need to use external equipment to acquire data, store that data in a sensible way, analyze the stored data, and generate collections and reports after analyzing the data. In the world of scientific computation there is an endless universe of solutions to do this, however none of the solutions met my personal daily needs and philosophy simultaneously. This package tries to stitch together many tools to meet those needs, while serving as a backend library to a webserver. It thus has a lot of other packages. It relies on these packages in different ways and may operate differently on different oeprating systems.Although it currently has a single primary developer, it is my hope that it will be adopted by at least 10's of people and help them accomplish their daily scientific goals.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#intro"> <em>previous topic</em></a>  |  <a href="#install"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="install">Installing and Loading pyMeasure</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Installation">Installation<a class="anchor-link" href="#Installation">&#182;</a></h3><ol>
-<li>Install Anaconda 2.7 from <a href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a></li>
-<li>Install pyvisa using pip install pyvisa</li>
-<li>Install NI-Visa from <a href="http://www.ni.com/download/ni-visa-15.0.1/5693/en/">http://www.ni.com/download/ni-visa-15.0.1/5693/en/</a></li>
-<li>Clone boa repository to Anaconda2/Lib/site-packages</li>
-<li>Clone pyMeasure to Anaconda2/Lib/site-packages</li>
-<li>Install wx from source forge <a href="http://wxpython.org/">http://wxpython.org/</a></li>
-<li>In addition, the USB-GPIB interface needs drivers from NI (NI488.2 version 15) and a computer restart.</li>
-</ol>
-<h3 id="Optional-Dependencies">Optional Dependencies<a class="anchor-link" href="#Optional-Dependencies">&#182;</a></h3><ol>
-<li>Inkscape from <a href="https://inkscape.org/en/download/">https://inkscape.org/en/download/</a></li>
-<li>Microscoft Office</li>
-<li>pdfkit and wkhtmltopdf pip install pdfkit and install from <a href="http://wkhtmltopdf.org/">http://wkhtmltopdf.org/</a></li>
-<li>statistiCAL and Microwave Uncertainty Framework from  <a href="http://www.nist.gov/ctl/rf-technology/related-software.cfm">http://www.nist.gov/ctl/rf-technology/related-software.cfm</a></li>
-</ol>
-<h3 id="Development-Environment-Details">Development Environment Details<a class="anchor-link" href="#Development-Environment-Details">&#182;</a></h3><p>A detailed description of my development environment can be found <a href="./Examples/html/Development_Environment">here</a></p>
-<h3 id="Accessing-the-API-after-installation">Accessing the API after installation<a class="anchor-link" href="#Accessing-the-API-after-installation">&#182;</a></h3><p>The API is best accessed by importing as</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMeasure</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-<p>However, if a specific function or class is required then direct import also works (this form imports the full API)</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMeasure.Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
-</pre></div>
-<p>If you want to have the import skip the API, then add the pyMeasure folder to sys.path and then import beginning with Code</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">r&quot;C:\ProgramData\Anaconda2\Lib\site-packages\pyMeasure&quot;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 
 </div>
@@ -11853,79 +11784,168 @@ Examples pertinent to work at NIST in Boulder.-->
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#install"> <em>previous topic</em></a>  |  <a href="#help"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="help">Getting Help</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>There are many ways to get help on pyMeasure. Internal to pyMeasure there are several primary help components:</p>
-<p><ul></p>
-<li>This page</li>
-<li> <a href="./pyMeasure/index.html">API help</a></li>
-<li> <a href="./Examples/html/pyMeasure_Examples.html">Html Examples </a></li>
-<li> <a href="./Examples/jupyter">Jupyter Interactive Examples </a></li>
-<li><a href="./Reference_Index.html">Index of All Classes and Functions in pyMeasure </a></li><p>&lt;/ul&gt;
-Additionally, python has a series of help functions including the command line tool
-pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help(object).</p>
-<div class="highlight"><pre><span></span><span class="err">?</span><span class="n">XMLBase</span>
-<span class="n">help</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">)</span>
+<h3 id="Everything-that-sets-the-page-up-is-in-the-head.-That-is-the-title,-any-metadata,-any-format-commands-and-any-loading-of-external-scripts.">Everything that sets the page up is in the head. That is the title, any metadata, any format commands and any loading of external scripts.<a class="anchor-link" href="#Everything-that-sets-the-page-up-is-in-the-head.-That-is-the-title,-any-metadata,-any-format-commands-and-any-loading-of-external-scripts.">&#182;</a></h3><ul>
+<li>For example if you want to load an external set of format commands in the css syntax </li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;./css/literallycanvas.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 </pre></div>
-<p>In addition there are several tools in <a href="./pyMeasure/Code/Utils/HelpUtils.html">pyMeasure.Code.Utils.HelpUtils</a> for generating html based help files.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#help"> <em>previous topic</em></a>  |  <a href="#design"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="design">The Design of pyMeasure</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Overall-Design-Goal">Overall Design Goal<a class="anchor-link" href="#Overall-Design-Goal">&#182;</a></h3><p>pyMeasure was designed with the overal goal of being easy to use, well documented, well tested and modular. The overall design follows a pattern of Models (DataHandlers), View and View-Controllers (FrontEnds), Anaylsis and Instrument Control.</p>
-<h3 id="Directory-Structure">Directory Structure<a class="anchor-link" href="#Directory-Structure">&#182;</a></h3><ul>
-<li> pyMeasure : The top directory that should be installed in python27/Lib/site-packages or C:\ProgramData\Anaconda2\Lib\site-packages
 <ul>
-<li> Code: The top level folder for the code repository </li>
+<li>We could have used a <code>&lt;style&gt;</code> tag and put all of our definitions there to create the same effect. The only difference is the who gets executed last. The precedence is first to apply all the styles imported from a file (in the order listed), then apply the styles defined in the head or body in a style tag, and finally any style in a html tag that is an attribute.</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;./css/literallycanvas.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+        <span class="nt">p</span> <span class="p">{</span><span class="nb">font-weight</span><span class="o">:</span><span class="nb">bold</span><span class="p">;}</span>
+    <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</pre></div>
 <ul>
-<li>Utils: Subpackage for utility functions needed by all of pyMeasure</li>
-<li>DataHandlers: Data models needed by everything but Utils</li>
-<li>Analysis: Functions and classes based on analyzing data. Requires Utils and DataHandlers.</li>
-<li>InstrumentControl: Functions and classes that communicate with external devices. Requires Utils and DataHandlers</li>
-<li>FrontEnds: Functions and classes that tie it altogether for the user, requires all other modules.</li>
-</ul>
-<li> Documentation: Top level folder for docs including examples </li>
-<li> Instruments: A repository for XML sheets describing instruments </li>
-<li> Data: A repository for data, this is volatile and likely to change </li> 
-<ul> 
-<li>Measurements: Storage for measurement data, either in xml or ascii</li>
-<li>Logs: Storage for xml logs</li>
-<li>States: Storage for Instrument and Experimental States</li>
-<li>Reports: Storage for formatted output </li>
-
-</ul>
-</ul>
+<li><p>This would apply the style sheet specified by the href attribute, and then make all the <code>&lt;p&gt;&lt;/p&gt;</code> elements bold after applying the style sheet.</p>
 </li>
-</ul><h3 id="Testing-Infrastructure">Testing Infrastructure<a class="anchor-link" href="#Testing-Infrastructure">&#182;</a></h3><p>pyMeasure has a multi-tiered testing infrastructure. It is comprised of basic unit tests, mesoscopic in-module tests, and integration tests.</p>
-<ol>
-<li><strong>Unit tests :</strong> These tests check if functions and classes with a basic input return what is expected. They are found in the module pyMeasure.Code.Utils.pyMeasureUnitTests</li>
-<li><strong>In Module Tests :</strong> Theses tests are scripts included in each module that test a series of things about functions or classes, they are typically named test_thing_of_interest(). For example in the module pyMeasure.Code.DataHandlers.XMLModels there are &gt;15 scripts to test functions and classes with names like test_get_header.</li>
-<li><strong>Integration Tests:</strong> These tests check if a large number of interacting components work as expected. For the wx frontend this is primarily the class AdvancedInterfaceFrame, or an integrated application that can open new window panels, run the in module tests and check if data objects appear as they are expected. For the django FrontEnd this is a Test_Server run using Django's development server found in manage.py. For Jupyter, this is a series of examples that live in pyMeasure/Documentation/Examples. </li>
+<li><p>If we wanted a single <code>&lt;p&gt;&lt;/p&gt;</code> tag to not be bolded we can specify that in the style attribute</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;./css/literallycanvas.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+          <span class="nt">p</span> <span class="p">{</span><span class="nb">font-weight</span><span class="o">:</span><span class="nb">bold</span><span class="p">;}</span>
+      <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span> A bolded paragraph <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">p</span> <span class="na">stlye</span><span class="o">=</span><span class="s">&quot;font-weight:normal&quot;</span><span class="p">&gt;</span> A normal weight paragraph <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Loading-of-external-JavaScript-or-defining-your-own">Loading of external JavaScript or defining your own<a class="anchor-link" href="#Loading-of-external-JavaScript-or-defining-your-own">&#182;</a></h3><p>Much like the css commands that describe the formatting and presentation specifics, scripts that execute when the page is loaded can be included in the <code>&lt;head&gt;</code> section of the html document. Also like css, the syntax is different from html.</p>
+<ul>
+<li><p>For example, to load an external JavaScript program or library use the script tag, and use the src attribute to point to the 
+file. It is common to see a cdn (content delivery network) url here, it is just pointing to the text file that has the code in it.</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</li>
+<li><p>You may also define your own program in JavaScript in the head element. This will be executed before the rest of the page loads, so it is common to see the <code>&lt;script&gt;</code> tag in both the head (before loading) and the body (after loading) to optimize load speed.</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="c1">// My JavaScript function</span>
+<span class="c1">// output to the browser console</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;My desired output: You find it by looking at inspect element, or f12 in the browser&#39;</span><span class="p">);</span>
+<span class="c1">// output to a window that pops up</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;My desired output: just pops up in your face&#39;</span><span class="p">);</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</li>
+<li><p>The script tag is actually legal in any part of the html document, and JavaScript has a few weird rules about moving function definitions and variable definitions around after executing them. This is known as Hoisting see for examples <a href="http://www.w3schools.com/js/js_hoisting.asp">http://www.w3schools.com/js/js_hoisting.asp</a></p>
+</li>
+<li><p>JavaScript is a mix of syntaxes but resembles java in some ways. Its main purpose is to alter the html on the client side, as such its basic language components are centered around finding a tag, extracting content and putting it a changed version back in.</p>
+</li>
+<li><p>Since all browsers implement some subset of JavaScript or ECMA Script, there are an infinite number of libraries to make things easier. Two of the most important libraries are <a href="https://en.wikipedia.org/wiki/Ajax_(programming">AJAX</a> and <a href="http://jquery.com/">JQUERY</a>. <a href="https://en.wikipedia.org/wiki/Ajax_(programming">AJAX</a> is based on getting information from a server and updating a single piece of the html without reloading the entire page and <a href="http://jquery.com/">JQUERY</a> is about making the selection of tags easier and more consistent with the CSS syntax. Other JavaScript libraries that are popular are <a href="http://getbootstrap.com/">Bootstrap</a> (about layout and buttons etc), <a href="https://facebook.github.io/react/">React.js</a> (some extra tools for making user interfaces), <a href="https://angularjs.org/">Angular</a> (helps in web apps). These are all programmed in JavaScript and are typically executed in the head section by linking to the library through a cdn or serving the library file yourself.</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Everything-that-gets-displayed-is-in-the-body.">Everything that gets displayed is in the body.<a class="anchor-link" href="#Everything-that-gets-displayed-is-in-the-body.">&#182;</a></h3><p>All of the content that is actually displayed on your web browser is in the body. The body contains a lot of markup that determine how the content is displayed and when put together with all the set of up in the head gives you the final product.</p>
+<ul>
+<li><p>There are several specifications of what the tags mean, and the current most advanced version is HTML 5. Unlike XHTML (HTML 4) the specification does not require HTML to be a proper subset of XML.</p>
+</li>
+<li><p>Two of the most important inclusions in HTML 5 are the <code>&lt;canvas&gt;&lt;/canvas&gt;</code> and <code>&lt;svg&gt;&lt;/svg&gt;</code> markups. These allow complex dynamic graphics in html.</p>
+</li>
+<li><p>The are 3 principal components to any of the markup tags in the head or body. This is the tag name, the attributes, and the tag content. HTML is comprised of specific tags (unlike xml), most with certain common attributes that have defined values and the content is changed to fit the purpose of the page. There are a few standard attributes like 'id' and 'class' that JavaScript and css use to select elements of pages.</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+        <span class="nc">.important-paragraph</span> <span class="p">{</span><span class="nb">color</span><span class="o">:</span><span class="nb">red</span><span class="p">;</span><span class="nb">font-size</span><span class="o">:</span><span class="m">22pt</span><span class="p">;}</span>
+        <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;first-paragraph&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;important-paragraph&quot;</span><span class="p">&gt;</span> My First Paragraph <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+            <span class="kd">var</span> <span class="nx">myP</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;first-paragraph&quot;</span><span class="p">)</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">myP</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">);</span>
+        <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Remember-current-HTML-is-really-3-different-syntaxes">Remember current HTML is really 3 different syntaxes<a class="anchor-link" href="#Remember-current-HTML-is-really-3-different-syntaxes">&#182;</a></h3><ol>
+<li>HTML - The markup that looks like <code>&lt;tag_name attribute='value'&gt; content &lt;/tag_name&gt;</code>.
+Example:<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;./myImage.png&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">h3</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;section-III&quot;</span><span class="p">&gt;</span> My third level heading <span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+</pre></div>
+</li>
+<li><p>CSS - Stuff inside of <code>&lt;style&gt;&lt;/style&gt;</code> that is in the form <code>css_selector {css_attribute:css_value; css_attribute:css_value;}</code>. Note this can be imported using the link tag or put in the html using the style attribute of the html tag.
+Example:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+ <span class="nn">#section-III</span> <span class="p">{</span><span class="nb">color</span><span class="o">:</span><span class="nb">green</span><span class="p">;</span>
+               <span class="nb">font-weight</span><span class="o">:</span><span class="nb">bold</span><span class="p">;</span>
+               <span class="nb">font-size</span><span class="o">:</span><span class="m">22pt</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&#39;http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300&#39;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#39;stylesheet&#39;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#39;text/css&#39;</span><span class="p">&gt;</span>
+</pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h3</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;section-III&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;color:green;font-weight:bold;font-size:22pt&quot;</span><span class="p">&gt;</span> My third level heading <span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+</pre></div>
+</li>
+<li><p>JavaScript (ECMA Script) - Stuff inside of the <code>&lt;script&gt;&lt;/script&gt;</code> tag. This can be loaded from an external file using the src attribute. Its main purpose is to change the content of html dynamically. The syntax looks like C with the naming conventions similar to java. 
+Example:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="c1">// A program that uses a loop to build a list and then outputs the list to an element chosen by its id</span>
+  <span class="cm">/* Also we could </span>
+<span class="cm">  use the block comment.</span>
+<span class="cm">  */</span>
+
+  <span class="c1">// intialize an empty list</span>
+  <span class="kd">var</span> <span class="nx">myList</span><span class="o">=</span><span class="p">[];</span>
+
+  <span class="c1">// run a for loop and put in new values for list elements</span>
+  <span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;=</span><span class="mi">12</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="nx">myList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;My new line number &#39;</span><span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Flatten the list into a string (yes I know we could have just done a string in the first place)</span>
+  <span class="kd">var</span> <span class="nx">outString</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+
+  <span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="nx">i</span><span class="o">&lt;=</span><span class="nx">myList</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="nx">outString</span><span class="o">=</span><span class="nx">outString</span><span class="o">+</span><span class="nx">myList</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+  <span class="p">}</span>
+
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;section-III&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="o">=</span><span class="nx">outString</span><span class="p">;</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;./myMagic.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</li>
 </ol>
 
 </div>
@@ -11936,9 +11956,14 @@ pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#help"> <em>previous topic</em></a>  |  <a href="#license"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="license">License</a> </h2>
+<h2 id="View-Source,-Inspect-Element-and-What-You-See-in-The-Browser">View Source, Inspect Element and What You See in The Browser<a class="anchor-link" href="#View-Source,-Inspect-Element-and-What-You-See-in-The-Browser">&#182;</a></h2><p>Every browser (Internet Explorer, Edge, Safari, Chrome, Firefox) acts as a complier, integrated development environment and complex graphic rendering program for all three syntaxes. The pieces of this that one sees most often is the end result of compiling and running all the JavaScript, rendering of the css and html. But hidden along with this is the "source code" and the new markup after running all of the code, and the displayed result.</p>
+<ol>
+<li><strong>View Source</strong>: Right Click on Windows, Apple-Click on Mac
+ Shows the source of the page. This is before any JavaScript has been executed.</li>
+<li><strong>Inspect or Inspect Element</strong>:  Right Click on Windows, Apple-Click on Mac sometimes F12. This shows the markup after running the JavaScript on the page once. Now these elements can change if you press a button, fill out a text box, etc. This is a combination of the output of console.log() and the markup in real time.</li>
+<li><strong>Final result in the browser</strong>: This is a little different for each browser, but in principal it should be close. Internet Explorer is infamous for not adhering to the standards for JavaScript, etc.  In addition, there are a few browser specific commands (should not be but still are) and several standards that are not implemented across the board.</li>
+</ol>
+
 </div>
 </div>
 </div>
@@ -11947,26 +11972,199 @@ pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is free and unencumbered software released into the public domain.</p>
-<p>Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.</p>
-<p>In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.</p>
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.</p>
-<p>For more information, please refer to <a href="http://unlicense.org/">http://unlicense.org/</a></p>
+<h2 id="Common-Patterns-in-HTML,-CSS,-JavaScript">Common Patterns in HTML, CSS, JavaScript<a class="anchor-link" href="#Common-Patterns-in-HTML,-CSS,-JavaScript">&#182;</a></h2><p>There are a series of patterns that if you look at the source of most websites you will see over and over. In addition, there are a few tricks that are commonly applied.</p>
+<ol>
+<li><p>Using the <code>&lt;div&gt;&lt;/div&gt;</code> tag to output the results of some complicated JavaScript function. This is usually accomplished by setting the id or class attributes of the tag and then using some function that overwrites them.</p>
+</li>
+<li><p>Using information in the <code>&lt;meta content="" name=""/&gt;</code> tags in <code>&lt;head&gt;&lt;/head&gt;</code> to input into functions</p>
+</li>
+<li><p>Talking with a server through forms. Forms are special tags that are meant as input to a server, they collect a set of inputs and send them to a server all at once, the page that they submit them to</p>
+</li>
+<li><p>Having so much JavaScript and css that the source of the page is unreadable.</p>
+</li>
+<li><p>The "this" pattern in JavaScript.</p>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A-basic-example-of-a-plot-with-a-fancy-equation">A basic example of a plot with a fancy equation<a class="anchor-link" href="#A-basic-example-of-a-plot-with-a-fancy-equation">&#182;</a></h2><p><a href="./SVG_MathJax_Example_20160202_001.html"> Open the file to see it for yourself </a></p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- Metadata Tag Specifying the Character Set Used --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- Metadata Tag For a Description and Author --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;description&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;An HTML page that illustrates SVG, Ploting and Latex.&quot;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;author&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;Aric Sanders&quot;</span><span class="p">&gt;</span>
+
+    <span class="c">&lt;!--  Tag to Add an Icon to the Browser Tab --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#39;shortcut icon&#39;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#39;image/ico&#39;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#39;/favicon.ico&#39;</span><span class="p">&gt;</span>
+
+    <span class="c">&lt;!-- Title, It Will Appear in The Browser Tab --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>SVG, Ploting and Latex<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+
+    <span class="c">&lt;!-- Load a set of external javascript functions from the file found at</span>
+<span class="c">    https://cdn.mathjax.org/mathjax/latest/MathJax.js, this is the library that does the latex magic --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/x-mathjax-config&quot;</span><span class="p">&gt;</span>
+    <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span><span class="nx">tex2jax</span><span class="o">:</span> <span class="p">{</span><span class="nx">inlineMath</span><span class="o">:</span> <span class="p">[[</span><span class="s1">&#39;$&#39;</span><span class="p">,</span><span class="s1">&#39;$&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;\\(&#39;</span><span class="p">,</span><span class="s1">&#39;\\)&#39;</span><span class="p">]]}});</span>
+    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">async</span>
+    <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+    <span class="c">&lt;!-- Load a set of external javascript functions from the file found at</span>
+<span class="c">    https://cdn.plot.ly/plotly-latest.min.js, this is the library that plots data using javascript to define</span>
+<span class="c">     an svg interactive plot--&gt;</span>
+  <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.plot.ly/plotly-latest.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+  <span class="c">&lt;!-- both of these libraries could be copied and stored in a different location. If they in the same folder and</span>
+<span class="c">  referenced with src=&quot;./plotly-latest.min.js&quot; in theory your browser does not even have to have an internet connection.</span>
+<span class="c">  Sometimes this fails because of browser security settings. --&gt;</span>
+
+
+ <span class="c">&lt;!-- css styles are defined inside of the css tag where everything has a different syntax--&gt;</span>
+  <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+    <span class="c">/* css comments only use the block comment form from c */</span>
+
+      <span class="c">/* this  statement chooses anything with the tag line and makes it red. Note</span>
+<span class="c">      since these are part of an svg tag you need to look up the attributes that you can</span>
+<span class="c">      change see for example https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line */</span>
+      <span class="nt">line</span> <span class="p">{</span><span class="n">stroke</span><span class="o">:</span><span class="nb">red</span><span class="p">}</span><span class="o">;</span>
+
+      <span class="c">/* this  statement says any time you hover over a line make it thicker */</span>
+      <span class="nt">line</span><span class="nd">:hover</span> <span class="p">{</span><span class="n">stroke</span><span class="o">-</span><span class="nb">width</span><span class="o">:</span><span class="m">5</span><span class="p">;}</span>
+
+
+      <span class="c">/* this selector statement chooses anything with the class myGroupOfCircles, or when you hover over &lt;p&gt;&lt;/p&gt;</span>
+<span class="c">      or &lt;h1&gt;&lt;/h1&gt; or an &lt;a&gt;&lt;/a&gt; tag */</span>
+      <span class="nc">.myGroupOfCircles</span><span class="o">,</span> <span class="nt">p</span><span class="nd">:hover</span><span class="o">,</span> <span class="nt">h1</span><span class="nd">:hover</span><span class="o">,</span> <span class="nt">a</span><span class="nd">:hover</span> <span class="p">{</span>
+    <span class="nb">background-color</span><span class="o">:</span> <span class="nb">yellow</span><span class="p">;</span>
+        <span class="p">}</span>
+
+      <span class="c">/* Example for the tag name circle */</span>
+      <span class="nt">circle</span> <span class="p">{</span><span class="n">fill</span><span class="o">:</span><span class="nb">blue</span><span class="p">;}</span>
+
+      <span class="c">/* Example for the anything with class attribute set to myGroupOfCircles and when the mouse is hovering over it*/</span>
+      <span class="nc">.myGroupOfCircles</span><span class="nd">:hover</span> <span class="p">{</span><span class="n">fill</span><span class="o">:</span><span class="nb">yellow</span><span class="p">;</span><span class="nb">opacity</span><span class="o">:.</span><span class="m">3</span><span class="p">;}</span>
+
+      <span class="c">/* Example for anything with the id attribute set to myParticularCircle */</span>
+      <span class="nn">#myParticularCircle</span> <span class="p">{</span><span class="nb">opacity</span><span class="o">:.</span><span class="m">5</span><span class="p">}</span>
+
+  <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>The SVG  to make a few circles and lines between them<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+
+ <span class="c">&lt;!-- Display the SVG (an xml based vector graphics format)</span>
+<span class="c"> if you want to make really elaborate svg&#39;s use Inkscape --&gt;</span>
+<span class="p">&lt;</span><span class="nt">svg</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;250&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;250&quot;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- Definitions of markers for lines--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">defs</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">marker</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;head&#39;</span> <span class="na">orient</span><span class="o">=</span><span class="s">&#39;auto&#39;</span> <span class="na">markerWidth</span><span class="o">=</span><span class="s">&#39;1&#39;</span> <span class="na">markerHeight</span><span class="o">=</span><span class="s">&#39;2&#39;</span>
+            <span class="na">refX</span><span class="o">=</span><span class="s">&#39;0.1&#39;</span> <span class="na">refY</span><span class="o">=</span><span class="s">&#39;2&#39;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">path</span> <span class="na">d</span><span class="o">=</span><span class="s">&#39;M0,0 V4 L2,2 Z&#39;</span> <span class="na">fill</span><span class="o">=</span><span class="s">&#39;red&#39;</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">marker</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">defs</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- little g stands for group --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">g</span><span class="p">&gt;</span>
+        <span class="c">&lt;!-- This makes the line a hyperlink. Inside of the SVG you have to give the hyperlink a namespace so it knows</span>
+<span class="c">        that you did not make up another tag with attribute href. This is why inside of the svg tag you need to</span>
+<span class="c">         put xlink:href--&gt;</span>
+       <span class="p">&lt;</span><span class="nt">a</span> <span class="na">xlink:href</span><span class="o">=</span><span class="s">&quot;http://example.com/link/&quot;</span><span class="p">&gt;</span>
+           <span class="c">&lt;!-- the line tag works the way you would expect it to, it has a lot of optional attributes--&gt;</span>
+           <span class="p">&lt;</span><span class="nt">line</span> <span class="na">x1</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">y1</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">x2</span><span class="o">=</span><span class="s">&quot;200&quot;</span> <span class="na">y2</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">stroke</span><span class="o">=</span><span class="s">&quot;black&quot;</span> <span class="na">stroke-width</span><span class="o">=</span><span class="s">&quot;3&quot;</span><span class="p">/&gt;</span>
+       <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+       <span class="p">&lt;</span><span class="nt">line</span> <span class="na">x1</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">y1</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">x2</span><span class="o">=</span><span class="s">&quot;200&quot;</span> <span class="na">y2</span><span class="o">=</span><span class="s">&quot;200&quot;</span> <span class="na">stroke</span><span class="o">=</span><span class="s">&quot;black&quot;</span> <span class="na">stroke-width</span><span class="o">=</span><span class="s">&quot;2&quot;</span><span class="p">/&gt;</span>
+
+       <span class="c">&lt;!-- The path tag is magic. It is effectively the turtle in LOGO with extra magic</span>
+<span class="c">       , M stands for move, L stands for line</span>
+<span class="c">       you can make curves, arcs etc. The d attribute is the key  M50,50 is move to 50,50,</span>
+<span class="c">       L100,100 is Line to 100,100. The syntax for curves and arcs gets a little more involved see</span>
+<span class="c">       https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d. for examples.</span>
+<span class="c">       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/path--&gt;</span>
+      <span class="p">&lt;</span><span class="nt">path</span>
+      <span class="na">id</span><span class="o">=</span><span class="s">&#39;arrow-line&#39;</span>
+      <span class="na">marker-mid</span><span class="o">=</span><span class="s">&#39;url(#head)&#39;</span>
+      <span class="na">marker-end</span><span class="o">=</span><span class="s">&#39;url(#head)&#39;</span>
+      <span class="na">stroke-width</span><span class="o">=</span><span class="s">&#39;3&#39;</span>
+      <span class="na">fill</span><span class="o">=</span><span class="s">&#39;none&#39;</span> <span class="na">stroke</span><span class="o">=</span><span class="s">&#39;black&#39;</span>
+      <span class="na">d</span><span class="o">=</span><span class="s">&#39;M50,50 L100,100 L200,200&#39;</span><span class="p">/&gt;</span>
+
+
+    <span class="c">&lt;!-- Circle just requires a center cx=,cy=  and a radius which I specifiy in pixels like the size of the svg tag --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">circle</span> <span class="na">cx</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">cy</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">r</span><span class="o">=</span><span class="s">&quot;40&quot;</span> <span class="na">stroke</span><span class="o">=</span><span class="s">&quot;black&quot;</span> <span class="na">stroke-width</span><span class="o">=</span><span class="s">&quot;3&quot;</span> <span class="na">fill</span><span class="o">=</span><span class="s">&quot;red&quot;</span> <span class="p">/&gt;</span>
+
+    <span class="c">&lt;!-- Circle with a hyperlink and some attributes defined locally --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">xlink:href</span><span class="o">=</span><span class="s">&quot;http://example.com/link/&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">circle</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;myGroupOfCircles&quot;</span> <span class="na">cx</span><span class="o">=</span><span class="s">&quot;200&quot;</span> <span class="na">cy</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">r</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="na">stroke</span><span class="o">=</span><span class="s">&quot;black&quot;</span> <span class="na">stroke-width</span><span class="o">=</span><span class="s">&quot;3&quot;</span> <span class="na">fill</span><span class="o">=</span><span class="s">&quot;red&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">g</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- Circle with an id --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">circle</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;myGroupOfCircles&quot;</span> <span class="na">cx</span><span class="o">=</span><span class="s">&quot;200&quot;</span> <span class="na">cy</span><span class="o">=</span><span class="s">&quot;200&quot;</span> <span class="na">r</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="na">stroke</span><span class="o">=</span><span class="s">&quot;black&quot;</span> <span class="na">stroke-width</span><span class="o">=</span><span class="s">&quot;3&quot;</span> <span class="na">fill</span><span class="o">=</span><span class="s">&quot;red&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;myParticularCircle&quot;</span><span class="p">/&gt;</span>
+
+    <span class="c">&lt;!-- Here it is important to note that in order to use css to alter the svg, it has to be an svg tag. If</span>
+<span class="c">    you use &lt;img src=&quot;mySVG.svg&quot; /&gt; the svg will display properly (it gets converted to a raster image) but</span>
+<span class="c">    the css and internal hyperlinks will not work. --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">svg</span><span class="p">&gt;</span>
+
+ <span class="c">&lt;!-- Now for the plot. In the source you only have this lowly div tag, but when the javascript at the end of the page</span>
+<span class="c"> gets run it replaces the div tag with an svg. The javascript at the end of the page uses the functions and classes</span>
+<span class="c"> defined by the &lt;script src=&quot;https://cdn.plot.ly/plotly-latest.min.js&quot;&gt;&lt;/script&gt; tag in the head.</span>
+<span class="c">  You can see the resulting svg by using inspect element on your</span>
+<span class="c"> browser usually F12 or right click--&gt;</span>
+     <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>The plotly plot<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+ <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;myDiv&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 480px; height: 400px;&quot;</span><span class="p">&gt;</span><span class="c">&lt;!-- Plotly chart will be drawn inside this DIV --&gt;</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+
+<span class="c">&lt;!-- Now for the latex. When the script tag</span>
+<span class="c"> &lt;script type=&quot;text/javascript&quot; async  src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML&quot;&gt;&lt;/script&gt;</span>
+<span class="c"> runs, it looks through the source, after the rest of the page is loaded, looking for any $$. If it finds them</span>
+<span class="c"> it assumes it is Latex. see https://www.mathjax.org/ just because 3 syntaxes were not enough.</span>
+<span class="c"> --&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>The Mathjax latex<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+
+<span class="c">&lt;!-- By tradition, scripts in the body are usually put at the very bottom so that the page loads</span>
+<span class="c">    and then the scripts run. Inside the script tag we change our syntax to JavaScript --&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="c1">// We define a variable that is a class in JavaScript,</span>
+  <span class="c1">// that has pretty much the same form as a dictionary in Python.</span>
+  <span class="c1">// Unlike CSS, we have both line and block comments.</span>
+  <span class="kd">var</span> <span class="nx">trace1</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">x</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+  <span class="nx">y</span><span class="o">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">17</span><span class="p">],</span>
+  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;scatter&#39;</span>
+   <span class="p">};</span>
+  <span class="c1">// This format is dictated by the plotly.js library see https://plot.ly/</span>
+  <span class="c1">// There are a bunch of javascript plotting libraries I just choose plotly because it had a cdn and a python counterpart</span>
+<span class="kd">var</span> <span class="nx">trace2</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">x</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+  <span class="nx">y</span><span class="o">:</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;scatter&#39;</span>
+<span class="p">};</span>
+<span class="c1">// data is a list or array of traces</span>
+<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">[</span><span class="nx">trace1</span><span class="p">,</span> <span class="nx">trace2</span><span class="p">];</span>
+
+<span class="c1">// This class method lives someplace in the plotly-latest.min.js it</span>
+<span class="c1">// uses the id on my div to replace it with the plot</span>
+<span class="nx">Plotly</span><span class="p">.</span><span class="nx">newPlot</span><span class="p">(</span><span class="s1">&#39;myDiv&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
 
 </div>
 </div>

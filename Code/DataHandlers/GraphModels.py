@@ -170,19 +170,7 @@ class Graph(object):
     to enter the graph at a node use graph.set_state() the current data representing the
     state is in the attribute graph.data. To move among the formats use graph.move_to_node('NodeName')
     need to recode the find_path method using a shortest path alogrithm like
-    https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm.
-
-        #!python
-            defaults={"graph_name":"Graph",
-                  "node_names":['n1','n2'],
-                  "node_descriptions":["A plain string",
-                                       "A list of strings with no \\n, created with string.splitlines()"],
-                  "current_node":'n1',
-                  "state":[1,0],
-                  "data":"This is a test string\n it has to have multiple lines \n and many characters 34%6\n^",
-                  "edge_2_to_1":edge_2_to_1,
-                  "edge_1_to_2":edge_1_to_2
-                 }
+    [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm).
     """
     def __init__(self,**options):
         """Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required"""

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metadata Tag Specifying the Character Set Used -->
+    <meta charset="UTF-8">
+    <!-- Metadata Tag For a Description and Author -->
+    <meta name="description" content="An HTML page that illustrates SVG, Ploting and Latex."/>
+    <meta name="author" content="Aric Sanders">
+
+    <!--  Tag to Add an Icon to the Browser Tab -->
+    <link rel='shortcut icon' type='image/ico' href='favicon.png'>
+
+    <!-- Title, It Will Appear in The Browser Tab -->
+    <title>SVG, Ploting and Latex</title>
+
+      <!-- Load a set of external javascript functions from the file found at
+    https://cdn.plot.ly/plotly-latest.min.js, this is the library that plots data using javascript to define
+     an svg interactive plot. For both plots and mathjax to work this has to come first.-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Load a set of external javascript functions from the file found at
+    https://cdn.mathjax.org/mathjax/latest/MathJax.js, this is the library that does the latex magic -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'>
+    </script>
+
+    <!-- both of these libraries could be copied and stored in a different location. If they in the same folder and
+    referenced with src="./plotly-latest.min.js" in theory your browser does not even have to have an internet connection.
+    Sometimes this fails because of browser security settings. -->
+
+
+    <!-- css styles are defined inside of the css tag where everything has a different syntax-->
+    <style>
+        /* css comments only use the block comment form from c */
+
+        /* this  statement chooses anything with the tag line and makes it red. Note
+          since these are part of an svg tag you need to look up the attributes that you can
+          change see for example https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line */
+        line {stroke:red};
+
+        /* this  statement says any time you hover over a line make it thicker */
+        line:hover {stroke-width:5;}
+
+
+        /* this selector statement chooses anything with the class myGroupOfCircles, or when you hover over <p></p>
+            or <h1></h1> or an <a></a> tag */
+        .myGroupOfCircles, h1:hover, a:hover {
+        background-color: yellow;
+         }
+
+        /* Example for the tag name circle */
+        circle {fill:blue;}
+
+        /* Example for the anything with class attribute set to myGroupOfCircles and when the mouse is hovering over it*/
+        .myGroupOfCircles:hover {fill:yellow;opacity:.3;}
+
+        /* Example for anything with the id attribute set to myParticularCircle */
+        #myParticularCircle {opacity:.5}
+
+  </style>
+</head>
+<body>
+
+    <h1>The SVG  to make a few circles and lines between them</h1>
+
+    <!-- Display the SVG (an xml based vector graphics format)
+    if you want to make really elaborate svg's use Inkscape -->
+    <svg height="250" width="250">
+        <!-- Definitions of markers for lines-->
+        <defs>
+            <marker id='head' orient='auto' markerWidth='1' markerHeight='20'
+                refX='0.1' refY='2'>
+                <path d='M0,0 V4 L2,2 Z' fill='red' />
+            </marker>
+        </defs>
+        <!-- little g stands for group -->
+        <g>
+            <!-- This makes the line a hyperlink. Inside of the SVG you have to give the hyperlink a namespace so it knows
+            that you did not make up another tag with attribute href. This is why inside of the svg tag you need to
+            put xlink:href-->
+        <a xlink:href="http://example.com/link/">
+           <!-- the line tag works the way you would expect it to, it has a lot of optional attributes-->
+           <line x1="50" y1="50" x2="200" y2="50" stroke="black" stroke-width="3"/>
+        </a>
+        <line x1="50" y1="50" x2="200" y2="200" stroke="black" stroke-width="2"/>
+
+        <!-- The path tag is magic. It is effectively the turtle in LOGO with extra magic
+        , M stands for move, L stands for line
+        you can make curves, arcs etc. The d attribute is the key  M50,50 is move to 50,50,
+        L100,100 is Line to 100,100. The syntax for curves and arcs gets a little more involved see
+        https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d. for examples.
+        https://developer.mozilla.org/en-US/docs/Web/SVG/Element/path-->
+        <path
+        id='arrow-line'
+        marker-mid='url(#head)'
+        marker-end='url(#head)'
+        stroke-width='3'
+        fill='none' stroke='black'
+        d='M50,50 L100,100 L200,200'/>
+
+
+        <!-- Circle just requires a center cx=,cy=  and a radius which I specifiy in pixels like the size of the svg tag -->
+        <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+
+        <!-- Circle with a hyperlink and some attributes defined locally -->
+        <a xlink:href="http://example.com/link/">
+        <circle class="myGroupOfCircles" cx="200" cy="50" r="20" stroke="black" stroke-width="3" fill="red" />
+        </a>
+        </g>
+        <!-- Circle with an id -->
+        <circle class="myGroupOfCircles" cx="200" cy="200" r="20" stroke="black" stroke-width="3" fill="red" id="myParticularCircle"/>
+
+        <!-- Here it is important to note that in order to use css to alter the svg, it has to be an svg tag. If
+        you use <img src="mySVG.svg" /> the svg will display properly (it gets converted to a raster image) but
+        the css and internal hyperlinks will not work. -->
+    </svg>
+
+    <!-- Now for the plot. In the source you only have this lowly div tag, but when the javascript at the end of the page
+    gets run it replaces the div tag with an svg. The javascript at the end of the page uses the functions and classes
+    defined by the <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> tag in the head.
+    You can see the resulting svg by using inspect element on your
+    browser usually F12 or right click-->
+    <h1>The plotly plot</h1>
+    <div id="myDiv" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+
+
+    <!-- Now for the latex. When the script tag
+    <script type="text/javascript" async  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    runs, it looks through the source, after the rest of the page is loaded, looking for any $$. If it finds them
+    it assumes it is Latex. see https://www.mathjax.org/ just because 3 syntaxes were not enough. Note there is
+    an order if you do both plotly and mathjax, plotly must come before mathjax in the head section to work.
+    -->
+    <h1>The Mathjax latex</h1>
+    <p>
+    When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+    $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+    </p>
+
+
+    <!-- By tradition, scripts in the body are usually put at the very bottom so that the page loads
+        and then the scripts run. Inside the script tag we change our syntax to JavaScript -->
+
+    <script>
+    // We define a variable that is a class in JavaScript,
+    // that has pretty much the same form as a dictionary in Python.
+    // Unlike CSS, we have both line and block comments.
+    var trace1 = {
+    x: [1, 2, 3, 4],
+    y: [10, 15, 13, 17],
+    type: 'scatter'
+     };
+    // This format is dictated by the plotly.js library see https://plot.ly/
+    // There are a bunch of javascript plotting libraries I just choose plotly because it had a cdn and a python counterpart
+    var trace2 = {
+    x: [1, 2, 3, 4],
+    y: [16, 5, 11, 9],
+    type: 'scatter'
+    };
+    // data is a list or array of traces
+    var data = [trace1, trace2];
+
+    // This class method lives someplace in the plotly-latest.min.js it
+    // uses the id on my div to replace it with the plot
+    Plotly.newPlot('myDiv', data);
+
+    </script>
+
+</body>
+</html>

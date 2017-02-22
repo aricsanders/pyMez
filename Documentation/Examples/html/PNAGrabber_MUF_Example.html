@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>pyMeasure_Documentation</title>
+<title>PNAGrabber_MUF_Example</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11752,181 +11752,36 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a id="top"></a></p>
-<h1 id="Welcome-to-pyMeasure,-an-open-source-python-library-for-science.">Welcome to pyMeasure, an open source python library for science.<a class="anchor-link" href="#Welcome-to-pyMeasure,-an-open-source-python-library-for-science.">&#182;</a></h1><p>This documentation is for the pyMeasure package, designed by Aric Sanders <a href="mailto:aric.sanders@gmail.com"> aric.sanders@gmail.com </a> 2016.</p>
-<p><a href="./pyMeasure/index.html">API Documentation </a> |
-<a href="./Examples/Html/Examples_Index.html">Examples</a> |
-<a href="./Reference_Index.html">Index </a></p>
-<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">&#182;</a></h2><p><hr style="border-top: 3px double #8c8b8b;"/></p>
-<ol style="list-style-type: upper-roman">
-<li><h3> <a href="#intro">Introduction</a> </h3></li>
-A brief introduction to pyMeasure and its motivation.
-<li><h3> <a href="#install">Installing and Loading pyMeasure</a></h3> </li>
-How to install pyMeasure and its requirements 
-<li><h3> <a href="#help">Getting Help</a></h3> </li>
-How to get help on the pyMeasure package and general.
-<li> <h3><a href="#design">The Design of pyMeasure</a> </h3></li>
-The overall design of pyMeasure, including how to contribute.
+<h1 id="Data-Acquistion-and-Analysis-with-PNA-Grabber-and-MUF">Data Acquistion and Analysis with PNA Grabber and MUF<a class="anchor-link" href="#Data-Acquistion-and-Analysis-with-PNA-Grabber-and-MUF">&#182;</a></h1><p>This document is  a guide to data acquistion with PNAGrabber.exe and error correction with the MUF for a short-open-load-thru (SOLT) calibration method using a E8631A PNA, and commerical 2.4mm calibration kit.</p>
+<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">&#182;</a></h2><hr style="border-top: 3px double #8c8b8b;"/>
 
-<li> <h3><a href="#license">License</a></h3> </li>
-pyMeasure License Statement
-<!--
-<li><h3> <a href="#pyMeasure-examples">pyMeasure Specific Examples</a></h3> </li>
-Examples specific to the pyMeasure package.
-<li><h3> <a href="#general-examples">General Examples</a> </h3></li>
-Examples for general tasks in python and related packages.
-<li> <h3><a href="#nist-examples">NIST Examples</a> </h3></li>
-Examples pertinent to work at NIST in Boulder.-->
-</ol>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#top"> <em>previous topic</em></a>  |  <a href="#intro"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="intro">Introduction</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>pyMeasure is a python package born out of the daily needs of a laboratory scientist. In particular, there is a constant need to use external equipment to acquire data, store that data in a sensible way, analyze the stored data, and generate collections and reports after analyzing the data. In the world of scientific computation there is an endless universe of solutions to do this, however none of the solutions met my personal daily needs and philosophy simultaneously. This package tries to stitch together many tools to meet those needs, while serving as a backend library to a webserver. It thus has a lot of other packages. It relies on these packages in different ways and may operate differently on different oeprating systems.Although it currently has a single primary developer, it is my hope that it will be adopted by at least 10's of people and help them accomplish their daily scientific goals.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#intro"> <em>previous topic</em></a>  |  <a href="#install"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="install">Installing and Loading pyMeasure</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Installation">Installation<a class="anchor-link" href="#Installation">&#182;</a></h3><ol>
-<li>Install Anaconda 2.7 from <a href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a></li>
-<li>Install pyvisa using pip install pyvisa</li>
-<li>Install NI-Visa from <a href="http://www.ni.com/download/ni-visa-15.0.1/5693/en/">http://www.ni.com/download/ni-visa-15.0.1/5693/en/</a></li>
-<li>Clone boa repository to Anaconda2/Lib/site-packages</li>
-<li>Clone pyMeasure to Anaconda2/Lib/site-packages</li>
-<li>Install wx from source forge <a href="http://wxpython.org/">http://wxpython.org/</a></li>
-<li>In addition, the USB-GPIB interface needs drivers from NI (NI488.2 version 15) and a computer restart.</li>
-</ol>
-<h3 id="Optional-Dependencies">Optional Dependencies<a class="anchor-link" href="#Optional-Dependencies">&#182;</a></h3><ol>
-<li>Inkscape from <a href="https://inkscape.org/en/download/">https://inkscape.org/en/download/</a></li>
-<li>Microscoft Office</li>
-<li>pdfkit and wkhtmltopdf pip install pdfkit and install from <a href="http://wkhtmltopdf.org/">http://wkhtmltopdf.org/</a></li>
-<li>statistiCAL and Microwave Uncertainty Framework from  <a href="http://www.nist.gov/ctl/rf-technology/related-software.cfm">http://www.nist.gov/ctl/rf-technology/related-software.cfm</a></li>
-</ol>
-<h3 id="Development-Environment-Details">Development Environment Details<a class="anchor-link" href="#Development-Environment-Details">&#182;</a></h3><p>A detailed description of my development environment can be found <a href="./Examples/html/Development_Environment">here</a></p>
-<h3 id="Accessing-the-API-after-installation">Accessing the API after installation<a class="anchor-link" href="#Accessing-the-API-after-installation">&#182;</a></h3><p>The API is best accessed by importing as</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMeasure</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-<p>However, if a specific function or class is required then direct import also works (this form imports the full API)</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMeasure.Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
-</pre></div>
-<p>If you want to have the import skip the API, then add the pyMeasure folder to sys.path and then import beginning with Code</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">r&quot;C:\ProgramData\Anaconda2\Lib\site-packages\pyMeasure&quot;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#install"> <em>previous topic</em></a>  |  <a href="#help"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="help">Getting Help</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>There are many ways to get help on pyMeasure. Internal to pyMeasure there are several primary help components:</p>
-<p><ul></p>
-<li>This page</li>
-<li> <a href="./pyMeasure/index.html">API help</a></li>
-<li> <a href="./Examples/html/pyMeasure_Examples.html">Html Examples </a></li>
-<li> <a href="./Examples/jupyter">Jupyter Interactive Examples </a></li>
-<li><a href="./Reference_Index.html">Index of All Classes and Functions in pyMeasure </a></li><p>&lt;/ul&gt;
-Additionally, python has a series of help functions including the command line tool
-pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help(object).</p>
-<div class="highlight"><pre><span></span><span class="err">?</span><span class="n">XMLBase</span>
-<span class="n">help</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">)</span>
-</pre></div>
-<p>In addition there are several tools in <a href="./pyMeasure/Code/Utils/HelpUtils.html">pyMeasure.Code.Utils.HelpUtils</a> for generating html based help files.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#help"> <em>previous topic</em></a>  |  <a href="#design"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="design">The Design of pyMeasure</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Overall-Design-Goal">Overall Design Goal<a class="anchor-link" href="#Overall-Design-Goal">&#182;</a></h3><p>pyMeasure was designed with the overal goal of being easy to use, well documented, well tested and modular. The overall design follows a pattern of Models (DataHandlers), View and View-Controllers (FrontEnds), Anaylsis and Instrument Control.</p>
-<h3 id="Directory-Structure">Directory Structure<a class="anchor-link" href="#Directory-Structure">&#182;</a></h3><ul>
-<li> pyMeasure : The top directory that should be installed in python27/Lib/site-packages or C:\ProgramData\Anaconda2\Lib\site-packages
-<ul>
-<li> Code: The top level folder for the code repository </li>
-<ul>
-<li>Utils: Subpackage for utility functions needed by all of pyMeasure</li>
-<li>DataHandlers: Data models needed by everything but Utils</li>
-<li>Analysis: Functions and classes based on analyzing data. Requires Utils and DataHandlers.</li>
-<li>InstrumentControl: Functions and classes that communicate with external devices. Requires Utils and DataHandlers</li>
-<li>FrontEnds: Functions and classes that tie it altogether for the user, requires all other modules.</li>
-</ul>
-<li> Documentation: Top level folder for docs including examples </li>
-<li> Instruments: A repository for XML sheets describing instruments </li>
-<li> Data: A repository for data, this is volatile and likely to change </li> 
-<ul> 
-<li>Measurements: Storage for measurement data, either in xml or ascii</li>
-<li>Logs: Storage for xml logs</li>
-<li>States: Storage for Instrument and Experimental States</li>
-<li>Reports: Storage for formatted output </li>
-
-</ul>
-</ul>
-</li>
-</ul><h3 id="Testing-Infrastructure">Testing Infrastructure<a class="anchor-link" href="#Testing-Infrastructure">&#182;</a></h3><p>pyMeasure has a multi-tiered testing infrastructure. It is comprised of basic unit tests, mesoscopic in-module tests, and integration tests.</p>
 <ol>
-<li><strong>Unit tests :</strong> These tests check if functions and classes with a basic input return what is expected. They are found in the module pyMeasure.Code.Utils.pyMeasureUnitTests</li>
-<li><strong>In Module Tests :</strong> Theses tests are scripts included in each module that test a series of things about functions or classes, they are typically named test_thing_of_interest(). For example in the module pyMeasure.Code.DataHandlers.XMLModels there are &gt;15 scripts to test functions and classes with names like test_get_header.</li>
-<li><strong>Integration Tests:</strong> These tests check if a large number of interacting components work as expected. For the wx frontend this is primarily the class AdvancedInterfaceFrame, or an integrated application that can open new window panels, run the in module tests and check if data objects appear as they are expected. For the django FrontEnd this is a Test_Server run using Django's development server found in manage.py. For Jupyter, this is a series of examples that live in pyMeasure/Documentation/Examples. </li>
+<li> <h3><a href="#overview" style="color:black">Overview</a> </h3></li>
+<li> <h3><a href="#measurement-setup" style="color:black">Measurement Setup</a> </h3></li>
+<li> <h3><a href="#PNAGrabber" style="color:black">Acquiring Calibration Data With PNAGrabber</a> </h3></li>
+<li> <h3><a href="#PNAGrabber-DUT" style="color:black">Acquiring DUT Data With PNAGrabber</a> </h3></li>
+<li> <h3><a href="#MUF" style="color:black">Correcting Data With the MUF</a> </h3></li>
+<li> <h3><a href="#Notes" style="color:black">Notes</a> </h3></li>
 </ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><table>
+ <td>
+ <a href="#top"><img src="./PNAGrabber_MUF_Example_Files/previous.png" /></a>
+ </td><td>
+ <a href="#overview"><img src="./PNAGrabber_MUF_Example_Files/next.png" /></a>
+ </td><td>
+ <a href="#top"> <em>back to top</em></a>
+ </td>
+ </table>
+ <hr style="border-top: 2px double #8c8b8b;"/>
+ <h3><a id="overview" style="color:black">Overview</a> </h3></p>
 
 </div>
 </div>
@@ -11936,9 +11791,8 @@ pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#help"> <em>previous topic</em></a>  |  <a href="#license"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="license">License</a> </h2>
+<p>The measurement process starts with the cleaning of the connectors of the calibration kit. Cleaning the connectors should remove any particulates in the threads of the connector or on the mating faces of the connector. After the connectors are clean, then the thru, a male-to-male adapter, is connected between port one and a cable attached to port two. The PNA is then setup by using the front panel of the PNA itself. The sweep parameters (sweep start, sweep stop and number of points) and the before measurement settling time are all set on the front pannel. The measurement is continued on a remote computer using PNAGrabber which sets the IF-Bandwidth. The calibration kit is measured starting with the thru, then progressing to the shorts, opens and loads. Each measurement is performed with two calibration standards, one on the male end of the thru and one on the female end of the cable. After the measurement the files are generated by PNAGrabber they are then analyzed by the MUF, which returns the s-parameters corrected and uncertainities. The MUF requires the calibration algorithm, standard definitions, stadard types and standard measurements along with DUT measurements to be entered.</p>
+
 </div>
 </div>
 </div>
@@ -11947,27 +11801,219 @@ pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is free and unencumbered software released into the public domain.</p>
-<p>Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.</p>
-<p>In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.</p>
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.</p>
-<p>For more information, please refer to <a href="http://unlicense.org/">http://unlicense.org/</a></p>
+<p><table>
+ <td>
+ <a href="#overview"><img src="./PNAGrabber_MUF_Example_Files/previous.png" /></a>
+ </td><td>
+ <a href="#measurement-setup"><img src="./PNAGrabber_MUF_Example_Files/next.png" /></a>
+ </td><td>
+ <a href="#top"> <em>back to top</em></a>
+ </td>
+ </table>
+ <hr style="border-top: 2px double #8c8b8b;"/>
+ <h3><a id="measurement-setup" style="color:black">Measurement Setup</a> </h3></p>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol style="list-style-type: upper-roman">
+<li> Clean all connectors and mating faces on the calibration standards and DUT's </li>
+<li> Gauge all calibration standards and the DUT </li>
+<li> Setup sweep parameters on the front panel of the instrument Channel->Start/Stop (10MHz,50GHz), Sweep-> Number of Points (201) </li>
+<li> Setup sweep settle parameters on the front panel of the instrument Sweep->Sweep Setup-> Dwelltime (10$\mu$ s)  </li>
+<li> Insure the instrument is communicating on the proper interface (in this example GPIB::16 ) </li>
+<li> Connect the thru (male to male) </li>
+<li> Open PNAGrabber.exe and check com settings and IFBW settings </li>
+<li> Measure with <a href="#PNAGrabber"> PNAGrabber </a>  </li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><table>
+ <td>
+ <a href="#measurement-setup"><img src="./PNAGrabber_MUF_Example_Files/previous.png" /></a>
+ </td><td>
+ <a href="#PNAGrabber"><img src="./PNAGrabber_MUF_Example_Files/next.png" /></a>
+ </td><td>
+ <a href="#top"> <em>back to top</em></a>
+ </td>
+ </table>
+ <hr style="border-top: 2px double #8c8b8b;"/>
+ <h3><a id="PNAGrabber" style="color:black">Acquiring Calibration Data With PNAGrabber</a> </h3></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Set-the-Working-Directory">Set the Working Directory<a class="anchor-link" href="#Set-the-Working-Directory">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/PNAGrabber_Set_Working_Directory.png" alt="PNAGrabber" height="800" width="400"/></p>
+<h4 id="Set-the-Type-and-File-Name-for-the-Thru-Measurement-and-the-Switch-Terms">Set the Type and File Name for the Thru Measurement and the Switch Terms<a class="anchor-link" href="#Set-the-Type-and-File-Name-for-the-Thru-Measurement-and-the-Switch-Terms">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/PNAGrabber_Set_Thru.png" alt="PNAGrabber" height="800" width="400"/></p>
+<h4 id="Measure-the-Thru-and-Thru-Switch-Terms">Measure the Thru and Thru Switch Terms<a class="anchor-link" href="#Measure-the-Thru-and-Thru-Switch-Terms">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/PNAGrabber_Measure_Thru.png" alt="PNAGrabber" height="800" width="400"/></p>
+<h4 id="Repeat-the-Process-for-Short,-Open-and-Load-Standards-(No-Switch-Terms-)">Repeat the Process for Short, Open and Load Standards (No Switch Terms )<a class="anchor-link" href="#Repeat-the-Process-for-Short,-Open-and-Load-Standards-(No-Switch-Terms-)">&#182;</a></h4><p>Each time, start by setting the type of measurement (normal), then set the file name, and finally measure the standard after it has been connected to the PNA.<br>
+<img src="./PNAGrabber_MUF_Example_Files/PNAGrabber_Set_Measure_Short.png" alt="PNAGrabber" height="800" width="400"/>
+Keep repeating this until all the standards are measured. 
+<img src="./PNAGrabber_MUF_Example_Files/PNAGrabber_Full_Menu.png" alt="PNAGrabber" height="800" width="400"/></p>
+<h4 id="Save-the-completed-menu,-so-that-you-can-repeat-the-process-(a-second-calibration)">Save the completed menu, so that you can repeat the process (a second calibration)<a class="anchor-link" href="#Save-the-completed-menu,-so-that-you-can-repeat-the-process-(a-second-calibration)">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/PNAGrabber_SAve.png" alt="PNAGrabber" height="800" width="1000"/></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><table>
+ <td>
+ <a href="#PNAGrabber"><img src="./PNAGrabber_MUF_Example_Files/previous.png" /></a>
+ </td><td>
+ <a href="#PNAGrabber-DUT"><img src="./PNAGrabber_MUF_Example_Files/next.png" /></a>
+ </td><td>
+ <a href="#top"> <em>back to top</em></a>
+ </td>
+ </table>
+ <hr style="border-top: 2px double #8c8b8b;"/>
+ <h3><a id="PNAGrabber-DUT" style="color:black">Acquiring DUT Data With PNAGrabber</a> </h3></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="After-saving-the-menu-for-the-calibration-standards,-change-the-working-directory-to-the-DUT-data-directory-and-edit-the-files-for-the-new-measurements,-then-measure-as-before.">After saving the menu for the calibration standards, change the working directory to the DUT data directory and edit the files for the new measurements, then measure as before.<a class="anchor-link" href="#After-saving-the-menu-for-the-calibration-standards,-change-the-working-directory-to-the-DUT-data-directory-and-edit-the-files-for-the-new-measurements,-then-measure-as-before.">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/PNAGrabber_DUT_Measurements.PNG" alt="PNAGrabber" height="800" /></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><table>
+ <td>
+ <a href="#PNAGrabber-DUT"><img src="./PNAGrabber_MUF_Example_Files/previous.png" /></a>
+ </td><td>
+ <a href="#MUF"><img src="./PNAGrabber_MUF_Example_Files/next.png" /></a>
+ </td><td>
+ <a href="#top"> <em>back to top</em></a>
+ </td>
+ </table>
+ <hr style="border-top: 2px double #8c8b8b;"/>
+ <h3><a id="MUF" style="color:black">Correcting Data With the MUF</a> </h3></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once the experiment is finished and the data has been collected,  it is time to correct the DUT data. Several standard definition files have been collected at <a href="\\jake.nist.gov\MUF$"><code>\\jake.nist.gov\MUF$</code></a>, and each calibration standard entered into the MUF will require at least 3 inputs; a definition file, a standard type and a measurement file. In this case we used the definitions at <code>\\jake.nist.gov\MUF$\2_4mm\OSLT_jaj</code></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Start-with-selecting-the-calibration-algrithm-(SOLT)">Start with selecting the calibration algrithm (SOLT)<a class="anchor-link" href="#Start-with-selecting-the-calibration-algrithm-(SOLT)">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/MUF_SOLT.png" alt="MUF" width="500" /></p>
+<h4 id="Define-the-main-calibration,-by-first-selecting-definition-files-and-dragging-them-to-the-screen">Define the main calibration, by first selecting definition files and dragging them to the screen<a class="anchor-link" href="#Define-the-main-calibration,-by-first-selecting-definition-files-and-dragging-them-to-the-screen">&#182;</a></h4><p>Here we have used the predefined definition files in <code>\\jake.nist.gov\MUF$\2_4mm\OSLT_jaj</code></p>
+<p><img src="./PNAGrabber_MUF_Example_Files/MUF_Main_Calibration.PNG" alt="MUF" width="800" /></p>
+<h4 id="Set-the-type-of-the-definition-by-right-clicking-the-definition-name">Set the type of the definition by right clicking the definition name<a class="anchor-link" href="#Set-the-type-of-the-definition-by-right-clicking-the-definition-name">&#182;</a></h4><p>The standard types are thru, switch terms, and termination (S12=S21=0)
+<img src="./PNAGrabber_MUF_Example_Files/MUF_Select_Std_Type.png" alt="MUF" width="800" /></p>
+<h4 id="Drag-and-drop-the-measurement-files">Drag and drop the measurement files<a class="anchor-link" href="#Drag-and-drop-the-measurement-files">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/MUF_Main_Measurement.png" alt="MUF" width="800" /></p>
+<h4 id="Now-the-menu-should-look-something-like-this,-with-Definition,-Standard-Type-and-Measurement-defined-for-each.">Now the menu should look something like this, with Definition, Standard Type and Measurement defined for each.<a class="anchor-link" href="#Now-the-menu-should-look-something-like-this,-with-Definition,-Standard-Type-and-Measurement-defined-for-each.">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/Finished_Calibration_Menu.PNG" alt="MUF" width="800" /></p>
+<h4 id="Now-select-the-DUT-tab-and-drag-and-drop-all-the-DUT's,-it-is-a-good-idea-to-use-the-calibration-standards-as-DUT's-to-check-that-everything-is-working-properly.">Now select the DUT tab and drag and drop all the DUT's, it is a good idea to use the calibration standards as DUT's to check that everything is working properly.<a class="anchor-link" href="#Now-select-the-DUT-tab-and-drag-and-drop-all-the-DUT's,-it-is-a-good-idea-to-use-the-calibration-standards-as-DUT's-to-check-that-everything-is-working-properly.">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/MUF_DUTs.PNG" alt="MUF" width="800" /></p>
+<h4 id="Now-set-the-number-of-monte-carlo-files-and-if-you-want-a-repeat-calibration-on-the-options-menu.-After-this-you-can-run-it-(run-&gt;calibrate),-if-there-are-some-files-it-cannot-find-it-will-tell-you-in-the-status-bar">Now set the number of monte carlo files and if you want a repeat calibration on the options menu. After this you can run it (run-&gt;calibrate), if there are some files it cannot find it will tell you in the status bar<a class="anchor-link" href="#Now-set-the-number-of-monte-carlo-files-and-if-you-want-a-repeat-calibration-on-the-options-menu.-After-this-you-can-run-it-(run-&gt;calibrate),-if-there-are-some-files-it-cannot-find-it-will-tell-you-in-the-status-bar">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/MUF_Options.png" alt="MUF" width="800" /></p>
+<h4 id="If-you-can't-run-it-look-at-the-status-bar">If you can't run it look at the status bar<a class="anchor-link" href="#If-you-can't-run-it-look-at-the-status-bar">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/MUF_Status_Bar.PNG" alt="MUF" width="800" /></p>
+<h4 id="Finally-run-the-calibration-Run-&gt;Calibrate">Finally run the calibration Run-&gt;Calibrate<a class="anchor-link" href="#Finally-run-the-calibration-Run-&gt;Calibrate">&#182;</a></h4><p><img src="./PNAGrabber_MUF_Example_Files/MUF_Calibrate.png" alt="MUF" width="800" /></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Examples-of-corrected-and-uncorrected-data,-smith-plots-of-S11">Examples of corrected and uncorrected data, smith plots of S11<a class="anchor-link" href="#Examples-of-corrected-and-uncorrected-data,-smith-plots-of-S11">&#182;</a></h4><table>
+<tr>
+<th> Uncorrected </th>
+<th> Corrected </th>
+</tr>
+<tr>
+<td><img src="./PNAGrabber_MUF_Example_Files/UncorrectedLoad.png" alt="PNAGrabber" width="475" /> Uncorrected Load</td>
+<td><img src="./PNAGrabber_MUF_Example_Files/CorrectedLoad.png" alt="PNAGrabber" width="475" />Corrected Load</td>
+</tr>
+<tr>
+<td><img src="./PNAGrabber_MUF_Example_Files/UncorrectedThru.png" alt="PNAGrabber" width="475"  />
+Uncorrected Thru</td>
+<td><img src="./PNAGrabber_MUF_Example_Files/CorrectedThru.png" alt="PNAGrabber" width="475"  />Corrected Thru</td>
+</tr>
+<tr>
+<td><img src="./PNAGrabber_MUF_Example_Files/UncorrectedShort.png" alt="PNAGrabber" width="475"  /> Uncorrected Short</td>
+<td><img src="./PNAGrabber_MUF_Example_Files/CorrectedShort.png" alt="PNAGrabber" width="475"  />Corrected Short</td>
+</tr>
+<tr>
+<td><img src="./PNAGrabber_MUF_Example_Files/UncorrectedOpen.png" alt="PNAGrabber" width="475" />Uncorrected Open</td>
+<td><img src="./PNAGrabber_MUF_Example_Files/CorrectedOpen.png" alt="PNAGrabber" width="475"  /> Corrected Open</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><table>
+ <td>
+ <a href="#MUF"><img src="./PNAGrabber_MUF_Example_Files/previous.png" /></a>
+ </td><td>
+ <a href="#Notes"><img src="./PNAGrabber_MUF_Example_Files/next.png" /></a>
+ </td><td>
+ <a href="#top"> <em>back to top</em></a>
+ </td>
+ </table>
+ <hr style="border-top: 2px double #8c8b8b;"/>
+ <h3><a id="Notes" style="color:black">Notes:</a> </h3></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li> Moving files around is difficult, one issue is that the menu files that the MUF / PNAGrabber uses are just pointers to the data in different formats. This causes problems if the data files are moved. The menu files can be made into archives. </li>
+<li> There is a lot of back and forth for the measurement so having the control computer close to the actual setup is handy.</li>
+<li> Sweep parameters are set on the instrument, but IFBW is set on PNAGrabber </li>
+<li> The main source of contamination on connectors seems to be the foam in the cal-kit box </li>
+
+</ol>
 </div>
 </div>
 </div>

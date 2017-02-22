@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>pyMeasure_Documentation</title>
+<title>Data_Guidance_Group_01</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,181 +11751,24 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a id="top"></a></p>
-<h1 id="Welcome-to-pyMeasure,-an-open-source-python-library-for-science.">Welcome to pyMeasure, an open source python library for science.<a class="anchor-link" href="#Welcome-to-pyMeasure,-an-open-source-python-library-for-science.">&#182;</a></h1><p>This documentation is for the pyMeasure package, designed by Aric Sanders <a href="mailto:aric.sanders@gmail.com"> aric.sanders@gmail.com </a> 2016.</p>
-<p><a href="./pyMeasure/index.html">API Documentation </a> |
-<a href="./Examples/Html/Examples_Index.html">Examples</a> |
-<a href="./Reference_Index.html">Index </a></p>
-<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">&#182;</a></h2><p><hr style="border-top: 3px double #8c8b8b;"/></p>
-<ol style="list-style-type: upper-roman">
-<li><h3> <a href="#intro">Introduction</a> </h3></li>
-A brief introduction to pyMeasure and its motivation.
-<li><h3> <a href="#install">Installing and Loading pyMeasure</a></h3> </li>
-How to install pyMeasure and its requirements 
-<li><h3> <a href="#help">Getting Help</a></h3> </li>
-How to get help on the pyMeasure package and general.
-<li> <h3><a href="#design">The Design of pyMeasure</a> </h3></li>
-The overall design of pyMeasure, including how to contribute.
-
-<li> <h3><a href="#license">License</a></h3> </li>
-pyMeasure License Statement
-<!--
-<li><h3> <a href="#pyMeasure-examples">pyMeasure Specific Examples</a></h3> </li>
-Examples specific to the pyMeasure package.
-<li><h3> <a href="#general-examples">General Examples</a> </h3></li>
-Examples for general tasks in python and related packages.
-<li> <h3><a href="#nist-examples">NIST Examples</a> </h3></li>
-Examples pertinent to work at NIST in Boulder.-->
+<p><a href="../../pyMeasure_Documentation.html">Documentation Home</a></p>
+<h1 id="How-to-Structure-Your-Text-and-XML-Data">How to Structure Your Text and XML Data<a class="anchor-link" href="#How-to-Structure-Your-Text-and-XML-Data">&#182;</a></h1><h2 id="Data-management-is-about-structure-and-not-format!">Data management is about structure and not format!<a class="anchor-link" href="#Data-management-is-about-structure-and-not-format!">&#182;</a></h2><p>If your data follows well thought out rules it will be easier for others to use. Don't worry too much over which seperator you choose (comma or double space), worry more that the seperator meaning is preserved through out your data. Similarly, you might believe you have found the perfect data format (Ascii, XML, JSON, .mat) that meets everyone's needs, but in any scientific eniviornment it is almost guarenteed that the data will have to be put in another format at some point. Once the data format is set, write down a description (schema) somewhere. This is tedious but well worth it in the long run.</p>
+<h2 id="Name-It-Well">Name It Well<a class="anchor-link" href="#Name-It-Well">&#182;</a></h2><ol>
+<li>Avoid Using Spaces as Delimiters in Names (<strong>No</strong>: My File.txt, <strong>Yes</strong>: MyFile.txt or My_File.txt)</li>
+<li>Put Date Codes in ISO Format (20161116 not 11162016)</li>
+<li>Choose a scheme with rules and stick to it, mine is Capitol Snake case with date code and iterator, the name starting with the most specific description and moving to the general followed by date (YYYYMMDD) and then a iterator, padded. An example is Two_Port_SParameters_20161116_001.txt</li>
+<li>Use extensions, choose general extensions like txt or xml over none. For example MyData.txt is better than MyData, at least .txt tells you it is ascii encoded.</li>
+<li>If you are using ascii, choose characters codes in the 0-126 range if at all possible. If you want to move to expanded character sets use utf-8 (same as ascii for 7bits) or html or something like that.</li>
 </ol>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#top"> <em>previous topic</em></a>  |  <a href="#intro"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="intro">Introduction</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>pyMeasure is a python package born out of the daily needs of a laboratory scientist. In particular, there is a constant need to use external equipment to acquire data, store that data in a sensible way, analyze the stored data, and generate collections and reports after analyzing the data. In the world of scientific computation there is an endless universe of solutions to do this, however none of the solutions met my personal daily needs and philosophy simultaneously. This package tries to stitch together many tools to meet those needs, while serving as a backend library to a webserver. It thus has a lot of other packages. It relies on these packages in different ways and may operate differently on different oeprating systems.Although it currently has a single primary developer, it is my hope that it will be adopted by at least 10's of people and help them accomplish their daily scientific goals.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#intro"> <em>previous topic</em></a>  |  <a href="#install"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="install">Installing and Loading pyMeasure</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Installation">Installation<a class="anchor-link" href="#Installation">&#182;</a></h3><ol>
-<li>Install Anaconda 2.7 from <a href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a></li>
-<li>Install pyvisa using pip install pyvisa</li>
-<li>Install NI-Visa from <a href="http://www.ni.com/download/ni-visa-15.0.1/5693/en/">http://www.ni.com/download/ni-visa-15.0.1/5693/en/</a></li>
-<li>Clone boa repository to Anaconda2/Lib/site-packages</li>
-<li>Clone pyMeasure to Anaconda2/Lib/site-packages</li>
-<li>Install wx from source forge <a href="http://wxpython.org/">http://wxpython.org/</a></li>
-<li>In addition, the USB-GPIB interface needs drivers from NI (NI488.2 version 15) and a computer restart.</li>
+<h2 id="The-Header">The Header<a class="anchor-link" href="#The-Header">&#182;</a></h2><ol>
+<li>The header should contain a series of facts that are true about the measurement or file, if it changes for each measurement then put it in the data.</li>
+<li>Long text descriptions <strong>do</strong> belong in the header, just group it all in one place, and name it Notes or Comments</li>
+<li>To make the header more machine friendly name the facts. Best is to name the facts and the context.</li>
+<li>The best piece of metadata is always a timestamp. </li>
 </ol>
-<h3 id="Optional-Dependencies">Optional Dependencies<a class="anchor-link" href="#Optional-Dependencies">&#182;</a></h3><ol>
-<li>Inkscape from <a href="https://inkscape.org/en/download/">https://inkscape.org/en/download/</a></li>
-<li>Microscoft Office</li>
-<li>pdfkit and wkhtmltopdf pip install pdfkit and install from <a href="http://wkhtmltopdf.org/">http://wkhtmltopdf.org/</a></li>
-<li>statistiCAL and Microwave Uncertainty Framework from  <a href="http://www.nist.gov/ctl/rf-technology/related-software.cfm">http://www.nist.gov/ctl/rf-technology/related-software.cfm</a></li>
-</ol>
-<h3 id="Development-Environment-Details">Development Environment Details<a class="anchor-link" href="#Development-Environment-Details">&#182;</a></h3><p>A detailed description of my development environment can be found <a href="./Examples/html/Development_Environment">here</a></p>
-<h3 id="Accessing-the-API-after-installation">Accessing the API after installation<a class="anchor-link" href="#Accessing-the-API-after-installation">&#182;</a></h3><p>The API is best accessed by importing as</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMeasure</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-<p>However, if a specific function or class is required then direct import also works (this form imports the full API)</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMeasure.Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
-</pre></div>
-<p>If you want to have the import skip the API, then add the pyMeasure folder to sys.path and then import beginning with Code</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">r&quot;C:\ProgramData\Anaconda2\Lib\site-packages\pyMeasure&quot;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#install"> <em>previous topic</em></a>  |  <a href="#help"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="help">Getting Help</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>There are many ways to get help on pyMeasure. Internal to pyMeasure there are several primary help components:</p>
-<p><ul></p>
-<li>This page</li>
-<li> <a href="./pyMeasure/index.html">API help</a></li>
-<li> <a href="./Examples/html/pyMeasure_Examples.html">Html Examples </a></li>
-<li> <a href="./Examples/jupyter">Jupyter Interactive Examples </a></li>
-<li><a href="./Reference_Index.html">Index of All Classes and Functions in pyMeasure </a></li><p>&lt;/ul&gt;
-Additionally, python has a series of help functions including the command line tool
-pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help(object).</p>
-<div class="highlight"><pre><span></span><span class="err">?</span><span class="n">XMLBase</span>
-<span class="n">help</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">)</span>
-</pre></div>
-<p>In addition there are several tools in <a href="./pyMeasure/Code/Utils/HelpUtils.html">pyMeasure.Code.Utils.HelpUtils</a> for generating html based help files.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#help"> <em>previous topic</em></a>  |  <a href="#design"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="design">The Design of pyMeasure</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Overall-Design-Goal">Overall Design Goal<a class="anchor-link" href="#Overall-Design-Goal">&#182;</a></h3><p>pyMeasure was designed with the overal goal of being easy to use, well documented, well tested and modular. The overall design follows a pattern of Models (DataHandlers), View and View-Controllers (FrontEnds), Anaylsis and Instrument Control.</p>
-<h3 id="Directory-Structure">Directory Structure<a class="anchor-link" href="#Directory-Structure">&#182;</a></h3><ul>
-<li> pyMeasure : The top directory that should be installed in python27/Lib/site-packages or C:\ProgramData\Anaconda2\Lib\site-packages
-<ul>
-<li> Code: The top level folder for the code repository </li>
-<ul>
-<li>Utils: Subpackage for utility functions needed by all of pyMeasure</li>
-<li>DataHandlers: Data models needed by everything but Utils</li>
-<li>Analysis: Functions and classes based on analyzing data. Requires Utils and DataHandlers.</li>
-<li>InstrumentControl: Functions and classes that communicate with external devices. Requires Utils and DataHandlers</li>
-<li>FrontEnds: Functions and classes that tie it altogether for the user, requires all other modules.</li>
-</ul>
-<li> Documentation: Top level folder for docs including examples </li>
-<li> Instruments: A repository for XML sheets describing instruments </li>
-<li> Data: A repository for data, this is volatile and likely to change </li> 
-<ul> 
-<li>Measurements: Storage for measurement data, either in xml or ascii</li>
-<li>Logs: Storage for xml logs</li>
-<li>States: Storage for Instrument and Experimental States</li>
-<li>Reports: Storage for formatted output </li>
-
-</ul>
-</ul>
-</li>
-</ul><h3 id="Testing-Infrastructure">Testing Infrastructure<a class="anchor-link" href="#Testing-Infrastructure">&#182;</a></h3><p>pyMeasure has a multi-tiered testing infrastructure. It is comprised of basic unit tests, mesoscopic in-module tests, and integration tests.</p>
-<ol>
-<li><strong>Unit tests :</strong> These tests check if functions and classes with a basic input return what is expected. They are found in the module pyMeasure.Code.Utils.pyMeasureUnitTests</li>
-<li><strong>In Module Tests :</strong> Theses tests are scripts included in each module that test a series of things about functions or classes, they are typically named test_thing_of_interest(). For example in the module pyMeasure.Code.DataHandlers.XMLModels there are &gt;15 scripts to test functions and classes with names like test_get_header.</li>
-<li><strong>Integration Tests:</strong> These tests check if a large number of interacting components work as expected. For the wx frontend this is primarily the class AdvancedInterfaceFrame, or an integrated application that can open new window panels, run the in module tests and check if data objects appear as they are expected. For the django FrontEnd this is a Test_Server run using Django's development server found in manage.py. For Jupyter, this is a series of examples that live in pyMeasure/Documentation/Examples. </li>
+<h2 id="The-Data">The Data<a class="anchor-link" href="#The-Data">&#182;</a></h2><ol>
+<li>If the data can be written in a table with columns that are all the same type, do it that way. </li>
+<li>Provide column names some place close to the columns, preferably the line above</li>
 </ol>
 
 </div>
@@ -11936,9 +11779,13 @@ pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#help"> <em>previous topic</em></a>  |  <a href="#license"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="license">License</a> </h2>
+<div style="border-style:solid;border-color:red;">
+An example of a ill-formed header <br/>
+```
+#9/30/2015 5:10 PM DMM reading = 2.809244E+1; IFBW= 3.000000E+2 (Hz); Power= -2.000000E+1 (dBm);
+#Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db
+```
+</div>
 </div>
 </div>
 </div>
@@ -11947,29 +11794,573 @@ pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is free and unencumbered software released into the public domain.</p>
-<p>Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.</p>
-<p>In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.</p>
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.</p>
-<p>For more information, please refer to <a href="http://unlicense.org/">http://unlicense.org/</a></p>
+<div style="border-style:solid;border-color:green;">
+How it should look <br/>
+```
+#Measurement_Timestamp = 2016-11-16 21:07:47.252000 ; DMM_reading = 2.809244E+1; IFBW = 3.000000E+2; 
+#IFBW.units = Hz ; Power = -2.000000E+1; Power.units = dBm;
+#Comments = Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db
+```
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div style="border-style:solid;border-color:green;">
+Also good <br/>
+```
+!Measurement_Timestamp = 2016-11-16 21:07:47.252000 
+!DMM_reading = 2.809244E+1
+!IFBW = 3.000000E+2 
+!IFBW.units = Hz
+!Power = -2.000000E+1
+!Power.units = dBm
+!Comments = Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db
+```
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Notes:">Notes:<a class="anchor-link" href="#Notes:">&#182;</a></h3><ol>
+<li>It is better to use = instead of :, because timestamps frequently have : in them</li>
+<li>Better to avoid spaces in parameter names but not a must</li>
+</ol>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Column-Names">Column Names<a class="anchor-link" href="#Column-Names">&#182;</a></h2><ol>
+<li>Column names should be descriptive without spaces if possible, they should have a uniform delimiter</li>
+</ol>
+<div style="border-style:solid;border-color:red;">
+An example of poorly formed column names<br/>
+```
+! Freq ( Hz)  Real Part of S11  Imaginary Part of S11
+```
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div style="border-style:solid;border-color:green;">
+How it should look <br/>
+```
+!Frequency, reS11, imS11
+```
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Notes:">Notes:<a class="anchor-link" href="#Notes:">&#182;</a></h3><ol>
+<li>Put units in the header like column_units=[Hz, None, None] or Frequency_Units=Hz</li>
+<li>Better to avoid spaces in column names but not a must, just don't use the delimiter in the column name</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Data-(Tabular)">Data (Tabular)<a class="anchor-link" href="#Data-(Tabular)">&#182;</a></h2><ol>
+<li>Make the data a stand-alone section</li>
+<li>Avoid comments in data</li>
+<li>Use the same character to delimit the columns</li>
+<li>Make the columns mean a single thing and all rows the same length</li>
+<li>Truncate the numbers, don't write them as full double precision (causes issues down the road)</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div style="border-style:solid;border-color:red;">
+An example of poorly formed data<br/>
+```
+1  -.01 .01
+1.11    .014 .015000101010013038
+1.12 .015 
+```
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div style="border-style:solid;border-color:green;">
+How it should look<br/>
+```
+1  -.012  .012
+1.11  .014 .015
+1.12  .015 .031
+```
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Putting-these-things-together">Putting these things together<a class="anchor-link" href="#Putting-these-things-together">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[138]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># here is a code example</span>
+<span class="kn">from</span> <span class="nn">pyMeasure</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">header</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Measurement_Timestamp = 2016-11-16 21:07:47.252000&#39;</span><span class="p">,</span> 
+<span class="s1">&#39;DMM_reading = 2.809244E+1&#39;</span><span class="p">,</span>
+<span class="s1">&#39;IFBW = 3.000000E+2&#39;</span><span class="p">,</span> 
+<span class="s1">&#39;IFBW.units = Hz&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Power = -2.000000E+1&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Power.units = dBm&#39;</span><span class="p">,</span>
+<span class="s1">&#39;column_units = [GHz,None,None]&#39;</span><span class="p">,</span>        
+<span class="s1">&#39;Comments = Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db&#39;</span><span class="p">]</span>
+<span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;reS11&#39;</span><span class="p">,</span> <span class="s1">&#39;imS11&#39;</span><span class="p">]</span>
+<span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="o">-.</span><span class="mo">012</span><span class="p">,</span> <span class="o">.</span><span class="mo">012</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">1.11</span><span class="p">,</span>  <span class="o">.</span><span class="mo">014</span><span class="p">,</span> <span class="o">.</span><span class="mo">015</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">1.12</span> <span class="p">,</span> <span class="o">.</span><span class="mo">015</span><span class="p">,</span> <span class="o">.</span><span class="mo">031</span><span class="p">]]</span>
+<span class="n">table</span><span class="o">=</span><span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span><span class="n">column_names</span><span class="o">=</span><span class="n">column_names</span><span class="p">,</span>
+                     <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span><span class="n">comment_begin</span><span class="o">=</span><span class="s1">&#39;!&#39;</span><span class="p">,</span><span class="n">comment_end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">column_names_delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span>
+                    <span class="n">column_names_begin_token</span><span class="o">=</span><span class="s1">&#39;!&#39;</span><span class="p">,</span><span class="n">column_names_end_token</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">data_delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span>
+                     <span class="n">treat_header_as_comment</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">data_table_element_separator</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                     <span class="n">specific_descriptor</span><span class="o">=</span><span class="s2">&quot;Example&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[139]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;The table name is {0} </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="o">*</span><span class="mi">80</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">table</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The table name is Example_Table_20161117_001.txt 
+
+********************************************************************************
+
+!Measurement_Timestamp = 2016-11-16 21:07:47.252000
+!DMM_reading = 2.809244E+1
+!IFBW = 3.000000E+2
+!IFBW.units = Hz
+!Power = -2.000000E+1
+!Power.units = dBm
+!column_units = [GHz,None,None]
+!Comments = Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db
+!Frequency,reS11,imS11
+1	-0.012	0.012
+1.11	0.014	0.015
+1.12	0.015	0.031
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-exact-choices-matter-less-than-the-pattern">The exact choices matter less than the pattern<a class="anchor-link" href="#The-exact-choices-matter-less-than-the-pattern">&#182;</a></h2><p>For example this is equally as good</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[140]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;,&quot;</span>
+<span class="n">table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;#&quot;</span>
+<span class="n">table</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Example&quot;</span><span class="p">,</span><span class="s2">&quot;One_Port_SParameter&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The table name is {0} </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="o">*</span><span class="mi">80</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">table</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The table name is One_Port_SParameter_Table_20161117_001.txt 
+
+********************************************************************************
+
+#Measurement_Timestamp = 2016-11-16 21:07:47.252000
+#DMM_reading = 2.809244E+1
+#IFBW = 3.000000E+2
+#IFBW.units = Hz
+#Power = -2.000000E+1
+#Power.units = dBm
+#column_units = [GHz,None,None]
+#Comments = Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db
+!Frequency,reS11,imS11
+1,-0.012,0.012
+1.11,0.014,0.015
+1.12,0.015,0.031
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="In-fact-XML-with-a-good-pattern-is-great-too!">In fact XML with a good pattern is great too!<a class="anchor-link" href="#In-fact-XML-with-a-good-pattern-is-great-too!">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[141]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">xml_table</span><span class="o">=</span><span class="n">AsciiDataTable_to_XMLDataTable</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The table name is {0} </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xml_table</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="o">*</span><span class="mi">80</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">xml_table</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The table name is Example_Table_20161117_001.xml 
+
+********************************************************************************
+
+&lt;?xml version=&#34;1.0&#34; ?&gt;
+&lt;?xml-stylesheet type=&#34;text/xsl&#34; href=&#34;../XSL/ONE_PORT_STYLE.xsl&#34;?&gt;
+&lt;Data_Table&gt;
+	&lt;Data_Description&gt;
+		&lt;Header_004&gt;Power = -2.000000E+1&lt;/Header_004&gt;
+		&lt;Header_005&gt;Power.units = dBm&lt;/Header_005&gt;
+		&lt;Header_006&gt;column_units = [GHz,None,None]&lt;/Header_006&gt;
+		&lt;Header_007&gt;Comments = Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db&lt;/Header_007&gt;
+		&lt;Header_000&gt;Measurement_Timestamp = 2016-11-16 21:07:47.252000&lt;/Header_000&gt;
+		&lt;Header_001&gt;DMM_reading = 2.809244E+1&lt;/Header_001&gt;
+		&lt;Header_002&gt;IFBW = 3.000000E+2&lt;/Header_002&gt;
+		&lt;Header_003&gt;IFBW.units = Hz&lt;/Header_003&gt;
+	&lt;/Data_Description&gt;
+	&lt;Data&gt;
+		&lt;Tuple Frequency=&#34;1&#34; imS11=&#34;0.012&#34; reS11=&#34;-0.012&#34;/&gt;
+		&lt;Tuple Frequency=&#34;1.11&#34; imS11=&#34;0.015&#34; reS11=&#34;0.014&#34;/&gt;
+		&lt;Tuple Frequency=&#34;1.12&#34; imS11=&#34;0.031&#34; reS11=&#34;0.015&#34;/&gt;
+	&lt;/Data&gt;
+&lt;/Data_Table&gt;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Or-a-little-more-descriptive-version">Or a little more descriptive version<a class="anchor-link" href="#Or-a-little-more-descriptive-version">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[147]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Data_Description&quot;</span><span class="p">:</span><span class="n">structure_metadata</span><span class="p">(</span><span class="n">string_list_collapse</span><span class="p">(</span><span class="n">header</span><span class="p">)),</span>
+      <span class="s2">&quot;Data&quot;</span><span class="p">:</span><span class="n">table</span><span class="o">.</span><span class="n">get_data_dictionary_list</span><span class="p">()}</span>
+<span class="n">xml_table_2</span><span class="o">=</span><span class="n">DataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">data_dictionary</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">xml_table_2</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;?xml version=&#34;1.0&#34; ?&gt;
+&lt;?xml-stylesheet type=&#34;text/xsl&#34; href=&#34;../XSL/DEFAULT_MEASUREMENT_STYLE.xsl&#34;?&gt;
+&lt;Data_Table&gt;
+	&lt;Data_Description&gt;
+		&lt;Measurement_Timestamp&gt;2016-11-16 21:07:47.252000&lt;/Measurement_Timestamp&gt;
+		&lt;column_units&gt;[GHz,None,None]&lt;/column_units&gt;
+		&lt;Power&gt;-2.000000E+1&lt;/Power&gt;
+		&lt;DMM_reading&gt;2.809244E+1&lt;/DMM_reading&gt;
+		&lt;IFBW&gt;3.000000E+2&lt;/IFBW&gt;
+		&lt;IFBW_units&gt;Hz&lt;/IFBW_units&gt;
+		&lt;Comments&gt;Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db&lt;/Comments&gt;
+		&lt;Power_units&gt;dBm&lt;/Power_units&gt;
+	&lt;/Data_Description&gt;
+	&lt;Data&gt;
+		&lt;Tuple Frequency=&#34;1&#34; imS11=&#34;0.012&#34; reS11=&#34;-0.012&#34;/&gt;
+		&lt;Tuple Frequency=&#34;1.11&#34; imS11=&#34;0.015&#34; reS11=&#34;0.014&#34;/&gt;
+		&lt;Tuple Frequency=&#34;1.12&#34; imS11=&#34;0.031&#34; reS11=&#34;0.015&#34;/&gt;
+	&lt;/Data&gt;
+&lt;/Data_Table&gt;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="And-this-gives-us-a-good-deal-of-formating-options-also">And this gives us a good deal of formating options also<a class="anchor-link" href="#And-this-gives-us-a-good-deal-of-formating-options-also">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[150]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span><span class="p">,</span><span class="n">display</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">xml_table_2</span><span class="o">.</span><span class="n">to_HTML</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;../XSL/DEFAULT_MEASUREMENT_STYLE.xsl&quot;</span><span class="p">))))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<h3>Data Description:</h3><table>
+<tr>
+<td><b>Measurement_Timestamp :</b></td>
+<td>2016-11-16 21:07:47.252000</td>
+</tr>
+<tr>
+<td><b>column_units :</b></td>
+<td>[GHz,None,None]</td>
+</tr>
+<tr>
+<td><b>Power :</b></td>
+<td>-2.000000E+1</td>
+</tr>
+<tr>
+<td><b>DMM_reading :</b></td>
+<td>2.809244E+1</td>
+</tr>
+<tr>
+<td><b>IFBW :</b></td>
+<td>3.000000E+2</td>
+</tr>
+<tr>
+<td><b>IFBW_units :</b></td>
+<td>Hz</td>
+</tr>
+<tr>
+<td><b>Comments :</b></td>
+<td>Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db</td>
+</tr>
+<tr>
+<td><b>Power_units :</b></td>
+<td>dBm</td>
+</tr>
+</table><h3>Data:</h3><table border="2" bgcolor="white" cellpadding="1" bordercolor="black" bordercolorlight="black">
+<tr>
+<th bgcolor="silver"><b>Frequency</b></th>
+<th bgcolor="silver"><b>imS11</b></th>
+<th bgcolor="silver"><b>reS11</b></th>
+</tr>
+<tr>
+<td>1</td>
+<td>0.012</td>
+<td>-0.012</td>
+</tr>
+<tr>
+<td>1.11</td>
+<td>0.015</td>
+<td>0.014</td>
+</tr>
+<tr>
+<td>1.12</td>
+<td>0.031</td>
+<td>0.015</td>
+</tr>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Some-development-work-for-those-who-are-interseted-in-seeing-how-a-header-like-this-would-be-parsed">Some development work for those who are interseted in seeing how a header like this would be parsed<a class="anchor-link" href="#Some-development-work-for-those-who-are-interseted-in-seeing-how-a-header-like-this-would-be-parsed">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[151]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">string</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">#Measurement_Timestamp = 2016-11-16 21:07:47.252000 ; DMM_Reading = 2.809244E+1; IFBW = 3.000000E+2; </span>
+<span class="s2">#IFBW.units = Hz ; Power = -2.000000E+1;Power.units = dBm;</span>
+<span class="s2">#Comments = Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db&quot;&quot;&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[146]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">structure_metadata</span><span class="p">(</span><span class="n">header_string</span><span class="p">,</span><span class="n">metadata_fact_delimiter</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span><span class="n">metadata_key_value_delimiter</span><span class="o">=</span><span class="s2">&quot;=&quot;</span><span class="p">,</span><span class="n">comment_character</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Strucutre Metadata returns a metadata string and returns a metadata dictionary&quot;&quot;&quot;</span>
+    <span class="n">string_list</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">metadata_fact_delimiter</span><span class="o">+</span><span class="s1">&#39;|</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">header_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">comment_character</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span>
+    <span class="n">metadata_dictionary</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">string_list</span><span class="p">:</span>
+        <span class="n">pair</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">metadata_key_value_delimiter</span><span class="p">)</span>
+        <span class="c1">#print pair</span>
+        <span class="c1">#print len(pair)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+            <span class="n">key</span><span class="o">=</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+            <span class="n">metadata_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">return</span> <span class="n">metadata_dictionary</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[152]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span> <span class="n">structure_metadata</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;Measurement_Timestamp&#39;: &#39;2016-11-16 21:07:47.252000&#39;, &#39;Power&#39;: &#39;-2.000000E+1&#39;, &#39;DMM_Reading&#39;: &#39;2.809244E+1&#39;, &#39;IFBW&#39;: &#39;3.000000E+2&#39;, &#39;IFBW_units&#39;: &#39;Hz&#39;, &#39;Comments&#39;: &#39;Q26Ra_g5 and the Song wafer with the pdms roof and su8 microfluidics. NDO, 2015/II/pg111, -20db&#39;, &#39;Power_units&#39;: &#39;dBm&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     </div>
   </div>

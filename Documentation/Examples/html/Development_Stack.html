@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>pyMeasure_Documentation</title>
+<title>Development_Stack</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,225 +11751,179 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a id="top"></a></p>
-<h1 id="Welcome-to-pyMeasure,-an-open-source-python-library-for-science.">Welcome to pyMeasure, an open source python library for science.<a class="anchor-link" href="#Welcome-to-pyMeasure,-an-open-source-python-library-for-science.">&#182;</a></h1><p>This documentation is for the pyMeasure package, designed by Aric Sanders <a href="mailto:aric.sanders@gmail.com"> aric.sanders@gmail.com </a> 2016.</p>
-<p><a href="./pyMeasure/index.html">API Documentation </a> |
-<a href="./Examples/Html/Examples_Index.html">Examples</a> |
-<a href="./Reference_Index.html">Index </a></p>
-<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">&#182;</a></h2><p><hr style="border-top: 3px double #8c8b8b;"/></p>
-<ol style="list-style-type: upper-roman">
-<li><h3> <a href="#intro">Introduction</a> </h3></li>
-A brief introduction to pyMeasure and its motivation.
-<li><h3> <a href="#install">Installing and Loading pyMeasure</a></h3> </li>
-How to install pyMeasure and its requirements 
-<li><h3> <a href="#help">Getting Help</a></h3> </li>
-How to get help on the pyMeasure package and general.
-<li> <h3><a href="#design">The Design of pyMeasure</a> </h3></li>
-The overall design of pyMeasure, including how to contribute.
+<h1 id="Development-Stack-Installation">Development Stack Installation<a class="anchor-link" href="#Development-Stack-Installation">&#182;</a></h1><p>Written by <a href="mailto:aric.sanders@nist.gov">Aric Sanders</a>, 01/2016</p>
+<p><hr style="height:1px"></p>
+<h2 id="OS">OS<a class="anchor-link" href="#OS">&#182;</a></h2><hr style="height:1px">
 
-<li> <h3><a href="#license">License</a></h3> </li>
-pyMeasure License Statement
-<!--
-<li><h3> <a href="#pyMeasure-examples">pyMeasure Specific Examples</a></h3> </li>
-Examples specific to the pyMeasure package.
-<li><h3> <a href="#general-examples">General Examples</a> </h3></li>
-Examples for general tasks in python and related packages.
-<li> <h3><a href="#nist-examples">NIST Examples</a> </h3></li>
-Examples pertinent to work at NIST in Boulder.-->
+<ol>
+<li>Primary OS was Windows 7 64 Bit </li>
+<li>Pieces were tested on Ubuntu 14.04</li>
 </ol>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#top"> <em>previous topic</em></a>  |  <a href="#intro"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="intro">Introduction</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>pyMeasure is a python package born out of the daily needs of a laboratory scientist. In particular, there is a constant need to use external equipment to acquire data, store that data in a sensible way, analyze the stored data, and generate collections and reports after analyzing the data. In the world of scientific computation there is an endless universe of solutions to do this, however none of the solutions met my personal daily needs and philosophy simultaneously. This package tries to stitch together many tools to meet those needs, while serving as a backend library to a webserver. It thus has a lot of other packages. It relies on these packages in different ways and may operate differently on different oeprating systems.Although it currently has a single primary developer, it is my hope that it will be adopted by at least 10's of people and help them accomplish their daily scientific goals.</p>
+<p><hr style="height:1px"></p>
+<h2 id="Git-Installation">Git Installation<a class="anchor-link" href="#Git-Installation">&#182;</a></h2><hr style="height:1px">
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#intro"> <em>previous topic</em></a>  |  <a href="#install"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="install">Installing and Loading pyMeasure</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Installation">Installation<a class="anchor-link" href="#Installation">&#182;</a></h3><ol>
-<li>Install Anaconda 2.7 from <a href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a></li>
-<li>Install pyvisa using pip install pyvisa</li>
-<li>Install NI-Visa from <a href="http://www.ni.com/download/ni-visa-15.0.1/5693/en/">http://www.ni.com/download/ni-visa-15.0.1/5693/en/</a></li>
-<li>Clone boa repository to Anaconda2/Lib/site-packages</li>
-<li>Clone pyMeasure to Anaconda2/Lib/site-packages</li>
-<li>Install wx from source forge <a href="http://wxpython.org/">http://wxpython.org/</a></li>
-<li>In addition, the USB-GPIB interface needs drivers from NI (NI488.2 version 15) and a computer restart.</li>
-</ol>
-<h3 id="Optional-Dependencies">Optional Dependencies<a class="anchor-link" href="#Optional-Dependencies">&#182;</a></h3><ol>
-<li>Inkscape from <a href="https://inkscape.org/en/download/">https://inkscape.org/en/download/</a></li>
-<li>Microscoft Office</li>
-<li>pdfkit and wkhtmltopdf pip install pdfkit and install from <a href="http://wkhtmltopdf.org/">http://wkhtmltopdf.org/</a></li>
-<li>statistiCAL and Microwave Uncertainty Framework from  <a href="http://www.nist.gov/ctl/rf-technology/related-software.cfm">http://www.nist.gov/ctl/rf-technology/related-software.cfm</a></li>
-</ol>
-<h3 id="Development-Environment-Details">Development Environment Details<a class="anchor-link" href="#Development-Environment-Details">&#182;</a></h3><p>A detailed description of my development environment can be found <a href="./Examples/html/Development_Environment">here</a></p>
-<h3 id="Accessing-the-API-after-installation">Accessing the API after installation<a class="anchor-link" href="#Accessing-the-API-after-installation">&#182;</a></h3><p>The API is best accessed by importing as</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMeasure</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-<p>However, if a specific function or class is required then direct import also works (this form imports the full API)</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMeasure.Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
-</pre></div>
-<p>If you want to have the import skip the API, then add the pyMeasure folder to sys.path and then import beginning with Code</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">r&quot;C:\ProgramData\Anaconda2\Lib\site-packages\pyMeasure&quot;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#install"> <em>previous topic</em></a>  |  <a href="#help"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="help">Getting Help</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>There are many ways to get help on pyMeasure. Internal to pyMeasure there are several primary help components:</p>
-<p><ul></p>
-<li>This page</li>
-<li> <a href="./pyMeasure/index.html">API help</a></li>
-<li> <a href="./Examples/html/pyMeasure_Examples.html">Html Examples </a></li>
-<li> <a href="./Examples/jupyter">Jupyter Interactive Examples </a></li>
-<li><a href="./Reference_Index.html">Index of All Classes and Functions in pyMeasure </a></li><p>&lt;/ul&gt;
-Additionally, python has a series of help functions including the command line tool
-pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help(object).</p>
-<div class="highlight"><pre><span></span><span class="err">?</span><span class="n">XMLBase</span>
-<span class="n">help</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">)</span>
-</pre></div>
-<p>In addition there are several tools in <a href="./pyMeasure/Code/Utils/HelpUtils.html">pyMeasure.Code.Utils.HelpUtils</a> for generating html based help files.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#help"> <em>previous topic</em></a>  |  <a href="#design"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="design">The Design of pyMeasure</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Overall-Design-Goal">Overall Design Goal<a class="anchor-link" href="#Overall-Design-Goal">&#182;</a></h3><p>pyMeasure was designed with the overal goal of being easy to use, well documented, well tested and modular. The overall design follows a pattern of Models (DataHandlers), View and View-Controllers (FrontEnds), Anaylsis and Instrument Control.</p>
-<h3 id="Directory-Structure">Directory Structure<a class="anchor-link" href="#Directory-Structure">&#182;</a></h3><ul>
-<li> pyMeasure : The top directory that should be installed in python27/Lib/site-packages or C:\ProgramData\Anaconda2\Lib\site-packages
-<ul>
-<li> Code: The top level folder for the code repository </li>
-<ul>
-<li>Utils: Subpackage for utility functions needed by all of pyMeasure</li>
-<li>DataHandlers: Data models needed by everything but Utils</li>
-<li>Analysis: Functions and classes based on analyzing data. Requires Utils and DataHandlers.</li>
-<li>InstrumentControl: Functions and classes that communicate with external devices. Requires Utils and DataHandlers</li>
-<li>FrontEnds: Functions and classes that tie it altogether for the user, requires all other modules.</li>
-</ul>
-<li> Documentation: Top level folder for docs including examples </li>
-<li> Instruments: A repository for XML sheets describing instruments </li>
-<li> Data: A repository for data, this is volatile and likely to change </li> 
-<ul> 
-<li>Measurements: Storage for measurement data, either in xml or ascii</li>
-<li>Logs: Storage for xml logs</li>
-<li>States: Storage for Instrument and Experimental States</li>
-<li>Reports: Storage for formatted output </li>
-
-</ul>
+<ol>
+<li>Download and install <a href="https://git-scm.com/downloads">Git</a><ul>
+<li>Git is a version control program</li>
+<li><a href="https://github.com/">Github</a> and <a href="https://bitbucket.org/">bitbucket</a> are good places to put repositories</li>
 </ul>
 </li>
-</ul><h3 id="Testing-Infrastructure">Testing Infrastructure<a class="anchor-link" href="#Testing-Infrastructure">&#182;</a></h3><p>pyMeasure has a multi-tiered testing infrastructure. It is comprised of basic unit tests, mesoscopic in-module tests, and integration tests.</p>
+</ol>
+<p><hr style="height:1px"></p>
+<h2 id="Python-Base-Installation">Python Base Installation<a class="anchor-link" href="#Python-Base-Installation">&#182;</a></h2><hr style="height:1px">
+
 <ol>
-<li><strong>Unit tests :</strong> These tests check if functions and classes with a basic input return what is expected. They are found in the module pyMeasure.Code.Utils.pyMeasureUnitTests</li>
-<li><strong>In Module Tests :</strong> Theses tests are scripts included in each module that test a series of things about functions or classes, they are typically named test_thing_of_interest(). For example in the module pyMeasure.Code.DataHandlers.XMLModels there are &gt;15 scripts to test functions and classes with names like test_get_header.</li>
-<li><strong>Integration Tests:</strong> These tests check if a large number of interacting components work as expected. For the wx frontend this is primarily the class AdvancedInterfaceFrame, or an integrated application that can open new window panels, run the in module tests and check if data objects appear as they are expected. For the django FrontEnd this is a Test_Server run using Django's development server found in manage.py. For Jupyter, this is a series of examples that live in pyMeasure/Documentation/Examples. </li>
+<li>Install <a href="https://www.continuum.io/downloads">Anaconda</a><ul>
+<li>Use the python 2.7 installer</li>
+<li>This installs a large number of <a href="http://docs.continuum.io/anaconda/pkg-docs">packages</a></li>
+<li>Includes <a href="http://jupyter.org/">Jupyter</a>, which is a mathematica style notebook for python.</li>
+<li>A good overview of jupyter's capability can be found <a href="https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook#gs.x8wJz3c">here</a></li>
+<li>in ubuntu down load the Anaconda package, from the directory run bash Anaconda....sh</li>
+</ul>
+</li>
+<li>Install <a href="https://www.jetbrains.com/pycharm/download/#section=windows">PyCharm</a>, Communtity Edition is free<ul>
+<li>Pycharm is an IDE (Integrated Development Environment) for python</li>
+<li>It integrates very well with <a href="https://git-scm.com/downloads">git</a>, and it includes very good tools for
+working with code, if you install <a href="https://git-scm.com/downloads">git</a> first it will autodetect it.</li>
+<li>Requires OpenJDK to be installed. The ubuntu command is sudo apt-get install openjdk-7-jre or JRE ( Windows ) to be installed.</li>
+</ul>
+</li>
+</ol>
+<p><hr style="height:1px"></p>
+<h2 id="Python-Package-Installation">Python Package Installation<a class="anchor-link" href="#Python-Package-Installation">&#182;</a></h2><p><hr style="height:1px"></p>
+<h3 id="For-python-packages-using-pip">For python packages using pip<a class="anchor-link" href="#For-python-packages-using-pip">&#182;</a></h3><p>\$ pip install package, in ubuntu make sure you are a superuser, i.e. sudo</p>
+<p>or in python code</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">r&#39;pip install pyvisa&#39;</span><span class="p">)</span>
+</pre></div>
+<ol>
+<li>Install <a href="https://pypi.python.org/pypi/pdoc">Pdoc</a><ul>
+<li>pdoc makes an html page given an import-able module</li>
+<li>pdoc.html('os') or a text version pdoc.text('os')</li>
+</ul>
+</li>
+<li>Install <a href="http://www.ni.com/download/ni-visa-15.0.1/5693/en/">NIVisa</a><ul>
+<li>NIVISA requires regstration but is free</li>
+<li>It allows communication through several methods including <a href="https://en.wikipedia.org/wiki/IEEE-488">GPIB</a></li>
+<li>This is not a python package but you need it for pyvisa,
+<a href="http://pyvisa-py.readthedocs.org/en/latest/">pyvisa-py</a> looks to be a potential alternative.</li>
+</ul>
+</li>
+<li>Install <a href="https://pyvisa.readthedocs.org/en/stable/getting.html">pyvisa</a> </li>
+<li>Install <a href="https://www.djangoproject.com/download/">Django</a></li>
+<li>Install <a href="http://wxpython.org/">WxPython</a>, not pip but there are prebuilt binaries</li>
+<li>Install <a href="https://odo.readthedocs.org/en/latest/">odo</a>, pip install has <em style="color:red;" >errors&lt;/em&gt; on ubuntu.</li>
+<li>Install django-registration and change registration/forms.py to include first_name and last_name on the user form<ul>
+<li>at a command prompt: pip install django-registration</li>
+</ul>
+</li>
+<li>Install django-bootstrap-breadcrumbs<ul>
+<li>at a command prompt: pip install django-bootstrap-breadcrumbs</li>
+</ul>
+</li>
+<li>Install markdown<ul>
+<li>at a command prompt: pip install markdown</li>
+</ul>
+</li>
+<li><p>Install <a href="https://sourceforge.net/projects/boa-constructor/files/Boa-Constructor/0.6.1-beta/">Boa Constructor</a> for Wx FrontEnds creations <strong>now I have a github repository for this</strong> (<a href="https://github.com/aricsanders/boa">https://github.com/aricsanders/boa</a>).</p>
+<ul>
+<li>choose boa-constructor-0.6.1.src.zip from the download page, the binary installers do not work if python is installed under the anaconda directory</li>
+<li><p>There some problems with the source code that must be fixed:</p>
+<ul>
+<li><p>All references to wx.NO_3D must be removed (I commented them out)</p>
+<ol>
+<li>in prefs.rc.py<ul>
+<li>splitterStyle = wx.SP_LIVE_UPDATE | wx.SP_3DSASH</li>
+<li>#removed option | wx.NO_3D,03/02/2016 Aric Sanders</li>
+</ul>
+</li>
+<li>in enumerations.py<ul>
+<li>windowNameStyles</li>
+<li>#removed the option 'wx.NO_3D':wx.NO_3D, 03/02/2016 Aric Sanders</li>
+<li>windowStyles</li>
+<li>#removed the window style wx.NO_3D, 03/02/2016 Aric Sanders</li>
+</ul>
+</li>
+<li>in Inspector.py<ul>
+<li>self.categories</li>
+<li>#removed the style wx.NO_3D | on 03/02/2016 Aric Sanders</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>Because you unzipped the file into something like C:\python27\Lib\site-packages\boa-constructor-0.6.1,
+you have to make a new folder Boa and add an <strong>init</strong>.py file to it.</li>
+<li>Now there are a lot of things improperly namespaced assuming that you will add an enviornmental variable to help it out. I renamspaced them to Boa.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Install <a href="https://github.com/pythonnet/pythonnet">pythonnet</a> This allows python to use .net assemblies</p>
+<ul>
+<li>pip install pythonnet</li>
+</ul>
+</li>
+<li><p>Install <a href="http://jpype.readthedocs.org/en/latest/">Jpype</a>, pip install JPype1</p>
+</li>
+<li>Install <a href="https://pypi.python.org/pypi/pdfkit">pdfkit</a>, pip install pdfkit, requires <a href="http://wkhtmltopdf.org/">wkhtmltopdf</a> </li>
+</ol>
+<p><hr style="height:1px"></p>
+<h2 id="Inkscape-Installation">Inkscape Installation<a class="anchor-link" href="#Inkscape-Installation">&#182;</a></h2><hr style="height:1px">
+
+<ol>
+<li>Download and install <a href="https://inkscape.org/en/download/">Inkscape</a><ul>
+<li>Inkscape is a <a href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics">svg</a> (scalable vector graphics) editor</li>
+<li>In ubuntu use sudo apt-get install inkscape at a terminal</li>
+</ul>
+</li>
+</ol>
+<p><hr style="height:1px"></p>
+<h2 id="Open-Office-Installation">Open Office Installation<a class="anchor-link" href="#Open-Office-Installation">&#182;</a></h2><p><hr style="height:1px"></p>
+<ol>
+<li>Download and install <a href="http://www.openoffice.org/download/">open office</a><ul>
+<li>Open office can be scripted through pyuno to convert many formats</li>
+<li>This is really optional, any office suite with html conversion will work</li>
+<li>Ultimately the idea is to use <a href="https://github.com/dagwieers/unoconv">unoconv</a></li>
+</ul>
+</li>
+</ol>
+<p><hr style="height:1px"></p>
+<h2 id="Visual-Studios">Visual Studios<a class="anchor-link" href="#Visual-Studios">&#182;</a></h2><p><hr style="height:1px"></p>
+<ol>
+<li>Download and Install <a href="https://www.visualstudio.com/products/visual-studio-community-vs">Visual Studio Community</a> , this is optional and used primarily for inspecting the source code of StatistiCAL and MUF. </li>
+</ol>
+<p><hr style="height:1px"></p>
+<h2 id="Notepad-++">Notepad ++<a class="anchor-link" href="#Notepad-++">&#182;</a></h2><p><hr style="height:1px"></p>
+<ol>
+<li>Download and Install <a href="https://notepad-plus-plus.org/">Notepad++</a>, this is optional but helps when you need to view random files.</li>
+</ol>
+<p><hr style="height:1px"></p>
+<h2 id="StatistiCAL-and-MUF">StatistiCAL and MUF<a class="anchor-link" href="#StatistiCAL-and-MUF">&#182;</a></h2><p><hr style="height:1px"></p>
+<ol>
+<li>Download and Install <a href="https://www.nist.gov/services-resources/software/wafer-calibration-software">StatistiCAL and MUF</a> <ul>
+<li>for calibration and uncertainty analysis for multi-port RF measurements</li>
+<li>currently only for windows, but may work with <a href="http://www.mono-project.com/">Mono</a></li>
+</ul>
+</li>
 </ol>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="#top"> <em>back to top</em></a>  |  <a href="#help"> <em>previous topic</em></a>  |  <a href="#license"> <em>next topic</em></a>
- <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="license">License</a> </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This is free and unencumbered software released into the public domain.</p>
-<p>Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.</p>
-<p>In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.</p>
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.</p>
-<p>For more information, please refer to <a href="http://unlicense.org/">http://unlicense.org/</a></p>
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
 
 </div>
 </div>
+</div>
+
 </div>
     </div>
   </div>
