@@ -1314,7 +1314,8 @@ Currently, the module networkx is used to display the graph.</p>
 </pre></div>
 
 
-<p><a href="../../../Examples/Html/GraphModels_Example.html">GraphModels Example</a></p>
+<h3><a href="../../../Examples/Html/GraphModels_Example.html">GraphModels Example</a></h3>
+
 <h2>Requirements</h2>
 <ul>
 <li><a href="https://docs.python.org/2/library/sys.html">sys</a></li>
@@ -1358,7 +1359,7 @@ Currently, the module networkx is used to display the graph.</p>
 <span class="sd">    &gt;&gt;print output</span>
 
 
-<span class="sd">&lt;a href=&quot;../../../Examples/Html/GraphModels_Example.html&quot;&gt;GraphModels Example&lt;/a&gt;</span>
+<span class="sd">&lt;h3&gt;&lt;a href=&quot;../../../Examples/Html/GraphModels_Example.html&quot;&gt;GraphModels Example&lt;/a&gt;&lt;/h3&gt;</span>
 
 <span class="sd">Requirements</span>
 <span class="sd">------------</span>
@@ -1507,17 +1508,6 @@ Currently, the module networkx is used to display the graph.</p>
 <span class="sd">    state is in the attribute graph.data. To move among the formats use graph.move_to_node(&#39;NodeName&#39;)</span>
 <span class="sd">    need to recode the find_path method using a shortest path alogrithm like</span>
 <span class="sd">    [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm).</span>
-
-<span class="sd">    #!python</span>
-<span class="sd">    &gt;&gt;defaults={&quot;graph_name&quot;:&quot;Graph&quot;,</span>
-<span class="sd">                  &quot;node_names&quot;:[&#39;n1&#39;,&#39;n2&#39;],</span>
-<span class="sd">                  &quot;node_descriptions&quot;:[&quot;A plain string&quot;,</span>
-<span class="sd">                                       &quot;A list of strings with no \\n, created with string.splitlines()&quot;],</span>
-<span class="sd">                  &quot;current_node&quot;:&#39;n1&#39;,</span>
-<span class="sd">                  &quot;state&quot;:[1,0],</span>
-<span class="sd">                  &quot;data&quot;:&quot;This is a test string\n it has to have multiple lines \n and many characters 34%6\n^&quot;,</span>
-<span class="sd">                  &quot;edge_2_to_1&quot;:edge_2_to_1,</span>
-<span class="sd">                  &quot;edge_1_to_2&quot;:edge_1_to_2}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required&quot;&quot;&quot;</span>
@@ -2825,27 +2815,12 @@ Currently, the module networkx is used to display the graph.</p>
       
   
     <div class="desc"><p>The Graph class creates a content graph that has as nodes different formats. As
-    a format is added via graph.add_node() by specifying a node name and a function from an
-    existing node into the new one, and one exiting the node. Once a series of nodes exists
-    to enter the graph at a node use graph.set_state() the current data representing the
-    state is in the attribute graph.data. To move among the formats use graph.move_to_node('NodeName')
-    need to recode the find_path method using a shortest path alogrithm like
-    <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra</a>.</p>
-<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;graph_name&quot;</span><span class="p">:</span><span class="s2">&quot;Graph&quot;</span><span class="p">,</span>
-              <span class="s2">&quot;node_names&quot;</span><span class="p">:[</span><span class="s1">&#39;n1&#39;</span><span class="p">,</span><span class="s1">&#39;n2&#39;</span><span class="p">],</span>
-              <span class="s2">&quot;node_descriptions&quot;</span><span class="p">:[</span><span class="s2">&quot;A plain string&quot;</span><span class="p">,</span>
-                                   <span class="s2">&quot;A list of strings with no </span><span class="se">\n</span><span class="s2">, created with string.splitlines()&quot;</span><span class="p">],</span>
-              <span class="s2">&quot;current_node&quot;</span><span class="p">:</span><span class="s1">&#39;n1&#39;</span><span class="p">,</span>
-              <span class="s2">&quot;state&quot;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-              <span class="s2">&quot;data&quot;</span><span class="p">:</span><span class="s2">&quot;This is a test string</span>
-</pre></div>
-
-
-<p>it has to have multiple lines 
- and many characters 34%6
-^",
-                  "edge_2_to_1":edge_2_to_1,
-                  "edge_1_to_2":edge_1_to_2}</p></div>
+a format is added via graph.add_node() by specifying a node name and a function from an
+existing node into the new one, and one exiting the node. Once a series of nodes exists
+to enter the graph at a node use graph.set_state() the current data representing the
+state is in the attribute graph.data. To move among the formats use graph.move_to_node('NodeName')
+need to recode the find_path method using a shortest path alogrithm like
+<a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra</a>.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.GraphModels.Graph', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.GraphModels.Graph" class="source">
@@ -2857,17 +2832,6 @@ Currently, the module networkx is used to display the graph.</p>
 <span class="sd">    state is in the attribute graph.data. To move among the formats use graph.move_to_node(&#39;NodeName&#39;)</span>
 <span class="sd">    need to recode the find_path method using a shortest path alogrithm like</span>
 <span class="sd">    [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm).</span>
-
-<span class="sd">    #!python</span>
-<span class="sd">    &gt;&gt;defaults={&quot;graph_name&quot;:&quot;Graph&quot;,</span>
-<span class="sd">                  &quot;node_names&quot;:[&#39;n1&#39;,&#39;n2&#39;],</span>
-<span class="sd">                  &quot;node_descriptions&quot;:[&quot;A plain string&quot;,</span>
-<span class="sd">                                       &quot;A list of strings with no \\n, created with string.splitlines()&quot;],</span>
-<span class="sd">                  &quot;current_node&quot;:&#39;n1&#39;,</span>
-<span class="sd">                  &quot;state&quot;:[1,0],</span>
-<span class="sd">                  &quot;data&quot;:&quot;This is a test string\n it has to have multiple lines \n and many characters 34%6\n^&quot;,</span>
-<span class="sd">                  &quot;edge_2_to_1&quot;:edge_2_to_1,</span>
-<span class="sd">                  &quot;edge_1_to_2&quot;:edge_1_to_2}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required&quot;&quot;&quot;</span>

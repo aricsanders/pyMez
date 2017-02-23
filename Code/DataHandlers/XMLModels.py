@@ -7,7 +7,42 @@
 #-----------------------------------------------------------------------------
 """ XMLModels is dedicated to handling xml based models,
 requires lxml to be installed.
-see also `pyMeasure.Code.DataHandlers.HTMLModels` """
+see also <a href="./HTMLModels.m.html">`pyMeasure.Code.DataHandlers.HTMLModels`</a>.
+XMLModels has components for basic manipulation, the creation of xml measurements, logs,
+Instrument states, instrument sheets and file indices.
+
+ Examples
+--------
+    #!python
+    >>new_xml=HTMLBase(os.path.join(TESTS_DIRECTORY,"One_Port_Sparameter_20160303_001.xml"))
+    >>print(new_xml)
+
+ <h3><a href="../../../Examples/Html/XMLModels_Example.html">XMLModels Example</a></h3>
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
++ [lxml](http://lxml.de/)
++ [types](https://docs.python.org/2/library/types.html)
++ [pyMeasure](https://github.com/aricsanders/pyMeasure)
++ [xml](https://docs.python.org/2/library/xml.html)
++ [datetime](https://docs.python.org/2/library/datetime.html)
++ [urlparse](https://docs.python.org/2/library/urlparse.html)
++ [socket](https://docs.python.org/2/library/socket.html)
++ [fnmatch](https://docs.python.org/2/library/fnmatch.html)
+
+Help
+---------------
+<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>
+
+ """
 
 #-----------------------------------------------------------------------------
 # Standard Imports
@@ -115,7 +150,7 @@ def join_xml(new_root="root",xml_document_list=None,**options):
             new_xml.document.documentElement.appendChild(new_entry)
         return new_xml
 def make_xml_element(tag,content=None,**attribute_dictionary):
-    """Creates an lxml.html.HtmlElement given a tag, content and attribute dictionary
+    """Returns an lxml.html.HtmlElement given a tag, content and attribute dictionary
      <tag key1="value2" key2="value2">content</tag> """
     position_arguments=[tag]
     if content:
@@ -124,7 +159,7 @@ def make_xml_element(tag,content=None,**attribute_dictionary):
     return new_tag
 
 def make_xml_string(tag,content=None,**attribute_dictionary):
-    """Creates the html string for tag, content and attribute dictionary
+    """Returns the html string for tag, content and attribute dictionary
      <tag key1="value2" key2="value2">content</tag> """
     position_arguments=[tag]
     if content:
@@ -410,7 +445,7 @@ class XMLLog(XMLBase):
             value=''
         elif type(entry) is str:
             if re.search('<Entry>(.)+</Entry>',entry):
-                new_document=xml.dom.minidom.parseString(new_entry)
+                new_document=xml.dom.minidom.parseString(entry)
                 new_entry=new_document.documentElement
             else:
                 new_document=xml.dom.minidom.parseString('<Entry>'
@@ -506,7 +541,7 @@ class XMLLog(XMLBase):
         self.update_Index_node_dictionary()
             
     def update_Index_node_dictionary(self):
-        """ Re-creates the attribute self.Index_node_dictionary, using the current
+        """ Re-Returns the attribute self.Index_node_dictionary, using the current
         definition of self.document"""
         self.Index_node_dictionary=dict([(str(node.getAttribute('Index')),
         node) for node in \
@@ -667,7 +702,7 @@ class ServiceXMLLog(XMLLog):
 class DataTable(XMLBase):
     """ This is a XML data table class with an optional description"""
     def __init__(self,file_path=None,**options):
-        """ Intializes the DataTable Class. Passing **{'data_table':[mylist]} creates a
+        """ Intializes the DataTable Class. Passing **{'data_table':[mylist]} Returns a
         table with x1 and x2 as column names. Passing **{'data_dictionary':{'Data_Description':{'Tag':'Text',etc},
         'Data':[{'x':1,'y':2},{'x':2,'y':3}]
          """
@@ -788,7 +823,7 @@ class DataTable(XMLBase):
             return None
 
     def get_header(self,style='txt'):
-        """ Creates a header from the data description if there is one"""
+        """ Returns a header from the data description if there is one"""
         try:
             node_list=self.document.getElementsByTagName('Data_Description')
             data_description=node_list[0]
@@ -832,7 +867,7 @@ class FileRegister(XMLBase):
             self.document.getElementsByTagName('File')])
 
     def create_Id(self,URL):
-        """ Creates or returns the existing Id element of a URL"""
+        """ Returns or returns the existing Id element of a URL"""
         parsed_URL=urlparse.urlparse(condition_URL(URL))
         try: # Look in self.Id_dictionary, if it is not there catch
              # the exception KeyError and generate an Id.

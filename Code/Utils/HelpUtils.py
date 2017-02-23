@@ -69,8 +69,9 @@ INDEX_HTML_PREFIX="""<html>
 <body>
 <a href="./pyMeasure_Documentation.html">Documentation Home</a> |
 <a href="./pyMeasure/index.html">API Documentation Home</a> |
-<a href="./Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
-<h1>Index</h1>
+<a href="./Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="./Reference_Index.html">Index </a>
+<h1>Index of All Functions and Classes in pyMeasure</h1>
 <ol>"""
 INDEX_HTML_POSTFIX="""</ol></body></html>"""
 #-----------------------------------------------------------------------------
@@ -176,7 +177,74 @@ def create_index_html_script(top_directory):
     out_file.write(links_string)
     out_file.close()
 
+def create_imports_html_script(top_directory):
+    """Reads all .py files under top directory and creates an html page that
+    contains all of the imports and the file that imports them"""
+    imports=[]
+    import_pattern_1=re.compile('import (?P<name>[\w|\.]+\n)')
+    import_pattern_2=re.compile('from (?P<name>\[w|\.]+) import \w+\n')
+    for directory, dirnames, file_names in os.walk(top_directory):
+        clean_directory=directory.split('..\\')[-1].replace("\\","/")
+        for file_name in file_names:
+            extension=file_name.split(".")[-1]
+            if re.match('py',extension,re.IGNORECASE):
+                in_file=open(os.path.join(directory,file_name),'r')
+                for line in in_file:
+                    if re.search(import_pattern_1,line) and not re.match(import_pattern_2,line):
+                        name=re.search(import_pattern_1,line).groupdict()['name']
+                        imports.append("{0} in {1}".format(name,file_name))
+                    elif re.match(import_pattern_2,line):
+                        name=re.search(import_pattern_2,line).groupdict()['name']
+                        imports.append("{0} in {1}".format(name, file_name))
+    unique_imports=sorted(list(set(imports)))
+    html_string=""
+    for import_name in unique_imports:
+        html_string=html_string+"<li>{0}</li>".format(import_name)
+    html_string=INDEX_HTML_PREFIX+html_string+INDEX_HTML_POSTFIX
+    out_file=open(os.path.join(DOCUMENTATION_DIRECTORY,"pyMeasure_Imports.html"),"w")
+    out_file.write(html_string)
+    out_file.close()
 
+def create_examples_html_script(jupyter_examples_directory):
+    """Uses nbconvert to change all .ipynb to .html then moves all files that are not.ipynb"""
+    pass
+
+def change_links_examples_script(top_directory):
+    """Changes all the links with extensions .ipynb to .html"""
+    file_names=os.listdir(top_directory)
+    for file_name in file_names:
+        extension=file_name.split(".")[-1]
+        if re.search('htm',extension,re.IGNORECASE):
+            in_file=open(os.path.join(top_directory,file_name),'r')
+            content=in_file.read()
+            new_content=content.replace('.ipynb','.html')
+            in_file.close()
+            out_file=open(os.path.join(top_directory,file_name),'w')
+            out_file.write(new_content)
+            out_file.close()
+
+def add_navigation_script(top_directory):
+    """Adds navigation links to the body tag of all html files in top_directory"""
+    navigation_html="""<a href="../../pyMeasure_Documentation.html">Documentation Home </a> |
+        <a href="../../pyMeasure/index.html">API Documentation </a> |
+        <a href="./Examples_Home.html">Examples</a> |
+        <a href="../../Reference_Index.html">Index </a>"""
+    file_names=os.listdir(top_directory)
+    for file_name in file_names:
+        extension=file_name.split(".")[-1]
+        if re.search('htm',extension,re.IGNORECASE):
+            in_file=open(os.path.join(top_directory,file_name),'r')
+            lines=[]
+            for line in in_file:
+                if re.search("\<body\>",line,re.IGNORECASE):
+                    line=line+navigation_html
+                    lines.append(line)
+                else:
+                    lines.append(line)
+            in_file.close()
+            out_file=open(os.path.join(top_directory,file_name),'w')
+            out_file.writelines(lines)
+            out_file.close()
 
 def test_create_index_html(top_directory=PYMEASURE_ROOT):
     "Tests the create_index_html_script by applying it to pyMeasure itself. "
@@ -192,3 +260,6 @@ if __name__ == '__main__':
     #test_create_examples_page(os.path.join(DOCUMENTATION_DIRECTORY,"pyMeasure_Documentation.ipynb"))
     autogenerate_api_documentation_script()
     test_create_index_html()
+    #create_imports_html_script(PYMEASURE_ROOT)
+    #change_links_examples_script(os.path.join(DOCUMENTATION_DIRECTORY,"Examples","Html"))
+    #add_navigation_script(os.path.join(DOCUMENTATION_DIRECTORY,"Examples","Html"))

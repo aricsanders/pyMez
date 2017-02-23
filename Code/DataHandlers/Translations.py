@@ -15,9 +15,37 @@ pyMeasure.Code.DataHandlers.GraphModels. Normal naming rules about
 composite types are denoted by ending the UpperCamelCase name with a full english version of the python
 class name, such as DataFrameDictionary or DataFrameList. Full translations requires the following third party
 software:
-Inkscape
-Microsoft Office
-Wkhtmltopdf
+    +Inkscape
+    +Microsoft Office
+    +Wkhtmltopdf
+
+Examples
+--------
+    #!python
+    >>new_html=HTMLBase(os.path.join(TESTS_DIRECTORY,"One_Port_Sparameter_20160307_001.html"))
+    >>print(new_html)
+
+ <h3><a href="../../../Examples/Html/Translations_Example.html">Translations Example</a></h3>
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
++ [lxml](http://lxml.de/)
++ [types](https://docs.python.org/2/library/types.html)
++ [pyMeasure](https://github.com/aricsanders/pyMeasure)
++ [pdfkit](http://pdfkit.org/)
++ [wkhtmltopdf](http://wkhtmltopdf.org/)
+
+Help
+---------------
+<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>
 """
 
 #-----------------------------------------------------------------------------

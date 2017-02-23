@@ -1054,9 +1054,13 @@ table {
     <li class="set"><h3><a href="#header-functions">Functions</a></h3>
       
   <ul>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.add_navigation_script">add_navigation_script</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.autogenerate_api_documentation_script">autogenerate_api_documentation_script</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.change_links_examples_script">change_links_examples_script</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_examples_html_script">create_examples_html_script</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_examples_page">create_examples_page</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_help_page">create_help_page</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_imports_html_script">create_imports_html_script</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_index_html_script">create_index_html_script</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.return_help">return_help</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.test_create_examples_page">test_create_examples_page</a></li>
@@ -1158,8 +1162,9 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
 <span class="s2">&lt;body&gt;</span>
 <span class="s2">&lt;a href=&quot;./pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
 <span class="s2">&lt;a href=&quot;./pyMeasure/index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
-<span class="s2">&lt;a href=&quot;./Reference_Index.html&quot;&gt;Index of all Functions and Classes in pyMeasure&lt;/a&gt;</span>
-<span class="s2">&lt;h1&gt;Index&lt;/h1&gt;</span>
+<span class="s2">&lt;a href=&quot;./Examples/Html/Examples_Home.html&quot;&gt;Examples Home&lt;/a&gt; |</span>
+<span class="s2">&lt;a href=&quot;./Reference_Index.html&quot;&gt;Index &lt;/a&gt;</span>
+<span class="s2">&lt;h1&gt;Index of All Functions and Classes in pyMeasure&lt;/h1&gt;</span>
 <span class="s2">&lt;ol&gt;&quot;&quot;&quot;</span>
 <span class="n">INDEX_HTML_POSTFIX</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;/ol&gt;&lt;/body&gt;&lt;/html&gt;&quot;&quot;&quot;</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
@@ -1265,7 +1270,74 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">links_string</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
+<span class="k">def</span> <span class="nf">create_imports_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reads all .py files under top directory and creates an html page that</span>
+<span class="sd">    contains all of the imports and the file that imports them&quot;&quot;&quot;</span>
+    <span class="n">imports</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">import_pattern_1</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;import (?P&lt;name&gt;[\w|\.]+</span><span class="se">\n</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="n">import_pattern_2</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;from (?P&lt;name&gt;\[w|\.]+) import \w+</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">file_names</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+        <span class="n">clean_directory</span><span class="o">=</span><span class="n">directory</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+            <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;py&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">import_pattern_1</span><span class="p">,</span><span class="n">line</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">import_pattern_2</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">import_pattern_1</span><span class="p">,</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                        <span class="n">imports</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{0} in {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">file_name</span><span class="p">))</span>
+                    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">import_pattern_2</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">import_pattern_2</span><span class="p">,</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                        <span class="n">imports</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{0} in {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span>
+    <span class="n">unique_imports</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">imports</span><span class="p">)))</span>
+    <span class="n">html_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">import_name</span> <span class="ow">in</span> <span class="n">unique_imports</span><span class="p">:</span>
+        <span class="n">html_string</span><span class="o">=</span><span class="n">html_string</span><span class="o">+</span><span class="s2">&quot;&lt;li&gt;{0}&lt;/li&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">import_name</span><span class="p">)</span>
+    <span class="n">html_string</span><span class="o">=</span><span class="n">INDEX_HTML_PREFIX</span><span class="o">+</span><span class="n">html_string</span><span class="o">+</span><span class="n">INDEX_HTML_POSTFIX</span>
+    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;pyMeasure_Imports.html&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_string</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
+<span class="k">def</span> <span class="nf">create_examples_html_script</span><span class="p">(</span><span class="n">jupyter_examples_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Uses nbconvert to change all .ipynb to .html then moves all files that are not.ipynb&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">change_links_examples_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Changes all the links with extensions .ipynb to .html&quot;&quot;&quot;</span>
+    <span class="n">file_names</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">top_directory</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+        <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;htm&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+            <span class="n">content</span><span class="o">=</span><span class="n">in_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">new_content</span><span class="o">=</span><span class="n">content</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.ipynb&#39;</span><span class="p">,</span><span class="s1">&#39;.html&#39;</span><span class="p">)</span>
+            <span class="n">in_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">new_content</span><span class="p">)</span>
+            <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">add_navigation_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds navigation links to the body tag of all html files in top_directory&quot;&quot;&quot;</span>
+    <span class="n">navigation_html</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;a href=&quot;../../pyMeasure_Documentation.html&quot;&gt;Documentation Home &lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&quot;../../pyMeasure/index.html&quot;&gt;API Documentation &lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&quot;./Examples_Home.html&quot;&gt;Examples&lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&quot;../../Reference_Index.html&quot;&gt;Index &lt;/a&gt;&quot;&quot;&quot;</span>
+    <span class="n">file_names</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">top_directory</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+        <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;htm&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+            <span class="n">lines</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;\&lt;body\&gt;&quot;</span><span class="p">,</span><span class="n">line</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="o">+</span><span class="n">navigation_html</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="n">in_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">out_file</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+            <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">test_create_index_html</span><span class="p">(</span><span class="n">top_directory</span><span class="o">=</span><span class="n">PYMEASURE_ROOT</span><span class="p">):</span>
     <span class="s2">&quot;Tests the create_index_html_script by applying it to pyMeasure itself. &quot;</span>
@@ -1281,6 +1353,9 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
     <span class="c1">#test_create_examples_page(os.path.join(DOCUMENTATION_DIRECTORY,&quot;pyMeasure_Documentation.ipynb&quot;))</span>
     <span class="n">autogenerate_api_documentation_script</span><span class="p">()</span>
     <span class="n">test_create_index_html</span><span class="p">()</span>
+    <span class="c1">#create_imports_html_script(PYMEASURE_ROOT)</span>
+    <span class="c1">#change_links_examples_script(os.path.join(DOCUMENTATION_DIRECTORY,&quot;Examples&quot;,&quot;Html&quot;))</span>
+    <span class="c1">#add_navigation_script(os.path.join(DOCUMENTATION_DIRECTORY,&quot;Examples&quot;,&quot;Html&quot;))</span>
 </pre></div>
 
   </div>
@@ -1349,6 +1424,48 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.HelpUtils.add_navigation_script">
+    <p>def <span class="ident">add_navigation_script</span>(</p><p>top_directory)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds navigation links to the body tag of all html files in top_directory</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.HelpUtils.add_navigation_script', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.HelpUtils.add_navigation_script" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_navigation_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds navigation links to the body tag of all html files in top_directory&quot;&quot;&quot;</span>
+    <span class="n">navigation_html</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;a href=&quot;../../pyMeasure_Documentation.html&quot;&gt;Documentation Home &lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&quot;../../pyMeasure/index.html&quot;&gt;API Documentation &lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&quot;./Examples_Home.html&quot;&gt;Examples&lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&quot;../../Reference_Index.html&quot;&gt;Index &lt;/a&gt;&quot;&quot;&quot;</span>
+    <span class="n">file_names</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">top_directory</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+        <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;htm&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+            <span class="n">lines</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;\&lt;body\&gt;&quot;</span><span class="p">,</span><span class="n">line</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="o">+</span><span class="n">navigation_html</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="n">in_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">out_file</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+            <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
     <div class="name def" id="pyMeasure.Code.Utils.HelpUtils.autogenerate_api_documentation_script">
     <p>def <span class="ident">autogenerate_api_documentation_script</span>(</p><p>)</p>
     </div>
@@ -1374,6 +1491,62 @@ the Documentation folder under pyMeasure. If the folder exists it first deletes 
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not delete existing API documentation&quot;</span><span class="p">)</span>
         <span class="k">pass</span>
     <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python pdoc --html --overwrite pyMeasure&quot;</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.HelpUtils.change_links_examples_script">
+    <p>def <span class="ident">change_links_examples_script</span>(</p><p>top_directory)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Changes all the links with extensions .ipynb to .html</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.HelpUtils.change_links_examples_script', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.HelpUtils.change_links_examples_script" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">change_links_examples_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Changes all the links with extensions .ipynb to .html&quot;&quot;&quot;</span>
+    <span class="n">file_names</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">top_directory</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+        <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;htm&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+            <span class="n">content</span><span class="o">=</span><span class="n">in_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">new_content</span><span class="o">=</span><span class="n">content</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.ipynb&#39;</span><span class="p">,</span><span class="s1">&#39;.html&#39;</span><span class="p">)</span>
+            <span class="n">in_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">new_content</span><span class="p">)</span>
+            <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.HelpUtils.create_examples_html_script">
+    <p>def <span class="ident">create_examples_html_script</span>(</p><p>jupyter_examples_directory)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Uses nbconvert to change all .ipynb to .html then moves all files that are not.ipynb</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.HelpUtils.create_examples_html_script', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.HelpUtils.create_examples_html_script" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">create_examples_html_script</span><span class="p">(</span><span class="n">jupyter_examples_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Uses nbconvert to change all .ipynb to .html then moves all files that are not.ipynb&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
 </pre></div>
 
   </div>
@@ -1428,6 +1601,54 @@ If file_path is not specified it auto names it and saves it in the current worki
         <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_text</span><span class="p">)</span>
         <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.HelpUtils.create_imports_html_script">
+    <p>def <span class="ident">create_imports_html_script</span>(</p><p>top_directory)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Reads all .py files under top directory and creates an html page that
+contains all of the imports and the file that imports them</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.HelpUtils.create_imports_html_script', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.HelpUtils.create_imports_html_script" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">create_imports_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reads all .py files under top directory and creates an html page that</span>
+<span class="sd">    contains all of the imports and the file that imports them&quot;&quot;&quot;</span>
+    <span class="n">imports</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">import_pattern_1</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;import (?P&lt;name&gt;[\w|\.]+</span><span class="se">\n</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="n">import_pattern_2</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;from (?P&lt;name&gt;\[w|\.]+) import \w+</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">file_names</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+        <span class="n">clean_directory</span><span class="o">=</span><span class="n">directory</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+            <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;py&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">import_pattern_1</span><span class="p">,</span><span class="n">line</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">import_pattern_2</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">import_pattern_1</span><span class="p">,</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                        <span class="n">imports</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{0} in {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">file_name</span><span class="p">))</span>
+                    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">import_pattern_2</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">import_pattern_2</span><span class="p">,</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                        <span class="n">imports</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{0} in {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span>
+    <span class="n">unique_imports</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">imports</span><span class="p">)))</span>
+    <span class="n">html_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">import_name</span> <span class="ow">in</span> <span class="n">unique_imports</span><span class="p">:</span>
+        <span class="n">html_string</span><span class="o">=</span><span class="n">html_string</span><span class="o">+</span><span class="s2">&quot;&lt;li&gt;{0}&lt;/li&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">import_name</span><span class="p">)</span>
+    <span class="n">html_string</span><span class="o">=</span><span class="n">INDEX_HTML_PREFIX</span><span class="o">+</span><span class="n">html_string</span><span class="o">+</span><span class="n">INDEX_HTML_POSTFIX</span>
+    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;pyMeasure_Imports.html&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_string</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
   </div>

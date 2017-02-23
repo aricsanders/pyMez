@@ -22,7 +22,7 @@ Examples
     >>print output
 
 
-<a href="../../../Examples/Html/GraphModels_Example.html">GraphModels Example</a>
+<h3><a href="../../../Examples/Html/GraphModels_Example.html">GraphModels Example</a></h3>
 
 Requirements
 ------------

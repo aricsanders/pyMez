@@ -1162,7 +1162,15 @@ Currently, the module networkx is used to display the g...</p></div>
       <p class="name"><a href="HTMLModels.m.html">pyMeasure.Code.DataHandlers.HTMLModels</a></p>
       
   
-    <div class="desc"><p>HTMLModels is a module for the creation and manipulation of HTML based models</p></div>
+    <div class="desc"><p>HTMLModels is a module for the creation and manipulation of HTML based models.
+It provides a model to open, print, add to and convert html to pdf.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">new_html</span><span class="o">=</span><span class="n">HTMLBase</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;One_Port_Sparameter_20160307_001.html&quot;</span><span class="p">))</span>
+<span class="o">&gt;&gt;</span><span class="k">print</span><span class="p">(</span><span class="n">new_html</span><span class="p">)</span>
+</pre></div>
+
+
+<p>&lt;h...</p></div>
 
       </div>
       <div class="item">
@@ -1225,7 +1233,9 @@ This change is meant ...</p></div>
   
     <div class="desc"><p>XMLModels is dedicated to handling xml based models,
 requires lxml to be installed.
-see also <a href="HTMLModels.m.html"><code>pyMeasure.Code.DataHandlers.HTMLModels</code></a></p></div>
+see also <a href="./HTMLModels.m.html"><a href="HTMLModels.m.html"><code>pyMeasure.Code.DataHandlers.HTMLModels</code></a></a>.
+XMLModels has components for basic manipulation, the creation of xml measurements, logs,
+Instrument states, instrument sheets and f...</p></div>
 
       </div>
       <div class="item">

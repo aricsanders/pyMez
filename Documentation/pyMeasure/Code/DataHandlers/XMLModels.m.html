@@ -6,7 +6,7 @@
     <title>pyMeasure.Code.DataHandlers.XMLModels API documentation</title>
     <meta name="description" content="XMLModels is dedicated to handling xml based models,
 requires lxml to be installed.
-see also `pyMeas..." />
+see also <a href..." />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
@@ -1338,7 +1338,37 @@ table {
   <h1 class="title"><span class="name">pyMeasure.Code.DataHandlers.XMLModels</span> module</h1>
   <p>XMLModels is dedicated to handling xml based models,
 requires lxml to be installed.
-see also <code>pyMeasure.Code.DataHandlers.HTMLModels</code></p>
+see also <a href="./HTMLModels.m.html"><code>pyMeasure.Code.DataHandlers.HTMLModels</code></a>.
+XMLModels has components for basic manipulation, the creation of xml measurements, logs,
+Instrument states, instrument sheets and file indices.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">new_xml</span><span class="o">=</span><span class="n">HTMLBase</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;One_Port_Sparameter_20160303_001.xml&quot;</span><span class="p">))</span>
+<span class="o">&gt;&gt;</span><span class="k">print</span><span class="p">(</span><span class="n">new_xml</span><span class="p">)</span>
+</pre></div>
+
+
+<p><h3><a href="../../../Examples/Html/XMLModels_Example.html">XMLModels Example</a></h3></p>
+<h2>Requirements</h2>
+<ul>
+<li><a href="https://docs.python.org/2/library/sys.html">sys</a></li>
+<li><a href="https://docs.python.org/2/library/os.html?highlight=os#module-os">os</a></li>
+<li><a href="http://lxml.de/">lxml</a></li>
+<li><a href="https://docs.python.org/2/library/types.html">types</a></li>
+<li><a href="https://github.com/aricsanders/pyMeasure">pyMeasure</a></li>
+<li><a href="https://docs.python.org/2/library/xml.html">xml</a></li>
+<li><a href="https://docs.python.org/2/library/datetime.html">datetime</a></li>
+<li><a href="https://docs.python.org/2/library/urlparse.html">urlparse</a></li>
+<li><a href="https://docs.python.org/2/library/socket.html">socket</a></li>
+<li><a href="https://docs.python.org/2/library/fnmatch.html">fnmatch</a></li>
+</ul>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMeasure.Code.DataHandlers</code></a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels" class="source">
@@ -1351,7 +1381,42 @@ see also <code>pyMeasure.Code.DataHandlers.HTMLModels</code></p>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot; XMLModels is dedicated to handling xml based models,</span>
 <span class="sd">requires lxml to be installed.</span>
-<span class="sd">see also `pyMeasure.Code.DataHandlers.HTMLModels` &quot;&quot;&quot;</span>
+<span class="sd">see also &lt;a href=&quot;./HTMLModels.m.html&quot;&gt;`pyMeasure.Code.DataHandlers.HTMLModels`&lt;/a&gt;.</span>
+<span class="sd">XMLModels has components for basic manipulation, the creation of xml measurements, logs,</span>
+<span class="sd">Instrument states, instrument sheets and file indices.</span>
+
+<span class="sd"> Examples</span>
+<span class="sd">--------</span>
+<span class="sd">    #!python</span>
+<span class="sd">    &gt;&gt;new_xml=HTMLBase(os.path.join(TESTS_DIRECTORY,&quot;One_Port_Sparameter_20160303_001.xml&quot;))</span>
+<span class="sd">    &gt;&gt;print(new_xml)</span>
+
+<span class="sd"> &lt;h3&gt;&lt;a href=&quot;../../../Examples/Html/XMLModels_Example.html&quot;&gt;XMLModels Example&lt;/a&gt;&lt;/h3&gt;</span>
+
+<span class="sd">Requirements</span>
+<span class="sd">------------</span>
+<span class="sd">+ [sys](https://docs.python.org/2/library/sys.html)</span>
+<span class="sd">+ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)</span>
+<span class="sd">+ [lxml](http://lxml.de/)</span>
+<span class="sd">+ [types](https://docs.python.org/2/library/types.html)</span>
+<span class="sd">+ [pyMeasure](https://github.com/aricsanders/pyMeasure)</span>
+<span class="sd">+ [xml](https://docs.python.org/2/library/xml.html)</span>
+<span class="sd">+ [datetime](https://docs.python.org/2/library/datetime.html)</span>
+<span class="sd">+ [urlparse](https://docs.python.org/2/library/urlparse.html)</span>
+<span class="sd">+ [socket](https://docs.python.org/2/library/socket.html)</span>
+<span class="sd">+ [fnmatch](https://docs.python.org/2/library/fnmatch.html)</span>
+
+<span class="sd">Help</span>
+<span class="sd">---------------</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMeasure.Code.DataHandlers`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Examples/Html/Examples_Home.html&quot;&gt;Examples Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;</span>
+
+<span class="sd"> &quot;&quot;&quot;</span>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Standard Imports</span>
@@ -1459,7 +1524,7 @@ see also <code>pyMeasure.Code.DataHandlers.HTMLModels</code></p>
             <span class="n">new_xml</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">new_entry</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">new_xml</span>
 <span class="k">def</span> <span class="nf">make_xml_element</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates an lxml.html.HtmlElement given a tag, content and attribute dictionary</span>
+    <span class="sd">&quot;&quot;&quot;Returns an lxml.html.HtmlElement given a tag, content and attribute dictionary</span>
 <span class="sd">     &lt;tag key1=&quot;value2&quot; key2=&quot;value2&quot;&gt;content&lt;/tag&gt; &quot;&quot;&quot;</span>
     <span class="n">position_arguments</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
@@ -1468,7 +1533,7 @@ see also <code>pyMeasure.Code.DataHandlers.HTMLModels</code></p>
     <span class="k">return</span> <span class="n">new_tag</span>
 
 <span class="k">def</span> <span class="nf">make_xml_string</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates the html string for tag, content and attribute dictionary</span>
+    <span class="sd">&quot;&quot;&quot;Returns the html string for tag, content and attribute dictionary</span>
 <span class="sd">     &lt;tag key1=&quot;value2&quot; key2=&quot;value2&quot;&gt;content&lt;/tag&gt; &quot;&quot;&quot;</span>
     <span class="n">position_arguments</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
@@ -1754,7 +1819,7 @@ see also <code>pyMeasure.Code.DataHandlers.HTMLModels</code></p>
             <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;(.)+&lt;/Entry&gt;&#39;</span><span class="p">,</span><span class="n">entry</span><span class="p">):</span>
-                <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">new_entry</span><span class="p">)</span>
+                <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
                 <span class="n">new_entry</span><span class="o">=</span><span class="n">new_document</span><span class="o">.</span><span class="n">documentElement</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;&#39;</span>
@@ -1850,7 +1915,7 @@ see also <code>pyMeasure.Code.DataHandlers.HTMLModels</code></p>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_Index_node_dictionary</span><span class="p">()</span>
             
     <span class="k">def</span> <span class="nf">update_Index_node_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Re-creates the attribute self.Index_node_dictionary, using the current</span>
+        <span class="sd">&quot;&quot;&quot; Re-Returns the attribute self.Index_node_dictionary, using the current</span>
 <span class="sd">        definition of self.document&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Index_node_dictionary</span><span class="o">=</span><span class="nb">dict</span><span class="p">([(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)),</span>
         <span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> \
@@ -2011,7 +2076,7 @@ see also <code>pyMeasure.Code.DataHandlers.HTMLModels</code></p>
 <span class="k">class</span> <span class="nc">DataTable</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This is a XML data table class with an optional description&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Intializes the DataTable Class. Passing **{&#39;data_table&#39;:[mylist]} creates a</span>
+        <span class="sd">&quot;&quot;&quot; Intializes the DataTable Class. Passing **{&#39;data_table&#39;:[mylist]} Returns a</span>
 <span class="sd">        table with x1 and x2 as column names. Passing **{&#39;data_dictionary&#39;:{&#39;Data_Description&#39;:{&#39;Tag&#39;:&#39;Text&#39;,etc},</span>
 <span class="sd">        &#39;Data&#39;:[{&#39;x&#39;:1,&#39;y&#39;:2},{&#39;x&#39;:2,&#39;y&#39;:3}]</span>
 <span class="sd">         &quot;&quot;&quot;</span>
@@ -2132,7 +2197,7 @@ see also <code>pyMeasure.Code.DataHandlers.HTMLModels</code></p>
             <span class="k">return</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">get_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Creates a header from the data description if there is one&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; Returns a header from the data description if there is one&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">node_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;Data_Description&#39;</span><span class="p">)</span>
             <span class="n">data_description</span><span class="o">=</span><span class="n">node_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2176,7 +2241,7 @@ see also <code>pyMeasure.Code.DataHandlers.HTMLModels</code></p>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;File&#39;</span><span class="p">)])</span>
 
     <span class="k">def</span> <span class="nf">create_Id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">URL</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Creates or returns the existing Id element of a URL&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; Returns or returns the existing Id element of a URL&quot;&quot;&quot;</span>
         <span class="n">parsed_URL</span><span class="o">=</span><span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">condition_URL</span><span class="p">(</span><span class="n">URL</span><span class="p">))</span>
         <span class="k">try</span><span class="p">:</span> <span class="c1"># Look in self.Id_dictionary, if it is not there catch</span>
              <span class="c1"># the exception KeyError and generate an Id.</span>
@@ -3495,13 +3560,13 @@ xml documents xml_list. Puts both documents under the new_root root tag</p></div
 
     
   
-    <div class="desc"><p>Creates an lxml.html.HtmlElement given a tag, content and attribute dictionary
+    <div class="desc"><p>Returns an lxml.html.HtmlElement given a tag, content and attribute dictionary
 <tag key1="value2" key2="value2">content</tag></p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.make_xml_element', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.make_xml_element" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">make_xml_element</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates an lxml.html.HtmlElement given a tag, content and attribute dictionary</span>
+    <span class="sd">&quot;&quot;&quot;Returns an lxml.html.HtmlElement given a tag, content and attribute dictionary</span>
 <span class="sd">     &lt;tag key1=&quot;value2&quot; key2=&quot;value2&quot;&gt;content&lt;/tag&gt; &quot;&quot;&quot;</span>
     <span class="n">position_arguments</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
@@ -3524,13 +3589,13 @@ xml documents xml_list. Puts both documents under the new_root root tag</p></div
 
     
   
-    <div class="desc"><p>Creates the html string for tag, content and attribute dictionary
+    <div class="desc"><p>Returns the html string for tag, content and attribute dictionary
 <tag key1="value2" key2="value2">content</tag></p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.make_xml_string', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.make_xml_string" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">make_xml_string</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates the html string for tag, content and attribute dictionary</span>
+    <span class="sd">&quot;&quot;&quot;Returns the html string for tag, content and attribute dictionary</span>
 <span class="sd">     &lt;tag key1=&quot;value2&quot; key2=&quot;value2&quot;&gt;content&lt;/tag&gt; &quot;&quot;&quot;</span>
     <span class="n">position_arguments</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
@@ -4326,7 +4391,7 @@ same tagname). If no metadata file is given it just writes them to a file in
         <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
     <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;(.)+&lt;/Entry&gt;&#39;</span><span class="p">,</span><span class="n">entry</span><span class="p">):</span>
-            <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">new_entry</span><span class="p">)</span>
+            <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
             <span class="n">new_entry</span><span class="o">=</span><span class="n">new_document</span><span class="o">.</span><span class="n">documentElement</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;&#39;</span>
@@ -4788,13 +4853,13 @@ window (using wx)</p></div>
 
     
   
-    <div class="desc inherited"><p>Re-creates the attribute self.Index_node_dictionary, using the current
+    <div class="desc inherited"><p>Re-Returns the attribute self.Index_node_dictionary, using the current
 definition of self.document</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.ChangeXMLLog.update_Index_node_dictionary', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.ChangeXMLLog.update_Index_node_dictionary" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_Index_node_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Re-creates the attribute self.Index_node_dictionary, using the current</span>
+    <span class="sd">&quot;&quot;&quot; Re-Returns the attribute self.Index_node_dictionary, using the current</span>
 <span class="sd">    definition of self.document&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">Index_node_dictionary</span><span class="o">=</span><span class="nb">dict</span><span class="p">([(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)),</span>
     <span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> \
@@ -4820,7 +4885,7 @@ definition of self.document</p></div>
     <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">DataTable</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This is a XML data table class with an optional description&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Intializes the DataTable Class. Passing **{&#39;data_table&#39;:[mylist]} creates a</span>
+        <span class="sd">&quot;&quot;&quot; Intializes the DataTable Class. Passing **{&#39;data_table&#39;:[mylist]} Returns a</span>
 <span class="sd">        table with x1 and x2 as column names. Passing **{&#39;data_dictionary&#39;:{&#39;Data_Description&#39;:{&#39;Tag&#39;:&#39;Text&#39;,etc},</span>
 <span class="sd">        &#39;Data&#39;:[{&#39;x&#39;:1,&#39;y&#39;:2},{&#39;x&#39;:2,&#39;y&#39;:3}]</span>
 <span class="sd">         &quot;&quot;&quot;</span>
@@ -4941,7 +5006,7 @@ definition of self.document</p></div>
             <span class="k">return</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">get_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Creates a header from the data description if there is one&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; Returns a header from the data description if there is one&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">node_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;Data_Description&#39;</span><span class="p">)</span>
             <span class="n">data_description</span><span class="o">=</span><span class="n">node_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -5018,14 +5083,14 @@ definition of self.document</p></div>
 
     
   
-    <div class="desc"><p>Intializes the DataTable Class. Passing <strong>{'data_table':[mylist]} creates a
+    <div class="desc"><p>Intializes the DataTable Class. Passing <strong>{'data_table':[mylist]} Returns a
 table with x1 and x2 as column names. Passing </strong>{'data_dictionary':{'Data_Description':{'Tag':'Text',etc},
 'Data':[{'x':1,'y':2},{'x':2,'y':3}]</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.DataTable.__init__', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.DataTable.__init__" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Intializes the DataTable Class. Passing **{&#39;data_table&#39;:[mylist]} creates a</span>
+    <span class="sd">&quot;&quot;&quot; Intializes the DataTable Class. Passing **{&#39;data_table&#39;:[mylist]} Returns a</span>
 <span class="sd">    table with x1 and x2 as column names. Passing **{&#39;data_dictionary&#39;:{&#39;Data_Description&#39;:{&#39;Tag&#39;:&#39;Text&#39;,etc},</span>
 <span class="sd">    &#39;Data&#39;:[{&#39;x&#39;:1,&#39;y&#39;:2},{&#39;x&#39;:2,&#39;y&#39;:3}]</span>
 <span class="sd">     &quot;&quot;&quot;</span>
@@ -5135,12 +5200,12 @@ table with x1 and x2 as column names. Passing </strong>{'data_dictionary':{'Data
 
     
   
-    <div class="desc"><p>Creates a header from the data description if there is one</p></div>
+    <div class="desc"><p>Returns a header from the data description if there is one</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.DataTable.get_header', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.DataTable.get_header" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Creates a header from the data description if there is one&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; Returns a header from the data description if there is one&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">node_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;Data_Description&#39;</span><span class="p">)</span>
         <span class="n">data_description</span><span class="o">=</span><span class="n">node_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -5659,7 +5724,7 @@ window (using wx)</p></div>
         <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
     <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;(.)+&lt;/Entry&gt;&#39;</span><span class="p">,</span><span class="n">entry</span><span class="p">):</span>
-            <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">new_entry</span><span class="p">)</span>
+            <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
             <span class="n">new_entry</span><span class="o">=</span><span class="n">new_document</span><span class="o">.</span><span class="n">documentElement</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;&#39;</span>
@@ -6158,13 +6223,13 @@ window (using wx)</p></div>
 
     
   
-    <div class="desc inherited"><p>Re-creates the attribute self.Index_node_dictionary, using the current
+    <div class="desc inherited"><p>Re-Returns the attribute self.Index_node_dictionary, using the current
 definition of self.document</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.EndOfDayXMLLog.update_Index_node_dictionary', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.EndOfDayXMLLog.update_Index_node_dictionary" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_Index_node_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Re-creates the attribute self.Index_node_dictionary, using the current</span>
+    <span class="sd">&quot;&quot;&quot; Re-Returns the attribute self.Index_node_dictionary, using the current</span>
 <span class="sd">    definition of self.document&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">Index_node_dictionary</span><span class="o">=</span><span class="nb">dict</span><span class="p">([(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)),</span>
     <span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> \
@@ -6342,7 +6407,7 @@ definition of self.document</p></div>
         <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
     <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;(.)+&lt;/Entry&gt;&#39;</span><span class="p">,</span><span class="n">entry</span><span class="p">):</span>
-            <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">new_entry</span><span class="p">)</span>
+            <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
             <span class="n">new_entry</span><span class="o">=</span><span class="n">new_document</span><span class="o">.</span><span class="n">documentElement</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;&#39;</span>
@@ -6804,13 +6869,13 @@ window (using wx)</p></div>
 
     
   
-    <div class="desc inherited"><p>Re-creates the attribute self.Index_node_dictionary, using the current
+    <div class="desc inherited"><p>Re-Returns the attribute self.Index_node_dictionary, using the current
 definition of self.document</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.ErrorXMLLog.update_Index_node_dictionary', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.ErrorXMLLog.update_Index_node_dictionary" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_Index_node_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Re-creates the attribute self.Index_node_dictionary, using the current</span>
+    <span class="sd">&quot;&quot;&quot; Re-Returns the attribute self.Index_node_dictionary, using the current</span>
 <span class="sd">    definition of self.document&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">Index_node_dictionary</span><span class="o">=</span><span class="nb">dict</span><span class="p">([(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)),</span>
     <span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> \
@@ -6862,7 +6927,7 @@ File Register XML File.</p></div>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;File&#39;</span><span class="p">)])</span>
 
     <span class="k">def</span> <span class="nf">create_Id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">URL</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Creates or returns the existing Id element of a URL&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; Returns or returns the existing Id element of a URL&quot;&quot;&quot;</span>
         <span class="n">parsed_URL</span><span class="o">=</span><span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">condition_URL</span><span class="p">(</span><span class="n">URL</span><span class="p">))</span>
         <span class="k">try</span><span class="p">:</span> <span class="c1"># Look in self.Id_dictionary, if it is not there catch</span>
              <span class="c1"># the exception KeyError and generate an Id.</span>
@@ -7328,12 +7393,12 @@ provides a way to {'ignore','.pyc|etc'} or {'only','.png|.bmp'}</p></div>
 
     
   
-    <div class="desc"><p>Creates or returns the existing Id element of a URL</p></div>
+    <div class="desc"><p>Returns or returns the existing Id element of a URL</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.FileRegister.create_Id', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.FileRegister.create_Id" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">create_Id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">URL</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Creates or returns the existing Id element of a URL&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; Returns or returns the existing Id element of a URL&quot;&quot;&quot;</span>
     <span class="n">parsed_URL</span><span class="o">=</span><span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">condition_URL</span><span class="p">(</span><span class="n">URL</span><span class="p">))</span>
     <span class="k">try</span><span class="p">:</span> <span class="c1"># Look in self.Id_dictionary, if it is not there catch</span>
          <span class="c1"># the exception KeyError and generate an Id.</span>
@@ -9461,7 +9526,7 @@ window (using wx)</p></div>
         <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
     <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;(.)+&lt;/Entry&gt;&#39;</span><span class="p">,</span><span class="n">entry</span><span class="p">):</span>
-            <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">new_entry</span><span class="p">)</span>
+            <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
             <span class="n">new_entry</span><span class="o">=</span><span class="n">new_document</span><span class="o">.</span><span class="n">documentElement</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;&#39;</span>
@@ -9923,13 +9988,13 @@ window (using wx)</p></div>
 
     
   
-    <div class="desc inherited"><p>Re-creates the attribute self.Index_node_dictionary, using the current
+    <div class="desc inherited"><p>Re-Returns the attribute self.Index_node_dictionary, using the current
 definition of self.document</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.ServiceXMLLog.update_Index_node_dictionary', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.ServiceXMLLog.update_Index_node_dictionary" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_Index_node_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Re-creates the attribute self.Index_node_dictionary, using the current</span>
+    <span class="sd">&quot;&quot;&quot; Re-Returns the attribute self.Index_node_dictionary, using the current</span>
 <span class="sd">    definition of self.document&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">Index_node_dictionary</span><span class="o">=</span><span class="nb">dict</span><span class="p">([(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)),</span>
     <span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> \
@@ -10331,7 +10396,7 @@ window (using wx)</p></div>
             <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;(.)+&lt;/Entry&gt;&#39;</span><span class="p">,</span><span class="n">entry</span><span class="p">):</span>
-                <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">new_entry</span><span class="p">)</span>
+                <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
                 <span class="n">new_entry</span><span class="o">=</span><span class="n">new_document</span><span class="o">.</span><span class="n">documentElement</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;&#39;</span>
@@ -10427,7 +10492,7 @@ window (using wx)</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_Index_node_dictionary</span><span class="p">()</span>
             
     <span class="k">def</span> <span class="nf">update_Index_node_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Re-creates the attribute self.Index_node_dictionary, using the current</span>
+        <span class="sd">&quot;&quot;&quot; Re-Returns the attribute self.Index_node_dictionary, using the current</span>
 <span class="sd">        definition of self.document&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Index_node_dictionary</span><span class="o">=</span><span class="nb">dict</span><span class="p">([(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)),</span>
         <span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> \
@@ -10674,7 +10739,7 @@ window (using wx)</p></div>
         <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
     <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;(.)+&lt;/Entry&gt;&#39;</span><span class="p">,</span><span class="n">entry</span><span class="p">):</span>
-            <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">new_entry</span><span class="p">)</span>
+            <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
             <span class="n">new_entry</span><span class="o">=</span><span class="n">new_document</span><span class="o">.</span><span class="n">documentElement</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">new_document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="s1">&#39;&lt;Entry&gt;&#39;</span>
@@ -11104,13 +11169,13 @@ window (using wx)</p></div>
 
     
   
-    <div class="desc"><p>Re-creates the attribute self.Index_node_dictionary, using the current
+    <div class="desc"><p>Re-Returns the attribute self.Index_node_dictionary, using the current
 definition of self.document</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.XMLLog.update_Index_node_dictionary', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.XMLLog.update_Index_node_dictionary" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_Index_node_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Re-creates the attribute self.Index_node_dictionary, using the current</span>
+    <span class="sd">&quot;&quot;&quot; Re-Returns the attribute self.Index_node_dictionary, using the current</span>
 <span class="sd">    definition of self.document&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">Index_node_dictionary</span><span class="o">=</span><span class="nb">dict</span><span class="p">([(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">)),</span>
     <span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> \
