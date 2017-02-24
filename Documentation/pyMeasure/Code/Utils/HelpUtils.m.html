@@ -1063,6 +1063,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_help_page">create_help_page</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_imports_html_script">create_imports_html_script</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_index_html_script">create_index_html_script</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.create_modules_html_script">create_modules_html_script</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.return_help">return_help</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.test_create_examples_page">test_create_examples_page</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.test_create_help_page">test_create_help_page</a></li>
@@ -1327,6 +1328,26 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_string</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
+
+<span class="k">def</span> <span class="nf">create_modules_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">output_directory</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">output_name</span><span class="o">=</span><span class="s2">&quot;pyMeasure_Modules.html&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates an html page with all python modules under top_directory&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">output_directory</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">output_directory</span><span class="o">=</span><span class="n">top_directory</span>
+    <span class="n">modules</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">file_names</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+            <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;py(?!c)&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                <span class="n">modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+
+    <span class="n">html_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">:</span>
+        <span class="n">html_string</span><span class="o">=</span><span class="n">html_string</span><span class="o">+</span><span class="s2">&quot;&lt;li&gt;{0}&lt;/li&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+    <span class="n">html_string</span><span class="o">=</span><span class="n">IMPORT_HMTL_PREFIX</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;All Imports&quot;</span><span class="p">,</span><span class="s2">&quot;All Modules&quot;</span><span class="p">)</span><span class="o">+</span><span class="n">html_string</span><span class="o">+</span><span class="n">INDEX_HTML_POSTFIX</span>
+    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_directory</span><span class="p">,</span><span class="n">output_name</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_string</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
 <span class="k">def</span> <span class="nf">create_examples_html_script</span><span class="p">(</span><span class="n">jupyter_examples_directory</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Uses nbconvert to change all .ipynb to .html then moves all files that are not .ipynb, to a</span>
 <span class="sd">    directory at the same level called html. It deletes out any files that are generated in the original directory&quot;&quot;&quot;</span>
@@ -1416,6 +1437,7 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
     <span class="n">create_examples_html_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Examples&quot;</span><span class="p">,</span><span class="s2">&quot;jupyter&quot;</span><span class="p">))</span>
     <span class="n">change_links_examples_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span> <span class="s2">&quot;Examples&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">))</span>
     <span class="n">add_navigation_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span> <span class="s2">&quot;Examples&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">))</span>
+    <span class="c1">#create_modules_html_script(PYMEASURE_ROOT)</span>
 </pre></div>
 
   </div>
@@ -1822,6 +1844,44 @@ and INDEX_HTML_POSTFIX to wrap the resulting html elements.</p></div>
     <span class="n">links_string</span> <span class="o">=</span> <span class="n">INDEX_HTML_PREFIX</span> <span class="o">+</span> <span class="n">links_string</span> <span class="o">+</span> <span class="n">INDEX_HTML_POSTFIX</span>
     <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Reference_Index.html&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">links_string</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.HelpUtils.create_modules_html_script">
+    <p>def <span class="ident">create_modules_html_script</span>(</p><p>top_directory, output_directory=None, output_name=&#39;pyMeasure_Modules.html&#39;)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates an html page with all python modules under top_directory</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.HelpUtils.create_modules_html_script', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.HelpUtils.create_modules_html_script" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">create_modules_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">output_directory</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">output_name</span><span class="o">=</span><span class="s2">&quot;pyMeasure_Modules.html&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates an html page with all python modules under top_directory&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">output_directory</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">output_directory</span><span class="o">=</span><span class="n">top_directory</span>
+    <span class="n">modules</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">file_names</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+            <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;py(?!c)&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                <span class="n">modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+
+    <span class="n">html_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">:</span>
+        <span class="n">html_string</span><span class="o">=</span><span class="n">html_string</span><span class="o">+</span><span class="s2">&quot;&lt;li&gt;{0}&lt;/li&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+    <span class="n">html_string</span><span class="o">=</span><span class="n">IMPORT_HMTL_PREFIX</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;All Imports&quot;</span><span class="p">,</span><span class="s2">&quot;All Modules&quot;</span><span class="p">)</span><span class="o">+</span><span class="n">html_string</span><span class="o">+</span><span class="n">INDEX_HTML_POSTFIX</span>
+    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_directory</span><span class="p">,</span><span class="n">output_name</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_string</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 

@@ -13,7 +13,7 @@ Designed by Aric Sanders 2016
     >>from pyMeasure import *
     >>test_AdvancedInterfaceFrame()
 
- <h3><a href="../../../Examples/html/Examples_Home.html">All Examples</a></h3>
+ <h3><a href="../Examples/html/Examples_Home.html">All Examples</a></h3>
 
 Requirements
 ------------
@@ -34,7 +34,6 @@ Requirements
 
 Help
 ---------------
-<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
 <div>
 <a href="../pyMeasure_Documentation.html">Documentation Home</a> |
 <a href="./index.html">API Documentation Home</a> |

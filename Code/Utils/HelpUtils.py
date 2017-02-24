@@ -233,6 +233,26 @@ def create_imports_html_script(top_directory,output_directory=None):
     out_file.write(html_string)
     out_file.close()
 
+
+def create_modules_html_script(top_directory,output_directory=None,output_name="pyMeasure_Modules.html"):
+    """Creates an html page with all python modules under top_directory"""
+    if output_directory is None:
+        output_directory=top_directory
+    modules=[]
+    for directory, dirnames, file_names in os.walk(top_directory):
+        for file_name in file_names:
+            extension=file_name.split(".")[-1]
+            if re.match('py(?!c)',extension,re.IGNORECASE):
+                modules.append(file_name)
+
+    html_string=""
+    for module_name in modules:
+        html_string=html_string+"<li>{0}</li>".format(module_name)
+    html_string=IMPORT_HMTL_PREFIX.replace("All Imports","All Modules")+html_string+INDEX_HTML_POSTFIX
+    out_file=open(os.path.join(output_directory,output_name),"w")
+    out_file.write(html_string)
+    out_file.close()
+
 def create_examples_html_script(jupyter_examples_directory):
     """Uses nbconvert to change all .ipynb to .html then moves all files that are not .ipynb, to a
     directory at the same level called html. It deletes out any files that are generated in the original directory"""
@@ -322,3 +342,4 @@ if __name__ == '__main__':
     create_examples_html_script(os.path.join(DOCUMENTATION_DIRECTORY,"Examples","jupyter"))
     change_links_examples_script(os.path.join(DOCUMENTATION_DIRECTORY, "Examples", "html"))
     add_navigation_script(os.path.join(DOCUMENTATION_DIRECTORY, "Examples", "html"))
+    #create_modules_html_script(PYMEASURE_ROOT)

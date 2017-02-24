@@ -1049,14 +1049,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.StringTypes">StringTypes</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.echo">echo</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.keyDefs">keyDefs</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.only_first_block">only_first_block</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.os_path">os_path</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.overview">overview</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.p2c">p2c</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.pi">pi</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.shellReg">shellReg</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.sin">sin</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAME">wxID_BASICINTERFACEFRAME</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEARBDBPANEL">wxID_BASICINTERFACEFRAMEARBDBPANEL</a></li>
@@ -1140,14 +1134,6 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTARTLABEL">wxID_KEITHLEYIVPANELSTARTLABEL</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPCONTROL">wxID_KEITHLEYIVPANELSTOPCONTROL</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPLABEL">wxID_KEITHLEYIVPANELSTOPLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_PANEL1">wxID_PANEL1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_PANEL1STYLEDTEXTCTRL1">wxID_PANEL1STYLEDTEXTCTRL1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_CALLTIPS">wxID_SHELL_CALLTIPS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_CODECOMP">wxID_SHELL_CODECOMP</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_ENTER">wxID_SHELL_ENTER</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_HISTORYDOWN">wxID_SHELL_HISTORYDOWN</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_HISTORYUP">wxID_SHELL_HISTORYUP</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_HOME">wxID_SHELL_HOME</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</a></li>
@@ -1634,7 +1620,7 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
     <span class="c1">#import pyMeasure</span>
     <span class="kn">from</span> <span class="nn">Code.FrontEnds.IEPanel</span> <span class="kn">import</span> <span class="o">*</span>
     <span class="kn">from</span> <span class="nn">Code.FrontEnds.EndOfDayDialog</span> <span class="kn">import</span> <span class="o">*</span>
-    <span class="kn">from</span> <span class="nn">Code.FrontEnds.ShellPanel</span> <span class="kn">import</span> <span class="o">*</span>
+    <span class="c1">#from Code.FrontEnds.ShellPanel import *</span>
     <span class="kn">from</span> <span class="nn">Code.FrontEnds.SimpleLogLowerInterfacePanel</span> <span class="kn">import</span> <span class="o">*</span>
     <span class="kn">from</span> <span class="nn">Code.FrontEnds.SimpleArbDBLowerInterfacePanel</span> <span class="kn">import</span> <span class="o">*</span>
     <span class="kn">from</span> <span class="nn">Code.FrontEnds.VisaDialog</span> <span class="kn">import</span> <span class="o">*</span>
@@ -2489,38 +2475,6 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
 
       </div>
       <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.echo" class="name">var <span class="ident">echo</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.keyDefs" class="name">var <span class="ident">keyDefs</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.only_first_block" class="name">var <span class="ident">only_first_block</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.os_path" class="name">var <span class="ident">os_path</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
       <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.overview" class="name">var <span class="ident">overview</span></p>
       
   
@@ -2529,23 +2483,7 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
 
       </div>
       <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.p2c" class="name">var <span class="ident">p2c</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
       <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.pi" class="name">var <span class="ident">pi</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.shellReg" class="name">var <span class="ident">shellReg</span></p>
       
   
   <div class="source_cont">
@@ -3210,70 +3148,6 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
       </div>
       <div class="item">
       <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTOPLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_PANEL1" class="name">var <span class="ident">wxID_PANEL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_PANEL1STYLEDTEXTCTRL1" class="name">var <span class="ident">wxID_PANEL1STYLEDTEXTCTRL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_CALLTIPS" class="name">var <span class="ident">wxID_SHELL_CALLTIPS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_CODECOMP" class="name">var <span class="ident">wxID_SHELL_CODECOMP</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_ENTER" class="name">var <span class="ident">wxID_SHELL_ENTER</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_HISTORYDOWN" class="name">var <span class="ident">wxID_SHELL_HISTORYDOWN</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_HISTORYUP" class="name">var <span class="ident">wxID_SHELL_HISTORYUP</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SHELL_HOME" class="name">var <span class="ident">wxID_SHELL_HOME</span></p>
       
   
   <div class="source_cont">

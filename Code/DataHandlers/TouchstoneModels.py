@@ -373,9 +373,13 @@ class SNPBase():
                     #print "{0:e}".format(multipliers[old_prefix]/multipliers[new_prefix])
                     self.data[index][column_selector]=\
                     (multipliers[old_prefix]/multipliers[new_prefix])*self.data[index][column_selector]
+                    self.sparameter_complex[index][column_selector]=\
+                    (multipliers[old_prefix]/multipliers[new_prefix])*self.sparameter_complex[index][column_selector]
                 elif type(self.data[index][column_selector]) in [StringType,IntType]:
                     self.data[index][column_selector]=\
                     str((multipliers[old_prefix]/multipliers[new_prefix])*float(self.data[index][column_selector]))
+                    self.sparameter_complex[index][column_selector]=\
+                    str((multipliers[old_prefix]/multipliers[new_prefix])*float(self.sparameter_complex[index][column_selector]))
                 else:
                     print type(self.data[index][column_selector])
                     raise
@@ -390,7 +394,10 @@ class SNPBase():
                 else:
                     print type(self.noiseparameter_data[index][column_selector])
                     raise
+            old_unit_pattern=re.compile(old_unit,re.IGNORECASE)
             self.frequency_units=new_frequency_units
+            self.option_line=re.sub(old_unit_pattern,new_unit,self.option_line)
+            self.options["option_line"]=re.sub(old_unit_pattern,new_unit,self.option_line)
             if self.options["column_descriptions"] is not None:
                 old=self.options["column_descriptions"][column_selector]
                 self.options["column_descriptions"][column_selector]=old.replace(old_unit,new_unit)
