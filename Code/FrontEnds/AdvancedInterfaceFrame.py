@@ -23,7 +23,7 @@ try:
     #import pyMeasure
     from Code.FrontEnds.IEPanel import *
     from Code.FrontEnds.EndOfDayDialog import *
-    from Code.FrontEnds.ShellPanel import *
+    #from Code.FrontEnds.ShellPanel import *
     from Code.FrontEnds.SimpleLogLowerInterfacePanel import *
     from Code.FrontEnds.SimpleArbDBLowerInterfacePanel import *
     from Code.FrontEnds.VisaDialog import *
