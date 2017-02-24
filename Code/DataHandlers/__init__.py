@@ -27,11 +27,11 @@ DataHandlers typically import from Utils but __NOT__ from Analysis, InstrumentCo
 
 Help
 -----
-<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
+<a href="../index.html">`pyMeasure.Code`</a>
 <div>
 <a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
-<a href="../../../Examples/Example_Home.html">Examples</a> |
+<a href="../../../Examples/html/Example_Home.html">Examples</a> |
 <a href="../../../Reference_Index.html">Index </a>
 </div>
 

@@ -6,7 +6,34 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ Uncertainty is a collection of general classes and functions that pertain to uncertainty calculations.
- For specific uncertainty calculations look for modules with a modifier in the name such as  NISTUncertainty"""
+ For specific uncertainty calculations look for modules with a modifier in the name such as  NISTUncertainty.
+
+  Examples
+--------
+    #!python
+    >>test_standard_error()
+
+ <h3><a href="../../../Examples/html/Uncertainty_Example.html">Uncertainty Example</a></h3>
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html)
++ [re](https://docs.python.org/2/library/re.html)
++ [math](https://docs.python.org/2/library/math.html)
++ [pyMeasure](https://github.com/aricsanders/pyMeasure)
+
+Help
+---------------
+<a href="./index.html">`pyMeasure.Code.Analysis`</a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>
+
+ """
 #-----------------------------------------------------------------------------
 # Standard Imports
 import os
@@ -174,7 +201,16 @@ def standard_error_data_table(table_1,table_2,**options):
 
 #-----------------------------------------------------------------------------
 # Module Scripts
-
+def test_standard_error(test_list=None):
+    """Tests the standard error function using a test_list=[first_value,first_error,
+    second_value,second_error]"""
+    if test_list is None:
+        [first_value,first_error,second_value,second_error]=[2.75,.1,3.45,.2]
+    print("The 1st value is {0}, with an uncertainty of {1}".format(first_value,first_error))
+    print("The 2nd value is {0}, with an uncertainty of {1}".format(second_value, second_error))
+    print("The standard_error is {0}".format(standard_error(first_value,
+                                                            first_error,
+                                                            second_value,second_error)))
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':

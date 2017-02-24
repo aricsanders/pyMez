@@ -1088,6 +1088,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.normalized_error_test">normalized_error_test</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.standard_error">standard_error</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table">standard_error_data_table</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.test_standard_error">test_standard_error</a></li>
   </ul>
 
     </li>
@@ -1106,7 +1107,29 @@ table {
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMeasure.Code.Analysis.Uncertainty</span> module</h1>
   <p>Uncertainty is a collection of general classes and functions that pertain to uncertainty calculations.
-For specific uncertainty calculations look for modules with a modifier in the name such as  NISTUncertainty</p>
+ For specific uncertainty calculations look for modules with a modifier in the name such as  NISTUncertainty.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">test_standard_error</span><span class="p">()</span>
+</pre></div>
+
+
+<p><h3><a href="../../../Examples/html/Uncertainty_Example.html">Uncertainty Example</a></h3></p>
+<h2>Requirements</h2>
+<ul>
+<li><a href="https://docs.python.org/2/library/sys.html">sys</a></li>
+<li><a href="https://docs.python.org/2/library/os.html">os</a></li>
+<li><a href="https://docs.python.org/2/library/re.html">re</a></li>
+<li><a href="https://docs.python.org/2/library/math.html">math</a></li>
+<li><a href="https://github.com/aricsanders/pyMeasure">pyMeasure</a></li>
+</ul>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMeasure.Code.Analysis</code></a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.Analysis.Uncertainty" class="source">
@@ -1118,7 +1141,34 @@ For specific uncertainty calculations look for modules with a modifier in the na
 <span class="c1"># License:     MIT License</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot; Uncertainty is a collection of general classes and functions that pertain to uncertainty calculations.</span>
-<span class="sd"> For specific uncertainty calculations look for modules with a modifier in the name such as  NISTUncertainty&quot;&quot;&quot;</span>
+<span class="sd"> For specific uncertainty calculations look for modules with a modifier in the name such as  NISTUncertainty.</span>
+
+<span class="sd">  Examples</span>
+<span class="sd">--------</span>
+<span class="sd">    #!python</span>
+<span class="sd">    &gt;&gt;test_standard_error()</span>
+
+<span class="sd"> &lt;h3&gt;&lt;a href=&quot;../../../Examples/html/Uncertainty_Example.html&quot;&gt;Uncertainty Example&lt;/a&gt;&lt;/h3&gt;</span>
+
+<span class="sd">Requirements</span>
+<span class="sd">------------</span>
+<span class="sd">+ [sys](https://docs.python.org/2/library/sys.html)</span>
+<span class="sd">+ [os](https://docs.python.org/2/library/os.html)</span>
+<span class="sd">+ [re](https://docs.python.org/2/library/re.html)</span>
+<span class="sd">+ [math](https://docs.python.org/2/library/math.html)</span>
+<span class="sd">+ [pyMeasure](https://github.com/aricsanders/pyMeasure)</span>
+
+<span class="sd">Help</span>
+<span class="sd">---------------</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMeasure.Code.Analysis`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Examples/Html/Examples_Home.html&quot;&gt;Examples Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;</span>
+
+<span class="sd"> &quot;&quot;&quot;</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Standard Imports</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -1286,7 +1336,16 @@ For specific uncertainty calculations look for modules with a modifier in the na
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Scripts</span>
-
+<span class="k">def</span> <span class="nf">test_standard_error</span><span class="p">(</span><span class="n">test_list</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests the standard error function using a test_list=[first_value,first_error,</span>
+<span class="sd">    second_value,second_error]&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">test_list</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="p">[</span><span class="n">first_value</span><span class="p">,</span><span class="n">first_error</span><span class="p">,</span><span class="n">second_value</span><span class="p">,</span><span class="n">second_error</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="mf">2.75</span><span class="p">,</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span><span class="mf">3.45</span><span class="p">,</span><span class="o">.</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The 1st value is {0}, with an uncertainty of {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span><span class="n">first_error</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The 2nd value is {0}, with an uncertainty of {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">second_value</span><span class="p">,</span> <span class="n">second_error</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The standard_error is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">standard_error</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span>
+                                                            <span class="n">first_error</span><span class="p">,</span>
+                                                            <span class="n">second_value</span><span class="p">,</span><span class="n">second_error</span><span class="p">)))</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Runner</span>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
@@ -1824,6 +1883,37 @@ appending SE to the value column names. To plot the table use result.show()</p><
     <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">out_data</span><span class="p">[:]</span>
     <span class="n">out_table</span><span class="o">=</span><span class="n">StandardErrorModel</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">error_options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out_table</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.test_standard_error">
+    <p>def <span class="ident">test_standard_error</span>(</p><p>test_list=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Tests the standard error function using a test_list=[first_value,first_error,
+second_value,second_error]</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.test_standard_error', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Analysis.Uncertainty.test_standard_error" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">test_standard_error</span><span class="p">(</span><span class="n">test_list</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests the standard error function using a test_list=[first_value,first_error,</span>
+<span class="sd">    second_value,second_error]&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">test_list</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="p">[</span><span class="n">first_value</span><span class="p">,</span><span class="n">first_error</span><span class="p">,</span><span class="n">second_value</span><span class="p">,</span><span class="n">second_error</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="mf">2.75</span><span class="p">,</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span><span class="mf">3.45</span><span class="p">,</span><span class="o">.</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The 1st value is {0}, with an uncertainty of {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span><span class="n">first_error</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The 2nd value is {0}, with an uncertainty of {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">second_value</span><span class="p">,</span> <span class="n">second_error</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The standard_error is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">standard_error</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span>
+                                                            <span class="n">first_error</span><span class="p">,</span>
+                                                            <span class="n">second_value</span><span class="p">,</span><span class="n">second_error</span><span class="p">)))</span>
 </pre></div>
 
   </div>

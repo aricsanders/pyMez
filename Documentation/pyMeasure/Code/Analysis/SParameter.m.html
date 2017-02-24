@@ -4,7 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
     <title>pyMeasure.Code.Analysis.SParameter API documentation</title>
-    <meta name="description" content="Sparameter is a module with tools for analyzing Sparameter data." />
+    <meta name="description" content="Sparameter is a module with tools for analyzing Scattering parameter data. It contains functions
+for..." />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
@@ -1044,23 +1045,34 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.CONNECTOR_TYPES">CONNECTOR_TYPES</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.CONVERT_S21">CONVERT_S21</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.DRIVER_FILE_EXTENSIONS">DRIVER_FILE_EXTENSIONS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.DUT_COLUMN_NAMES">DUT_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.EXIF_AVAILABLE">EXIF_AVAILABLE</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.EXTENSION_PATTERN">EXTENSION_PATTERN</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.FORMATS">FORMATS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.FREQUENCY_UNITS">FREQUENCY_UNITS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.GET_STATS_FIELDS">GET_STATS_FIELDS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.IMAGE_FILE_EXTENSIONS">IMAGE_FILE_EXTENSIONS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.INKSCAPE_PATH">INKSCAPE_PATH</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.INSTRUMENT_SHEETS">INSTRUMENT_SHEETS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.METHOD_ALIASES">METHOD_ALIASES</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.MINIMUM_DB">MINIMUM_DB</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.MINIMUM_DB_ARG_VALUE">MINIMUM_DB_ARG_VALUE</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.MINIMUM_DB_VALUE">MINIMUM_DB_VALUE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.NODE_TYPE_DICTIONARY">NODE_TYPE_DICTIONARY</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.NUMBER_MATCH_STRING">NUMBER_MATCH_STRING</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.ONE_PORT_COLUMN_NAMES">ONE_PORT_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.ONE_PORT_DUT">ONE_PORT_DUT</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.OPTION_LINE_PATTERN">OPTION_LINE_PATTERN</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.OS_STAT_FIELDS">OS_STAT_FIELDS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.PARAMETERS">PARAMETERS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.PDF_CONVERT">PDF_CONVERT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.PIL_AVAILABLE">PIL_AVAILABLE</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.POWER_3TERM_COLUMN_DESCRIPTIONS">POWER_3TERM_COLUMN_DESCRIPTIONS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.POWER_3TERM_COLUMN_NAMES">POWER_3TERM_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.POWER_4TERM_COLUMN_DESCRIPTIONS">POWER_4TERM_COLUMN_DESCRIPTIONS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.POWER_4TERM_COLUMN_NAMES">POWER_4TERM_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.RESULTS_FILE_ONE_PORT_COLUMN_NAMES">RESULTS_FILE_ONE_PORT_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.RESULTS_FILE_POWER_COLUMN_NAMES">RESULTS_FILE_POWER_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.RESULTS_FILE_TWO_PORT_COLUMN_NAMES">RESULTS_FILE_TWO_PORT_COLUMN_NAMES</a></li>
@@ -1076,10 +1088,16 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.S2P_RI_COLUMN_DESCRIPTION">S2P_RI_COLUMN_DESCRIPTION</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.S2P_RI_COLUMN_NAMES">S2P_RI_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.SMITHPLOT">SMITHPLOT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.SOLUTION_VECTOR_COLUMN_NAMES">SOLUTION_VECTOR_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.StringTypes">StringTypes</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.TOUCHSTONE_KEYWORDS">TOUCHSTONE_KEYWORDS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.TWELVE_TERM_ERROR_COLUMN_NAMES">TWELVE_TERM_ERROR_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.WINDOWS_COM">WINDOWS_COM</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.WINDOWS_WRAPPER">WINDOWS_WRAPPER</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.WKHTML_PATH">WKHTML_PATH</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.XSLT_CAPABLE">XSLT_CAPABLE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.XSLT_REPOSITORY">XSLT_REPOSITORY</a></li>
   </ul>
 
     </li>
@@ -1146,7 +1164,37 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMeasure.Code.Analysis.SParameter</span> module</h1>
-  <p>Sparameter is a module with tools for analyzing Sparameter data.</p>
+  <p>Sparameter is a module with tools for analyzing Scattering parameter data. It contains functions
+for comparing, applying corrections, uncertainty analysis and plotting scattering parameters.
+see also <a href="./NISTUncertainty.m.html">NISTUncertainty</a></p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">test_compare_s2p_plots</span><span class="p">()</span>
+</pre></div>
+
+
+<p><h3><a href="../../../Examples/html/SParameter_Example.html">SParameter Example</a></h3></p>
+<h2>Requirements</h2>
+<ul>
+<li><a href="https://docs.python.org/2/library/sys.html">sys</a></li>
+<li><a href="https://docs.python.org/2/library/os.html">os</a></li>
+<li><a href="https://docs.python.org/2/library/re.html">re</a></li>
+<li><a href="https://docs.python.org/2/library/datetime.html">datetime</a></li>
+<li><a href="https://docs.python.org/2/library/math.html">math</a></li>
+<li><a href="https://docs.python.org/2/library/cmath.html">cmath</a></li>
+<li><a href="https://docs.scipy.org/doc/">numpy</a></li>
+<li><a href="https://docs.scipy.org/doc/">scipy</a></li>
+<li><a href="http://pandas.pydata.org/">pandas</a></li>
+<li><a href="http://matplotlib.org/">matplotlib</a></li>
+<li><a href="https://github.com/aricsanders/pyMeasure">pyMeasure</a></li>
+</ul>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMeasure.Code.Analysis</code></a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.SParameter', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.Analysis.SParameter" class="source">
@@ -1157,7 +1205,43 @@ table {
 <span class="c1"># Created:     4/13/2016</span>
 <span class="c1"># License:     MIT License</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
-<span class="sd">&quot;&quot;&quot; Sparameter is a module with tools for analyzing Sparameter data.  &quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot; Sparameter is a module with tools for analyzing Scattering parameter data. It contains functions</span>
+<span class="sd">for comparing, applying corrections, uncertainty analysis and plotting scattering parameters.</span>
+<span class="sd">see also &lt;a href=&quot;./NISTUncertainty.m.html&quot;&gt;NISTUncertainty&lt;/a&gt;</span>
+
+
+
+<span class="sd"> Examples</span>
+<span class="sd">--------</span>
+<span class="sd">    #!python</span>
+<span class="sd">    &gt;&gt;test_compare_s2p_plots()</span>
+
+<span class="sd"> &lt;h3&gt;&lt;a href=&quot;../../../Examples/html/SParameter_Example.html&quot;&gt;SParameter Example&lt;/a&gt;&lt;/h3&gt;</span>
+
+<span class="sd">Requirements</span>
+<span class="sd">------------</span>
+<span class="sd">+ [sys](https://docs.python.org/2/library/sys.html)</span>
+<span class="sd">+ [os](https://docs.python.org/2/library/os.html)</span>
+<span class="sd">+ [re](https://docs.python.org/2/library/re.html)</span>
+<span class="sd">+ [datetime](https://docs.python.org/2/library/datetime.html)</span>
+<span class="sd">+ [math](https://docs.python.org/2/library/math.html)</span>
+<span class="sd">+ [cmath](https://docs.python.org/2/library/cmath.html)</span>
+<span class="sd">+ [numpy](https://docs.scipy.org/doc/)</span>
+<span class="sd">+ [scipy](https://docs.scipy.org/doc/)</span>
+<span class="sd">+ [pandas](http://pandas.pydata.org/)</span>
+<span class="sd">+ [matplotlib](http://matplotlib.org/)</span>
+<span class="sd">+ [pyMeasure](https://github.com/aricsanders/pyMeasure)</span>
+
+<span class="sd">Help</span>
+<span class="sd">---------------</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMeasure.Code.Analysis`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Examples/Html/Examples_Home.html&quot;&gt;Examples Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;</span>
+<span class="sd">  &quot;&quot;&quot;</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Standard Imports</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -1193,7 +1277,7 @@ table {
     <span class="kn">from</span> <span class="nn">Code.DataHandlers.TouchstoneModels</span> <span class="kn">import</span> <span class="o">*</span>
     <span class="kn">from</span> <span class="nn">Code.DataHandlers.GeneralModels</span> <span class="kn">import</span> <span class="o">*</span>
     <span class="kn">from</span> <span class="nn">Code.Analysis.NISTUncertainty</span> <span class="kn">import</span> <span class="o">*</span>
-    <span class="kn">from</span> <span class="nn">Code.DataHandlers.Translations</span> <span class="kn">import</span> <span class="n">AsciiDataTable_to_DataFrame</span><span class="p">,</span><span class="n">DataFrame_to_AsciiDataTable</span>
+    <span class="kn">from</span> <span class="nn">Code.DataHandlers.Translations</span> <span class="kn">import</span> <span class="o">*</span>
     <span class="c1">#from pyMeasure import *</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The subpackage pyMeasure.Code.DataHandlers did not import properly,&quot;</span>
@@ -2911,7 +2995,23 @@ table {
 
       </div>
       <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.DRIVER_FILE_EXTENSIONS" class="name">var <span class="ident">DRIVER_FILE_EXTENSIONS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMeasure.Code.Analysis.SParameter.DUT_COLUMN_NAMES" class="name">var <span class="ident">DUT_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.EXIF_AVAILABLE" class="name">var <span class="ident">EXIF_AVAILABLE</span></p>
       
   
   <div class="source_cont">
@@ -2936,6 +3036,38 @@ table {
       </div>
       <div class="item">
       <p id="pyMeasure.Code.Analysis.SParameter.FREQUENCY_UNITS" class="name">var <span class="ident">FREQUENCY_UNITS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.GET_STATS_FIELDS" class="name">var <span class="ident">GET_STATS_FIELDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.IMAGE_FILE_EXTENSIONS" class="name">var <span class="ident">IMAGE_FILE_EXTENSIONS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.INKSCAPE_PATH" class="name">var <span class="ident">INKSCAPE_PATH</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.INSTRUMENT_SHEETS" class="name">var <span class="ident">INSTRUMENT_SHEETS</span></p>
       
   
   <div class="source_cont">
@@ -2975,6 +3107,14 @@ table {
 
       </div>
       <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.NODE_TYPE_DICTIONARY" class="name">var <span class="ident">NODE_TYPE_DICTIONARY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMeasure.Code.Analysis.SParameter.NUMBER_MATCH_STRING" class="name">var <span class="ident">NUMBER_MATCH_STRING</span></p>
       
   
@@ -3007,7 +3147,31 @@ table {
 
       </div>
       <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.OS_STAT_FIELDS" class="name">var <span class="ident">OS_STAT_FIELDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMeasure.Code.Analysis.SParameter.PARAMETERS" class="name">var <span class="ident">PARAMETERS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.PDF_CONVERT" class="name">var <span class="ident">PDF_CONVERT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.PIL_AVAILABLE" class="name">var <span class="ident">PIL_AVAILABLE</span></p>
       
   
   <div class="source_cont">
@@ -3040,6 +3204,14 @@ table {
       </div>
       <div class="item">
       <p id="pyMeasure.Code.Analysis.SParameter.POWER_4TERM_COLUMN_NAMES" class="name">var <span class="ident">POWER_4TERM_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
       
   
   <div class="source_cont">
@@ -3167,6 +3339,14 @@ table {
 
       </div>
       <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.SOLUTION_VECTOR_COLUMN_NAMES" class="name">var <span class="ident">SOLUTION_VECTOR_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMeasure.Code.Analysis.SParameter.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
       
   
@@ -3192,6 +3372,46 @@ table {
       </div>
       <div class="item">
       <p id="pyMeasure.Code.Analysis.SParameter.TWELVE_TERM_ERROR_COLUMN_NAMES" class="name">var <span class="ident">TWELVE_TERM_ERROR_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.WINDOWS_COM" class="name">var <span class="ident">WINDOWS_COM</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.WINDOWS_WRAPPER" class="name">var <span class="ident">WINDOWS_WRAPPER</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.WKHTML_PATH" class="name">var <span class="ident">WKHTML_PATH</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.XSLT_CAPABLE" class="name">var <span class="ident">XSLT_CAPABLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.XSLT_REPOSITORY" class="name">var <span class="ident">XSLT_REPOSITORY</span></p>
       
   
   <div class="source_cont">

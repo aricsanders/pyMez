@@ -5,7 +5,38 @@
 # Created:     9/9/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" Fitting is a module containing classes and functions for fitting data """
+""" Fitting is a module containing classes and functions for fitting and simulating
+data.
+
+
+ Examples
+--------
+    #!python
+    >>line=FunctionalModel(variables='x',parameters='m b',equation='m*x+b')
+    >>line(m=2,b=5,x=np.array([1,2,3]))
+
+ <h3><a href="../../../Examples/html/Fitting_Example.html">Fitting Example</a></h3>
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html)
++ [re](https://docs.python.org/2/library/re.html)
++ [types](https://docs.python.org/2/library/types.html)
++ [numpy](https://docs.scipy.org/doc/)
++ [scipy](https://docs.scipy.org/doc/)
++ [sympy](http://www.sympy.org/en/index.html)
+
+Help
+---------------
+<a href="./index.html">`pyMeasure.Code.Analysis`</a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>
+"""
 
 #-----------------------------------------------------------------------------
 # Standard Imports

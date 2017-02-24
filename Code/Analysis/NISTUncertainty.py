@@ -5,7 +5,32 @@
 # Created:     11/3/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" This module contains definitions for uncertainty analysis for NIST sparameter impedance"""
+""" This module contains definitions for uncertainty analysis for NIST sparameter impedance.
+It follows uncertainty equations originally found in the calrep hp basic program, and
+is primarily used in the function calrep see also <a href="./SParameter.m.html">SParameter</a>.
+
+
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html)
++ [re](https://docs.python.org/2/library/re.html)
++ [numpy](https://docs.scipy.org/doc/)
++ [math](https://docs.python.org/2/library/math.html)
+
+
+Help
+---------------
+<a href="./index.html">`pyMeasure.Code.Analysis`</a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>
+
+"""
 
 #-----------------------------------------------------------------------------
 # Standard Imports

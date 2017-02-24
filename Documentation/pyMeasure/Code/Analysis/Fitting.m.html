@@ -4,7 +4,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
     <title>pyMeasure.Code.Analysis.Fitting API documentation</title>
-    <meta name="description" content="Fitting is a module containing classes and functions for fitting data" />
+    <meta name="description" content="Fitting is a module containing classes and functions for fitting and simulating
+data.
+
+
+ Examples
+--..." />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
@@ -1106,7 +1111,33 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMeasure.Code.Analysis.Fitting</span> module</h1>
-  <p>Fitting is a module containing classes and functions for fitting data</p>
+  <p>Fitting is a module containing classes and functions for fitting and simulating
+data.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">line</span><span class="o">=</span><span class="n">FunctionalModel</span><span class="p">(</span><span class="n">variables</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="n">parameters</span><span class="o">=</span><span class="s1">&#39;m b&#39;</span><span class="p">,</span><span class="n">equation</span><span class="o">=</span><span class="s1">&#39;m*x+b&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span><span class="n">line</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]))</span>
+</pre></div>
+
+
+<p><h3><a href="../../../Examples/html/Fitting_Example.html">Fitting Example</a></h3></p>
+<h2>Requirements</h2>
+<ul>
+<li><a href="https://docs.python.org/2/library/sys.html">sys</a></li>
+<li><a href="https://docs.python.org/2/library/os.html">os</a></li>
+<li><a href="https://docs.python.org/2/library/re.html">re</a></li>
+<li><a href="https://docs.python.org/2/library/types.html">types</a></li>
+<li><a href="https://docs.scipy.org/doc/">numpy</a></li>
+<li><a href="https://docs.scipy.org/doc/">scipy</a></li>
+<li><a href="http://www.sympy.org/en/index.html">sympy</a></li>
+</ul>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMeasure.Code.Analysis</code></a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Fitting', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.Analysis.Fitting" class="source">
@@ -1117,7 +1148,38 @@ table {
 <span class="c1"># Created:     9/9/2016</span>
 <span class="c1"># License:     MIT License</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
-<span class="sd">&quot;&quot;&quot; Fitting is a module containing classes and functions for fitting data &quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot; Fitting is a module containing classes and functions for fitting and simulating</span>
+<span class="sd">data.</span>
+
+
+<span class="sd"> Examples</span>
+<span class="sd">--------</span>
+<span class="sd">    #!python</span>
+<span class="sd">    &gt;&gt;line=FunctionalModel(variables=&#39;x&#39;,parameters=&#39;m b&#39;,equation=&#39;m*x+b&#39;)</span>
+<span class="sd">    &gt;&gt;line(m=2,b=5,x=np.array([1,2,3]))</span>
+
+<span class="sd"> &lt;h3&gt;&lt;a href=&quot;../../../Examples/html/Fitting_Example.html&quot;&gt;Fitting Example&lt;/a&gt;&lt;/h3&gt;</span>
+
+<span class="sd">Requirements</span>
+<span class="sd">------------</span>
+<span class="sd">+ [sys](https://docs.python.org/2/library/sys.html)</span>
+<span class="sd">+ [os](https://docs.python.org/2/library/os.html)</span>
+<span class="sd">+ [re](https://docs.python.org/2/library/re.html)</span>
+<span class="sd">+ [types](https://docs.python.org/2/library/types.html)</span>
+<span class="sd">+ [numpy](https://docs.scipy.org/doc/)</span>
+<span class="sd">+ [scipy](https://docs.scipy.org/doc/)</span>
+<span class="sd">+ [sympy](http://www.sympy.org/en/index.html)</span>
+
+<span class="sd">Help</span>
+<span class="sd">---------------</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMeasure.Code.Analysis`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Examples/Html/Examples_Home.html&quot;&gt;Examples Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Standard Imports</span>

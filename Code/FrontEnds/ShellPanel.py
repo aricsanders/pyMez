@@ -14,8 +14,8 @@ import os
 # This is a little bit of a windows hack, it really requires python/Lib/site-packages/boa-constructor
 os_path=os.__file__.replace('\\os.pyc','')
 
-sys.path.append(os_path.replace('lib','Lib/site-packages/boa-constructor'))
-print sys.path
+sys.path.append(os_path.replace('lib','Lib/site-packages/boa'))
+
 
 
 import wx

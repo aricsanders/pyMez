@@ -5,7 +5,36 @@
 # Created:     9/9/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" Interpolation holds classes and functions important for interpolating data """
+""" Interpolation holds classes and functions important for interpolating data.
+
+  Examples
+--------
+    #!python
+    >>test_interpolate()
+
+ <h3><a href="../../../Examples/html/Interpolation_Example.html">Interpolation Example</a></h3>
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html)
++ [types](https://docs.python.org/2/library/types.html)
++ [numpy](https://docs.scipy.org/doc/)
++ [scipy](https://docs.scipy.org/doc/)
+
+
+Help
+---------------
+<a href="./index.html">`pyMeasure.Code.Analysis`</a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>
+
+
+ """
 
 #-----------------------------------------------------------------------------
 # Standard Imports

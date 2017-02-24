@@ -13,10 +13,11 @@ Examples
 
 Help
 ---------------
-<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
+<a href="../index.html">`pyMeasure.Code`</a>
 <div>
 <a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
-<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
+<a href="../../../Examples/html/Example_Home.html">Examples</a> |
+<a href="../../../Reference_Index.html">Index </a>
 </div>
 """

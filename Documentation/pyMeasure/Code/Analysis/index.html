@@ -1065,6 +1065,18 @@ a function that interpolates data from a table and returns a new table would liv
 a function or class is designed to only change the format of an object and not its content it should reside
 in DataHandlers. Any module in the Analysis subpackage can import from DataHandlers, Utils or third party libraries,
  however should not import from FrontEnds or Instrument control.</p>
+<h2>Examples</h2>
+<p><a href="../../../Examples/How_to_Calrep.html"> How to calrep a raw data file</a></p>
+<h2>Import Structure</h2>
+<p>Analysis typically import from Utils and DataHandlers but <strong>NOT</strong> from  InstrumentControl or FrontEnds</p>
+<h2>Help</h2>
+<p><a href="../index.html"><code>pyMeasure.Code</code></a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/html/Example_Home.html">Examples</a> |
+<a href="../../../Reference_Index.html">Index </a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.Analysis" class="source">
@@ -1074,6 +1086,24 @@ in DataHandlers. Any module in the Analysis subpackage can import from DataHandl
 <span class="sd">a function or class is designed to only change the format of an object and not its content it should reside</span>
 <span class="sd">in DataHandlers. Any module in the Analysis subpackage can import from DataHandlers, Utils or third party libraries,</span>
 <span class="sd"> however should not import from FrontEnds or Instrument control.</span>
+
+<span class="sd"> Examples</span>
+<span class="sd">--------</span>
+<span class="sd">&lt;a href=&quot;../../../Examples/How_to_Calrep.html&quot;&gt; How to calrep a raw data file&lt;/a&gt;</span>
+
+<span class="sd">Import Structure</span>
+<span class="sd">----------------</span>
+<span class="sd">Analysis typically import from Utils and DataHandlers but __NOT__ from  InstrumentControl or FrontEnds</span>
+
+<span class="sd">Help</span>
+<span class="sd">-----</span>
+<span class="sd">&lt;a href=&quot;../index.html&quot;&gt;`pyMeasure.Code`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Examples/html/Example_Home.html&quot;&gt;Examples&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index &lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;</span>
 <span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 
@@ -1090,28 +1120,55 @@ in DataHandlers. Any module in the Analysis subpackage can import from DataHandl
       <p class="name"><a href="Fitting.m.html">pyMeasure.Code.Analysis.Fitting</a></p>
       
   
-    <div class="desc"><p>Fitting is a module containing classes and functions for fitting data</p></div>
+    <div class="desc"><p>Fitting is a module containing classes and functions for fitting and simulating
+data.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">line</span><span class="o">=</span><span class="n">FunctionalModel</span><span class="p">(</span><span class="n">variables</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="n">parameters</span><span class="o">=</span><span class="s1">&#39;m b&#39;</span><span class="p">,</span><span class="n">equation</span><span class="o">=</span><span class="s1">&#39;m*x+b&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span><span class="n">line</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]))</span>
+</pre></div>
+
+
+<p><h3><a href="../../../Examples/html/Fitting_Example.html">Fitt...</p></div>
 
       </div>
       <div class="item">
       <p class="name"><a href="Interpolation.m.html">pyMeasure.Code.Analysis.Interpolation</a></p>
       
   
-    <div class="desc"><p>Interpolation holds classes and functions important for interpolating data</p></div>
+    <div class="desc"><p>Interpolation holds classes and functions important for interpolating data.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">test_interpolate</span><span class="p">()</span>
+</pre></div>
+
+
+<p><h3><a href="../../../Examples/html/Interpolation_Example.html">Interpolation Example</a></h3></p>
+<h2>Requirements</h2>
+<ul>
+<li>[sys](https://docs.python.org/2/library...</li>
+</ul></div>
 
       </div>
       <div class="item">
       <p class="name"><a href="NISTUncertainty.m.html">pyMeasure.Code.Analysis.NISTUncertainty</a></p>
       
   
-    <div class="desc"><p>This module contains definitions for uncertainty analysis for NIST sparameter impedance</p></div>
+    <div class="desc"><p>This module contains definitions for uncertainty analysis for NIST sparameter impedance.
+It follows uncertainty equations originally found in the calrep hp basic program, and
+is primarily used in the function calrep see also <a href="./SParameter.m.html">SParameter</a>.</p>
+<h2>Requirements</h2>
+<p>...</p></div>
 
       </div>
       <div class="item">
       <p class="name"><a href="SParameter.m.html">pyMeasure.Code.Analysis.SParameter</a></p>
       
   
-    <div class="desc"><p>Sparameter is a module with tools for analyzing Sparameter data.</p></div>
+    <div class="desc"><p>Sparameter is a module with tools for analyzing Scattering parameter data. It contains functions
+for comparing, applying corrections, uncertainty analysis and plotting scattering parameters.
+see also <a href="./NISTUncertainty.m.html">NISTUncertainty</a></p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">test</span><span class="o">...</span>
+</pre></div></div>
 
       </div>
       <div class="item">
@@ -1119,7 +1176,13 @@ in DataHandlers. Any module in the Analysis subpackage can import from DataHandl
       
   
     <div class="desc"><p>Uncertainty is a collection of general classes and functions that pertain to uncertainty calculations.
-For specific uncertainty calculations look for modules with a modifier in the name such as  NISTUncertainty</p></div>
+ For specific uncertainty calculations look for modules with a modifier in the name such as  NISTUncertainty.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">test_standard_error</span><span class="p">()</span>
+</pre></div>
+
+
+<p><h3>&lt;a href="../../../E...</p></div>
 
       </div>
   </section>

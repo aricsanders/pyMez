@@ -5,7 +5,43 @@
 # Created:     4/13/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" Sparameter is a module with tools for analyzing Sparameter data.  """
+""" Sparameter is a module with tools for analyzing Scattering parameter data. It contains functions
+for comparing, applying corrections, uncertainty analysis and plotting scattering parameters.
+see also <a href="./NISTUncertainty.m.html">NISTUncertainty</a>
+
+
+
+ Examples
+--------
+    #!python
+    >>test_compare_s2p_plots()
+
+ <h3><a href="../../../Examples/html/SParameter_Example.html">SParameter Example</a></h3>
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html)
++ [re](https://docs.python.org/2/library/re.html)
++ [datetime](https://docs.python.org/2/library/datetime.html)
++ [math](https://docs.python.org/2/library/math.html)
++ [cmath](https://docs.python.org/2/library/cmath.html)
++ [numpy](https://docs.scipy.org/doc/)
++ [scipy](https://docs.scipy.org/doc/)
++ [pandas](http://pandas.pydata.org/)
++ [matplotlib](http://matplotlib.org/)
++ [pyMeasure](https://github.com/aricsanders/pyMeasure)
+
+Help
+---------------
+<a href="./index.html">`pyMeasure.Code.Analysis`</a>
+<div>
+<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>
+  """
 #-----------------------------------------------------------------------------
 # Standard Imports
 import os
@@ -41,7 +77,7 @@ try:
     from Code.DataHandlers.TouchstoneModels import *
     from Code.DataHandlers.GeneralModels import *
     from Code.Analysis.NISTUncertainty import *
-    from Code.DataHandlers.Translations import AsciiDataTable_to_DataFrame,DataFrame_to_AsciiDataTable
+    from Code.DataHandlers.Translations import *
     #from pyMeasure import *
 except:
     print("The subpackage pyMeasure.Code.DataHandlers did not import properly,"

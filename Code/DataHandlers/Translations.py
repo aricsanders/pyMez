@@ -22,8 +22,7 @@ software:
 Examples
 --------
     #!python
-    >>new_html=HTMLBase(os.path.join(TESTS_DIRECTORY,"One_Port_Sparameter_20160307_001.html"))
-    >>print(new_html)
+    >>test_JBSparameter_to_S2PV1()
 
  <h3><a href="../../../Examples/Html/Translations_Example.html">Translations Example</a></h3>
 
@@ -43,7 +42,7 @@ Help
 <div>
 <a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
-<a href="../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../Examples/html/Examples_Home.html">Examples Home</a> |
 <a href="../../../Reference_Index.html">Index</a>
 </div>
 """
