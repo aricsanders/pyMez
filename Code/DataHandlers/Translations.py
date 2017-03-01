@@ -212,7 +212,7 @@ def AsciiDataTable_to_XmlDataTable(ascii_data_table,**options):
     defaults={"specific_descriptor":ascii_data_table.options["specific_descriptor"],
                      "general_descriptor":ascii_data_table.options["general_descriptor"],
                       "directory":ascii_data_table.options["directory"],
-              "style_sheet":"../XSL/ONE_PORT_STYLE.xsl"
+              "style_sheet":"./DEFAULT_STYLE.xsl"
                      }
     XML_options={}
     for key,value in defaults.iteritems():

@@ -70,6 +70,10 @@ try:
 except:
     print("The function gmean from the package scipy.stats.mstats did not import correctly ")
 try:
+    from statsmodels.robust.scale import mad
+except:
+    print("The function mad from the package statsmodels.robust.scale did not import correctly ")
+try:
     #Todo: this could lead to a cyclic dependency, it really should import only the models it analyzes
     #Todo: If analysis is to be in the top import, none of the models should rely on it
     #import pyMeasure.Code.DataHandlers.NISTModels
@@ -98,7 +102,10 @@ ONE_PORT_DUT=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
 # Module Functions
 def frequency_model_collapse_multiple_measurements(model, **options):
     """Returns a model with a single set of frequencies. Default is to average values together
-    but geometric mean, std, variance and median are options. Geometric means of odd number of negative values fails"""
+    but geometric mean, std, variance, rss, mad and median are options.
+    Geometric means of odd number of negative values fails"""
+    if type(model) in [pandas.DataFrame]:
+        model_1 = DataFrame_to_AsciiDataTable(model)
     defaults = {"method": "mean"}
     # load other options from model
     for option, value in model.options.iteritems():
@@ -135,6 +142,9 @@ def frequency_model_collapse_multiple_measurements(model, **options):
             new_row = np.sqrt(np.mean(np.square(np.array(data_row)), axis=0, dtype=np.float64)).tolist()
         elif re.search('rss', collapse_options["method"], re.IGNORECASE):
             new_row = np.sqrt(np.sum(np.square(np.array(data_row)), axis=0, dtype=np.float64)).tolist()
+        elif re.search('mad', collapse_options["method"], re.IGNORECASE):
+            new_row = mad(np.array(data_row), axis=0).tolist()
+        new_row[frequency_selector]=frequency
         out_data.append(new_row)
 
     collapse_options["data"] = out_data
