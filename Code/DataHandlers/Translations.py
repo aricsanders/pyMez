@@ -202,10 +202,12 @@ def StringIo_to_String(string_io_object):
     """Converts a StringIO.StringIO object to a string """
     return string_io_object.getvalue()
 def String_to_CStringIo(string):
-    """Converts a string to a StringIO.StringIO object"""
+    """Converts a string to a StringIO.StringIO object.
+    Inverse of CStringIo_to_StringIo"""
     return cStringIO.StringIO(string)
 def CStringIo_to_String(string_io_object):
-    """Converts a StringIO.StringIO object to a string """
+    """Converts a StringIO.StringIO object to a string.
+     Inverse of String_to_CStringIo"""
     return string_io_object.getvalue()
 def AsciiDataTable_to_XmlDataTable(ascii_data_table,**options):
     """Takes an AsciiDataTable and returns a XmlDataTable with **options"""
@@ -619,18 +621,26 @@ def JsonFile_to_DataFrame(json_file_name):
     return data_frame
 
 def DataFrame_to_JsonString(pandas_data_frame):
+    """Converts a pandas.DataFrame to a Json string in the form {column_name:value,...}.
+    Inverse of JsonString_to_DataFrame."""
     json=pandas_data_frame.to_json(orient='records')
     return json
 
 def JsonString_to_DataFrame(json_string):
+    """Converts a JsonString to a pandas.DataFrame in the form with orient = records.
+    Inverse of DataFrame_to_JsonString."""
     data_frame=pandas.read_json(json_string,orient='records')
     return data_frame
 
 def DataFrame_to_CsvFile(pandas_data_frame,file_name="test.csv"):
+    """Converts a pandas.DataFrame to a Csv file with default file_name test.csv.
+    Inverse of CsvFile_to_DataFrame."""
     csv=pandas_data_frame.to_csv(file_name,index=False)
     return file_name
 
 def CsvFile_to_DataFrame(csv_file_name):
+    """Converts a csv file to a panads.DataFrame.
+    Inverse of DataFrame_to_CsvFile"""
     data_frame=pandas.read_csv(csv_file_name)
     return data_frame
 
@@ -641,6 +651,8 @@ def AsciiTable_to_MatFile(ascii_data_table,file_name="test.mat"):
     return file_name
 
 def MatFile_to_AsciiTable(matlab_file_name):
+    """Converts a .mat file that has the variables column_names and table to an AsciiDataTable
+    with no header or footer."""
     matlab_data_dictionary=loadmat(matlab_file_name)
     ascii_data_table=AsciiDataTable(None,
                                     column_names=map(lambda x: x.rstrip().lstrip(),
@@ -649,14 +661,17 @@ def MatFile_to_AsciiTable(matlab_file_name):
     return ascii_data_table
 
 def XmlDataTable_to_XmlFile(xml_data_table,file_name="test.xml"):
+    """Converts the XMLModel DataTable to a file on disk using the save method"""
     xml_data_table.save(file_name)
     return file_name
 
 def XmlFile_to_XmlDataTable(xml_file_name):
+    """Opens a saved file in the XMLModels format DataTable and returns an DataTable object"""
     xml_data_table=DataTable(xml_file_name)
     return xml_data_table
 
 def HtmlString_to_HtmlFile(html_string,file_name="test.html"):
+    """Saves an html string as a file with the default name """
     out_file=open(file_name,'w')
     out_file.write(html_string)
     out_file.close()

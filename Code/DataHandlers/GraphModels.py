@@ -100,10 +100,25 @@ except:
 # as an example these functions are left.
 #todo: Change the names
 def edge_1_to_2(in_string):
+    "A Test function for an edge for a Graph"
     return in_string.splitlines()
 
 def edge_2_to_1(string_list):
+    """A test function for an edge in a Graph"""
     return string_list_collapse(string_list)
+
+def visit_all_nodes(graph):
+    """Visit all nodes visits each node on a graph"""
+    nodes=graph.node_names
+    for node in nodes:
+        graph.move_to_node(node)
+
+def visit_and_print_all_nodes(graph):
+    """Visits all the nodes in graph and prints graph.data after each move"""
+    nodes=graph.node_names
+    for node in nodes:
+        graph.move_to_node(node)
+        print(graph.data)
 
 def remove_circular_paths(path):
     """Removes pieces of the path that just end on the same node"""
