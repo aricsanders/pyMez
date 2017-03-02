@@ -1499,17 +1499,19 @@ software:
     <span class="sd">&quot;&quot;&quot;Converts a StringIO.StringIO object to a string &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">string_io_object</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">String_to_CStringIo</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Converts a string to a StringIO.StringIO object&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Converts a string to a StringIO.StringIO object.</span>
+<span class="sd">    Inverse of CStringIo_to_StringIo&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">CStringIo_to_String</span><span class="p">(</span><span class="n">string_io_object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Converts a StringIO.StringIO object to a string &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Converts a StringIO.StringIO object to a string.</span>
+<span class="sd">     Inverse of String_to_CStringIo&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">string_io_object</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">AsciiDataTable_to_XmlDataTable</span><span class="p">(</span><span class="n">ascii_data_table</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes an AsciiDataTable and returns a XmlDataTable with **options&quot;&quot;&quot;</span>
     <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
                      <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
                       <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span>
-              <span class="s2">&quot;style_sheet&quot;</span><span class="p">:</span><span class="s2">&quot;../XSL/ONE_PORT_STYLE.xsl&quot;</span>
+              <span class="s2">&quot;style_sheet&quot;</span><span class="p">:</span><span class="s2">&quot;./DEFAULT_STYLE.xsl&quot;</span>
                      <span class="p">}</span>
     <span class="n">XML_options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -1916,18 +1918,26 @@ software:
     <span class="k">return</span> <span class="n">data_frame</span>
 
 <span class="k">def</span> <span class="nf">DataFrame_to_JsonString</span><span class="p">(</span><span class="n">pandas_data_frame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a pandas.DataFrame to a Json string in the form {column_name:value,...}.</span>
+<span class="sd">    Inverse of JsonString_to_DataFrame.&quot;&quot;&quot;</span>
     <span class="n">json</span><span class="o">=</span><span class="n">pandas_data_frame</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">json</span>
 
 <span class="k">def</span> <span class="nf">JsonString_to_DataFrame</span><span class="p">(</span><span class="n">json_string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a JsonString to a pandas.DataFrame in the form with orient = records.</span>
+<span class="sd">    Inverse of DataFrame_to_JsonString.&quot;&quot;&quot;</span>
     <span class="n">data_frame</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">json_string</span><span class="p">,</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data_frame</span>
 
 <span class="k">def</span> <span class="nf">DataFrame_to_CsvFile</span><span class="p">(</span><span class="n">pandas_data_frame</span><span class="p">,</span><span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.csv&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a pandas.DataFrame to a Csv file with default file_name test.csv.</span>
+<span class="sd">    Inverse of CsvFile_to_DataFrame.&quot;&quot;&quot;</span>
     <span class="n">csv</span><span class="o">=</span><span class="n">pandas_data_frame</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">file_name</span>
 
 <span class="k">def</span> <span class="nf">CsvFile_to_DataFrame</span><span class="p">(</span><span class="n">csv_file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a csv file to a panads.DataFrame.</span>
+<span class="sd">    Inverse of DataFrame_to_CsvFile&quot;&quot;&quot;</span>
     <span class="n">data_frame</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_file_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data_frame</span>
 
@@ -1938,6 +1948,8 @@ software:
     <span class="k">return</span> <span class="n">file_name</span>
 
 <span class="k">def</span> <span class="nf">MatFile_to_AsciiTable</span><span class="p">(</span><span class="n">matlab_file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a .mat file that has the variables column_names and table to an AsciiDataTable</span>
+<span class="sd">    with no header or footer.&quot;&quot;&quot;</span>
     <span class="n">matlab_data_dictionary</span><span class="o">=</span><span class="n">loadmat</span><span class="p">(</span><span class="n">matlab_file_name</span><span class="p">)</span>
     <span class="n">ascii_data_table</span><span class="o">=</span><span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
                                     <span class="n">column_names</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(),</span>
@@ -1946,14 +1958,17 @@ software:
     <span class="k">return</span> <span class="n">ascii_data_table</span>
 
 <span class="k">def</span> <span class="nf">XmlDataTable_to_XmlFile</span><span class="p">(</span><span class="n">xml_data_table</span><span class="p">,</span><span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.xml&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts the XMLModel DataTable to a file on disk using the save method&quot;&quot;&quot;</span>
     <span class="n">xml_data_table</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">file_name</span>
 
 <span class="k">def</span> <span class="nf">XmlFile_to_XmlDataTable</span><span class="p">(</span><span class="n">xml_file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Opens a saved file in the XMLModels format DataTable and returns an DataTable object&quot;&quot;&quot;</span>
     <span class="n">xml_data_table</span><span class="o">=</span><span class="n">DataTable</span><span class="p">(</span><span class="n">xml_file_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">xml_data_table</span>
 
 <span class="k">def</span> <span class="nf">HtmlString_to_HtmlFile</span><span class="p">(</span><span class="n">html_string</span><span class="p">,</span><span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.html&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Saves an html string as a file with the default name &quot;&quot;&quot;</span>
     <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_string</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -3661,7 +3676,7 @@ discarding any header or footer information</p></div>
     <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
                      <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
                       <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span>
-              <span class="s2">&quot;style_sheet&quot;</span><span class="p">:</span><span class="s2">&quot;../XSL/ONE_PORT_STYLE.xsl&quot;</span>
+              <span class="s2">&quot;style_sheet&quot;</span><span class="p">:</span><span class="s2">&quot;./DEFAULT_STYLE.xsl&quot;</span>
                      <span class="p">}</span>
     <span class="n">XML_options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -3821,12 +3836,14 @@ discarding any header or footer information</p></div>
 
     
   
-    <div class="desc"><p>Converts a StringIO.StringIO object to a string</p></div>
+    <div class="desc"><p>Converts a StringIO.StringIO object to a string.
+Inverse of String_to_CStringIo</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.CStringIo_to_String', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.Translations.CStringIo_to_String" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">CStringIo_to_String</span><span class="p">(</span><span class="n">string_io_object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Converts a StringIO.StringIO object to a string &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Converts a StringIO.StringIO object to a string.</span>
+<span class="sd">     Inverse of String_to_CStringIo&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">string_io_object</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
 </pre></div>
 
@@ -3868,10 +3885,14 @@ discarding any header or footer information</p></div>
 
     
   
+    <div class="desc"><p>Converts a csv file to a panads.DataFrame.
+Inverse of DataFrame_to_CsvFile</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.CsvFile_to_DataFrame', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.Translations.CsvFile_to_DataFrame" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">CsvFile_to_DataFrame</span><span class="p">(</span><span class="n">csv_file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a csv file to a panads.DataFrame.</span>
+<span class="sd">    Inverse of DataFrame_to_CsvFile&quot;&quot;&quot;</span>
     <span class="n">data_frame</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_file_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data_frame</span>
 </pre></div>
@@ -3958,10 +3979,14 @@ determined by keys</p></div>
 
     
   
+    <div class="desc"><p>Converts a pandas.DataFrame to a Csv file with default file_name test.csv.
+Inverse of CsvFile_to_DataFrame.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.DataFrame_to_CsvFile', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.Translations.DataFrame_to_CsvFile" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">DataFrame_to_CsvFile</span><span class="p">(</span><span class="n">pandas_data_frame</span><span class="p">,</span><span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.csv&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a pandas.DataFrame to a Csv file with default file_name test.csv.</span>
+<span class="sd">    Inverse of CsvFile_to_DataFrame.&quot;&quot;&quot;</span>
     <span class="n">csv</span><span class="o">=</span><span class="n">pandas_data_frame</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">file_name</span>
 </pre></div>
@@ -4129,10 +4154,14 @@ inverse of JsonFile_to_DataFrame</p></div>
 
     
   
+    <div class="desc"><p>Converts a pandas.DataFrame to a Json string in the form {column_name:value,...}.
+Inverse of JsonString_to_DataFrame.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.DataFrame_to_JsonString', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.Translations.DataFrame_to_JsonString" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">DataFrame_to_JsonString</span><span class="p">(</span><span class="n">pandas_data_frame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a pandas.DataFrame to a Json string in the form {column_name:value,...}.</span>
+<span class="sd">    Inverse of JsonString_to_DataFrame.&quot;&quot;&quot;</span>
     <span class="n">json</span><span class="o">=</span><span class="n">pandas_data_frame</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">json</span>
 </pre></div>
@@ -5048,10 +5077,12 @@ Returns data in the form
 
     
   
+    <div class="desc"><p>Saves an html string as a file with the default name</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.HtmlString_to_HtmlFile', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.Translations.HtmlString_to_HtmlFile" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">HtmlString_to_HtmlFile</span><span class="p">(</span><span class="n">html_string</span><span class="p">,</span><span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.html&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Saves an html string as a file with the default name &quot;&quot;&quot;</span>
     <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_string</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -5320,10 +5351,14 @@ inverse of DataFrame_to_JsonFile</p></div>
 
     
   
+    <div class="desc"><p>Converts a JsonString to a pandas.DataFrame in the form with orient = records.
+Inverse of DataFrame_to_JsonString.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.JsonString_to_DataFrame', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.Translations.JsonString_to_DataFrame" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">JsonString_to_DataFrame</span><span class="p">(</span><span class="n">json_string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a JsonString to a pandas.DataFrame in the form with orient = records.</span>
+<span class="sd">    Inverse of DataFrame_to_JsonString.&quot;&quot;&quot;</span>
     <span class="n">data_frame</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">json_string</span><span class="p">,</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data_frame</span>
 </pre></div>
@@ -5448,10 +5483,14 @@ inverse of DataFrame_to_JsonFile</p></div>
 
     
   
+    <div class="desc"><p>Converts a .mat file that has the variables column_names and table to an AsciiDataTable
+with no header or footer.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.MatFile_to_AsciiTable', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.Translations.MatFile_to_AsciiTable" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">MatFile_to_AsciiTable</span><span class="p">(</span><span class="n">matlab_file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a .mat file that has the variables column_names and table to an AsciiDataTable</span>
+<span class="sd">    with no header or footer.&quot;&quot;&quot;</span>
     <span class="n">matlab_data_dictionary</span><span class="o">=</span><span class="n">loadmat</span><span class="p">(</span><span class="n">matlab_file_name</span><span class="p">)</span>
     <span class="n">ascii_data_table</span><span class="o">=</span><span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
                                     <span class="n">column_names</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(),</span>
@@ -6307,12 +6346,14 @@ the port 1 (Z01) and port 2 (Z01) impedances can be specified, default is 50. Re
 
     
   
-    <div class="desc"><p>Converts a string to a StringIO.StringIO object</p></div>
+    <div class="desc"><p>Converts a string to a StringIO.StringIO object.
+Inverse of CStringIo_to_StringIo</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.String_to_CStringIo', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.Translations.String_to_CStringIo" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">String_to_CStringIo</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Converts a string to a StringIO.StringIO object&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Converts a string to a StringIO.StringIO object.</span>
+<span class="sd">    Inverse of CStringIo_to_StringIo&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 </pre></div>
 
@@ -6733,10 +6774,12 @@ Is the inverse of SFrequencyMatrixList_to_TFrequencyMatrixList</p></div>
 
     
   
+    <div class="desc"><p>Converts the XMLModel DataTable to a file on disk using the save method</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.XmlDataTable_to_XmlFile', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.Translations.XmlDataTable_to_XmlFile" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">XmlDataTable_to_XmlFile</span><span class="p">(</span><span class="n">xml_data_table</span><span class="p">,</span><span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.xml&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts the XMLModel DataTable to a file on disk using the save method&quot;&quot;&quot;</span>
     <span class="n">xml_data_table</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">file_name</span>
 </pre></div>
@@ -6755,10 +6798,12 @@ Is the inverse of SFrequencyMatrixList_to_TFrequencyMatrixList</p></div>
 
     
   
+    <div class="desc"><p>Opens a saved file in the XMLModels format DataTable and returns an DataTable object</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.XmlFile_to_XmlDataTable', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.Translations.XmlFile_to_XmlDataTable" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">XmlFile_to_XmlDataTable</span><span class="p">(</span><span class="n">xml_file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Opens a saved file in the XMLModels format DataTable and returns an DataTable object&quot;&quot;&quot;</span>
     <span class="n">xml_data_table</span><span class="o">=</span><span class="n">DataTable</span><span class="p">(</span><span class="n">xml_file_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">xml_data_table</span>
 </pre></div>
