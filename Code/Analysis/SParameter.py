@@ -635,6 +635,56 @@ def correct_sparameters_eight_term(sparameters_complex,eight_term_correction,rec
 
     return s_corrected_list
 
+def uncorrect_sparameters_eight_term(sparameters_complex,eight_term_correction,reciprocal=True):
+    """Removes the eight term correction to sparameters_complex and returns
+    a uncorrected (reference plane is measurement)
+     complex list in the form of [[frequency,S11,S21,S12,S22],..]. The eight term
+    correction should be in the form [[frequency,S1_11,S1_21,S1_12,S1_22,S2_11,S2_21,S2_12,S2_22]..]
+    Use s2p.sparameter_complex as input."""
+    # first transform both lists to matrices
+    s2p_matrix_list=two_port_complex_to_matrix_form(sparameters_complex)
+    s1_list=[[row[0],row[1],row[2],row[3],row[4]] for row in eight_term_correction]
+    s2_list=[[row[0],row[5],row[6],row[7],row[8]] for row in eight_term_correction]
+    s1_matrix_list=two_port_complex_to_matrix_form(s1_list)
+    s2_matrix_list=two_port_complex_to_matrix_form(s2_list)
+    # now transform to T matrices
+    t_matrix_list=S_to_T(s2p_matrix_list)
+    x_matrix_list=S_to_T(s1_matrix_list)
+    y_matrix_list=S_to_T(s2_matrix_list)
+
+
+    # now apply the correction
+    t_uncorrected_list=[]
+    for index,row in enumerate(t_matrix_list):
+        frequency=row[0]
+        t_corrected=x_matrix_list[index][1]*row[1]*y_matrix_list[index][1]
+        t_uncorrected_list.append([frequency,t_corrected])
+    # now transform back to S
+    s_uncorrected_matrix_list =T_to_S(t_uncorrected_list)
+    # now put back into single row form
+    s_uncorrected_list=two_port_matrix_to_complex_form(s_uncorrected_matrix_list)
+    # now we take the geometric average and replace S12 and S21 with it
+    if reciprocal:
+        s_averaged_corrected=[]
+        phase_last=0
+        for row in s_uncorrected_list:
+            [frequency,S11,S21,S12,S22]=row
+            # S12 and S21 are averaged together in a weird way that makes phase continuous
+            geometric_mean=cmath.sqrt(S21*S12)
+            root_select=1
+            phase_new=cmath.phase(geometric_mean)
+            # if the phase jumps by >180 but less than 270, then pick the other root
+            if abs(phase_new-phase_last)>math.pi/2 and abs(phase_new-phase_last)<3*math.pi/2:
+                root_select=-1
+            mean_S12_S21=root_select*cmath.sqrt(S21*S12)
+            s_averaged_corrected.append([frequency,S11,mean_S12_S21,mean_S12_S21,S22])
+            phase_last=cmath.phase(mean_S12_S21)
+        s_uncorrected_list=s_averaged_corrected
+    else:
+        pass
+
+    return s_uncorrected_list
+
 def correct_sparameters_sixteen_term(sparameters_complex,sixteen_term_correction):
     """Applies the sixteen term correction to sparameters and returns a new sparameter list.
     The sparameters should be a list of [frequency, S11, S21, S12, S22] where S terms are complex numbers.
@@ -668,6 +718,42 @@ def correct_sparameters_sixteen_term(sparameters_complex,sixteen_term_correction
                                 corrected_s_matrix[0,1],corrected_s_matrix[1,1]])
     return sparameter_out
 
+def uncorrect_sparameters_sixteen_term(sparameters_complex,sixteen_term_correction):
+    """Removes the sixteen term correction to sparameters and returns a new sparameter list.
+    The sparameters should be a list of [frequency, S11, S21, S12, S22] where S terms are complex numbers.
+    The sixteen term correction should be a list of
+    [frequency, S11, S12, S13,S14,S21, S22,S23,S24,S31,S32,S33,S34,S41,S42,S43,S44], etc are complex numbers
+    Designed to use S2P.sparameter_complex and SNP.sparameter_complex.
+    Inverse of correct_sparameters_sixteen_term"""
+
+    # first create 4 separate matrix lists for 16 term correction
+    s1_matrix_list=[]
+    s2_matrix_list=[]
+    s3_matrix_list=[]
+    s4_matrix_list=[]
+    # Then populate them with the right values
+    for index,correction in enumerate(sixteen_term_correction):
+        [frequency, S11, S12, S13,S14,S21, S22,S23,S24,S31,S32,S33,S34,S41,S42,S43,S44]=correction
+        s1_matrix_list.append([frequency,np.matrix([[S11,S12],[S21,S22]])])
+        s2_matrix_list.append([frequency,np.matrix([[S13,S14],[S23,S24]])])
+        s3_matrix_list.append([frequency,np.matrix([[S31,S32],[S41,S42]])])
+        s4_matrix_list.append([frequency,np.matrix([[S33,S34],[S43,S44]])])
+    sparameter_matrix_list=two_port_complex_to_matrix_form(sparameters_complex)
+    # Apply the correction
+    sparameter_out=[]
+    for index,sparameter in enumerate(sparameter_matrix_list):
+        frequency=sparameter[0]
+        s_matrix=sparameter[1]
+        [s11_matrix,s12_matrix,s21_matrix,s22_matrix]=[s1_matrix_list[index][1],s2_matrix_list[index][1],
+                                                   s3_matrix_list[index][1],s4_matrix_list[index][1]]
+        uncorrected_s_matrix=np.linalg.inv(np.linalg.inv(s21_matrix)*(np.linalg.inv(s_matrix)-s22_matrix)*\
+                                            np.linalg.inv(s12_matrix))+s11_matrix
+
+        # This flips S12 and S21
+        sparameter_out.append([frequency,uncorrected_s_matrix[0,0],uncorrected_s_matrix[1,0],
+                               uncorrected_s_matrix[0,1],uncorrected_s_matrix[1,1]])
+    return sparameter_out
+
 def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction,reciprocal=True):
     """Applies the twelve term correction to sparameters and returns a new sparameter list.
     The sparameters should be a list of [frequency, S11, S21, S12, S22] where S terms are complex numbers.
@@ -690,6 +776,43 @@ def correct_sparameters_twelve_term(sparameters_complex,twelve_term_correction,r
         S21 =((Sm[1,0]-Exr)/(D*Etf))*(1+(Sm[1,1]-Edr)*(Esr-Elf)/Err)
         S12 = ((Sm[0,1]-Exf)/(D*Etr))*(1+(Sm[0,0]-Edf)*(Esf-Elr)/Erf)
         S22 = (Sm[1,1]-Edr)/(D*Err)*(1+(Sm[0,0]-Edf)*(Esf/Erf))-(Sm[0,1]*Sm[1,0]*Elr)/(D*Etf*Etr)
+        # S12 and S21 are averaged together in a weird way that makes phase continuous
+        geometric_mean=cmath.sqrt(S21*S12)
+        root_select=1
+        phase_new=cmath.phase(geometric_mean)
+        # if the phase jumps by >180 but less than 270, then pick the other root
+        if abs(phase_new-phase_last)>math.pi/2 and abs(phase_new-phase_last)<3*math.pi/2:
+            root_select=-1
+        mean_S12_S21=root_select*cmath.sqrt(S21*S12)
+        if reciprocal:
+            sparameter_out.append([frequency,S11,mean_S12_S21,mean_S12_S21,S22])
+        else:
+            sparameter_out.append([frequency,S11,S21,S12,S22])
+        phase_last=cmath.phase(mean_S12_S21)
+    return sparameter_out
+
+def uncorrect_sparameters_twelve_term(sparameters_complex,twelve_term_correction,reciprocal=True):
+    """Removes the twelve term correction to sparameters and returns a new sparameter list.
+    The sparameters should be a list of [frequency, S11, S21, S12, S22] where S terms are complex numbers.
+    The twelve term correction should be a list of
+    [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr] where Edf, etc are complex numbers"""
+    if len(sparameters_complex) != len(twelve_term_correction):
+        raise TypeError("s parameter and twelve term correction must be the same length")
+    sparameter_out=[]
+    phase_last=0.
+    for index,row in enumerate(sparameters_complex):
+        frequency=row[0]
+        Sa=np.matrix(row[1:]).reshape((2,2))
+        [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr]=twelve_term_correction[index]
+        #        frequency Edf Esf Erf Exf Elf Etf Edr Esr Err Exr Elr Etr.
+#         print [frequency,Edf,Esf,Erf,Exf,Elf,Etf,Edr,Esr,Err,Exr,Elr,Etr]
+#         print Sm[0,0]
+        delta=Sa[0,0]*Sa[1,1]-Sa[0,1]*Sa[1,0]
+#         print D
+        S11 =Edf+(Erf)*(Sa[0,0]-Elf*delta)/(1-Esf*Sa[0,0]-Elf*Sa[1,1]+Esf*Elf*delta)
+        S21 =Etf*(Sa[1,0])/(1-Esf*Sa[0,0]-Elf*Sa[1,1]-Esf*Elf*delta)
+        S12 = Etr*(Sa[0,1])/(1-Elr*Sa[0,0]-Esr*Sa[1,1]-Esr*Elr*delta)
+        S22 = Edr+Err*(Sa[1,1]-Elr*delta)/(1-Elr*Sa[0,0]-Esr*Sa[1,1]-Esr*Elr*delta)
         # S12 and S21 are averaged together in a weird way that makes phase continuous
         geometric_mean=cmath.sqrt(S21*S12)
         root_select=1
