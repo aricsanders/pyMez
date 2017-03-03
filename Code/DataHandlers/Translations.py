@@ -143,7 +143,7 @@ except:
     #raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants
-INKSCAPE_PATH=r'c:\PROGRA~1\Inkscape\inkscape.exe'
+INKSCAPE_PATH=r'C:\Program Files (x86)\Inkscape\inkscape.exe'
 "Path to the Inkscape executable."
 WKHTML_PATH=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
 "Path to the wkhtmltopdf executable."
@@ -880,7 +880,7 @@ def FigFile_to_MatplotlibFigure(filename,fignr=1):
         ax1 = ax1[0]
     else:
         legs=0
-    figure(fignr)
+    fig=figure(fignr)
     clf()
     hold(True)
     counter = 0
@@ -930,6 +930,7 @@ def FigFile_to_MatplotlibFigure(filename,fignr=1):
         legend(leg_entries,loc=Mat2py[location])
     hold(False)
     show()
+    return fig
 
 # Metadata Translations
 def replace_None(string):

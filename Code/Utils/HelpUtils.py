@@ -69,7 +69,7 @@ INDEX_HTML_PREFIX="""<html>
 <body>
 <a href="./pyMeasure_Documentation.html">Documentation Home</a> |
 <a href="./pyMeasure/index.html">API Documentation Home</a> |
-<a href="./Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="./Examples/html/Examples_Home.html">Examples Home</a> |
 <a href="./Reference_Index.html">Index </a>
 <h1>Index of All Functions and Classes in pyMeasure</h1>
 <ol>"""

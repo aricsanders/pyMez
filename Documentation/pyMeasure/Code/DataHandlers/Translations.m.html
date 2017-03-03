@@ -1440,7 +1440,7 @@ software:
     <span class="c1">#raise ImportError</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Constants</span>
-<span class="n">INKSCAPE_PATH</span><span class="o">=</span><span class="s1">r&#39;c:\PROGRA~1\Inkscape\inkscape.exe&#39;</span>
+<span class="n">INKSCAPE_PATH</span><span class="o">=</span><span class="s1">r&#39;C:\Program Files (x86)\Inkscape\inkscape.exe&#39;</span>
 <span class="s2">&quot;Path to the Inkscape executable.&quot;</span>
 <span class="n">WKHTML_PATH</span><span class="o">=</span><span class="s1">r&#39;C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe&#39;</span>
 <span class="s2">&quot;Path to the wkhtmltopdf executable.&quot;</span>
@@ -2177,7 +2177,7 @@ software:
         <span class="n">ax1</span> <span class="o">=</span> <span class="n">ax1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">legs</span><span class="o">=</span><span class="mi">0</span>
-    <span class="n">figure</span><span class="p">(</span><span class="n">fignr</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">=</span><span class="n">figure</span><span class="p">(</span><span class="n">fignr</span><span class="p">)</span>
     <span class="n">clf</span><span class="p">()</span>
     <span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
@@ -2227,6 +2227,7 @@ software:
         <span class="n">legend</span><span class="p">(</span><span class="n">leg_entries</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="n">Mat2py</span><span class="p">[</span><span class="n">location</span><span class="p">])</span>
     <span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
     <span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fig</span>
 
 <span class="c1"># Metadata Translations</span>
 <span class="k">def</span> <span class="nf">replace_None</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
@@ -4656,7 +4657,7 @@ Returns the new file name</p></div>
         <span class="n">ax1</span> <span class="o">=</span> <span class="n">ax1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">legs</span><span class="o">=</span><span class="mi">0</span>
-    <span class="n">figure</span><span class="p">(</span><span class="n">fignr</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">=</span><span class="n">figure</span><span class="p">(</span><span class="n">fignr</span><span class="p">)</span>
     <span class="n">clf</span><span class="p">()</span>
     <span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
@@ -4706,6 +4707,7 @@ Returns the new file name</p></div>
         <span class="n">legend</span><span class="p">(</span><span class="n">leg_entries</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="n">Mat2py</span><span class="p">[</span><span class="n">location</span><span class="p">])</span>
     <span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
     <span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fig</span>
 </pre></div>
 
   </div>
