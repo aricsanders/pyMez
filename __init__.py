@@ -2,9 +2,11 @@
 pyMeasure is an open source package for scientific data handling, analysis and acquisition. By loading the pyMeasure
 package with the from pyMeasure import * style, the user gets the designed API with finished functionality. The
 pyMeasure library itself has other helper modules that are directly accessible by importing them in the standard
-fashion (from pyMeasure.Code.Subpackage.Module import class_or_function). For optimization purposes the pyMeasure
+fashion (from pyMeasure.Code.Subpackage.Module import class_or_function). For clarity purposes the pyMeasure
 package importer (this file) has a constant VERBOSE_IMPORT = True that prints a list of each of the packages as it is
-imported. To change the imported API, change the import statements in this __init__.py file.
+imported. To change the imported API, change the dictionary API_MODULES to have an entry
+API_MODULE["Code.Subpackage.Module"]=True
+ in this __init__.py file.
 Designed by Aric Sanders 2016
 
  Examples

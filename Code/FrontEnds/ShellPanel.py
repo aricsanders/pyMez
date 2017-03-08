@@ -6,7 +6,9 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 
-"""This is a shell, modified from the shell in Boa Constructor, updated to work with wx 3 and python 2.7"""
+"""This is a shell, modified from the shell in Boa Constructor, updated to work with wx 3 and python 2.7
+The shell causes a wxWidgets Debug alert to occur because of the wx.stc module, to avoid it in the
+end product import this in the module runner."""
 
 # A trick to make sure the boa directory is on sys.path
 import sys
@@ -19,7 +21,7 @@ sys.path.append(os_path.replace('lib','Lib/site-packages/boa'))
 
 
 import wx
-import wx.stc
+# import wx.stc
 
 [wxID_PANEL1, wxID_PANEL1STYLEDTEXTCTRL1, 
 ] = [wx.NewId() for _init_ctrls in range(2)]
@@ -595,6 +597,7 @@ class ShellPanel(wx.Panel):
 
 if __name__ == '__main__':
     app = wx.App(False)
+
     frame = wx.Frame(None,size=wx.Size(762, 502))
     panel=ShellPanel(id=1, name=u'ShellPanel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(762, 502),
