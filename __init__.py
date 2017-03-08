@@ -48,44 +48,64 @@ import os
 import sys
 VERBOSE_IMPORT=True
 "Constant that determines if import statements are echoed to output"
+# control the modules loaded in the API, this should be included in a pyMeasure Settings file
+# The new module load scheme can be for module in API_MODULES.keys()
+API_MODULES={"Code.Utils.Names":True,
+             "Code.Utils.Alias":False,
+             "Code.Utils.DjangoUtils":False,
+             "Code.Utils.GetMetadata":False,
+             "Code.Utils.HelpUtils":False,
+             "Code.Utils.HPBasicUtils":False,
+             "Code.Utils.PerformanceUtils":False,
+             "Code.Utils.pyMeasureUnitTest":False,
+             "Code.DataHandlers.AbstractDjangoModels":False,
+             "Code.DataHandlers.GeneralModels":True,
+             "Code.DataHandlers.GraphModels":True,
+             "Code.DataHandlers.HTMLModels":True,
+             "Code.DataHandlers.MUFModels":True,
+             "Code.DataHandlers.NISTModels":True,
+             "Code.DataHandlers.RadiCALModels":False,
+             "Code.DataHandlers.StatistiCALModels":True,
+             "Code.DataHandlers.TouchstoneModels":True,
+             "Code.DataHandlers.Translations":True,
+             "Code.DataHandlers.XMLModels":True,
+             "Code.DataHandlers.ZipModels":True,
+             "Code.Analysis.Fitting":True,
+             "Code.Analysis.Interpolation":True,
+             "Code.Analysis.NISTUncertainty":True,
+             "Code.Analysis.SParameter":True,
+             "Code.Analysis.Uncertainty":True,
+             "Code.InstrumentControl.Instruments":True,
+             "Code.InstrumentControl.Experiments":True,
+             "Code.FrontEnds.AdvancedInterfaceFrame":False,
+             "Code.FrontEnds.BasicInterfaceFrame":False,
+             "Code.FrontEnds.EndOfDayDialog":False,
+             "Code.FrontEnds.GeneralInterfaceFrame":False,
+             "Code.FrontEnds.HTMLPanel":False,
+             "Code.FrontEnds.IEPanel":False,
+             "Code.FrontEnds.IPythonPanel":False,
+             "Code.FrontEnds.KeithleyIVPanel":False,
+             "Code.FrontEnds.MatplotlibWxPanel":False,
+             "Code.FrontEnds.ShellPanel":False,
+             "Code.FrontEnds.SimpleArbDBLowerInterfacePanel":False,
+             "Code.FrontEnds.SimpleLogLowerInterfacePanel":False,
+             "Code.FrontEnds.StyledTextCtrlPanel":False,
+             "Code.FrontEnds.VisaDialog":False,
+             "Code.FrontEnds.WxDialogFunctions":False,
+             "Code.FrontEnds.WxHTML2Panel":False,
+             "Code.FrontEnds.XMLEditPanel":False,
+             "Code.FrontEnds.XMLGeneral":False
+             }
+"Dictionary that controls the definition of the API, this can be set to leave out any unwanted modules. Also it is" \
+"possible to discover all modules by API_MODULES.keys()"
+
 # This makes sure this file is the one loaded
 sys.path.append(os.path.dirname( __file__ ))
-# To tune the imported API change the modules imported
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.Utils.Names"))
-from Code.Utils.Names import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.NISTModels"))
-from Code.DataHandlers.NISTModels import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.GeneralModels"))
-from Code.DataHandlers.GeneralModels import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.TouchstoneModels"))
-from Code.DataHandlers.TouchstoneModels import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.XMLModels"))
-from Code.DataHandlers.XMLModels import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.RadiCALModels"))
-from Code.DataHandlers.RadiCALModels import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.ZipModels"))
-from Code.DataHandlers.ZipModels import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.Translations"))
-from Code.DataHandlers.Translations import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.StatistiCALModels"))
-from Code.DataHandlers.StatistiCALModels import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.DataHandlers.MUFModels"))
-from Code.DataHandlers.MUFModels import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.Analysis.SParameter"))
-from Code.Analysis.SParameter import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.Analysis.Uncertainty"))
-from Code.Analysis.Uncertainty import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.InstrumentControl.Instruments"))
-from Code.InstrumentControl.Instruments import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.InstrumentControl.Experiments"))
-from Code.InstrumentControl.Experiments import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.FrontEnds.AdvancedInterfaceFrame"))
-from pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.FrontEnds.ShellPanel"))
-from pyMeasure.Code.FrontEnds.ShellPanel import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.FrontEnds.IEPanel"))
-from pyMeasure.Code.FrontEnds.IEPanel import *
-if VERBOSE_IMPORT:print("Importing {0}".format("Code.FrontEnds.MatplotlibWxPanel"))
-from pyMeasure.Code.FrontEnds.MatplotlibWxPanel import *
+# To tune the imported API change the API_MODULES dictionary
+for module in sorted(API_MODULES.keys()):
+    if API_MODULES[module]:
+        if VERBOSE_IMPORT:
+            print("Importing {0}".format(module))
+        exec('from {0} import *'.format(module))
 
-# __all__=["Code"]
+
