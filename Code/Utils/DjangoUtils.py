@@ -22,6 +22,66 @@ def build_index():
     """Builds index.html given a set of inputs"""
     pass
 
+
+def create_nav_bar_string(**options):
+    """Creates a django templated nav bar string for insertion into the {% block nav %} {% endblock %} template
+    tags"""
+    defaults = {"nav_class": "navbar navbar-inverse",
+                "site_name": "Calnet",
+                "apps": ["Home", "Help"],
+                "registration": """
+              {% if user.is_authenticated %}
+                </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/accounts/user_info/">
+                  <span class="glyphicon glyphicon-user"></span>
+                  {% trans "Logged in" %}: {{ user.username }}</a></li>
+                  <li><a href="{% url 'auth_logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                 </ul>
+              {% else %}
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/accounts/register/"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                  <li><a href="{% url 'auth_login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+              {% endif %}""",
+                "search": """<form class="navbar-form navbar-right" role="search">
+                              <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Search">
+                              </div>
+                             <button type="submit" class="btn btn-default">
+                             <span class="glyphicon glyphicon-search"></span></button>
+                            </form>"""}
+    nav_bar_options = {}
+    for key, value in defaults.iteritems():
+        nav_bar_options[key] = value
+    for key, value in options.iteritems():
+        nav_bar_options[key] = value
+    output_string = ""
+    string_template = """
+    <nav class="{nav_class}" id="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/"><span class="badge">{site_name}</span></a>
+            </div>
+        <ul class="nav navbar-nav">
+            {app_link_string}
+            {registration}
+        {search}
+        </div>
+    </nav>
+    """
+    app_link_string = ""
+    for app in nav_bar_options["apps"]:
+        app_link_string = app_link_string + '<li><a href="/{0}">{0}</a> </li>'.format(app)
+    nav_bar_options["app_link_string"] = app_link_string
+    if not nav_bar_options["registration"]:
+        nav_bar_options = "</ol>"
+    if not nav_bar_options["search"]:
+        nav_bar_options["search"] = ""
+
+    return string_template.format(**nav_bar_options)
+
 def write_home_templates():
     """Writes several basic templates to the current directory includes index.html
     and a series of templates required for registrations"""

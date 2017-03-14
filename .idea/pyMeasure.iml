@@ -13,6 +13,9 @@
     <orderEntry type="module" module-name="Jupyter-Notebooks" />
     <orderEntry type="module" module-name="boa" />
     <orderEntry type="module" module-name="aricsanders.github.io" />
+    <orderEntry type="module" module-name="test_site" />
+    <orderEntry type="module" module-name="check_standard" />
+    <orderEntry type="module" module-name="test_site" />
   </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="Nosetests" />
