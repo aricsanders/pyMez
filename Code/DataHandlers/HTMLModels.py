@@ -42,6 +42,7 @@ import sys
 import lxml.html
 import lxml.html.builder
 from types import *
+import re
 #-----------------------------------------------------------------------------
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
@@ -87,21 +88,21 @@ WKHTML_PATH=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
 TESTS_DIRECTORY=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
 #-----------------------------------------------------------------------------
 # Module Functions
-def make_html_element(tag,content=None,**attribute_dictionary):
-    """Creates an lxml.html.HtmlElement given a tag, content and attribute dictionary
-     <tag key1="value2" key2="value2">content</tag> """
+def make_html_element(tag,text=None,**attribute_dictionary):
+    """Creates an lxml.html.HtmlElement given a tag, text and attribute dictionary
+     <tag key1="value2" key2="value2">text</tag> """
     position_arguments=[tag]
-    if content:
-        position_arguments.append(content)
+    if text:
+        position_arguments.append(text)
     new_tag=lxml.html.builder.E(*position_arguments,**attribute_dictionary)
     return new_tag
 
-def make_html_string(tag,content=None,**attribute_dictionary):
-    """Creates the html string for tag, content and attribute dictionary
-     <tag key1="value2" key2="value2">content</tag> """
+def make_html_string(tag,text=None,**attribute_dictionary):
+    """Creates the html string for tag, text and attribute dictionary
+     <tag key1="value2" key2="value2">text</tag> """
     position_arguments=[tag]
-    if content:
-        position_arguments.append(content)
+    if text:
+        position_arguments.append(text)
     new_tag=lxml.html.builder.E(*position_arguments,**attribute_dictionary)
     out_text=lxml.html.tostring(new_tag)
     return out_text
@@ -118,7 +119,7 @@ class HTMLBase(object):
                   "directory":None,
                   "extension":'html',
                   "path":None,
-                  "html_content":None,
+                  "html_text":None,
                   "body":None,
                   "head":None
                   }
@@ -133,9 +134,9 @@ class HTMLBase(object):
                 exec(command)
         if file_path is None:
             # create self.document
-            if self.options["html_content"]:
-                # first priority is just passing the full page in html_content
-                self.document=lxml.html.fromstring(self.options["html_content"])
+            if self.options["html_text"]:
+                # first priority is just passing the full page in html_text
+                self.document=lxml.html.fromstring(self.options["html_text"])
             else:
                 self.root=lxml.html.builder.HTML()
                 self.document=lxml.etree.ElementTree(self.root)
@@ -193,11 +194,99 @@ class HTMLBase(object):
             config = pdfkit.configuration(wkhtmltopdf=WKHTML_PATH)
             pdfkit.from_string(str(self),file_path,configuration=config)
             return file_path
+    def add_head(self):
+        """Adds a head tag to the model if it does not exist"""
+        head=make_html_element(tag="head",text="")
+        if not re.match("head",self.root.getchildren()[0].tag,re.IGNORECASE):
+            self.root.insert(0,head)
+        else:
+            print("head already exists, tag was not added ")
+            pass
+
+    def add_body(self):
+        """Adds a body tag to the model if it does not exist"""
+        body=make_html_element(tag="body",text="")
+        tags=map(lambda x:x.tag.lower(),self.root.getchildren())
+        if not "body" in tags:
+            self.root.append(body)
+        else:
+            print("body already exists, tag was not added ")
+            pass
+
+    def append_to_body(self,element):
+        """Appends the element to the body of the model, if it is a string it parses first, if it is a
+        dictionary it assumes it has the form {"tag":tag_name,"text":text_text,
+        "attribute_dictionary":{"attribute_name":"attribute_value"}, and if it is a
+        lxml.html.HtmlElement it appends it"""
+        try:
+            tags = map(lambda x: x.tag.lower(), self.root.getchildren())
+            if not "body" in tags:
+                body = make_html_element(tag="body", text="")
+                print("Body tag was not present adding it")
+                self.root.append(body)
+
+            if type(element) is StringType:
+                new_element=lxml.html.fragment_fromstring(element)
+            elif type(element) is DictionaryType:
+                new_element=make_html_element(**element)
+            elif type(element) in [lxml.html.HtmlElement]:
+                new_element=element
+            self.root.body.append(new_element)
+        except:
+            print("Could not add {0} to body".format(element))
+
+    def append_to_head(self,element):
+        """Appends the element to the head of the model, if it is a string it parses first, if it is a
+        dictionary it assumes it has the form {"tag":tag_name,"text":text_text,
+        "attribute_dictionary":{"attribute_name":"attribute_value"}, and if it is a
+        lxml.html.HtmlElement it appends it"""
+        try:
+            tags = map(lambda x: x.tag.lower(), self.root.getchildren())
+            if not "head" in tags:
+                head = make_html_element(tag="head", text="")
+                print("Head tag was not present adding it")
+                self.root.insert(0,head)
+
+            if type(element) is StringType:
+                new_element=lxml.html.fragment_fromstring(element)
+            elif type(element) is DictionaryType:
+                new_element=make_html_element(**element)
+            elif type(element) in [lxml.html.HtmlElement]:
+                new_element=element
+            self.root.head.append(new_element)
+        except:
+            print("Could not add {0} to head".format(element))
 
     def to_HTML(self):
         """Convenience function that echos the content updates the attribute self.text"""
         self.text=str(self)
         return str(self.text)
+
+    def __add__(self, other):
+        """Adds two html sheets and returns the answer"""
+        children_model_1=self.root.getchildren()
+        children_model_2=other.root.getchildren()
+        tags_model_1=map(lambda x:x.tag,children_model_1)
+        tags_model_2=map(lambda x:x.tag,children_model_2)
+        # if the models don't have a head or body add them
+        if not "head" in tags_model_1:
+            head = make_html_element(tag="head", text="")
+            self.root.inset(0,head)
+        if not "body" in tags_model_1:
+            body=make_html_element(tag="body", text="")
+            self.root.append(body)
+        if "head" in tags_model_2:
+            for child in other.root.head.getchildren():
+                copy=child.__copy__()
+                self.root.head.append(copy)
+        if "body" in tags_model_2:
+            for child in other.root.body.getchildren():
+                copy=child.__copy__()
+                self.root.body.append(copy)
+        return self
+
+
+
 
 class HTMLHelpPage(HTMLBase):
     """Model for a HTMLHelp page for a given module, class or function"""
@@ -226,15 +315,33 @@ def test_HTMLBase_no_file(head=None,body=None):
     # saves a pdf
     #html.to_pdf()
     html.show()
+
 def test_make_html_element():
     """Tests both the make_html_string function
     """
-    [tag,content,id_attribute]=["h3","A level 3 heading",{"id":"heading-here"}]
-    print("The input of the function is tag = {0}, content = {1}, attribute dictionary = {2}".format(tag,content,                                                                                               id_attribute))
-    print("The resulting html string is {0}".format(make_html_string(tag,content,**id_attribute)))
+    [tag,text,id_attribute]=["h3","A level 3 heading",{"id":"heading-here"}]
+    print("The input of the function is tag = {0}, text = {1}, attribute dictionary = {2}".format(tag,text,                                                                                               id_attribute))
+    print("The resulting html string is {0}".format(make_html_string(tag,text,**id_attribute)))
+
+def test_HTMLBase_addition(first="One_Port_Raw_Sparameter_20160307_001.html",second="One_Port_Raw_Sparameter_20160307_001.html"):
+    os.chdir(TESTS_DIRECTORY)
+    html_1=HTMLBase(first)
+    html_2=HTMLBase(second)
+    print("-"*80)
+    print("The first HTML is {0}".format(str(html_1)))
+    print("-"*80)
+    print("The second HTML is {0}".format(str(html_2)))
+    print("-"*80)
+    html_3=html_1+html_2
+    print("The addition is {0}".format(str(html_3)))
+    html_3.show()
+    html_3.save("combined_html.html")
+
+
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    test_HTMLBase(file_name="One_Port_Raw_Sparameter_20160307_001.html")
+    #test_HTMLBase(file_name="One_Port_Raw_Sparameter_20160307_001.html")
     #test_HTMLBase_no_file()
-    #test_make_html_element()
+    test_make_html_element()
+    test_HTMLBase_addition()
