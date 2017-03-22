@@ -209,6 +209,26 @@ def CStringIo_to_String(string_io_object):
     """Converts a StringIO.StringIO object to a string.
      Inverse of String_to_CStringIo"""
     return string_io_object.getvalue()
+
+def String_to_DownloadLink(string,**options):
+    """Converts a string to a download link options are suggested_name, mime_type and text for the link"""
+    defaults={"suggested_name":"test.txt",
+              "mime_type":"text/plain",
+              "text":"Download File"}
+    link_options={}
+    for key,value in defaults.iteritems():
+        link_options[key]=value
+    for key,value in options.iteritems():
+        link_options[key]=value
+    if type(string) not in StringTypes:
+        string=str(string)
+    base_64=base64.encodestring(string)
+    out_text="<a href='data:{0};base64,{1}' download = '{2}'>{3}</a>".format(link_options["mime_type"],
+                                                                                    base_64,
+                                                                                    link_options["suggested_name"],
+                                                                                    link_options["text"])
+    return out_text
+
 def AsciiDataTable_to_XmlDataTable(ascii_data_table,**options):
     """Takes an AsciiDataTable and returns a XmlDataTable with **options"""
     defaults={"specific_descriptor":ascii_data_table.options["specific_descriptor"],
