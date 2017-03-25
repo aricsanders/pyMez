@@ -66,6 +66,61 @@ def radical_dataset_to_s2p(radical_data_set,frequency_list,**options):
     new_s2p=S2PV1(None,sparameter_complex=sparameters,**s2p_options)
     return new_s2p
 
+
+def radical_frequency_to_frequency_list(radical_frequency, radical_data_file=None):
+    """Takes either the string specifying the radical frequency location ("RadiCalData/StatistiCalData/F") and
+    radical data file
+    or the data set radical_data_file["RadiCalData/StatistiCalData/F"] and returns a python list of frequencies"""
+    try:
+        if type(radical_frequency) in StringTypes:
+            frequency_list = np.array(radical_data_file[radical_frequency])[0].tolist()
+        elif type(radical_frequency) in [h5py._hl.dataset.Dataset]:
+            frequency_list = np.array(radical_frequency)[0].tolist()
+        elif type(radical_frequency) in [h5py._hl.files.File]:
+            frequency_list = np.array(radical_frequency["RadiCalData/StatistiCalData/F"])[0].tolist()
+    except:
+        print("Could not change {0} to a python list".format(radical_frequency))
+
+
+def radical_error_boxes_to_eight_term_complex(radical_s1, radical_s2, radical_frequency_list, radical_data_file=None):
+    """Takes two radical error boxes and a frequency_list (in python format run radical_frequency_to_frequency_list first)
+    and converts them into a python list structure
+    [[f,S1_11,S1_12,S1_21,S1_22,S2_11,S2_12,S2_21,S_22]] where each component of a matrix is a complex number.
+    This list is designed to be used as an input for correct_sparameters_eight_term"""
+    try:
+        # fist convert the S1 to a numpy array the dimensions are 4 x number of frequencies x 2
+        if type(radical_s1) in StringTypes:
+            s1_numpy_array = np.array(radical_data_file[radical_s1])
+        elif type(radical_s1) in [h5py._hl.dataset.Dataset]:
+            s1_numpy_array = np.array(radical_s1)
+        elif type(radical_s1) in [np.ndarray]:
+            s1_numpy_array = radical_s1
+        else:
+            raise TypeError("S1 is the wrong type")
+        # second convert the S2 to a numpy array are 4 x number of frequencies x 2
+        if type(radical_s2) in StringTypes:
+            s2_numpy_array = np.array(radical_data_file[radical_s2])
+        elif type(radical_s2) in [h5py._hl.dataset.Dataset]:
+            s2_numpy_array = np.array(radical_s2)
+        elif type(radical_s2) in [np.ndarray]:
+            s2_numpy_array = radical_s2
+        else:
+            raise TypeError("S2 is the wrong type")
+        # now arrange each item as complex()
+        eight_term_complex_list = []
+        for frequency_index, frequency in enumerate(radical_frequency_list):
+            new_row = [frequency]
+            s1_row = [s1_numpy_array[i][frequency_index] for i in range(len(s1_numpy_array))]
+            s1_complex_row = map(lambda x: complex(x[0], x[1]), s1_row)
+            s2_row = [s2_numpy_array[i][frequency_index] for i in range(len(s2_numpy_array))]
+            s2_complex_row = map(lambda x: complex(x[0], x[1]), s2_row)
+            new_row = new_row + s1_complex_row + s2_complex_row
+            eight_term_complex_list.append(new_row)
+        return eight_term_complex_list
+    except:
+        print("Could not convert the S1, S2 as given")
+        raise
+
 # Does this belong in HD5Models?
 def print_hd5_keys(hd5_group):
     """Prints hd5 keys and passes if there are none"""

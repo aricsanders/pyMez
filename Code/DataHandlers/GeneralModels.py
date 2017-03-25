@@ -629,7 +629,8 @@ class AsciiDataTable():
                                 self.options["inline_comments"]]
             #print "I got here {0}".format(self.path)
             for element in self.elements:
-                self.options[element]=None
+                if element not in ["metadata"]:
+                    self.options[element]=None
 
             #if you are validating the model, you have to skip the updating until it hsa been parsed
             try:
