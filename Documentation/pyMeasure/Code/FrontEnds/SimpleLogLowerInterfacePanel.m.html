@@ -575,7 +575,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -845,6 +861,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1025,6 +1042,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1036,44 +1067,22 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.LOGS_DIRECTORY">LOGS_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANEL">wxID_SIMPLELOGLOWERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL">wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELENTRY">wxID_SIMPLELOGLOWERINTERFACEPANELENTRY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL">wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.convert_datetime">convert_datetime</a></li>
   </ul>
 
+	 </div>
     </li>
 
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
         <li class="mono">
         <span class="class_name"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.SimpleLogLowerInterfacePanel">SimpleLogLowerInterfacePanel</a></span>
         
@@ -1385,6 +1394,38 @@ table {
       </ul>
     </li>
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.LOGS_DIRECTORY">LOGS_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANEL">wxID_SIMPLELOGLOWERINTERFACEPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL">wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELENTRY">wxID_SIMPLELOGLOWERINTERFACEPANELENTRY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL">wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -1775,175 +1816,6 @@ table {
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.LOGS_DIRECTORY" class="name">var <span class="ident">LOGS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELENTRY" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELENTRY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -11963,6 +11835,177 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
       </div>
       </div>
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.LOGS_DIRECTORY" class="name">var <span class="ident">LOGS_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELENTRY" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELENTRY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleLogLowerInterfacePanel.wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

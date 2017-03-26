@@ -575,7 +575,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -845,6 +861,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1025,6 +1042,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1036,44 +1067,22 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.METHOD_ALIASES">METHOD_ALIASES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.StringTypes">StringTypes</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.XSLT_CAPABLE">XSLT_CAPABLE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.demoText">demoText</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.faces">faces</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.overview">overview</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_STYLEDTEXTCTRLPANEL">wxID_STYLEDTEXTCTRLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_STYLEDTEXTCTRLPANELSTYLEDTEXTCTRL1">wxID_STYLEDTEXTCTRLPANELSTYLEDTEXTCTRL1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANEL">wxID_XMLEDITPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELEDITDISPLAYPANEL">wxID_XMLEDITPANELEDITDISPLAYPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELEDITPANEL">wxID_XMLEDITPANELEDITPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILECONTROLPANEL">wxID_XMLEDITPANELFILECONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILEOPENBUTTON">wxID_XMLEDITPANELFILEOPENBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILESAVEBUTTON">wxID_XMLEDITPANELFILESAVEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELNOTEBOOK1">wxID_XMLEDITPANELNOTEBOOK1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELSOURCEVIEW">wxID_XMLEDITPANELSOURCEVIEW</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELTRANSFORMEDXML">wxID_XMLEDITPANELTRANSFORMEDXML</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELVIEWSOURCE">wxID_XMLEDITPANELVIEWSOURCE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELXSLVIEW">wxID_XMLEDITPANELXSLVIEW</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.test_XMLEditPanel">test_XMLEditPanel</a></li>
   </ul>
 
+	 </div>
     </li>
 
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
         <li class="mono">
         <span class="class_name"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.XMLEditPanel">XMLEditPanel</a></span>
         
@@ -1378,6 +1387,38 @@ table {
       </ul>
     </li>
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.METHOD_ALIASES">METHOD_ALIASES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.StringTypes">StringTypes</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.XSLT_CAPABLE">XSLT_CAPABLE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.demoText">demoText</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.faces">faces</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.overview">overview</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_STYLEDTEXTCTRLPANEL">wxID_STYLEDTEXTCTRLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_STYLEDTEXTCTRLPANELSTYLEDTEXTCTRL1">wxID_STYLEDTEXTCTRLPANELSTYLEDTEXTCTRL1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANEL">wxID_XMLEDITPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELEDITDISPLAYPANEL">wxID_XMLEDITPANELEDITDISPLAYPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELEDITPANEL">wxID_XMLEDITPANELEDITPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILECONTROLPANEL">wxID_XMLEDITPANELFILECONTROLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILEOPENBUTTON">wxID_XMLEDITPANELFILEOPENBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILESAVEBUTTON">wxID_XMLEDITPANELFILESAVEBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELNOTEBOOK1">wxID_XMLEDITPANELNOTEBOOK1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELSOURCEVIEW">wxID_XMLEDITPANELSOURCEVIEW</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELTRANSFORMEDXML">wxID_XMLEDITPANELTRANSFORMEDXML</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELVIEWSOURCE">wxID_XMLEDITPANELVIEWSOURCE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELXSLVIEW">wxID_XMLEDITPANELXSLVIEW</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -1663,175 +1704,6 @@ table {
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.XSLT_CAPABLE" class="name">var <span class="ident">XSLT_CAPABLE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.demoText" class="name">var <span class="ident">demoText</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.faces" class="name">var <span class="ident">faces</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.overview" class="name">var <span class="ident">overview</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_STYLEDTEXTCTRLPANEL" class="name">var <span class="ident">wxID_STYLEDTEXTCTRLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_STYLEDTEXTCTRLPANELSTYLEDTEXTCTRL1" class="name">var <span class="ident">wxID_STYLEDTEXTCTRLPANELSTYLEDTEXTCTRL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANEL" class="name">var <span class="ident">wxID_XMLEDITPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELEDITDISPLAYPANEL" class="name">var <span class="ident">wxID_XMLEDITPANELEDITDISPLAYPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELEDITPANEL" class="name">var <span class="ident">wxID_XMLEDITPANELEDITPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILECONTROLPANEL" class="name">var <span class="ident">wxID_XMLEDITPANELFILECONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILEOPENBUTTON" class="name">var <span class="ident">wxID_XMLEDITPANELFILEOPENBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILESAVEBUTTON" class="name">var <span class="ident">wxID_XMLEDITPANELFILESAVEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELNOTEBOOK1" class="name">var <span class="ident">wxID_XMLEDITPANELNOTEBOOK1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELSOURCEVIEW" class="name">var <span class="ident">wxID_XMLEDITPANELSOURCEVIEW</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELTRANSFORMEDXML" class="name">var <span class="ident">wxID_XMLEDITPANELTRANSFORMEDXML</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELVIEWSOURCE" class="name">var <span class="ident">wxID_XMLEDITPANELVIEWSOURCE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELXSLVIEW" class="name">var <span class="ident">wxID_XMLEDITPANELXSLVIEW</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -11594,6 +11466,177 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
       </div>
       </div>
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.XSLT_CAPABLE" class="name">var <span class="ident">XSLT_CAPABLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.demoText" class="name">var <span class="ident">demoText</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.faces" class="name">var <span class="ident">faces</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.overview" class="name">var <span class="ident">overview</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_STYLEDTEXTCTRLPANEL" class="name">var <span class="ident">wxID_STYLEDTEXTCTRLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_STYLEDTEXTCTRLPANELSTYLEDTEXTCTRL1" class="name">var <span class="ident">wxID_STYLEDTEXTCTRLPANELSTYLEDTEXTCTRL1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANEL" class="name">var <span class="ident">wxID_XMLEDITPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELEDITDISPLAYPANEL" class="name">var <span class="ident">wxID_XMLEDITPANELEDITDISPLAYPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELEDITPANEL" class="name">var <span class="ident">wxID_XMLEDITPANELEDITPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILECONTROLPANEL" class="name">var <span class="ident">wxID_XMLEDITPANELFILECONTROLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILEOPENBUTTON" class="name">var <span class="ident">wxID_XMLEDITPANELFILEOPENBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELFILESAVEBUTTON" class="name">var <span class="ident">wxID_XMLEDITPANELFILESAVEBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELNOTEBOOK1" class="name">var <span class="ident">wxID_XMLEDITPANELNOTEBOOK1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELSOURCEVIEW" class="name">var <span class="ident">wxID_XMLEDITPANELSOURCEVIEW</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELTRANSFORMEDXML" class="name">var <span class="ident">wxID_XMLEDITPANELTRANSFORMEDXML</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELVIEWSOURCE" class="name">var <span class="ident">wxID_XMLEDITPANELVIEWSOURCE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.XMLEditPanel.wxID_XMLEDITPANELXSLVIEW" class="name">var <span class="ident">wxID_XMLEDITPANELXSLVIEW</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

@@ -576,7 +576,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -846,6 +862,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1026,6 +1043,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,25 +1068,11 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.ACTIVE_COMPONENTS">ACTIVE_COMPONENTS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.DATA_SHEETS">DATA_SHEETS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.DEFAULT_MODE">DEFAULT_MODE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.INSTRUMENTS_DEFINED">INSTRUMENTS_DEFINED</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.INSTRUMENT_TYPES">INSTRUMENT_TYPES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.METHOD_ALIASES">METHOD_ALIASES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.PIL_AVAILABLE">PIL_AVAILABLE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.RTLD_GLOBAL">RTLD_GLOBAL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.RTLD_LOCAL">RTLD_LOCAL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.StringTypes">StringTypes</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.determine_instrument_type">determine_instrument_type</a></li>
@@ -1066,10 +1083,12 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.test_find_description">test_find_description</a></li>
   </ul>
 
+	 </div>
     </li>
 
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
         <li class="mono">
         <span class="class_name"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument">VisaInstrument</a></span>
         
@@ -1107,6 +1126,28 @@ table {
       </ul>
     </li>
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.ACTIVE_COMPONENTS">ACTIVE_COMPONENTS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.DATA_SHEETS">DATA_SHEETS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.DEFAULT_MODE">DEFAULT_MODE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.INSTRUMENTS_DEFINED">INSTRUMENTS_DEFINED</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.INSTRUMENT_TYPES">INSTRUMENT_TYPES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.METHOD_ALIASES">METHOD_ALIASES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.PIL_AVAILABLE">PIL_AVAILABLE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.RTLD_GLOBAL">RTLD_GLOBAL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.RTLD_LOCAL">RTLD_LOCAL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.StringTypes">StringTypes</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -1426,95 +1467,6 @@ instruments; GPIB,RS232 and other visa instruments</p>
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.ACTIVE_COMPONENTS" class="name">var <span class="ident">ACTIVE_COMPONENTS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.DATA_SHEETS" class="name">var <span class="ident">DATA_SHEETS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.DEFAULT_MODE" class="name">var <span class="ident">DEFAULT_MODE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.INSTRUMENTS_DEFINED" class="name">var <span class="ident">INSTRUMENTS_DEFINED</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.INSTRUMENT_TYPES" class="name">var <span class="ident">INSTRUMENT_TYPES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.PIL_AVAILABLE" class="name">var <span class="ident">PIL_AVAILABLE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.RTLD_GLOBAL" class="name">var <span class="ident">RTLD_GLOBAL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.RTLD_LOCAL" class="name">var <span class="ident">RTLD_LOCAL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.InstrumentControl.Instruments.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -2500,6 +2452,97 @@ window (using wx)</p></div>
       </div>
       </div>
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.ACTIVE_COMPONENTS" class="name">var <span class="ident">ACTIVE_COMPONENTS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.DATA_SHEETS" class="name">var <span class="ident">DATA_SHEETS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.DEFAULT_MODE" class="name">var <span class="ident">DEFAULT_MODE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.INSTRUMENTS_DEFINED" class="name">var <span class="ident">INSTRUMENTS_DEFINED</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.INSTRUMENT_TYPES" class="name">var <span class="ident">INSTRUMENT_TYPES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.PIL_AVAILABLE" class="name">var <span class="ident">PIL_AVAILABLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.RTLD_GLOBAL" class="name">var <span class="ident">RTLD_GLOBAL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.RTLD_LOCAL" class="name">var <span class="ident">RTLD_LOCAL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

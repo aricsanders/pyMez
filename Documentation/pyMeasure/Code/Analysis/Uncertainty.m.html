@@ -575,7 +575,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -845,6 +861,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1025,6 +1042,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1036,7 +1067,29 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
+
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.normalized_error">normalized_error</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.normalized_error_test">normalized_error_test</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.standard_error">standard_error</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table">standard_error_data_table</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.test_standard_error">test_standard_error</a></li>
+  </ul>
+
+	 </div>
+    </li>
+
+
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.COMBINE_S11_S22">COMBINE_S11_S22</a></li>
@@ -1079,21 +1132,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.TWELVE_TERM_ERROR_COLUMN_NAMES">TWELVE_TERM_ERROR_COLUMN_NAMES</a></li>
   </ul>
 
+	  </div>
     </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.normalized_error">normalized_error</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.normalized_error_test">normalized_error_test</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.standard_error">standard_error</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table">standard_error_data_table</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.Uncertainty.test_standard_error">test_standard_error</a></li>
-  </ul>
-
-    </li>
-
-
     </ul>
   </div>
 
@@ -1358,6 +1398,268 @@ table {
   </header>
 
   <section id="section-items">
+
+    <h2 class="section-title" id="header-functions">Functions</h2>
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.normalized_error">
+    <p>def <span class="ident">normalized_error</span>(</p><p>value_1, value_2, uncertainty, expansion_factor=1)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>normalized error returns the  scalar normalized error (delta value/ (expansion_factor*uncertainty))</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.normalized_error', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Analysis.Uncertainty.normalized_error" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">normalized_error</span><span class="p">(</span><span class="n">value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">,</span><span class="n">uncertainty</span><span class="p">,</span><span class="n">expansion_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;normalized error returns the  scalar normalized error (delta value/ (expansion_factor*uncertainty))&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">value_2</span><span class="o">-</span><span class="n">value_1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">uncertainty</span><span class="o">*</span><span class="n">expansion_factor</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.normalized_error_test">
+    <p>def <span class="ident">normalized_error_test</span>(</p><p>value_1, value_2, uncertainty, expansion_factor=1)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>normalized error returns true if the scalar normalized error (delta value/ (expansion_factor*uncertainty))
+is less than or equal to one</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.normalized_error_test', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Analysis.Uncertainty.normalized_error_test" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">normalized_error_test</span><span class="p">(</span><span class="n">value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">,</span><span class="n">uncertainty</span><span class="p">,</span><span class="n">expansion_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;normalized error returns true if the scalar normalized error (delta value/ (expansion_factor*uncertainty))</span>
+<span class="sd">    is less than or equal to one&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">normalized_error</span><span class="p">(</span><span class="n">value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">,</span><span class="n">uncertainty</span><span class="p">,</span><span class="n">expansion_factor</span><span class="p">)</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.standard_error">
+    <p>def <span class="ident">standard_error</span>(</p><p>value_1, uncertainty_value_1, value_2, uncertainty_value_2=0, expansion_factor=2)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>calculates the standard errror (delta value/ (expansion factor * Sqrt(ua^2+ub^2)))</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.standard_error', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Analysis.Uncertainty.standard_error" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">standard_error</span><span class="p">(</span><span class="n">value_1</span><span class="p">,</span><span class="n">uncertainty_value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">,</span><span class="n">uncertainty_value_2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">expansion_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;calculates the standard errror (delta value/ (expansion factor * Sqrt(ua^2+ub^2)))&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">abs</span><span class="p">((</span><span class="n">value_2</span><span class="o">-</span><span class="n">value_1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">uncertainty_value_1</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">uncertainty_value_2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">expansion_factor</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table">
+    <p>def <span class="ident">standard_error_data_table</span>(</p><p>table_1, table_2, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>standard error data table takes two tables and creates a table that is the standard error of the two tables,
+at least one table must have uncertainties associated with it. The input tables are assumed to have data
+in the form [[x, y1, y2,...]..] Uncertainties can be specified as a column name in the respective
+table, fractional, constant, or a function of the values. The returned table is an object
+of the class StandardErrorModel(AsciiDataTable) that has data in the form
+[[independent_varaible,SEValue1,SEValue2...]...] where column names are formed by
+appending SE to the value column names. To plot the table use result.show()</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">standard_error_data_table</span><span class="p">(</span><span class="n">table_1</span><span class="p">,</span><span class="n">table_2</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;standard error data table takes two tables and creates a table that is the standard error of the two tables,</span>
+<span class="sd">    at least one table must have uncertainties associated with it. The input tables are assumed to have data</span>
+<span class="sd">    in the form [[x, y1, y2,...]..] Uncertainties can be specified as a column name in the respective</span>
+<span class="sd">    table, fractional, constant, or a function of the values. The returned table is an object</span>
+<span class="sd">    of the class StandardErrorModel(AsciiDataTable) that has data in the form</span>
+<span class="sd">    [[independent_varaible,SEValue1,SEValue2...]...] where column names are formed by</span>
+<span class="sd">    appending SE to the value column names. To plot the table use result.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">error_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">:</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;value_column_names&quot;</span><span class="p">:[</span><span class="s1">&#39;magS11&#39;</span><span class="p">,</span><span class="s1">&#39;argS11&#39;</span><span class="p">,</span><span class="s1">&#39;magS21&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;argS21&#39;</span><span class="p">,</span><span class="s1">&#39;magS22&#39;</span><span class="p">,</span><span class="s1">&#39;argS22&#39;</span><span class="p">],</span>
+                  <span class="s2">&quot;table_1_uncertainty_column_names&quot;</span><span class="p">:[</span><span class="s1">&#39;uMgS11&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS11&#39;</span><span class="p">,</span>
+                                                      <span class="s1">&#39;uMgS21&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS21&#39;</span><span class="p">,</span><span class="s1">&#39;uMgS22&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS22&#39;</span><span class="p">],</span>
+                  <span class="s2">&quot;table_2_uncertainty_column_names&quot;</span><span class="p">:[</span><span class="s1">&#39;uMgS11&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS11&#39;</span><span class="p">,</span>
+                                                      <span class="s1">&#39;uMgS21&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS21&#39;</span><span class="p">,</span><span class="s1">&#39;uMgS22&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS22&#39;</span><span class="p">],</span>
+                   <span class="s2">&quot;uncertainty_table_1&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="s2">&quot;uncertainty_table_2&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="s2">&quot;uncertainty_function_table_1&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="s2">&quot;uncertainty_function_table_2&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="s2">&quot;uncertainty_function&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="s2">&quot;uncertainty_type&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">:</span><span class="s2">&quot;table&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="s2">&quot;expansion_factor&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+                   <span class="s1">&#39;debug&#39;</span><span class="p">:</span><span class="bp">False</span><span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">error_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">error_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="c1"># Begin by checking at least one table has an error associated with it</span>
+    <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">StandardErrorError</span><span class="p">(</span><span class="s2">&quot;Undefined Error For Both Tables: Define at least one of &quot;</span>
+                                 <span class="s2">&quot;table_1_uncertainty_type or table_2_uncertainty_type to be a value other than None&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;expansion_factor&quot;</span><span class="p">]:</span>
+        <span class="n">expansion_factor</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;expansion_factor&quot;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">expansion_factor</span><span class="o">=</span><span class="mi">1</span>
+    <span class="c1"># first find a unique list of the independent variable for both curves</span>
+    <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]:</span>
+        <span class="n">begin_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;started finding intersection of&quot;</span>
+              <span class="s2">&quot;table_1[{0}] and table_2[{1}] at {2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">],</span>
+                                                           <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">],</span>
+                                                           <span class="n">begin_time</span><span class="p">))</span>
+    <span class="n">x_set_table_1</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">table_1</span><span class="p">[</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">]])</span>
+    <span class="n">x_set_table_2</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">table_2</span><span class="p">[</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">]])</span>
+    <span class="n">unique_x</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x_set_table_1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">x_set_table_2</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]:</span>
+        <span class="n">end_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;finished finding intersection at {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end_time</span><span class="p">))</span>
+        <span class="n">delta_time</span><span class="o">=</span><span class="n">end_time</span><span class="o">-</span><span class="n">begin_time</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;it took {0} to find the intersection that contained {1} points&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">delta_time</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_x</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">unique_x</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">StandardErrorError</span><span class="p">(</span><span class="s2">&quot;No points in the intersection, please either interpolate one data set or compare&quot;</span>
+                                 <span class="s2">&quot;with another data set&quot;</span><span class="p">)</span>
+
+    <span class="c1"># next build the new data set</span>
+    <span class="n">out_data</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">x_column_index_table_1</span><span class="o">=</span><span class="n">table_1</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">])</span>
+    <span class="n">x_column_index_table_2</span><span class="o">=</span><span class="n">table_2</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">])</span>
+    <span class="c1"># we choose the row by using unique_x</span>
+    <span class="k">for</span> <span class="n">x_value</span> <span class="ow">in</span> <span class="n">unique_x</span><span class="p">:</span>
+        <span class="c1"># here if there are multiple values for x_value we ignore them</span>
+        <span class="n">table_1_row</span><span class="o">=</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="n">x_column_index_table_1</span><span class="p">]</span><span class="o">==</span><span class="n">x_value</span><span class="p">,</span><span class="n">table_1</span><span class="o">.</span><span class="n">data</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># we begin a new_row</span>
+        <span class="n">table_2_rows</span><span class="o">=</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="n">x_column_index_table_2</span><span class="p">]</span><span class="o">==</span><span class="n">x_value</span><span class="p">,</span><span class="n">table_2</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;table_2_rows&quot;</span><span class="p">,</span><span class="n">table_2_rows</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">table_2_row</span> <span class="ow">in</span> <span class="n">table_2_rows</span><span class="p">:</span>
+            <span class="n">new_row</span><span class="o">=</span><span class="p">[</span><span class="n">x_value</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">column_index</span><span class="p">,</span><span class="n">column_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;value_column_names&quot;</span><span class="p">]):</span>
+                <span class="n">value_1_column_selector</span><span class="o">=</span><span class="n">table_1</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
+                <span class="n">value_2_column_selector</span><span class="o">=</span><span class="n">table_2</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
+                <span class="n">value_1</span><span class="o">=</span><span class="n">table_1_row</span><span class="p">[</span><span class="n">value_1_column_selector</span><span class="p">]</span>
+                <span class="n">value_2</span><span class="o">=</span><span class="n">table_2_row</span><span class="p">[</span><span class="n">value_2_column_selector</span><span class="p">]</span>
+                <span class="c1"># now we assign the error to value 1</span>
+                <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">error_1</span><span class="o">=</span><span class="mi">0</span>
+                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;table|list&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">error_1_column_selector</span><span class="o">=</span><span class="n">table_1</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_column_names&quot;</span><span class="p">][</span><span class="n">column_index</span><span class="p">])</span>
+                    <span class="n">error_1</span><span class="o">=</span><span class="n">table_1_row</span><span class="p">[</span><span class="n">error_1_column_selector</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;con|fixed&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">error_1</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_1&quot;</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;fract&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">error_1</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_1&quot;</span><span class="p">])</span><span class="o">*</span><span class="n">value_1</span>
+                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;func&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">error_1</span><span class="o">=</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_1_function&quot;</span><span class="p">](</span><span class="n">value_1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">error_1</span><span class="o">=</span><span class="mi">0</span>
+                <span class="c1"># now the same for table 2</span>
+                <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">error_2</span><span class="o">=</span><span class="mi">0</span>
+                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;table|list&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">error_2_column_selector</span><span class="o">=</span><span class="n">table_2</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_column_names&quot;</span><span class="p">][</span><span class="n">column_index</span><span class="p">])</span>
+                    <span class="n">error_2</span><span class="o">=</span><span class="n">table_2_row</span><span class="p">[</span><span class="n">error_2_column_selector</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;con|fixed&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">error_2</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_2&quot;</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;fract&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">error_2</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_2&quot;</span><span class="p">])</span><span class="o">*</span><span class="n">value_2</span>
+                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;func&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">error_2</span><span class="o">=</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_2_function&quot;</span><span class="p">](</span><span class="n">value_2</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">error_2</span><span class="o">=</span><span class="mi">0</span>
+                <span class="c1"># now calculate the value and append</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">standard_error</span><span class="o">=</span><span class="p">(</span><span class="n">value_1</span><span class="o">-</span><span class="n">value_2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">expansion_factor</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">error_1</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">error_2</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">standard_error</span><span class="o">=</span><span class="mi">0</span>
+                <span class="n">new_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">standard_error</span><span class="p">)</span>
+            <span class="n">out_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+        <span class="c1"># now we handle the standard error table creation</span>
+    <span class="n">standard_error_column_names</span><span class="o">=</span><span class="p">[</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;value_column_names&quot;</span><span class="p">]:</span>
+        <span class="n">standard_error_column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;SE&quot;</span><span class="o">+</span><span class="n">column_name</span><span class="p">)</span>
+    <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">standard_error_column_names</span><span class="p">[:]</span>
+    <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;standard_error_column_names&quot;</span><span class="p">,</span><span class="n">standard_error_column_names</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;out_data&quot;</span><span class="p">,</span><span class="n">out_data</span><span class="p">))</span>
+    <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;column_types&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;float&#39;</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span>  <span class="n">standard_error_column_names</span><span class="p">[:]]</span>
+    <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">out_data</span><span class="p">[:]</span>
+    <span class="n">out_table</span><span class="o">=</span><span class="n">StandardErrorModel</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">error_options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_table</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.test_standard_error">
+    <p>def <span class="ident">test_standard_error</span>(</p><p>test_list=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Tests the standard error function using a test_list=[first_value,first_error,
+second_value,second_error]</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.test_standard_error', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Analysis.Uncertainty.test_standard_error" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">test_standard_error</span><span class="p">(</span><span class="n">test_list</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests the standard error function using a test_list=[first_value,first_error,</span>
+<span class="sd">    second_value,second_error]&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">test_list</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="p">[</span><span class="n">first_value</span><span class="p">,</span><span class="n">first_error</span><span class="p">,</span><span class="n">second_value</span><span class="p">,</span><span class="n">second_error</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="mf">2.75</span><span class="p">,</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span><span class="mf">3.45</span><span class="p">,</span><span class="o">.</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The 1st value is {0}, with an uncertainty of {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span><span class="n">first_error</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The 2nd value is {0}, with an uncertainty of {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">second_value</span><span class="p">,</span> <span class="n">second_error</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The standard_error is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">standard_error</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span>
+                                                            <span class="n">first_error</span><span class="p">,</span>
+                                                            <span class="n">second_value</span><span class="p">,</span><span class="n">second_error</span><span class="p">)))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+
+
+
+	
     <h2 class="section-title" id="header-variables">Module variables</h2>
       <div class="item">
       <p id="pyMeasure.Code.Analysis.Uncertainty.COMBINE_S11_S22" class="name">var <span class="ident">COMBINE_S11_S22</span></p>
@@ -1663,266 +1965,6 @@ table {
 </div>
 
       </div>
-
-    <h2 class="section-title" id="header-functions">Functions</h2>
-      
-  <div class="item">
-    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.normalized_error">
-    <p>def <span class="ident">normalized_error</span>(</p><p>value_1, value_2, uncertainty, expansion_factor=1)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>normalized error returns the  scalar normalized error (delta value/ (expansion_factor*uncertainty))</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.normalized_error', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.Analysis.Uncertainty.normalized_error" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">normalized_error</span><span class="p">(</span><span class="n">value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">,</span><span class="n">uncertainty</span><span class="p">,</span><span class="n">expansion_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;normalized error returns the  scalar normalized error (delta value/ (expansion_factor*uncertainty))&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">value_2</span><span class="o">-</span><span class="n">value_1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">uncertainty</span><span class="o">*</span><span class="n">expansion_factor</span><span class="p">)</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-      
-  <div class="item">
-    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.normalized_error_test">
-    <p>def <span class="ident">normalized_error_test</span>(</p><p>value_1, value_2, uncertainty, expansion_factor=1)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>normalized error returns true if the scalar normalized error (delta value/ (expansion_factor*uncertainty))
-is less than or equal to one</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.normalized_error_test', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.Analysis.Uncertainty.normalized_error_test" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">normalized_error_test</span><span class="p">(</span><span class="n">value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">,</span><span class="n">uncertainty</span><span class="p">,</span><span class="n">expansion_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;normalized error returns true if the scalar normalized error (delta value/ (expansion_factor*uncertainty))</span>
-<span class="sd">    is less than or equal to one&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">normalized_error</span><span class="p">(</span><span class="n">value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">,</span><span class="n">uncertainty</span><span class="p">,</span><span class="n">expansion_factor</span><span class="p">)</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">True</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">False</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-      
-  <div class="item">
-    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.standard_error">
-    <p>def <span class="ident">standard_error</span>(</p><p>value_1, uncertainty_value_1, value_2, uncertainty_value_2=0, expansion_factor=2)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>calculates the standard errror (delta value/ (expansion factor * Sqrt(ua^2+ub^2)))</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.standard_error', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.Analysis.Uncertainty.standard_error" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">standard_error</span><span class="p">(</span><span class="n">value_1</span><span class="p">,</span><span class="n">uncertainty_value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">,</span><span class="n">uncertainty_value_2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">expansion_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;calculates the standard errror (delta value/ (expansion factor * Sqrt(ua^2+ub^2)))&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">abs</span><span class="p">((</span><span class="n">value_2</span><span class="o">-</span><span class="n">value_1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">uncertainty_value_1</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">uncertainty_value_2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">expansion_factor</span><span class="p">)</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-      
-  <div class="item">
-    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table">
-    <p>def <span class="ident">standard_error_data_table</span>(</p><p>table_1, table_2, **options)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>standard error data table takes two tables and creates a table that is the standard error of the two tables,
-at least one table must have uncertainties associated with it. The input tables are assumed to have data
-in the form [[x, y1, y2,...]..] Uncertainties can be specified as a column name in the respective
-table, fractional, constant, or a function of the values. The returned table is an object
-of the class StandardErrorModel(AsciiDataTable) that has data in the form
-[[independent_varaible,SEValue1,SEValue2...]...] where column names are formed by
-appending SE to the value column names. To plot the table use result.show()</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">standard_error_data_table</span><span class="p">(</span><span class="n">table_1</span><span class="p">,</span><span class="n">table_2</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;standard error data table takes two tables and creates a table that is the standard error of the two tables,</span>
-<span class="sd">    at least one table must have uncertainties associated with it. The input tables are assumed to have data</span>
-<span class="sd">    in the form [[x, y1, y2,...]..] Uncertainties can be specified as a column name in the respective</span>
-<span class="sd">    table, fractional, constant, or a function of the values. The returned table is an object</span>
-<span class="sd">    of the class StandardErrorModel(AsciiDataTable) that has data in the form</span>
-<span class="sd">    [[independent_varaible,SEValue1,SEValue2...]...] where column names are formed by</span>
-<span class="sd">    appending SE to the value column names. To plot the table use result.show()</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">defaults</span><span class="o">=</span><span class="p">{}</span>
-    <span class="n">error_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">:</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;value_column_names&quot;</span><span class="p">:[</span><span class="s1">&#39;magS11&#39;</span><span class="p">,</span><span class="s1">&#39;argS11&#39;</span><span class="p">,</span><span class="s1">&#39;magS21&#39;</span><span class="p">,</span>
-                                                <span class="s1">&#39;argS21&#39;</span><span class="p">,</span><span class="s1">&#39;magS22&#39;</span><span class="p">,</span><span class="s1">&#39;argS22&#39;</span><span class="p">],</span>
-                  <span class="s2">&quot;table_1_uncertainty_column_names&quot;</span><span class="p">:[</span><span class="s1">&#39;uMgS11&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS11&#39;</span><span class="p">,</span>
-                                                      <span class="s1">&#39;uMgS21&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS21&#39;</span><span class="p">,</span><span class="s1">&#39;uMgS22&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS22&#39;</span><span class="p">],</span>
-                  <span class="s2">&quot;table_2_uncertainty_column_names&quot;</span><span class="p">:[</span><span class="s1">&#39;uMgS11&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS11&#39;</span><span class="p">,</span>
-                                                      <span class="s1">&#39;uMgS21&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS21&#39;</span><span class="p">,</span><span class="s1">&#39;uMgS22&#39;</span><span class="p">,</span><span class="s1">&#39;uAgS22&#39;</span><span class="p">],</span>
-                   <span class="s2">&quot;uncertainty_table_1&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                   <span class="s2">&quot;uncertainty_table_2&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                   <span class="s2">&quot;uncertainty_function_table_1&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                   <span class="s2">&quot;uncertainty_function_table_2&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                   <span class="s2">&quot;uncertainty_function&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                   <span class="s2">&quot;uncertainty_type&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                   <span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">:</span><span class="s2">&quot;table&quot;</span><span class="p">,</span>
-                   <span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                   <span class="s2">&quot;expansion_factor&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
-                   <span class="s1">&#39;debug&#39;</span><span class="p">:</span><span class="bp">False</span><span class="p">}</span>
-
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="n">error_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="n">error_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-    <span class="c1"># Begin by checking at least one table has an error associated with it</span>
-    <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">StandardErrorError</span><span class="p">(</span><span class="s2">&quot;Undefined Error For Both Tables: Define at least one of &quot;</span>
-                                 <span class="s2">&quot;table_1_uncertainty_type or table_2_uncertainty_type to be a value other than None&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;expansion_factor&quot;</span><span class="p">]:</span>
-        <span class="n">expansion_factor</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;expansion_factor&quot;</span><span class="p">])</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">expansion_factor</span><span class="o">=</span><span class="mi">1</span>
-    <span class="c1"># first find a unique list of the independent variable for both curves</span>
-    <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]:</span>
-        <span class="n">begin_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;started finding intersection of&quot;</span>
-              <span class="s2">&quot;table_1[{0}] and table_2[{1}] at {2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">],</span>
-                                                           <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">],</span>
-                                                           <span class="n">begin_time</span><span class="p">))</span>
-    <span class="n">x_set_table_1</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">table_1</span><span class="p">[</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">]])</span>
-    <span class="n">x_set_table_2</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">table_2</span><span class="p">[</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">]])</span>
-    <span class="n">unique_x</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x_set_table_1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">x_set_table_2</span><span class="p">)))</span>
-    <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]:</span>
-        <span class="n">end_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;finished finding intersection at {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end_time</span><span class="p">))</span>
-        <span class="n">delta_time</span><span class="o">=</span><span class="n">end_time</span><span class="o">-</span><span class="n">begin_time</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;it took {0} to find the intersection that contained {1} points&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">delta_time</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_x</span><span class="p">)))</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">unique_x</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">StandardErrorError</span><span class="p">(</span><span class="s2">&quot;No points in the intersection, please either interpolate one data set or compare&quot;</span>
-                                 <span class="s2">&quot;with another data set&quot;</span><span class="p">)</span>
-
-    <span class="c1"># next build the new data set</span>
-    <span class="n">out_data</span><span class="o">=</span><span class="p">[]</span>
-    <span class="n">x_column_index_table_1</span><span class="o">=</span><span class="n">table_1</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">])</span>
-    <span class="n">x_column_index_table_2</span><span class="o">=</span><span class="n">table_2</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">])</span>
-    <span class="c1"># we choose the row by using unique_x</span>
-    <span class="k">for</span> <span class="n">x_value</span> <span class="ow">in</span> <span class="n">unique_x</span><span class="p">:</span>
-        <span class="c1"># here if there are multiple values for x_value we ignore them</span>
-        <span class="n">table_1_row</span><span class="o">=</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="n">x_column_index_table_1</span><span class="p">]</span><span class="o">==</span><span class="n">x_value</span><span class="p">,</span><span class="n">table_1</span><span class="o">.</span><span class="n">data</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="c1"># we begin a new_row</span>
-        <span class="n">table_2_rows</span><span class="o">=</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="n">x_column_index_table_2</span><span class="p">]</span><span class="o">==</span><span class="n">x_value</span><span class="p">,</span><span class="n">table_2</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;table_2_rows&quot;</span><span class="p">,</span><span class="n">table_2_rows</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">table_2_row</span> <span class="ow">in</span> <span class="n">table_2_rows</span><span class="p">:</span>
-            <span class="n">new_row</span><span class="o">=</span><span class="p">[</span><span class="n">x_value</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">column_index</span><span class="p">,</span><span class="n">column_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;value_column_names&quot;</span><span class="p">]):</span>
-                <span class="n">value_1_column_selector</span><span class="o">=</span><span class="n">table_1</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
-                <span class="n">value_2_column_selector</span><span class="o">=</span><span class="n">table_2</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
-                <span class="n">value_1</span><span class="o">=</span><span class="n">table_1_row</span><span class="p">[</span><span class="n">value_1_column_selector</span><span class="p">]</span>
-                <span class="n">value_2</span><span class="o">=</span><span class="n">table_2_row</span><span class="p">[</span><span class="n">value_2_column_selector</span><span class="p">]</span>
-                <span class="c1"># now we assign the error to value 1</span>
-                <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                    <span class="n">error_1</span><span class="o">=</span><span class="mi">0</span>
-                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;table|list&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                    <span class="n">error_1_column_selector</span><span class="o">=</span><span class="n">table_1</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_column_names&quot;</span><span class="p">][</span><span class="n">column_index</span><span class="p">])</span>
-                    <span class="n">error_1</span><span class="o">=</span><span class="n">table_1_row</span><span class="p">[</span><span class="n">error_1_column_selector</span><span class="p">]</span>
-                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;con|fixed&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                    <span class="n">error_1</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_1&quot;</span><span class="p">])</span>
-                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;fract&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                    <span class="n">error_1</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_1&quot;</span><span class="p">])</span><span class="o">*</span><span class="n">value_1</span>
-                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;func&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_1_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                    <span class="n">error_1</span><span class="o">=</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_1_function&quot;</span><span class="p">](</span><span class="n">value_1</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">error_1</span><span class="o">=</span><span class="mi">0</span>
-                <span class="c1"># now the same for table 2</span>
-                <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                    <span class="n">error_2</span><span class="o">=</span><span class="mi">0</span>
-                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;table|list&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                    <span class="n">error_2_column_selector</span><span class="o">=</span><span class="n">table_2</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_column_names&quot;</span><span class="p">][</span><span class="n">column_index</span><span class="p">])</span>
-                    <span class="n">error_2</span><span class="o">=</span><span class="n">table_2_row</span><span class="p">[</span><span class="n">error_2_column_selector</span><span class="p">]</span>
-                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;con|fixed&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                    <span class="n">error_2</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_2&quot;</span><span class="p">])</span>
-                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;fract&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                    <span class="n">error_2</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_2&quot;</span><span class="p">])</span><span class="o">*</span><span class="n">value_2</span>
-                <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;func&quot;</span><span class="p">,</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;table_2_uncertainty_type&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                    <span class="n">error_2</span><span class="o">=</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;uncertainty_table_2_function&quot;</span><span class="p">](</span><span class="n">value_2</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">error_2</span><span class="o">=</span><span class="mi">0</span>
-                <span class="c1"># now calculate the value and append</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">standard_error</span><span class="o">=</span><span class="p">(</span><span class="n">value_1</span><span class="o">-</span><span class="n">value_2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">expansion_factor</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">error_1</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">error_2</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
-                <span class="k">except</span><span class="p">:</span>
-                    <span class="n">standard_error</span><span class="o">=</span><span class="mi">0</span>
-                <span class="n">new_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">standard_error</span><span class="p">)</span>
-            <span class="n">out_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
-        <span class="c1"># now we handle the standard error table creation</span>
-    <span class="n">standard_error_column_names</span><span class="o">=</span><span class="p">[</span><span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;independent_variable_column_name&quot;</span><span class="p">]]</span>
-    <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;value_column_names&quot;</span><span class="p">]:</span>
-        <span class="n">standard_error_column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;SE&quot;</span><span class="o">+</span><span class="n">column_name</span><span class="p">)</span>
-    <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">standard_error_column_names</span><span class="p">[:]</span>
-    <span class="k">if</span> <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;standard_error_column_names&quot;</span><span class="p">,</span><span class="n">standard_error_column_names</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;out_data&quot;</span><span class="p">,</span><span class="n">out_data</span><span class="p">))</span>
-    <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;column_types&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;float&#39;</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span>  <span class="n">standard_error_column_names</span><span class="p">[:]]</span>
-    <span class="n">error_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">out_data</span><span class="p">[:]</span>
-    <span class="n">out_table</span><span class="o">=</span><span class="n">StandardErrorModel</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">error_options</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out_table</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-      
-  <div class="item">
-    <div class="name def" id="pyMeasure.Code.Analysis.Uncertainty.test_standard_error">
-    <p>def <span class="ident">test_standard_error</span>(</p><p>test_list=None)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Tests the standard error function using a test_list=[first_value,first_error,
-second_value,second_error]</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Analysis.Uncertainty.test_standard_error', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.Analysis.Uncertainty.test_standard_error" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">test_standard_error</span><span class="p">(</span><span class="n">test_list</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Tests the standard error function using a test_list=[first_value,first_error,</span>
-<span class="sd">    second_value,second_error]&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">test_list</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="p">[</span><span class="n">first_value</span><span class="p">,</span><span class="n">first_error</span><span class="p">,</span><span class="n">second_value</span><span class="p">,</span><span class="n">second_error</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="mf">2.75</span><span class="p">,</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span><span class="mf">3.45</span><span class="p">,</span><span class="o">.</span><span class="mi">2</span><span class="p">]</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The 1st value is {0}, with an uncertainty of {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span><span class="n">first_error</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The 2nd value is {0}, with an uncertainty of {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">second_value</span><span class="p">,</span> <span class="n">second_error</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The standard_error is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">standard_error</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span>
-                                                            <span class="n">first_error</span><span class="p">,</span>
-                                                            <span class="n">second_value</span><span class="p">,</span><span class="n">second_error</span><span class="p">)))</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-
-
   </section>
 
     </article>

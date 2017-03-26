@@ -263,12 +263,12 @@
   </header>
 
   <section id="section-items">
-    % if len(variables) > 0:
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-    % for v in variables:
+    % if len(submodules) > 0:
+    <h2 class="section-title" id="header-submodules">Sub-modules</h2>
+    % for m in submodules:
       <div class="item">
-      <p id="${v.refname}" class="name">var ${ident(v.name)}</p>
-      ${show_desc(v)}
+      <p class="name">${link(m.refname)}</p>
+      ${show_desc(m, limit=300)}
       </div>
     % endfor
     % endif
@@ -340,17 +340,21 @@
     % endfor
     % endif
 
-    % if len(submodules) > 0:
-    <h2 class="section-title" id="header-submodules">Sub-modules</h2>
-    % for m in submodules:
+
+	
+    % if len(variables) > 0:
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+    % for v in variables:
       <div class="item">
-      <p class="name">${link(m.refname)}</p>
-      ${show_desc(m, limit=300)}
+      <p id="${v.refname}" class="name">var ${ident(v.name)}</p>
+      ${show_desc(v)}
       </div>
     % endfor
     % endif
   </section>
 </%def>
+
+
 
 <%def name="module_index(module)">
   <%
@@ -362,21 +366,30 @@
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    % if len(variables) > 0:
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      ${show_column_list(map(lambda v: link(v.refname), variables))}
+
+    % if len(submodules) > 0:
+    <li class="set"><h3><a href="#header-submodules">Sub-modules</a></h3>
+      <ul >
+      % for m in submodules:
+        <li class="mono">${link(m.refname)}</li>
+      % endfor
+      </ul>
     </li>
     % endif
-
     % if len(functions) > 0:
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       ${show_column_list(map(lambda f: link(f.refname), functions))}
+	 </div>
     </li>
     % endif
 
     % if len(classes) > 0:
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
       % for c in classes:
         <li class="mono">
         <span class="class_name">${link(c.refname)}</span>
@@ -392,13 +405,14 @@
     </li>
     % endif
 
-    % if len(submodules) > 0:
-    <li class="set"><h3><a href="#header-submodules">Sub-modules</a></h3>
-      <ul>
-      % for m in submodules:
-        <li class="mono">${link(m.refname)}</li>
-      % endfor
-      </ul>
+
+	% if len(variables) > 0:
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      ${show_column_list(map(lambda v: link(v.refname), variables))}
+	  </div>
     </li>
     % endif
     </ul>
@@ -449,6 +463,20 @@
     } else {
     $node.style.display = 'none';
     $link.innerHTML = 'Show source &equiv;';
+    }
+  }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
     }
   }
   </script>

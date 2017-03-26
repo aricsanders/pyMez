@@ -575,7 +575,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -845,6 +861,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1025,6 +1042,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1036,47 +1067,22 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.IMAGE_DIRECTORY">IMAGE_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.LOGS_DIRECTORY">LOGS_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.convert_datetime">convert_datetime</a></li>
   </ul>
 
+	 </div>
     </li>
 
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
         <li class="mono">
         <span class="class_name"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.SimpleArbDBLowerInterfacePanel">SimpleArbDBLowerInterfacePanel</a></span>
         
@@ -1388,6 +1394,41 @@ table {
       </ul>
     </li>
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.IMAGE_DIRECTORY">IMAGE_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.LOGS_DIRECTORY">LOGS_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -1797,199 +1838,6 @@ table {
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.IMAGE_DIRECTORY" class="name">var <span class="ident">IMAGE_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.LOGS_DIRECTORY" class="name">var <span class="ident">LOGS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -12024,6 +11872,201 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
       </div>
       </div>
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.IMAGE_DIRECTORY" class="name">var <span class="ident">IMAGE_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.LOGS_DIRECTORY" class="name">var <span class="ident">LOGS_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.SimpleArbDBLowerInterfacePanel.wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

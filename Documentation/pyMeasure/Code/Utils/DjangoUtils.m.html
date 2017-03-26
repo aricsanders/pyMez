@@ -576,7 +576,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -846,6 +862,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1026,6 +1043,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,28 +1068,38 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.Utils.DjangoUtils.TEMPLATE_BEGIN_STRING">TEMPLATE_BEGIN_STRING</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.Utils.DjangoUtils.build_calnet_script">build_calnet_script</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.DjangoUtils.build_index">build_index</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.DjangoUtils.create_nav_bar_string">create_nav_bar_string</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.DjangoUtils.write_admin_file">write_admin_file</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.DjangoUtils.write_app_urls">write_app_urls</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.DjangoUtils.write_home_templates">write_home_templates</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.DjangoUtils.write_project_urls">write_project_urls</a></li>
   </ul>
 
+	 </div>
     </li>
 
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.DjangoUtils.TEMPLATE_BEGIN_STRING">TEMPLATE_BEGIN_STRING</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -1099,6 +1140,66 @@ using meta-scripting tools</p>
 <span class="k">def</span> <span class="nf">build_index</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Builds index.html given a set of inputs&quot;&quot;&quot;</span>
     <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">create_nav_bar_string</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates a django templated nav bar string for insertion into the {% block nav %} {% endblock %} template</span>
+<span class="sd">    tags&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;nav_class&quot;</span><span class="p">:</span> <span class="s2">&quot;navbar navbar-inverse&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;site_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Calnet&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;apps&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Home&quot;</span><span class="p">,</span> <span class="s2">&quot;Help&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;registration&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">              {</span><span class="si">% i</span><span class="s2">f user.is_authenticated %}</span>
+<span class="s2">                &lt;/ul&gt;</span>
+<span class="s2">                  &lt;ul class=&quot;nav navbar-nav navbar-right&quot;&gt;</span>
+<span class="s2">                  &lt;li&gt;&lt;a href=&quot;/accounts/user_info/&quot;&gt;</span>
+<span class="s2">                  &lt;span class=&quot;glyphicon glyphicon-user&quot;&gt;&lt;/span&gt;</span>
+<span class="s2">                  {% trans &quot;Logged in&quot; %}: {{ user.username }}&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                  &lt;li&gt;&lt;a href=&quot;{</span><span class="si">% u</span><span class="s2">rl &#39;auth_logout&#39; %}&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-log-out&quot;&gt;&lt;/span&gt; Logout&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                 &lt;/ul&gt;</span>
+<span class="s2">              {</span><span class="si">% e</span><span class="s2">lse %}</span>
+<span class="s2">                  &lt;/ul&gt;</span>
+<span class="s2">                  &lt;ul class=&quot;nav navbar-nav navbar-right&quot;&gt;</span>
+<span class="s2">                  &lt;li&gt;&lt;a href=&quot;/accounts/register/&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-user&quot;&gt;&lt;/span&gt; Sign Up&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                  &lt;li&gt;&lt;a href=&quot;{</span><span class="si">% u</span><span class="s2">rl &#39;auth_login&#39; %}&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-log-in&quot;&gt;&lt;/span&gt; Login&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                &lt;/ul&gt;</span>
+<span class="s2">              {</span><span class="si">% e</span><span class="s2">ndif %}&quot;&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;search&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;&lt;form class=&quot;navbar-form navbar-right&quot; role=&quot;search&quot;&gt;</span>
+<span class="s2">                              &lt;div class=&quot;form-group&quot;&gt;</span>
+<span class="s2">                              &lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;Search&quot;&gt;</span>
+<span class="s2">                              &lt;/div&gt;</span>
+<span class="s2">                             &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot;&gt;</span>
+<span class="s2">                             &lt;span class=&quot;glyphicon glyphicon-search&quot;&gt;&lt;/span&gt;&lt;/button&gt;</span>
+<span class="s2">                            &lt;/form&gt;&quot;&quot;&quot;</span><span class="p">}</span>
+    <span class="n">nav_bar_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">nav_bar_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">nav_bar_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">output_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">string_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;nav class=&quot;{nav_class}&quot; id=&quot;navbar&quot;&gt;</span>
+<span class="s2">        &lt;div class=&quot;container-fluid&quot;&gt;</span>
+<span class="s2">            &lt;div class=&quot;navbar-header&quot;&gt;</span>
+<span class="s2">              &lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;&lt;span class=&quot;badge&quot;&gt;{site_name}&lt;/span&gt;&lt;/a&gt;</span>
+<span class="s2">            &lt;/div&gt;</span>
+<span class="s2">        &lt;ul class=&quot;nav navbar-nav&quot;&gt;</span>
+<span class="s2">            {app_link_string}</span>
+<span class="s2">            {registration}</span>
+<span class="s2">        {search}</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">    &lt;/nav&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">app_link_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">app</span> <span class="ow">in</span> <span class="n">nav_bar_options</span><span class="p">[</span><span class="s2">&quot;apps&quot;</span><span class="p">]:</span>
+        <span class="n">app_link_string</span> <span class="o">=</span> <span class="n">app_link_string</span> <span class="o">+</span> <span class="s1">&#39;&lt;li&gt;&lt;a href=&quot;/{0}&quot;&gt;{0}&lt;/a&gt; &lt;/li&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">nav_bar_options</span><span class="p">[</span><span class="s2">&quot;app_link_string&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">app_link_string</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nav_bar_options</span><span class="p">[</span><span class="s2">&quot;registration&quot;</span><span class="p">]:</span>
+        <span class="n">nav_bar_options</span> <span class="o">=</span> <span class="s2">&quot;&lt;/ol&gt;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nav_bar_options</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">]:</span>
+        <span class="n">nav_bar_options</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">string_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">nav_bar_options</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">write_home_templates</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Writes several basic templates to the current directory includes index.html</span>
@@ -1277,15 +1378,6 @@ using meta-scripting tools</p>
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.Utils.DjangoUtils.TEMPLATE_BEGIN_STRING" class="name">var <span class="ident">TEMPLATE_BEGIN_STRING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -1389,6 +1481,85 @@ using meta-scripting tools</p>
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">build_index</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Builds index.html given a set of inputs&quot;&quot;&quot;</span>
     <span class="k">pass</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.DjangoUtils.create_nav_bar_string">
+    <p>def <span class="ident">create_nav_bar_string</span>(</p><p>**options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates a django templated nav bar string for insertion into the {% block nav %} {% endblock %} template
+tags</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.DjangoUtils.create_nav_bar_string', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.DjangoUtils.create_nav_bar_string" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">create_nav_bar_string</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates a django templated nav bar string for insertion into the {% block nav %} {% endblock %} template</span>
+<span class="sd">    tags&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;nav_class&quot;</span><span class="p">:</span> <span class="s2">&quot;navbar navbar-inverse&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;site_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Calnet&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;apps&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Home&quot;</span><span class="p">,</span> <span class="s2">&quot;Help&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;registration&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">              {</span><span class="si">% i</span><span class="s2">f user.is_authenticated %}</span>
+<span class="s2">                &lt;/ul&gt;</span>
+<span class="s2">                  &lt;ul class=&quot;nav navbar-nav navbar-right&quot;&gt;</span>
+<span class="s2">                  &lt;li&gt;&lt;a href=&quot;/accounts/user_info/&quot;&gt;</span>
+<span class="s2">                  &lt;span class=&quot;glyphicon glyphicon-user&quot;&gt;&lt;/span&gt;</span>
+<span class="s2">                  {% trans &quot;Logged in&quot; %}: {{ user.username }}&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                  &lt;li&gt;&lt;a href=&quot;{</span><span class="si">% u</span><span class="s2">rl &#39;auth_logout&#39; %}&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-log-out&quot;&gt;&lt;/span&gt; Logout&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                 &lt;/ul&gt;</span>
+<span class="s2">              {</span><span class="si">% e</span><span class="s2">lse %}</span>
+<span class="s2">                  &lt;/ul&gt;</span>
+<span class="s2">                  &lt;ul class=&quot;nav navbar-nav navbar-right&quot;&gt;</span>
+<span class="s2">                  &lt;li&gt;&lt;a href=&quot;/accounts/register/&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-user&quot;&gt;&lt;/span&gt; Sign Up&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                  &lt;li&gt;&lt;a href=&quot;{</span><span class="si">% u</span><span class="s2">rl &#39;auth_login&#39; %}&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-log-in&quot;&gt;&lt;/span&gt; Login&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                &lt;/ul&gt;</span>
+<span class="s2">              {</span><span class="si">% e</span><span class="s2">ndif %}&quot;&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;search&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;&lt;form class=&quot;navbar-form navbar-right&quot; role=&quot;search&quot;&gt;</span>
+<span class="s2">                              &lt;div class=&quot;form-group&quot;&gt;</span>
+<span class="s2">                              &lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;Search&quot;&gt;</span>
+<span class="s2">                              &lt;/div&gt;</span>
+<span class="s2">                             &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot;&gt;</span>
+<span class="s2">                             &lt;span class=&quot;glyphicon glyphicon-search&quot;&gt;&lt;/span&gt;&lt;/button&gt;</span>
+<span class="s2">                            &lt;/form&gt;&quot;&quot;&quot;</span><span class="p">}</span>
+    <span class="n">nav_bar_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">nav_bar_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">nav_bar_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">output_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">string_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;nav class=&quot;{nav_class}&quot; id=&quot;navbar&quot;&gt;</span>
+<span class="s2">        &lt;div class=&quot;container-fluid&quot;&gt;</span>
+<span class="s2">            &lt;div class=&quot;navbar-header&quot;&gt;</span>
+<span class="s2">              &lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;&lt;span class=&quot;badge&quot;&gt;{site_name}&lt;/span&gt;&lt;/a&gt;</span>
+<span class="s2">            &lt;/div&gt;</span>
+<span class="s2">        &lt;ul class=&quot;nav navbar-nav&quot;&gt;</span>
+<span class="s2">            {app_link_string}</span>
+<span class="s2">            {registration}</span>
+<span class="s2">        {search}</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">    &lt;/nav&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">app_link_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">app</span> <span class="ow">in</span> <span class="n">nav_bar_options</span><span class="p">[</span><span class="s2">&quot;apps&quot;</span><span class="p">]:</span>
+        <span class="n">app_link_string</span> <span class="o">=</span> <span class="n">app_link_string</span> <span class="o">+</span> <span class="s1">&#39;&lt;li&gt;&lt;a href=&quot;/{0}&quot;&gt;{0}&lt;/a&gt; &lt;/li&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">nav_bar_options</span><span class="p">[</span><span class="s2">&quot;app_link_string&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">app_link_string</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nav_bar_options</span><span class="p">[</span><span class="s2">&quot;registration&quot;</span><span class="p">]:</span>
+        <span class="n">nav_bar_options</span> <span class="o">=</span> <span class="s2">&quot;&lt;/ol&gt;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nav_bar_options</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">]:</span>
+        <span class="n">nav_bar_options</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">string_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">nav_bar_options</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -1574,6 +1745,17 @@ given the app names</p></div>
   
 
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.DjangoUtils.TEMPLATE_BEGIN_STRING" class="name">var <span class="ident">TEMPLATE_BEGIN_STRING</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

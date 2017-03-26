@@ -576,7 +576,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -846,6 +862,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1026,6 +1043,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,40 +1068,11 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.COMMENT_PATTERN">COMMENT_PATTERN</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.EXTENSION_PATTERN">EXTENSION_PATTERN</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.FORMATS">FORMATS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.FREQUENCY_UNITS">FREQUENCY_UNITS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.METHOD_ALIASES">METHOD_ALIASES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.MINIMUM_DB_ARG_VALUE">MINIMUM_DB_ARG_VALUE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.MINIMUM_DB_VALUE">MINIMUM_DB_VALUE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.NUMBER_MATCH_STRING">NUMBER_MATCH_STRING</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.OPTION_LINE_PATTERN">OPTION_LINE_PATTERN</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.PARAMETERS">PARAMETERS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_DB_COLUMN_NAMES">S1P_DB_COLUMN_NAMES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_MA_COLUMN_NAMES">S1P_MA_COLUMN_NAMES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_RI_COLUMN_NAMES">S1P_RI_COLUMN_NAMES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_COMPLEX_COLUMN_NAMES">S2P_COMPLEX_COLUMN_NAMES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_DB_COLUMN_DESCRIPTION">S2P_DB_COLUMN_DESCRIPTION</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_DB_COLUMN_NAMES">S2P_DB_COLUMN_NAMES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_MA_COLUMN_DESCRIPTION">S2P_MA_COLUMN_DESCRIPTION</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_MA_COLUMN_NAMES">S2P_MA_COLUMN_NAMES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_NOISE_PARAMETER_COLUMN_NAMES">S2P_NOISE_PARAMETER_COLUMN_NAMES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_RI_COLUMN_DESCRIPTION">S2P_RI_COLUMN_DESCRIPTION</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_RI_COLUMN_NAMES">S2P_RI_COLUMN_NAMES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SMITHPLOT">SMITHPLOT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.StringTypes">StringTypes</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.TOUCHSTONE_KEYWORDS">TOUCHSTONE_KEYWORDS</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.build_row_formatter">build_row_formatter</a></li>
@@ -1098,10 +1100,12 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.test_s2pv1">test_s2pv1</a></li>
   </ul>
 
+	 </div>
     </li>
 
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
         <li class="mono">
         <span class="class_name"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1PV1">S1PV1</a></span>
         
@@ -1177,6 +1181,43 @@ table {
       </ul>
     </li>
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.COMMENT_PATTERN">COMMENT_PATTERN</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.EXTENSION_PATTERN">EXTENSION_PATTERN</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.FORMATS">FORMATS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.FREQUENCY_UNITS">FREQUENCY_UNITS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.METHOD_ALIASES">METHOD_ALIASES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.MINIMUM_DB_ARG_VALUE">MINIMUM_DB_ARG_VALUE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.MINIMUM_DB_VALUE">MINIMUM_DB_VALUE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.NUMBER_MATCH_STRING">NUMBER_MATCH_STRING</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.OPTION_LINE_PATTERN">OPTION_LINE_PATTERN</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.PARAMETERS">PARAMETERS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_DB_COLUMN_NAMES">S1P_DB_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_MA_COLUMN_NAMES">S1P_MA_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_RI_COLUMN_NAMES">S1P_RI_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_COMPLEX_COLUMN_NAMES">S2P_COMPLEX_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_DB_COLUMN_DESCRIPTION">S2P_DB_COLUMN_DESCRIPTION</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_DB_COLUMN_NAMES">S2P_DB_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_MA_COLUMN_DESCRIPTION">S2P_MA_COLUMN_DESCRIPTION</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_MA_COLUMN_NAMES">S2P_MA_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_NOISE_PARAMETER_COLUMN_NAMES">S2P_NOISE_PARAMETER_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_RI_COLUMN_DESCRIPTION">S2P_RI_COLUMN_DESCRIPTION</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_RI_COLUMN_NAMES">S2P_RI_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SMITHPLOT">SMITHPLOT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.StringTypes">StringTypes</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.TOUCHSTONE_KEYWORDS">TOUCHSTONE_KEYWORDS</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -3083,224 +3124,6 @@ changed to data to align better with other class models.</p>
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.COMMENT_PATTERN" class="name">var <span class="ident">COMMENT_PATTERN</span></p>
-      
-  
-    <div class="desc"><p>Regular expression for comments in touchstone files.</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.DEFAULT_FILE_NAME" class="name">var <span class="ident">DEFAULT_FILE_NAME</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.EXTENSION_PATTERN" class="name">var <span class="ident">EXTENSION_PATTERN</span></p>
-      
-  
-    <div class="desc"><p>Regular expresion for snp extensions.</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.FORMATS" class="name">var <span class="ident">FORMATS</span></p>
-      
-  
-    <div class="desc"><p>Format codes found in touchstone files.</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.FREQUENCY_UNITS" class="name">var <span class="ident">FREQUENCY_UNITS</span></p>
-      
-  
-    <div class="desc"><p>Common frequency units .in touchstone files</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.MINIMUM_DB_ARG_VALUE" class="name">var <span class="ident">MINIMUM_DB_ARG_VALUE</span></p>
-      
-  
-    <div class="desc"><p>Value assigned to the phase of a zero linear value in a touchstone file</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.MINIMUM_DB_VALUE" class="name">var <span class="ident">MINIMUM_DB_VALUE</span></p>
-      
-  
-    <div class="desc"><p>Decibel value assigned to any linear value that is zero in a touchstone file</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.NUMBER_MATCH_STRING" class="name">var <span class="ident">NUMBER_MATCH_STRING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.OPTION_LINE_PATTERN" class="name">var <span class="ident">OPTION_LINE_PATTERN</span></p>
-      
-  
-    <div class="desc"><p>Regular expression string for the option line in touchstone files (# GHz S RI R 50)</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.PARAMETERS" class="name">var <span class="ident">PARAMETERS</span></p>
-      
-  
-    <div class="desc"><p>Network parameters found in touchstone files</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_DB_COLUMN_NAMES" class="name">var <span class="ident">S1P_DB_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_MA_COLUMN_NAMES" class="name">var <span class="ident">S1P_MA_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_RI_COLUMN_NAMES" class="name">var <span class="ident">S1P_RI_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_COMPLEX_COLUMN_NAMES" class="name">var <span class="ident">S2P_COMPLEX_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_DB_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_DB_COLUMN_DESCRIPTION</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_DB_COLUMN_NAMES" class="name">var <span class="ident">S2P_DB_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_MA_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_MA_COLUMN_DESCRIPTION</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_MA_COLUMN_NAMES" class="name">var <span class="ident">S2P_MA_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_NOISE_PARAMETER_COLUMN_NAMES" class="name">var <span class="ident">S2P_NOISE_PARAMETER_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_RI_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_RI_COLUMN_DESCRIPTION</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_RI_COLUMN_NAMES" class="name">var <span class="ident">S2P_RI_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.SMITHPLOT" class="name">var <span class="ident">SMITHPLOT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.TOUCHSTONE_KEYWORDS" class="name">var <span class="ident">TOUCHSTONE_KEYWORDS</span></p>
-      
-  
-    <div class="desc"><p>Keywords for version 2 touchstone files, not currently implemented</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -8018,6 +7841,226 @@ an accepted scientific prefix, function is case sensitive (mHz=milli Hertz, MHz=
       </div>
       </div>
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.COMMENT_PATTERN" class="name">var <span class="ident">COMMENT_PATTERN</span></p>
+      
+  
+    <div class="desc"><p>Regular expression for comments in touchstone files.</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.DEFAULT_FILE_NAME" class="name">var <span class="ident">DEFAULT_FILE_NAME</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.EXTENSION_PATTERN" class="name">var <span class="ident">EXTENSION_PATTERN</span></p>
+      
+  
+    <div class="desc"><p>Regular expresion for snp extensions.</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.FORMATS" class="name">var <span class="ident">FORMATS</span></p>
+      
+  
+    <div class="desc"><p>Format codes found in touchstone files.</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.FREQUENCY_UNITS" class="name">var <span class="ident">FREQUENCY_UNITS</span></p>
+      
+  
+    <div class="desc"><p>Common frequency units .in touchstone files</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.MINIMUM_DB_ARG_VALUE" class="name">var <span class="ident">MINIMUM_DB_ARG_VALUE</span></p>
+      
+  
+    <div class="desc"><p>Value assigned to the phase of a zero linear value in a touchstone file</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.MINIMUM_DB_VALUE" class="name">var <span class="ident">MINIMUM_DB_VALUE</span></p>
+      
+  
+    <div class="desc"><p>Decibel value assigned to any linear value that is zero in a touchstone file</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.NUMBER_MATCH_STRING" class="name">var <span class="ident">NUMBER_MATCH_STRING</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.OPTION_LINE_PATTERN" class="name">var <span class="ident">OPTION_LINE_PATTERN</span></p>
+      
+  
+    <div class="desc"><p>Regular expression string for the option line in touchstone files (# GHz S RI R 50)</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.PARAMETERS" class="name">var <span class="ident">PARAMETERS</span></p>
+      
+  
+    <div class="desc"><p>Network parameters found in touchstone files</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_DB_COLUMN_NAMES" class="name">var <span class="ident">S1P_DB_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_MA_COLUMN_NAMES" class="name">var <span class="ident">S1P_MA_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S1P_RI_COLUMN_NAMES" class="name">var <span class="ident">S1P_RI_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_COMPLEX_COLUMN_NAMES" class="name">var <span class="ident">S2P_COMPLEX_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_DB_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_DB_COLUMN_DESCRIPTION</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_DB_COLUMN_NAMES" class="name">var <span class="ident">S2P_DB_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_MA_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_MA_COLUMN_DESCRIPTION</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_MA_COLUMN_NAMES" class="name">var <span class="ident">S2P_MA_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_NOISE_PARAMETER_COLUMN_NAMES" class="name">var <span class="ident">S2P_NOISE_PARAMETER_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_RI_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_RI_COLUMN_DESCRIPTION</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2P_RI_COLUMN_NAMES" class="name">var <span class="ident">S2P_RI_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.SMITHPLOT" class="name">var <span class="ident">SMITHPLOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.TouchstoneModels.TOUCHSTONE_KEYWORDS" class="name">var <span class="ident">TOUCHSTONE_KEYWORDS</span></p>
+      
+  
+    <div class="desc"><p>Keywords for version 2 touchstone files, not currently implemented</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

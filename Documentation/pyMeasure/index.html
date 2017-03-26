@@ -575,7 +575,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -845,6 +861,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1025,6 +1042,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1036,10 +1067,23 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
+
+    <li class="set"><h3><a href="#header-submodules">Sub-modules</a></h3>
+      <ul >
+        <li class="mono"><a href="Code/index.html">pyMeasure.Code</a></li>
+      </ul>
+    </li>
+
+
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.ACTIVE_COMPONENTS">ACTIVE_COMPONENTS</a></li>
+    <li class="mono"><a href="#pyMeasure.API_MODULES">API_MODULES</a></li>
     <li class="mono"><a href="#pyMeasure.COMBINE_S11_S22">COMBINE_S11_S22</a></li>
     <li class="mono"><a href="#pyMeasure.COMMENT_PATTERN">COMMENT_PATTERN</a></li>
     <li class="mono"><a href="#pyMeasure.CONNECTOR_TYPES">CONNECTOR_TYPES</a></li>
@@ -1053,18 +1097,15 @@ table {
     <li class="mono"><a href="#pyMeasure.EXTENSION_PATTERN">EXTENSION_PATTERN</a></li>
     <li class="mono"><a href="#pyMeasure.FORMATS">FORMATS</a></li>
     <li class="mono"><a href="#pyMeasure.FREQUENCY_UNITS">FREQUENCY_UNITS</a></li>
-    <li class="mono"><a href="#pyMeasure.FRONTENDS_DIRECTORY">FRONTENDS_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMeasure.GENERAL_DESCRIPTORS">GENERAL_DESCRIPTORS</a></li>
     <li class="mono"><a href="#pyMeasure.GET_STATS_FIELDS">GET_STATS_FIELDS</a></li>
-    <li class="mono"><a href="#pyMeasure.IMAGE_DIRECTORY">IMAGE_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.HTML_TEMPLATE_DIRECTORY">HTML_TEMPLATE_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMeasure.IMAGE_FILE_EXTENSIONS">IMAGE_FILE_EXTENSIONS</a></li>
     <li class="mono"><a href="#pyMeasure.INKSCAPE_PATH">INKSCAPE_PATH</a></li>
     <li class="mono"><a href="#pyMeasure.INSTRUMENTS_DEFINED">INSTRUMENTS_DEFINED</a></li>
     <li class="mono"><a href="#pyMeasure.INSTRUMENT_SHEETS">INSTRUMENT_SHEETS</a></li>
     <li class="mono"><a href="#pyMeasure.INSTRUMENT_TYPES">INSTRUMENT_TYPES</a></li>
-    <li class="mono"><a href="#pyMeasure.JAVASCRIPT_STRING">JAVASCRIPT_STRING</a></li>
     <li class="mono"><a href="#pyMeasure.KEITHLEY_INSTRUMENT_SHEET">KEITHLEY_INSTRUMENT_SHEET</a></li>
-    <li class="mono"><a href="#pyMeasure.LOGS_DIRECTORY">LOGS_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMeasure.METHOD_ALIASES">METHOD_ALIASES</a></li>
     <li class="mono"><a href="#pyMeasure.MINIMUM_DB">MINIMUM_DB</a></li>
     <li class="mono"><a href="#pyMeasure.MINIMUM_DB_ARG_VALUE">MINIMUM_DB_ARG_VALUE</a></li>
@@ -1075,7 +1116,6 @@ table {
     <li class="mono"><a href="#pyMeasure.ONE_PORT_DUT">ONE_PORT_DUT</a></li>
     <li class="mono"><a href="#pyMeasure.OPTION_LINE_PATTERN">OPTION_LINE_PATTERN</a></li>
     <li class="mono"><a href="#pyMeasure.OS_STAT_FIELDS">OS_STAT_FIELDS</a></li>
-    <li class="mono"><a href="#pyMeasure.PANELS">PANELS</a></li>
     <li class="mono"><a href="#pyMeasure.PARAMETERS">PARAMETERS</a></li>
     <li class="mono"><a href="#pyMeasure.PDF_CONVERT">PDF_CONVERT</a></li>
     <li class="mono"><a href="#pyMeasure.PIL_AVAILABLE">PIL_AVAILABLE</a></li>
@@ -1112,175 +1152,10 @@ table {
     <li class="mono"><a href="#pyMeasure.WKHTML_PATH">WKHTML_PATH</a></li>
     <li class="mono"><a href="#pyMeasure.XSLT_CAPABLE">XSLT_CAPABLE</a></li>
     <li class="mono"><a href="#pyMeasure.XSLT_REPOSITORY">XSLT_REPOSITORY</a></li>
-    <li class="mono"><a href="#pyMeasure.echo">echo</a></li>
-    <li class="mono"><a href="#pyMeasure.keyDefs">keyDefs</a></li>
-    <li class="mono"><a href="#pyMeasure.only_first_block">only_first_block</a></li>
-    <li class="mono"><a href="#pyMeasure.os_path">os_path</a></li>
-    <li class="mono"><a href="#pyMeasure.overview">overview</a></li>
-    <li class="mono"><a href="#pyMeasure.p2c">p2c</a></li>
-    <li class="mono"><a href="#pyMeasure.pi">pi</a></li>
-    <li class="mono"><a href="#pyMeasure.shellReg">shellReg</a></li>
-    <li class="mono"><a href="#pyMeasure.sin">sin</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAME">wxID_BASICINTERFACEFRAME</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEARBDBPANEL">wxID_BASICINTERFACEFRAMEARBDBPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEBUTTON1">wxID_BASICINTERFACEFRAMEBUTTON1</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEBUTTON2">wxID_BASICINTERFACEFRAMEBUTTON2</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEBUTTON3">wxID_BASICINTERFACEFRAMEBUTTON3</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEDISPLAY">wxID_BASICINTERFACEFRAMEDISPLAY</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON">wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEEXECUTEBUTTON">wxID_BASICINTERFACEFRAMEEXECUTEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEFILEMENUNEW">wxID_BASICINTERFACEFRAMEFILEMENUNEW</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEFILEMENUOPEN">wxID_BASICINTERFACEFRAMEFILEMENUOPEN</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON">wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR">wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR">wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL">wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMELOGSPANEL">wxID_BASICINTERFACEFRAMELOGSPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL">wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMELOWERINTERFACE">wxID_BASICINTERFACEFRAMELOWERINTERFACE</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL">wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEMAINPANEL">wxID_BASICINTERFACEFRAMEMAINPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEPANEL1">wxID_BASICINTERFACEFRAMEPANEL1</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEPLOTPANEL">wxID_BASICINTERFACEFRAMEPLOTPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON">wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL">wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMESHELL">wxID_BASICINTERFACEFRAMESHELL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMESTATESBUTTON">wxID_BASICINTERFACEFRAMESTATESBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS">wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON">wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEUPPERINTERFACE">wxID_BASICINTERFACEFRAMEUPPERINTERFACE</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL">wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON">wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_CONTROL_PANEL">wxID_CONTROL_PANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialog">wxID_EndOfDayDialog</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogCLEAR_FILE">wxID_EndOfDayDialogCLEAR_FILE</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogDATA_FLAG">wxID_EndOfDayDialogDATA_FLAG</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogFILE_CHOOSER">wxID_EndOfDayDialogFILE_CHOOSER</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogFILE_CHOOSER2">wxID_EndOfDayDialogFILE_CHOOSER2</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogFILE_DISP">wxID_EndOfDayDialogFILE_DISP</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogFILE_DISP2">wxID_EndOfDayDialogFILE_DISP2</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogQUEST1">wxID_EndOfDayDialogQUEST1</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogQUEST2">wxID_EndOfDayDialogQUEST2</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogQUEST3">wxID_EndOfDayDialogQUEST3</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogQUEST4">wxID_EndOfDayDialogQUEST4</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogQUEST5">wxID_EndOfDayDialogQUEST5</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogQUEST6">wxID_EndOfDayDialogQUEST6</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogRESP1">wxID_EndOfDayDialogRESP1</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogRESP2">wxID_EndOfDayDialogRESP2</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogRESP3">wxID_EndOfDayDialogRESP3</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogRESP4">wxID_EndOfDayDialogRESP4</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogRESP5">wxID_EndOfDayDialogRESP5</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogRESP6">wxID_EndOfDayDialogRESP6</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogSTATICBOX">wxID_EndOfDayDialogSTATICBOX</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogSTATICLINE1">wxID_EndOfDayDialogSTATICLINE1</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_EndOfDayDialogSUBMIT">wxID_EndOfDayDialogSUBMIT</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANEL">wxID_KEITHLEYIVPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELACTIONPANEL">wxID_KEITHLEYIVPANELACTIONPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL">wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL">wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL">wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELBOWTIECONTROL">wxID_KEITHLEYIVPANELBOWTIECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELBOWTIELABEL">wxID_KEITHLEYIVPANELBOWTIELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELINFORMATIONPANEL">wxID_KEITHLEYIVPANELINFORMATIONPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELIVBUTTON">wxID_KEITHLEYIVPANELIVBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELNOTESCONTROL">wxID_KEITHLEYIVPANELNOTESCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELNOTESLABEL">wxID_KEITHLEYIVPANELNOTESLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELNOTESPANEL">wxID_KEITHLEYIVPANELNOTESPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL">wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL">wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELPANEL1">wxID_KEITHLEYIVPANELPANEL1</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELPLOTBUTTON">wxID_KEITHLEYIVPANELPLOTBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELRESISTANCECONTROL">wxID_KEITHLEYIVPANELRESISTANCECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELRESISTANCELABEL">wxID_KEITHLEYIVPANELRESISTANCELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELSAMPLENAMECONTROL">wxID_KEITHLEYIVPANELSAMPLENAMECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELSAMPLENAMELABEL">wxID_KEITHLEYIVPANELSAMPLENAMELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELSAVEBUTTON">wxID_KEITHLEYIVPANELSAVEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELSETTLETIMECONTROL">wxID_KEITHLEYIVPANELSETTLETIMECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELSETTLETIMELABEL">wxID_KEITHLEYIVPANELSETTLETIMELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELSTARTCONTROL">wxID_KEITHLEYIVPANELSTARTCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELSTARTLABEL">wxID_KEITHLEYIVPANELSTARTLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELSTOPCONTROL">wxID_KEITHLEYIVPANELSTOPCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_KEITHLEYIVPANELSTOPLABEL">wxID_KEITHLEYIVPANELSTOPLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_PANEL1">wxID_PANEL1</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_PANEL1STYLEDTEXTCTRL1">wxID_PANEL1STYLEDTEXTCTRL1</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SHELL_CALLTIPS">wxID_SHELL_CALLTIPS</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SHELL_CODECOMP">wxID_SHELL_CODECOMP</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SHELL_ENTER">wxID_SHELL_ENTER</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SHELL_HISTORYDOWN">wxID_SHELL_HISTORYDOWN</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SHELL_HISTORYUP">wxID_SHELL_HISTORYUP</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SHELL_HOME">wxID_SHELL_HOME</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANEL">wxID_SIMPLELOGLOWERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL">wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELENTRY">wxID_SIMPLELOGLOWERINTERFACEPANELENTRY</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL">wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOG">wxID_VISADIALOG</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGASKBUTTON">wxID_VISADIALOGASKBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGCOMMANDPANEL">wxID_VISADIALOGCOMMANDPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGINPUTLABEL">wxID_VISADIALOGINPUTLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGINSTRUMENTCHOICE">wxID_VISADIALOGINSTRUMENTCHOICE</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGINSTRUMENTCHOOSERPANEL">wxID_VISADIALOGINSTRUMENTCHOOSERPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGINSTRUMENTLABEL">wxID_VISADIALOGINSTRUMENTLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGREADBUTTON">wxID_VISADIALOGREADBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGRESPONSELABEL">wxID_VISADIALOGRESPONSELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGRESPONSETEXT">wxID_VISADIALOGRESPONSETEXT</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGTEXTINPUT">wxID_VISADIALOGTEXTINPUT</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGTEXTPANEL">wxID_VISADIALOGTEXTPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.wxID_VISADIALOGWRITEBUTTON">wxID_VISADIALOGWRITEBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.module">module</a></li>
   </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.rand">rand</a></li>
-  </ul>
-
-    </li>
-
-
-    <li class="set"><h3><a href="#header-submodules">Sub-modules</a></h3>
-      <ul>
-        <li class="mono"><a href="Code/index.html">pyMeasure.Code</a></li>
-      </ul>
+	  </div>
     </li>
     </ul>
   </div>
@@ -1297,9 +1172,11 @@ table {
   <p>pyMeasure is an open source package for scientific data handling, analysis and acquisition. By loading the pyMeasure
 package with the from pyMeasure import * style, the user gets the designed API with finished functionality. The
 pyMeasure library itself has other helper modules that are directly accessible by importing them in the standard
-fashion (from pyMeasure.Code.Subpackage.Module import class_or_function). For optimization purposes the pyMeasure
+fashion (from pyMeasure.Code.Subpackage.Module import class_or_function). For clarity purposes the pyMeasure
 package importer (this file) has a constant VERBOSE_IMPORT = True that prints a list of each of the packages as it is
-imported. To change the imported API, change the import statements in this <strong>init</strong>.py file.
+imported. To change the imported API, change the dictionary API_MODULES to have an entry
+API_MODULE["Code.Subpackage.Module"]=True
+ in this <strong>init</strong>.py file.
 Designed by Aric Sanders 2016</p>
 <h2>Examples</h2>
 <div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="kn">from</span> <span class="nn">pyMeasure</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1339,9 +1216,11 @@ Designed by Aric Sanders 2016</p>
 <span class="sd">pyMeasure is an open source package for scientific data handling, analysis and acquisition. By loading the pyMeasure</span>
 <span class="sd">package with the from pyMeasure import * style, the user gets the designed API with finished functionality. The</span>
 <span class="sd">pyMeasure library itself has other helper modules that are directly accessible by importing them in the standard</span>
-<span class="sd">fashion (from pyMeasure.Code.Subpackage.Module import class_or_function). For optimization purposes the pyMeasure</span>
+<span class="sd">fashion (from pyMeasure.Code.Subpackage.Module import class_or_function). For clarity purposes the pyMeasure</span>
 <span class="sd">package importer (this file) has a constant VERBOSE_IMPORT = True that prints a list of each of the packages as it is</span>
-<span class="sd">imported. To change the imported API, change the import statements in this __init__.py file.</span>
+<span class="sd">imported. To change the imported API, change the dictionary API_MODULES to have an entry</span>
+<span class="sd">API_MODULE[&quot;Code.Subpackage.Module&quot;]=True</span>
+<span class="sd"> in this __init__.py file.</span>
 <span class="sd">Designed by Aric Sanders 2016</span>
 
 <span class="sd"> Examples</span>
@@ -1385,47 +1264,65 @@ Designed by Aric Sanders 2016</p>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="n">VERBOSE_IMPORT</span><span class="o">=</span><span class="bp">True</span>
 <span class="s2">&quot;Constant that determines if import statements are echoed to output&quot;</span>
+<span class="c1"># control the modules loaded in the API, this should be included in a pyMeasure Settings file</span>
+<span class="c1"># The new module load scheme can be for module in API_MODULES.keys()</span>
+<span class="n">API_MODULES</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Code.Utils.Names&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Utils.Alias&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Utils.DjangoUtils&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Utils.GetMetadata&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Utils.HelpUtils&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Utils.HPBasicUtils&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Utils.PerformanceUtils&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Utils.pyMeasureUnitTest&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.AbstractDjangoModels&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.GeneralModels&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.GraphModels&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.HTMLModels&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.MUFModels&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.NISTModels&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.RadiCALModels&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.StatistiCALModels&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.TouchstoneModels&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.Translations&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.XMLModels&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.DataHandlers.ZipModels&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Analysis.Fitting&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Analysis.Interpolation&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Analysis.NISTUncertainty&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Analysis.SParameter&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Analysis.Uncertainty&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.InstrumentControl.Instruments&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.InstrumentControl.Experiments&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.AdvancedInterfaceFrame&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.BasicInterfaceFrame&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.EndOfDayDialog&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.GeneralInterfaceFrame&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.HTMLPanel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.IEPanel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.IPythonPanel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.KeithleyIVPanel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.MatplotlibWxPanel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.ShellPanel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.SimpleArbDBLowerInterfacePanel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.SimpleLogLowerInterfacePanel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.StyledTextCtrlPanel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.VisaDialog&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.WxDialogFunctions&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.WxHTML2Panel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.XMLEditPanel&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.FrontEnds.XMLGeneral&quot;</span><span class="p">:</span><span class="bp">False</span>
+             <span class="p">}</span>
+<span class="s2">&quot;Dictionary that controls the definition of the API, this can be set to leave out any unwanted modules. Also it is&quot;</span> \
+<span class="s2">&quot;possible to discover all modules by API_MODULES.keys()&quot;</span>
+
 <span class="c1"># This makes sure this file is the one loaded</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span> <span class="n">__file__</span> <span class="p">))</span>
-<span class="c1"># To tune the imported API change the modules imported</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.Utils.Names&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.Utils.Names</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.DataHandlers.NISTModels&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.NISTModels</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.DataHandlers.GeneralModels&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.GeneralModels</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.DataHandlers.TouchstoneModels&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.TouchstoneModels</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.DataHandlers.XMLModels&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.DataHandlers.RadiCALModels&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.RadiCALModels</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.DataHandlers.ZipModels&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.ZipModels</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.DataHandlers.Translations&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.Translations</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.DataHandlers.StatistiCALModels&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.StatistiCALModels</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.DataHandlers.MUFModels&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.DataHandlers.MUFModels</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.Analysis.SParameter&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.Analysis.SParameter</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.Analysis.Uncertainty&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.Analysis.Uncertainty</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.InstrumentControl.Instruments&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.InstrumentControl.Instruments</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.InstrumentControl.Experiments&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">Code.InstrumentControl.Experiments</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.FrontEnds.AdvancedInterfaceFrame&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.FrontEnds.ShellPanel&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">pyMeasure.Code.FrontEnds.ShellPanel</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.FrontEnds.IEPanel&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">pyMeasure.Code.FrontEnds.IEPanel</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Code.FrontEnds.MatplotlibWxPanel&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">pyMeasure.Code.FrontEnds.MatplotlibWxPanel</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="c1"># __all__=[&quot;Code&quot;]</span>
+<span class="c1"># To tune the imported API change the API_MODULES dictionary</span>
+<span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">API_MODULES</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+    <span class="k">if</span> <span class="n">API_MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
+        <span class="k">exec</span><span class="p">(</span><span class="s1">&#39;from {0} import *&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
 </pre></div>
 
   </div>
@@ -1433,11 +1330,35 @@ Designed by Aric Sanders 2016</p>
   </header>
 
   <section id="section-items">
+    <h2 class="section-title" id="header-submodules">Sub-modules</h2>
+      <div class="item">
+      <p class="name"><a href="Code/index.html">pyMeasure.Code</a></p>
+      
+  
+    <div class="desc"><p>Code is  the package designed as the top level of python code for pyMeasure. To reduce the burden of the
+ importing of all subpackages/modules in pyMeasure internal code uses this as the starting place for the import. For
+ example, in a module in the <a href="./DataHandlers">`DataHandlers subpackage...</p></div>
+
+      </div>
+
+
+
+
+	
     <h2 class="section-title" id="header-variables">Module variables</h2>
       <div class="item">
       <p id="pyMeasure.ACTIVE_COMPONENTS" class="name">var <span class="ident">ACTIVE_COMPONENTS</span></p>
       
   
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.API_MODULES" class="name">var <span class="ident">API_MODULES</span></p>
+      
+  
+    <div class="desc"><p>Dictionary that controls the definition of the API, this can be set to leave out any unwanted modules. Also it ispossible to discover all modules by API_MODULES.keys()</p></div>
   <div class="source_cont">
 </div>
 
@@ -1547,14 +1468,6 @@ Designed by Aric Sanders 2016</p>
 
       </div>
       <div class="item">
-      <p id="pyMeasure.FRONTENDS_DIRECTORY" class="name">var <span class="ident">FRONTENDS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
       <p id="pyMeasure.GENERAL_DESCRIPTORS" class="name">var <span class="ident">GENERAL_DESCRIPTORS</span></p>
       
   
@@ -1571,7 +1484,7 @@ Designed by Aric Sanders 2016</p>
 
       </div>
       <div class="item">
-      <p id="pyMeasure.IMAGE_DIRECTORY" class="name">var <span class="ident">IMAGE_DIRECTORY</span></p>
+      <p id="pyMeasure.HTML_TEMPLATE_DIRECTORY" class="name">var <span class="ident">HTML_TEMPLATE_DIRECTORY</span></p>
       
   
   <div class="source_cont">
@@ -1619,23 +1532,7 @@ Designed by Aric Sanders 2016</p>
 
       </div>
       <div class="item">
-      <p id="pyMeasure.JAVASCRIPT_STRING" class="name">var <span class="ident">JAVASCRIPT_STRING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
       <p id="pyMeasure.KEITHLEY_INSTRUMENT_SHEET" class="name">var <span class="ident">KEITHLEY_INSTRUMENT_SHEET</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.LOGS_DIRECTORY" class="name">var <span class="ident">LOGS_DIRECTORY</span></p>
       
   
   <div class="source_cont">
@@ -1716,14 +1613,6 @@ Designed by Aric Sanders 2016</p>
       </div>
       <div class="item">
       <p id="pyMeasure.OS_STAT_FIELDS" class="name">var <span class="ident">OS_STAT_FIELDS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.PANELS" class="name">var <span class="ident">PANELS</span></p>
       
   
   <div class="source_cont">
@@ -2020,1276 +1909,11 @@ Designed by Aric Sanders 2016</p>
 
       </div>
       <div class="item">
-      <p id="pyMeasure.echo" class="name">var <span class="ident">echo</span></p>
+      <p id="pyMeasure.module" class="name">var <span class="ident">module</span></p>
       
   
   <div class="source_cont">
 </div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.keyDefs" class="name">var <span class="ident">keyDefs</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.only_first_block" class="name">var <span class="ident">only_first_block</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.os_path" class="name">var <span class="ident">os_path</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.overview" class="name">var <span class="ident">overview</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.p2c" class="name">var <span class="ident">p2c</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.pi" class="name">var <span class="ident">pi</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.shellReg" class="name">var <span class="ident">shellReg</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.sin" class="name">var <span class="ident">sin</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAME" class="name">var <span class="ident">wxID_BASICINTERFACEFRAME</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEARBDBPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEARBDBPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEBUTTON1" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEBUTTON1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEBUTTON2" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEBUTTON2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEBUTTON3" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEBUTTON3</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEDISPLAY" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEDISPLAY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEEXECUTEBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEEXECUTEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEFILEMENUNEW" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEFILEMENUNEW</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEFILEMENUOPEN" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEFILEMENUOPEN</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMELOGSPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOGSPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMELOWERINTERFACE" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOWERINTERFACE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEMAINPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEMAINPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEPANEL1" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEPANEL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEPLOTPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEPLOTPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMESHELL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMESHELL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMESTATESBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMESTATESBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEUPPERINTERFACE" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEUPPERINTERFACE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_CONTROL_PANEL" class="name">var <span class="ident">wxID_CONTROL_PANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialog" class="name">var <span class="ident">wxID_EndOfDayDialog</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogCLEAR_FILE" class="name">var <span class="ident">wxID_EndOfDayDialogCLEAR_FILE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogDATA_FLAG" class="name">var <span class="ident">wxID_EndOfDayDialogDATA_FLAG</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogFILE_CHOOSER" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_CHOOSER</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogFILE_CHOOSER2" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_CHOOSER2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogFILE_DISP" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_DISP</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogFILE_DISP2" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_DISP2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogQUEST1" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogQUEST2" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogQUEST3" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST3</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogQUEST4" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST4</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogQUEST5" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST5</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogQUEST6" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST6</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogRESP1" class="name">var <span class="ident">wxID_EndOfDayDialogRESP1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogRESP2" class="name">var <span class="ident">wxID_EndOfDayDialogRESP2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogRESP3" class="name">var <span class="ident">wxID_EndOfDayDialogRESP3</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogRESP4" class="name">var <span class="ident">wxID_EndOfDayDialogRESP4</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogRESP5" class="name">var <span class="ident">wxID_EndOfDayDialogRESP5</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogRESP6" class="name">var <span class="ident">wxID_EndOfDayDialogRESP6</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogSTATICBOX" class="name">var <span class="ident">wxID_EndOfDayDialogSTATICBOX</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogSTATICLINE1" class="name">var <span class="ident">wxID_EndOfDayDialogSTATICLINE1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_EndOfDayDialogSUBMIT" class="name">var <span class="ident">wxID_EndOfDayDialogSUBMIT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELACTIONPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELACTIONPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELBOWTIECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELBOWTIECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELBOWTIELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELBOWTIELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELINFORMATIONPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELINFORMATIONPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELIVBUTTON" class="name">var <span class="ident">wxID_KEITHLEYIVPANELIVBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELNOTESCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNOTESCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELNOTESLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNOTESLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELNOTESPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNOTESPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELPANEL1" class="name">var <span class="ident">wxID_KEITHLEYIVPANELPANEL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELPLOTBUTTON" class="name">var <span class="ident">wxID_KEITHLEYIVPANELPLOTBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELRESISTANCECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELRESISTANCECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELRESISTANCELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELRESISTANCELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELSAMPLENAMECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSAMPLENAMECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELSAMPLENAMELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSAMPLENAMELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELSAVEBUTTON" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSAVEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELSETTLETIMECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSETTLETIMECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELSETTLETIMELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSETTLETIMELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELSTARTCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTARTCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELSTARTLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTARTLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELSTOPCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTOPCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_KEITHLEYIVPANELSTOPLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTOPLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_PANEL1" class="name">var <span class="ident">wxID_PANEL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_PANEL1STYLEDTEXTCTRL1" class="name">var <span class="ident">wxID_PANEL1STYLEDTEXTCTRL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SHELL_CALLTIPS" class="name">var <span class="ident">wxID_SHELL_CALLTIPS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SHELL_CODECOMP" class="name">var <span class="ident">wxID_SHELL_CODECOMP</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SHELL_ENTER" class="name">var <span class="ident">wxID_SHELL_ENTER</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SHELL_HISTORYDOWN" class="name">var <span class="ident">wxID_SHELL_HISTORYDOWN</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SHELL_HISTORYUP" class="name">var <span class="ident">wxID_SHELL_HISTORYUP</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SHELL_HOME" class="name">var <span class="ident">wxID_SHELL_HOME</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELENTRY" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELENTRY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOG" class="name">var <span class="ident">wxID_VISADIALOG</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGASKBUTTON" class="name">var <span class="ident">wxID_VISADIALOGASKBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGCOMMANDPANEL" class="name">var <span class="ident">wxID_VISADIALOGCOMMANDPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGINPUTLABEL" class="name">var <span class="ident">wxID_VISADIALOGINPUTLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGINSTRUMENTCHOICE" class="name">var <span class="ident">wxID_VISADIALOGINSTRUMENTCHOICE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGINSTRUMENTCHOOSERPANEL" class="name">var <span class="ident">wxID_VISADIALOGINSTRUMENTCHOOSERPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGINSTRUMENTLABEL" class="name">var <span class="ident">wxID_VISADIALOGINSTRUMENTLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGREADBUTTON" class="name">var <span class="ident">wxID_VISADIALOGREADBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGRESPONSELABEL" class="name">var <span class="ident">wxID_VISADIALOGRESPONSELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGRESPONSETEXT" class="name">var <span class="ident">wxID_VISADIALOGRESPONSETEXT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGTEXTINPUT" class="name">var <span class="ident">wxID_VISADIALOGTEXTINPUT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGTEXTPANEL" class="name">var <span class="ident">wxID_VISADIALOGTEXTPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.wxID_VISADIALOGWRITEBUTTON" class="name">var <span class="ident">wxID_VISADIALOGWRITEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-
-    <h2 class="section-title" id="header-functions">Functions</h2>
-      
-  <div class="item">
-    <div class="name def" id="pyMeasure.rand">
-    <p>def <span class="ident">rand</span>(</p><p>...)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>rand(d0, d1, ..., dn)</p>
-<p>Random values in a given shape.</p>
-<p>Create an array of the given shape and populate it with
-random samples from a uniform distribution
-over <code>[0, 1)</code>.</p>
-<h2>Parameters</h2>
-<p>d0, d1, ..., dn : int, optional
-    The dimensions of the returned array, should all be positive.
-    If no argument is given a single Python float is returned.</p>
-<h2>Returns</h2>
-<p>out : ndarray, shape <code>(d0, d1, ..., dn)</code>
-    Random values.</p>
-<h2>See Also</h2>
-<p>random</p>
-<h2>Notes</h2>
-<p>This is a convenience function. If you want an interface that
-takes a shape-tuple as the first argument, refer to
-np.random.random_sample .</p>
-<h2>Examples</h2>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>np.random.rand(3,2)
-array([[ 0.14022471,  0.96360618],  #random
-       [ 0.37601032,  0.25528411],  #random
-       [ 0.49313049,  0.94909878]]) #random</p>
-</blockquote>
-</blockquote>
-</blockquote></div>
-  <div class="source_cont">
-</div>
-
-  </div>
-  
-
-
-    <h2 class="section-title" id="header-submodules">Sub-modules</h2>
-      <div class="item">
-      <p class="name"><a href="Code/index.html">pyMeasure.Code</a></p>
-      
-  
-    <div class="desc"><p>Code is  the package designed as the top level of python code for pyMeasure. To reduce the burden of the
- importing of all subpackages/modules in pyMeasure internal code uses this as the starting place for the import. For
- example, in a module in the <a href="./DataHandlers">`DataHandlers subpackage...</p></div>
 
       </div>
   </section>

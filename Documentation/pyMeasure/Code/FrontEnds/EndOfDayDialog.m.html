@@ -575,7 +575,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -845,6 +861,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1025,6 +1042,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1036,46 +1067,22 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialog">wxID_EndOfDayDialog</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogCLEAR_FILE">wxID_EndOfDayDialogCLEAR_FILE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogDATA_FLAG">wxID_EndOfDayDialogDATA_FLAG</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_CHOOSER">wxID_EndOfDayDialogFILE_CHOOSER</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_CHOOSER2">wxID_EndOfDayDialogFILE_CHOOSER2</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_DISP">wxID_EndOfDayDialogFILE_DISP</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_DISP2">wxID_EndOfDayDialogFILE_DISP2</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST1">wxID_EndOfDayDialogQUEST1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST2">wxID_EndOfDayDialogQUEST2</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST3">wxID_EndOfDayDialogQUEST3</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST4">wxID_EndOfDayDialogQUEST4</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST5">wxID_EndOfDayDialogQUEST5</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST6">wxID_EndOfDayDialogQUEST6</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP1">wxID_EndOfDayDialogRESP1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP2">wxID_EndOfDayDialogRESP2</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP3">wxID_EndOfDayDialogRESP3</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP4">wxID_EndOfDayDialogRESP4</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP5">wxID_EndOfDayDialogRESP5</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP6">wxID_EndOfDayDialogRESP6</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSTATICBOX">wxID_EndOfDayDialogSTATICBOX</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSTATICLINE1">wxID_EndOfDayDialogSTATICLINE1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSUBMIT">wxID_EndOfDayDialogSUBMIT</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.main">main</a></li>
   </ul>
 
+	 </div>
     </li>
 
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
         <li class="mono">
         <span class="class_name"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.BoaApp">BoaApp</a></span>
         
@@ -1546,6 +1553,40 @@ table {
       </ul>
     </li>
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialog">wxID_EndOfDayDialog</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogCLEAR_FILE">wxID_EndOfDayDialogCLEAR_FILE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogDATA_FLAG">wxID_EndOfDayDialogDATA_FLAG</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_CHOOSER">wxID_EndOfDayDialogFILE_CHOOSER</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_CHOOSER2">wxID_EndOfDayDialogFILE_CHOOSER2</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_DISP">wxID_EndOfDayDialogFILE_DISP</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_DISP2">wxID_EndOfDayDialogFILE_DISP2</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST1">wxID_EndOfDayDialogQUEST1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST2">wxID_EndOfDayDialogQUEST2</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST3">wxID_EndOfDayDialogQUEST3</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST4">wxID_EndOfDayDialogQUEST4</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST5">wxID_EndOfDayDialogQUEST5</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST6">wxID_EndOfDayDialogQUEST6</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP1">wxID_EndOfDayDialogRESP1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP2">wxID_EndOfDayDialogRESP2</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP3">wxID_EndOfDayDialogRESP3</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP4">wxID_EndOfDayDialogRESP4</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP5">wxID_EndOfDayDialogRESP5</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP6">wxID_EndOfDayDialogRESP6</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSTATICBOX">wxID_EndOfDayDialogSTATICBOX</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSTATICLINE1">wxID_EndOfDayDialogSTATICLINE1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSUBMIT">wxID_EndOfDayDialogSUBMIT</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -1847,191 +1888,6 @@ table {
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialog" class="name">var <span class="ident">wxID_EndOfDayDialog</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogCLEAR_FILE" class="name">var <span class="ident">wxID_EndOfDayDialogCLEAR_FILE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogDATA_FLAG" class="name">var <span class="ident">wxID_EndOfDayDialogDATA_FLAG</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_CHOOSER" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_CHOOSER</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_CHOOSER2" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_CHOOSER2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_DISP" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_DISP</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_DISP2" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_DISP2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST1" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST2" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST3" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST3</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST4" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST4</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST5" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST5</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST6" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST6</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP1" class="name">var <span class="ident">wxID_EndOfDayDialogRESP1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP2" class="name">var <span class="ident">wxID_EndOfDayDialogRESP2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP3" class="name">var <span class="ident">wxID_EndOfDayDialogRESP3</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP4" class="name">var <span class="ident">wxID_EndOfDayDialogRESP4</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP5" class="name">var <span class="ident">wxID_EndOfDayDialogRESP5</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP6" class="name">var <span class="ident">wxID_EndOfDayDialogRESP6</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSTATICBOX" class="name">var <span class="ident">wxID_EndOfDayDialogSTATICBOX</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSTATICLINE1" class="name">var <span class="ident">wxID_EndOfDayDialogSTATICLINE1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSUBMIT" class="name">var <span class="ident">wxID_EndOfDayDialogSUBMIT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -16315,6 +16171,193 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
       </div>
       </div>
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialog" class="name">var <span class="ident">wxID_EndOfDayDialog</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogCLEAR_FILE" class="name">var <span class="ident">wxID_EndOfDayDialogCLEAR_FILE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogDATA_FLAG" class="name">var <span class="ident">wxID_EndOfDayDialogDATA_FLAG</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_CHOOSER" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_CHOOSER</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_CHOOSER2" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_CHOOSER2</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_DISP" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_DISP</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogFILE_DISP2" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_DISP2</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST1" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST2" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST2</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST3" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST3</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST4" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST4</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST5" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST5</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogQUEST6" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST6</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP1" class="name">var <span class="ident">wxID_EndOfDayDialogRESP1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP2" class="name">var <span class="ident">wxID_EndOfDayDialogRESP2</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP3" class="name">var <span class="ident">wxID_EndOfDayDialogRESP3</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP4" class="name">var <span class="ident">wxID_EndOfDayDialogRESP4</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP5" class="name">var <span class="ident">wxID_EndOfDayDialogRESP5</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogRESP6" class="name">var <span class="ident">wxID_EndOfDayDialogRESP6</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSTATICBOX" class="name">var <span class="ident">wxID_EndOfDayDialogSTATICBOX</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSTATICLINE1" class="name">var <span class="ident">wxID_EndOfDayDialogSTATICLINE1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.EndOfDayDialog.wxID_EndOfDayDialogSUBMIT" class="name">var <span class="ident">wxID_EndOfDayDialogSUBMIT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

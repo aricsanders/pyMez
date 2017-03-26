@@ -576,7 +576,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -846,6 +862,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1026,6 +1043,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,7 +1068,69 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
+
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.S_to_T">S_to_T</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.T_to_S">T_to_S</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.average_one_port_sparameters">average_one_port_sparameters</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.calrep">calrep</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.calrep_history_plot">calrep_history_plot</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.compare_s2p_plots">compare_s2p_plots</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.correct_sparameters">correct_sparameters</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.correct_sparameters_eight_term">correct_sparameters_eight_term</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.correct_sparameters_sixteen_term">correct_sparameters_sixteen_term</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.correct_sparameters_twelve_term">correct_sparameters_twelve_term</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.create_monte_carlo_reference_curve">create_monte_carlo_reference_curve</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.create_sensitivity_reference_curve">create_sensitivity_reference_curve</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.frequency_model_collapse_multiple_measurements">frequency_model_collapse_multiple_measurements</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.frequency_model_difference">frequency_model_difference</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.invert_two_port_matrix_list">invert_two_port_matrix_list</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.mean_from_history">mean_from_history</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.median_from_history">median_from_history</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.one_port_robin_comparison_plot">one_port_robin_comparison_plot</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep">plot_calrep</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep_comparison">plot_calrep_comparison</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep_results_comparison">plot_calrep_results_comparison</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep_results_difference_comparison">plot_calrep_results_difference_comparison</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_frequency_model">plot_frequency_model</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_frequency_model_histogram">plot_frequency_model_histogram</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_reference_curve">plot_reference_curve</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.polar_average">polar_average</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.polar_geometric_average">polar_geometric_average</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.raw_comparison_plot_with_residuals">raw_comparison_plot_with_residuals</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.raw_difference_frame">raw_difference_frame</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.return_calrep_error_column_names">return_calrep_error_column_names</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.return_calrep_value_column_names">return_calrep_value_column_names</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.return_history_key">return_history_key</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.test_average_one_port_sparameters">test_average_one_port_sparameters</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.test_compare_s2p_plots">test_compare_s2p_plots</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.test_comparison">test_comparison</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_comparison_plot_with_residuals">two_port_comparison_plot_with_residuals</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_complex_to_matrix_form">two_port_complex_to_matrix_form</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_difference_frame">two_port_difference_frame</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_matrix_to_complex_form">two_port_matrix_to_complex_form</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_mean_frame">two_port_mean_frame</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_swap_ports">two_port_swap_ports</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.uncorrect_sparameters_eight_term">uncorrect_sparameters_eight_term</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.uncorrect_sparameters_sixteen_term">uncorrect_sparameters_sixteen_term</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.uncorrect_sparameters_twelve_term">uncorrect_sparameters_twelve_term</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.unwrap_phase">unwrap_phase</a></li>
+  </ul>
+
+	 </div>
+    </li>
+
+
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.COMBINE_S11_S22">COMBINE_S11_S22</a></li>
@@ -1100,61 +1193,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.XSLT_REPOSITORY">XSLT_REPOSITORY</a></li>
   </ul>
 
+	  </div>
     </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.S_to_T">S_to_T</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.T_to_S">T_to_S</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.average_one_port_sparameters">average_one_port_sparameters</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.calrep">calrep</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.calrep_history_plot">calrep_history_plot</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.compare_s2p_plots">compare_s2p_plots</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.correct_sparameters">correct_sparameters</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.correct_sparameters_eight_term">correct_sparameters_eight_term</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.correct_sparameters_sixteen_term">correct_sparameters_sixteen_term</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.correct_sparameters_twelve_term">correct_sparameters_twelve_term</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.create_monte_carlo_reference_curve">create_monte_carlo_reference_curve</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.create_sensitivity_reference_curve">create_sensitivity_reference_curve</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.frequency_model_collapse_multiple_measurements">frequency_model_collapse_multiple_measurements</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.frequency_model_difference">frequency_model_difference</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.invert_two_port_matrix_list">invert_two_port_matrix_list</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.mean_from_history">mean_from_history</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.median_from_history">median_from_history</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.one_port_robin_comparison_plot">one_port_robin_comparison_plot</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep">plot_calrep</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep_comparison">plot_calrep_comparison</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep_results_comparison">plot_calrep_results_comparison</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_calrep_results_difference_comparison">plot_calrep_results_difference_comparison</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_frequency_model">plot_frequency_model</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_frequency_model_histogram">plot_frequency_model_histogram</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.plot_reference_curve">plot_reference_curve</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.polar_average">polar_average</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.polar_geometric_average">polar_geometric_average</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.raw_comparison_plot_with_residuals">raw_comparison_plot_with_residuals</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.raw_difference_frame">raw_difference_frame</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.return_calrep_error_column_names">return_calrep_error_column_names</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.return_calrep_value_column_names">return_calrep_value_column_names</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.return_history_key">return_history_key</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.test_average_one_port_sparameters">test_average_one_port_sparameters</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.test_compare_s2p_plots">test_compare_s2p_plots</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.test_comparison">test_comparison</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_comparison_plot_with_residuals">two_port_comparison_plot_with_residuals</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_complex_to_matrix_form">two_port_complex_to_matrix_form</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_difference_frame">two_port_difference_frame</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_matrix_to_complex_form">two_port_matrix_to_complex_form</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_mean_frame">two_port_mean_frame</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.two_port_swap_ports">two_port_swap_ports</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.uncorrect_sparameters_eight_term">uncorrect_sparameters_eight_term</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.uncorrect_sparameters_sixteen_term">uncorrect_sparameters_sixteen_term</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.uncorrect_sparameters_twelve_term">uncorrect_sparameters_twelve_term</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.unwrap_phase">unwrap_phase</a></li>
-  </ul>
-
-    </li>
-
-
     </ul>
   </div>
 
@@ -3089,471 +3129,6 @@ see also <a href="./NISTUncertainty.m.html">NISTUncertainty</a></p>
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.COMBINE_S11_S22" class="name">var <span class="ident">COMBINE_S11_S22</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.COMMENT_PATTERN" class="name">var <span class="ident">COMMENT_PATTERN</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.CONNECTOR_TYPES" class="name">var <span class="ident">CONNECTOR_TYPES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.CONVERT_S21" class="name">var <span class="ident">CONVERT_S21</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.DEFAULT_FILE_NAME" class="name">var <span class="ident">DEFAULT_FILE_NAME</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.DRIVER_FILE_EXTENSIONS" class="name">var <span class="ident">DRIVER_FILE_EXTENSIONS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.DUT_COLUMN_NAMES" class="name">var <span class="ident">DUT_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.EXIF_AVAILABLE" class="name">var <span class="ident">EXIF_AVAILABLE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.EXTENSION_PATTERN" class="name">var <span class="ident">EXTENSION_PATTERN</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.FORMATS" class="name">var <span class="ident">FORMATS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.FREQUENCY_UNITS" class="name">var <span class="ident">FREQUENCY_UNITS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.GET_STATS_FIELDS" class="name">var <span class="ident">GET_STATS_FIELDS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.IMAGE_FILE_EXTENSIONS" class="name">var <span class="ident">IMAGE_FILE_EXTENSIONS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.INKSCAPE_PATH" class="name">var <span class="ident">INKSCAPE_PATH</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.INSTRUMENT_SHEETS" class="name">var <span class="ident">INSTRUMENT_SHEETS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.MINIMUM_DB" class="name">var <span class="ident">MINIMUM_DB</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.MINIMUM_DB_ARG_VALUE" class="name">var <span class="ident">MINIMUM_DB_ARG_VALUE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.MINIMUM_DB_VALUE" class="name">var <span class="ident">MINIMUM_DB_VALUE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.NODE_TYPE_DICTIONARY" class="name">var <span class="ident">NODE_TYPE_DICTIONARY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.NUMBER_MATCH_STRING" class="name">var <span class="ident">NUMBER_MATCH_STRING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.ONE_PORT_COLUMN_NAMES" class="name">var <span class="ident">ONE_PORT_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.ONE_PORT_DUT" class="name">var <span class="ident">ONE_PORT_DUT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.OPTION_LINE_PATTERN" class="name">var <span class="ident">OPTION_LINE_PATTERN</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.OS_STAT_FIELDS" class="name">var <span class="ident">OS_STAT_FIELDS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.PARAMETERS" class="name">var <span class="ident">PARAMETERS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.PDF_CONVERT" class="name">var <span class="ident">PDF_CONVERT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.PIL_AVAILABLE" class="name">var <span class="ident">PIL_AVAILABLE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.POWER_3TERM_COLUMN_DESCRIPTIONS" class="name">var <span class="ident">POWER_3TERM_COLUMN_DESCRIPTIONS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.POWER_3TERM_COLUMN_NAMES" class="name">var <span class="ident">POWER_3TERM_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.POWER_4TERM_COLUMN_DESCRIPTIONS" class="name">var <span class="ident">POWER_4TERM_COLUMN_DESCRIPTIONS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.POWER_4TERM_COLUMN_NAMES" class="name">var <span class="ident">POWER_4TERM_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.RESULTS_FILE_ONE_PORT_COLUMN_NAMES" class="name">var <span class="ident">RESULTS_FILE_ONE_PORT_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.RESULTS_FILE_POWER_COLUMN_NAMES" class="name">var <span class="ident">RESULTS_FILE_POWER_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.RESULTS_FILE_TWO_PORT_COLUMN_NAMES" class="name">var <span class="ident">RESULTS_FILE_TWO_PORT_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S1P_DB_COLUMN_NAMES" class="name">var <span class="ident">S1P_DB_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S1P_MA_COLUMN_NAMES" class="name">var <span class="ident">S1P_MA_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S1P_RI_COLUMN_NAMES" class="name">var <span class="ident">S1P_RI_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S2P_COMPLEX_COLUMN_NAMES" class="name">var <span class="ident">S2P_COMPLEX_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S2P_DB_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_DB_COLUMN_DESCRIPTION</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S2P_DB_COLUMN_NAMES" class="name">var <span class="ident">S2P_DB_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S2P_MA_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_MA_COLUMN_DESCRIPTION</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S2P_MA_COLUMN_NAMES" class="name">var <span class="ident">S2P_MA_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S2P_NOISE_PARAMETER_COLUMN_NAMES" class="name">var <span class="ident">S2P_NOISE_PARAMETER_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S2P_RI_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_RI_COLUMN_DESCRIPTION</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.S2P_RI_COLUMN_NAMES" class="name">var <span class="ident">S2P_RI_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.SMITHPLOT" class="name">var <span class="ident">SMITHPLOT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.SOLUTION_VECTOR_COLUMN_NAMES" class="name">var <span class="ident">SOLUTION_VECTOR_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.TOUCHSTONE_KEYWORDS" class="name">var <span class="ident">TOUCHSTONE_KEYWORDS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.TWELVE_TERM_ERROR_COLUMN_NAMES" class="name">var <span class="ident">TWELVE_TERM_ERROR_COLUMN_NAMES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.WINDOWS_COM" class="name">var <span class="ident">WINDOWS_COM</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.WINDOWS_WRAPPER" class="name">var <span class="ident">WINDOWS_WRAPPER</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.WKHTML_PATH" class="name">var <span class="ident">WKHTML_PATH</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.XSLT_CAPABLE" class="name">var <span class="ident">XSLT_CAPABLE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.SParameter.XSLT_REPOSITORY" class="name">var <span class="ident">XSLT_REPOSITORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -6243,6 +5818,473 @@ by min_phase and radians or degrees can be specified by units</p></div>
   
 
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.COMBINE_S11_S22" class="name">var <span class="ident">COMBINE_S11_S22</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.COMMENT_PATTERN" class="name">var <span class="ident">COMMENT_PATTERN</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.CONNECTOR_TYPES" class="name">var <span class="ident">CONNECTOR_TYPES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.CONVERT_S21" class="name">var <span class="ident">CONVERT_S21</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.DEFAULT_FILE_NAME" class="name">var <span class="ident">DEFAULT_FILE_NAME</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.DRIVER_FILE_EXTENSIONS" class="name">var <span class="ident">DRIVER_FILE_EXTENSIONS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.DUT_COLUMN_NAMES" class="name">var <span class="ident">DUT_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.EXIF_AVAILABLE" class="name">var <span class="ident">EXIF_AVAILABLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.EXTENSION_PATTERN" class="name">var <span class="ident">EXTENSION_PATTERN</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.FORMATS" class="name">var <span class="ident">FORMATS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.FREQUENCY_UNITS" class="name">var <span class="ident">FREQUENCY_UNITS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.GET_STATS_FIELDS" class="name">var <span class="ident">GET_STATS_FIELDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.IMAGE_FILE_EXTENSIONS" class="name">var <span class="ident">IMAGE_FILE_EXTENSIONS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.INKSCAPE_PATH" class="name">var <span class="ident">INKSCAPE_PATH</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.INSTRUMENT_SHEETS" class="name">var <span class="ident">INSTRUMENT_SHEETS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.MINIMUM_DB" class="name">var <span class="ident">MINIMUM_DB</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.MINIMUM_DB_ARG_VALUE" class="name">var <span class="ident">MINIMUM_DB_ARG_VALUE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.MINIMUM_DB_VALUE" class="name">var <span class="ident">MINIMUM_DB_VALUE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.NODE_TYPE_DICTIONARY" class="name">var <span class="ident">NODE_TYPE_DICTIONARY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.NUMBER_MATCH_STRING" class="name">var <span class="ident">NUMBER_MATCH_STRING</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.ONE_PORT_COLUMN_NAMES" class="name">var <span class="ident">ONE_PORT_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.ONE_PORT_DUT" class="name">var <span class="ident">ONE_PORT_DUT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.OPTION_LINE_PATTERN" class="name">var <span class="ident">OPTION_LINE_PATTERN</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.OS_STAT_FIELDS" class="name">var <span class="ident">OS_STAT_FIELDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.PARAMETERS" class="name">var <span class="ident">PARAMETERS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.PDF_CONVERT" class="name">var <span class="ident">PDF_CONVERT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.PIL_AVAILABLE" class="name">var <span class="ident">PIL_AVAILABLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.POWER_3TERM_COLUMN_DESCRIPTIONS" class="name">var <span class="ident">POWER_3TERM_COLUMN_DESCRIPTIONS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.POWER_3TERM_COLUMN_NAMES" class="name">var <span class="ident">POWER_3TERM_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.POWER_4TERM_COLUMN_DESCRIPTIONS" class="name">var <span class="ident">POWER_4TERM_COLUMN_DESCRIPTIONS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.POWER_4TERM_COLUMN_NAMES" class="name">var <span class="ident">POWER_4TERM_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.RESULTS_FILE_ONE_PORT_COLUMN_NAMES" class="name">var <span class="ident">RESULTS_FILE_ONE_PORT_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.RESULTS_FILE_POWER_COLUMN_NAMES" class="name">var <span class="ident">RESULTS_FILE_POWER_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.RESULTS_FILE_TWO_PORT_COLUMN_NAMES" class="name">var <span class="ident">RESULTS_FILE_TWO_PORT_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S1P_DB_COLUMN_NAMES" class="name">var <span class="ident">S1P_DB_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S1P_MA_COLUMN_NAMES" class="name">var <span class="ident">S1P_MA_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S1P_RI_COLUMN_NAMES" class="name">var <span class="ident">S1P_RI_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S2P_COMPLEX_COLUMN_NAMES" class="name">var <span class="ident">S2P_COMPLEX_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S2P_DB_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_DB_COLUMN_DESCRIPTION</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S2P_DB_COLUMN_NAMES" class="name">var <span class="ident">S2P_DB_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S2P_MA_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_MA_COLUMN_DESCRIPTION</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S2P_MA_COLUMN_NAMES" class="name">var <span class="ident">S2P_MA_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S2P_NOISE_PARAMETER_COLUMN_NAMES" class="name">var <span class="ident">S2P_NOISE_PARAMETER_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S2P_RI_COLUMN_DESCRIPTION" class="name">var <span class="ident">S2P_RI_COLUMN_DESCRIPTION</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.S2P_RI_COLUMN_NAMES" class="name">var <span class="ident">S2P_RI_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.SMITHPLOT" class="name">var <span class="ident">SMITHPLOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.SOLUTION_VECTOR_COLUMN_NAMES" class="name">var <span class="ident">SOLUTION_VECTOR_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.TOUCHSTONE_KEYWORDS" class="name">var <span class="ident">TOUCHSTONE_KEYWORDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.TWELVE_TERM_ERROR_COLUMN_NAMES" class="name">var <span class="ident">TWELVE_TERM_ERROR_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.WINDOWS_COM" class="name">var <span class="ident">WINDOWS_COM</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.WINDOWS_WRAPPER" class="name">var <span class="ident">WINDOWS_WRAPPER</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.WKHTML_PATH" class="name">var <span class="ident">WKHTML_PATH</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.XSLT_CAPABLE" class="name">var <span class="ident">XSLT_CAPABLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.XSLT_REPOSITORY" class="name">var <span class="ident">XSLT_REPOSITORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

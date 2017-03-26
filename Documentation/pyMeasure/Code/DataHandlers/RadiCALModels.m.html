@@ -576,7 +576,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -846,6 +862,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1026,6 +1043,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,7 +1068,44 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
+
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.print_hd5_keys">print_hd5_keys</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.radical_dataset_to_s2p">radical_dataset_to_s2p</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.radical_error_boxes_to_eight_term_complex">radical_error_boxes_to_eight_term_complex</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.radical_frequency_to_frequency_list">radical_frequency_to_frequency_list</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.return_hd5_keys">return_hd5_keys</a></li>
+  </ul>
+
+	 </div>
+    </li>
+
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
+        <li class="mono">
+        <span class="class_name"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel">RadicalDataModel</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.__init__">__init__</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.show">show</a></li>
+  </ul>
+
+        </li>
+      </ul>
+    </li>
+
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.COMMENT_PATTERN">COMMENT_PATTERN</a></li>
@@ -1068,33 +1136,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.TOUCHSTONE_KEYWORDS">TOUCHSTONE_KEYWORDS</a></li>
   </ul>
 
+	  </div>
     </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.print_hd5_keys">print_hd5_keys</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.radical_dataset_to_s2p">radical_dataset_to_s2p</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.return_hd5_keys">return_hd5_keys</a></li>
-  </ul>
-
-    </li>
-
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
-        <li class="mono">
-        <span class="class_name"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel">RadicalDataModel</a></span>
-        
-          
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.__init__">__init__</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.show">show</a></li>
-  </ul>
-
-        </li>
-      </ul>
-    </li>
-
     </ul>
   </div>
 
@@ -1183,6 +1226,61 @@ scipy.io.loadmat, but this module does not use this function</p>
     <span class="n">new_s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">sparameter_complex</span><span class="o">=</span><span class="n">sparameters</span><span class="p">,</span><span class="o">**</span><span class="n">s2p_options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_s2p</span>
 
+
+<span class="k">def</span> <span class="nf">radical_frequency_to_frequency_list</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">,</span> <span class="n">radical_data_file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes either the string specifying the radical frequency location (&quot;RadiCalData/StatistiCalData/F&quot;) and</span>
+<span class="sd">    radical data file</span>
+<span class="sd">    or the data set radical_data_file[&quot;RadiCalData/StatistiCalData/F&quot;] and returns a python list of frequencies&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">)</span> <span class="ow">in</span> <span class="n">StringTypes</span><span class="p">:</span>
+            <span class="n">frequency_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_data_file</span><span class="p">[</span><span class="n">radical_frequency</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]:</span>
+            <span class="n">frequency_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">File</span><span class="p">]:</span>
+            <span class="n">frequency_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/F&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not change {0} to a python list&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">radical_error_boxes_to_eight_term_complex</span><span class="p">(</span><span class="n">radical_s1</span><span class="p">,</span> <span class="n">radical_s2</span><span class="p">,</span> <span class="n">radical_frequency_list</span><span class="p">,</span> <span class="n">radical_data_file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes two radical error boxes and a frequency_list (in python format run radical_frequency_to_frequency_list first)</span>
+<span class="sd">    and converts them into a python list structure</span>
+<span class="sd">    [[f,S1_11,S1_12,S1_21,S1_22,S2_11,S2_12,S2_21,S_22]] where each component of a matrix is a complex number.</span>
+<span class="sd">    This list is designed to be used as an input for correct_sparameters_eight_term&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># fist convert the S1 to a numpy array the dimensions are 4 x number of frequencies x 2</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">StringTypes</span><span class="p">:</span>
+            <span class="n">s1_numpy_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_data_file</span><span class="p">[</span><span class="n">radical_s1</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s1</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]:</span>
+            <span class="n">s1_numpy_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_s1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s1</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+            <span class="n">s1_numpy_array</span> <span class="o">=</span> <span class="n">radical_s1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;S1 is the wrong type&quot;</span><span class="p">)</span>
+        <span class="c1"># second convert the S2 to a numpy array are 4 x number of frequencies x 2</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">StringTypes</span><span class="p">:</span>
+            <span class="n">s2_numpy_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_data_file</span><span class="p">[</span><span class="n">radical_s2</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s2</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]:</span>
+            <span class="n">s2_numpy_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_s2</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s2</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+            <span class="n">s2_numpy_array</span> <span class="o">=</span> <span class="n">radical_s2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;S2 is the wrong type&quot;</span><span class="p">)</span>
+        <span class="c1"># now arrange each item as complex()</span>
+        <span class="n">eight_term_complex_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">frequency_index</span><span class="p">,</span> <span class="n">frequency</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">radical_frequency_list</span><span class="p">):</span>
+            <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">frequency</span><span class="p">]</span>
+            <span class="n">s1_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">s1_numpy_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">frequency_index</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1_numpy_array</span><span class="p">))]</span>
+            <span class="n">s1_complex_row</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">complex</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">s1_row</span><span class="p">)</span>
+            <span class="n">s2_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">s2_numpy_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">frequency_index</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s2_numpy_array</span><span class="p">))]</span>
+            <span class="n">s2_complex_row</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">complex</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">s2_row</span><span class="p">)</span>
+            <span class="n">new_row</span> <span class="o">=</span> <span class="n">new_row</span> <span class="o">+</span> <span class="n">s1_complex_row</span> <span class="o">+</span> <span class="n">s2_complex_row</span>
+            <span class="n">eight_term_complex_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">eight_term_complex_list</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not convert the S1, S2 as given&quot;</span><span class="p">)</span>
+        <span class="k">raise</span>
+
 <span class="c1"># Does this belong in HD5Models?</span>
 <span class="k">def</span> <span class="nf">print_hd5_keys</span><span class="p">(</span><span class="n">hd5_group</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Prints hd5 keys and passes if there are none&quot;&quot;&quot;</span>
@@ -1242,6 +1340,333 @@ scipy.io.loadmat, but this module does not use this function</p>
   </header>
 
   <section id="section-items">
+
+    <h2 class="section-title" id="header-functions">Functions</h2>
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.print_hd5_keys">
+    <p>def <span class="ident">print_hd5_keys</span>(</p><p>hd5_group)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Prints hd5 keys and passes if there are none</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.print_hd5_keys', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.print_hd5_keys" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">print_hd5_keys</span><span class="p">(</span><span class="n">hd5_group</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prints hd5 keys and passes if there are none&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">hd5_group</span>
+    <span class="k">except</span><span class="p">:</span> <span class="k">pass</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.radical_dataset_to_s2p">
+    <p>def <span class="ident">radical_dataset_to_s2p</span>(</p><p>radical_data_set, frequency_list, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Takes a radical data set that is of the form <HDF5 dataset "S1": shape (4, 512), type "|V16"> and outputs
+an S2PV1 python model. Requires frequency_list=np.array(radical_data_file["RadiCalData/StatistiCalData/F"])[0].tolist()
+to be passed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.radical_dataset_to_s2p', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.radical_dataset_to_s2p" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">radical_dataset_to_s2p</span><span class="p">(</span><span class="n">radical_data_set</span><span class="p">,</span><span class="n">frequency_list</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes a radical data set that is of the form &lt;HDF5 dataset &quot;S1&quot;: shape (4, 512), type &quot;|V16&quot;&gt; and outputs</span>
+<span class="sd">    an S2PV1 python model. Requires frequency_list=np.array(radical_data_file[&quot;RadiCalData/StatistiCalData/F&quot;])[0].tolist()</span>
+<span class="sd">    to be passed&quot;&quot;&quot;</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;frequency_selector&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;frequency_column_name&quot;</span><span class="p">:</span><span class="s2">&quot;Frequency&quot;</span><span class="p">}</span>
+    <span class="n">s2p_options</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">s2p_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">s2p_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="n">input_data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_data_set</span><span class="p">)</span>
+    <span class="n">sparameters</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frequency_list</span><span class="p">):</span>
+        <span class="p">[</span><span class="n">S11</span><span class="p">,</span><span class="n">S21</span><span class="p">,</span><span class="n">S12</span><span class="p">,</span><span class="n">S22</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="nb">complex</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">input_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+                           <span class="nb">complex</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">input_data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+                           <span class="nb">complex</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">input_data</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+                           <span class="nb">complex</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">input_data</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="n">new_row</span><span class="o">=</span><span class="p">[</span><span class="n">item</span><span class="p">,</span><span class="n">S11</span><span class="p">,</span><span class="n">S21</span><span class="p">,</span><span class="n">S12</span><span class="p">,</span><span class="n">S22</span><span class="p">]</span>
+        <span class="n">sparameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+    <span class="n">new_s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">sparameter_complex</span><span class="o">=</span><span class="n">sparameters</span><span class="p">,</span><span class="o">**</span><span class="n">s2p_options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_s2p</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.radical_error_boxes_to_eight_term_complex">
+    <p>def <span class="ident">radical_error_boxes_to_eight_term_complex</span>(</p><p>radical_s1, radical_s2, radical_frequency_list, radical_data_file=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Takes two radical error boxes and a frequency_list (in python format run radical_frequency_to_frequency_list first)
+and converts them into a python list structure
+[[f,S1_11,S1_12,S1_21,S1_22,S2_11,S2_12,S2_21,S_22]] where each component of a matrix is a complex number.
+This list is designed to be used as an input for correct_sparameters_eight_term</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.radical_error_boxes_to_eight_term_complex', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.radical_error_boxes_to_eight_term_complex" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">radical_error_boxes_to_eight_term_complex</span><span class="p">(</span><span class="n">radical_s1</span><span class="p">,</span> <span class="n">radical_s2</span><span class="p">,</span> <span class="n">radical_frequency_list</span><span class="p">,</span> <span class="n">radical_data_file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes two radical error boxes and a frequency_list (in python format run radical_frequency_to_frequency_list first)</span>
+<span class="sd">    and converts them into a python list structure</span>
+<span class="sd">    [[f,S1_11,S1_12,S1_21,S1_22,S2_11,S2_12,S2_21,S_22]] where each component of a matrix is a complex number.</span>
+<span class="sd">    This list is designed to be used as an input for correct_sparameters_eight_term&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># fist convert the S1 to a numpy array the dimensions are 4 x number of frequencies x 2</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">StringTypes</span><span class="p">:</span>
+            <span class="n">s1_numpy_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_data_file</span><span class="p">[</span><span class="n">radical_s1</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s1</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]:</span>
+            <span class="n">s1_numpy_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_s1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s1</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+            <span class="n">s1_numpy_array</span> <span class="o">=</span> <span class="n">radical_s1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;S1 is the wrong type&quot;</span><span class="p">)</span>
+        <span class="c1"># second convert the S2 to a numpy array are 4 x number of frequencies x 2</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">StringTypes</span><span class="p">:</span>
+            <span class="n">s2_numpy_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_data_file</span><span class="p">[</span><span class="n">radical_s2</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s2</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]:</span>
+            <span class="n">s2_numpy_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_s2</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_s2</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+            <span class="n">s2_numpy_array</span> <span class="o">=</span> <span class="n">radical_s2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;S2 is the wrong type&quot;</span><span class="p">)</span>
+        <span class="c1"># now arrange each item as complex()</span>
+        <span class="n">eight_term_complex_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">frequency_index</span><span class="p">,</span> <span class="n">frequency</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">radical_frequency_list</span><span class="p">):</span>
+            <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">frequency</span><span class="p">]</span>
+            <span class="n">s1_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">s1_numpy_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">frequency_index</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1_numpy_array</span><span class="p">))]</span>
+            <span class="n">s1_complex_row</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">complex</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">s1_row</span><span class="p">)</span>
+            <span class="n">s2_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">s2_numpy_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">frequency_index</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s2_numpy_array</span><span class="p">))]</span>
+            <span class="n">s2_complex_row</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">complex</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">s2_row</span><span class="p">)</span>
+            <span class="n">new_row</span> <span class="o">=</span> <span class="n">new_row</span> <span class="o">+</span> <span class="n">s1_complex_row</span> <span class="o">+</span> <span class="n">s2_complex_row</span>
+            <span class="n">eight_term_complex_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">eight_term_complex_list</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not convert the S1, S2 as given&quot;</span><span class="p">)</span>
+        <span class="k">raise</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.radical_frequency_to_frequency_list">
+    <p>def <span class="ident">radical_frequency_to_frequency_list</span>(</p><p>radical_frequency, radical_data_file=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Takes either the string specifying the radical frequency location ("RadiCalData/StatistiCalData/F") and
+radical data file
+or the data set radical_data_file["RadiCalData/StatistiCalData/F"] and returns a python list of frequencies</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.radical_frequency_to_frequency_list', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.radical_frequency_to_frequency_list" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">radical_frequency_to_frequency_list</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">,</span> <span class="n">radical_data_file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes either the string specifying the radical frequency location (&quot;RadiCalData/StatistiCalData/F&quot;) and</span>
+<span class="sd">    radical data file</span>
+<span class="sd">    or the data set radical_data_file[&quot;RadiCalData/StatistiCalData/F&quot;] and returns a python list of frequencies&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">)</span> <span class="ow">in</span> <span class="n">StringTypes</span><span class="p">:</span>
+            <span class="n">frequency_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_data_file</span><span class="p">[</span><span class="n">radical_frequency</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]:</span>
+            <span class="n">frequency_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">File</span><span class="p">]:</span>
+            <span class="n">frequency_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/F&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not change {0} to a python list&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radical_frequency</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.return_hd5_keys">
+    <p>def <span class="ident">return_hd5_keys</span>(</p><p>hd5_group)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns hd5 keys and passes if there are none</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.return_hd5_keys', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.return_hd5_keys" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">return_hd5_keys</span><span class="p">(</span><span class="n">hd5_group</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns hd5 keys and passes if there are none&quot;&quot;&quot;</span>
+    <span class="n">keys</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">hd5_group</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">except</span><span class="p">:</span> <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">keys</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+
+    <h2 class="section-title" id="header-classes">Classes</h2>
+      
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel" class="name">class <span class="ident">RadicalDataModel</span></p>
+      
+  
+    <div class="desc"><p>RadicalDataModel is a container for data generated by the matlab program radical
+copyright 2011, Nathan Orloff. Typically the file is found in Radical_Solutions/RadicalData.mat or renamed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">RadicalDataModel</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;RadicalDataModel is a container for data generated by the matlab program radical</span>
+<span class="sd">    copyright 2011, Nathan Orloff. Typically the file is found in Radical_Solutions/RadicalData.mat or renamed&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="n">defaults</span><span class="o">=</span><span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="o">=</span><span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+            <span class="c1"># load the frequency list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/F&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="c1"># create some s2p file attributes for easy access</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">uncorrected_short</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/S&quot;</span><span class="p">],</span>
+                                                          <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">uncorrected_Rs</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/Rs&quot;</span><span class="p">],</span>
+                                                       <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">corrected_Rs</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Ref/TRL/Models/Rs&quot;</span><span class="p">],</span>
+                                                       <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">corrected_DUT</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Dut/Calibrated&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">propagation_constant</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Ref/TRL/PropConst&quot;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Displays corrected DUT as s2p&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corrected_DUT</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel">RadicalDataModel</a></li>
+          </ul>
+          <h3>Instance variables</h3>
+            <div class="item">
+            <p id="pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.options" class="name">var <span class="ident">options</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, file_path=None, **options)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.__init__', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.__init__" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="o">=</span><span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="c1"># load the frequency list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/F&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="c1"># create some s2p file attributes for easy access</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uncorrected_short</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/S&quot;</span><span class="p">],</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uncorrected_Rs</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/Rs&quot;</span><span class="p">],</span>
+                                                   <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corrected_Rs</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Ref/TRL/Models/Rs&quot;</span><span class="p">],</span>
+                                                   <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corrected_DUT</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Dut/Calibrated&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propagation_constant</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Ref/TRL/PropConst&quot;</span><span class="p">])</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.show">
+    <p>def <span class="ident">show</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Displays corrected DUT as s2p</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.show', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.show" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Displays corrected DUT as s2p&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">corrected_DUT</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      </div>
+      </div>
+
+
+	
     <h2 class="section-title" id="header-variables">Module variables</h2>
       <div class="item">
       <p id="pyMeasure.Code.DataHandlers.RadiCALModels.COMMENT_PATTERN" class="name">var <span class="ident">COMMENT_PATTERN</span></p>
@@ -1451,235 +1876,6 @@ scipy.io.loadmat, but this module does not use this function</p>
 </div>
 
       </div>
-
-    <h2 class="section-title" id="header-functions">Functions</h2>
-      
-  <div class="item">
-    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.print_hd5_keys">
-    <p>def <span class="ident">print_hd5_keys</span>(</p><p>hd5_group)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Prints hd5 keys and passes if there are none</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.print_hd5_keys', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.print_hd5_keys" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">print_hd5_keys</span><span class="p">(</span><span class="n">hd5_group</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Prints hd5 keys and passes if there are none&quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">print</span> <span class="n">hd5_group</span>
-    <span class="k">except</span><span class="p">:</span> <span class="k">pass</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-      
-  <div class="item">
-    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.radical_dataset_to_s2p">
-    <p>def <span class="ident">radical_dataset_to_s2p</span>(</p><p>radical_data_set, frequency_list, **options)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Takes a radical data set that is of the form <HDF5 dataset "S1": shape (4, 512), type "|V16"> and outputs
-an S2PV1 python model. Requires frequency_list=np.array(radical_data_file["RadiCalData/StatistiCalData/F"])[0].tolist()
-to be passed</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.radical_dataset_to_s2p', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.radical_dataset_to_s2p" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">radical_dataset_to_s2p</span><span class="p">(</span><span class="n">radical_data_set</span><span class="p">,</span><span class="n">frequency_list</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Takes a radical data set that is of the form &lt;HDF5 dataset &quot;S1&quot;: shape (4, 512), type &quot;|V16&quot;&gt; and outputs</span>
-<span class="sd">    an S2PV1 python model. Requires frequency_list=np.array(radical_data_file[&quot;RadiCalData/StatistiCalData/F&quot;])[0].tolist()</span>
-<span class="sd">    to be passed&quot;&quot;&quot;</span>
-    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;frequency_selector&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;frequency_column_name&quot;</span><span class="p">:</span><span class="s2">&quot;Frequency&quot;</span><span class="p">}</span>
-    <span class="n">s2p_options</span><span class="o">=</span><span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="n">s2p_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="n">s2p_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-    <span class="n">input_data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radical_data_set</span><span class="p">)</span>
-    <span class="n">sparameters</span><span class="o">=</span><span class="p">[]</span>
-    <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frequency_list</span><span class="p">):</span>
-        <span class="p">[</span><span class="n">S11</span><span class="p">,</span><span class="n">S21</span><span class="p">,</span><span class="n">S12</span><span class="p">,</span><span class="n">S22</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="nb">complex</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">input_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
-                           <span class="nb">complex</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">input_data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
-                           <span class="nb">complex</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">input_data</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
-                           <span class="nb">complex</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">input_data</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">])]</span>
-        <span class="n">new_row</span><span class="o">=</span><span class="p">[</span><span class="n">item</span><span class="p">,</span><span class="n">S11</span><span class="p">,</span><span class="n">S21</span><span class="p">,</span><span class="n">S12</span><span class="p">,</span><span class="n">S22</span><span class="p">]</span>
-        <span class="n">sparameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
-    <span class="n">new_s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">sparameter_complex</span><span class="o">=</span><span class="n">sparameters</span><span class="p">,</span><span class="o">**</span><span class="n">s2p_options</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">new_s2p</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-      
-  <div class="item">
-    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.return_hd5_keys">
-    <p>def <span class="ident">return_hd5_keys</span>(</p><p>hd5_group)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Returns hd5 keys and passes if there are none</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.return_hd5_keys', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.return_hd5_keys" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">return_hd5_keys</span><span class="p">(</span><span class="n">hd5_group</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Returns hd5 keys and passes if there are none&quot;&quot;&quot;</span>
-    <span class="n">keys</span><span class="o">=</span><span class="p">[]</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">hd5_group</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-    <span class="k">except</span><span class="p">:</span> <span class="k">pass</span>
-    <span class="k">return</span> <span class="n">keys</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-
-    <h2 class="section-title" id="header-classes">Classes</h2>
-      
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel" class="name">class <span class="ident">RadicalDataModel</span></p>
-      
-  
-    <div class="desc"><p>RadicalDataModel is a container for data generated by the matlab program radical
-copyright 2011, Nathan Orloff. Typically the file is found in Radical_Solutions/RadicalData.mat or renamed</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">RadicalDataModel</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;RadicalDataModel is a container for data generated by the matlab program radical</span>
-<span class="sd">    copyright 2011, Nathan Orloff. Typically the file is found in Radical_Solutions/RadicalData.mat or renamed&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="n">defaults</span><span class="o">=</span><span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="o">=</span><span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
-            <span class="c1"># load the frequency list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/F&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-            <span class="c1"># create some s2p file attributes for easy access</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">uncorrected_short</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/S&quot;</span><span class="p">],</span>
-                                                          <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">uncorrected_Rs</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/Rs&quot;</span><span class="p">],</span>
-                                                       <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">corrected_Rs</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Ref/TRL/Models/Rs&quot;</span><span class="p">],</span>
-                                                       <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">corrected_DUT</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Dut/Calibrated&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span>
-                      <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">propagation_constant</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Ref/TRL/PropConst&quot;</span><span class="p">])</span>
-    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Displays corrected DUT as s2p&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">corrected_DUT</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-
-  </div>
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="#pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel">RadicalDataModel</a></li>
-          </ul>
-          <h3>Instance variables</h3>
-            <div class="item">
-            <p id="pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.options" class="name">var <span class="ident">options</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-          <h3>Methods</h3>
-            
-  <div class="item">
-    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, file_path=None, **options)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.__init__', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.__init__" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="n">defaults</span><span class="o">=</span><span class="p">{}</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-    <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">pass</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="o">=</span><span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
-        <span class="c1"># load the frequency list</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/F&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-        <span class="c1"># create some s2p file attributes for easy access</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uncorrected_short</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/S&quot;</span><span class="p">],</span>
-                                                      <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uncorrected_Rs</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/StatistiCalData/Rs&quot;</span><span class="p">],</span>
-                                                   <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">corrected_Rs</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Ref/TRL/Models/Rs&quot;</span><span class="p">],</span>
-                                                   <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">corrected_DUT</span><span class="o">=</span><span class="n">radical_dataset_to_s2p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Dut/Calibrated&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span>
-                  <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">propagation_constant</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">[</span><span class="s2">&quot;RadiCalData/Ref/TRL/PropConst&quot;</span><span class="p">])</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.show">
-    <p>def <span class="ident">show</span>(</p><p>self)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Displays corrected DUT as s2p</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.show', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.DataHandlers.RadiCALModels.RadicalDataModel.show" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Displays corrected DUT as s2p&quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">corrected_DUT</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-      </div>
-      </div>
-
   </section>
 
     </article>

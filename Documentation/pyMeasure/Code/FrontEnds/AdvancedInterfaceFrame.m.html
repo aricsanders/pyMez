@@ -576,7 +576,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -846,6 +862,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1026,6 +1043,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,161 +1068,11 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.FRONTENDS_DIRECTORY">FRONTENDS_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.IMAGE_DIRECTORY">IMAGE_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.JAVASCRIPT_STRING">JAVASCRIPT_STRING</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.KEITHLEY_INSTRUMENT_SHEET">KEITHLEY_INSTRUMENT_SHEET</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.LOGS_DIRECTORY">LOGS_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.PANELS">PANELS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.StringTypes">StringTypes</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.overview">overview</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.pi">pi</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.sin">sin</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAME">wxID_BASICINTERFACEFRAME</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEARBDBPANEL">wxID_BASICINTERFACEFRAMEARBDBPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON1">wxID_BASICINTERFACEFRAMEBUTTON1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON2">wxID_BASICINTERFACEFRAMEBUTTON2</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON3">wxID_BASICINTERFACEFRAMEBUTTON3</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEDISPLAY">wxID_BASICINTERFACEFRAMEDISPLAY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON">wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEEXECUTEBUTTON">wxID_BASICINTERFACEFRAMEEXECUTEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEFILEMENUNEW">wxID_BASICINTERFACEFRAMEFILEMENUNEW</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEFILEMENUOPEN">wxID_BASICINTERFACEFRAMEFILEMENUOPEN</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON">wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR">wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR">wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL">wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOGSPANEL">wxID_BASICINTERFACEFRAMELOGSPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL">wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERINTERFACE">wxID_BASICINTERFACEFRAMELOWERINTERFACE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL">wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEMAINPANEL">wxID_BASICINTERFACEFRAMEMAINPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEPANEL1">wxID_BASICINTERFACEFRAMEPANEL1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEPLOTPANEL">wxID_BASICINTERFACEFRAMEPLOTPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON">wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL">wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMESHELL">wxID_BASICINTERFACEFRAMESHELL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMESTATESBUTTON">wxID_BASICINTERFACEFRAMESTATESBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS">wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON">wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEUPPERINTERFACE">wxID_BASICINTERFACEFRAMEUPPERINTERFACE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL">wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON">wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_CONTROL_PANEL">wxID_CONTROL_PANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialog">wxID_EndOfDayDialog</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogCLEAR_FILE">wxID_EndOfDayDialogCLEAR_FILE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogDATA_FLAG">wxID_EndOfDayDialogDATA_FLAG</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_CHOOSER">wxID_EndOfDayDialogFILE_CHOOSER</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_CHOOSER2">wxID_EndOfDayDialogFILE_CHOOSER2</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_DISP">wxID_EndOfDayDialogFILE_DISP</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_DISP2">wxID_EndOfDayDialogFILE_DISP2</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST1">wxID_EndOfDayDialogQUEST1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST2">wxID_EndOfDayDialogQUEST2</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST3">wxID_EndOfDayDialogQUEST3</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST4">wxID_EndOfDayDialogQUEST4</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST5">wxID_EndOfDayDialogQUEST5</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST6">wxID_EndOfDayDialogQUEST6</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP1">wxID_EndOfDayDialogRESP1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP2">wxID_EndOfDayDialogRESP2</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP3">wxID_EndOfDayDialogRESP3</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP4">wxID_EndOfDayDialogRESP4</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP5">wxID_EndOfDayDialogRESP5</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP6">wxID_EndOfDayDialogRESP6</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSTATICBOX">wxID_EndOfDayDialogSTATICBOX</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSTATICLINE1">wxID_EndOfDayDialogSTATICLINE1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSUBMIT">wxID_EndOfDayDialogSUBMIT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANEL">wxID_KEITHLEYIVPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELACTIONPANEL">wxID_KEITHLEYIVPANELACTIONPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL">wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL">wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL">wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELBOWTIECONTROL">wxID_KEITHLEYIVPANELBOWTIECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELBOWTIELABEL">wxID_KEITHLEYIVPANELBOWTIELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELINFORMATIONPANEL">wxID_KEITHLEYIVPANELINFORMATIONPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELIVBUTTON">wxID_KEITHLEYIVPANELIVBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESCONTROL">wxID_KEITHLEYIVPANELNOTESCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESLABEL">wxID_KEITHLEYIVPANELNOTESLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESPANEL">wxID_KEITHLEYIVPANELNOTESPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL">wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL">wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELPANEL1">wxID_KEITHLEYIVPANELPANEL1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELPLOTBUTTON">wxID_KEITHLEYIVPANELPLOTBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELRESISTANCECONTROL">wxID_KEITHLEYIVPANELRESISTANCECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELRESISTANCELABEL">wxID_KEITHLEYIVPANELRESISTANCELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAMPLENAMECONTROL">wxID_KEITHLEYIVPANELSAMPLENAMECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAMPLENAMELABEL">wxID_KEITHLEYIVPANELSAMPLENAMELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAVEBUTTON">wxID_KEITHLEYIVPANELSAVEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSETTLETIMECONTROL">wxID_KEITHLEYIVPANELSETTLETIMECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSETTLETIMELABEL">wxID_KEITHLEYIVPANELSETTLETIMELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTARTCONTROL">wxID_KEITHLEYIVPANELSTARTCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTARTLABEL">wxID_KEITHLEYIVPANELSTARTLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPCONTROL">wxID_KEITHLEYIVPANELSTOPCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPLABEL">wxID_KEITHLEYIVPANELSTOPLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANEL">wxID_SIMPLELOGLOWERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL">wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELENTRY">wxID_SIMPLELOGLOWERINTERFACEPANELENTRY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL">wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOG">wxID_VISADIALOG</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGASKBUTTON">wxID_VISADIALOGASKBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGCOMMANDPANEL">wxID_VISADIALOGCOMMANDPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINPUTLABEL">wxID_VISADIALOGINPUTLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTCHOICE">wxID_VISADIALOGINSTRUMENTCHOICE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTCHOOSERPANEL">wxID_VISADIALOGINSTRUMENTCHOOSERPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTLABEL">wxID_VISADIALOGINSTRUMENTLABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGREADBUTTON">wxID_VISADIALOGREADBUTTON</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGRESPONSELABEL">wxID_VISADIALOGRESPONSELABEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGRESPONSETEXT">wxID_VISADIALOGRESPONSETEXT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGTEXTINPUT">wxID_VISADIALOGTEXTINPUT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGTEXTPANEL">wxID_VISADIALOGTEXTPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGWRITEBUTTON">wxID_VISADIALOGWRITEBUTTON</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.convert_datetime">convert_datetime</a></li>
@@ -1201,10 +1082,12 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.test_AdvancedInterfaceFrame">test_AdvancedInterfaceFrame</a></li>
   </ul>
 
+	 </div>
     </li>
 
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
         <li class="mono">
         <span class="class_name"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.AdvancedInterfaceFrame">AdvancedInterfaceFrame</a></span>
         
@@ -1578,6 +1461,164 @@ table {
       </ul>
     </li>
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.FRONTENDS_DIRECTORY">FRONTENDS_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.IMAGE_DIRECTORY">IMAGE_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.JAVASCRIPT_STRING">JAVASCRIPT_STRING</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.KEITHLEY_INSTRUMENT_SHEET">KEITHLEY_INSTRUMENT_SHEET</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.LOGS_DIRECTORY">LOGS_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.PANELS">PANELS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.StringTypes">StringTypes</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.overview">overview</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.pi">pi</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.sin">sin</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAME">wxID_BASICINTERFACEFRAME</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEARBDBPANEL">wxID_BASICINTERFACEFRAMEARBDBPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON1">wxID_BASICINTERFACEFRAMEBUTTON1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON2">wxID_BASICINTERFACEFRAMEBUTTON2</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON3">wxID_BASICINTERFACEFRAMEBUTTON3</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEDISPLAY">wxID_BASICINTERFACEFRAMEDISPLAY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON">wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEEXECUTEBUTTON">wxID_BASICINTERFACEFRAMEEXECUTEBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEFILEMENUNEW">wxID_BASICINTERFACEFRAMEFILEMENUNEW</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEFILEMENUOPEN">wxID_BASICINTERFACEFRAMEFILEMENUOPEN</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON">wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR">wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR">wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL">wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOGSPANEL">wxID_BASICINTERFACEFRAMELOGSPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL">wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERINTERFACE">wxID_BASICINTERFACEFRAMELOWERINTERFACE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL">wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEMAINPANEL">wxID_BASICINTERFACEFRAMEMAINPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEPANEL1">wxID_BASICINTERFACEFRAMEPANEL1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEPLOTPANEL">wxID_BASICINTERFACEFRAMEPLOTPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON">wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL">wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMESHELL">wxID_BASICINTERFACEFRAMESHELL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMESTATESBUTTON">wxID_BASICINTERFACEFRAMESTATESBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS">wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON">wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEUPPERINTERFACE">wxID_BASICINTERFACEFRAMEUPPERINTERFACE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL">wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON">wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_CONTROL_PANEL">wxID_CONTROL_PANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialog">wxID_EndOfDayDialog</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogCLEAR_FILE">wxID_EndOfDayDialogCLEAR_FILE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogDATA_FLAG">wxID_EndOfDayDialogDATA_FLAG</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_CHOOSER">wxID_EndOfDayDialogFILE_CHOOSER</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_CHOOSER2">wxID_EndOfDayDialogFILE_CHOOSER2</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_DISP">wxID_EndOfDayDialogFILE_DISP</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_DISP2">wxID_EndOfDayDialogFILE_DISP2</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST1">wxID_EndOfDayDialogQUEST1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST2">wxID_EndOfDayDialogQUEST2</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST3">wxID_EndOfDayDialogQUEST3</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST4">wxID_EndOfDayDialogQUEST4</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST5">wxID_EndOfDayDialogQUEST5</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST6">wxID_EndOfDayDialogQUEST6</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP1">wxID_EndOfDayDialogRESP1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP2">wxID_EndOfDayDialogRESP2</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP3">wxID_EndOfDayDialogRESP3</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP4">wxID_EndOfDayDialogRESP4</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP5">wxID_EndOfDayDialogRESP5</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP6">wxID_EndOfDayDialogRESP6</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSTATICBOX">wxID_EndOfDayDialogSTATICBOX</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSTATICLINE1">wxID_EndOfDayDialogSTATICLINE1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSUBMIT">wxID_EndOfDayDialogSUBMIT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANEL">wxID_KEITHLEYIVPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELACTIONPANEL">wxID_KEITHLEYIVPANELACTIONPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL">wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL">wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL">wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELBOWTIECONTROL">wxID_KEITHLEYIVPANELBOWTIECONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELBOWTIELABEL">wxID_KEITHLEYIVPANELBOWTIELABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELINFORMATIONPANEL">wxID_KEITHLEYIVPANELINFORMATIONPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELIVBUTTON">wxID_KEITHLEYIVPANELIVBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESCONTROL">wxID_KEITHLEYIVPANELNOTESCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESLABEL">wxID_KEITHLEYIVPANELNOTESLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESPANEL">wxID_KEITHLEYIVPANELNOTESPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL">wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL">wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELPANEL1">wxID_KEITHLEYIVPANELPANEL1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELPLOTBUTTON">wxID_KEITHLEYIVPANELPLOTBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELRESISTANCECONTROL">wxID_KEITHLEYIVPANELRESISTANCECONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELRESISTANCELABEL">wxID_KEITHLEYIVPANELRESISTANCELABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAMPLENAMECONTROL">wxID_KEITHLEYIVPANELSAMPLENAMECONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAMPLENAMELABEL">wxID_KEITHLEYIVPANELSAMPLENAMELABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAVEBUTTON">wxID_KEITHLEYIVPANELSAVEBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSETTLETIMECONTROL">wxID_KEITHLEYIVPANELSETTLETIMECONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSETTLETIMELABEL">wxID_KEITHLEYIVPANELSETTLETIMELABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTARTCONTROL">wxID_KEITHLEYIVPANELSTARTCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTARTLABEL">wxID_KEITHLEYIVPANELSTARTLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPCONTROL">wxID_KEITHLEYIVPANELSTOPCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPLABEL">wxID_KEITHLEYIVPANELSTOPLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL">wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANEL">wxID_SIMPLELOGLOWERINTERFACEPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL">wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELENTRY">wxID_SIMPLELOGLOWERINTERFACEPANELENTRY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL">wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL">wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL">wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOG">wxID_VISADIALOG</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGASKBUTTON">wxID_VISADIALOGASKBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGCOMMANDPANEL">wxID_VISADIALOGCOMMANDPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINPUTLABEL">wxID_VISADIALOGINPUTLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTCHOICE">wxID_VISADIALOGINSTRUMENTCHOICE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTCHOOSERPANEL">wxID_VISADIALOGINSTRUMENTCHOOSERPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTLABEL">wxID_VISADIALOGINSTRUMENTLABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGREADBUTTON">wxID_VISADIALOGREADBUTTON</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGRESPONSELABEL">wxID_VISADIALOGRESPONSELABEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGRESPONSETEXT">wxID_VISADIALOGRESPONSETEXT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGTEXTINPUT">wxID_VISADIALOGTEXTINPUT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGTEXTPANEL">wxID_VISADIALOGTEXTPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGWRITEBUTTON">wxID_VISADIALOGWRITEBUTTON</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -2401,1183 +2442,6 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.FRONTENDS_DIRECTORY" class="name">var <span class="ident">FRONTENDS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.IMAGE_DIRECTORY" class="name">var <span class="ident">IMAGE_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.JAVASCRIPT_STRING" class="name">var <span class="ident">JAVASCRIPT_STRING</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.KEITHLEY_INSTRUMENT_SHEET" class="name">var <span class="ident">KEITHLEY_INSTRUMENT_SHEET</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.LOGS_DIRECTORY" class="name">var <span class="ident">LOGS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.PANELS" class="name">var <span class="ident">PANELS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.overview" class="name">var <span class="ident">overview</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.pi" class="name">var <span class="ident">pi</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.sin" class="name">var <span class="ident">sin</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAME" class="name">var <span class="ident">wxID_BASICINTERFACEFRAME</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEARBDBPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEARBDBPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON1" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEBUTTON1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON2" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEBUTTON2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON3" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEBUTTON3</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEDISPLAY" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEDISPLAY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEEXECUTEBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEEXECUTEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEFILEMENUNEW" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEFILEMENUNEW</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEFILEMENUOPEN" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEFILEMENUOPEN</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOGSPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOGSPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERINTERFACE" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOWERINTERFACE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEMAINPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEMAINPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEPANEL1" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEPANEL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEPLOTPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEPLOTPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMESHELL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMESHELL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMESTATESBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMESTATESBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEUPPERINTERFACE" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEUPPERINTERFACE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_CONTROL_PANEL" class="name">var <span class="ident">wxID_CONTROL_PANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialog" class="name">var <span class="ident">wxID_EndOfDayDialog</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogCLEAR_FILE" class="name">var <span class="ident">wxID_EndOfDayDialogCLEAR_FILE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogDATA_FLAG" class="name">var <span class="ident">wxID_EndOfDayDialogDATA_FLAG</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_CHOOSER" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_CHOOSER</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_CHOOSER2" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_CHOOSER2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_DISP" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_DISP</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_DISP2" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_DISP2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST1" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST2" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST3" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST3</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST4" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST4</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST5" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST5</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST6" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST6</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP1" class="name">var <span class="ident">wxID_EndOfDayDialogRESP1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP2" class="name">var <span class="ident">wxID_EndOfDayDialogRESP2</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP3" class="name">var <span class="ident">wxID_EndOfDayDialogRESP3</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP4" class="name">var <span class="ident">wxID_EndOfDayDialogRESP4</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP5" class="name">var <span class="ident">wxID_EndOfDayDialogRESP5</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP6" class="name">var <span class="ident">wxID_EndOfDayDialogRESP6</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSTATICBOX" class="name">var <span class="ident">wxID_EndOfDayDialogSTATICBOX</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSTATICLINE1" class="name">var <span class="ident">wxID_EndOfDayDialogSTATICLINE1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSUBMIT" class="name">var <span class="ident">wxID_EndOfDayDialogSUBMIT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELACTIONPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELACTIONPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELBOWTIECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELBOWTIECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELBOWTIELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELBOWTIELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELINFORMATIONPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELINFORMATIONPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELIVBUTTON" class="name">var <span class="ident">wxID_KEITHLEYIVPANELIVBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNOTESCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNOTESLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNOTESPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELPANEL1" class="name">var <span class="ident">wxID_KEITHLEYIVPANELPANEL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELPLOTBUTTON" class="name">var <span class="ident">wxID_KEITHLEYIVPANELPLOTBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELRESISTANCECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELRESISTANCECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELRESISTANCELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELRESISTANCELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAMPLENAMECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSAMPLENAMECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAMPLENAMELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSAMPLENAMELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAVEBUTTON" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSAVEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSETTLETIMECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSETTLETIMECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSETTLETIMELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSETTLETIMELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTARTCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTARTCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTARTLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTARTLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTOPCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTOPLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELENTRY" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELENTRY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOG" class="name">var <span class="ident">wxID_VISADIALOG</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGASKBUTTON" class="name">var <span class="ident">wxID_VISADIALOGASKBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGCOMMANDPANEL" class="name">var <span class="ident">wxID_VISADIALOGCOMMANDPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINPUTLABEL" class="name">var <span class="ident">wxID_VISADIALOGINPUTLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTCHOICE" class="name">var <span class="ident">wxID_VISADIALOGINSTRUMENTCHOICE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTCHOOSERPANEL" class="name">var <span class="ident">wxID_VISADIALOGINSTRUMENTCHOOSERPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTLABEL" class="name">var <span class="ident">wxID_VISADIALOGINSTRUMENTLABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGREADBUTTON" class="name">var <span class="ident">wxID_VISADIALOGREADBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGRESPONSELABEL" class="name">var <span class="ident">wxID_VISADIALOGRESPONSELABEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGRESPONSETEXT" class="name">var <span class="ident">wxID_VISADIALOGRESPONSETEXT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGTEXTINPUT" class="name">var <span class="ident">wxID_VISADIALOGTEXTINPUT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGTEXTPANEL" class="name">var <span class="ident">wxID_VISADIALOGTEXTPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGWRITEBUTTON" class="name">var <span class="ident">wxID_VISADIALOGWRITEBUTTON</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -15850,6 +14714,1185 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
       </div>
       </div>
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.FRONTENDS_DIRECTORY" class="name">var <span class="ident">FRONTENDS_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.IMAGE_DIRECTORY" class="name">var <span class="ident">IMAGE_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.JAVASCRIPT_STRING" class="name">var <span class="ident">JAVASCRIPT_STRING</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.KEITHLEY_INSTRUMENT_SHEET" class="name">var <span class="ident">KEITHLEY_INSTRUMENT_SHEET</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.LOGS_DIRECTORY" class="name">var <span class="ident">LOGS_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.PANELS" class="name">var <span class="ident">PANELS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.overview" class="name">var <span class="ident">overview</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.pi" class="name">var <span class="ident">pi</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.sin" class="name">var <span class="ident">sin</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAME" class="name">var <span class="ident">wxID_BASICINTERFACEFRAME</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEARBDBPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEARBDBPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON1" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEBUTTON1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON2" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEBUTTON2</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEBUTTON3" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEBUTTON3</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEDISPLAY" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEDISPLAY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEEXECUTEBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEEXECUTEBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEFILEMENUNEW" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEFILEMENUNEW</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEFILEMENUOPEN" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEFILEMENUOPEN</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOGSPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOGSPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERINTERFACE" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOWERINTERFACE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEMAINPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEMAINPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEPANEL1" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEPANEL1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEPLOTPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEPLOTPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMESHELL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMESHELL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMESTATESBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMESTATESBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEUPPERINTERFACE" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEUPPERINTERFACE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON" class="name">var <span class="ident">wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_CONTROL_PANEL" class="name">var <span class="ident">wxID_CONTROL_PANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialog" class="name">var <span class="ident">wxID_EndOfDayDialog</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogCLEAR_FILE" class="name">var <span class="ident">wxID_EndOfDayDialogCLEAR_FILE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogDATA_FLAG" class="name">var <span class="ident">wxID_EndOfDayDialogDATA_FLAG</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_CHOOSER" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_CHOOSER</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_CHOOSER2" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_CHOOSER2</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_DISP" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_DISP</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogFILE_DISP2" class="name">var <span class="ident">wxID_EndOfDayDialogFILE_DISP2</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST1" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST2" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST2</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST3" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST3</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST4" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST4</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST5" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST5</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogQUEST6" class="name">var <span class="ident">wxID_EndOfDayDialogQUEST6</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP1" class="name">var <span class="ident">wxID_EndOfDayDialogRESP1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP2" class="name">var <span class="ident">wxID_EndOfDayDialogRESP2</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP3" class="name">var <span class="ident">wxID_EndOfDayDialogRESP3</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP4" class="name">var <span class="ident">wxID_EndOfDayDialogRESP4</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP5" class="name">var <span class="ident">wxID_EndOfDayDialogRESP5</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogRESP6" class="name">var <span class="ident">wxID_EndOfDayDialogRESP6</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSTATICBOX" class="name">var <span class="ident">wxID_EndOfDayDialogSTATICBOX</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSTATICLINE1" class="name">var <span class="ident">wxID_EndOfDayDialogSTATICLINE1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_EndOfDayDialogSUBMIT" class="name">var <span class="ident">wxID_EndOfDayDialogSUBMIT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELACTIONPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELACTIONPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELBOWTIECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELBOWTIECONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELBOWTIELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELBOWTIELABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELINFORMATIONPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELINFORMATIONPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELIVBUTTON" class="name">var <span class="ident">wxID_KEITHLEYIVPANELIVBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNOTESCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNOTESLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNOTESPANEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNOTESPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELPANEL1" class="name">var <span class="ident">wxID_KEITHLEYIVPANELPANEL1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELPLOTBUTTON" class="name">var <span class="ident">wxID_KEITHLEYIVPANELPLOTBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELRESISTANCECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELRESISTANCECONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELRESISTANCELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELRESISTANCELABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAMPLENAMECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSAMPLENAMECONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAMPLENAMELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSAMPLENAMELABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSAVEBUTTON" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSAVEBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSETTLETIMECONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSETTLETIMECONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSETTLETIMELABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSETTLETIMELABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTARTCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTARTCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTARTLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTARTLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPCONTROL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTOPCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_KEITHLEYIVPANELSTOPLABEL" class="name">var <span class="ident">wxID_KEITHLEYIVPANELSTOPLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL" class="name">var <span class="ident">wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCONTROLSPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELCURRENTLOGLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDATECONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDATELABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELDESCRIPTIONBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELENTRY" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELENTRY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELENTRYCONTROLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELIDCONTROL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELIDLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELNEWENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELNEXTENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELOPENBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELPREVIOUSENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELREMOVEENTRYBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEASBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELSAVEBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL" class="name">var <span class="ident">wxID_SIMPLELOGLOWERINTERFACEPANELTEXTENTRYPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOG" class="name">var <span class="ident">wxID_VISADIALOG</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGASKBUTTON" class="name">var <span class="ident">wxID_VISADIALOGASKBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGCOMMANDPANEL" class="name">var <span class="ident">wxID_VISADIALOGCOMMANDPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINPUTLABEL" class="name">var <span class="ident">wxID_VISADIALOGINPUTLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTCHOICE" class="name">var <span class="ident">wxID_VISADIALOGINSTRUMENTCHOICE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTCHOOSERPANEL" class="name">var <span class="ident">wxID_VISADIALOGINSTRUMENTCHOOSERPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGINSTRUMENTLABEL" class="name">var <span class="ident">wxID_VISADIALOGINSTRUMENTLABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGREADBUTTON" class="name">var <span class="ident">wxID_VISADIALOGREADBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGRESPONSELABEL" class="name">var <span class="ident">wxID_VISADIALOGRESPONSELABEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGRESPONSETEXT" class="name">var <span class="ident">wxID_VISADIALOGRESPONSETEXT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGTEXTINPUT" class="name">var <span class="ident">wxID_VISADIALOGTEXTINPUT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGTEXTPANEL" class="name">var <span class="ident">wxID_VISADIALOGTEXTPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame.wxID_VISADIALOGWRITEBUTTON" class="name">var <span class="ident">wxID_VISADIALOGWRITEBUTTON</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

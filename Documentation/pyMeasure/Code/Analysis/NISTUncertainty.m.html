@@ -576,7 +576,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -846,6 +862,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1026,6 +1043,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,16 +1068,11 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.NISTUncertainty.CONNECTOR_TYPES">CONNECTOR_TYPES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Analysis.NISTUncertainty.MINIMUM_DB">MINIMUM_DB</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.NISTUncertainty.S_NIST">S_NIST</a></li>
@@ -1066,9 +1092,23 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Analysis.NISTUncertainty.waveguide_s21_type_b">waveguide_s21_type_b</a></li>
   </ul>
 
+	 </div>
     </li>
 
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.NISTUncertainty.CONNECTOR_TYPES">CONNECTOR_TYPES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.NISTUncertainty.MINIMUM_DB">MINIMUM_DB</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -1601,26 +1641,6 @@ is primarily used in the function calrep see also <a href="./SParameter.m.html">
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.NISTUncertainty.CONNECTOR_TYPES" class="name">var <span class="ident">CONNECTOR_TYPES</span></p>
-      
-  
-    <div class="desc"><p>Constant containing acceptable connector and waveguide types</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Analysis.NISTUncertainty.MINIMUM_DB" class="name">var <span class="ident">MINIMUM_DB</span></p>
-      
-  
-    <div class="desc"><p>The smallest value in dB for a linear magnitude of zero. Note this one is positive,
-which is different than touchstone models definition.</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -2330,6 +2350,28 @@ frequency, magnitude and phase</p></div>
   
 
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.NISTUncertainty.CONNECTOR_TYPES" class="name">var <span class="ident">CONNECTOR_TYPES</span></p>
+      
+  
+    <div class="desc"><p>Constant containing acceptable connector and waveguide types</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.NISTUncertainty.MINIMUM_DB" class="name">var <span class="ident">MINIMUM_DB</span></p>
+      
+  
+    <div class="desc"><p>The smallest value in dB for a linear magnitude of zero. Note this one is positive,
+which is different than touchstone models definition.</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

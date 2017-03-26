@@ -17,7 +17,7 @@ Help
 <div>
 <a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
-<a href="../../../Examples/html/Example_Home.html">Examples</a> |
+<a href="../../../Examples/html/Examples_Home.html">Examples</a> |
 <a href="../../../Reference_Index.html">Index </a>
 </div>
 """

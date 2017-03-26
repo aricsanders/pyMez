@@ -576,7 +576,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -846,6 +862,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1026,6 +1043,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,22 +1068,11 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.DOCUMENTATION_DIRECTORY">DOCUMENTATION_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.IMPORT_HMTL_PREFIX">IMPORT_HMTL_PREFIX</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_POSTFIX">INDEX_HTML_POSTFIX</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_PREFIX">INDEX_HTML_PREFIX</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.METHOD_ALIASES">METHOD_ALIASES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.add_navigation_script">add_navigation_script</a></li>
@@ -1070,9 +1090,29 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.test_create_index_html">test_create_index_html</a></li>
   </ul>
 
+	 </div>
     </li>
 
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.DOCUMENTATION_DIRECTORY">DOCUMENTATION_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.IMPORT_HMTL_PREFIX">IMPORT_HMTL_PREFIX</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_POSTFIX">INDEX_HTML_POSTFIX</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_PREFIX">INDEX_HTML_PREFIX</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.METHOD_ALIASES">METHOD_ALIASES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.HelpUtils.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -1241,12 +1281,13 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
 <span class="sd">     new one. The folder permissions must be set properly to allow the script to delete the old API help.&quot;&quot;&quot;</span>
 
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">)</span>
+    <span class="n">template_directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;templates&quot;</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;pyMeasure&quot;</span><span class="p">))</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not delete existing API documentation&quot;</span><span class="p">)</span>
         <span class="k">pass</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python pdoc --html --overwrite pyMeasure&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python pdoc --html --overwrite --template-dir {0} pyMeasure&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template_directory</span><span class="p">))</span>
 
 <span class="k">def</span> <span class="nf">create_index_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;create_index returns an html page with links to the autogenerated help page for all</span>
@@ -1434,9 +1475,9 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
     <span class="n">autogenerate_api_documentation_script</span><span class="p">()</span>
     <span class="n">test_create_index_html</span><span class="p">()</span>
     <span class="c1">#create_imports_html_script(PYMEASURE_ROOT,DOCUMENTATION_DIRECTORY)</span>
-    <span class="n">create_examples_html_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Examples&quot;</span><span class="p">,</span><span class="s2">&quot;jupyter&quot;</span><span class="p">))</span>
-    <span class="n">change_links_examples_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span> <span class="s2">&quot;Examples&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">))</span>
-    <span class="n">add_navigation_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span> <span class="s2">&quot;Examples&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">))</span>
+    <span class="c1">#create_examples_html_script(os.path.join(DOCUMENTATION_DIRECTORY,&quot;Examples&quot;,&quot;jupyter&quot;))</span>
+    <span class="c1">#change_links_examples_script(os.path.join(DOCUMENTATION_DIRECTORY, &quot;Examples&quot;, &quot;html&quot;))</span>
+    <span class="c1">#add_navigation_script(os.path.join(DOCUMENTATION_DIRECTORY, &quot;Examples&quot;, &quot;html&quot;))</span>
     <span class="c1">#create_modules_html_script(PYMEASURE_ROOT)</span>
 </pre></div>
 
@@ -1445,71 +1486,6 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.Utils.HelpUtils.DEFAULT_FILE_NAME" class="name">var <span class="ident">DEFAULT_FILE_NAME</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Utils.HelpUtils.DOCUMENTATION_DIRECTORY" class="name">var <span class="ident">DOCUMENTATION_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Utils.HelpUtils.IMPORT_HMTL_PREFIX" class="name">var <span class="ident">IMPORT_HMTL_PREFIX</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_POSTFIX" class="name">var <span class="ident">INDEX_HTML_POSTFIX</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_PREFIX" class="name">var <span class="ident">INDEX_HTML_PREFIX</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Utils.HelpUtils.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Utils.HelpUtils.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.Utils.HelpUtils.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -1577,12 +1553,13 @@ the Documentation folder under pyMeasure. If the folder exists it first deletes 
 <span class="sd">     new one. The folder permissions must be set properly to allow the script to delete the old API help.&quot;&quot;&quot;</span>
 
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">)</span>
+    <span class="n">template_directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;templates&quot;</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;pyMeasure&quot;</span><span class="p">))</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not delete existing API documentation&quot;</span><span class="p">)</span>
         <span class="k">pass</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python pdoc --html --overwrite pyMeasure&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python pdoc --html --overwrite --template-dir {0} pyMeasure&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template_directory</span><span class="p">))</span>
 </pre></div>
 
   </div>
@@ -1988,6 +1965,73 @@ and INDEX_HTML_POSTFIX to wrap the resulting html elements.</p></div>
   
 
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.HelpUtils.DEFAULT_FILE_NAME" class="name">var <span class="ident">DEFAULT_FILE_NAME</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.HelpUtils.DOCUMENTATION_DIRECTORY" class="name">var <span class="ident">DOCUMENTATION_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.HelpUtils.IMPORT_HMTL_PREFIX" class="name">var <span class="ident">IMPORT_HMTL_PREFIX</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_POSTFIX" class="name">var <span class="ident">INDEX_HTML_POSTFIX</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.HelpUtils.INDEX_HTML_PREFIX" class="name">var <span class="ident">INDEX_HTML_PREFIX</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.HelpUtils.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.HelpUtils.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Utils.HelpUtils.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

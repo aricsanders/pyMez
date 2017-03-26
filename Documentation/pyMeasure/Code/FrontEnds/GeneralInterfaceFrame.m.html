@@ -576,7 +576,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -846,6 +862,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1026,6 +1043,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,41 +1068,23 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.StringTypes">StringTypes</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.overview">overview</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_CONTROL_PANEL">wxID_CONTROL_PANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAME">wxID_GENERALINTERFACEFRAME</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEDISPLAY">wxID_GENERALINTERFACEFRAMEDISPLAY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEFILEMENUOPEN">wxID_GENERALINTERFACEFRAMEFILEMENUOPEN</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEINTERFACESTATUSBAR">wxID_GENERALINTERFACEFRAMEINTERFACESTATUSBAR</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEINTERFACETOOLBAR">wxID_GENERALINTERFACEFRAMEINTERFACETOOLBAR</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELEFTINTERFACEPANEL">wxID_GENERALINTERFACEFRAMELEFTINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERCONTROLPANEL">wxID_GENERALINTERFACEFRAMELOWERCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERINTERFACE">wxID_GENERALINTERFACEFRAMELOWERINTERFACE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERINTERFACEPANEL">wxID_GENERALINTERFACEFRAMELOWERINTERFACEPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEMAINPANEL">wxID_GENERALINTERFACEFRAMEMAINPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMERIGHTCONTROLPANEL">wxID_GENERALINTERFACEFRAMERIGHTCONTROLPANEL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMESHELL">wxID_GENERALINTERFACEFRAMESHELL</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEUPPERINTERFACE">wxID_GENERALINTERFACEFRAMEUPPERINTERFACE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEUPPERINTERFACEPANEL">wxID_GENERALINTERFACEFRAMEUPPERINTERFACEPANEL</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.create">create</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.get_top_parent">get_top_parent</a></li>
   </ul>
 
+	 </div>
     </li>
 
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
         <li class="mono">
         <span class="class_name"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.GeneralInterfaceFrame">GeneralInterfaceFrame</a></span>
         
@@ -1423,6 +1436,34 @@ table {
       </ul>
     </li>
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.StringTypes">StringTypes</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.overview">overview</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_CONTROL_PANEL">wxID_CONTROL_PANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAME">wxID_GENERALINTERFACEFRAME</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEDISPLAY">wxID_GENERALINTERFACEFRAMEDISPLAY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEFILEMENUOPEN">wxID_GENERALINTERFACEFRAMEFILEMENUOPEN</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEINTERFACESTATUSBAR">wxID_GENERALINTERFACEFRAMEINTERFACESTATUSBAR</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEINTERFACETOOLBAR">wxID_GENERALINTERFACEFRAMEINTERFACETOOLBAR</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELEFTINTERFACEPANEL">wxID_GENERALINTERFACEFRAMELEFTINTERFACEPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERCONTROLPANEL">wxID_GENERALINTERFACEFRAMELOWERCONTROLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERINTERFACE">wxID_GENERALINTERFACEFRAMELOWERINTERFACE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERINTERFACEPANEL">wxID_GENERALINTERFACEFRAMELOWERINTERFACEPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEMAINPANEL">wxID_GENERALINTERFACEFRAMEMAINPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMERIGHTCONTROLPANEL">wxID_GENERALINTERFACEFRAMERIGHTCONTROLPANEL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMESHELL">wxID_GENERALINTERFACEFRAMESHELL</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEUPPERINTERFACE">wxID_GENERALINTERFACEFRAMEUPPERINTERFACE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEUPPERINTERFACEPANEL">wxID_GENERALINTERFACEFRAMEUPPERINTERFACEPANEL</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -1713,143 +1754,6 @@ is meant as a template for GUI design</p>
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.overview" class="name">var <span class="ident">overview</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_CONTROL_PANEL" class="name">var <span class="ident">wxID_CONTROL_PANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAME" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAME</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEDISPLAY" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEDISPLAY</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEFILEMENUOPEN" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEFILEMENUOPEN</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEINTERFACESTATUSBAR" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEINTERFACESTATUSBAR</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEINTERFACETOOLBAR" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEINTERFACETOOLBAR</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELEFTINTERFACEPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMELEFTINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERCONTROLPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMELOWERCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERINTERFACE" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMELOWERINTERFACE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMELOWERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEMAINPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEMAINPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMERIGHTCONTROLPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMERIGHTCONTROLPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMESHELL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMESHELL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEUPPERINTERFACE" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEUPPERINTERFACE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEUPPERINTERFACEPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEUPPERINTERFACEPANEL</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -12808,6 +12712,145 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
       </div>
       </div>
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.overview" class="name">var <span class="ident">overview</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_CONTROL_PANEL" class="name">var <span class="ident">wxID_CONTROL_PANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAME" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAME</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEDISPLAY" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEDISPLAY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEFILEMENUOPEN" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEFILEMENUOPEN</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEINTERFACESTATUSBAR" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEINTERFACESTATUSBAR</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEINTERFACETOOLBAR" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEINTERFACETOOLBAR</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELEFTINTERFACEPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMELEFTINTERFACEPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERCONTROLPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMELOWERCONTROLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERINTERFACE" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMELOWERINTERFACE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMELOWERINTERFACEPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMELOWERINTERFACEPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEMAINPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEMAINPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMERIGHTCONTROLPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMERIGHTCONTROLPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMESHELL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMESHELL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEUPPERINTERFACE" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEUPPERINTERFACE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.GeneralInterfaceFrame.wxID_GENERALINTERFACEFRAMEUPPERINTERFACEPANEL" class="name">var <span class="ident">wxID_GENERALINTERFACEFRAMEUPPERINTERFACEPANEL</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

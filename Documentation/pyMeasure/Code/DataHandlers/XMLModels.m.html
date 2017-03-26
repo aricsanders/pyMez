@@ -577,7 +577,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -847,6 +863,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1027,6 +1044,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1038,29 +1069,11 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.DRIVER_FILE_EXTENSIONS">DRIVER_FILE_EXTENSIONS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.EXIF_AVAILABLE">EXIF_AVAILABLE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.GET_STATS_FIELDS">GET_STATS_FIELDS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.IMAGE_FILE_EXTENSIONS">IMAGE_FILE_EXTENSIONS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.INSTRUMENT_SHEETS">INSTRUMENT_SHEETS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.METHOD_ALIASES">METHOD_ALIASES</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.NODE_TYPE_DICTIONARY">NODE_TYPE_DICTIONARY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.OS_STAT_FIELDS">OS_STAT_FIELDS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.PIL_AVAILABLE">PIL_AVAILABLE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.StringTypes">StringTypes</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.XSLT_CAPABLE">XSLT_CAPABLE</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.XSLT_REPOSITORY">XSLT_REPOSITORY</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.URL_to_path">URL_to_path</a></li>
@@ -1091,10 +1104,12 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.test_to_HTML">test_to_HTML</a></li>
   </ul>
 
+	 </div>
     </li>
 
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
         <li class="mono">
         <span class="class_name"><a href="#pyMeasure.Code.DataHandlers.XMLModels.ChangeXMLLog">ChangeXMLLog</a></span>
         
@@ -1324,6 +1339,32 @@ table {
       </ul>
     </li>
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.DRIVER_FILE_EXTENSIONS">DRIVER_FILE_EXTENSIONS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.EXIF_AVAILABLE">EXIF_AVAILABLE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.GET_STATS_FIELDS">GET_STATS_FIELDS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.IMAGE_FILE_EXTENSIONS">IMAGE_FILE_EXTENSIONS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.INSTRUMENT_SHEETS">INSTRUMENT_SHEETS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.METHOD_ALIASES">METHOD_ALIASES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.NODE_TYPE_DICTIONARY">NODE_TYPE_DICTIONARY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.OS_STAT_FIELDS">OS_STAT_FIELDS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.PIL_AVAILABLE">PIL_AVAILABLE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.StringTypes">StringTypes</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.XSLT_CAPABLE">XSLT_CAPABLE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.XSLT_REPOSITORY">XSLT_REPOSITORY</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -1523,23 +1564,23 @@ Instrument states, instrument sheets and file indices.</p>
             <span class="n">new_entry</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
             <span class="n">new_xml</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">new_entry</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">new_xml</span>
-<span class="k">def</span> <span class="nf">make_xml_element</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">make_xml_element</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns an lxml.html.HtmlElement given a tag, content and attribute dictionary</span>
 <span class="sd">     &lt;tag key1=&quot;value2&quot; key2=&quot;value2&quot;&gt;content&lt;/tag&gt; &quot;&quot;&quot;</span>
     <span class="n">position_arguments</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
-        <span class="n">position_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+        <span class="n">position_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="n">new_tag</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">E</span><span class="p">(</span><span class="o">*</span><span class="n">position_arguments</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_tag</span>
 
-<span class="k">def</span> <span class="nf">make_xml_string</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">make_xml_string</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the html string for tag, content and attribute dictionary</span>
 <span class="sd">     &lt;tag key1=&quot;value2&quot; key2=&quot;value2&quot;&gt;content&lt;/tag&gt; &quot;&quot;&quot;</span>
     <span class="n">position_arguments</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
-        <span class="n">position_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+        <span class="n">position_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="n">new_tag</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">E</span><span class="p">(</span><span class="o">*</span><span class="n">position_arguments</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">)</span>
-    <span class="n">out_text</span><span class="o">=</span><span class="n">new_tag</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">()</span>
+    <span class="n">out_text</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">new_tag</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out_text</span>
 
 <span class="k">def</span> <span class="nf">dictionary_to_xml</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">char_between</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
@@ -3107,133 +3148,6 @@ Instrument states, instrument sheets and file indices.</p>
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.DEFAULT_FILE_NAME" class="name">var <span class="ident">DEFAULT_FILE_NAME</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.DRIVER_FILE_EXTENSIONS" class="name">var <span class="ident">DRIVER_FILE_EXTENSIONS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.EXIF_AVAILABLE" class="name">var <span class="ident">EXIF_AVAILABLE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.GET_STATS_FIELDS" class="name">var <span class="ident">GET_STATS_FIELDS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.IMAGE_FILE_EXTENSIONS" class="name">var <span class="ident">IMAGE_FILE_EXTENSIONS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.INSTRUMENT_SHEETS" class="name">var <span class="ident">INSTRUMENT_SHEETS</span></p>
-      
-  
-    <div class="desc"><p>A list of the available instrument sheet files in pyMeasure/Instruments</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.NODE_TYPE_DICTIONARY" class="name">var <span class="ident">NODE_TYPE_DICTIONARY</span></p>
-      
-  
-    <div class="desc"><p>A dictionary of XML node types, where the key is the node type and the value is an integer that corresponds to
-node types in lxml module.</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.OS_STAT_FIELDS" class="name">var <span class="ident">OS_STAT_FIELDS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.PIL_AVAILABLE" class="name">var <span class="ident">PIL_AVAILABLE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
-      
-  
-    <div class="desc"><p>The root directory of pyMeasure</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
-      
-  
-    <div class="desc"><p>Directory containing files generated by or for module testing.</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.XSLT_CAPABLE" class="name">var <span class="ident">XSLT_CAPABLE</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.DataHandlers.XMLModels.XSLT_REPOSITORY" class="name">var <span class="ident">XSLT_REPOSITORY</span></p>
-      
-  
-    <div class="desc"><p>A default location for the xsl repository.</p></div>
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -3554,7 +3468,7 @@ xml documents xml_list. Puts both documents under the new_root root tag</p></div
       
   <div class="item">
     <div class="name def" id="pyMeasure.Code.DataHandlers.XMLModels.make_xml_element">
-    <p>def <span class="ident">make_xml_element</span>(</p><p>tag, content=None, **attribute_dictionary)</p>
+    <p>def <span class="ident">make_xml_element</span>(</p><p>tag, text=None, **attribute_dictionary)</p>
     </div>
     
 
@@ -3565,12 +3479,12 @@ xml documents xml_list. Puts both documents under the new_root root tag</p></div
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.make_xml_element', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.make_xml_element" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">make_xml_element</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">make_xml_element</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns an lxml.html.HtmlElement given a tag, content and attribute dictionary</span>
 <span class="sd">     &lt;tag key1=&quot;value2&quot; key2=&quot;value2&quot;&gt;content&lt;/tag&gt; &quot;&quot;&quot;</span>
     <span class="n">position_arguments</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
-        <span class="n">position_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+        <span class="n">position_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="n">new_tag</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">E</span><span class="p">(</span><span class="o">*</span><span class="n">position_arguments</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_tag</span>
 </pre></div>
@@ -3583,7 +3497,7 @@ xml documents xml_list. Puts both documents under the new_root root tag</p></div
       
   <div class="item">
     <div class="name def" id="pyMeasure.Code.DataHandlers.XMLModels.make_xml_string">
-    <p>def <span class="ident">make_xml_string</span>(</p><p>tag, content=None, **attribute_dictionary)</p>
+    <p>def <span class="ident">make_xml_string</span>(</p><p>tag, text=None, **attribute_dictionary)</p>
     </div>
     
 
@@ -3594,14 +3508,14 @@ xml documents xml_list. Puts both documents under the new_root root tag</p></div
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.make_xml_string', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.make_xml_string" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">make_xml_string</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">content</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">make_xml_string</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the html string for tag, content and attribute dictionary</span>
 <span class="sd">     &lt;tag key1=&quot;value2&quot; key2=&quot;value2&quot;&gt;content&lt;/tag&gt; &quot;&quot;&quot;</span>
     <span class="n">position_arguments</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
-        <span class="n">position_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+        <span class="n">position_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="n">new_tag</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">E</span><span class="p">(</span><span class="o">*</span><span class="n">position_arguments</span><span class="p">,</span><span class="o">**</span><span class="n">attribute_dictionary</span><span class="p">)</span>
-    <span class="n">out_text</span><span class="o">=</span><span class="n">new_tag</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">()</span>
+    <span class="n">out_text</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">new_tag</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out_text</span>
 </pre></div>
 
@@ -11190,6 +11104,135 @@ definition of self.document</p></div>
       </div>
       </div>
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.DEFAULT_FILE_NAME" class="name">var <span class="ident">DEFAULT_FILE_NAME</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.DRIVER_FILE_EXTENSIONS" class="name">var <span class="ident">DRIVER_FILE_EXTENSIONS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.EXIF_AVAILABLE" class="name">var <span class="ident">EXIF_AVAILABLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.GET_STATS_FIELDS" class="name">var <span class="ident">GET_STATS_FIELDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.IMAGE_FILE_EXTENSIONS" class="name">var <span class="ident">IMAGE_FILE_EXTENSIONS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.INSTRUMENT_SHEETS" class="name">var <span class="ident">INSTRUMENT_SHEETS</span></p>
+      
+  
+    <div class="desc"><p>A list of the available instrument sheet files in pyMeasure/Instruments</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.METHOD_ALIASES" class="name">var <span class="ident">METHOD_ALIASES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.NODE_TYPE_DICTIONARY" class="name">var <span class="ident">NODE_TYPE_DICTIONARY</span></p>
+      
+  
+    <div class="desc"><p>A dictionary of XML node types, where the key is the node type and the value is an integer that corresponds to
+node types in lxml module.</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.OS_STAT_FIELDS" class="name">var <span class="ident">OS_STAT_FIELDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.PIL_AVAILABLE" class="name">var <span class="ident">PIL_AVAILABLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
+      
+  
+    <div class="desc"><p>The root directory of pyMeasure</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
+      
+  
+    <div class="desc"><p>Directory containing files generated by or for module testing.</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.XSLT_CAPABLE" class="name">var <span class="ident">XSLT_CAPABLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.XMLModels.XSLT_REPOSITORY" class="name">var <span class="ident">XSLT_REPOSITORY</span></p>
+      
+  
+    <div class="desc"><p>A default location for the xsl repository.</p></div>
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>

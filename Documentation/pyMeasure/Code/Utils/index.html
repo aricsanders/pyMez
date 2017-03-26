@@ -575,7 +575,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -845,6 +861,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1025,6 +1042,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,10 +1068,8 @@ table {
     <h1>Index</h1>
     <ul id="index">
 
-
-
     <li class="set"><h3><a href="#header-submodules">Sub-modules</a></h3>
-      <ul>
+      <ul >
         <li class="mono"><a href="Alias.m.html">pyMeasure.Code.Utils.Alias</a></li>
         <li class="mono"><a href="DjangoUtils.m.html">pyMeasure.Code.Utils.DjangoUtils</a></li>
         <li class="mono"><a href="GetMetadata.m.html">pyMeasure.Code.Utils.GetMetadata</a></li>
@@ -1051,6 +1080,9 @@ table {
         <li class="mono"><a href="pyMeasureUnitTest.m.html">pyMeasure.Code.Utils.pyMeasureUnitTest</a></li>
       </ul>
     </li>
+
+
+
     </ul>
   </div>
 
@@ -1070,7 +1102,7 @@ helper functions needed in daily development life. All other packages should if 
 <div>
 <a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
-<a href="../../../Examples/html/Example_Home.html">Examples</a> |
+<a href="../../../Examples/html/Examples_Home.html">Examples</a> |
 <a href="../../../Reference_Index.html">Index </a>
 </div></p>
   
@@ -1087,7 +1119,7 @@ helper functions needed in daily development life. All other packages should if 
 <span class="sd">&lt;div&gt;</span>
 <span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
 <span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
-<span class="sd">&lt;a href=&quot;../../../Examples/html/Example_Home.html&quot;&gt;Examples&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Examples/html/Examples_Home.html&quot;&gt;Examples&lt;/a&gt; |</span>
 <span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index &lt;/a&gt;</span>
 <span class="sd">&lt;/div&gt;</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -1098,9 +1130,6 @@ helper functions needed in daily development life. All other packages should if 
   </header>
 
   <section id="section-items">
-
-
-
     <h2 class="section-title" id="header-submodules">Sub-modules</h2>
       <div class="item">
       <p class="name"><a href="Alias.m.html">pyMeasure.Code.Utils.Alias</a></p>
@@ -1174,6 +1203,11 @@ All modules should be imported using import full.module.name and test classes sh
 named TestPyMeasureModuleName to prevent confu...</p></div>
 
       </div>
+
+
+
+
+	
   </section>
 
     </article>

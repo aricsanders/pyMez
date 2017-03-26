@@ -575,7 +575,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -845,6 +861,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1025,6 +1042,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1037,10 +1068,8 @@ table {
     <h1>Index</h1>
     <ul id="index">
 
-
-
     <li class="set"><h3><a href="#header-submodules">Sub-modules</a></h3>
-      <ul>
+      <ul >
         <li class="mono"><a href="AdvancedInterfaceFrame.m.html">pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame</a></li>
         <li class="mono"><a href="BasicInterfaceFrame.m.html">pyMeasure.Code.FrontEnds.BasicInterfaceFrame</a></li>
         <li class="mono"><a href="EndOfDayDialog.m.html">pyMeasure.Code.FrontEnds.EndOfDayDialog</a></li>
@@ -1060,6 +1089,9 @@ table {
         <li class="mono"><a href="XMLGeneral.m.html">pyMeasure.Code.FrontEnds.XMLGeneral</a></li>
       </ul>
     </li>
+
+
+
     </ul>
   </div>
 
@@ -1089,7 +1121,7 @@ finaly a jupyter notebook front end.</p>
 <div>
 <a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
-<a href="../../../Examples/html/Example_Home.html">Examples</a> |
+<a href="../../../Examples/html/Examples_Home.html">Examples</a> |
 <a href="../../../Reference_Index.html">Index </a>
 </div></p>
   
@@ -1118,7 +1150,7 @@ finaly a jupyter notebook front end.</p>
 <span class="sd">&lt;div&gt;</span>
 <span class="sd">&lt;a href=&quot;../../../pyMeasure_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
 <span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
-<span class="sd">&lt;a href=&quot;../../../Examples/html/Example_Home.html&quot;&gt;Examples&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Examples/html/Examples_Home.html&quot;&gt;Examples&lt;/a&gt; |</span>
 <span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index &lt;/a&gt;</span>
 <span class="sd">&lt;/div&gt;</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -1129,9 +1161,6 @@ finaly a jupyter notebook front end.</p>
   </header>
 
   <section id="section-items">
-
-
-
     <h2 class="section-title" id="header-submodules">Sub-modules</h2>
       <div class="item">
       <p class="name"><a href="AdvancedInterfaceFrame.m.html">pyMeasure.Code.FrontEnds.AdvancedInterfaceFrame</a></p>
@@ -1198,7 +1227,9 @@ The custom tool bar is MyNavigationToolBar</p></div>
       <p class="name"><a href="ShellPanel.m.html">pyMeasure.Code.FrontEnds.ShellPanel</a></p>
       
   
-    <div class="desc"><p>This is a shell, modified from the shell in Boa Constructor, updated to work with wx 3 and python 2.7</p></div>
+    <div class="desc"><p>This is a shell, modified from the shell in Boa Constructor, updated to work with wx 3 and python 2.7
+The shell causes a wxWidgets Debug alert to occur because of the wx.stc module, to avoid it in the
+end product import this in the module runner.</p></div>
 
       </div>
       <div class="item">
@@ -1258,6 +1289,11 @@ import user choices.</p></div>
 the General XML editing FrontEnds</p></div>
 
       </div>
+
+
+
+
+	
   </section>
 
     </article>

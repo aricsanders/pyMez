@@ -575,7 +575,23 @@ table {
     float: left;
     padding: 30px;
     overflow: hidden;
+	word-wrap: break-word;
   }
+  
+  .toggleButton {
+      background-color: white;
+      border: 2px solid black;
+       border-radius: 8px;
+       color:red;
+	   }
+   .toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	}
+	
+	#functionsNavigation, #classesNavigation, #variablesNavigation {
+	display:none;
+	}
+  
   #nav {
     font-size: 130%;
     margin: 0 0 15px 0;
@@ -845,6 +861,7 @@ table {
       display: block;
       margin: inherit;
     }
+	
   }
 
   /*****************************/
@@ -1025,6 +1042,20 @@ table {
     $link.innerHTML = 'Show source &equiv;';
     }
   }
+  
+
+    function toggleId(id,$link){
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.value = '-';
+    } else {
+    $node.style.display = 'none';
+    $link.value = '+';
+    }
+  }
   </script>
 </head>
 <body>
@@ -1036,38 +1067,23 @@ table {
   <div id="sidebar">
     <h1>Index</h1>
     <ul id="index">
-    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
-      
-  <ul>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.echo">echo</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.keyDefs">keyDefs</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.only_first_block">only_first_block</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.os_path">os_path</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.p2c">p2c</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.shellReg">shellReg</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_PANEL1">wxID_PANEL1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_PANEL1STYLEDTEXTCTRL1">wxID_PANEL1STYLEDTEXTCTRL1</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_CALLTIPS">wxID_SHELL_CALLTIPS</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_CODECOMP">wxID_SHELL_CODECOMP</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_ENTER">wxID_SHELL_ENTER</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HISTORYDOWN">wxID_SHELL_HISTORYDOWN</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HISTORYUP">wxID_SHELL_HISTORYUP</a></li>
-    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HOME">wxID_SHELL_HOME</a></li>
-  </ul>
 
-    </li>
-
-    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
       
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.recdir">recdir</a></li>
     <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.tipforobj">tipforobj</a></li>
   </ul>
 
+	 </div>
     </li>
 
-    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
-      <ul>
+    <li class="set"><h3><a href="#header-classes">Classes</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
+      <ul id="classesNavigation">
         <li class="mono">
         <span class="class_name"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.IShellEditor">IShellEditor</a></span>
         
@@ -2810,6 +2826,31 @@ table {
       </ul>
     </li>
 
+
+    
+	<li class="set"><h3><a href="#header-variables">Module variables</a>
+	<input type="button" class="toggleButton" value="+" onclick="toggleId('variablesNavigation',this)"></h3>
+	<div id="variablesNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.echo">echo</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.keyDefs">keyDefs</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.only_first_block">only_first_block</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.os_path">os_path</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.p2c">p2c</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.shellReg">shellReg</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_PANEL1">wxID_PANEL1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_PANEL1STYLEDTEXTCTRL1">wxID_PANEL1STYLEDTEXTCTRL1</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_CALLTIPS">wxID_SHELL_CALLTIPS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_CODECOMP">wxID_SHELL_CODECOMP</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_ENTER">wxID_SHELL_ENTER</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HISTORYDOWN">wxID_SHELL_HISTORYDOWN</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HISTORYUP">wxID_SHELL_HISTORYUP</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HOME">wxID_SHELL_HOME</a></li>
+  </ul>
+
+	  </div>
+    </li>
     </ul>
   </div>
 
@@ -2822,7 +2863,9 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMeasure.Code.FrontEnds.ShellPanel</span> module</h1>
-  <p>This is a shell, modified from the shell in Boa Constructor, updated to work with wx 3 and python 2.7</p>
+  <p>This is a shell, modified from the shell in Boa Constructor, updated to work with wx 3 and python 2.7
+The shell causes a wxWidgets Debug alert to occur because of the wx.stc module, to avoid it in the
+end product import this in the module runner.</p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.FrontEnds.ShellPanel', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.FrontEnds.ShellPanel" class="source">
@@ -2834,7 +2877,9 @@ table {
 <span class="c1"># License:     MIT License</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 
-<span class="sd">&quot;&quot;&quot;This is a shell, modified from the shell in Boa Constructor, updated to work with wx 3 and python 2.7&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;This is a shell, modified from the shell in Boa Constructor, updated to work with wx 3 and python 2.7</span>
+<span class="sd">The shell causes a wxWidgets Debug alert to occur because of the wx.stc module, to avoid it in the</span>
+<span class="sd">end product import this in the module runner.&quot;&quot;&quot;</span>
 
 <span class="c1"># A trick to make sure the boa directory is on sys.path</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -2847,7 +2892,7 @@ table {
 
 
 <span class="kn">import</span> <span class="nn">wx</span>
-<span class="kn">import</span> <span class="nn">wx.stc</span>
+<span class="c1"># import wx.stc</span>
 
 <span class="p">[</span><span class="n">wxID_PANEL1</span><span class="p">,</span> <span class="n">wxID_PANEL1STYLEDTEXTCTRL1</span><span class="p">,</span> 
 <span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">wx</span><span class="o">.</span><span class="n">NewId</span><span class="p">()</span> <span class="k">for</span> <span class="n">_init_ctrls</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
@@ -3423,6 +3468,7 @@ table {
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">App</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
     <span class="n">frame</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">wx</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span><span class="mi">762</span><span class="p">,</span> <span class="mi">502</span><span class="p">))</span>
     <span class="n">panel</span><span class="o">=</span><span class="n">ShellPanel</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">u&#39;ShellPanel&#39;</span><span class="p">,</span>
               <span class="n">parent</span><span class="o">=</span><span class="n">frame</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">wx</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="mi">350</span><span class="p">,</span> <span class="mi">204</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">wx</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span><span class="mi">762</span><span class="p">,</span> <span class="mi">502</span><span class="p">),</span>
@@ -3441,119 +3487,6 @@ table {
   </header>
 
   <section id="section-items">
-    <h2 class="section-title" id="header-variables">Module variables</h2>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.echo" class="name">var <span class="ident">echo</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.keyDefs" class="name">var <span class="ident">keyDefs</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.only_first_block" class="name">var <span class="ident">only_first_block</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.os_path" class="name">var <span class="ident">os_path</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.p2c" class="name">var <span class="ident">p2c</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.shellReg" class="name">var <span class="ident">shellReg</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_PANEL1" class="name">var <span class="ident">wxID_PANEL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_PANEL1STYLEDTEXTCTRL1" class="name">var <span class="ident">wxID_PANEL1STYLEDTEXTCTRL1</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_CALLTIPS" class="name">var <span class="ident">wxID_SHELL_CALLTIPS</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_CODECOMP" class="name">var <span class="ident">wxID_SHELL_CODECOMP</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_ENTER" class="name">var <span class="ident">wxID_SHELL_ENTER</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HISTORYDOWN" class="name">var <span class="ident">wxID_SHELL_HISTORYDOWN</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HISTORYUP" class="name">var <span class="ident">wxID_SHELL_HISTORYUP</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HOME" class="name">var <span class="ident">wxID_SHELL_HOME</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
 
     <h2 class="section-title" id="header-functions">Functions</h2>
       
@@ -55301,6 +55234,121 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
       </div>
       </div>
 
+
+	
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.echo" class="name">var <span class="ident">echo</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.keyDefs" class="name">var <span class="ident">keyDefs</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.only_first_block" class="name">var <span class="ident">only_first_block</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.os_path" class="name">var <span class="ident">os_path</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.p2c" class="name">var <span class="ident">p2c</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.shellReg" class="name">var <span class="ident">shellReg</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_PANEL1" class="name">var <span class="ident">wxID_PANEL1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_PANEL1STYLEDTEXTCTRL1" class="name">var <span class="ident">wxID_PANEL1STYLEDTEXTCTRL1</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_CALLTIPS" class="name">var <span class="ident">wxID_SHELL_CALLTIPS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_CODECOMP" class="name">var <span class="ident">wxID_SHELL_CODECOMP</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_ENTER" class="name">var <span class="ident">wxID_SHELL_ENTER</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HISTORYDOWN" class="name">var <span class="ident">wxID_SHELL_HISTORYDOWN</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HISTORYUP" class="name">var <span class="ident">wxID_SHELL_HISTORYUP</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.FrontEnds.ShellPanel.wxID_SHELL_HOME" class="name">var <span class="ident">wxID_SHELL_HOME</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
   </section>
 
     </article>
