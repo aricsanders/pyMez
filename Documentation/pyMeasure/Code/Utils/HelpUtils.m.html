@@ -1278,7 +1278,8 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
 <span class="k">def</span> <span class="nf">autogenerate_api_documentation_script</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Autogenerates the api help files. It requires that pdoc is installed and that the pdoc script is in</span>
 <span class="sd">    the Documentation folder under pyMeasure. If the folder exists it first deletes the folder and then creates a</span>
-<span class="sd">     new one. The folder permissions must be set properly to allow the script to delete the old API help.&quot;&quot;&quot;</span>
+<span class="sd">     new one. The folder permissions must be set properly to allow the script to delete the old API help.</span>
+<span class="sd">     Uses the mako templates found in Documentation/templates&quot;&quot;&quot;</span>
 
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">)</span>
     <span class="n">template_directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;templates&quot;</span><span class="p">)</span>
@@ -1471,13 +1472,13 @@ see (https://github.com/jupyter/nbconvert/pull/370/commits/f01e44daca69f349bfdcf
     <span class="c1">#test_create_help_page(&#39;pyMeasure.Code.DataHandlers.NISTModels&#39;)</span>
     <span class="c1">#test_create_help_page(&#39;pyMeasure.Code.DataHandlers&#39;)</span>
     <span class="c1">#test_create_examples_page()</span>
-    <span class="c1">#test_create_examples_page(os.path.join(DOCUMENTATION_DIRECTORY,&quot;pyMeasure_Documentation.ipynb&quot;))</span>
+    <span class="n">test_create_examples_page</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;pyMeasure_Documentation.ipynb&quot;</span><span class="p">))</span>
     <span class="n">autogenerate_api_documentation_script</span><span class="p">()</span>
     <span class="n">test_create_index_html</span><span class="p">()</span>
     <span class="c1">#create_imports_html_script(PYMEASURE_ROOT,DOCUMENTATION_DIRECTORY)</span>
-    <span class="c1">#create_examples_html_script(os.path.join(DOCUMENTATION_DIRECTORY,&quot;Examples&quot;,&quot;jupyter&quot;))</span>
-    <span class="c1">#change_links_examples_script(os.path.join(DOCUMENTATION_DIRECTORY, &quot;Examples&quot;, &quot;html&quot;))</span>
-    <span class="c1">#add_navigation_script(os.path.join(DOCUMENTATION_DIRECTORY, &quot;Examples&quot;, &quot;html&quot;))</span>
+    <span class="n">create_examples_html_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Examples&quot;</span><span class="p">,</span><span class="s2">&quot;jupyter&quot;</span><span class="p">))</span>
+    <span class="n">change_links_examples_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span> <span class="s2">&quot;Examples&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">))</span>
+    <span class="n">add_navigation_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span> <span class="s2">&quot;Examples&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">))</span>
     <span class="c1">#create_modules_html_script(PYMEASURE_ROOT)</span>
 </pre></div>
 
@@ -1543,14 +1544,16 @@ designed to add navigation to all files in Documentation/Examples/html</p></div>
   
     <div class="desc"><p>Autogenerates the api help files. It requires that pdoc is installed and that the pdoc script is in
 the Documentation folder under pyMeasure. If the folder exists it first deletes the folder and then creates a
- new one. The folder permissions must be set properly to allow the script to delete the old API help.</p></div>
+ new one. The folder permissions must be set properly to allow the script to delete the old API help.
+ Uses the mako templates found in Documentation/templates</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.HelpUtils.autogenerate_api_documentation_script', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.Utils.HelpUtils.autogenerate_api_documentation_script" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">autogenerate_api_documentation_script</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Autogenerates the api help files. It requires that pdoc is installed and that the pdoc script is in</span>
 <span class="sd">    the Documentation folder under pyMeasure. If the folder exists it first deletes the folder and then creates a</span>
-<span class="sd">     new one. The folder permissions must be set properly to allow the script to delete the old API help.&quot;&quot;&quot;</span>
+<span class="sd">     new one. The folder permissions must be set properly to allow the script to delete the old API help.</span>
+<span class="sd">     Uses the mako templates found in Documentation/templates&quot;&quot;&quot;</span>
 
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">)</span>
     <span class="n">template_directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;templates&quot;</span><span class="p">)</span>
