@@ -91,6 +91,14 @@ except:
     print("The module pyMeasure.Code.DataHandlers.StatistiCALModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
+
+try:
+    from Code.DataHandlers.HTMLModels import *
+except:
+    print("The module pyMeasure.Code.DataHandlers.HTMLModels was not found or had an error,"
+          "please check module or put it on the python path")
+    raise ImportError
+
 try:
     import pandas
 except:
@@ -228,6 +236,23 @@ def String_to_DownloadLink(string,**options):
                                                                                     link_options["suggested_name"],
                                                                                     link_options["text"])
     return out_text
+
+def String_to_SVGAnchorLinkElement(string,**options):
+    """Converts a string to a DataURI"""
+    defaults={"suggested_name":"test.txt",
+              "mime_type":"text/plain"}
+    link_options={}
+    for key,value in defaults.iteritems():
+        link_options[key]=value
+    for key,value in options.iteritems():
+        link_options[key]=value
+    if type(string) not in StringTypes:
+        string=str(string)
+    base_64=base64.encodestring(string)
+    data_uri="data:{0};base64,{1}".format(link_options["mime_type"],base_64)
+    anchor_dictionary={"tag":"a","xlink:href":data_uri,"xlink:download":link_options["suggested_name"]}
+    out_element=make_html_element(**anchor_dictionary)
+    return out_element
 
 def AsciiDataTable_to_XmlDataTable(ascii_data_table,**options):
     """Takes an AsciiDataTable and returns a XmlDataTable with **options"""
