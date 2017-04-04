@@ -49,6 +49,8 @@ Help
 import os
 import sys
 VERBOSE_IMPORT=True
+TIMED_IMPORT=True
+
 "Constant that determines if import statements are echoed to output"
 # control the modules loaded in the API, this should be included in a pyMeasure Settings file
 # The new module load scheme can be for module in API_MODULES.keys()
@@ -104,10 +106,22 @@ API_MODULES={"Code.Utils.Names":True,
 # This makes sure this file is the one loaded
 sys.path.append(os.path.dirname( __file__ ))
 # To tune the imported API change the API_MODULES dictionary
+if TIMED_IMPORT:
+    import datetime
+    first_timer=datetime.datetime.utcnow()
+    start_timer=datetime.datetime.utcnow()
 for module in sorted(API_MODULES.keys()):
     if API_MODULES[module]:
         if VERBOSE_IMPORT:
             print("Importing {0}".format(module))
         exec('from {0} import *'.format(module))
-
+        if TIMED_IMPORT:
+            end_timer=datetime.datetime.utcnow()
+            time_difference=end_timer-start_timer
+            print("It took {0} s to import {1}".format(time_difference.total_seconds(),module))
+            start_timer=end_timer
+if TIMED_IMPORT:
+    end_timer = datetime.datetime.utcnow()
+    time_difference = end_timer - first_timer
+    print("It took {0} s to import all of the active modules".format(time_difference.total_seconds()))
 
