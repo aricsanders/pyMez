@@ -197,10 +197,10 @@ class HTMLBase(object):
     def add_head(self):
         """Adds a head tag to the model if it does not exist"""
         head=make_html_element(tag="head",text="")
-        if not re.match("head",self.root.getchildren()[0].tag,re.IGNORECASE) and len(self.root.getchildren())>0:
-            self.root.insert(0,head)
-        elif len(self.root.getchildren())==0:
+        if len(self.root.getchildren())==0:
             self.root.append(head)
+        elif not re.match("head",self.root.getchildren()[0].tag,re.IGNORECASE) and len(self.root.getchildren())>0:
+            self.root.insert(0,head)
         else:
             print("head already exists, tag was not added ")
             pass
