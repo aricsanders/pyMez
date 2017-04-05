@@ -237,6 +237,20 @@ def String_to_DownloadLink(string,**options):
                                                                                     link_options["text"])
     return out_text
 
+
+def DownloadLink_to_String(download_link):
+    """Given a download link of the form <a href='data:mime_type;base64,encoded_file' download='file_name'>text</a>
+    returns a unencoded text string"""
+    encoded_pattern = "base64,(?P<encoded_text>[\w|\W]+)\'"
+
+    if re.search(encoded_pattern, download_link):
+        encoded_data = re.search(encoded_pattern, download_link).groupdict()["encoded_text"]
+        decoded_data = base64.decodestring(encoded_data)
+        return decoded_data
+    else:
+        print("Could Not Decode Link")
+        return None
+
 def String_to_SVGAnchorLinkElement(string,**options):
     """Converts a string to a DataURI"""
     defaults={"suggested_name":"test.txt",
