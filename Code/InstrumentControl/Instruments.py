@@ -147,7 +147,8 @@ class VisaInstrumentError(Exception):
 
         
 class VisaInstrument(InstrumentSheet):
-    """ General Class to communicate with COMM and GPIB instruments"""
+    """ General Class to communicate with COMM and GPIB instruments
+    This is a blend of the pyvisa resource and an xml description. """
     def __init__(self,resource_name=None,**key_word_arguments):
         """ Intializes the VisaInstrument Class"""
         # First we try to look up the description and get info from it
@@ -180,11 +181,6 @@ class VisaInstrument(InstrumentSheet):
         self.resource_manager=visa.ResourceManager()
         # Call the visa instrument class-- this gives ask,write,read
         self.resource=self.resource_manager.open_resource(self.instrument_address)
-        # for key,value in self.resource.__dict__.iteritems():
-        #     self.__dict__[key]=value
-        # pyvisa.resources.messagebased.MessageBasedResource.__init__(self,
-        #                                                             **{"resource_manager":visa.ResourceManager(),
-        #                                                               "resource_name":self.instrument_address})
         self.current_state=self.get_state()
         
         if METHOD_ALIASES and not self.info_found :
@@ -231,7 +227,7 @@ class VisaInstrument(InstrumentSheet):
         
     def save_state(self,state_path=None,**state_dictionary):
         """ Saves any state dictionary to an xml file, with state_name """
-        new_state=InstrumentState(**state_dictionary)
+        new_state=InstrumentState(None,**state_dictionary)
         try:
             new_state.add_state_description(self.description)
         except: raise #pass
