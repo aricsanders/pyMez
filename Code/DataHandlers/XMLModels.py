@@ -1359,7 +1359,7 @@ class InstrumentState(XMLBase):
                   "directory":None,
                   "extension":'xml',
                   "date":"now",
-                  "State_Dictionary":None
+                  "state_dictionary":None
                   }
         self.options={}
         for key,value in defaults.iteritems():
