@@ -2,11 +2,11 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../aricsanders.github.io" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../boa" vcs="Git" />
     <mapping directory="$USER_HOME$/PyCharmProjects/Jupyter-Notebooks" vcs="Git" />
     <mapping directory="$USER_HOME$/PyCharmProjects/check_standard" vcs="Git" />
     <mapping directory="$USER_HOME$/PyCharmProjects/html-examples" vcs="Git" />
     <mapping directory="$USER_HOME$/PyCharmProjects/test_site" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../aricsanders.github.io" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../boa" vcs="Git" />
   </component>
 </project>
