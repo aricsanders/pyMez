@@ -137,6 +137,8 @@ class HTMLBase(object):
             if self.options["html_text"]:
                 # first priority is just passing the full page in html_text
                 self.document=lxml.html.fromstring(self.options["html_text"])
+                self.root=self.document
+
             else:
                 self.root=lxml.html.builder.HTML()
                 self.document=lxml.etree.ElementTree(self.root)
