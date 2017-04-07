@@ -225,9 +225,9 @@ class VisaInstrument(InstrumentSheet):
         self.current_state=self.get_state()
         self.save_state(**self.current_state)
         
-    def save_state(self,state_path=None,**state_dictionary):
+    def save_state(self,state_path=None,state_dictionary=None):
         """ Saves any state dictionary to an xml file, with state_name """
-        new_state=InstrumentState(None,**state_dictionary)
+        new_state=InstrumentState(None,**{"state_dictionary":state_dictionary})
         try:
             new_state.add_state_description(self.description)
         except: raise #pass
