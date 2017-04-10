@@ -293,7 +293,7 @@ def create_sensitivity_reference_curve(sensitivity_directory,nominal_file_path="
         combined_table + difference
     #print combined_table.options["column_types"]
     variance = frequency_model_collapse_multiple_measurements(combined_table,
-                                                                        method='rms')
+                                                                        method='rss')
     new_column_names = ['Frequency'] + ['u' + name for name in variance.column_names[1:]]
     mean_table=Snp_to_AsciiDataTable(nominal_file)
     variance.column_names = new_column_names
