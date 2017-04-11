@@ -1298,11 +1298,6 @@ class InstrumentSheet(XMLBase):
         for command in commands.childNodes:
             if command.nodeType is NODE_TYPE_DICTIONARY['ELEMENT_NODE']:
                 self.commands.append(command.getAttribute('Command'))
-        # Define Method Aliases if they are available
-        if METHOD_ALIASES:
-            #print 'True'
-            for command in alias(self):
-                exec(command)
         try:
             self.image=self.get_image_path()
         except:
