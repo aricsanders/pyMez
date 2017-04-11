@@ -72,7 +72,7 @@ def create_svg_black_box_diagram(inputs, outputs, function, **options):
                 "title_text_ratio": 3,
                 "box_text_ratio": 8,
                 "arrow_fill": "#f00",
-                "ouput_transformation_function": None,
+                "output_transformation_function": None,
                 "output_mime_type": "text/plain"
 
                 }
@@ -92,8 +92,8 @@ def create_svg_black_box_diagram(inputs, outputs, function, **options):
     output_names = outputs
     number_outputs = len(output_names)
     output_data = function(**inputs)
-    if example_options["ouput_transformation_function"]:
-        output_data = example_options["ouput_transformation_function"](output_data)
+    if example_options["output_transformation_function"]:
+        output_data = example_options["output_transformation_function"](output_data)
         # print(output_data)
     if type(output_data) is ListType:
         output_dictionary = {name: output_data[i] for i, name in enumerate(output_names)}
