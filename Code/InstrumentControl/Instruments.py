@@ -53,7 +53,11 @@ try:
 except:
     METHOD_ALIASES=0
     pass 
-
+try:
+    from Code.Utils.Names import *
+except:
+    print("Could not load pyMeasure.Code.Utils.Names")
+    pass
 #-------------------------------------------------------------------------------
 # Module Constants
 ACTIVE_COMPONENTS=[PIL_AVAILABLE,DATA_SHEETS,METHOD_ALIASES]
@@ -149,13 +153,19 @@ class VisaInstrumentError(Exception):
 class VisaInstrument(InstrumentSheet):
     """ General Class to communicate with COMM and GPIB instruments
     This is a blend of the pyvisa resource and an xml description. """
-    def __init__(self,resource_name=None,**key_word_arguments):
+    def __init__(self,resource_name=None,**options):
         """ Intializes the VisaInstrument Class"""
+        defaults={"state_directory":os.getcwd()}
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
         # First we try to look up the description and get info from it
         if DATA_SHEETS:
             try: 
                 self.info_path=find_description(resource_name)
-                InstrumentSheet.__init__(self,self.info_path)
+                InstrumentSheet.__init__(self,self.info_path,**self.options)
                 self.info_found=True
                 self.DEFAULT_STATE_QUERY_DICTIONARY=self.get_query_dictionary()
             except:
@@ -163,6 +173,7 @@ class VisaInstrument(InstrumentSheet):
                 self.DEFAULT_STATE_QUERY_DICTIONARY={}
                 self.info_found=False
                 self.instrument_address=resource_name
+                self.name=resource_name.replace(":","_")
                 pass
         else:
             self.info_found=False
@@ -183,9 +194,7 @@ class VisaInstrument(InstrumentSheet):
         self.resource=self.resource_manager.open_resource(self.instrument_address)
         self.current_state=self.get_state()
         
-        if METHOD_ALIASES and not self.info_found :
-            for command in alias(self):
-                exec(command)
+
     def write(self,command):
         "Writes command to instrument"
         return self.resource.write(command)
@@ -223,15 +232,23 @@ class VisaInstrument(InstrumentSheet):
     def save_current_state(self):
         """ Saves the state in self.current_state attribute """
         self.current_state=self.get_state()
-        self.save_state(**self.current_state)
+        self.save_state(None,state_dictionary=self.current_state)
         
     def save_state(self,state_path=None,state_dictionary=None):
         """ Saves any state dictionary to an xml file, with state_name """
-        new_state=InstrumentState(None,**{"state_dictionary":state_dictionary})
+        if state_path is None:
+            state_path=auto_name(specific_descriptor=self.name,general_descriptor="State",
+                                 directory=self.options["state_directory"])
+        new_state=InstrumentState(None,**{"state_dictionary":state_dictionary,"style_sheet":"./DEFAULT_STATE_STYLE.xsl"})
         try:
             new_state.add_state_description(self.description)
         except: raise #pass
         new_state.save(state_path)
+
+    def load_state(self,file_path):
+        """Loads a state from a file."""
+        state_model=InstrumentState(file_path)
+        self.set_state(**state_model.state_dictionary)
 
 
     

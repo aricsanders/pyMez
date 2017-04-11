@@ -44,6 +44,7 @@ def get_filename_iterator(base_name=None,directory=None,extension=None,padding=3
     else:
         file_names=glob.glob(directory+'/*.'+extension)
         for name in file_names:
+            name=os.path.split(name)[1]
             if re.match(base_name,name):
                 iterator+=1
         return replacement_string.format(iterator+1)
