@@ -1366,6 +1366,7 @@ class InstrumentState(XMLBase):
         XMLBase.__init__(self,file_path,**self.options)
         state_node=self.document.createElement('State')
         self.document.documentElement.appendChild(state_node)
+        # This should be in State_Description as State_Timestamp?
         if self.options["date"] in ['now']:
             # Add the Date attribute, this is the time when the state was created
             date=datetime.datetime.utcnow().isoformat()
@@ -1389,7 +1390,9 @@ class InstrumentState(XMLBase):
         self.state_node.getElementsByTagName('Tuple')])
 
     def add_state_description(self,description):
-        """Adds the tag named State_Description and its information"""
+        """Adds the tag named State_Description and its information
+        Currently data can be entered as a dictionary of the form {'State_Description':{tag_name:tag_value}}
+        or as an element or as a string"""
         try:
             new_element=''
             if type(description) is DictionaryType:
@@ -1414,6 +1417,12 @@ class InstrumentState(XMLBase):
         except:
             raise
 
+    def get_timestamp(self):
+        """Tries to return the timestamp stored as an attribute date in the tag State"""
+        # Take the first thing called Image
+        state_node = self.document.getElementsByTagName('State')[0]
+        timestamp = state_node.getAttribute('Date')
+        return timestamp
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_XMLModel(test_new=True,test_existing=False):

@@ -1078,6 +1078,7 @@ def Dictionary_to_XmlTupleString(python_dictionary):
     prefix="<Tuple "
     postfix=" />"
     inner=""
+    xml_out=""
     for key,value in python_dictionary.iteritems():
         inner=inner+'{0}="{1}" ' .format(key,value)
         xml_out=prefix+inner+postfix
