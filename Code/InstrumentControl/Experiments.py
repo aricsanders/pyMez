@@ -131,7 +131,7 @@ class KeithleyIV():
                 current=self.current_reading.split(',')[0]
                 current=current.replace('A','')   
                 self.data_list.append({'Index':index,
-                'Voltage':self.current_reading.split(',')[-1],
+                'Voltage':self.current_reading.split(',')[-1].replace("\n",""),
                 'Current':current})
                 self.instrument.write("CURR:RANG:AUTO ON")
     def save_data(self):
@@ -146,7 +146,15 @@ class KeithleyIV():
         'Date':datetime.datetime.utcnow().isoformat(),
         'Notes':self.notes,'Name':self.name,'Resistance':str(self.resistance)}
         self.data_dictionary['Data']=self.data_list
-        self.measurement_data=Code.DataHandlers.XMLModels.DataTable(**self.data_dictionary)
+        self.state=Code.DataHandlers.XMLModels.InstrumentState(None,state_dictionary=self.instrument.get_state(),
+                                                               style_sheet=os.path.join(Code.DataHandlers.XMLModels.TESTS_DIRECTORY,
+                                                                                             "../XSL/DEFAULT_STATE_STYLE.xsl"))
+        self.state.add_state_description(description={"State_Description":{"Instrument_Description":KEITHLEY_INSTRUMENT_SHEET}})
+        self.data_dictionary["Data_Description"]["State"]="./"+self.state.path
+        self.state.save()
+        self.measurement_data=Code.DataHandlers.XMLModels.DataTable(None,data_dictionary=self.data_dictionary,
+                                                                    style_sheet=os.path.join(Code.DataHandlers.XMLModels.TESTS_DIRECTORY,
+                                                                                             "../XSL/DEFAULT_MEASUREMENT_STYLE.xsl"))
         self.measurement_data.save()   
         
     def plot_data(self):
@@ -158,13 +166,16 @@ class KeithleyIV():
         try:
             
             import matplotlib.pyplot as plt
-                      
+            fig=plt.figure("IV")
             plt.plot(voltage_list,current_list)
             plt.xlabel("Voltage (V)")
             plt.ylabel("Current (A)")
             plt.show()
+            return fig
         except:
+            raise
             print('An Error in the function plot has occurred')
+
     def calculate_resistance(self):
         voltage_list=[]
         current_list=[]

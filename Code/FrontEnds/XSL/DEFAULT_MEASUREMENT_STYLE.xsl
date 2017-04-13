@@ -30,13 +30,16 @@
 		<h3>Data Description:</h3>
 		 <table>
             <xsl:for-each select="//Data_Description/*">
-            <xsl:if test=".!='' and name()!='Instrument_Description'">
+            <xsl:if test=".!='' and name()!='Instrument_Description' and name()!='State' ">
             <tr><td><b><xsl:value-of select="name()"/> :</b> </td><td><xsl:value-of select="."/></td></tr>
             </xsl:if>
 
             <xsl:if test="name()='Instrument_Description'">
+            <tr><th bgcolor='silver'><b><xsl:value-of select="name()"/></b></th><td><a><xsl:attribute name="href">
+                <xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a></td></tr>
+            </xsl:if><xsl:if test="name()='State'">
             <tr><th bgcolor='silver'><b><xsl:value-of select="name()"/></b></th><td><a><xsl:attribute name="href"> <xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a></td></tr>
-            </xsl:if> 
+            </xsl:if>
             </xsl:for-each>
          </table>
         <h3>Data:</h3>

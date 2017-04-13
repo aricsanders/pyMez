@@ -316,7 +316,8 @@ class XMLBase():
                   "specific_descriptor":'XML',
                   "general_descriptor":'Document',
                   "directory":None,
-                  "extension":'xml'
+                  "extension":'xml',
+                  "content":None
                   }
         self.options={}
         for key,value in defaults.iteritems():
@@ -329,8 +330,12 @@ class XMLBase():
                 exec(command)
         #if the file path is not supplied create a new xml sheet
         if file_path is None:
-            impl=getDOMImplementation()
-            self.document=impl.createDocument(None,self.options['root'],None)
+            if self.options["content"]:
+                self.document = xml.dom.minidom.parseString(self.options["content"])
+                self.options["content"]=None
+            else:
+                impl=getDOMImplementation()
+                self.document=impl.createDocument(None,self.options['root'],None)
             # Should be a relative path for
             if self.options["style_sheet"] is not None:
                 new_node=self.document.createProcessingInstruction('xml-stylesheet',
