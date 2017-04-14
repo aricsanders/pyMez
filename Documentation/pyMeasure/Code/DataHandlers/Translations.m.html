@@ -1111,6 +1111,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.DocFile_to_HtmlFile">DocFile_to_HtmlFile</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.DocFile_to_OdtFile">DocFile_to_OdtFile</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.DocFile_to_PdfFile">DocFile_to_PdfFile</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.DownloadLink_to_String">DownloadLink_to_String</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.EmbeddedHtmlString_to_Base64Png">EmbeddedHtmlString_to_Base64Png</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.ExcelFile_to_DataFrame">ExcelFile_to_DataFrame</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.ExcelFile_to_DataFrameDictionary">ExcelFile_to_DataFrameDictionary</a></li>
@@ -1174,6 +1175,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.String_to_CStringIo">String_to_CStringIo</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.String_to_DownloadLink">String_to_DownloadLink</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.String_to_File">String_to_File</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.String_to_SVGAnchorLinkElement">String_to_SVGAnchorLinkElement</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.String_to_StringIo">String_to_StringIo</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.String_to_StringList">String_to_StringList</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.SvgFile_to_EpsFile">SvgFile_to_EpsFile</a></li>
@@ -1236,6 +1238,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.FORMATS">FORMATS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.FREQUENCY_UNITS">FREQUENCY_UNITS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.GET_STATS_FIELDS">GET_STATS_FIELDS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.HTML_TEMPLATE_DIRECTORY">HTML_TEMPLATE_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.IMAGE_FILE_EXTENSIONS">IMAGE_FILE_EXTENSIONS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.INKSCAPE_PATH">INKSCAPE_PATH</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.INSTRUMENT_SHEETS">INSTRUMENT_SHEETS</a></li>
@@ -1429,6 +1432,14 @@ software:
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module pyMeasure.Code.DataHandlers.StatistiCALModels was not found or had an error,&quot;</span>
           <span class="s2">&quot;please check module or put it on the python path&quot;</span><span class="p">)</span>
     <span class="k">raise</span> <span class="ne">ImportError</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">Code.DataHandlers.HTMLModels</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module pyMeasure.Code.DataHandlers.HTMLModels was not found or had an error,&quot;</span>
+          <span class="s2">&quot;please check module or put it on the python path&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ImportError</span>
+
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">pandas</span>
 <span class="k">except</span><span class="p">:</span>
@@ -1566,6 +1577,37 @@ software:
                                                                                     <span class="n">link_options</span><span class="p">[</span><span class="s2">&quot;suggested_name&quot;</span><span class="p">],</span>
                                                                                     <span class="n">link_options</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">out_text</span>
+
+
+<span class="k">def</span> <span class="nf">DownloadLink_to_String</span><span class="p">(</span><span class="n">download_link</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a download link of the form &lt;a href=&#39;data:mime_type;base64,encoded_file&#39; download=&#39;file_name&#39;&gt;text&lt;/a&gt;</span>
+<span class="sd">    returns a unencoded text string&quot;&quot;&quot;</span>
+    <span class="n">encoded_pattern</span> <span class="o">=</span> <span class="s2">&quot;base64,(?P&lt;encoded_text&gt;[\w|\W]+)</span><span class="se">\&#39;</span><span class="s2">&quot;</span>
+
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">encoded_pattern</span><span class="p">,</span> <span class="n">download_link</span><span class="p">):</span>
+        <span class="n">encoded_data</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">encoded_pattern</span><span class="p">,</span> <span class="n">download_link</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s2">&quot;encoded_text&quot;</span><span class="p">]</span>
+        <span class="n">decoded_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">decodestring</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">decoded_data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could Not Decode Link&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">String_to_SVGAnchorLinkElement</span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a string to a DataURI&quot;&quot;&quot;</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;suggested_name&quot;</span><span class="p">:</span><span class="s2">&quot;test.txt&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;mime_type&quot;</span><span class="p">:</span><span class="s2">&quot;text/plain&quot;</span><span class="p">}</span>
+    <span class="n">link_options</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">link_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">link_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">StringTypes</span><span class="p">:</span>
+        <span class="n">string</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="n">base_64</span><span class="o">=</span><span class="n">base64</span><span class="o">.</span><span class="n">encodestring</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="n">data_uri</span><span class="o">=</span><span class="s2">&quot;data:{0};base64,{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">link_options</span><span class="p">[</span><span class="s2">&quot;mime_type&quot;</span><span class="p">],</span><span class="n">base_64</span><span class="p">)</span>
+    <span class="n">anchor_dictionary</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;xlink:href&quot;</span><span class="p">:</span><span class="n">data_uri</span><span class="p">,</span><span class="s2">&quot;xlink:download&quot;</span><span class="p">:</span><span class="n">link_options</span><span class="p">[</span><span class="s2">&quot;suggested_name&quot;</span><span class="p">]}</span>
+    <span class="n">out_element</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="o">**</span><span class="n">anchor_dictionary</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_element</span>
 
 <span class="k">def</span> <span class="nf">AsciiDataTable_to_XmlDataTable</span><span class="p">(</span><span class="n">ascii_data_table</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes an AsciiDataTable and returns a XmlDataTable with **options&quot;&quot;&quot;</span>
@@ -2377,6 +2419,7 @@ software:
     <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&lt;Tuple &quot;</span>
     <span class="n">postfix</span><span class="o">=</span><span class="s2">&quot; /&gt;&quot;</span>
     <span class="n">inner</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="n">xml_out</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">python_dictionary</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="n">inner</span><span class="o">=</span><span class="n">inner</span><span class="o">+</span><span class="s1">&#39;{0}=&quot;{1}&quot; &#39;</span> <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
         <span class="n">xml_out</span><span class="o">=</span><span class="n">prefix</span><span class="o">+</span><span class="n">inner</span><span class="o">+</span><span class="n">postfix</span>
@@ -2876,6 +2919,7 @@ software:
         <span class="n">S22</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">Z02</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">+</span><span class="n">B</span><span class="o">-</span><span class="n">C</span><span class="o">*</span><span class="n">Z01</span><span class="o">*</span><span class="n">Z02</span><span class="o">+</span><span class="n">D</span><span class="o">*</span><span class="n">Z01</span><span class="p">)</span><span class="o">/</span><span class="n">denominator</span>
         <span class="n">s_frequency_list</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">frequency</span><span class="p">,</span><span class="n">S11</span><span class="p">,</span><span class="n">S12</span><span class="p">,</span><span class="n">S21</span><span class="p">,</span><span class="n">S22</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">s_frequency_list</span>
+
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Classes</span>
 
@@ -3994,6 +4038,7 @@ Inverse of JsonString_to_DataFrame.</p></div>
     <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&lt;Tuple &quot;</span>
     <span class="n">postfix</span><span class="o">=</span><span class="s2">&quot; /&gt;&quot;</span>
     <span class="n">inner</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="n">xml_out</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">python_dictionary</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="n">inner</span><span class="o">=</span><span class="n">inner</span><span class="o">+</span><span class="s1">&#39;{0}=&quot;{1}&quot; &#39;</span> <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
         <span class="n">xml_out</span><span class="o">=</span><span class="n">prefix</span><span class="o">+</span><span class="n">inner</span><span class="o">+</span><span class="n">postfix</span>
@@ -4126,6 +4171,39 @@ Returns the new file name</p></div>
     <span class="n">doc</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
     <span class="n">word</span><span class="o">.</span><span class="n">Quit</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">pdf_file_name</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.Translations.DownloadLink_to_String">
+    <p>def <span class="ident">DownloadLink_to_String</span>(</p><p>download_link)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Given a download link of the form <a href='data:mime_type;base64,encoded_file' download='file_name'>text</a>
+returns a unencoded text string</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.DownloadLink_to_String', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.Translations.DownloadLink_to_String" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">DownloadLink_to_String</span><span class="p">(</span><span class="n">download_link</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a download link of the form &lt;a href=&#39;data:mime_type;base64,encoded_file&#39; download=&#39;file_name&#39;&gt;text&lt;/a&gt;</span>
+<span class="sd">    returns a unencoded text string&quot;&quot;&quot;</span>
+    <span class="n">encoded_pattern</span> <span class="o">=</span> <span class="s2">&quot;base64,(?P&lt;encoded_text&gt;[\w|\W]+)</span><span class="se">\&#39;</span><span class="s2">&quot;</span>
+
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">encoded_pattern</span><span class="p">,</span> <span class="n">download_link</span><span class="p">):</span>
+        <span class="n">encoded_data</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">encoded_pattern</span><span class="p">,</span> <span class="n">download_link</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s2">&quot;encoded_text&quot;</span><span class="p">]</span>
+        <span class="n">decoded_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">decodestring</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">decoded_data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could Not Decode Link&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
 </pre></div>
 
   </div>
@@ -6048,6 +6126,42 @@ Inverse of CStringIo_to_StringIo</p></div>
   
       
   <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.Translations.String_to_SVGAnchorLinkElement">
+    <p>def <span class="ident">String_to_SVGAnchorLinkElement</span>(</p><p>string, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Converts a string to a DataURI</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.String_to_SVGAnchorLinkElement', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.Translations.String_to_SVGAnchorLinkElement" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">String_to_SVGAnchorLinkElement</span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a string to a DataURI&quot;&quot;&quot;</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;suggested_name&quot;</span><span class="p">:</span><span class="s2">&quot;test.txt&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;mime_type&quot;</span><span class="p">:</span><span class="s2">&quot;text/plain&quot;</span><span class="p">}</span>
+    <span class="n">link_options</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">link_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">link_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">StringTypes</span><span class="p">:</span>
+        <span class="n">string</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="n">base_64</span><span class="o">=</span><span class="n">base64</span><span class="o">.</span><span class="n">encodestring</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="n">data_uri</span><span class="o">=</span><span class="s2">&quot;data:{0};base64,{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">link_options</span><span class="p">[</span><span class="s2">&quot;mime_type&quot;</span><span class="p">],</span><span class="n">base_64</span><span class="p">)</span>
+    <span class="n">anchor_dictionary</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;xlink:href&quot;</span><span class="p">:</span><span class="n">data_uri</span><span class="p">,</span><span class="s2">&quot;xlink:download&quot;</span><span class="p">:</span><span class="n">link_options</span><span class="p">[</span><span class="s2">&quot;suggested_name&quot;</span><span class="p">]}</span>
+    <span class="n">out_element</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="o">**</span><span class="n">anchor_dictionary</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_element</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
     <div class="name def" id="pyMeasure.Code.DataHandlers.Translations.String_to_StringIo">
     <p>def <span class="ident">String_to_StringIo</span>(</p><p>string)</p>
     </div>
@@ -7267,6 +7381,14 @@ import statement in setup</p></div>
       </div>
       <div class="item">
       <p id="pyMeasure.Code.DataHandlers.Translations.GET_STATS_FIELDS" class="name">var <span class="ident">GET_STATS_FIELDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.Translations.HTML_TEMPLATE_DIRECTORY" class="name">var <span class="ident">HTML_TEMPLATE_DIRECTORY</span></p>
       
   
   <div class="source_cont">

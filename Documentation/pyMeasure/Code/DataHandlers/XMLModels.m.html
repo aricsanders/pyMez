@@ -1250,6 +1250,7 @@ table {
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.__init__">__init__</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.add_state_description">add_state_description</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.get_timestamp">get_timestamp</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.save">save</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.save_HTML">save_HTML</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.show">show</a></li>
@@ -1731,7 +1732,8 @@ Instrument states, instrument sheets and file indices.</p>
                   <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                  <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span>
+                  <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+                  <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="bp">None</span>
                   <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -1744,8 +1746,12 @@ Instrument states, instrument sheets and file indices.</p>
                 <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
         <span class="c1">#if the file path is not supplied create a new xml sheet</span>
         <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
             <span class="c1"># Should be a relative path for</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
@@ -2713,11 +2719,6 @@ Instrument states, instrument sheets and file indices.</p>
         <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">commands</span><span class="o">.</span><span class="n">childNodes</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">command</span><span class="o">.</span><span class="n">nodeType</span> <span class="ow">is</span> <span class="n">NODE_TYPE_DICTIONARY</span><span class="p">[</span><span class="s1">&#39;ELEMENT_NODE&#39;</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Command&#39;</span><span class="p">))</span>
-        <span class="c1"># Define Method Aliases if they are available</span>
-        <span class="k">if</span> <span class="n">METHOD_ALIASES</span><span class="p">:</span>
-            <span class="c1">#print &#39;True&#39;</span>
-            <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_image_path</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
@@ -2774,7 +2775,7 @@ Instrument states, instrument sheets and file indices.</p>
                   <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
                   <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;date&quot;</span><span class="p">:</span><span class="s2">&quot;now&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;State_Dictionary&quot;</span><span class="p">:</span><span class="bp">None</span>
+                  <span class="s2">&quot;state_dictionary&quot;</span><span class="p">:</span><span class="bp">None</span>
                   <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -2786,6 +2787,7 @@ Instrument states, instrument sheets and file indices.</p>
         <span class="n">XMLBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
         <span class="n">state_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;State&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">state_node</span><span class="p">)</span>
+        <span class="c1"># This should be in State_Description as State_Timestamp?</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;now&#39;</span><span class="p">]:</span>
             <span class="c1"># Add the Date attribute, this is the time when the state was created</span>
             <span class="n">date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
@@ -2809,7 +2811,9 @@ Instrument states, instrument sheets and file indices.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">state_node</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;Tuple&#39;</span><span class="p">)])</span>
 
     <span class="k">def</span> <span class="nf">add_state_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">description</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description and its information&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description and its information</span>
+<span class="sd">        Currently data can be entered as a dictionary of the form {&#39;State_Description&#39;:{tag_name:tag_value}}</span>
+<span class="sd">        or as an element or as a string&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_element</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DictionaryType</span><span class="p">:</span>
@@ -2834,6 +2838,12 @@ Instrument states, instrument sheets and file indices.</p>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span>
 
+    <span class="k">def</span> <span class="nf">get_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tries to return the timestamp stored as an attribute date in the tag State&quot;&quot;&quot;</span>
+        <span class="c1"># Take the first thing called Image</span>
+        <span class="n">state_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">state_node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">timestamp</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Scripts</span>
 <span class="k">def</span> <span class="nf">test_XMLModel</span><span class="p">(</span><span class="n">test_new</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">test_existing</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
@@ -7772,11 +7782,6 @@ HTML class see HTMLModels/HTMLBase</p></div>
         <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">commands</span><span class="o">.</span><span class="n">childNodes</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">command</span><span class="o">.</span><span class="n">nodeType</span> <span class="ow">is</span> <span class="n">NODE_TYPE_DICTIONARY</span><span class="p">[</span><span class="s1">&#39;ELEMENT_NODE&#39;</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Command&#39;</span><span class="p">))</span>
-        <span class="c1"># Define Method Aliases if they are available</span>
-        <span class="k">if</span> <span class="n">METHOD_ALIASES</span><span class="p">:</span>
-            <span class="c1">#print &#39;True&#39;</span>
-            <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_image_path</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
@@ -7922,11 +7927,6 @@ HTML class see HTMLModels/HTMLBase</p></div>
     <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">commands</span><span class="o">.</span><span class="n">childNodes</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">command</span><span class="o">.</span><span class="n">nodeType</span> <span class="ow">is</span> <span class="n">NODE_TYPE_DICTIONARY</span><span class="p">[</span><span class="s1">&#39;ELEMENT_NODE&#39;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Command&#39;</span><span class="p">))</span>
-    <span class="c1"># Define Method Aliases if they are available</span>
-    <span class="k">if</span> <span class="n">METHOD_ALIASES</span><span class="p">:</span>
-        <span class="c1">#print &#39;True&#39;</span>
-        <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_image_path</span><span class="p">()</span>
     <span class="k">except</span><span class="p">:</span>
@@ -8212,7 +8212,7 @@ window (using wx)</p></div>
                   <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
                   <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;date&quot;</span><span class="p">:</span><span class="s2">&quot;now&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;State_Dictionary&quot;</span><span class="p">:</span><span class="bp">None</span>
+                  <span class="s2">&quot;state_dictionary&quot;</span><span class="p">:</span><span class="bp">None</span>
                   <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -8224,6 +8224,7 @@ window (using wx)</p></div>
         <span class="n">XMLBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
         <span class="n">state_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;State&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">state_node</span><span class="p">)</span>
+        <span class="c1"># This should be in State_Description as State_Timestamp?</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;now&#39;</span><span class="p">]:</span>
             <span class="c1"># Add the Date attribute, this is the time when the state was created</span>
             <span class="n">date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
@@ -8247,7 +8248,9 @@ window (using wx)</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">state_node</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;Tuple&#39;</span><span class="p">)])</span>
 
     <span class="k">def</span> <span class="nf">add_state_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">description</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description and its information&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description and its information</span>
+<span class="sd">        Currently data can be entered as a dictionary of the form {&#39;State_Description&#39;:{tag_name:tag_value}}</span>
+<span class="sd">        or as an element or as a string&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_element</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DictionaryType</span><span class="p">:</span>
@@ -8271,6 +8274,13 @@ window (using wx)</p></div>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">insertBefore</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span>
+
+    <span class="k">def</span> <span class="nf">get_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tries to return the timestamp stored as an attribute date in the tag State&quot;&quot;&quot;</span>
+        <span class="c1"># Take the first thing called Image</span>
+        <span class="n">state_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">state_node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">timestamp</span>
 </pre></div>
 
   </div>
@@ -8346,7 +8356,7 @@ window (using wx)</p></div>
               <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
               <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
               <span class="s2">&quot;date&quot;</span><span class="p">:</span><span class="s2">&quot;now&quot;</span><span class="p">,</span>
-              <span class="s2">&quot;State_Dictionary&quot;</span><span class="p">:</span><span class="bp">None</span>
+              <span class="s2">&quot;state_dictionary&quot;</span><span class="p">:</span><span class="bp">None</span>
               <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -8356,6 +8366,7 @@ window (using wx)</p></div>
     <span class="n">XMLBase</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
     <span class="n">state_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;State&#39;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">state_node</span><span class="p">)</span>
+    <span class="c1"># This should be in State_Description as State_Timestamp?</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;now&#39;</span><span class="p">]:</span>
         <span class="c1"># Add the Date attribute, this is the time when the state was created</span>
         <span class="n">date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
@@ -8393,12 +8404,16 @@ window (using wx)</p></div>
 
     
   
-    <div class="desc"><p>Adds the tag named State_Description and its information</p></div>
+    <div class="desc"><p>Adds the tag named State_Description and its information
+Currently data can be entered as a dictionary of the form {'State_Description':{tag_name:tag_value}}
+or as an element or as a string</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.add_state_description', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.add_state_description" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_state_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">description</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description and its information&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description and its information</span>
+<span class="sd">    Currently data can be entered as a dictionary of the form {&#39;State_Description&#39;:{tag_name:tag_value}}</span>
+<span class="sd">    or as an element or as a string&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">new_element</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DictionaryType</span><span class="p">:</span>
@@ -8421,6 +8436,32 @@ window (using wx)</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">insertBefore</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">raise</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.get_timestamp">
+    <p>def <span class="ident">get_timestamp</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Tries to return the timestamp stored as an attribute date in the tag State</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.get_timestamp', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.XMLModels.InstrumentState.get_timestamp" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tries to return the timestamp stored as an attribute date in the tag State&quot;&quot;&quot;</span>
+    <span class="c1"># Take the first thing called Image</span>
+    <span class="n">state_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">state_node</span><span class="o">.</span><span class="n">getAttribute</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">timestamp</span>
 </pre></div>
 
   </div>
@@ -9947,7 +9988,8 @@ operations including display as a string.</p></div>
                   <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                  <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span>
+                  <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+                  <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="bp">None</span>
                   <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -9960,8 +10002,12 @@ operations including display as a string.</p></div>
                 <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
         <span class="c1">#if the file path is not supplied create a new xml sheet</span>
         <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
             <span class="c1"># Should be a relative path for</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
@@ -10091,7 +10137,8 @@ operations including display as a string.</p></div>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span>
               <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span>
+              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+              <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="bp">None</span>
               <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -10104,8 +10151,12 @@ operations including display as a string.</p></div>
             <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
     <span class="c1">#if the file path is not supplied create a new xml sheet</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>

@@ -1303,7 +1303,8 @@ Most models are xml based</p>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span>
               <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span>
+              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+              <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="bp">None</span>
               <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -1316,8 +1317,12 @@ Most models are xml based</p>
             <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
     <span class="c1">#if the file path is not supplied create a new xml sheet</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
@@ -1529,7 +1534,8 @@ window (using wx)</p></div>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span>
               <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span>
+              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+              <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="bp">None</span>
               <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -1542,8 +1548,12 @@ window (using wx)</p></div>
             <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
     <span class="c1">#if the file path is not supplied create a new xml sheet</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
@@ -1755,7 +1765,8 @@ window (using wx)</p></div>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span>
               <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span>
+              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+              <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="bp">None</span>
               <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -1768,8 +1779,12 @@ window (using wx)</p></div>
             <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
     <span class="c1">#if the file path is not supplied create a new xml sheet</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
@@ -1981,7 +1996,8 @@ window (using wx)</p></div>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span>
               <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span>
+              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+              <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="bp">None</span>
               <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -1994,8 +2010,12 @@ window (using wx)</p></div>
             <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
     <span class="c1">#if the file path is not supplied create a new xml sheet</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
@@ -2207,7 +2227,8 @@ window (using wx)</p></div>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span>
               <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span>
+              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+              <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="bp">None</span>
               <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -2220,8 +2241,12 @@ window (using wx)</p></div>
             <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
     <span class="c1">#if the file path is not supplied create a new xml sheet</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
@@ -2433,7 +2458,8 @@ window (using wx)</p></div>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span>
               <span class="s2">&quot;directory&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span>
+              <span class="s2">&quot;extension&quot;</span><span class="p">:</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+              <span class="s2">&quot;content&quot;</span><span class="p">:</span><span class="bp">None</span>
               <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -2446,8 +2472,12 @@ window (using wx)</p></div>
             <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
     <span class="c1">#if the file path is not supplied create a new xml sheet</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">impl</span><span class="o">=</span><span class="n">getDOMImplementation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">impl</span><span class="o">.</span><span class="n">createDocument</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">],</span><span class="bp">None</span><span class="p">)</span>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>

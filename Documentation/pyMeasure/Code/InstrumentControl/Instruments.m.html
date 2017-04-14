@@ -1100,6 +1100,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.get_image_path">get_image_path</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.get_query_dictionary">get_query_dictionary</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.get_state">get_state</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.load_state">load_state</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.query">query</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.read">read</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.save">save</a></li>
@@ -1136,6 +1137,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.ACTIVE_COMPONENTS">ACTIVE_COMPONENTS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.DATA_SHEETS">DATA_SHEETS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.DEFAULT_MODE">DEFAULT_MODE</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.GENERAL_DESCRIPTORS">GENERAL_DESCRIPTORS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.INSTRUMENTS_DEFINED">INSTRUMENTS_DEFINED</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.INSTRUMENT_TYPES">INSTRUMENT_TYPES</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.METHOD_ALIASES">METHOD_ALIASES</a></li>
@@ -1220,7 +1222,11 @@ instruments; GPIB,RS232 and other visa instruments</p>
 <span class="k">except</span><span class="p">:</span>
     <span class="n">METHOD_ALIASES</span><span class="o">=</span><span class="mi">0</span>
     <span class="k">pass</span> 
-
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">Code.Utils.Names</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not load pyMeasure.Code.Utils.Names&quot;</span><span class="p">)</span>
+    <span class="k">pass</span>
 <span class="c1">#-------------------------------------------------------------------------------</span>
 <span class="c1"># Module Constants</span>
 <span class="n">ACTIVE_COMPONENTS</span><span class="o">=</span><span class="p">[</span><span class="n">PIL_AVAILABLE</span><span class="p">,</span><span class="n">DATA_SHEETS</span><span class="p">,</span><span class="n">METHOD_ALIASES</span><span class="p">]</span>
@@ -1314,14 +1320,21 @@ instruments; GPIB,RS232 and other visa instruments</p>
 
         
 <span class="k">class</span> <span class="nc">VisaInstrument</span><span class="p">(</span><span class="n">InstrumentSheet</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; General Class to communicate with COMM and GPIB instruments&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">resource_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">key_word_arguments</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; General Class to communicate with COMM and GPIB instruments</span>
+<span class="sd">    This is a blend of the pyvisa resource and an xml description. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">resource_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Intializes the VisaInstrument Class&quot;&quot;&quot;</span>
+        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;state_directory&quot;</span><span class="p">:</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
         <span class="c1"># First we try to look up the description and get info from it</span>
         <span class="k">if</span> <span class="n">DATA_SHEETS</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span> 
                 <span class="bp">self</span><span class="o">.</span><span class="n">info_path</span><span class="o">=</span><span class="n">find_description</span><span class="p">(</span><span class="n">resource_name</span><span class="p">)</span>
-                <span class="n">InstrumentSheet</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">info_path</span><span class="p">)</span>
+                <span class="n">InstrumentSheet</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">info_path</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span><span class="o">=</span><span class="bp">True</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_STATE_QUERY_DICTIONARY</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_query_dictionary</span><span class="p">()</span>
             <span class="k">except</span><span class="p">:</span>
@@ -1329,6 +1342,7 @@ instruments; GPIB,RS232 and other visa instruments</p>
                 <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_STATE_QUERY_DICTIONARY</span><span class="o">=</span><span class="p">{}</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span><span class="o">=</span><span class="bp">False</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">instrument_address</span><span class="o">=</span><span class="n">resource_name</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="n">resource_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
                 <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span><span class="o">=</span><span class="bp">False</span>
@@ -1347,16 +1361,9 @@ instruments; GPIB,RS232 and other visa instruments</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span><span class="o">=</span><span class="n">visa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
         <span class="c1"># Call the visa instrument class-- this gives ask,write,read</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_address</span><span class="p">)</span>
-        <span class="c1"># for key,value in self.resource.__dict__.iteritems():</span>
-        <span class="c1">#     self.__dict__[key]=value</span>
-        <span class="c1"># pyvisa.resources.messagebased.MessageBasedResource.__init__(self,</span>
-        <span class="c1">#                                                             **{&quot;resource_manager&quot;:visa.ResourceManager(),</span>
-        <span class="c1">#                                                               &quot;resource_name&quot;:self.instrument_address})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
         
-        <span class="k">if</span> <span class="n">METHOD_ALIASES</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span> <span class="p">:</span>
-            <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">command</span><span class="p">):</span>
         <span class="s2">&quot;Writes command to instrument&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
@@ -1394,15 +1401,23 @@ instruments; GPIB,RS232 and other visa instruments</p>
     <span class="k">def</span> <span class="nf">save_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Saves the state in self.current_state attribute &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">state_dictionary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">)</span>
         
-    <span class="k">def</span> <span class="nf">save_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">state_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">state_dictionary</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">save_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">state_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">state_dictionary</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Saves any state dictionary to an xml file, with state_name &quot;&quot;&quot;</span>
-        <span class="n">new_state</span><span class="o">=</span><span class="n">InstrumentState</span><span class="p">(</span><span class="o">**</span><span class="n">state_dictionary</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">state_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">state_path</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">general_descriptor</span><span class="o">=</span><span class="s2">&quot;State&quot;</span><span class="p">,</span>
+                                 <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;state_directory&quot;</span><span class="p">])</span>
+        <span class="n">new_state</span><span class="o">=</span><span class="n">InstrumentState</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;state_dictionary&quot;</span><span class="p">:</span><span class="n">state_dictionary</span><span class="p">,</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">:</span><span class="s2">&quot;./DEFAULT_STATE_STYLE.xsl&quot;</span><span class="p">})</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_state</span><span class="o">.</span><span class="n">add_state_description</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span> <span class="k">raise</span> <span class="c1">#pass</span>
         <span class="n">new_state</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">state_path</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">load_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Loads a state from a file.&quot;&quot;&quot;</span>
+        <span class="n">state_model</span><span class="o">=</span><span class="n">InstrumentState</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="o">**</span><span class="n">state_model</span><span class="o">.</span><span class="n">state_dictionary</span><span class="p">)</span>
 
 
     
@@ -1702,19 +1717,27 @@ outputs a path or the file.</p></div>
       <p id="pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument" class="name">class <span class="ident">VisaInstrument</span></p>
       
   
-    <div class="desc"><p>General Class to communicate with COMM and GPIB instruments</p></div>
+    <div class="desc"><p>General Class to communicate with COMM and GPIB instruments
+This is a blend of the pyvisa resource and an xml description.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument" class="source">
     <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">VisaInstrument</span><span class="p">(</span><span class="n">InstrumentSheet</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; General Class to communicate with COMM and GPIB instruments&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">resource_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">key_word_arguments</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; General Class to communicate with COMM and GPIB instruments</span>
+<span class="sd">    This is a blend of the pyvisa resource and an xml description. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">resource_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Intializes the VisaInstrument Class&quot;&quot;&quot;</span>
+        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;state_directory&quot;</span><span class="p">:</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
         <span class="c1"># First we try to look up the description and get info from it</span>
         <span class="k">if</span> <span class="n">DATA_SHEETS</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span> 
                 <span class="bp">self</span><span class="o">.</span><span class="n">info_path</span><span class="o">=</span><span class="n">find_description</span><span class="p">(</span><span class="n">resource_name</span><span class="p">)</span>
-                <span class="n">InstrumentSheet</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">info_path</span><span class="p">)</span>
+                <span class="n">InstrumentSheet</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">info_path</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span><span class="o">=</span><span class="bp">True</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_STATE_QUERY_DICTIONARY</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_query_dictionary</span><span class="p">()</span>
             <span class="k">except</span><span class="p">:</span>
@@ -1722,6 +1745,7 @@ outputs a path or the file.</p></div>
                 <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_STATE_QUERY_DICTIONARY</span><span class="o">=</span><span class="p">{}</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span><span class="o">=</span><span class="bp">False</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">instrument_address</span><span class="o">=</span><span class="n">resource_name</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="n">resource_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
                 <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span><span class="o">=</span><span class="bp">False</span>
@@ -1740,16 +1764,9 @@ outputs a path or the file.</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span><span class="o">=</span><span class="n">visa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
         <span class="c1"># Call the visa instrument class-- this gives ask,write,read</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_address</span><span class="p">)</span>
-        <span class="c1"># for key,value in self.resource.__dict__.iteritems():</span>
-        <span class="c1">#     self.__dict__[key]=value</span>
-        <span class="c1"># pyvisa.resources.messagebased.MessageBasedResource.__init__(self,</span>
-        <span class="c1">#                                                             **{&quot;resource_manager&quot;:visa.ResourceManager(),</span>
-        <span class="c1">#                                                               &quot;resource_name&quot;:self.instrument_address})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
         
-        <span class="k">if</span> <span class="n">METHOD_ALIASES</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span> <span class="p">:</span>
-            <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">command</span><span class="p">):</span>
         <span class="s2">&quot;Writes command to instrument&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
@@ -1787,15 +1804,23 @@ outputs a path or the file.</p></div>
     <span class="k">def</span> <span class="nf">save_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Saves the state in self.current_state attribute &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">state_dictionary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">)</span>
         
-    <span class="k">def</span> <span class="nf">save_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">state_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">state_dictionary</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">save_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">state_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">state_dictionary</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Saves any state dictionary to an xml file, with state_name &quot;&quot;&quot;</span>
-        <span class="n">new_state</span><span class="o">=</span><span class="n">InstrumentState</span><span class="p">(</span><span class="o">**</span><span class="n">state_dictionary</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">state_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">state_path</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">general_descriptor</span><span class="o">=</span><span class="s2">&quot;State&quot;</span><span class="p">,</span>
+                                 <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;state_directory&quot;</span><span class="p">])</span>
+        <span class="n">new_state</span><span class="o">=</span><span class="n">InstrumentState</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;state_dictionary&quot;</span><span class="p">:</span><span class="n">state_dictionary</span><span class="p">,</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">:</span><span class="s2">&quot;./DEFAULT_STATE_STYLE.xsl&quot;</span><span class="p">})</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_state</span><span class="o">.</span><span class="n">add_state_description</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span> <span class="k">raise</span> <span class="c1">#pass</span>
         <span class="n">new_state</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">state_path</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">load_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Loads a state from a file.&quot;&quot;&quot;</span>
+        <span class="n">state_model</span><span class="o">=</span><span class="n">InstrumentState</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="o">**</span><span class="n">state_model</span><span class="o">.</span><span class="n">state_dictionary</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -1822,6 +1847,16 @@ outputs a path or the file.</p></div>
             </div>
             <div class="item">
             <p id="pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.current_state" class="name">var <span class="ident">current_state</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.options" class="name">var <span class="ident">options</span></p>
             
 
             
@@ -1864,7 +1899,7 @@ outputs a path or the file.</p></div>
             
   <div class="item">
     <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, resource_name=None, **key_word_arguments)</p>
+    <p>def <span class="ident">__init__</span>(</p><p>self, resource_name=None, **options)</p>
     </div>
     
 
@@ -1874,13 +1909,19 @@ outputs a path or the file.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.__init__', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.__init__" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">resource_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">key_word_arguments</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">resource_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Intializes the VisaInstrument Class&quot;&quot;&quot;</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;state_directory&quot;</span><span class="p">:</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
     <span class="c1"># First we try to look up the description and get info from it</span>
     <span class="k">if</span> <span class="n">DATA_SHEETS</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span> 
             <span class="bp">self</span><span class="o">.</span><span class="n">info_path</span><span class="o">=</span><span class="n">find_description</span><span class="p">(</span><span class="n">resource_name</span><span class="p">)</span>
-            <span class="n">InstrumentSheet</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">info_path</span><span class="p">)</span>
+            <span class="n">InstrumentSheet</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">info_path</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span><span class="o">=</span><span class="bp">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_STATE_QUERY_DICTIONARY</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_query_dictionary</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
@@ -1888,6 +1929,7 @@ outputs a path or the file.</p></div>
             <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_STATE_QUERY_DICTIONARY</span><span class="o">=</span><span class="p">{}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span><span class="o">=</span><span class="bp">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">instrument_address</span><span class="o">=</span><span class="n">resource_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="n">resource_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
             <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span><span class="o">=</span><span class="bp">False</span>
@@ -1906,16 +1948,7 @@ outputs a path or the file.</p></div>
     <span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span><span class="o">=</span><span class="n">visa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
     <span class="c1"># Call the visa instrument class-- this gives ask,write,read</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_address</span><span class="p">)</span>
-    <span class="c1"># for key,value in self.resource.__dict__.iteritems():</span>
-    <span class="c1">#     self.__dict__[key]=value</span>
-    <span class="c1"># pyvisa.resources.messagebased.MessageBasedResource.__init__(self,</span>
-    <span class="c1">#                                                             **{&quot;resource_manager&quot;:visa.ResourceManager(),</span>
-    <span class="c1">#                                                               &quot;resource_name&quot;:self.instrument_address})</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
-    
-    <span class="k">if</span> <span class="n">METHOD_ALIASES</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_found</span> <span class="p">:</span>
-        <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">exec</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -2071,6 +2104,30 @@ outputs a path or the file.</p></div>
   
             
   <div class="item">
+    <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.load_state">
+    <p>def <span class="ident">load_state</span>(</p><p>self, file_path)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Loads a state from a file.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.load_state', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.load_state" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">load_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads a state from a file.&quot;&quot;&quot;</span>
+    <span class="n">state_model</span><span class="o">=</span><span class="n">InstrumentState</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="o">**</span><span class="n">state_model</span><span class="o">.</span><span class="n">state_dictionary</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.query">
     <p>def <span class="ident">query</span>(</p><p>self, command)</p>
     </div>
@@ -2192,7 +2249,7 @@ an XLST in self.options["XSLT"] and file_path=self.path.replace('.xml','.html')<
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">save_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Saves the state in self.current_state attribute &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">state_dictionary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -2203,7 +2260,7 @@ an XLST in self.options["XSLT"] and file_path=self.path.replace('.xml','.html')<
             
   <div class="item">
     <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.save_state">
-    <p>def <span class="ident">save_state</span>(</p><p>self, state_path=None, **state_dictionary)</p>
+    <p>def <span class="ident">save_state</span>(</p><p>self, state_path=None, state_dictionary=None)</p>
     </div>
     
 
@@ -2213,9 +2270,12 @@ an XLST in self.options["XSLT"] and file_path=self.path.replace('.xml','.html')<
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.save_state', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.save_state" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">save_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">state_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">state_dictionary</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">save_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">state_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">state_dictionary</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Saves any state dictionary to an xml file, with state_name &quot;&quot;&quot;</span>
-    <span class="n">new_state</span><span class="o">=</span><span class="n">InstrumentState</span><span class="p">(</span><span class="o">**</span><span class="n">state_dictionary</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">state_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">state_path</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">general_descriptor</span><span class="o">=</span><span class="s2">&quot;State&quot;</span><span class="p">,</span>
+                             <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;state_directory&quot;</span><span class="p">])</span>
+    <span class="n">new_state</span><span class="o">=</span><span class="n">InstrumentState</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;state_dictionary&quot;</span><span class="p">:</span><span class="n">state_dictionary</span><span class="p">,</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">:</span><span class="s2">&quot;./DEFAULT_STATE_STYLE.xsl&quot;</span><span class="p">})</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">new_state</span><span class="o">.</span><span class="n">add_state_description</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span> <span class="k">raise</span> <span class="c1">#pass</span>
@@ -2473,6 +2533,14 @@ window (using wx)</p></div>
       </div>
       <div class="item">
       <p id="pyMeasure.Code.InstrumentControl.Instruments.DEFAULT_MODE" class="name">var <span class="ident">DEFAULT_MODE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.InstrumentControl.Instruments.GENERAL_DESCRIPTORS" class="name">var <span class="ident">GENERAL_DESCRIPTORS</span></p>
       
   
   <div class="source_cont">

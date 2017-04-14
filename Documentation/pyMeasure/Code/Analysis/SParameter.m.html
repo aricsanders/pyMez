@@ -1145,6 +1145,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.FORMATS">FORMATS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.FREQUENCY_UNITS">FREQUENCY_UNITS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.GET_STATS_FIELDS">GET_STATS_FIELDS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.HTML_TEMPLATE_DIRECTORY">HTML_TEMPLATE_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.IMAGE_FILE_EXTENSIONS">IMAGE_FILE_EXTENSIONS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.INKSCAPE_PATH">INKSCAPE_PATH</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Analysis.SParameter.INSTRUMENT_SHEETS">INSTRUMENT_SHEETS</a></li>
@@ -1536,7 +1537,7 @@ see also <a href="./NISTUncertainty.m.html">NISTUncertainty</a></p>
         <span class="n">combined_table</span> <span class="o">+</span> <span class="n">difference</span>
     <span class="c1">#print combined_table.options[&quot;column_types&quot;]</span>
     <span class="n">variance</span> <span class="o">=</span> <span class="n">frequency_model_collapse_multiple_measurements</span><span class="p">(</span><span class="n">combined_table</span><span class="p">,</span>
-                                                                        <span class="n">method</span><span class="o">=</span><span class="s1">&#39;rms&#39;</span><span class="p">)</span>
+                                                                        <span class="n">method</span><span class="o">=</span><span class="s1">&#39;rss&#39;</span><span class="p">)</span>
     <span class="n">new_column_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frequency&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">variance</span><span class="o">.</span><span class="n">column_names</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
     <span class="n">mean_table</span><span class="o">=</span><span class="n">Snp_to_AsciiDataTable</span><span class="p">(</span><span class="n">nominal_file</span><span class="p">)</span>
     <span class="n">variance</span><span class="o">.</span><span class="n">column_names</span> <span class="o">=</span> <span class="n">new_column_names</span>
@@ -3945,7 +3946,7 @@ has a mean or median and a RMS variance from the nominal value for the uncertain
         <span class="n">combined_table</span> <span class="o">+</span> <span class="n">difference</span>
     <span class="c1">#print combined_table.options[&quot;column_types&quot;]</span>
     <span class="n">variance</span> <span class="o">=</span> <span class="n">frequency_model_collapse_multiple_measurements</span><span class="p">(</span><span class="n">combined_table</span><span class="p">,</span>
-                                                                        <span class="n">method</span><span class="o">=</span><span class="s1">&#39;rms&#39;</span><span class="p">)</span>
+                                                                        <span class="n">method</span><span class="o">=</span><span class="s1">&#39;rss&#39;</span><span class="p">)</span>
     <span class="n">new_column_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frequency&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">variance</span><span class="o">.</span><span class="n">column_names</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
     <span class="n">mean_table</span><span class="o">=</span><span class="n">Snp_to_AsciiDataTable</span><span class="p">(</span><span class="n">nominal_file</span><span class="p">)</span>
     <span class="n">variance</span><span class="o">.</span><span class="n">column_names</span> <span class="o">=</span> <span class="n">new_column_names</span>
@@ -5911,6 +5912,14 @@ by min_phase and radians or degrees can be specified by units</p></div>
       </div>
       <div class="item">
       <p id="pyMeasure.Code.Analysis.SParameter.GET_STATS_FIELDS" class="name">var <span class="ident">GET_STATS_FIELDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.Analysis.SParameter.HTML_TEMPLATE_DIRECTORY" class="name">var <span class="ident">HTML_TEMPLATE_DIRECTORY</span></p>
       
   
   <div class="source_cont">

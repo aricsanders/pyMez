@@ -1075,6 +1075,7 @@ table {
 	<div id="functionsNavigation">
       
   <ul>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.TableGraph_to_Links">TableGraph_to_Links</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.edge_1_to_2">edge_1_to_2</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.edge_2_to_1">edge_2_to_1</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.remove_circular_paths">remove_circular_paths</a></li>
@@ -1283,6 +1284,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.FORMATS">FORMATS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.FREQUENCY_UNITS">FREQUENCY_UNITS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.GET_STATS_FIELDS">GET_STATS_FIELDS</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.HTML_TEMPLATE_DIRECTORY">HTML_TEMPLATE_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.IMAGE_FILE_EXTENSIONS">IMAGE_FILE_EXTENSIONS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.INKSCAPE_PATH">INKSCAPE_PATH</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.GraphModels.INSTRUMENT_SHEETS">INSTRUMENT_SHEETS</a></li>
@@ -1499,6 +1501,47 @@ Currently, the module networkx is used to display the graph.</p>
     <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
         <span class="n">graph</span><span class="o">.</span><span class="n">move_to_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">TableGraph_to_Links</span><span class="p">(</span><span class="n">table_graph</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a table graph to a set of download links with embedded data in them&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;base_name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;XmlFile&#39;</span><span class="p">,</span> <span class="s1">&#39;CsvFile&#39;</span><span class="p">,</span> <span class="s1">&#39;ExcelFile&#39;</span><span class="p">,</span> <span class="s1">&#39;OdsFile&#39;</span><span class="p">,</span> <span class="s1">&#39;MatFile&#39;</span><span class="p">,</span> <span class="s1">&#39;HtmlFile&#39;</span><span class="p">,</span> <span class="s1">&#39;JsonFile&#39;</span><span class="p">],</span>
+                <span class="s2">&quot;extensions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span> <span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="s1">&#39;xlsx&#39;</span><span class="p">,</span> <span class="s1">&#39;ods&#39;</span><span class="p">,</span> <span class="s1">&#39;mat&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">],</span>
+                <span class="s2">&quot;mime_types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;application/xml&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;application/vnd.oasis.opendocument.spreadsheet&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;application/x-matlab-data&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">]}</span>
+    <span class="n">conversion_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">conversion_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">conversion_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">if</span> <span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;base_name&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">base_name</span> <span class="o">=</span> <span class="s1">&#39;test.txt&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">base_name</span> <span class="o">=</span> <span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;base_name&quot;</span><span class="p">]</span>
+
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">]</span>
+    <span class="n">extensions</span> <span class="o">=</span> <span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;extensions&quot;</span><span class="p">]</span>
+    <span class="n">mime_types</span> <span class="o">=</span> <span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;mime_types&quot;</span><span class="p">]</span>
+
+    <span class="n">out_links</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">node_index</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+        <span class="n">table_graph</span><span class="o">.</span><span class="n">move_to_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">table_graph</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">in_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+        <span class="n">content_string</span> <span class="o">=</span> <span class="n">in_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">link</span> <span class="o">=</span> <span class="n">String_to_DownloadLink</span><span class="p">(</span><span class="n">content_string</span><span class="p">,</span>
+                                      <span class="n">suggested_name</span><span class="o">=</span><span class="n">change_extension</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span> <span class="n">extensions</span><span class="p">[</span><span class="n">node_index</span><span class="p">]),</span>
+                                      <span class="n">mime_type</span><span class="o">=</span><span class="n">mime_types</span><span class="p">[</span><span class="n">node_index</span><span class="p">],</span>
+                                      <span class="n">text</span><span class="o">=</span><span class="n">extensions</span><span class="p">[</span><span class="n">node_index</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">node_index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">out_links</span> <span class="o">=</span> <span class="n">out_links</span> <span class="o">+</span> <span class="n">link</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out_links</span> <span class="o">=</span> <span class="n">out_links</span> <span class="o">+</span> <span class="n">link</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span>
+    <span class="k">return</span> <span class="n">out_links</span>
+
 
 <span class="k">def</span> <span class="nf">remove_circular_paths</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Removes pieces of the path that just end on the same node&quot;&quot;&quot;</span>
@@ -2307,6 +2350,64 @@ Currently, the module networkx is used to display the graph.</p>
   <section id="section-items">
 
     <h2 class="section-title" id="header-functions">Functions</h2>
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.GraphModels.TableGraph_to_Links">
+    <p>def <span class="ident">TableGraph_to_Links</span>(</p><p>table_graph, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Converts a table graph to a set of download links with embedded data in them</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.GraphModels.TableGraph_to_Links', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.GraphModels.TableGraph_to_Links" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">TableGraph_to_Links</span><span class="p">(</span><span class="n">table_graph</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a table graph to a set of download links with embedded data in them&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;base_name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;XmlFile&#39;</span><span class="p">,</span> <span class="s1">&#39;CsvFile&#39;</span><span class="p">,</span> <span class="s1">&#39;ExcelFile&#39;</span><span class="p">,</span> <span class="s1">&#39;OdsFile&#39;</span><span class="p">,</span> <span class="s1">&#39;MatFile&#39;</span><span class="p">,</span> <span class="s1">&#39;HtmlFile&#39;</span><span class="p">,</span> <span class="s1">&#39;JsonFile&#39;</span><span class="p">],</span>
+                <span class="s2">&quot;extensions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;xml&#39;</span><span class="p">,</span> <span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="s1">&#39;xlsx&#39;</span><span class="p">,</span> <span class="s1">&#39;ods&#39;</span><span class="p">,</span> <span class="s1">&#39;mat&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">],</span>
+                <span class="s2">&quot;mime_types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;application/xml&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;application/vnd.oasis.opendocument.spreadsheet&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;application/x-matlab-data&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">]}</span>
+    <span class="n">conversion_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">conversion_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">conversion_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">if</span> <span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;base_name&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">base_name</span> <span class="o">=</span> <span class="s1">&#39;test.txt&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">base_name</span> <span class="o">=</span> <span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;base_name&quot;</span><span class="p">]</span>
+
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">]</span>
+    <span class="n">extensions</span> <span class="o">=</span> <span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;extensions&quot;</span><span class="p">]</span>
+    <span class="n">mime_types</span> <span class="o">=</span> <span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;mime_types&quot;</span><span class="p">]</span>
+
+    <span class="n">out_links</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">node_index</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+        <span class="n">table_graph</span><span class="o">.</span><span class="n">move_to_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">table_graph</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">in_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+        <span class="n">content_string</span> <span class="o">=</span> <span class="n">in_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">link</span> <span class="o">=</span> <span class="n">String_to_DownloadLink</span><span class="p">(</span><span class="n">content_string</span><span class="p">,</span>
+                                      <span class="n">suggested_name</span><span class="o">=</span><span class="n">change_extension</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span> <span class="n">extensions</span><span class="p">[</span><span class="n">node_index</span><span class="p">]),</span>
+                                      <span class="n">mime_type</span><span class="o">=</span><span class="n">mime_types</span><span class="p">[</span><span class="n">node_index</span><span class="p">],</span>
+                                      <span class="n">text</span><span class="o">=</span><span class="n">extensions</span><span class="p">[</span><span class="n">node_index</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">node_index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">out_links</span> <span class="o">=</span> <span class="n">out_links</span> <span class="o">+</span> <span class="n">link</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out_links</span> <span class="o">=</span> <span class="n">out_links</span> <span class="o">+</span> <span class="n">link</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span>
+    <span class="k">return</span> <span class="n">out_links</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
       
   <div class="item">
     <div class="name def" id="pyMeasure.Code.DataHandlers.GraphModels.edge_1_to_2">
@@ -9676,6 +9777,14 @@ moving around the closed path, False otherwise. Starting point is current_node</
       </div>
       <div class="item">
       <p id="pyMeasure.Code.DataHandlers.GraphModels.GET_STATS_FIELDS" class="name">var <span class="ident">GET_STATS_FIELDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.GraphModels.HTML_TEMPLATE_DIRECTORY" class="name">var <span class="ident">HTML_TEMPLATE_DIRECTORY</span></p>
       
   
   <div class="source_cont">
