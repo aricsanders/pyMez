@@ -146,12 +146,14 @@ class KeithleyIV():
         'Date':datetime.datetime.utcnow().isoformat(),
         'Notes':self.notes,'Name':self.name,'Resistance':str(self.resistance)}
         self.data_dictionary['Data']=self.data_list
-        self.state=Code.DataHandlers.XMLModels.InstrumentState(None,state_dictionary=self.instrument.get_state(),
+        try:
+            self.state=Code.DataHandlers.XMLModels.InstrumentState(None,state_dictionary=self.instrument.get_state(),
                                                                style_sheet=os.path.join(Code.DataHandlers.XMLModels.TESTS_DIRECTORY,
                                                                                              "../XSL/DEFAULT_STATE_STYLE.xsl"))
-        self.state.add_state_description(description={"State_Description":{"Instrument_Description":KEITHLEY_INSTRUMENT_SHEET}})
-        self.data_dictionary["Data_Description"]["State"]="./"+self.state.path
-        self.state.save()
+            self.state.add_state_description(description={"State_Description":{"Instrument_Description":KEITHLEY_INSTRUMENT_SHEET}})
+            self.data_dictionary["Data_Description"]["State"]="./"+self.state.path
+            self.state.save()
+        except:pass
         self.measurement_data=Code.DataHandlers.XMLModels.DataTable(None,data_dictionary=self.data_dictionary,
                                                                     style_sheet=os.path.join(Code.DataHandlers.XMLModels.TESTS_DIRECTORY,
                                                                                              "../XSL/DEFAULT_MEASUREMENT_STYLE.xsl"))

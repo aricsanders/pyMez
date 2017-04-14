@@ -1578,6 +1578,7 @@ def ABCDFrequencyList_to_SFrequencyList(ABCD_frequency_list,Z01=complex(50,0),Z0
         S22=(-1*A*Z02.conjugate()+B-C*Z01*Z02+D*Z01)/denominator
         s_frequency_list.append([frequency,S11,S12,S21,S22])
     return s_frequency_list
+
 #-----------------------------------------------------------------------------
 # Module Classes
 

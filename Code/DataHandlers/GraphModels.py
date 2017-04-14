@@ -120,6 +120,47 @@ def visit_and_print_all_nodes(graph):
         graph.move_to_node(node)
         print(graph.data)
 
+
+def TableGraph_to_Links(table_graph, **options):
+    """Converts a table graph to a set of download links with embedded data in them"""
+    defaults = {"base_name": None,
+                "nodes": ['XmlFile', 'CsvFile', 'ExcelFile', 'OdsFile', 'MatFile', 'HtmlFile', 'JsonFile'],
+                "extensions": ['xml', 'csv', 'xlsx', 'ods', 'mat', 'html', 'json'],
+                "mime_types": ['application/xml', 'text/plain',
+                               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                               'application/vnd.oasis.opendocument.spreadsheet',
+                               'application/x-matlab-data', 'text/html', 'application/json']}
+    conversion_options = {}
+    for key, value in defaults.iteritems():
+        conversion_options[key] = value
+    for key, value in options.iteritems():
+        conversion_options[key] = value
+    if conversion_options["base_name"] is None:
+        base_name = 'test.txt'
+    else:
+        base_name = conversion_options["base_name"]
+
+    nodes = conversion_options["nodes"]
+    extensions = conversion_options["extensions"]
+    mime_types = conversion_options["mime_types"]
+
+    out_links = ""
+    for node_index, node in enumerate(nodes):
+        table_graph.move_to_node(node)
+        file_path = table_graph.data
+        in_file = open(file_path, 'rb')
+        content_string = in_file.read()
+        link = String_to_DownloadLink(content_string,
+                                      suggested_name=change_extension(base_name, extensions[node_index]),
+                                      mime_type=mime_types[node_index],
+                                      text=extensions[node_index])
+        if node_index == len(nodes) - 1:
+            out_links = out_links + link
+        else:
+            out_links = out_links + link + " | "
+    return out_links
+
+
 def remove_circular_paths(path):
     """Removes pieces of the path that just end on the same node"""
     # Todo: Track the error that leaves out a needed path sometimes
