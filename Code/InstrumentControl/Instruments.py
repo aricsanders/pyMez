@@ -121,12 +121,15 @@ def determine_instrument_type(object):
                     return determine_instrument_type_from_string(string)
                 except: pass 
                 
-def find_description(identifier,output='path'):
+def find_description(identifier,output='path',directory=None):
     """ Finds an instrument description in pyMeasure/Instruments given an identifier, 
-    outputs a path or the file."""
+    outputs a path or the file. Right now this outputs the first sheet that matches the identifier"""
     if type(identifier) in StringTypes:
         # Now read in all the Instrument sheets and look for a match
-        instrument_folder=os.path.join(PYMEASURE_ROOT,'Instruments')
+        if directory is None:
+            instrument_folder=os.path.join(PYMEASURE_ROOT,'Instruments')
+        else:
+            instrument_folder=directory
         for instrument_sheet in os.listdir(instrument_folder):
             path=os.path.join(PYMEASURE_ROOT,'Instruments',instrument_sheet)
             if os.path.isfile(path):
@@ -222,7 +225,7 @@ class VisaInstrument(InstrumentSheet):
         """ Gets the current state of the instrument """
         if len(state_query_dictionary)==0:
             state_query_dictionary=self.DEFAULT_STATE_QUERY_DICTIONARY
-        state=dict([(state_command,self.query(str(query))) for state_command,query
+        state=dict([(state_command,self.query(str(query)).replace("\n","")) for state_command,query
         in state_query_dictionary.iteritems()])
         return state
     

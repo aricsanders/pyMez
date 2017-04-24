@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="DEFAULT_INSTRUMENT_STYLE.xsl"?>
-<!-- Written by Aric Sanders 02/2016 -->
-<!-- Updated by Aric Sanders 07/2016 -->
+<!-- Written by Aric Sanders 04/2017 -->
 
 
 <Instrument>
-<!-- Information Specific To My E8361A-->
+<!-- Information Specific To My ZVA110-->
     <Specific_Information>
-        <Name>E8361A</Name>
-        <Alias>Agilent_E8361A_4639_001</Alias>
-        <Location>Building 81, D121</Location>
-        <Manual href="../Documenation/Manuals/PNA_users_Guide.pdf"/>
-        <Image href="./E8361_PNA1_Images/E8361A.jpg"/>
-        <Price></Price>
-        <Serial></Serial>
-        <IDN>Agilent Technologies,E8361A,US43140754,A.07.50.67</IDN>
+        <Name>ZVA110</Name>
+        <Alias>RS_ZVA110_4639_01</Alias>
+        <Location>Building 1, 4639</Location>
+        <Manual href="../Documentation/Manuals/ZVA_ZVB_ZVT_Operating.pdf"/>
+        <Image href="./RS_ZVA110_4639_01_Images/ZVA.jpg"/>
+        <Price>$360,000</Price>
+        <Serial>1312700403101122</Serial>
+        <IDN>Rohde&amp;Schwarz,ZVA67-4Port,1312700403101122,3.80</IDN>
         <Instrument_Type>GPIB</Instrument_Type>
-        <Instrument_Address>GPIB::16</Instrument_Address>
-        <Purchase_Date></Purchase_Date>
-        <NIST_Tag>933071</NIST_Tag>
+        <Instrument_Address>GPIB::20</Instrument_Address>
+        <Purchase_Date>08/2014</Purchase_Date>
+        <NIST_Tag>938506</NIST_Tag>
     </Specific_Information>
-<!-- Information Common To All E8361A-->
+<!-- Information Common To All ZVA110-->
     <General_Information>
-    <Manufacturer>Keysight</Manufacturer>
-    <Manufacturer_Website href="http://www.keysight.com/" />
+    <Manufacturer>Rohde and Schwarz</Manufacturer>
+    <Manufacturer_Website href="https://www.rohde-schwarz.com/us/home_48230.html" />
      <Commands_Description>
         <Command>This is the command sent over the GPIB bus.</Command>
         <Type>Whether or not it returns a value or just sets something.</Type>
