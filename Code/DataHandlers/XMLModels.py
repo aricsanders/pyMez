@@ -1348,7 +1348,10 @@ class InstrumentSheet(XMLBase):
         return image_path
 
 class InstrumentState(XMLBase):
-    """ An instrument state is an XML file with instrument setting information"""
+    """ An instrument state is an XML file with instrument setting information
+    The basic structure was changed 04/2017 to be <Instrument_State><State_Description/><State>
+    <Tuple Set='' Value='' Index=''> </State></Instrument_State> Where index is optional to create an ordered set of
+    commands. Any other attribute is optional and """
     def __init__(self,file_path=None,**options):
         """ Intialize the InstrumentState class"""
         defaults={"root":"Instrument_State",

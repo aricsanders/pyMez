@@ -465,7 +465,7 @@ class S1PV1(SNPBase):
         format may be found at
         http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams/touchstone_file_format.htm
         """
-        defaults={"data_delimiter":"\t",
+        defaults={"data_delimiter":"  ",
                   "column_names_delimiter":None,
                   "specific_descriptor":'One_Port',
                   "general_descriptor":'Sparameter',
@@ -781,7 +781,7 @@ class S2PV1(SNPBase):
         format may be found at
         http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams/touchstone_file_format.htm
         """
-        defaults={"data_delimiter":"\t",
+        defaults={"data_delimiter":"  ",
                   "column_names_delimiter":None,
                   "specific_descriptor":'Two_Port',
                   "general_descriptor":'Sparameter',
@@ -1227,7 +1227,7 @@ class SNP(SNPBase):
         For S2P files use the S2PV1 class. This class does not handle noise parameters.
         """
         defaults={"number_ports":None,
-                  "data_delimiter":"\t",
+                  "data_delimiter":"  ",
                   "column_names_delimiter":None,
                   "specific_descriptor":'Multiport',
                   "general_descriptor":'Sparameter',

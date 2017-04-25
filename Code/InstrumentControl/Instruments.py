@@ -253,6 +253,10 @@ class VisaInstrument(InstrumentSheet):
         state_model=InstrumentState(file_path)
         self.set_state(**state_model.state_dictionary)
 
+    def close(self):
+        """Closes the VISA session"""
+        self.resource_manager.close()
+
 
     
 
