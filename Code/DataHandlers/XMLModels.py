@@ -1264,7 +1264,7 @@ class Metadata(XMLBase):
 
 class InstrumentSheet(XMLBase):
     """ Class that handles the xml instrument sheet"""
-    def __init__(self,file_path=None,**options): #instrument_name=None):
+    def __init__(self,file_path=None,**options):
         """ Intializes the InstrumentSheet Class"""
         #if the file path is not supplied create a new instrument sheet
         #using the supplied instrument_name

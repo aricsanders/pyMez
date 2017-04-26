@@ -158,7 +158,8 @@ class VisaInstrument(InstrumentSheet):
     This is a blend of the pyvisa resource and an xml description. """
     def __init__(self,resource_name=None,**options):
         """ Intializes the VisaInstrument Class"""
-        defaults={"state_directory":os.getcwd()}
+        defaults={"state_directory":os.getcwd(),
+                  "instrument_description_directory":os.path.join(PYMEASURE_ROOT,'Instruments')}
         self.options={}
         for key,value in defaults.iteritems():
             self.options[key]=value
@@ -167,12 +168,12 @@ class VisaInstrument(InstrumentSheet):
         # First we try to look up the description and get info from it
         if DATA_SHEETS:
             try: 
-                self.info_path=find_description(resource_name)
+                self.info_path=find_description(resource_name,directory=self.options["instrument_description_directory"])
                 InstrumentSheet.__init__(self,self.info_path,**self.options)
                 self.info_found=True
                 self.DEFAULT_STATE_QUERY_DICTIONARY=self.get_query_dictionary()
             except:
-                print 'The information sheet was not found defaulting to address' 
+                print('The information sheet was not found defaulting to address')
                 self.DEFAULT_STATE_QUERY_DICTIONARY={}
                 self.info_found=False
                 self.instrument_address=resource_name
