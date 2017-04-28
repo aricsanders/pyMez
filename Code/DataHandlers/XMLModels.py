@@ -1263,7 +1263,8 @@ class Metadata(XMLBase):
         print self.current_node.toxml()
 
 class InstrumentSheet(XMLBase):
-    """ Class that handles the xml instrument sheet"""
+    """ Class that handles the xml instrument sheet. An instrument sheet is an xml file with static metadata about
+    the instrument. The default directory containing the sheets is PYMEASURE_ROOT/Instruments."""
     def __init__(self,file_path=None,**options):
         """ Intializes the InstrumentSheet Class"""
         #if the file path is not supplied create a new instrument sheet
@@ -1347,90 +1348,151 @@ class InstrumentSheet(XMLBase):
         image_path=image_node.getAttribute('href')
         return image_path
 
+
 class InstrumentState(XMLBase):
     """ An instrument state is an XML file with instrument setting information
-    The basic structure was changed 04/2017 to be <Instrument_State><State_Description/><State>
-    <Tuple Set='' Value='' Index=''> </State></Instrument_State> Where index is optional to create an ordered set of
-    commands. Any other attribute is optional and """
-    def __init__(self,file_path=None,**options):
-        """ Intialize the InstrumentState class"""
-        defaults={"root":"Instrument_State",
-                  "style_sheet":os.path.join(XSLT_REPOSITORY,
-                                             'DEFAULT_STATE_STYLE.xsl').replace('\\','/'),
-                  "specific_descriptor":'Instrument',
-                  "general_descriptor":'State',
-                  "directory":None,
-                  "extension":'xml',
-                  "date":"now",
-                  "state_dictionary":None
-                  }
-        self.options={}
-        for key,value in defaults.iteritems():
-            self.options[key]=value
-        for key,value in options.iteritems():
-            self.options[key]=value
+    Changed in 04/2017 to accept a state_table that can have other columns and be ordered by the column Index
+    to open an existing state use
+    #!python
+    >>new_xml=InstrumentState("MyInstrumentState.xml")
 
+    To create a new instrument state and save it use
 
-        XMLBase.__init__(self,file_path,**self.options)
-        state_node=self.document.createElement('State')
-        self.document.documentElement.appendChild(state_node)
+    #!python
+    >>state=InstrumentState(state_table=[{"Set":"SOUR:VOLT",{"Value":10},{"Index":0}])
+    >>state.save()
+    """
+
+    def __init__(self, file_path=None, **options):
+        """ Intialize the InstrumentState class."""
+        defaults = {"root": "Instrument_State",
+                    "style_sheet": os.path.join(XSLT_REPOSITORY,
+                                                'DEFAULT_STATE_STYLE.xsl').replace('\\', '/'),
+                    "specific_descriptor": 'Instrument',
+                    "general_descriptor": 'State',
+                    "directory": None,
+                    "extension": 'xml',
+                    "date": "now",
+                    "state_dictionary": None,
+                    "state_table": None
+                    }
+        self.options = {}
+        for key, value in defaults.iteritems():
+            self.options[key] = value
+        for key, value in options.iteritems():
+            self.options[key] = value
+
+        XMLBase.__init__(self, file_path, **self.options)
+        self.state_node = self.document.createElement('State')
+        self.document.documentElement.appendChild(self.state_node)
+
+        if self.options["state_dictionary"]:
+            for key, value in self.options["state_dictionary"].iteritems():
+                new_entry = self.document.createElement('Tuple')
+                set_attribute = self.document.createAttribute('Set')
+                value_attribute = self.document.createAttribute('Value')
+                new_entry.setAttributeNode(set_attribute)
+                new_entry.setAttributeNode(value_attribute)
+                new_entry.setAttribute('Set', key)
+                new_entry.setAttribute('Value', str(value))
+                self.state_node.appendChild(new_entry)
+        if self.options["state_table"]:
+            if "Index" in self.options["state_table"][0].keys():
+                table = sorted(self.options["state_table"], key=lambda x: x["Index"])
+            else:
+                table = self.options["state_table"]
+
+            for row in table[:]:
+                new_entry = self.document.createElement('Tuple')
+                for key, value in row.iteritems():
+                    set_attribute = self.document.createAttribute(key)
+                    new_entry.setAttributeNode(set_attribute)
+                    new_entry.setAttribute(key, "{0}".format(value))
+                self.state_node.appendChild(new_entry)
+
+        # this is not the most direct way to define it but it is the most robust I think
+        # self.state_node=self.document.getElementsByTagName('State')[0]
         # This should be in State_Description as State_Timestamp?
         if self.options["date"] in ['now']:
             # Add the Date attribute, this is the time when the state was created
-            date=datetime.datetime.utcnow().isoformat()
-            Date_attribute=self.document.createAttribute('Date')
-            state_node.setAttributeNode(Date_attribute)
-            state_node.setAttribute('Date',str(date))
-        if self.options["state_dictionary"]:
-            for key,value in self.options["state_dictionary"].iteritems():
-                new_entry=self.document.createElement('Tuple')
-                set_attribute=self.document.createAttribute('Set')
-                value_attribute=self.document.createAttribute('Value')
-                new_entry.setAttributeNode(set_attribute)
-                new_entry.setAttributeNode(value_attribute)
-                new_entry.setAttribute('Set',key)
-                new_entry.setAttribute('Value',str(value))
-                state_node.appendChild(new_entry)
-        # this is not the most direct way to define it but it is the most robust I think
-        self.state_node=self.document.getElementsByTagName('State')[0]
-        self.state_dictionary=dict([(str(node.getAttribute('Set')),
-        node.getAttribute('Value')) for node in \
-        self.state_node.getElementsByTagName('Tuple')])
+            self.add_state_description()
+            timestamp_element = self.document.createElement("State_Timestamp")
+            text = str(datetime.datetime.utcnow().isoformat())
+            timestamp_element.appendChild(self.document.createTextNode(text))
+            state_description = self.document.getElementsByTagName("State_Description")[0]
+            state_description.appendChild(timestamp_element)
+        self.state_dictionary = dict([(str(node.getAttribute('Set')),
+                                       node.getAttribute('Value')) for node in \
+                                      self.state_node.getElementsByTagName('Tuple')])
 
-    def add_state_description(self,description):
+    def add_state_description(self):
         """Adds the tag named State_Description and its information
         Currently data can be entered as a dictionary of the form {'State_Description':{tag_name:tag_value}}
         or as an element or as a string"""
-        try:
-            new_element=''
-            if type(description) is DictionaryType:
-                for key,value in description.iteritems():
-                    # This hanldes Tag:Text dictionaries
-                    if re.search('Description',key):
-                        new_element=self.document.createElement(key)
-                        for tag,element_text in value.iteritems():
-                            new_tag=self.document.createElement(tag)
-                            new_text=self.document.createTextNode(element_text)
-                            new_tag.appendChild(new_text)
-                            new_element.appendChild(new_tag)
-            elif type(description) is StringType:
-                new_element=self.document.createElement('State_Description')
-                new_text=self.document.createTextNode(str(description))
-                new_element.appendChild(new_text)
-            elif type(description) is InstanceType:
-                new_element=description
-            #first_child=self.document.documentElement.firstChild
+        state_description = self.document.createElement("State_Description")
+        if len(self.document.childNodes) == 0:
+            self.document.documentElement.appendChild(state_description)
+        elif not re.match("State_Description", self.document.childNodes[0].nodeName, re.IGNORECASE) and len(
+                self.document.childNodes) > 0:
+            self.document.documentElement.appendChild(state_description)
+        else:
+            print("State_Description already exists, tag was not added ")
+            pass
 
-            self.document.documentElement.insertBefore(new_element,self.document.documentElement.childNodes[0])
-        except:
-            raise
+    def append_description(self, description_dictionary):
+        """Adds the description_dictionary to State_Description. Description"""
+        state_description = self.document.getElementsByTagName('State_Description')[0]
+        for key, value in description_dictionary.iteritems():
+            element = self.document.createElement("{0}".format(key))
+            text = self.document.createTextNode("{0}".format(value))
+            element.appendChild(text)
+            state_description.appendChild(element)
 
     def get_timestamp(self):
         """Tries to return the timestamp stored as an attribute date in the tag State"""
         # Take the first thing called Image
-        state_node = self.document.getElementsByTagName('State')[0]
-        timestamp = state_node.getAttribute('Date')
-        return timestamp
+        try:
+            timestamp_node = self.document.getElementsByTagName('State_Timestamp')[0]
+            timestamp = timestamp_node.childNodes[0].nodeValue
+            return timestamp
+        except:
+            print("No Timestamp Found")
+            return None
+
+    def get_attribute_names(self):
+        """ Returns the attribute names in the first tuple element in the 'data' element """
+        attribute_names = []
+        data_nodes = self.document.getElementsByTagName('State')
+        first_tuple_node = data_nodes[0].childNodes[1]
+        text = first_tuple_node.toprettyxml()
+        text_list = text.split(' ')
+        # print text_list
+        for item in text_list:
+            try:
+                match = re.search('(?P<attribute_name>\w+)=', item)
+                name = match.group('attribute_name')
+                # print name
+                attribute_names.append(name)
+            except:
+                pass
+        return attribute_names
+
+    def get_state_list_dictionary(self):
+        """Gets the state data in a list of dictionaries. This is the equivelent to a table"""
+        out_list = []
+        tuple_list = self.document.getElementsByTagName("Tuple")
+        attributes = self.get_attribute_names()[:]
+        for node in tuple_list:
+            new_row = {}
+            for attribute in attributes:
+                new_row[attribute] = node.getAttribute(attribute)
+            out_list.append(new_row)
+        return out_list
+
+    def get_description_dictionary(self):
+        """Returns State_Description as a tag:value dictionary"""
+        out_dictionary = {}
+        pass
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_XMLModel(test_new=True,test_existing=False):
