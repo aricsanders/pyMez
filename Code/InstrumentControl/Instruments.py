@@ -58,6 +58,16 @@ try:
 except:
     print("Could not load pyMeasure.Code.Utils.Names")
     pass
+try:
+    from Code.DataHandlers.TouchstoneModels import *
+except:
+    print("Could not load Code.DataHandlers.TouchstoneModels")
+    pass
+try:
+    import numpy as np
+except:
+    print("Could not load numpy")
+    pass
 #-------------------------------------------------------------------------------
 # Module Constants
 ACTIVE_COMPONENTS=[PIL_AVAILABLE,DATA_SHEETS,METHOD_ALIASES]
@@ -259,7 +269,211 @@ class VisaInstrument(InstrumentSheet):
         self.resource_manager.close()
 
 
-    
+class VNA(VisaInstrument):
+    """Control class for a linear VNA """
+
+    def __init__(self, resource_name=None, **options):
+        """Initializes the E8631A control class"""
+        defaults = {"state_directory": os.getcwd()}
+        self.options = {}
+        for key, value in defaults.iteritems():
+            self.options[key] = value
+        for key, value in options.iteritems():
+            self.options[key] = value
+        VisaInstrument.__init__(self, resource_name, **self.options)
+        self.power = self.get_power()
+        self.IFBW = self.get_IFBW()
+        # this should be if SENS:SWE:TYPE? is LIN or LOG
+        start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
+        stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
+        number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
+        self.frequency_list = np.linspace(start, stop, number_points).tolist()
+
+    def initialize(self):
+        """Intializes the system"""
+        self.write("SYST:FPRESET")
+        self.write("DISPlay:WINDow1:STATE ON")
+        self.write("CALCulate:PARameter:DEFine 'S11',S11")
+        self.write("DISPlay:WINDow1:TRACe1:FEED 'S11'")
+        self.write("CALCulate:PARameter:DEFine 'S12',S12")
+        self.write("DISPlay:WINDow1:TRACe2:FEED 'S12'")
+        self.write("CALCulate:PARameter:DEFine 'S21',S21")
+        self.write("DISPlay:WINDow1:TRACe3:FEED 'S21'")
+        self.write("CALCulate:PARameter:DEFine 'S22',S22")
+        self.write("DISPlay:WINDow1:TRACe4:FEED 'S22'")
+        start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
+        stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
+        number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
+        self.frequency_list = np.linspace(start, stop, number_points).tolist()
+
+    def set_power(self, power):
+        """Sets the power of the Instrument in dbm"""
+        self.write('SOUR:POW {0}'.format(power))
+
+    def get_power(self):
+        "Returns the power of the instrument in dbm"
+        return self.query('SOUR:POW?')
+
+    def set_IFBW(self, ifbw):
+        """Sets the IF Bandwidth of the instrument in Hz"""
+        self.write('SENS:BAND {0}'.format(ifbw))
+        self.IFBW = ifbw
+
+    def get_IFBW(self):
+        """Returns the IFBW of the instrument in Hz"""
+        ifbw = float(self.query('SENS:BAND?'))
+        self.IFBW = ifbw
+        return ifbw
+
+    def set_frequency(self, start, stop=None, number_points=None, step=None, units='Hz'):
+        """Sets the VNA to a linear mode and creates a single entry in the frequency table. If start is the only specified
+        parameter sets the entry to start=stop and number_points = 1. If step is specified calculates the number of points
+        and sets start, stop, number_points on the VNA. It also stores the value into the attribute frequency_list.
+        """
+        if stop is None and number_points is None:
+            stop = start
+            number_points = 1
+        if number_points is None and not step is None:
+            number_points = round((stop - start) / step) + 1
+        self.frequency_list = np.linspace(start, stop, number_points).tolist()
+        self.write('SWE:TYPE LIN')
+        self.write("SENS:FREQ:START {0}".format(start))
+        self.write("SENS:FREQ:STOP {0}".format(stop))
+        self.write("SENS:SWE:POIN {0}".format(number_points))
+
+    def get_frequency(self):
+        "Returns the frequency in python list format"
+        return self.frequency_list
+
+    def is_busy(self):
+        """Checks if the instrument is currently doing something and returns a boolean value"""
+        opc = bool(self.resource.query("*OPC?"))
+        return not opc
+
+    def measure_switch_terms(self, **options):
+        """Measures switch terms and returns a s2p table in foward and reverse format"""
+        defaults = {}
+        self.measure_switch_term_options = {}
+        for key, value in defaults.iteritems():
+            self.measure_switch_term_options[key] = value
+        for key, value in options:
+            self.measure_switch_term_options[key] = value
+        # this resets the traces to be based on swith terms
+        # Set VS to be remotely triggered by GPIB
+        self.write("SENS:HOLD: FUNC HOLD")
+        self.write("TRIG:REM:TYP CHAN")
+        # Set the Channel to have 2 Traces
+        self.write("CALC1:PAR:COUN 2")
+        # Trace 1 This is port 2 or Forward Switch Terms
+        self.write(":PAR1:DEF USR,A2,B2 Port1")
+        self.write(":PAR1:FORM REIM")
+        # Trace 2 This is port 1 or Reverse Switch Terms
+        self.write(":PAR2:DEF USR,A1,B1 Port2")
+        self.write(":PAR2:FORM REIM")
+        # Select Channel
+        self.write("CALC1:SEL;")
+        self.write("ABORT;TRIG:SING;")
+        # Sleep for the duration of the scan
+        time.sleep(len(self.frequency_list) * 2 / float(self.IFBW))
+        # wait for other functions to be completed
+        while self.is_busy():
+            time.sleep(.01)
+        # Set the read format
+        self.write("FORM:DATA ASC")
+        # Read in the data
+        self.write("CALC:PAR1:SEL;")
+        foward_switch_string = self.query("CALC:DATA? SDATA")
+        self.write("CALC:PAR2:SEL;")
+        reverse_switch_string = self.query("CALC:DATA? SDATA")
+        # Now parse the string
+        foward_switch_list = foward_switch_string.replace("\n", "").split(",")
+        reverse_switch_list = reverse_switch_string.replace("\n", "").split(",")
+        real_foward = foward_switch_list[0::2]
+        imaginary_forward = foward_switch_list[1::2]
+        real_reverse = reverse_switch_list[0::2]
+        imaginary_reverse = reverse_switch_list[1::2]
+        switch_data = []
+        for index, frequency in enumerate(self.frequency_list[:]):
+            new_row = [frequency,
+                       real_foward[index], imaginary_forward[index],
+                       real_reverse[index], imaginary_reverse[index],
+                       0, 0,
+                       0, 0]
+            switch_data.append(new_row)
+        option_line = "# Hz S RI R 50"
+        # add some options here about auto saving
+        # do we want comment options?
+        s2p = S2PV1(None, option_line=option_line, data=switch_data)
+        return s2p
+
+    def measure_sparameters(self, **options):
+        """Triggers a single sparameter measurement for all 4 parameters and returns a SP2V1 object"""
+        defaults = {"trigger": "single"}
+        self.measure_sparameter_options = {}
+        for key, value in defaults.iteritems():
+            self.measure_sparameter_options[key] = value
+        for key, value in options:
+            self.measure_sparameter_options[key] = value
+        if self.measure_sparameter_options["trigger"] in ["single"]:
+            self.write("INITiate:CONTinuous OFF")
+            self.write("ABORT;INITiate:IMMediate;*wai")
+            # now go to sleep for the time to take the scan
+            time.sleep(len(self.frequency_list) * 2 / float(self.IFBW))
+
+        # wait for other functions to be completed
+        while self.is_busy():
+            time.sleep(.01)
+        # Set the format to ascii and set up sweep definitions
+        self.write('FORM:ASCII')
+        # First get the Sparameter lists
+        self.write('CALC:PAR:SEL S11')
+        self.write('CALC:FORM MLIN')
+        while self.is_busy():
+            time.sleep(.01)
+        s11_string = self.query('CALC:DATA? SDATA')
+
+        self.write('CALC:PAR:SEL S12')
+        self.write('CALC:FORM MLIN')
+        while self.is_busy():
+            time.sleep(.01)
+        s12_string = self.query('CALC:DATA? SDATA')
+        self.write('CALC:PAR:SEL S21')
+        self.write('CALC:FORM MLIN')
+        while self.is_busy():
+            time.sleep(.01)
+        s21_string = self.query('CALC:DATA? SDATA')
+        self.write('CALC:PAR:SEL S22')
+        self.write('CALC:FORM MLIN')
+        while self.is_busy():
+            time.sleep(.01)
+        s22_string = self.query('CALC:DATA? SDATA')
+        # String Parsing
+        s11_list = s11_string.replace("\n", "").split(",")
+        s12_list = s12_string.replace("\n", "").split(",")
+        s21_list = s21_string.replace("\n", "").split(",")
+        s22_list = s22_string.replace("\n", "").split(",")
+        # Construct a list of lists that is data in RI format
+        reS11 = s11_list[0::2]
+        imS11 = s11_list[1::2]
+        reS12 = s12_list[0::2]
+        imS12 = s12_list[1::2]
+        reS21 = s21_list[0::2]
+        imS21 = s21_list[1::2]
+        reS22 = s22_list[0::2]
+        imS22 = s22_list[1::2]
+        sparameter_data = []
+        for index, frequency in enumerate(self.frequency_list[:]):
+            new_row = [frequency,
+                       reS11[index], imS11[index],
+                       reS21[index], imS21[index],
+                       reS12[index], imS12[index],
+                       reS22[index], imS22[index]]
+            sparameter_data.append(new_row)
+        option_line = "# Hz S RI R 50"
+        # add some options here about auto saving
+        # do we want comment options?
+        s2p = S2PV1(None, option_line=option_line, data=sparameter_data)
+        return s2p
 
 
 #-------------------------------------------------------------------------------
