@@ -319,6 +319,28 @@ class SNPBase():
         "Controls how the model displays when print and str are called"
         self.string=self.build_string()
         return self.string
+    def add_comment(self,comment):
+        """Adds a comment to the SNP file"""
+        if self.comments is None:
+            self.comments=[]
+        if type(comment) is StringType:
+            for old_comment in self.comments:
+                if old_comment[2] == 0:
+                    old_comment[1] += 1
+            self.comments.append([comment,0,0])
+            self.options["option_line_line"]+=1
+            self.options["sparameter_begin_line"]+=1
+
+        if type(comment) is ListType:
+            if comment[1]==0:
+                for old_comment in self.comments:
+                    if old_comment[2]==0:
+                        old_comment[1]+=1
+                self.comments.append(comment)
+                self.options["option_line_line"] += 1
+                self.options["sparameter_begin_line"] += 1
+            else:
+                self.comments.append(comment)
 
     def save(self,file_path=None,**temp_options):
         """Saves the snp file to file_path with options, defaults to snp.path"""
@@ -1851,6 +1873,17 @@ def test_s2p_mean_and_difference(s2p_one="thru.s2p",s2p_two="thru.s2p"):
     mean=s2p_mean([s2p,difference])
     mean.show()
 
+def test_add_comment(file_path="thru.s2p"):
+    """Tests the add_comment method of the SNPBase superclass"""
+    os.chdir(TESTS_DIRECTORY)
+    s2p=SNP(file_path)
+    print("Before adding a comment")
+    print("-"*80)
+    print(s2p)
+    print("After adding a comment")
+    print("-"*80)
+    s2p.add_comment("A new comment")
+    print(s2p)
 
 #-----------------------------------------------------------------------------
 # Module Runner
@@ -1874,6 +1907,7 @@ if __name__ == '__main__':
     # test_s2p_mean()
     # test_s2p_difference()
     # test_s2p_mean(["thru.s2p","thru.s2p","thru.s2p"])
-    test_s2p_mean_and_difference()
-    test_SNP('Solution_0.s4p')
-    test_change_format_SNP('Solution_0.s4p')
+    #test_s2p_mean_and_difference()
+    #test_SNP('Solution_0.s4p')
+    #test_change_format_SNP('Solution_0.s4p')
+    test_add_comment()
