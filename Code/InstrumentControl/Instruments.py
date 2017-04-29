@@ -178,7 +178,8 @@ class VisaInstrument(InstrumentSheet):
         # First we try to look up the description and get info from it
         if DATA_SHEETS:
             try: 
-                self.info_path=find_description(resource_name,directory=self.options["instrument_description_directory"])
+                self.info_path=find_description(resource_name,
+                                                directory=self.options["instrument_description_directory"])
                 InstrumentSheet.__init__(self,self.info_path,**self.options)
                 self.info_found=True
                 self.DEFAULT_STATE_QUERY_DICTIONARY=self.get_query_dictionary()
@@ -221,16 +222,28 @@ class VisaInstrument(InstrumentSheet):
     def ask(self,command):
         "Writes command and then reads a response"
         return self.resource.query(command)
-    def set_state(self,**state_dictionary):
+    def set_state(self,state_dictionary=None,state_table=None):
         """ Sets the instrument to the state specified by Command:Value pairs"""
-        if len(self.state_buffer)+1<self.STATE_BUFFER_MAX_LENGTH:
-            self.state_buffer.append(self.get_state())
-        else:
-            self.state_buffer.pop(1)
-            self.state_buffer.insert(-1,self.get_state())         
-        for state_command,value in state_dictionary.iteritems():
-            self.write(state_command+' '+str(value))
-        self.current_state=self.get_state()
+        if state_dictionary:
+            if len(self.state_buffer)+1<self.STATE_BUFFER_MAX_LENGTH:
+                self.state_buffer.append(self.get_state())
+            else:
+                self.state_buffer.pop(1)
+                self.state_buffer.insert(-1,self.get_state())
+            for state_command,value in state_dictionary.iteritems():
+                self.write(state_command+' '+str(value))
+            self.current_state=self.get_state()
+        if state_table:
+            if "Index" in state_table[0].keys:
+                state_table=sorted(state_table,key=lambda x:x["Index"])
+            if len(self.state_buffer)+1<self.STATE_BUFFER_MAX_LENGTH:
+                self.state_buffer.append(self.get_state())
+            else:
+                self.state_buffer.pop(1)
+                self.state_buffer.insert(-1,self.get_state())
+            for state_row in state_table:
+                for state_command,value in state_row.iteritems():
+                    self.write(state_command+' '+str(value))
             
     def get_state(self,**state_query_dictionary):
         """ Gets the current state of the instrument """
@@ -248,12 +261,21 @@ class VisaInstrument(InstrumentSheet):
         self.current_state=self.get_state()
         self.save_state(None,state_dictionary=self.current_state)
         
-    def save_state(self,state_path=None,state_dictionary=None):
+    def save_state(self,state_path=None,state_dictionary=None,state_table=None):
         """ Saves any state dictionary to an xml file, with state_name """
         if state_path is None:
             state_path=auto_name(specific_descriptor=self.name,general_descriptor="State",
                                  directory=self.options["state_directory"])
-        new_state=InstrumentState(None,**{"state_dictionary":state_dictionary,"style_sheet":"./DEFAULT_STATE_STYLE.xsl"})
+        if state_dictionary:
+            new_state=InstrumentState(None,**{"state_dictionary":state_dictionary,
+                                              "style_sheet":"./DEFAULT_STATE_STYLE.xsl"})
+        elif state_table:
+            new_state=InstrumentState(None,**{"state_table":state_table,
+                                              "style_sheet":"./DEFAULT_STATE_STYLE.xsl"})
+        else:
+            new_state=InstrumentState(None,**{"state_dictionary":self.get_state(),
+                                              "style_sheet":"./DEFAULT_STATE_STYLE.xsl"})
+
         try:
             new_state.add_state_description(self.description)
         except: raise #pass
@@ -261,8 +283,9 @@ class VisaInstrument(InstrumentSheet):
 
     def load_state(self,file_path):
         """Loads a state from a file."""
+        #TODO put a UDT to state_table
         state_model=InstrumentState(file_path)
-        self.set_state(**state_model.state_dictionary)
+        self.set_state(state_table=state_model.get_state_list_dictionary())
 
     def close(self):
         """Closes the VISA session"""

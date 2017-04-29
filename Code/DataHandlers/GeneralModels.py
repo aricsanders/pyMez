@@ -1687,12 +1687,6 @@ class AsciiDataTable():
                 out_data.append(new_row)
             return out_data
 
-
-
-
-
-
-
     def get_data_dictionary_list(self,use_row_formatter_string=True):
         """Returns a python list with a row dictionary of form {column_name:data_column}"""
         try:

@@ -333,6 +333,15 @@ def XmlBase_to_XsltResultFile(xml_model,**options):
     xml_model.save_HTML(XSLT=transform_options["style_sheet"],file_path=transform_options["file_path"])
     return transform_options["file_path"]
 
+def XmlLog_to_AsciiDataTable(xml_log):
+    """Transforms the XMLLog class to the AsciiDataTable class"""
+    table=xml_log.get_table()
+    column_names=["Index","Date","Entry"]
+    column_types=["int","string","string"]
+    data=[[row[column_name] for column_name in column_names] for row in table]
+    ascii=AsciiDataTable(column_names=column_names,data=data,column_types=column_types)
+    return ascii
+
 def AsciiDataTable_to_DataFrame(ascii_data_table):
     """Converts an AsciiDataTable to a pandas.DataFrame
     discarding any header or footer information"""

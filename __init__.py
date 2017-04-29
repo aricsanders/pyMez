@@ -48,8 +48,8 @@ Help
 
 import os
 import sys
-VERBOSE_IMPORT=True
-TIMED_IMPORT=True
+VERBOSE_IMPORT=False
+TIMED_IMPORT=False
 
 "Constant that determines if import statements are echoed to output"
 # control the modules loaded in the API, this should be included in a pyMeasure Settings file
@@ -110,6 +110,7 @@ if TIMED_IMPORT:
     import datetime
     first_timer=datetime.datetime.utcnow()
     start_timer=datetime.datetime.utcnow()
+print("Importing pyMeasure, this should take roughly 30 seconds")
 for module in sorted(API_MODULES.keys()):
     if API_MODULES[module]:
         if VERBOSE_IMPORT:

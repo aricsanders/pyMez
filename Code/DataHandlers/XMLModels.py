@@ -643,6 +643,15 @@ class XMLLog(XMLBase):
             else:
                 new_log.add_entry(entry)
         return new_log
+
+    def get_table(self):
+        "Returns the XML data as a list of python dictionaries"
+        node_list=self.document.getElementsByTagName("Entry")
+        table=[{"Index": node.getAttribute("Index"),
+          "Date": node.getAttribute("Date"),
+          "Entry": node.childNodes[0].nodeValue} for node in node_list]
+        return table
+
 class ChangeXMLLog(XMLLog):
     """ A XMLLog for storing changes to a program"""
     def __init__(self,path=None,program_name=None):
