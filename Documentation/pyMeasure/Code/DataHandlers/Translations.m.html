@@ -1191,6 +1191,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.XmlDataTable_to_AsciiDataTable">XmlDataTable_to_AsciiDataTable</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.XmlDataTable_to_XmlFile">XmlDataTable_to_XmlFile</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.XmlFile_to_XmlDataTable">XmlFile_to_XmlDataTable</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.XmlLog_to_AsciiDataTable">XmlLog_to_AsciiDataTable</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.XmlString_to_Dictionary">XmlString_to_Dictionary</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.XmlTupleString_to_Dictionary">XmlTupleString_to_Dictionary</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.Translations.YFrequencyList_to_HFrequencyList">YFrequencyList_to_HFrequencyList</a></li>
@@ -1673,6 +1674,15 @@ software:
         <span class="n">transform_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
     <span class="n">xml_model</span><span class="o">.</span><span class="n">save_HTML</span><span class="p">(</span><span class="n">XSLT</span><span class="o">=</span><span class="n">transform_options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">],</span><span class="n">file_path</span><span class="o">=</span><span class="n">transform_options</span><span class="p">[</span><span class="s2">&quot;file_path&quot;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">transform_options</span><span class="p">[</span><span class="s2">&quot;file_path&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">XmlLog_to_AsciiDataTable</span><span class="p">(</span><span class="n">xml_log</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transforms the XMLLog class to the AsciiDataTable class&quot;&quot;&quot;</span>
+    <span class="n">table</span><span class="o">=</span><span class="n">xml_log</span><span class="o">.</span><span class="n">get_table</span><span class="p">()</span>
+    <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Index&quot;</span><span class="p">,</span><span class="s2">&quot;Date&quot;</span><span class="p">,</span><span class="s2">&quot;Entry&quot;</span><span class="p">]</span>
+    <span class="n">column_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;int&quot;</span><span class="p">,</span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="s2">&quot;string&quot;</span><span class="p">]</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span> <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">column_names</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="p">]</span>
+    <span class="n">ascii</span><span class="o">=</span><span class="n">AsciiDataTable</span><span class="p">(</span><span class="n">column_names</span><span class="o">=</span><span class="n">column_names</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span><span class="n">column_types</span><span class="o">=</span><span class="n">column_types</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ascii</span>
 
 <span class="k">def</span> <span class="nf">AsciiDataTable_to_DataFrame</span><span class="p">(</span><span class="n">ascii_data_table</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Converts an AsciiDataTable to a pandas.DataFrame</span>
@@ -6578,6 +6588,34 @@ Is the inverse of SFrequencyMatrixList_to_TFrequencyMatrixList</p></div>
     <span class="sd">&quot;&quot;&quot;Opens a saved file in the XMLModels format DataTable and returns an DataTable object&quot;&quot;&quot;</span>
     <span class="n">xml_data_table</span><span class="o">=</span><span class="n">DataTable</span><span class="p">(</span><span class="n">xml_file_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">xml_data_table</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.Translations.XmlLog_to_AsciiDataTable">
+    <p>def <span class="ident">XmlLog_to_AsciiDataTable</span>(</p><p>xml_log)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Transforms the XMLLog class to the AsciiDataTable class</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.Translations.XmlLog_to_AsciiDataTable', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.Translations.XmlLog_to_AsciiDataTable" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">XmlLog_to_AsciiDataTable</span><span class="p">(</span><span class="n">xml_log</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transforms the XMLLog class to the AsciiDataTable class&quot;&quot;&quot;</span>
+    <span class="n">table</span><span class="o">=</span><span class="n">xml_log</span><span class="o">.</span><span class="n">get_table</span><span class="p">()</span>
+    <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Index&quot;</span><span class="p">,</span><span class="s2">&quot;Date&quot;</span><span class="p">,</span><span class="s2">&quot;Entry&quot;</span><span class="p">]</span>
+    <span class="n">column_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;int&quot;</span><span class="p">,</span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="s2">&quot;string&quot;</span><span class="p">]</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span> <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">column_names</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="p">]</span>
+    <span class="n">ascii</span><span class="o">=</span><span class="n">AsciiDataTable</span><span class="p">(</span><span class="n">column_names</span><span class="o">=</span><span class="n">column_names</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span><span class="n">column_types</span><span class="o">=</span><span class="n">column_types</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ascii</span>
 </pre></div>
 
   </div>

@@ -1089,6 +1089,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.s2p_mean">s2p_mean</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.test_S1PV1">test_S1PV1</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.test_SNP">test_SNP</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.test_add_comment">test_add_comment</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.test_build_snp_column_names">test_build_snp_column_names</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.test_change_format">test_change_format</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.test_change_format_SNP">test_change_format_SNP</a></li>
@@ -1112,6 +1113,7 @@ table {
           
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1PV1.__init__">__init__</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1PV1.add_comment">add_comment</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1PV1.add_sparameter_complex_row">add_sparameter_complex_row</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1PV1.add_sparameter_row">add_sparameter_row</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S1PV1.build_string">build_string</a></li>
@@ -1131,6 +1133,7 @@ table {
           
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2PV1.__init__">__init__</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2PV1.add_comment">add_comment</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2PV1.add_noiseparameter_row">add_noiseparameter_row</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2PV1.add_sparameter_complex_row">add_sparameter_complex_row</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.S2PV1.add_sparameter_row">add_sparameter_row</a></li>
@@ -1152,6 +1155,7 @@ table {
           
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNP.__init__">__init__</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNP.add_comment">add_comment</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNP.add_sparameter_complex_row">add_sparameter_complex_row</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNP.add_sparameter_row">add_sparameter_row</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNP.build_string">build_string</a></li>
@@ -1171,6 +1175,7 @@ table {
           
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.__init__">__init__</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.add_comment">add_comment</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.change_frequency_units">change_frequency_units</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.get_column">get_column</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.get_data_dictionary_list">get_data_dictionary_list</a></li>
@@ -1559,6 +1564,28 @@ changed to data to align better with other class models.</p>
         <span class="s2">&quot;Controls how the model displays when print and str are called&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">build_string</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span>
+    <span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a comment to the SNP file&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">comment</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">ListType</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                        <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">temp_options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Saves the snp file to file_path with options, defaults to snp.path&quot;&quot;&quot;</span>
@@ -1705,7 +1732,7 @@ changed to data to align better with other class models.</p>
 <span class="sd">        format may be found at</span>
 <span class="sd">        http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams/touchstone_file_format.htm</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;  &quot;</span><span class="p">,</span>
                   <span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
                   <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;One_Port&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Sparameter&#39;</span><span class="p">,</span>
@@ -2021,7 +2048,7 @@ changed to data to align better with other class models.</p>
 <span class="sd">        format may be found at</span>
 <span class="sd">        http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams/touchstone_file_format.htm</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;  &quot;</span><span class="p">,</span>
                   <span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
                   <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Two_Port&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Sparameter&#39;</span><span class="p">,</span>
@@ -2467,7 +2494,7 @@ changed to data to align better with other class models.</p>
 <span class="sd">        For S2P files use the S2PV1 class. This class does not handle noise parameters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;number_ports&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                  <span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;  &quot;</span><span class="p">,</span>
                   <span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
                   <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Multiport&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Sparameter&#39;</span><span class="p">,</span>
@@ -3091,6 +3118,17 @@ changed to data to align better with other class models.</p>
     <span class="n">mean</span><span class="o">=</span><span class="n">s2p_mean</span><span class="p">([</span><span class="n">s2p</span><span class="p">,</span><span class="n">difference</span><span class="p">])</span>
     <span class="n">mean</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
+<span class="k">def</span> <span class="nf">test_add_comment</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;thru.s2p&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests the add_comment method of the SNPBase superclass&quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">)</span>
+    <span class="n">s2p</span><span class="o">=</span><span class="n">SNP</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Before adding a comment&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">s2p</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;After adding a comment&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="n">s2p</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="s2">&quot;A new comment&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">s2p</span><span class="p">)</span>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Runner</span>
@@ -3114,9 +3152,10 @@ changed to data to align better with other class models.</p>
     <span class="c1"># test_s2p_mean()</span>
     <span class="c1"># test_s2p_difference()</span>
     <span class="c1"># test_s2p_mean([&quot;thru.s2p&quot;,&quot;thru.s2p&quot;,&quot;thru.s2p&quot;])</span>
-    <span class="n">test_s2p_mean_and_difference</span><span class="p">()</span>
-    <span class="n">test_SNP</span><span class="p">(</span><span class="s1">&#39;Solution_0.s4p&#39;</span><span class="p">)</span>
-    <span class="n">test_change_format_SNP</span><span class="p">(</span><span class="s1">&#39;Solution_0.s4p&#39;</span><span class="p">)</span>
+    <span class="c1">#test_s2p_mean_and_difference()</span>
+    <span class="c1">#test_SNP(&#39;Solution_0.s4p&#39;)</span>
+    <span class="c1">#test_change_format_SNP(&#39;Solution_0.s4p&#39;)</span>
+    <span class="n">test_add_comment</span><span class="p">()</span>
 </pre></div>
 
   </div>
@@ -3667,6 +3706,37 @@ s2p model and returns a new s2p model. The formats should be the same</p></div>
   
       
   <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.TouchstoneModels.test_add_comment">
+    <p>def <span class="ident">test_add_comment</span>(</p><p>file_path=&#39;thru.s2p&#39;)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Tests the add_comment method of the SNPBase superclass</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.TouchstoneModels.test_add_comment', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.TouchstoneModels.test_add_comment" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">test_add_comment</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;thru.s2p&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests the add_comment method of the SNPBase superclass&quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">)</span>
+    <span class="n">s2p</span><span class="o">=</span><span class="n">SNP</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Before adding a comment&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">s2p</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;After adding a comment&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="n">s2p</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="s2">&quot;A new comment&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">s2p</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
     <div class="name def" id="pyMeasure.Code.DataHandlers.TouchstoneModels.test_build_snp_column_names">
     <p>def <span class="ident">test_build_snp_column_names</span>(</p><p>)</p>
     </div>
@@ -3981,7 +4051,7 @@ stored parameter (default is S), data format (RI,MA or DB) and reference resista
 <span class="sd">        format may be found at</span>
 <span class="sd">        http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams/touchstone_file_format.htm</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;  &quot;</span><span class="p">,</span>
                   <span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
                   <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;One_Port&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Sparameter&#39;</span><span class="p">,</span>
@@ -4368,7 +4438,7 @@ http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams
 <span class="sd">    format may be found at</span>
 <span class="sd">    http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams/touchstone_file_format.htm</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;  &quot;</span><span class="p">,</span>
               <span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;One_Port&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Sparameter&#39;</span><span class="p">,</span>
@@ -4424,6 +4494,51 @@ http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams
                                 <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;directory&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.TouchstoneModels.S1PV1.add_comment">
+    <p>def <span class="ident">add_comment</span>(</p><p>self, comment)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase">SNPBase</a></code>.<code><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.add_comment">add_comment</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Adds a comment to the SNP file</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.TouchstoneModels.S1PV1.add_comment', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.TouchstoneModels.S1PV1.add_comment" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a comment to the SNP file&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">comment</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">ListType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -4943,7 +5058,7 @@ and noise parameter data</p></div>
 <span class="sd">        format may be found at</span>
 <span class="sd">        http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams/touchstone_file_format.htm</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;  &quot;</span><span class="p">,</span>
                   <span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
                   <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Two_Port&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Sparameter&#39;</span><span class="p">,</span>
@@ -5468,7 +5583,7 @@ http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams
 <span class="sd">    format may be found at</span>
 <span class="sd">    http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams/touchstone_file_format.htm</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;  &quot;</span><span class="p">,</span>
               <span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Two_Port&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Sparameter&#39;</span><span class="p">,</span>
@@ -5544,6 +5659,51 @@ http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams
                                 <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;directory&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.TouchstoneModels.S2PV1.add_comment">
+    <p>def <span class="ident">add_comment</span>(</p><p>self, comment)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase">SNPBase</a></code>.<code><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.add_comment">add_comment</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Adds a comment to the SNP file</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.TouchstoneModels.S2PV1.add_comment', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.TouchstoneModels.S2PV1.add_comment" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a comment to the SNP file&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">comment</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">ListType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -6201,7 +6361,7 @@ for one and two ports, they have special methods</p></div>
 <span class="sd">        For S2P files use the S2PV1 class. This class does not handle noise parameters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;number_ports&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                  <span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;  &quot;</span><span class="p">,</span>
                   <span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
                   <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Multiport&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Sparameter&#39;</span><span class="p">,</span>
@@ -6760,7 +6920,7 @@ For S2P files use the S2PV1 class. This class does not handle noise parameters.<
 <span class="sd">    For S2P files use the S2PV1 class. This class does not handle noise parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;number_ports&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span><span class="s2">&quot;  &quot;</span><span class="p">,</span>
               <span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
               <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Multiport&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Sparameter&#39;</span><span class="p">,</span>
@@ -6878,6 +7038,51 @@ For S2P files use the S2PV1 class. This class does not handle noise parameters.<
                                                                   <span class="o">*</span><span class="n">row</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="n">offset</span><span class="o">+</span><span class="n">span</span><span class="p">]))</span>
     <span class="c1">#print(&quot;{0} is {1}&quot;.format(&quot;len(self.sparameter_lines)&quot;,len(self.sparameter_lines)))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_types&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;float&quot;</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_names</span><span class="p">[:]]</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.TouchstoneModels.SNP.add_comment">
+    <p>def <span class="ident">add_comment</span>(</p><p>self, comment)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase">SNPBase</a></code>.<code><a href="#pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.add_comment">add_comment</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Adds a comment to the SNP file</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.TouchstoneModels.SNP.add_comment', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.TouchstoneModels.SNP.add_comment" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a comment to the SNP file&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">comment</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">ListType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -7494,6 +7699,28 @@ It is only meant as a base class to inherit, not to instantiate by itself</p></d
         <span class="s2">&quot;Controls how the model displays when print and str are called&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">build_string</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span>
+    <span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a comment to the SNP file&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">comment</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">ListType</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                        <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">temp_options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Saves the snp file to file_path with options, defaults to snp.path&quot;&quot;&quot;</span>
@@ -7651,6 +7878,47 @@ It is only meant as a base class to inherit, not to instantiate by itself</p></d
   <div id="source-pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.__init__" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">pass</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.add_comment">
+    <p>def <span class="ident">add_comment</span>(</p><p>self, comment)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds a comment to the SNP file</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.add_comment', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.TouchstoneModels.SNPBase.add_comment" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">comment</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a comment to the SNP file&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">comment</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="ow">is</span> <span class="n">ListType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">old_comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">old_comment</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">old_comment</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;option_line_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_begin_line&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
 </pre></div>
 
   </div>

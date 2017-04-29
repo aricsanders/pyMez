@@ -1086,6 +1086,7 @@ table {
     <li class="mono"><a href="#pyMeasure.API_MODULES">API_MODULES</a></li>
     <li class="mono"><a href="#pyMeasure.COMBINE_S11_S22">COMBINE_S11_S22</a></li>
     <li class="mono"><a href="#pyMeasure.COMMENT_PATTERN">COMMENT_PATTERN</a></li>
+    <li class="mono"><a href="#pyMeasure.CONNECTOR_TYPES">CONNECTOR_TYPES</a></li>
     <li class="mono"><a href="#pyMeasure.CONVERT_S21">CONVERT_S21</a></li>
     <li class="mono"><a href="#pyMeasure.DATA_SHEETS">DATA_SHEETS</a></li>
     <li class="mono"><a href="#pyMeasure.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
@@ -1106,11 +1107,13 @@ table {
     <li class="mono"><a href="#pyMeasure.INSTRUMENT_TYPES">INSTRUMENT_TYPES</a></li>
     <li class="mono"><a href="#pyMeasure.KEITHLEY_INSTRUMENT_SHEET">KEITHLEY_INSTRUMENT_SHEET</a></li>
     <li class="mono"><a href="#pyMeasure.METHOD_ALIASES">METHOD_ALIASES</a></li>
+    <li class="mono"><a href="#pyMeasure.MINIMUM_DB">MINIMUM_DB</a></li>
     <li class="mono"><a href="#pyMeasure.MINIMUM_DB_ARG_VALUE">MINIMUM_DB_ARG_VALUE</a></li>
     <li class="mono"><a href="#pyMeasure.MINIMUM_DB_VALUE">MINIMUM_DB_VALUE</a></li>
     <li class="mono"><a href="#pyMeasure.NODE_TYPE_DICTIONARY">NODE_TYPE_DICTIONARY</a></li>
     <li class="mono"><a href="#pyMeasure.NUMBER_MATCH_STRING">NUMBER_MATCH_STRING</a></li>
     <li class="mono"><a href="#pyMeasure.ONE_PORT_COLUMN_NAMES">ONE_PORT_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMeasure.ONE_PORT_DUT">ONE_PORT_DUT</a></li>
     <li class="mono"><a href="#pyMeasure.OPTION_LINE_PATTERN">OPTION_LINE_PATTERN</a></li>
     <li class="mono"><a href="#pyMeasure.OS_STAT_FIELDS">OS_STAT_FIELDS</a></li>
     <li class="mono"><a href="#pyMeasure.PARAMETERS">PARAMETERS</a></li>
@@ -1150,11 +1153,7 @@ table {
     <li class="mono"><a href="#pyMeasure.WKHTML_PATH">WKHTML_PATH</a></li>
     <li class="mono"><a href="#pyMeasure.XSLT_CAPABLE">XSLT_CAPABLE</a></li>
     <li class="mono"><a href="#pyMeasure.XSLT_REPOSITORY">XSLT_REPOSITORY</a></li>
-    <li class="mono"><a href="#pyMeasure.end_timer">end_timer</a></li>
-    <li class="mono"><a href="#pyMeasure.first_timer">first_timer</a></li>
     <li class="mono"><a href="#pyMeasure.module">module</a></li>
-    <li class="mono"><a href="#pyMeasure.start_timer">start_timer</a></li>
-    <li class="mono"><a href="#pyMeasure.time_difference">time_difference</a></li>
   </ul>
 
 	  </div>
@@ -1264,8 +1263,8 @@ Designed by Aric Sanders 2016</p>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">VERBOSE_IMPORT</span><span class="o">=</span><span class="bp">True</span>
-<span class="n">TIMED_IMPORT</span><span class="o">=</span><span class="bp">True</span>
+<span class="n">VERBOSE_IMPORT</span><span class="o">=</span><span class="bp">False</span>
+<span class="n">TIMED_IMPORT</span><span class="o">=</span><span class="bp">False</span>
 
 <span class="s2">&quot;Constant that determines if import statements are echoed to output&quot;</span>
 <span class="c1"># control the modules loaded in the API, this should be included in a pyMeasure Settings file</span>
@@ -1293,7 +1292,7 @@ Designed by Aric Sanders 2016</p>
              <span class="s2">&quot;Code.Analysis.Fitting&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
              <span class="s2">&quot;Code.Analysis.Interpolation&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
              <span class="s2">&quot;Code.Analysis.NISTUncertainty&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
-             <span class="s2">&quot;Code.Analysis.SParameter&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+             <span class="s2">&quot;Code.Analysis.SParameter&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
              <span class="s2">&quot;Code.Analysis.Uncertainty&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
              <span class="s2">&quot;Code.InstrumentControl.Instruments&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
              <span class="s2">&quot;Code.InstrumentControl.Experiments&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span>
@@ -1326,6 +1325,7 @@ Designed by Aric Sanders 2016</p>
     <span class="kn">import</span> <span class="nn">datetime</span>
     <span class="n">first_timer</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
     <span class="n">start_timer</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Importing pyMeasure, this should take roughly 30 seconds&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">API_MODULES</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
     <span class="k">if</span> <span class="n">API_MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">VERBOSE_IMPORT</span><span class="p">:</span>
@@ -1390,6 +1390,14 @@ Designed by Aric Sanders 2016</p>
       </div>
       <div class="item">
       <p id="pyMeasure.COMMENT_PATTERN" class="name">var <span class="ident">COMMENT_PATTERN</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.CONNECTOR_TYPES" class="name">var <span class="ident">CONNECTOR_TYPES</span></p>
       
   
   <div class="source_cont">
@@ -1557,6 +1565,14 @@ Designed by Aric Sanders 2016</p>
 
       </div>
       <div class="item">
+      <p id="pyMeasure.MINIMUM_DB" class="name">var <span class="ident">MINIMUM_DB</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMeasure.MINIMUM_DB_ARG_VALUE" class="name">var <span class="ident">MINIMUM_DB_ARG_VALUE</span></p>
       
   
@@ -1590,6 +1606,14 @@ Designed by Aric Sanders 2016</p>
       </div>
       <div class="item">
       <p id="pyMeasure.ONE_PORT_COLUMN_NAMES" class="name">var <span class="ident">ONE_PORT_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.ONE_PORT_DUT" class="name">var <span class="ident">ONE_PORT_DUT</span></p>
       
   
   <div class="source_cont">
@@ -1910,39 +1934,7 @@ Designed by Aric Sanders 2016</p>
 
       </div>
       <div class="item">
-      <p id="pyMeasure.end_timer" class="name">var <span class="ident">end_timer</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.first_timer" class="name">var <span class="ident">first_timer</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
       <p id="pyMeasure.module" class="name">var <span class="ident">module</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.start_timer" class="name">var <span class="ident">start_timer</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
-      <p id="pyMeasure.time_difference" class="name">var <span class="ident">time_difference</span></p>
       
   
   <div class="source_cont">
