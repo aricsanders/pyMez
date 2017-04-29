@@ -9,7 +9,6 @@
 to generate black box diagrams of functions or scripts in svg for help support
 
 
-
 Requirements
 ------------
 + [sys](https://docs.python.org/2/library/sys.html)
