@@ -76,6 +76,35 @@ def change_extension(file_path,new_extension=None):
     # just to make it uniform, remove any . and add it back in
         new_extension="."+new_extension.replace(".","")
         return re.sub("\.\w+",new_extension,file_path)
+def filename_decrement(filename,padding=3):
+    """Takes an autogenrated file name in the form specific_descriptor_general_descriptor_date_iterator and
+    decreases the iterator by 1"""
+    replacement_string="{:0"+str(padding)+"d}"
+    filename_pattern="(?P<base_name>[\w|_]+)_(?P<iterator>\d+).[\w]+"
+    match=re.search(filename_pattern,filename,re.IGNORECASE)
+    if match:
+        i=match.groupdict()["iterator"]
+        iterator=int(i)
+        iterator-=1
+        new_filename=re.sub(i,replacement_string.format(iterator),filename)
+        return new_filename
+    else:
+        print("Filename did not conform to the base_name_iterator.extension pattern")
+
+def filename_increment(filename,padding=3):
+    """Takes an autogenrated file name in the form specific_descriptor_general_descriptor_date_iterator and
+    decreases the iterator by 1"""
+    replacement_string="{:0"+str(padding)+"d}"
+    filename_pattern="(?P<base_name>[\w|_]+)_(?P<iterator>\d+).[\w]+"
+    match=re.search(filename_pattern,filename,re.IGNORECASE)
+    if match:
+        i=match.groupdict()["iterator"]
+        iterator=int(i)
+        iterator+=1
+        new_filename=re.sub(i,replacement_string.format(iterator),filename)
+        return new_filename
+    else:
+        print("Filename did not conform to the base_name_iterator.extension pattern")
     
             
 #-------------------------------------------------------------------------------
@@ -129,6 +158,14 @@ def test_auto_name():
                                                                                          'AutoName',
                                                                                          None,'txt')))
 
+def test_filename_change_iterator():
+    """Tests the filename decrement and increment functions"""
+    name=auto_name('Test','AutoName',None,'txt')
+    print("The original name is {0}".format(name))
+    print("-"*80)
+    print("The result of filename_increment is {0}".format(filename_increment(name)))
+    print("-"*80)
+    print("The result of filename_decrement is {0}".format(filename_decrement(name)))
 
 #-------------------------------------------------------------------------------
 # Module Runner
@@ -137,4 +174,5 @@ if __name__ == '__main__':
     test_module()
     clean_up_test_module()
     test_auto_name()
+    test_filename_change_iterator()
         
