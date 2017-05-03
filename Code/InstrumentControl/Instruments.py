@@ -277,7 +277,8 @@ class VisaInstrument(InstrumentSheet):
                                               "style_sheet":"./DEFAULT_STATE_STYLE.xsl"})
 
         try:
-            new_state.add_state_description(self.description)
+            new_state.add_state_description()
+            new_state.append_description(description_dictionary={"Description":self.description})
         except: raise #pass
         new_state.save(state_path)
 
@@ -293,7 +294,8 @@ class VisaInstrument(InstrumentSheet):
 
 
 class VNA(VisaInstrument):
-    """Control class for a linear VNA """
+    """Control class for a linear VNA. The .measure_sparameters ans .measure_switch_terms return a S2PV1
+    class that can be saved, printed or have a simple plot using show()"""
 
     def __init__(self, resource_name=None, **options):
         """Initializes the E8631A control class"""
@@ -388,11 +390,11 @@ class VNA(VisaInstrument):
         # Set the Channel to have 2 Traces
         self.write("CALC1:PAR:COUN 2")
         # Trace 1 This is port 2 or Forward Switch Terms
-        self.write(":PAR1:DEF USR,A2,B2 Port1")
-        self.write(":PAR1:FORM REIM")
+        self.write("CALC:PAR:DEF 'FWD',A2B2,1")
+
         # Trace 2 This is port 1 or Reverse Switch Terms
-        self.write(":PAR2:DEF USR,A1,B1 Port2")
-        self.write(":PAR2:FORM REIM")
+        self.write("CALC:PAR:DEF 'REV',A1B1,2")
+
         # Select Channel
         self.write("CALC1:SEL;")
         self.write("ABORT;TRIG:SING;")
@@ -404,9 +406,11 @@ class VNA(VisaInstrument):
         # Set the read format
         self.write("FORM:DATA ASC")
         # Read in the data
-        self.write("CALC:PAR1:SEL;")
+        self.write("CALC:PAR:SEL FWD;")
         foward_switch_string = self.query("CALC:DATA? SDATA")
-        self.write("CALC:PAR2:SEL;")
+        while self.is_busy():
+            time.sleep(.01)
+        self.write("CALC:PAR:SEL REV;")
         reverse_switch_string = self.query("CALC:DATA? SDATA")
         # Now parse the string
         foward_switch_list = foward_switch_string.replace("\n", "").split(",")
@@ -422,6 +426,7 @@ class VNA(VisaInstrument):
                        real_reverse[index], imaginary_reverse[index],
                        0, 0,
                        0, 0]
+            new_row = map(lambda x: float(x), new_row)
             switch_data.append(new_row)
         option_line = "# Hz S RI R 50"
         # add some options here about auto saving
@@ -491,6 +496,7 @@ class VNA(VisaInstrument):
                        reS21[index], imS21[index],
                        reS12[index], imS12[index],
                        reS22[index], imS22[index]]
+            new_row=map(lambda x:float(x),new_row)
             sparameter_data.append(new_row)
         option_line = "# Hz S RI R 50"
         # add some options here about auto saving
