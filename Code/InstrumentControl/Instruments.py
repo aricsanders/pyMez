@@ -197,9 +197,9 @@ class VisaInstrument(InstrumentSheet):
         
         # Create a description for state saving
         if self.info_found:
-            self.description={'State_Description':{'Instrument_Description':self.path}}
+            self.description={'Instrument_Description':self.path}
         else:
-            self.description={'State_Description':{'Instrument_Description':self.instrument_address}}
+            self.description={'Instrument_Description':self.instrument_address}
         
         self.state_buffer=[]
         self.STATE_BUFFER_MAX_LENGTH=10
@@ -278,7 +278,7 @@ class VisaInstrument(InstrumentSheet):
 
         try:
             new_state.add_state_description()
-            new_state.append_description(description_dictionary={"Description":self.description})
+            new_state.append_description(description_dictionary=self.description)
         except: raise #pass
         new_state.save(state_path)
 
