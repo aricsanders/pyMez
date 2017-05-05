@@ -234,24 +234,50 @@ class VisaInstrument(InstrumentSheet):
                 self.write(state_command+' '+str(value))
             self.current_state=self.get_state()
         if state_table:
-            if "Index" in state_table[0].keys:
+            if "Index" in state_table[0].keys():
                 state_table=sorted(state_table,key=lambda x:x["Index"])
             if len(self.state_buffer)+1<self.STATE_BUFFER_MAX_LENGTH:
                 self.state_buffer.append(self.get_state())
             else:
                 self.state_buffer.pop(1)
                 self.state_buffer.insert(-1,self.get_state())
+            # now we need to write the command
             for state_row in state_table:
-                for state_command,value in state_row.iteritems():
-                    self.write(state_command+' '+str(value))
+                # a state row has a set and value
+                state_command=state_row["Set"]
+                value=state_row["Value"]
+                self.write(state_command+' '+str(value))
             
-    def get_state(self,**state_query_dictionary):
-        """ Gets the current state of the instrument """
-        if len(state_query_dictionary)==0:
-            state_query_dictionary=self.DEFAULT_STATE_QUERY_DICTIONARY
-        state=dict([(state_command,self.query(str(query)).replace("\n","")) for state_command,query
-        in state_query_dictionary.iteritems()])
-        return state
+    def get_state(self,state_query_dictionary=None,state_query_table=None):
+        """ Gets the current state of the instrument. get_state accepts any query dictionary in
+        the form state_query_dictionary={"GPIB_SET_COMMAND":"GPIB_QUERY_COMMAND",...} or any state_query_table
+        in the form [{"Set":"GPIB_SET_COMMAND","Query":"GPIB_QUERY_COMMAND","Index":Optional_int_ordering commands,
+        if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in from the InstrumentSheet"""
+        if not state_query_table:
+            if state_query_dictionary is None or len(state_query_dictionary)==0 :
+                state_query_dictionary=self.DEFAULT_STATE_QUERY_DICTIONARY
+            state=dict([(state_command,self.query(str(query)).replace("\n","")) for state_command,query
+            in state_query_dictionary.iteritems()])
+            return state
+        else:
+            # a state_query_table is a list of dictionaries, each row has at least a Set and Query key but could
+            # have an Index key that denotes order
+            if "Index" in state_query_table[0].keys():
+                state_query_table=sorted(state_query_table,key=lambda x:int(x["Index"]))
+                state=[]
+                for state_row in state_query_table:
+                    set=state_row["Set"]
+                    query=state_row["Query"]
+                    index=state_row["Index"]
+                    state.append({"Set":set,"Value":self.query(query).replace("\n",""),"Index":index})
+                return state
+            else:
+                state=[]
+                for state_row in state_query_table:
+                    set=state_row["Set"]
+                    query=state_row["Query"]
+                    state.append({"Set":set,"Value":self.query(query).replace("\n","")})
+                return state
     
     def update_current_state(self):
         self.current_state=self.get_state()
@@ -281,6 +307,7 @@ class VisaInstrument(InstrumentSheet):
             new_state.append_description(description_dictionary=self.description)
         except: raise #pass
         new_state.save(state_path)
+        return state_path
 
     def load_state(self,file_path):
         """Loads a state from a file."""
