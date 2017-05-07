@@ -162,6 +162,181 @@ class VisaInstrumentError(Exception):
         Exception.__init__(self,*args)
 
 
+class FakeInstrument(InstrumentSheet):
+    """ General Class to communicate with COMM and GPIB instruments
+    This is a blend of the pyvisa resource and an xml description. """
+
+    def __init__(self, resource_name=None, **options):
+        """ Intializes the VisaInstrument Class"""
+        defaults = {"state_directory": os.getcwd(),
+                    "instrument_description_directory": os.path.join(PYMEASURE_ROOT, 'Instruments')}
+        self.options = {}
+        for key, value in defaults.iteritems():
+            self.options[key] = value
+        for key, value in options.iteritems():
+            self.options[key] = value
+        # First we try to look up the description and get info from it
+        if DATA_SHEETS:
+            try:
+                self.info_path = find_description(resource_name,
+                                                  directory=self.options["instrument_description_directory"])
+                InstrumentSheet.__init__(self, self.info_path, **self.options)
+                self.info_found = True
+                self.DEFAULT_STATE_QUERY_DICTIONARY = self.get_query_dictionary()
+            except:
+                print('The information sheet was not found defaulting to address')
+                self.DEFAULT_STATE_QUERY_DICTIONARY = {}
+                self.info_found = False
+                self.instrument_address = resource_name
+                self.name = resource_name.replace(":", "_")
+                pass
+        else:
+            self.info_found = False
+            self.DEFAULT_STATE_QUERY_DICTIONARY = {}
+            self.instrument_address = resource_name
+
+        # Create a description for state saving
+        if self.info_found:
+            self.description = {'Instrument_Description': self.path}
+        else:
+            self.description = {'Instrument_Description': self.instrument_address}
+
+        self.state_buffer = []
+        self.STATE_BUFFER_MAX_LENGTH = 10
+        self.write_buffer=[]
+        self.read_buffer=[]
+        self.history=[]
+        #self.resource_manager = visa.ResourceManager()
+        # Call the visa instrument class-- this gives ask,write,read
+        #self.resource = self.resource_manager.open_resource(self.instrument_address)
+        self.current_state = self.get_state()
+
+    def write(self, command):
+        "Writes command to instrument"
+        now=datetime.datetime.utcnow().isoformat()
+        self.write_buffer.append(command)
+        self.history.append({"Timestamp":now,"Action":"self.write",
+                             "Argument":command,"Response":None})
+
+
+    def read(self):
+        "Reads from the instrument"
+        now=datetime.datetime.utcnow().isoformat()
+        out="Buffer Read at {0}".format(now)
+        self.read_buffer.append(out)
+        time.sleep(.001)
+        self.history.append({"Timestamp":now,"Action":"self.read",
+                             "Argument":None,"Response":out})
+        return out
+
+    def query(self, command):
+        "Writes command and then reads a response"
+        self.write(command)
+        return self.read()
+
+
+    def ask(self, command):
+        "Writes command and then reads a response"
+        return self.query(command)
+
+    def set_state(self, state_dictionary=None, state_table=None):
+        """ Sets the instrument to the state specified by Command:Value pairs"""
+        if state_dictionary:
+            if len(self.state_buffer) + 1 < self.STATE_BUFFER_MAX_LENGTH:
+                self.state_buffer.append(self.get_state())
+            else:
+                self.state_buffer.pop(1)
+                self.state_buffer.insert(-1, self.get_state())
+            for state_command, value in state_dictionary.iteritems():
+                self.write(state_command + ' ' + str(value))
+            self.current_state = self.get_state()
+        if state_table:
+            if "Index" in state_table[0].keys():
+                state_table = sorted(state_table, key=lambda x: x["Index"])
+            if len(self.state_buffer) + 1 < self.STATE_BUFFER_MAX_LENGTH:
+                self.state_buffer.append(self.get_state())
+            else:
+                self.state_buffer.pop(1)
+                self.state_buffer.insert(-1, self.get_state())
+            # now we need to write the command
+            for state_row in state_table:
+                # a state row has a set and value
+                state_command = state_row["Set"]
+                value = state_row["Value"]
+                self.write(state_command + ' ' + str(value))
+
+    def get_state(self, state_query_dictionary=None, state_query_table=None):
+        """ Gets the current state of the instrument. get_state accepts any query dictionary in
+        the form state_query_dictionary={"GPIB_SET_COMMAND":"GPIB_QUERY_COMMAND",...} or any state_query_table
+        in the form [{"Set":"GPIB_SET_COMMAND","Query":"GPIB_QUERY_COMMAND","Index":Optional_int_ordering commands,
+        if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in from the InstrumentSheet"""
+        if not state_query_table:
+            if state_query_dictionary is None or len(state_query_dictionary) == 0:
+                state_query_dictionary = self.DEFAULT_STATE_QUERY_DICTIONARY
+            state = dict([(state_command, self.query(str(query)).replace("\n", "")) for state_command, query
+                          in state_query_dictionary.iteritems()])
+            return state
+        else:
+            # a state_query_table is a list of dictionaries, each row has at least a Set and Query key but could
+            # have an Index key that denotes order
+            if "Index" in state_query_table[0].keys():
+                state_query_table = sorted(state_query_table, key=lambda x: int(x["Index"]))
+                state = []
+                for state_row in state_query_table:
+                    set = state_row["Set"]
+                    query = state_row["Query"]
+                    index = state_row["Index"]
+                    state.append({"Set": set, "Value": self.query(query).replace("\n", ""), "Index": index})
+                return state
+            else:
+                state = []
+                for state_row in state_query_table:
+                    set = state_row["Set"]
+                    query = state_row["Query"]
+                    state.append({"Set": set, "Value": self.query(query).replace("\n", "")})
+                return state
+
+    def update_current_state(self):
+        self.current_state = self.get_state()
+
+    def save_current_state(self):
+        """ Saves the state in self.current_state attribute """
+        self.current_state = self.get_state()
+        self.save_state(None, state_dictionary=self.current_state)
+
+    def save_state(self, state_path=None, state_dictionary=None, state_table=None):
+        """ Saves any state dictionary to an xml file, with state_path, if not specified defaults to autonamed state
+         """
+        if state_path is None:
+            state_path = auto_name(specific_descriptor=self.name, general_descriptor="State",
+                                   directory=self.options["state_directory"])
+        if state_dictionary:
+            new_state = InstrumentState(None, **{"state_dictionary": state_dictionary,
+                                                 "style_sheet": "./DEFAULT_STATE_STYLE.xsl"})
+        elif state_table:
+            new_state = InstrumentState(None, **{"state_table": state_table,
+                                                 "style_sheet": "./DEFAULT_STATE_STYLE.xsl"})
+        else:
+            new_state = InstrumentState(None, **{"state_dictionary": self.get_state(),
+                                                 "style_sheet": "./DEFAULT_STATE_STYLE.xsl"})
+
+        try:
+            new_state.add_state_description()
+            new_state.append_description(description_dictionary=self.description)
+        except:
+            raise  # pass
+        new_state.save(state_path)
+        return state_path
+
+    def load_state(self, file_path):
+        """Loads a state from a file."""
+        # TODO put a UDT to state_table
+        state_model = InstrumentState(file_path)
+        self.set_state(state_table=state_model.get_state_list_dictionary())
+
+    def close(self):
+        """Closes the VISA session"""
+        print("Fake Instrument has been closed")
         
 class VisaInstrument(InstrumentSheet):
     """ General Class to communicate with COMM and GPIB instruments
@@ -288,7 +463,8 @@ class VisaInstrument(InstrumentSheet):
         self.save_state(None,state_dictionary=self.current_state)
         
     def save_state(self,state_path=None,state_dictionary=None,state_table=None):
-        """ Saves any state dictionary to an xml file, with state_name """
+        """ Saves any state dictionary to an xml file, with state_path, if not specified defaults to autonamed state
+         """
         if state_path is None:
             state_path=auto_name(specific_descriptor=self.name,general_descriptor="State",
                                  directory=self.options["state_directory"])
@@ -377,7 +553,7 @@ class VNA(VisaInstrument):
         self.IFBW = ifbw
         return ifbw
 
-    def set_frequency(self, start, stop=None, number_points=None, step=None, units='Hz'):
+    def set_frequency(self, start, stop=None, number_points=None, step=None, type='LIN'):
         """Sets the VNA to a linear mode and creates a single entry in the frequency table. If start is the only specified
         parameter sets the entry to start=stop and number_points = 1. If step is specified calculates the number of points
         and sets start, stop, number_points on the VNA. It also stores the value into the attribute frequency_list.
@@ -387,8 +563,19 @@ class VNA(VisaInstrument):
             number_points = 1
         if number_points is None and not step is None:
             number_points = round((stop - start) / step) + 1
-        self.frequency_list = np.linspace(start, stop, number_points).tolist()
-        self.write('SWE:TYPE LIN')
+
+        if re.search("LIN",type,re.IGNORECASE):
+            self.write('SWE:TYPE LIN')
+            self.frequency_list = np.linspace(start, stop, number_points).tolist()
+        elif re.search("LOG",type,re.IGNORECASE):
+            self.write('SWE:TYPE LOG')
+            logspace_start=np.log10(start)
+            logspace_stop=np.log10(stop)
+            self.frequency_list = np.logspace(logspace_start, logspace_stop,
+                                              num=number_points).tolist()
+        else:
+            self.write('SWE:TYPE LIN')
+            self.frequency_list = np.linspace(start, stop, number_points).tolist()
         self.write("SENS:FREQ:START {0}".format(start))
         self.write("SENS:FREQ:STOP {0}".format(stop))
         self.write("SENS:SWE:POIN {0}".format(number_points))
