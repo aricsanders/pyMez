@@ -75,6 +75,7 @@ INSTRUMENT_TYPES=['GPIB','COMM','OCEAN_OPTICS','MIGHTEX','LABJACK']
 INSTRUMENTS_DEFINED=[]
 #TODO Make PYMEASURE_ROOT be read from the settings folder
 PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
+VNA_FREQUENCY_UNIT_MULTIPLIERS={"Hz":1.,"kHz":10.**3,"MHz":10.**6,"GHz":10.**9,"THz":10.**12}
 #-------------------------------------------------------------------------------
 # Module Functions
 
@@ -497,12 +498,14 @@ class VisaInstrument(InstrumentSheet):
 
 
 class VNA(VisaInstrument):
-    """Control class for a linear VNA. The .measure_sparameters ans .measure_switch_terms return a S2PV1
-    class that can be saved, printed or have a simple plot using show()"""
+    """Control class for a linear VNA.
+    The .measure_sparameters ans .measure_switch_terms return a S2PV1
+    class that can be saved, printed or have a simple plot using show(). The attribute frequency_list
+    stores the frequency points as Hz."""
 
     def __init__(self, resource_name=None, **options):
         """Initializes the E8631A control class"""
-        defaults = {"state_directory": os.getcwd()}
+        defaults = {"state_directory": os.getcwd(),"frequency_units":"Hz"}
         self.options = {}
         for key, value in defaults.iteritems():
             self.options[key] = value
@@ -511,6 +514,7 @@ class VNA(VisaInstrument):
         VisaInstrument.__init__(self, resource_name, **self.options)
         self.power = self.get_power()
         self.IFBW = self.get_IFBW()
+        self.frequency_units=self.options["frequency_units"]
         # this should be if SENS:SWE:TYPE? is LIN or LOG
         start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
         stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
@@ -553,29 +557,49 @@ class VNA(VisaInstrument):
         self.IFBW = ifbw
         return ifbw
 
-    def set_frequency(self, start, stop=None, number_points=None, step=None, type='LIN'):
+    def set_frequency_units(self,frequency_units="Hz"):
+        """Sets the frequency units of the class, all values are still written to the VNA
+        as Hz and the attrbiute frequncy_list is in Hz,
+        however all commands that deal with sweeps and measurements will be in units"""
+        for unit in VNA_FREQUENCY_UNIT_MULTIPLIERS.keys():
+            if re.match(unit, frequency_units, re.IGNORECASE):
+                self.frequency_units = unit
+
+
+    def set_frequency(self, start, stop=None, number_points=None, step=None, type='LIN',frequency_units="Hz"):
         """Sets the VNA to a linear mode and creates a single entry in the frequency table. If start is the only specified
         parameter sets the entry to start=stop and number_points = 1. If step is specified calculates the number of points
         and sets start, stop, number_points on the VNA. It also stores the value into the attribute frequency_list.
+        Note this function was primarily tested on an agilent which stores frequency to the nearest mHz.
         """
+
         if stop is None and number_points is None:
             stop = start
             number_points = 1
+
+        for unit in VNA_FREQUENCY_UNIT_MULTIPLIERS.keys():
+            if re.match(unit,frequency_units,re.IGNORECASE):
+                start=start*VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
+                stop=stop*VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
+                if step:
+                    step=step*VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
+                self.frequency_units=unit
         if number_points is None and not step is None:
             number_points = round((stop - start) / step) + 1
 
         if re.search("LIN",type,re.IGNORECASE):
-            self.write('SWE:TYPE LIN')
+            self.write('SENS:SWE:TYPE LIN')
             self.frequency_list = np.linspace(start, stop, number_points).tolist()
         elif re.search("LOG",type,re.IGNORECASE):
-            self.write('SWE:TYPE LOG')
+            self.write('SENS:SWE:TYPE LOG')
             logspace_start=np.log10(start)
             logspace_stop=np.log10(stop)
-            self.frequency_list = np.logspace(logspace_start, logspace_stop,
-                                              num=number_points).tolist()
+            self.frequency_list = map(lambda x: round(x,ndigits=3),np.logspace(logspace_start, logspace_stop,
+                                              num=number_points,base=10).tolist())
         else:
-            self.write('SWE:TYPE LIN')
-            self.frequency_list = np.linspace(start, stop, number_points).tolist()
+            self.write('SENS:SWE:TYPE LIN')
+            self.frequency_list =  map(lambda x: round(x,ndigits=3),
+                                                        np.linspace(start, stop, number_points).tolist())
         self.write("SENS:FREQ:START {0}".format(start))
         self.write("SENS:FREQ:STOP {0}".format(stop))
         self.write("SENS:SWE:POIN {0}".format(number_points))
@@ -646,6 +670,7 @@ class VNA(VisaInstrument):
         # add some options here about auto saving
         # do we want comment options?
         s2p = S2PV1(None, option_line=option_line, data=switch_data)
+        s2p.change_frequency_units(self.frequency_units)
         return s2p
 
     def measure_sparameters(self, **options):
@@ -716,6 +741,7 @@ class VNA(VisaInstrument):
         # add some options here about auto saving
         # do we want comment options?
         s2p = S2PV1(None, option_line=option_line, data=sparameter_data)
+        s2p.change_frequency_units(self.frequency_units)
         return s2p
 
 
