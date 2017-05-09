@@ -591,7 +591,8 @@ class AsciiDataTable():
                   "data_table_element_separator":'\n',
                   "treat_header_as_comment":None,
                   "treat_footer_as_comment":None,
-                  "metadata":None
+                  "metadata":None,
+                  "data_list_dictionary":None
                   }
         #some of the options have the abiltiy to confilct with each other, so there has to be a
         #built-in way to determine the precedence of each option, for import lines first, then begin and then end
@@ -618,6 +619,11 @@ class AsciiDataTable():
                     self.path=self.name
                 else:
                     self.path=os.path.join(self.options["directory"],self.name)
+            if self.options["data_list_dictionary"]:
+                column_names=self.options["data_list_dictionary"][0].keys()
+                self.options["column_names"]=column_names
+                self.options["data"]=[[row[key] for key in column_names ] \
+                                      for row in self.options["data_list_dictionary"]]
             #Now we see if the table has been defined in the options
             # We should reset the self.options versions to None after this so as to not recreate or we
             # can use it as a cache and add a method reset_table which either redoes the below or reloads the saved file

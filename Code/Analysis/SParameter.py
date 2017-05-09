@@ -221,7 +221,7 @@ def frequency_model_difference(model_1, model_2, **options):
     # print("New Column Names are {0}".format(new_column_names))
     difference_options["data"] = difference_data
     difference_options["column_types"]=column_types
-    print column_types
+    #print column_types
     result = AsciiDataTable(None, **difference_options)
     return result
 
@@ -1311,7 +1311,7 @@ def compare_s2p_plots(list_S2PV1,**options):
         comparison_plot_options[key]=value
 
     # create a set of 8 subplots
-    plt.hold(True)
+    #plt.hold(True)
     fig, compare_axes = plt.subplots(nrows=4, ncols=2, figsize=(8,6),dpi=80)
     if comparison_plot_options["labels"] is None:
         labels=[s2p.path for s2p in list_S2PV1]
@@ -1740,7 +1740,7 @@ def plot_calrep_comparison(calrep_model_list):
     #print("{0} is {1}".format("average_columns",average_columns))
     number_plots=len(average_columns)
     number_rows=int(round(number_plots/2.))
-    plt.hold(True)
+    #plt.hold(True)
     fig, axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col')
     for calrep_model in calrep_model_list:
         for plot_index,ax in enumerate(axes.flat):
