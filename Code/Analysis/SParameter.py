@@ -100,6 +100,29 @@ except:
 ONE_PORT_DUT=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')
 #-----------------------------------------------------------------------------
 # Module Functions
+
+def cascade(s1,s2):
+    """Cascade returns the cascaded sparameters of s1 and s2. s1 and s2 should be in complex list form
+    [[f,S11,S12,S21,S22]...] and the returned sparameters will be in the same format. Assumes that s1,s2 have the
+    same frequencies. If 1-S2_22*S1_11 is zero we add a small non zero real part or loss."""
+    out_sparameters=[]
+    for row_index,row in enumerate(s1):
+        [f1,S1_11,S1_12,S1_21,S1_22]=row
+        [f2,S2_11,S2_12,S2_21,S2_22]=s2[row_index]
+        if f1!=f2:
+            raise TypeError("Frequencies do not match! F lists must be the same")
+        denominator=(1-S1_22*S2_11)
+        if denominator ==complex(0,0):
+            denominator=complex(10**-20,0)
+        S11=S1_11+S2_11*(S1_12*S1_21)/denominator
+        S12=S1_12*S2_12/(denominator)
+        S21=S1_21*S2_21/denominator
+        S22=S2_22+S1_22*(S2_12*S2_21)/denominator
+        new_row=[f1,S11,S12,S21,S22]
+        out_sparameters.append(new_row)
+    return out_sparameters
+
+
 def frequency_model_collapse_multiple_measurements(model, **options):
     """Returns a model with a single set of frequencies. Default is to average values together
     but geometric mean, std, variance, rss, mad and median are options.
@@ -577,12 +600,24 @@ def T_to_S(T_list):
         S_list.append([frequency,np.matrix([[S11,S12],[S21,S22]])])
     return S_list
 
-def unwrap_phase(phase_list,min_phase=0,units='degree'):
-    """unwrap_phase returns an unwraped phase list given a wraped phase list, the beginning value can be specified
-    by min_phase and radians or degrees can be specified by units"""
+def unwrap_phase(phase_list):
+    """unwrap_phase returns an unwraped phase list given a wraped phase list,
+    assumed units are degrees """
     unwrapped_phase_list=[]
-    pass
+    phase_list_copy=phase_list[:]
+    i=1
+    n=0
+    while(i+1<len(phase_list)):
+        if abs(phase_list[i]-phase_list[i-1])>90:
+            if phase_list[i]-phase_list[i-1]>0:
+                n+=1
+            else:
+                n-=1
+            phase_list_copy[i]=phase_list_copy[i+1]-n*360
+        phase_list_copy[i+1]=phase_list_copy[i+1]-n*360
+        i+=1
 
+    return phase_list_copy
 
 
 def correct_sparameters_eight_term(sparameters_complex,eight_term_correction,reciprocal=True):

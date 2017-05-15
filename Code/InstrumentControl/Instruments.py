@@ -518,7 +518,7 @@ class VNA(VisaInstrument):
 
     def __init__(self, resource_name=None, **options):
         """Initializes the E8631A control class"""
-        defaults = {"state_directory": os.getcwd(),"frequency_units":"Hz"}
+        defaults = {"state_directory": os.getcwd(), "frequency_units": "Hz"}
         self.options = {}
         for key, value in defaults.iteritems():
             self.options[key] = value
@@ -527,41 +527,40 @@ class VNA(VisaInstrument):
         VisaInstrument.__init__(self, resource_name, **self.options)
         self.power = self.get_power()
         self.IFBW = self.get_IFBW()
-        self.frequency_units=self.options["frequency_units"]
-        self.frequency_table=[]
+        self.frequency_units = self.options["frequency_units"]
+        self.frequency_table = []
         # this should be if SENS:SWE:TYPE? is LIN or LOG
-        self.sweep_type=self.get_sweep_type()
-        if re.search("LIN",self.sweep_type,re.IGNORECASE):
+        self.sweep_type = self.get_sweep_type()
+        if re.search("LIN", self.sweep_type, re.IGNORECASE):
             start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
             stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
             self.frequency_list = np.linspace(start, stop, number_points).tolist()
-        elif re.search("LIN",self.sweep_type,re.IGNORECASE):
+        elif re.search("LIN", self.sweep_type, re.IGNORECASE):
             start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
             stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
-            logspace_start=np.log10(start)
-            logspace_stop=np.log10(stop)
-            self.frequency_list = map(lambda x: round(x,ndigits=3),np.logspace(logspace_start, logspace_stop,
-                                              num=number_points,base=10).tolist())
-        elif re.search("SEG",self.sweep_type,re.IGNORECASE):
-            number_segments=int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
+            logspace_start = np.log10(start)
+            logspace_stop = np.log10(stop)
+            self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
+                                                                                 num=number_points, base=10).tolist())
+        elif re.search("SEG", self.sweep_type, re.IGNORECASE):
+            number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
             for i in range(number_segments):
-                start= float(self.query("SENS:SEG{0}:FREQ:START?".format(i+1)).replace("\n", ""))
-                stop = float(self.query("SENS:SEG{0}:FREQ:STOP?".format(i + 1)).replace("\n", ""))
-                number_points = int(self.query("SENS:SEG{0}:SWE:POIN?".format(i + 1)).replace("\n", ""))
-                step=(stop-start)/float(number_points-1)
-                self.frequency_table.append({"start":start,"stop":stop,
-                                             "number_points":number_points,"step":step})
-                self.frequency_table=fix_segment_table(self.frequency_table)
+                start = float(self.query("SENS:SEGM{0}:FREQ:START?".format(i + 1)).replace("\n", ""))
+                stop = float(self.query("SENS:SEGM{0}:FREQ:STOP?".format(i + 1)).replace("\n", ""))
+                number_points = int(self.query("SENS:SEGM{0}:SWE:POIN?".format(i + 1)).replace("\n", ""))
+                step = (stop - start) / float(number_points - 1)
+                self.frequency_table.append({"start": start, "stop": stop,
+                                             "number_points": number_points, "step": step})
+                self.frequency_table = fix_segment_table(self.frequency_table)
                 frequency_list = []
                 for row in self.frequency_table[:]:
                     new_list = np.linspace(row["start"], row["stop"], row["number_points"]).tolist()
                     frequency_list = frequency_list + new_list
                 self.frequency_list = frequency_list
         else:
-            self.frequency_list=[]
-
+            self.frequency_list = []
 
     def initialize(self):
         """Intializes the system"""
@@ -603,7 +602,7 @@ class VNA(VisaInstrument):
         self.IFBW = ifbw
         return ifbw
 
-    def set_frequency_units(self,frequency_units="Hz"):
+    def set_frequency_units(self, frequency_units="Hz"):
         """Sets the frequency units of the class, all values are still written to the VNA
         as Hz and the attrbiute frequncy_list is in Hz,
         however all commands that deal with sweeps and measurements will be in units"""
@@ -650,34 +649,55 @@ class VNA(VisaInstrument):
         self.frequency_list = frequency_list
 
         # now we write the segment to the instrument
-        self.write('SENS:SWE:TYPE SEG')
+        if not re.search("SEG", self.get_sweep_type(), re.IGNORECASE):
+            self.write('SENS:SWE:TYPE SEGM')
 
         # now get the number of segments and add or delete the right amount to make it line up with self.frequency_table
-        number_segments = self.int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
+        # This routine is broken
+
+        number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
+        print("{0} is {1}".format("number_segments", number_segments))
         if len(self.frequency_table) < number_segments:
             difference = number_segments - len(self.frequency_table)
             max_segment = number_segments
             while (difference != 0):
-                self.write("SENS:SEG:DEL {0}".format(max_segment))
+                self.write("SENS:SEGM{0}:DEL".format(max_segment))
                 max_segment -= 1
                 difference -= 1
         elif len(self.frequency_table) > number_segments:
-            difference = number_segments - len(self.frequency_table)
+            difference = len(self.frequency_table) - number_segments
             max_segment = number_segments + 1
+            print("{0} is {1}".format("difference", difference))
             while (difference != 0):
-                self.write("SENS:SEG:ADD {0}".format(max_segment))
+                self.write("SENS:SEGM{0}:ADD".format(max_segment))
                 max_segment += 1
                 difference -= 1
+                print("{0} is {1}".format("difference", difference))
         else:
             pass
 
-        for row_index, row in self.frequency_table[:]:
+        for row_index, row in enumerate(self.frequency_table[:]):
+            [start, stop, number_points] = [row["start"], row["stop"], row["number_points"]]
             # SENSe<cnum>:SEGMent<snum>:SWEep:POINts <num>
-            self.write("SENS:SEGM{0}:FREQ:START {0}".format(row_index, start))
-            self.write("SENS:SEGM{0}:FREQ:STOP {0}".format(row_index, stop))
-            self.write("SENS:SEGM{0}:SWE:POIN {0}".format(row_index, number_points))
+            self.write("SENS:SEGM{0}:FREQ:START {1}".format(row_index + 1, start))
+            self.write("SENS:SEGM{0}:FREQ:STOP {1}".format(row_index + 1, stop))
+            self.write("SENS:SEGM{0}:SWE:POIN {1}".format(row_index + 1, number_points))
+            self.write("SENS:SEGM{0}:STAT ON".format(row_index + 1))
 
-    def set_frequency(self, start, stop=None, number_points=None, step=None, type='LIN',frequency_units="Hz"):
+    def write_frequency_table(self, frequency_table=None):
+        """Writes frequency_table to the instrument, the frequency table should be in the form
+        [{start:,stop:,number_points:}..] or None"""
+        if frequency_table is None:
+            frequency_table = self.frequency_table[:]
+        for row_index, row in enumerate(frequency_table[:]):
+            [start, stop, number_points] = [row["start"], row["stop"], row["number_points"]]
+            # SENSe<cnum>:SEGMent<snum>:SWEep:POINts <num>
+            self.write("SENS:SEGM{0}:FREQ:START {1}".format(row_index + 1, start))
+            self.write("SENS:SEGM{0}:FREQ:STOP {1}".format(row_index + 1, stop))
+            self.write("SENS:SEGM{0}:SWE:POIN {1}".format(row_index + 1, number_points))
+            self.write("SENS:SEGM{0}:STAT ON".format(row_index + 1))
+
+    def set_frequency(self, start, stop=None, number_points=None, step=None, type='LIN', frequency_units="Hz"):
         """Sets the VNA to a linear mode and creates a single entry in the frequency table. If start is the only specified
         parameter sets the entry to start=stop and number_points = 1. If step is specified calculates the number of points
         and sets start, stop, number_points on the VNA. It also stores the value into the attribute frequency_list.
@@ -689,32 +709,31 @@ class VNA(VisaInstrument):
             number_points = 1
 
         for unit in VNA_FREQUENCY_UNIT_MULTIPLIERS.keys():
-            if re.match(unit,frequency_units,re.IGNORECASE):
-                start=start*VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
-                stop=stop*VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
+            if re.match(unit, frequency_units, re.IGNORECASE):
+                start = start * VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
+                stop = stop * VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
                 if step:
-                    step=step*VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
-                self.frequency_units=unit
+                    step = step * VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
+                self.frequency_units = unit
         if number_points is None and not step is None:
             number_points = round((stop - start) / step) + 1
 
-        if re.search("LIN",type,re.IGNORECASE):
+        if re.search("LIN", type, re.IGNORECASE):
             self.write('SENS:SWE:TYPE LIN')
             self.frequency_list = np.linspace(start, stop, number_points).tolist()
-        elif re.search("LOG",type,re.IGNORECASE):
+        elif re.search("LOG", type, re.IGNORECASE):
             self.write('SENS:SWE:TYPE LOG')
-            logspace_start=np.log10(start)
-            logspace_stop=np.log10(stop)
-            self.frequency_list = map(lambda x: round(x,ndigits=3),np.logspace(logspace_start, logspace_stop,
-                                              num=number_points,base=10).tolist())
+            logspace_start = np.log10(start)
+            logspace_stop = np.log10(stop)
+            self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
+                                                                                 num=number_points, base=10).tolist())
         else:
             self.write('SENS:SWE:TYPE LIN')
-            self.frequency_list =  map(lambda x: round(x,ndigits=3),
-                                                        np.linspace(start, stop, number_points).tolist())
+            self.frequency_list = map(lambda x: round(x, ndigits=3),
+                                      np.linspace(start, stop, number_points).tolist())
         self.write("SENS:FREQ:START {0}".format(start))
         self.write("SENS:FREQ:STOP {0}".format(stop))
         self.write("SENS:SWE:POIN {0}".format(number_points))
-
 
     def get_frequency(self):
         "Returns the frequency in python list format"
@@ -847,7 +866,7 @@ class VNA(VisaInstrument):
                        reS21[index], imS21[index],
                        reS12[index], imS12[index],
                        reS22[index], imS22[index]]
-            new_row=map(lambda x:float(x),new_row)
+            new_row = map(lambda x: float(x), new_row)
             sparameter_data.append(new_row)
         option_line = "# Hz S RI R 50"
         # add some options here about auto saving
