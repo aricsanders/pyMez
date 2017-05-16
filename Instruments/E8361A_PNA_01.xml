@@ -33,8 +33,22 @@
         <Returns> What gets returned by the function. </Returns>
         <Description>A one line describing the purpose of the function, for more detailed info look in the manual. </Description>
     </Commands_Description>
-    <Commands>
-        
+     <Commands>
+        <Tuple Command="SENS:BAND" Type="SET" Argument="float" Returns="None" Description="Sets the IFBW of the VNA"/>
+        <Tuple Command="SENS:BAND?" Type="QUERY" Argument="None" Returns="float" Description="Queries the IFBW of the VNA"/>
+        <Tuple Command="SENS:AVER" Type="SET" Argument="int" Returns="None" Description="Sets the number of averages of the VNA"/>
+        <Tuple Command="SENS:AVER?" Type="QUERY" Argument="None" Returns="int" Description="Queries the number of averages of the VNA"/>
+        <Tuple Command="SOUR:POW" Type="SET" Argument="float" Returns="None" Description="Sets the source power in dbm of the VNA"/>
+        <Tuple Command="SOUR:POW?" Type="QUERY" Argument="None" Returns="float" Description="Queries the source power in dbm of the VNA"/>
+        <Tuple Command="SOUR:POW:SLOP" Type="SET" Argument="float" Returns="None" Description="Sets the source power slope in dbm of the VNA"/>
+        <Tuple Command="SOUR:POW:SLOP?" Type="QUERY" Argument="None" Returns="float" Description="Queries the source power slope in dbm of the VNA"/>
+        <Tuple Command="SOUR:POW:CORR:STAT" Type="SET" Argument="bool" Returns="None" Description="Sets the source power correction of the VNA"/>
+        <Tuple Command="SOUR:POW:CORR:STAT?" Type="QUERY" Argument="None" Returns="bool" Description="Queries the source power correction of the VNA"/>
+        <Tuple Command="SENS:CORR:STAT" Type="SET" Argument="ON|OFF" Returns="None" Description="Sets the correction state of the VNA"/>
+        <Tuple Command="SENS:CORR:STAT?" Type="QUERY" Argument="None" Returns="bool" Description="Queries the correction state of the VNA"/>
+        <Tuple Command="SENS:SWE:TYPE" Type="SET" Argument="LINear | LOGarithmic | POWer | CW | SEGMent" Returns="None" Description="Sets the sweep type of the VNA"/>
+        <Tuple Command="SENS:SWE:TYPE?" Type="QUERY" Argument="None" Returns="LIN|LOG|POW|CW|SEGM" Description="Queries the sweep type of the VNA"/>
+
     </Commands>
     <Command_Parameter_Definitions>
 
