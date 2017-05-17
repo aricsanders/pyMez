@@ -1031,7 +1031,7 @@ def mean_from_history(history_frame,**options):
 
     defaults={"Device_Id":None, "System_Id":None,"Measurement_Timestamp":None,
               "Connector_Type_Measurement":None,
-             "Measurement_Date":None,"Measurement_Time":None,
+             "Measurement_Date":None,"Measurement_Time":None,"Direction":None,
               "column_names":['Frequency','magS11','argS11']}
     mean_options={}
     for key,value in defaults.iteritems():
@@ -1040,7 +1040,7 @@ def mean_from_history(history_frame,**options):
             mean_options[key]=value
 
     filters=["Device_Id","System_Id","Measurement_Timestamp","Connector_Type_Measurement",
-             "Measurement_Date","Measurement_Time"]
+             "Measurement_Date","Measurement_Time","Direction"]
     temp_frame=history_frame.copy()
     for index,filter_type in enumerate(filters):
         if mean_options[filter_type] is not None:
@@ -1067,7 +1067,7 @@ def median_from_history(history_frame,**options):
 
     defaults={"Device_Id":None, "System_Id":None,"Measurement_Timestamp":None,
               "Connector_Type_Measurement":None,
-             "Measurement_Date":None,"Measurement_Time":None,
+             "Measurement_Date":None,"Measurement_Time":None,"Direction":None,
               "column_names":['Frequency','magS11','argS11']}
     median_options={}
     for key,value in defaults.iteritems():
@@ -1076,7 +1076,7 @@ def median_from_history(history_frame,**options):
             median_options[key]=value
 
     filters=["Device_Id","System_Id","Measurement_Timestamp","Connector_Type_Measurement",
-             "Measurement_Date","Measurement_Time"]
+             "Measurement_Date","Measurement_Time","Direction"]
     temp_frame=history_frame.copy()
     for index,filter_type in enumerate(filters):
         if median_options[filter_type] is not None:
@@ -1685,7 +1685,7 @@ def plot_calrep_results_difference_comparison(calrep_model, results_model, **opt
     defaults = {"display_legend": False,
                 "save_plot": False,
                 "directory": None,
-                "specific_descriptor": "comparison_Plot",
+                "specific_descriptor": "Difference_Comparison",
                 "general_descriptor": "Plot",
                 "file_name": None,
                 "labels": None,
@@ -1693,7 +1693,7 @@ def plot_calrep_results_difference_comparison(calrep_model, results_model, **opt
                 "calrep_format": 'r-x',
                 "results_format": 'r-x',
                 "debug": False,
-                "title": 'Calrep diiference of {0}'.format(calrep_model.metadata["Device_Id"])}
+                "title": 'Calrep diference of {0}'.format(calrep_model.metadata["Device_Id"])}
     comparison_plot_options = {}
     for key, value in defaults.iteritems():
         comparison_plot_options[key] = value
