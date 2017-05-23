@@ -1058,6 +1058,7 @@ def mean_from_history(history_frame,**options):
         mean_array.append(row)
     mean_frame=pandas.DataFrame(mean_array,columns=mean_options["column_names"])
     return mean_frame
+
 def median_from_history(history_frame,**options):
     """median_from_history creates a median_frame given a full history frame (pandas.DataFrame object),
     by setting options it selects column names
@@ -1817,6 +1818,216 @@ def plot_calrep_comparison(calrep_model_list):
     plt.tight_layout()
     plt.show()
     return fig
+
+def plot_raw_MUF_comparison(raw_directory=r"C:\Share\35CalComp\35_ascii_results",
+                            measurement_names=['N101P1.L1_030716', 'N101P2.L1_030716'],
+                            nominal_path=r"C:\Share\35CalComp\MUF_results\DUTs\N101P1_Support\N101P1_0.s2p",
+                            sensitivity_directory=r"C:\Share\35CalComp\MUF_results\DUTs\N101P1_Support\Covariance",
+                            montecarlo_directory=r"C:\Share\35CalComp\MUF_results\DUTs\N101P1_Support\MonteCarlo",
+                            **options):
+    """Plots a comparison of results form the Microwave Uncertainty Framework and calrep given a raw file, nominal file,
+    a sensitivity directory and a montecarlo directory.
+    """
+
+    # deal with options
+    defaults = {"save_plots": False}
+    comparison_options = {}
+    for key, value in defaults.iteritems():
+        comparison_options[key] = value
+    for key, value in comparison_options.iteritems():
+        comparison_options[key] = value
+    # load files into python classes
+    model_name = sparameter_power_type(os.path.join(raw_directory, measurement_names[0]))
+    print model_name
+    # raw_type(os.path.join(raw_directory,'M105P1.L1_030716'))
+    model = globals()[model_name]
+    measurements = map(lambda x: model(os.path.join(raw_directory, x)), measurement_names)
+    calrep_measurements = map(lambda x: calrep(x), measurements)
+    montecarlo_reference_curve = create_monte_carlo_reference_curve(monte_carlo_directory=montecarlo_directory,
+                                                                    format="MA")
+    sensitivity_reference_curve = create_sensitivity_reference_curve(nominal_file_path=nominal_path,
+                                                                     sensitivity_directory=sensitivity_directory,
+                                                                     format="MA")
+    print("-" * 80)
+    print("{0}".format(measurements[0].metadata["Device_Id"]))
+
+    # update global preferences
+    plt.rcParams.update({'font.size': 22, 'figure.figsize': (12, 6)})
+
+    # for one-port
+    if re.search("one", model_name, re.IGNORECASE):
+        combined_figure, axes = plt.subplots(nrows=1, ncols=2)
+        # Now plot all of these together at once mag first
+        data_list = measurements + [sensitivity_reference_curve, montecarlo_reference_curve]
+        labels = []
+        for index, data in enumerate(data_list):
+            if index == len(data_list) - 1:
+                labels.append("Montecarlo")
+            elif index == len(data_list) - 2:
+                labels.append("Nominal")
+            else:
+                labels.append("Measurement {0}".format(index + 1))
+        for index, data in enumerate(data_list):
+            axes[0].plot(data["Frequency"], data["magS11"], label=labels[index])
+
+        # now phase
+
+        for index, data in enumerate(data_list):
+            axes[1].plot(data["Frequency"], data["argS11"], label=labels[index])
+        axes[1].legend(loc='center left', bbox_to_anchor=(1, 0.5))
+    else:
+        combined_figure, axes = plt.subplots(nrows=3, ncols=2)
+        data_list = measurements + [sensitivity_reference_curve, montecarlo_reference_curve]
+        labels = []
+        for index, data in enumerate(data_list):
+            if index == len(data_list) - 1:
+                labels.append("Montecarlo")
+            elif index == len(data_list) - 2:
+                labels.append("Nominal")
+            else:
+                labels.append("Measurement {0}".format(index + 1))
+        parameters = ["S11", "S21", "S22"]
+        for plot_index, plot_row in enumerate(axes):
+            # Now plot all of these together at once mag first
+            for index, data in enumerate(data_list):
+                plot_row[0].plot(data["Frequency"], data["mag" + parameters[plot_index]], label=labels[index])
+            # now phase
+            for index, data in enumerate(data_list):
+                plot_row[1].plot(data["Frequency"], data["arg" + parameters[plot_index]], label=labels[index])
+            if plot_index == 1:
+                plot_row[1].legend(loc='center left', bbox_to_anchor=(1, 0.5))
+
+
+                # plot the difference with uncertainties
+
+    plt.tight_layout()
+
+    if re.search("One", model_name, re.IGNORECASE):
+        # now the difference of mag for measurement one
+        montecarlo_mag = np.array(montecarlo_reference_curve["magS11"])
+        montecarlo_uncertainty = np.array(montecarlo_reference_curve["umagS11"])
+        measurement_1_mag = np.array(calrep_measurements[0]["magS11"])
+        measurement_1_uncertainty = np.array(calrep_measurements[0]["uMgS11"])
+        nominal_mag = np.array(sensitivity_reference_curve["magS11"])
+        nominal_uncertainty = np.array(sensitivity_reference_curve["umagS11"])
+        difference_figure, difference_axes = plt.subplots(nrows=1, ncols=2)
+        difference_axes[0].plot(sensitivity_reference_curve["Frequency"],
+                                measurement_1_mag - nominal_mag, label="Difference of Nominal and Calrep")
+        difference_axes[0].fill_between(sensitivity_reference_curve["Frequency"], -1 * nominal_uncertainty,
+                                        nominal_uncertainty,
+                                        color="blue",
+                                        alpha=.25,
+                                        edgecolor="black", label="Sensitivity Uncertainty")
+        difference_axes[0].plot(montecarlo_reference_curve["Frequency"], measurement_1_mag - montecarlo_mag,
+                                label="Difference of Montecarlo mean and Calrep")
+        difference_axes[0].fill_between(sensitivity_reference_curve["Frequency"], -1 * montecarlo_uncertainty,
+                                        montecarlo_uncertainty,
+                                        color="black",
+                                        alpha=.25,
+                                        edgecolor="black", label="Montecarlo Uncertainty")
+        difference_axes[0].fill_between(sensitivity_reference_curve["Frequency"], -1 * measurement_1_uncertainty,
+                                        measurement_1_uncertainty,
+                                        color="red",
+                                        alpha=.25,
+                                        edgecolor="red", label="Calrep Uncertainty")
+        montecarlo_arg = np.array(montecarlo_reference_curve["argS11"])
+        montecarlo_arg_uncertainty = np.array(montecarlo_reference_curve["uargS11"])
+        measurement_1_arg = np.array(calrep_measurements[0]["argS11"])
+        measurement_1_arg_uncertainty = np.array(calrep_measurements[0]["uAgS11"])
+        nominal_arg = np.array(sensitivity_reference_curve["argS11"])
+        nominal_arg_uncertainty = np.array(sensitivity_reference_curve["uargS11"])
+        difference_axes[1].plot(sensitivity_reference_curve["Frequency"],
+                                measurement_1_arg - nominal_arg,
+                                label="Difference of Nominal ")
+        difference_axes[1].fill_between(sensitivity_reference_curve["Frequency"], -1 * nominal_arg_uncertainty,
+                                        nominal_arg_uncertainty,
+                                        color="blue",
+                                        alpha=.25,
+                                        edgecolor="black", label="Sensitivity Uncertainty")
+        difference_axes[1].plot(montecarlo_reference_curve["Frequency"], measurement_1_arg - montecarlo_arg,
+                                label="Difference of Montecarlo ")
+        difference_axes[1].fill_between(sensitivity_reference_curve["Frequency"],
+                                        -1 * montecarlo_arg_uncertainty, montecarlo_arg_uncertainty,
+                                        color="black",
+                                        alpha=.25,
+                                        edgecolor="black", label="Montecarlo Uncertainty")
+        difference_axes[1].fill_between(sensitivity_reference_curve["Frequency"],
+                                        -1 * measurement_1_arg_uncertainty, measurement_1_arg_uncertainty,
+                                        color="red",
+                                        alpha=.25,
+                                        edgecolor="red", label="Calrep Uncertainty")
+
+        difference_axes[1].legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        difference_axes[1].set_ylim(ymin=-5, ymax=5)
+        difference_axes[0].set_ylim(ymin=-.025, ymax=.025)
+    else:
+        parameters = ["S11", "S21", "S22"]
+        difference_figure, difference_axes = plt.subplots(nrows=3, ncols=2)
+        for plot_index, plot_row in enumerate(difference_axes):
+            parameter = parameters[plot_index]
+            montecarlo_mag = np.array(montecarlo_reference_curve["mag" + parameter])
+            montecarlo_uncertainty = np.array(montecarlo_reference_curve["umag" + parameter])
+            measurement_1_mag = np.array(calrep_measurements[0]["mag" + parameter])
+            measurement_1_uncertainty = np.array(calrep_measurements[0]["uMg" + parameter])
+            nominal_mag = np.array(sensitivity_reference_curve["mag" + parameter])
+            nominal_uncertainty = np.array(sensitivity_reference_curve["umag" + parameter])
+            plot_row[0].plot(sensitivity_reference_curve["Frequency"],
+                             measurement_1_mag - nominal_mag, label="Difference of Nominal and Calrep")
+            plot_row[0].fill_between(sensitivity_reference_curve["Frequency"], -1 * nominal_uncertainty,
+                                     nominal_uncertainty,
+                                     color="blue",
+                                     alpha=.25,
+                                     edgecolor="black", label="Sensitivity Uncertainty")
+            plot_row[0].plot(montecarlo_reference_curve["Frequency"], measurement_1_mag - montecarlo_mag,
+                             label="Difference of Montecarlo mean and Calrep")
+            plot_row[0].fill_between(sensitivity_reference_curve["Frequency"], -1 * montecarlo_uncertainty,
+                                     montecarlo_uncertainty,
+                                     color="black",
+                                     alpha=.25,
+                                     edgecolor="black", label="Montecarlo Uncertainty")
+            plot_row[0].fill_between(sensitivity_reference_curve["Frequency"], -1 * measurement_1_uncertainty,
+                                     measurement_1_uncertainty,
+                                     color="red",
+                                     alpha=.25,
+                                     edgecolor="red", label="Calrep Uncertainty")
+            montecarlo_arg = np.array(montecarlo_reference_curve["arg" + parameter])
+            montecarlo_arg_uncertainty = np.array(montecarlo_reference_curve["uarg" + parameter])
+            measurement_1_arg = np.array(calrep_measurements[0]["arg" + parameter])
+            measurement_1_arg_uncertainty = np.array(calrep_measurements[0]["uAg" + parameter])
+            nominal_arg = np.array(sensitivity_reference_curve["arg" + parameter])
+            nominal_arg_uncertainty = np.array(sensitivity_reference_curve["uarg" + parameter])
+            plot_row[1].plot(sensitivity_reference_curve["Frequency"],
+                             measurement_1_arg - nominal_arg,
+                             label="Difference of Nominal ")
+            plot_row[1].fill_between(sensitivity_reference_curve["Frequency"], -1 * nominal_arg_uncertainty,
+                                     nominal_arg_uncertainty,
+                                     color="blue",
+                                     alpha=.25,
+                                     edgecolor="black", label="Sensitivity Uncertainty")
+            plot_row[1].plot(montecarlo_reference_curve["Frequency"], measurement_1_arg - montecarlo_arg,
+                             label="Difference of Montecarlo ")
+            plot_row[1].fill_between(sensitivity_reference_curve["Frequency"],
+                                     -1 * montecarlo_arg_uncertainty, montecarlo_arg_uncertainty,
+                                     color="black",
+                                     alpha=.25,
+                                     edgecolor="black", label="Montecarlo Uncertainty")
+            plot_row[1].fill_between(sensitivity_reference_curve["Frequency"],
+                                     -1 * measurement_1_arg_uncertainty, measurement_1_arg_uncertainty,
+                                     color="red",
+                                     alpha=.25,
+                                     edgecolor="red", label="Calrep Uncertainty")
+            if plot_index == 1:
+                plot_row[1].legend(loc='center left', bbox_to_anchor=(1, 0.5))
+                plot_row[0].set_ylim(ymin=-.0001, ymax=.0001)
+                plot_row[1].set_ylim(ymin=-1.8, ymax=1.8)
+            else:
+                plot_row[1].set_ylim(ymin=-10, ymax=10)
+                plot_row[0].set_ylim(ymin=-.025, ymax=.025)
+    plt.tight_layout()
+    plt.show()
+    print("-" * 80)
+    # Return files if you need them later
+    return [measurements, calrep_measurements, montecarlo_reference_curve, sensitivity_reference_curve]
 #-----------------------------------------------------------------------------
 # Module Classes
 
