@@ -67,6 +67,7 @@
 <li><a href='./pyMeasure/Code/Analysis/SParameter.m.html#pyMeasure.Code.Analysis.SParameter.calrep'>calrep</a></li>
 <li><a href='./pyMeasure/Code/Analysis/SParameter.m.html#pyMeasure.Code.Analysis.SParameter.calrep_history_plot'>calrep_history_plot</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/NISTModels.m.html#pyMeasure.Code.DataHandlers.NISTModels.calrep_to_benchmark'>calrep_to_benchmark</a></li>
+<li><a href='./pyMeasure/Code/Analysis/SParameter.m.html#pyMeasure.Code.Analysis.SParameter.cascade'>cascade</a></li>
 <li><a href='./pyMeasure/Code/Utils/Names.m.html#pyMeasure.Code.Utils.Names.change_extension'>change_extension</a></li>
 <li><a href='./pyMeasure/Code/Utils/HelpUtils.m.html#pyMeasure.Code.Utils.HelpUtils.change_links_examples_script'>change_links_examples_script</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/XMLModels.m.html#pyMeasure.Code.DataHandlers.XMLModels.ChangeXMLLog'>ChangeXMLLog</a></li>
@@ -145,12 +146,16 @@
 <li><a href='./pyMeasure/Code/DataHandlers/Translations.m.html#pyMeasure.Code.DataHandlers.Translations.ExcelFile_to_DataFrame'>ExcelFile_to_DataFrame</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/Translations.m.html#pyMeasure.Code.DataHandlers.Translations.ExcelFile_to_DataFrameDictionary'>ExcelFile_to_DataFrameDictionary</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/ZipModels.m.html#pyMeasure.Code.DataHandlers.ZipModels.extract_all'>extract_all</a></li>
+<li><a href='./pyMeasure/Code/InstrumentControl/Instruments.m.html#pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument'>FakeInstrument</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/Translations.m.html#pyMeasure.Code.DataHandlers.Translations.FigFile_to_MatplotlibFigure'>FigFile_to_MatplotlibFigure</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/Translations.m.html#pyMeasure.Code.DataHandlers.Translations.File_to_Image'>File_to_Image</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/Translations.m.html#pyMeasure.Code.DataHandlers.Translations.File_to_Model'>File_to_Model</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/Translations.m.html#pyMeasure.Code.DataHandlers.Translations.File_to_String'>File_to_String</a></li>
+<li><a href='./pyMeasure/Code/Utils/Names.m.html#pyMeasure.Code.Utils.Names.filename_decrement'>filename_decrement</a></li>
+<li><a href='./pyMeasure/Code/Utils/Names.m.html#pyMeasure.Code.Utils.Names.filename_increment'>filename_increment</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/XMLModels.m.html#pyMeasure.Code.DataHandlers.XMLModels.FileRegister'>FileRegister</a></li>
 <li><a href='./pyMeasure/Code/InstrumentControl/Instruments.m.html#pyMeasure.Code.InstrumentControl.Instruments.find_description'>find_description</a></li>
+<li><a href='./pyMeasure/Code/InstrumentControl/Instruments.m.html#pyMeasure.Code.InstrumentControl.Instruments.fix_segment_table'>fix_segment_table</a></li>
 <li><a href='./pyMeasure/Code/Analysis/SParameter.m.html#pyMeasure.Code.Analysis.SParameter.frequency_model_collapse_multiple_measurements'>frequency_model_collapse_multiple_measurements</a></li>
 <li><a href='./pyMeasure/Code/Analysis/SParameter.m.html#pyMeasure.Code.Analysis.SParameter.frequency_model_difference'>frequency_model_difference</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/Translations.m.html#pyMeasure.Code.DataHandlers.Translations.FrequencyList_to_FrequencyMatrixList'>FrequencyList_to_FrequencyMatrixList</a></li>
@@ -268,6 +273,7 @@
 <li><a href='./pyMeasure/Code/Analysis/SParameter.m.html#pyMeasure.Code.Analysis.SParameter.plot_calrep_results_difference_comparison'>plot_calrep_results_difference_comparison</a></li>
 <li><a href='./pyMeasure/Code/Analysis/SParameter.m.html#pyMeasure.Code.Analysis.SParameter.plot_frequency_model'>plot_frequency_model</a></li>
 <li><a href='./pyMeasure/Code/Analysis/SParameter.m.html#pyMeasure.Code.Analysis.SParameter.plot_frequency_model_histogram'>plot_frequency_model_histogram</a></li>
+<li><a href='./pyMeasure/Code/Analysis/SParameter.m.html#pyMeasure.Code.Analysis.SParameter.plot_raw_MUF_comparison'>plot_raw_MUF_comparison</a></li>
 <li><a href='./pyMeasure/Code/Analysis/SParameter.m.html#pyMeasure.Code.Analysis.SParameter.plot_reference_curve'>plot_reference_curve</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/Translations.m.html#pyMeasure.Code.DataHandlers.Translations.PngFile_to_Base64'>PngFile_to_Base64</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/Translations.m.html#pyMeasure.Code.DataHandlers.Translations.PngFile_to_JpgFile'>PngFile_to_JpgFile</a></li>
@@ -404,6 +410,7 @@
 <li><a href='./pyMeasure/Code/DataHandlers/XMLModels.m.html#pyMeasure.Code.DataHandlers.XMLModels.test_dictionary_to_xmlchunk'>test_dictionary_to_xmlchunk</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/XMLModels.m.html#pyMeasure.Code.DataHandlers.XMLModels.test_EndOfDayXMLLog'>test_EndOfDayXMLLog</a></li>
 <li><a href='./pyMeasure/Code/FrontEnds/XMLGeneral.m.html#pyMeasure.Code.FrontEnds.XMLGeneral.test_EtreeXML'>test_EtreeXML</a></li>
+<li><a href='./pyMeasure/Code/Utils/Names.m.html#pyMeasure.Code.Utils.Names.test_filename_change_iterator'>test_filename_change_iterator</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/XMLModels.m.html#pyMeasure.Code.DataHandlers.XMLModels.test_FileRegister'>test_FileRegister</a></li>
 <li><a href='./pyMeasure/Code/InstrumentControl/Instruments.m.html#pyMeasure.Code.InstrumentControl.Instruments.test_find_description'>test_find_description</a></li>
 <li><a href='./pyMeasure/Code/DataHandlers/XMLModels.m.html#pyMeasure.Code.DataHandlers.XMLModels.test_get_attribute_names'>test_get_attribute_names</a></li>

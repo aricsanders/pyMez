@@ -1853,7 +1853,8 @@ table {
                   <span class="s2">&quot;data_table_element_separator&quot;</span><span class="p">:</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
                   <span class="s2">&quot;treat_footer_as_comment&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                  <span class="s2">&quot;metadata&quot;</span><span class="p">:</span><span class="bp">None</span>
+                  <span class="s2">&quot;metadata&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+                  <span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">:</span><span class="bp">None</span>
                   <span class="p">}</span>
         <span class="c1">#some of the options have the abiltiy to confilct with each other, so there has to be a</span>
         <span class="c1">#built-in way to determine the precedence of each option, for import lines first, then begin and then end</span>
@@ -1880,6 +1881,11 @@ table {
                     <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">]:</span>
+                <span class="n">column_names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">column_names</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">column_names</span> <span class="p">]</span> \
+                                      <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">]]</span>
             <span class="c1">#Now we see if the table has been defined in the options</span>
             <span class="c1"># We should reset the self.options versions to None after this so as to not recreate or we</span>
             <span class="c1"># can use it as a cache and add a method reset_table which either redoes the below or reloads the saved file</span>
@@ -5335,7 +5341,8 @@ column names,rectangular array of data, and footer</p></div>
                   <span class="s2">&quot;data_table_element_separator&quot;</span><span class="p">:</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
                   <span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
                   <span class="s2">&quot;treat_footer_as_comment&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-                  <span class="s2">&quot;metadata&quot;</span><span class="p">:</span><span class="bp">None</span>
+                  <span class="s2">&quot;metadata&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+                  <span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">:</span><span class="bp">None</span>
                   <span class="p">}</span>
         <span class="c1">#some of the options have the abiltiy to confilct with each other, so there has to be a</span>
         <span class="c1">#built-in way to determine the precedence of each option, for import lines first, then begin and then end</span>
@@ -5362,6 +5369,11 @@ column names,rectangular array of data, and footer</p></div>
                     <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">]:</span>
+                <span class="n">column_names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">column_names</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">column_names</span> <span class="p">]</span> \
+                                      <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">]]</span>
             <span class="c1">#Now we see if the table has been defined in the options</span>
             <span class="c1"># We should reset the self.options versions to None after this so as to not recreate or we</span>
             <span class="c1"># can use it as a cache and add a method reset_table which either redoes the below or reloads the saved file</span>
@@ -6618,7 +6630,8 @@ column names,rectangular array of data, and footer</p></div>
               <span class="s2">&quot;data_table_element_separator&quot;</span><span class="p">:</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
               <span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
               <span class="s2">&quot;treat_footer_as_comment&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;metadata&quot;</span><span class="p">:</span><span class="bp">None</span>
+              <span class="s2">&quot;metadata&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+              <span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">:</span><span class="bp">None</span>
               <span class="p">}</span>
     <span class="c1">#some of the options have the abiltiy to confilct with each other, so there has to be a</span>
     <span class="c1">#built-in way to determine the precedence of each option, for import lines first, then begin and then end</span>
@@ -6645,6 +6658,11 @@ column names,rectangular array of data, and footer</p></div>
                 <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">]:</span>
+            <span class="n">column_names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">column_names</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">column_names</span> <span class="p">]</span> \
+                                  <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_list_dictionary&quot;</span><span class="p">]]</span>
         <span class="c1">#Now we see if the table has been defined in the options</span>
         <span class="c1"># We should reset the self.options versions to None after this so as to not recreate or we</span>
         <span class="c1"># can use it as a cache and add a method reset_table which either redoes the below or reloads the saved file</span>

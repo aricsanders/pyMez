@@ -1078,10 +1078,13 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.Utils.Names.auto_name">auto_name</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.Names.change_extension">change_extension</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.Names.clean_up_test_module">clean_up_test_module</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.Names.filename_decrement">filename_decrement</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.Names.filename_increment">filename_increment</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.Names.get_date">get_date</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.Names.get_filename_iterator">get_filename_iterator</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.Names.split_filename">split_filename</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.Names.test_auto_name">test_auto_name</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.Utils.Names.test_filename_change_iterator">test_filename_change_iterator</a></li>
     <li class="mono"><a href="#pyMeasure.Code.Utils.Names.test_module">test_module</a></li>
   </ul>
 
@@ -1196,6 +1199,35 @@ generating file names</p>
     <span class="c1"># just to make it uniform, remove any . and add it back in</span>
         <span class="n">new_extension</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="o">+</span><span class="n">new_extension</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;\.\w+&quot;</span><span class="p">,</span><span class="n">new_extension</span><span class="p">,</span><span class="n">file_path</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">filename_decrement</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes an autogenrated file name in the form specific_descriptor_general_descriptor_date_iterator and</span>
+<span class="sd">    decreases the iterator by 1&quot;&quot;&quot;</span>
+    <span class="n">replacement_string</span><span class="o">=</span><span class="s2">&quot;{:0&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;d}&quot;</span>
+    <span class="n">filename_pattern</span><span class="o">=</span><span class="s2">&quot;(?P&lt;base_name&gt;[\w|_]+)_(?P&lt;iterator&gt;\d+).[\w]+&quot;</span>
+    <span class="n">match</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">filename_pattern</span><span class="p">,</span><span class="n">filename</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="n">i</span><span class="o">=</span><span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s2">&quot;iterator&quot;</span><span class="p">]</span>
+        <span class="n">iterator</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">iterator</span><span class="o">-=</span><span class="mi">1</span>
+        <span class="n">new_filename</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">replacement_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iterator</span><span class="p">),</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Filename did not conform to the base_name_iterator.extension pattern&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">filename_increment</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes an autogenrated file name in the form specific_descriptor_general_descriptor_date_iterator and</span>
+<span class="sd">    decreases the iterator by 1&quot;&quot;&quot;</span>
+    <span class="n">replacement_string</span><span class="o">=</span><span class="s2">&quot;{:0&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;d}&quot;</span>
+    <span class="n">filename_pattern</span><span class="o">=</span><span class="s2">&quot;(?P&lt;base_name&gt;[\w|_]+)_(?P&lt;iterator&gt;\d+).[\w]+&quot;</span>
+    <span class="n">match</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">filename_pattern</span><span class="p">,</span><span class="n">filename</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="n">i</span><span class="o">=</span><span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s2">&quot;iterator&quot;</span><span class="p">]</span>
+        <span class="n">iterator</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">iterator</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">new_filename</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">replacement_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iterator</span><span class="p">),</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Filename did not conform to the base_name_iterator.extension pattern&quot;</span><span class="p">)</span>
     
             
 <span class="c1">#-------------------------------------------------------------------------------</span>
@@ -1249,6 +1281,14 @@ generating file names</p>
                                                                                          <span class="s1">&#39;AutoName&#39;</span><span class="p">,</span>
                                                                                          <span class="bp">None</span><span class="p">,</span><span class="s1">&#39;txt&#39;</span><span class="p">)))</span>
 
+<span class="k">def</span> <span class="nf">test_filename_change_iterator</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Tests the filename decrement and increment functions&quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">,</span><span class="s1">&#39;AutoName&#39;</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;txt&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The original name is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of filename_increment is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_increment</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of filename_decrement is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_decrement</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
 
 <span class="c1">#-------------------------------------------------------------------------------</span>
 <span class="c1"># Module Runner</span>
@@ -1257,6 +1297,7 @@ generating file names</p>
     <span class="n">test_module</span><span class="p">()</span>
     <span class="n">clean_up_test_module</span><span class="p">()</span>
     <span class="n">test_auto_name</span><span class="p">()</span>
+    <span class="n">test_filename_change_iterator</span><span class="p">()</span>
         
 </pre></div>
 
@@ -1359,6 +1400,76 @@ generating file names</p>
     <span class="k">print</span> <span class="s2">&quot;End of cleanup&quot;</span>
     <span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
     <span class="k">print</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.Names.filename_decrement">
+    <p>def <span class="ident">filename_decrement</span>(</p><p>filename, padding=3)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Takes an autogenrated file name in the form specific_descriptor_general_descriptor_date_iterator and
+decreases the iterator by 1</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.Names.filename_decrement', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.Names.filename_decrement" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">filename_decrement</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes an autogenrated file name in the form specific_descriptor_general_descriptor_date_iterator and</span>
+<span class="sd">    decreases the iterator by 1&quot;&quot;&quot;</span>
+    <span class="n">replacement_string</span><span class="o">=</span><span class="s2">&quot;{:0&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;d}&quot;</span>
+    <span class="n">filename_pattern</span><span class="o">=</span><span class="s2">&quot;(?P&lt;base_name&gt;[\w|_]+)_(?P&lt;iterator&gt;\d+).[\w]+&quot;</span>
+    <span class="n">match</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">filename_pattern</span><span class="p">,</span><span class="n">filename</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="n">i</span><span class="o">=</span><span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s2">&quot;iterator&quot;</span><span class="p">]</span>
+        <span class="n">iterator</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">iterator</span><span class="o">-=</span><span class="mi">1</span>
+        <span class="n">new_filename</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">replacement_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iterator</span><span class="p">),</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Filename did not conform to the base_name_iterator.extension pattern&quot;</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.Names.filename_increment">
+    <p>def <span class="ident">filename_increment</span>(</p><p>filename, padding=3)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Takes an autogenrated file name in the form specific_descriptor_general_descriptor_date_iterator and
+decreases the iterator by 1</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.Names.filename_increment', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.Names.filename_increment" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">filename_increment</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes an autogenrated file name in the form specific_descriptor_general_descriptor_date_iterator and</span>
+<span class="sd">    decreases the iterator by 1&quot;&quot;&quot;</span>
+    <span class="n">replacement_string</span><span class="o">=</span><span class="s2">&quot;{:0&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;d}&quot;</span>
+    <span class="n">filename_pattern</span><span class="o">=</span><span class="s2">&quot;(?P&lt;base_name&gt;[\w|_]+)_(?P&lt;iterator&gt;\d+).[\w]+&quot;</span>
+    <span class="n">match</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">filename_pattern</span><span class="p">,</span><span class="n">filename</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="n">i</span><span class="o">=</span><span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s2">&quot;iterator&quot;</span><span class="p">]</span>
+        <span class="n">iterator</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">iterator</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">new_filename</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">replacement_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iterator</span><span class="p">),</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Filename did not conform to the base_name_iterator.extension pattern&quot;</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -1477,6 +1588,34 @@ common delimiter seperated words (last element is nominally the file extension)<
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of auto_name(&#39;Test&#39;,&#39;AutoName&#39;,None,&#39;txt) is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">auto_name</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">,</span>
                                                                                          <span class="s1">&#39;AutoName&#39;</span><span class="p">,</span>
                                                                                          <span class="bp">None</span><span class="p">,</span><span class="s1">&#39;txt&#39;</span><span class="p">)))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.Utils.Names.test_filename_change_iterator">
+    <p>def <span class="ident">test_filename_change_iterator</span>(</p><p>)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Tests the filename decrement and increment functions</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.Utils.Names.test_filename_change_iterator', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.Utils.Names.test_filename_change_iterator" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">test_filename_change_iterator</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Tests the filename decrement and increment functions&quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">,</span><span class="s1">&#39;AutoName&#39;</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;txt&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The original name is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of filename_increment is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_increment</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of filename_decrement is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_decrement</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
 </pre></div>
 
   </div>
