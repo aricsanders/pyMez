@@ -165,7 +165,7 @@ class ShellEditor(wx.stc.StyledTextCtrl,
     def execStartupScript(self, startupfile):
         if startupfile:
             startuptext = '## Startup script: ' + startupfile
-            self.pushLine('print %s;execfile(%s)'%(`startuptext`, `startupfile`))
+            self.pushLine('print({0};execfile({0}))'.format(`startuptext`, `startupfile`))
         else:
             self.pushLine('')
 
@@ -173,10 +173,10 @@ class ShellEditor(wx.stc.StyledTextCtrl,
         if doDebug:
             self._debugger = debugger
             self.stdout.write('\n## Debug mode turned on.')
-            self.pushLine('print "?"')
+            self.pushLine('print("?")')
         else:
             self._debugger = None
-            self.pushLine('print "## Debug mode turned %s."'% (doDebug and 'on' or 'off'))
+            self.pushLine('print("## Debug mode turned {0}.")'.format (doDebug and 'on' or 'off'))
 
     def OnUpdateUI(self, event):
         if Preferences.braceHighLight:
@@ -224,7 +224,7 @@ class ShellEditor(wx.stc.StyledTextCtrl,
                 prompt = Preferences.ps3
                 val = self._debugger.getVarValue(line)
                 if val is not None:
-                    print val
+                    print(val)
                 return False
             elif self.interp.push(line):
                 prompt = Preferences.ps2
@@ -540,10 +540,10 @@ class PyCrustShellEditor(wx.SplitterWindow):
         if doDebug:
             self._debugger = debugger
             self.shellWin.stdout.write('\n## Debug mode turned on.')
-            self.pushLine('print "?"')
+            self.pushLine('print("?")')
         else:
             self._debugger = None
-            self.pushLine('print "## Debug mode turned %s."'% (doDebug and 'on' or 'off'))
+            self.pushLine('print("## Debug mode turned {0}.")'.format(doDebug and 'on' or 'off'))
     
     def pushLine(self, line, addText=''):
         if addText:
