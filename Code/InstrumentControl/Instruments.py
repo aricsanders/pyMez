@@ -788,12 +788,12 @@ class VNA(VisaInstrument):
             self.measure_switch_term_options[key] = value
         # this resets the traces to be based on swith terms
         # Set VS to be remotely triggered by GPIB
-        self.write("SENS:HOLD: FUNC HOLD")
+        self.write("SENS:HOLD:FUNC HOLD")
         self.write("TRIG:REM:TYP CHAN")
         # Set the Channel to have 2 Traces
         self.write("CALC1:PAR:COUN 2")
         # Trace 1 This is port 2 or Forward Switch Terms
-        self.write("CALC:PAR:DEF 'FWD',A2B2,1")
+        self.write("CALC:PAR:DEF 'FWD',A2B2,1") # note this command is different for vector star A2,B2
 
         # Trace 2 This is port 1 or Reverse Switch Terms
         self.write("CALC:PAR:DEF 'REV',A1B1,2")
