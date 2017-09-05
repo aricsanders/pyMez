@@ -319,15 +319,15 @@ class KeithleyIVPanel(wx.Panel):
             [start,stop,number_points,settling_time,bowtie]=[float(self.StartControl.GetValue()),
             float(self.StopControl.GetValue()),int(self.NumberOfPointsControl.GetValue()),
             float(self.SettleTimeControl.GetValue()),self.BowtieControl.GetValue()]
-            #print start,stop,number_points,settle_time,bowtie
+            #print(start,stop,number_points,settle_time,bowtie)
             voltage_list=self.experiment.make_voltage_list(start,stop,number_points,bowtie)
-            #print voltage_list
+            #print(voltage_list)
             try:
                 self.experiment.initialize_keithley()
                 self.experiment.take_IV(voltage_list,settle_time=settling_time)
             except:
                 text='Entering fake mode, keithley did not respond fake R=12000.1'
-                print text
+                print(text)
                 self.NotesControl.SetValue(text)
                 self.NotesControl.SetBackgroundColour(wx.Colour(192, 0, 0))
                 fake_list=voltage_list
@@ -344,7 +344,7 @@ class KeithleyIVPanel(wx.Panel):
  
         except:
             raise
-            print "IV Button Failure"
+            print("IV Button Failure")
         
         
         event.Skip()

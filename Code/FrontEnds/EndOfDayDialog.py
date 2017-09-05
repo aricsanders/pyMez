@@ -17,7 +17,7 @@ sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     import Code.DataHandlers.XMLModels
 except:
-    print "Cannot find  pyMeasure.Code.DataHandlers.Logs"
+    print("Cannot find  pyMeasure.Code.DataHandlers.Logs")
 
 [wxID_EndOfDayDialog, wxID_EndOfDayDialogCLEAR_FILE, wxID_EndOfDayDialogDATA_FLAG, 
  wxID_EndOfDayDialogFILE_CHOOSER, wxID_EndOfDayDialogFILE_CHOOSER2,wxID_EndOfDayDialogFILE_DISP,wxID_EndOfDayDialogFILE_DISP2,wxID_EndOfDayDialogQUEST1, 
@@ -241,7 +241,7 @@ class EndOfDayDialog(wx.Dialog):
         doc = log.document
         root = doc.documentElement
         log.add_entry()
-        #print log.path
+        #print(log.path)
         Index=log.current_entry['Index']
         response={'Actions':self.resp1.Value,'Who_Did':self.resp2.Value
     ,'Who_Suggested':self.resp3.Value,'Why':self.resp4.Value,

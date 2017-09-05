@@ -37,11 +37,11 @@ try:
     import numpy as np
 
 except:
-    print "Please make sure matplotlib package is installed and in sys.path"
+    print("Please make sure matplotlib package is installed and in sys.path")
 try:
     from Code.DataHandlers.XMLModels import DataTable
 except: 
-    print "import of pyMeasure.Code.DataHandlers.XMLModels failed"
+    print("import of pyMeasure.Code.DataHandlers.XMLModels failed")
     
 #-------------------------------------------------------------------------------
 # Constants
@@ -100,8 +100,8 @@ class MyNavigationToolbar(NavigationToolbar2WxAgg):
                     ax = self.canvas.figure.axes[0]
                     # This needs to be generalized with a chooser so that things with
                     # lots of columns can be plotted
-                    #print data_sheet.get_attribute_names()
-                    
+                    #print(data_sheet.get_attribute_names())
+
                     if 'Current' in data_sheet.get_attribute_names():
                         y_name='Current'
                     if 'Voltage' in data_sheet.get_attribute_names():
@@ -119,7 +119,7 @@ class MyNavigationToolbar(NavigationToolbar2WxAgg):
                     matplotlib.rcParams.update(params)
                     self.axes.xaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=True))
                     self.axes.yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=True))
-                    #print x_name,y_name
+                    #print(x_name,y_name)
                     self.axes.set_xlabel(x_name,fontsize=20)
                     self.axes.set_ylabel(y_name,fontsize=20)
                     x_data=np.array(map(lambda x:float(x),data_sheet.to_list(x_name)))

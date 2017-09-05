@@ -30,8 +30,8 @@ try:
     from Code.FrontEnds.MatplotlibWxPanel import *
     from Code.FrontEnds.KeithleyIVPanel import *
 except:
-    print """Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path
-            Also check that the Boa Constructor Source is on sys.path """
+    print("""Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path
+            Also check that the Boa Constructor Source is on sys.path """)
     raise
 
 #-------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ def get_top_parent(window):
     """Returns the topmost parent window"""
     try:
         parent=window.Parent
-        print parent
+        print(parent)
         if parent in [None,''] or not type(parent) is InstanceType:
             raise
         get_top_parent(parent)
@@ -485,7 +485,7 @@ class AdvancedInterfaceFrame(wx.Frame):
         self.Shell.ShellEditor.pushLine("shell=locals()['self']")
         #This assumes the main frame is exactly 6 levels above
         self.Shell.ShellEditor.pushLine("frame=shell.Parent.Parent.Parent.Parent.Parent.Parent")
-        self.Shell.ShellEditor.pushLine("print '\# The object corresponding to the main frame is called frame'")
+        self.Shell.ShellEditor.pushLine("print('\# The object corresponding to the main frame is called frame')")
         #self.Shell.ShellEditor.pushLine("shell=locals()['self']",'\n')
         self.right_control_panels=[self.RightControlPanel]
         self.current_right_control_panel=self.right_control_panels[0]
@@ -544,13 +544,13 @@ class AdvancedInterfaceFrame(wx.Frame):
             self.panel_dictionary[new_id]=panel
             self.add_panel_menu.Append(new_id,panel,'Add the Panel %s'%panel)
             self.Bind(wx.EVT_MENU, lambda evt: self.OnAddPanel(evt,new_id),id=new_id)
-            #print new_id,panel
-        #print self.panel_dictionary
+            #print(new_id,panel)
+        #print(self.panel_dictionary)
         self.FileMenu.AppendMenu(0,'Add a Panel',self.add_panel_menu)   
     def OnAddPanel(self,event,id):
         """ Adds a panel"""
         sys.path.append(FRONTENDS_DIRECTORY)
-        #print dir(event),event.Id
+        #print(dir(event),event.Id)
         panel_name=self.panel_dictionary[event.Id].replace('.py','')
         exec('from %s import *'%panel_name)
         exec('self.%s_%s=%s(id=%s,name="%s_%s", parent=self.UpperInterface, pos=wx.Point(0, 0),size=wx.Size(1339, 610), style=wx.TAB_TRAVERSAL)'%(panel_name,id,panel_name,id,panel_name,id))
@@ -664,22 +664,22 @@ class AdvancedInterfaceFrame(wx.Frame):
                         
                         #event_handler.func_name='%s'%index
                         self.event_handlers[menu_item.GetId()]=module_scripts[script]
-                        #print self.event_handlers
+                        #print(self.event_handlers)
                         self.Bind(wx.EVT_MENU,self.execute_script,id=menu_item.GetId())
-                    #print self.event_handlers
+                    #print(self.event_handlers)
                     #self.bind_menu()        
               
                 except:
-                    print 'Could Not Import %s'%module
-                    raise        
+                    print('Could Not Import {0}'.format(module))
+                    raise
         finally:
             dlg.Destroy()
             event.Skip()
-            #print self.event_handlers
+            #print(self.event_handlers)
 
 ##    def bind_menu(self): 
 ##        for index,menu_item in enumerate(self.loaded_script_menu_items):
-##            print self.event_handlers[menu_item.GetId()],menu_item,menu_item.GetId()
+##            print(self.event_handlers[menu_item.GetId()],menu_item,menu_item.GetId())
 ##            self.Bind(wx.EVT_MENU,self.event_handlers[menu_item.GetId()],id=menu_item.GetId())       
    
    
@@ -708,8 +708,8 @@ class AdvancedInterfaceFrame(wx.Frame):
 
     def execute_script(self,event):
 
-        #print self.event_handlers
-        #print event.Id
+        #print(self.event_handlers)
+        #print(event.Id)
         return self.event_handlers[event.Id]()
 
     def add_notebook_page(self):

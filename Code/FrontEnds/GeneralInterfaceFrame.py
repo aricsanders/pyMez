@@ -22,8 +22,8 @@ try:
 
     #from Code.FrontEnds.ShellPanel import *
 except:
-    print """Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path
-            Also check that the Boa Constructor Source is on sys.path --C:\Python25\Lib\site-packages"""
+    print("""Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path
+            Also check that the Boa Constructor Source is on sys.path --C:\Python25\Lib\site-packages""")
     raise
 #-------------------------------------------------------------------------------
 #Functions
@@ -32,7 +32,7 @@ def get_top_parent(window):
     """Returns the topmost parent window"""
     try:
         parent=window.Parent
-        print parent
+        print(parent)
         if parent in [None,''] or not type(parent) is InstanceType:
             raise
         get_top_parent(parent)

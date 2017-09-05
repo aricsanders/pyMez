@@ -25,8 +25,8 @@ try:
     from Code.FrontEnds.SimpleArbDBLowerInterfacePanel import *
     from Code.FrontEnds.VisaDialog import *
 except:
-    print """Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path
-            Also check that the Boa Constructor Source is on sys.path --C:\Python27\Lib\site-packages"""
+    print("""Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path
+            Also check that the Boa Constructor Source is on sys.path --C:\Python27\Lib\site-packages""")
     raise
 
 #-------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ def get_top_parent(window):
     """Returns the topmost parent window"""
     try:
         parent=window.Parent
-        print parent
+        print(parent)
         if parent in [None,''] or not type(parent) is InstanceType:
             raise
         get_top_parent(parent)
@@ -456,7 +456,7 @@ class BasicInterfaceFrame(wx.Frame):
         self.Shell.ShellEditor.pushLine("shell=locals()['self']")
         #This assumes the main frame is exactly 6 levels above
         self.Shell.ShellEditor.pushLine("frame=shell.Parent.Parent.Parent.Parent.Parent.Parent")
-        self.Shell.ShellEditor.pushLine("print '\# The object corresponding to the main frame is called frame'")
+        self.Shell.ShellEditor.pushLine("print('\# The object corresponding to the main frame is called frame')")
         #self.Shell.ShellEditor.pushLine("shell=locals()['self']",'\n')
         self.right_control_panels=[self.RightControlPanel]
         self.current_right_control_panel=self.right_control_panels[0]
@@ -596,22 +596,22 @@ class BasicInterfaceFrame(wx.Frame):
                         
                         #event_handler.func_name='%s'%index
                         self.event_handlers[menu_item.GetId()]=module_scripts[script]
-                        #print self.event_handlers
+                        #print(self.event_handlers)
                         self.Bind(wx.EVT_MENU,self.execute_script,id=menu_item.GetId())
-                    #print self.event_handlers
+                    #print(self.event_handlers)
                     #self.bind_menu()        
               
                 except:
-                    print 'Could Not Import %s'%module
+                    print('Could Not Import {0}'.format(module))
                     raise        
         finally:
             dlg.Destroy()
             event.Skip()
-            #print self.event_handlers
+            #print(self.event_handlers)
 
 ##    def bind_menu(self): 
 ##        for index,menu_item in enumerate(self.loaded_script_menu_items):
-##            print self.event_handlers[menu_item.GetId()],menu_item,menu_item.GetId()
+##            print(self.event_handlers[menu_item.GetId()],menu_item,menu_item.GetId())
 ##            self.Bind(wx.EVT_MENU,self.event_handlers[menu_item.GetId()],id=menu_item.GetId())       
    
    
@@ -640,8 +640,8 @@ class BasicInterfaceFrame(wx.Frame):
 
     def execute_script(self,event):
 
-        #print self.event_handlers
-        #print event.Id
+        #print(self.event_handlers)
+        #print(event.Id)
         return self.event_handlers[event.Id]()
 
         
