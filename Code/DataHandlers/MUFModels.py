@@ -21,9 +21,16 @@ except:
     print("The module pyMeasure.Code.DataHandlers.XMLModels was not found,"
           "please put it on the python path")
     raise ImportError
+try:
+    import clr
+except:
+    print("The module clr had an error or was not found. Please check that it is on the path and "
+          "working properly")
+    raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants
-
+SCRIPTABLE_MUF_LOCATION=r"C:\Share\MUF-develop\VNAUncertainty\bin\Debug"
+"""Location of the MUF executable with modifications to make it scriptable."""
 #-----------------------------------------------------------------------------
 # Module Functions
 
@@ -44,6 +51,18 @@ class MUFSolution(XMLBase):
 
 #-----------------------------------------------------------------------------
 # Module Scripts
+def run_muf_script(menu_location):
+    """Opens a vnauncert or vnauncert_archive and runs it as is."""
+    sys.path.append(SCRIPTABLE_MUF_LOCATION)
+    clr.AddReference("VNAUncertainty")
+    import VNAUncertainty
+    from System import EventArgs, Object
+    event=EventArgs()
+    vna =VNAUncertainty.VNAUncertainty()
+    vna.OnLoad(event)
+    vna.myOpenMenu(menu_location)
+    vna.RunCalibration(0)
+    vna.Close()
 
 #-----------------------------------------------------------------------------
 # Module Runner
