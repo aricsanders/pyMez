@@ -780,7 +780,7 @@ class VNA(VisaInstrument):
 
     def measure_switch_terms(self, **options):
         """Measures switch terms and returns a s2p table in foward and reverse format"""
-        defaults = {}
+        defaults = {"view_trace":True}
         self.measure_switch_term_options = {}
         for key, value in defaults.iteritems():
             self.measure_switch_term_options[key] = value
@@ -793,10 +793,13 @@ class VNA(VisaInstrument):
         # Set the Channel to have 2 Traces
         self.write("CALC1:PAR:COUN 2")
         # Trace 1 This is port 2 or Forward Switch Terms
-        self.write("CALC:PAR:DEF 'FWD',A2B2,1") # note this command is different for vector star A2,B2
-
+        self.write("CALC1:PAR:DEF 'FWD',R2,1") # note this command is different for vector star A2,B2
+        if self.measure_switch_term_options["view_trace"]:
+            self.write("DISPlay:WINDow1:TRACe5:FEED 'FWD'")
         # Trace 2 This is port 1 or Reverse Switch Terms
-        self.write("CALC:PAR:DEF 'REV',A1B1,2")
+        self.write("CALC1:PAR:DEF 'REV',R1,2")
+        if self.measure_switch_term_options["view_trace"]:
+            self.write("DISPlay:WINDow1:TRACe6:FEED 'REV'")
 
         # Select Channel
         self.write("CALC1:SEL;")
@@ -908,7 +911,6 @@ class VNA(VisaInstrument):
         s2p = S2PV1(None, option_line=option_line, data=sparameter_data)
         s2p.change_frequency_units(self.frequency_units)
         return s2p
-
 
 #-------------------------------------------------------------------------------
 # Module Scripts
