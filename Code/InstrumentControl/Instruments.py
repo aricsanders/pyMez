@@ -779,7 +779,7 @@ class VNA(VisaInstrument):
         return not opc
 
     def measure_switch_terms(self, **options):
-        """Measures switch terms and returns a s2p table in foward and reverse format."""
+        """Measures switch terms and returns a s2p table in foward and reverse format"""
         defaults = {"view_trace":True}
         self.measure_switch_term_options = {}
         for key, value in defaults.iteritems():
