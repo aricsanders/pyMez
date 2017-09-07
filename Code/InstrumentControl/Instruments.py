@@ -628,6 +628,7 @@ class VNA(VisaInstrument):
     def set_IFBW(self, ifbw):
         """Sets the IF Bandwidth of the instrument in Hz"""
         self.write('SENS:BAND {0}'.format(ifbw))
+        self.write('SENS:BAND:TRAC OFF')
         self.IFBW = ifbw
 
     def get_IFBW(self):
@@ -779,7 +780,7 @@ class VNA(VisaInstrument):
         return not opc
 
     def measure_switch_terms(self, **options):
-        """Measures switch terms and returns a s2p table in foward and reverse format"""
+        """Measures switch terms and returns a s2p table in forward and reverse format"""
         defaults = {"view_trace":True}
         self.measure_switch_term_options = {}
         for key, value in defaults.iteritems():
@@ -805,10 +806,10 @@ class VNA(VisaInstrument):
         self.write("CALC1:SEL;")
         self.write("ABORT;TRIG:SING;")
         # Sleep for the duration of the scan
-        time.sleep(len(self.frequency_list) * 2 / float(self.IFBW))
+        time.sleep(len(self.frequency_list) * 2.5 / float(self.IFBW))
         # wait for other functions to be completed
-        while self.is_busy():
-            time.sleep(.01)
+        # while self.is_busy():
+        #     time.sleep(.01)
         # Set the read format
         self.write("FORM:DATA ASC")
         # Read in the data
