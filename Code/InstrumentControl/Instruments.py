@@ -778,6 +778,12 @@ class VNA(VisaInstrument):
         """Checks if the instrument is currently doing something and returns a boolean value"""
         opc = bool(self.resource.query("*OPC?"))
         return not opc
+    def clear_window(self,window=1):
+        """Clears the  window of traces. Does not delete the variables"""
+        string_response=self.query("DISPlay:WINDow{0}:CATalog?".format(window))
+        traces=string_response.split(",")
+        for trace in traces:
+            self.write("DISP:WIND{0}:TRAC{1}:DEL".format(window,trace))
 
     def measure_switch_terms(self, **options):
         """Measures switch terms and returns a s2p table in forward and reverse format"""
@@ -811,7 +817,7 @@ class VNA(VisaInstrument):
         # while self.is_busy():
         #     time.sleep(.01)
         # Set the read format
-        self.write("FORM:DATA ASC")
+        self.write("FORM:ASC,0")
         # Read in the data
         self.write("CALC:PAR:SEL FWD;")
         foward_switch_string = self.query("CALC:DATA? SDATA")
@@ -860,7 +866,7 @@ class VNA(VisaInstrument):
         while self.is_busy():
             time.sleep(.01)
         # Set the format to ascii and set up sweep definitions
-        self.write('FORM:ASCII')
+        self.write('FORM:ASC,0')
         # First get the Sparameter lists
         self.write('CALC:PAR:SEL S11')
         self.write('CALC:FORM MLIN')

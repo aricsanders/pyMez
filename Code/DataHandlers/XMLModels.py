@@ -354,6 +354,16 @@ class XMLBase():
             self.document=xml.dom.minidom.parse(file_in)
             file_in.close()
             self.path=file_path
+        self.etree=etree.fromstring(self.document.toxml())
+    def __getitem__(self, item):
+        """This returns the items found by using xpath as a string.
+        For example: XMLBase[".//BeforeCalibration/Item/SubItem[@Index='6']"] will return all of the elements
+        with index=6. This is a thin wrapper of etree.findall"""
+        out=self.etree.findall(item)
+        if len(out)==1:
+            return etree.tostring(out[0])
+        else:
+            return map(lambda x: etree.tostring(x),out)
 
     def save(self,path=None):
         """" Saves as an XML file"""
