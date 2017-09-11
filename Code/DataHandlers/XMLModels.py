@@ -355,6 +355,7 @@ class XMLBase():
             file_in.close()
             self.path=file_path
         self.etree=etree.fromstring(self.document.toxml())
+
     def __getitem__(self, item):
         """This returns the items found by using xpath as a string.
         For example: XMLBase[".//BeforeCalibration/Item/SubItem[@Index='6']"] will return all of the elements
@@ -365,12 +366,20 @@ class XMLBase():
         else:
             return map(lambda x: etree.tostring(x),out)
 
+    def update_etree(self):
+        "Updates the attribute etree. Should be called anytime the xml content is changed"
+        self.etree = etree.fromstring(self.document.toxml())
+
+    def update_document(self):
+        """Updates the attribute document from the self.etree. """
+        self.document=xml.dom.minidom.parseString(etree.tostring(self.etree))
+
     def save(self,path=None):
         """" Saves as an XML file"""
         if path is None:
             path=self.path
         file_out=open(path,'w')
-        file_out.write(self.document.toprettyxml())
+        file_out.write(str(self))
         file_out.close()
 
     if XSLT_CAPABLE:
@@ -428,8 +437,15 @@ class XMLBase():
             app.MainLoop()
 
     def __str__(self):
-        "Controls how XMLBAse is returned when a string function is called"
-        return self.document.toprettyxml()
+        """Controls how XMLBAse is returned when a string function is called. Changed to using self.etree instead
+        of self.document for better unicode support"""
+        self.update_etree()
+        try:
+            string_representation = etree.tostring(self.etree)
+
+        except:
+            string_representation = self.document.toprettyxml()
+        return string_representation
 
 class XMLLog(XMLBase):
     """ Data container for a general XMLLog"""
@@ -1805,12 +1821,12 @@ def test_dictionary_to_xmlchunk(dictionary={"li":"My list Element"}):
 # Module Runner
 if __name__=='__main__':
     #test_XMLModel()
-    #test_XMLLog()
+    test_XMLLog()
     #test_log_addition()
     #test_EndOfDayXMLLog()
     #test_show()
     #test_to_HTML()
-    #test_DataTable()
+    test_DataTable()
     #test_get_header()
     #test_open_measurement()
     #test_get_attribute_names()
