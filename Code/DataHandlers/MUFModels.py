@@ -67,9 +67,71 @@ class MUFVNAUncert(XMLBase):
         sub_items = self.etree.findall(".//BeforeCalibration/Item")
         return etree.tostring(sub_items[standard_number-1])
 
+    def get_standard_measurement_locations(self):
+        """Returns the file locations for the measurement of the standards in a form of a list"""
+        standards = self.etree.findall(".//BeforeCalibration/Item/SubItem[@Index='6']")
+        locations=[standard.attrib["Text"] for standard in standards]
+        return locations
+
     def set_standard_location(self,standard_location=None,standard_number=1):
         """Sets the location for the measurement of standard_number"""
-        pass
+        standards = self.etree.findall(".//BeforeCalibration/Item/SubItem[@Index='6']")
+        standard=standards[standard_number-1]
+        standard.attrib["Text"]=standard_location
+        self.update_document()
+
+    def get_number_montecarlo(self):
+        "Returns the number of montecarlo simulations"
+        montecarlo_text_box=self.etree.findall(".//MenuStripTextBoxes/NumberMonteCarloSimulations")[0]
+        number_montecarlo=montecarlo_text_box.attrib["Text"]
+        return number_montecarlo
+
+    def set_number_montecarlo(self,number_montecarlo=100):
+        """Sets the number of montecarlo trials for the menu"""
+        montecarlo_text_box = self.etree.findall(".//MenuStripTextBoxes/NumberMonteCarloSimulations")[0]
+        montecarlo_text_box.attrib["Text"]=str(number_montecarlo)
+        self.update_document()
+
+    def get_DUTs(self):
+        "Returns the names and locations of DUTs"
+        duts=[]
+        names=map(lambda x: x.attrib["Text"],self.etree.findall(".//DUTMeasurements/Item/SubItem[@Index='0']"))
+        locations=map(lambda x: x.attrib["Text"],self.etree.findall(".//DUTMeasurements/Item/SubItem[@Index='1']"))
+        for index,name in enumerate(names):
+            name_location_dictionary={"name":name,"location":locations[index]}
+            duts.append(name_location_dictionary)
+        return duts
+
+    def add_DUT(self,location,name=None):
+        """Adds a DUT to the DUTMeasurements element"""
+        # get the name
+        if name is None:
+            name=os.path.basename(location).split(".")[0]
+        # first get the DUTMeasurement element
+        dut_measurement=self.etree.findall(".//DUTMeasurements")[0]
+        # next add one to the count attribute
+        number_standards=int(dut_measurement.attrib["Count"])
+        number_standards+=1
+        dut_measurement.attrib["Count"]=str(number_standards)
+        # create a Item
+        item=etree.SubElement(dut_measurement,"Item",attrib={"Count":"2","Index":str(number_standards),"Text":name})
+        etree.SubElement(item,"SubItem",attrib={"Index":"0","Text":name})
+        etree.SubElement(item,"SubItem",attrib={"Index":"1","Text":location})
+        self.update_document()
+
+    def clear_DUTs(self):
+        """Removes all DUTs"""
+        dut_measurement = self.etree.findall(".//DUTMeasurements")[0]
+        items= self.etree.findall(".//DUTMeasurements/Item")
+        for item in items:
+            dut_measurement.remove(item)
+
+
+
+
+
+
+
 
 
 
@@ -94,7 +156,7 @@ def run_muf_script(menu_location,timeit=True):
     vna =VNAUncertainty.VNAUncertainty()
     vna.OnLoad(event)
     vna.myOpenMenu(menu_location)
-    vna.UpdateResultsDirectory(True)
+    vna.OnLocationChanged(event)
     vna.RunCalibration(0)
     vna.Close()
     if timeit:
