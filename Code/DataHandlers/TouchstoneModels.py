@@ -1291,6 +1291,7 @@ class SNP(SNPBase):
                     self.number_ports=number_ports_from_file_name(self.options["path"])
                 elif file_path is not None:
                     self.number_ports=number_ports_from_file_name(file_path)
+        self.number_ports = self.options["number_ports"]
         self.elements=['data','noiseparameter_data','comments','option_line']
         self.noiseparameter_data=[]
         self.metadata=self.options["metadata"]

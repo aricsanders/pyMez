@@ -358,7 +358,7 @@ def collect_inline_comments(list_of_strings,begin_token=None,end_token=None):
     Output form is ['comment',line_number,string_location] returns None  if there are none or tokens are set to None"""
     if begin_token in [None] and end_token in [None]:
         return None
-    match=re.compile('{0}(?P<inline_comments>.+){1}'.format(re.escape(begin_token),re.escape(end_token)))
+    match=re.compile('{0}(?P<inline_comments>.*){1}'.format(re.escape(begin_token),re.escape(end_token)))
     inline_comment_list=[]
     for index,line in enumerate(list_of_strings):
         comment_match=re.search(match,line)
