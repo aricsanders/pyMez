@@ -54,8 +54,8 @@ def add_all_files(zipfile,top_directory):
     """Adds all of the files under top directory into the zipfile and closes the file"""
     for directory, dirnames, filenames in os.walk(top_directory):
         for filename in filenames:
-            zipfile.write(os.path.join(directory,filename),os.path.join(os.path.basename(directory),filename))
-
+            zipfile.write(os.path.join(directory,filename),
+                          os.path.join(os.path.relpath(directory,top_directory),filename))
 
 def extract_all(zipfile,directory):
     """Extracts all files from the zip archive to the specified directory"""
