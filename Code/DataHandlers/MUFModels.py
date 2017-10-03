@@ -13,6 +13,7 @@ Most models are xml based"""
 import sys
 import os
 import datetime
+from types import *
 #-----------------------------------------------------------------------------
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
@@ -32,6 +33,10 @@ except:
 # Module Constants
 SCRIPTABLE_MUF_LOCATION=r"C:\Share\MUF-develop\VNAUncertainty\bin\Debug"
 """Location of the MUF executable with modifications to make it scriptable."""
+MODEL_UNIT_LIST=["Unitless","cm","mm","um","GHz","pf","nH","ohm","mho","pf/cm","ns","ps","mV","mA"]
+MODEL_DISTRIBUTION_LIST=["Rectangular","Arc-sine","Bernoulli (binary)","Gaussain",
+                         "2-D Uniform-Distribution Radius","2-D Gaussian-Distribution Radius"]
+
 #-----------------------------------------------------------------------------
 # Module Functions
 
@@ -55,9 +60,24 @@ class MUFParameter(XMLBase):
         distribution_type=self.etree.findall(".//DistributionType")[0]
         text=distribution_type.attrib["ControlText"]
         return text
+
     def set_distribution_type(self,distribution_type):
-        """Sets the distribution type, accepts an integer of text value. """
-        pass
+        """Sets the distribution type, accepts an integer or text value.
+        See the constant MODEL_DISTRIBUTION_LIST for possibilities. Rectangular is 0, Gaussian is 3. """
+        if type(distribution_type) in [IntType,FloatType]:
+            type_number=distribution_type
+            type_name=MODEL_DISTRIBUTION_LIST[distribution_type]
+        elif distribution_type in MODEL_DISTRIBUTION_LIST:
+            type_number=MODEL_DISTRIBUTION_LIST.index(distribution_type)
+            type_name=distribution_type
+        else:
+            print("Could not set the type {0} please choose a"
+                  " type or index from {1}".format(distribution_type,MODEL_DISTRIBUTION_LIST))
+            return
+        distribution_type_tag = self.etree.findall(".//DistributionType")[0]
+        distribution_type_tag.attrib["ControlText"]=type_name
+        distribution_type_tag.attrib["SelectedIndex"]=type_number
+        self.update_document()
 
     def get_distribution_width(self):
         """Returns the wdith of the distribution."""
@@ -67,7 +87,9 @@ class MUFParameter(XMLBase):
 
     def set_distribution_width(self,distribution_width):
         """Sets the distribution width"""
-        pass
+        distribution_width = self.etree.findall(".//DistributionLimits")[0]
+        distribution_width.attrib["ControlText"]=str(distribution_width)
+        self.update_document()
 
     def get_units(self):
         """Returns the units of the parameter"""
@@ -76,9 +98,28 @@ class MUFParameter(XMLBase):
         return text
 
     def set_units(self,units):
-        """Sets the units of the parameter"""
-        pass
+        """Sets the units of the parameter can accept either an index or value. Look at
+        MODEL_UNIT_LIST for complete set of possibilities"""
+        if type(units) in [IntType,FloatType]:
+            unit_number=units
+            unit_name=MODEL_DISTRIBUTION_LIST[units]
+        elif units in MODEL_DISTRIBUTION_LIST:
+            unit_number=MODEL_DISTRIBUTION_LIST.index(units)
+            unit_name=units
+        else:
+            print("Could not set the units {0} please choose a"
+                  " type or index from {1}".format(units,MODEL_UNIT_LIST))
+            return
+        unit_tag = self.etree.findall(".//Units")[0]
+        unit_tag.attrib["ControlText"]=unit_name
+        unit_tag.attrib["SelectedIndex"]=unit_number
+        self.update_document()
 
+    def get_mechanism_name(self):
+        """Returns the mechanism name"""
+        units=self.etree.findall(".//MechanismName")[0]
+        text=units.attrib["ControlText"]
+        return text
 
 class MUFModel(XMLBase):
     pass
@@ -166,6 +207,7 @@ class MUFVNAUncert(XMLBase):
         items= self.etree.findall(".//DUTMeasurements/Item")
         for item in items:
             dut_measurement.remove(item)
+        self.update_document()
 
 
 
