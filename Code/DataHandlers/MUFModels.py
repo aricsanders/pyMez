@@ -38,7 +38,48 @@ SCRIPTABLE_MUF_LOCATION=r"C:\Share\MUF-develop\VNAUncertainty\bin\Debug"
 #-----------------------------------------------------------------------------
 # Module Classes
 class MUFParameter(XMLBase):
-    pass
+    def get_value(self):
+        """Returns the value of the parameter"""
+        mechanism_value=self.etree.findall(".//MechanismValue")[0]
+        value=mechanism_value.attrib["ControlText"]
+        return float(value)
+
+    def set_value(self,value):
+        """Sets the value (center of distribution)"""
+        mechanism_value=self.etree.findall(".//MechanismValue")[0]
+        mechanism_value.attrib["ControlText"]=str(value)
+        self.update_document()
+
+    def get_distribution_type(self):
+        """Returns the type of Distribution. The choices are held in  DistributionType/Item."""
+        distribution_type=self.etree.findall(".//DistributionType")[0]
+        text=distribution_type.attrib["ControlText"]
+        return text
+    def set_distribution_type(self,distribution_type):
+        """Sets the distribution type, accepts an integer of text value. """
+        pass
+
+    def get_distribution_width(self):
+        """Returns the wdith of the distribution."""
+        distribution_width=self.etree.findall(".//DistributionLimits")[0]
+        text=distribution_width.attrib["ControlText"]
+        return text
+
+    def set_distribution_width(self,distribution_width):
+        """Sets the distribution width"""
+        pass
+
+    def get_units(self):
+        """Returns the units of the parameter"""
+        units=self.etree.findall(".//Units")[0]
+        text=units.attrib["ControlText"]
+        return text
+
+    def set_units(self,units):
+        """Sets the units of the parameter"""
+        pass
+
+
 class MUFModel(XMLBase):
     pass
 class MUFVNAUncert(XMLBase):
