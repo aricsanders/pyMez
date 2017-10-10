@@ -1113,6 +1113,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.show">show</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.to_HTML">to_HTML</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.update_current_state">update_current_state</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.update_document">update_document</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.update_etree">update_etree</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.write">write</a></li>
   </ul>
 
@@ -1126,6 +1128,7 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.add_entry">add_entry</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.add_segment">add_segment</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.ask">ask</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.clear_window">clear_window</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.close">close</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.get_IFBW">get_IFBW</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.get_frequency">get_frequency</a></li>
@@ -1153,6 +1156,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.show">show</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.to_HTML">to_HTML</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.update_current_state">update_current_state</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.update_document">update_document</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.update_etree">update_etree</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.write">write</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VNA.write_frequency_table">write_frequency_table</a></li>
   </ul>
@@ -1181,6 +1186,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.show">show</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.to_HTML">to_HTML</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_current_state">update_current_state</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_document">update_document</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_etree">update_etree</a></li>
     <li class="mono"><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.write">write</a></li>
   </ul>
 
@@ -1892,6 +1899,7 @@ instruments; GPIB,RS232 and other visa instruments</p>
     <span class="k">def</span> <span class="nf">set_IFBW</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifbw</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the IF Bandwidth of the instrument in Hz&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;SENS:BAND {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifbw</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;SENS:BAND:TRAC OFF&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">IFBW</span> <span class="o">=</span> <span class="n">ifbw</span>
 
     <span class="k">def</span> <span class="nf">get_IFBW</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2041,10 +2049,16 @@ instruments; GPIB,RS232 and other visa instruments</p>
         <span class="sd">&quot;&quot;&quot;Checks if the instrument is currently doing something and returns a boolean value&quot;&quot;&quot;</span>
         <span class="n">opc</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;*OPC?&quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">opc</span>
+    <span class="k">def</span> <span class="nf">clear_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">window</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clears the  window of traces. Does not delete the variables&quot;&quot;&quot;</span>
+        <span class="n">string_response</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow{0}:CATalog?&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window</span><span class="p">))</span>
+        <span class="n">traces</span><span class="o">=</span><span class="n">string_response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISP:WIND{0}:TRAC{1}:DEL&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">trace</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">measure_switch_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Measures switch terms and returns a s2p table in foward and reverse format&quot;&quot;&quot;</span>
-        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="sd">&quot;&quot;&quot;Measures switch terms and returns a s2p table in forward and reverse format&quot;&quot;&quot;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;view_trace&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -2052,26 +2066,29 @@ instruments; GPIB,RS232 and other visa instruments</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="c1"># this resets the traces to be based on swith terms</span>
         <span class="c1"># Set VS to be remotely triggered by GPIB</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SENS:HOLD: FUNC HOLD&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SENS:HOLD:FUNC HOLD&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;TRIG:REM:TYP CHAN&quot;</span><span class="p">)</span>
         <span class="c1"># Set the Channel to have 2 Traces</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:COUN 2&quot;</span><span class="p">)</span>
         <span class="c1"># Trace 1 This is port 2 or Forward Switch Terms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:DEF &#39;FWD&#39;,A2B2,1&quot;</span><span class="p">)</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:DEF &#39;FWD&#39;,R2,1&quot;</span><span class="p">)</span> <span class="c1"># note this command is different for vector star A2,B2</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;view_trace&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe5:FEED &#39;FWD&#39;&quot;</span><span class="p">)</span>
         <span class="c1"># Trace 2 This is port 1 or Reverse Switch Terms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:DEF &#39;REV&#39;,A1B1,2&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:DEF &#39;REV&#39;,R1,2&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;view_trace&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe6:FEED &#39;REV&#39;&quot;</span><span class="p">)</span>
 
         <span class="c1"># Select Channel</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:SEL;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ABORT;TRIG:SING;&quot;</span><span class="p">)</span>
         <span class="c1"># Sleep for the duration of the scan</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IFBW</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.5</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IFBW</span><span class="p">))</span>
         <span class="c1"># wait for other functions to be completed</span>
-        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
+        <span class="c1"># while self.is_busy():</span>
+        <span class="c1">#     time.sleep(.01)</span>
         <span class="c1"># Set the read format</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FORM:DATA ASC&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FORM:ASC,0&quot;</span><span class="p">)</span>
         <span class="c1"># Read in the data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:SEL FWD;&quot;</span><span class="p">)</span>
         <span class="n">foward_switch_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;CALC:DATA? SDATA&quot;</span><span class="p">)</span>
@@ -2120,7 +2137,7 @@ instruments; GPIB,RS232 and other visa instruments</p>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
         <span class="c1"># Set the format to ascii and set up sweep definitions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;FORM:ASCII&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;FORM:ASC,0&#39;</span><span class="p">)</span>
         <span class="c1"># First get the Sparameter lists</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;CALC:PAR:SEL S11&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;CALC:FORM MLIN&#39;</span><span class="p">)</span>
@@ -2172,7 +2189,6 @@ instruments; GPIB,RS232 and other visa instruments</p>
         <span class="n">s2p</span> <span class="o">=</span> <span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">option_line</span><span class="o">=</span><span class="n">option_line</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">sparameter_data</span><span class="p">)</span>
         <span class="n">s2p</span><span class="o">.</span><span class="n">change_frequency_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_units</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">s2p</span>
-
 
 <span class="c1">#-------------------------------------------------------------------------------</span>
 <span class="c1"># Module Scripts</span>
@@ -3123,7 +3139,7 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
     <span class="n">file_out</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">())</span>
+    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">file_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
@@ -3378,6 +3394,52 @@ window (using wx)</p></div>
   
             
   <div class="item">
+    <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.update_document">
+    <p>def <span class="ident">update_document</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute document from the self.etree.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.update_document', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.update_document" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates the attribute document from the self.etree. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.update_etree">
+    <p>def <span class="ident">update_etree</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute etree. Should be called anytime the xml content is changed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.update_etree', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.update_etree" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_etree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Updates the attribute etree. Should be called anytime the xml content is changed&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.FakeInstrument.write">
     <p>def <span class="ident">write</span>(</p><p>self, command)</p>
     </div>
@@ -3534,6 +3596,7 @@ stores the frequency points as Hz.</p></div>
     <span class="k">def</span> <span class="nf">set_IFBW</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifbw</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the IF Bandwidth of the instrument in Hz&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;SENS:BAND {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifbw</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;SENS:BAND:TRAC OFF&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">IFBW</span> <span class="o">=</span> <span class="n">ifbw</span>
 
     <span class="k">def</span> <span class="nf">get_IFBW</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -3683,10 +3746,16 @@ stores the frequency points as Hz.</p></div>
         <span class="sd">&quot;&quot;&quot;Checks if the instrument is currently doing something and returns a boolean value&quot;&quot;&quot;</span>
         <span class="n">opc</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;*OPC?&quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">opc</span>
+    <span class="k">def</span> <span class="nf">clear_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">window</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clears the  window of traces. Does not delete the variables&quot;&quot;&quot;</span>
+        <span class="n">string_response</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow{0}:CATalog?&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window</span><span class="p">))</span>
+        <span class="n">traces</span><span class="o">=</span><span class="n">string_response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISP:WIND{0}:TRAC{1}:DEL&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">trace</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">measure_switch_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Measures switch terms and returns a s2p table in foward and reverse format&quot;&quot;&quot;</span>
-        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="sd">&quot;&quot;&quot;Measures switch terms and returns a s2p table in forward and reverse format&quot;&quot;&quot;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;view_trace&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -3694,26 +3763,29 @@ stores the frequency points as Hz.</p></div>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="c1"># this resets the traces to be based on swith terms</span>
         <span class="c1"># Set VS to be remotely triggered by GPIB</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SENS:HOLD: FUNC HOLD&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SENS:HOLD:FUNC HOLD&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;TRIG:REM:TYP CHAN&quot;</span><span class="p">)</span>
         <span class="c1"># Set the Channel to have 2 Traces</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:COUN 2&quot;</span><span class="p">)</span>
         <span class="c1"># Trace 1 This is port 2 or Forward Switch Terms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:DEF &#39;FWD&#39;,A2B2,1&quot;</span><span class="p">)</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:DEF &#39;FWD&#39;,R2,1&quot;</span><span class="p">)</span> <span class="c1"># note this command is different for vector star A2,B2</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;view_trace&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe5:FEED &#39;FWD&#39;&quot;</span><span class="p">)</span>
         <span class="c1"># Trace 2 This is port 1 or Reverse Switch Terms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:DEF &#39;REV&#39;,A1B1,2&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:DEF &#39;REV&#39;,R1,2&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;view_trace&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe6:FEED &#39;REV&#39;&quot;</span><span class="p">)</span>
 
         <span class="c1"># Select Channel</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:SEL;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ABORT;TRIG:SING;&quot;</span><span class="p">)</span>
         <span class="c1"># Sleep for the duration of the scan</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IFBW</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.5</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IFBW</span><span class="p">))</span>
         <span class="c1"># wait for other functions to be completed</span>
-        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
+        <span class="c1"># while self.is_busy():</span>
+        <span class="c1">#     time.sleep(.01)</span>
         <span class="c1"># Set the read format</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FORM:DATA ASC&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FORM:ASC,0&quot;</span><span class="p">)</span>
         <span class="c1"># Read in the data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:SEL FWD;&quot;</span><span class="p">)</span>
         <span class="n">foward_switch_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;CALC:DATA? SDATA&quot;</span><span class="p">)</span>
@@ -3762,7 +3834,7 @@ stores the frequency points as Hz.</p></div>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
         <span class="c1"># Set the format to ascii and set up sweep definitions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;FORM:ASCII&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;FORM:ASC,0&#39;</span><span class="p">)</span>
         <span class="c1"># First get the Sparameter lists</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;CALC:PAR:SEL S11&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;CALC:FORM MLIN&#39;</span><span class="p">)</span>
@@ -4193,6 +4265,32 @@ Note this function was primarily tested on an agilent which stores frequency to 
   
             
   <div class="item">
+    <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.VNA.clear_window">
+    <p>def <span class="ident">clear_window</span>(</p><p>self, window=1)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Clears the  window of traces. Does not delete the variables</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.VNA.clear_window', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VNA.clear_window" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">clear_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">window</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Clears the  window of traces. Does not delete the variables&quot;&quot;&quot;</span>
+    <span class="n">string_response</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow{0}:CATalog?&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window</span><span class="p">))</span>
+    <span class="n">traces</span><span class="o">=</span><span class="n">string_response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISP:WIND{0}:TRAC{1}:DEL&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">trace</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
     <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.VNA.close">
     <p>def <span class="ident">close</span>(</p><p>self)</p>
     </div>
@@ -4589,7 +4687,7 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
     <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
     <span class="c1"># Set the format to ascii and set up sweep definitions</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;FORM:ASCII&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;FORM:ASC,0&#39;</span><span class="p">)</span>
     <span class="c1"># First get the Sparameter lists</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;CALC:PAR:SEL S11&#39;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;CALC:FORM MLIN&#39;</span><span class="p">)</span>
@@ -4656,13 +4754,13 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
 
     
   
-    <div class="desc"><p>Measures switch terms and returns a s2p table in foward and reverse format</p></div>
+    <div class="desc"><p>Measures switch terms and returns a s2p table in forward and reverse format</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.VNA.measure_switch_terms', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VNA.measure_switch_terms" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">measure_switch_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Measures switch terms and returns a s2p table in foward and reverse format&quot;&quot;&quot;</span>
-    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="sd">&quot;&quot;&quot;Measures switch terms and returns a s2p table in forward and reverse format&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;view_trace&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -4670,24 +4768,28 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="c1"># this resets the traces to be based on swith terms</span>
     <span class="c1"># Set VS to be remotely triggered by GPIB</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SENS:HOLD: FUNC HOLD&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SENS:HOLD:FUNC HOLD&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;TRIG:REM:TYP CHAN&quot;</span><span class="p">)</span>
     <span class="c1"># Set the Channel to have 2 Traces</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:COUN 2&quot;</span><span class="p">)</span>
     <span class="c1"># Trace 1 This is port 2 or Forward Switch Terms</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:DEF &#39;FWD&#39;,A2B2,1&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:DEF &#39;FWD&#39;,R2,1&quot;</span><span class="p">)</span> <span class="c1"># note this command is different for vector star A2,B2</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;view_trace&quot;</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe5:FEED &#39;FWD&#39;&quot;</span><span class="p">)</span>
     <span class="c1"># Trace 2 This is port 1 or Reverse Switch Terms</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:DEF &#39;REV&#39;,A1B1,2&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:DEF &#39;REV&#39;,R1,2&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;view_trace&quot;</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe6:FEED &#39;REV&#39;&quot;</span><span class="p">)</span>
     <span class="c1"># Select Channel</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:SEL;&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ABORT;TRIG:SING;&quot;</span><span class="p">)</span>
     <span class="c1"># Sleep for the duration of the scan</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IFBW</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.5</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IFBW</span><span class="p">))</span>
     <span class="c1"># wait for other functions to be completed</span>
-    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
+    <span class="c1"># while self.is_busy():</span>
+    <span class="c1">#     time.sleep(.01)</span>
     <span class="c1"># Set the read format</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FORM:DATA ASC&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FORM:ASC,0&quot;</span><span class="p">)</span>
     <span class="c1"># Read in the data</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:SEL FWD;&quot;</span><span class="p">)</span>
     <span class="n">foward_switch_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;CALC:DATA? SDATA&quot;</span><span class="p">)</span>
@@ -4800,7 +4902,7 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
     <span class="n">file_out</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">())</span>
+    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">file_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
@@ -4936,6 +5038,7 @@ an XLST in self.options["XSLT"] and file_path=self.path.replace('.xml','.html')<
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_IFBW</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifbw</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Sets the IF Bandwidth of the instrument in Hz&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;SENS:BAND {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifbw</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;SENS:BAND:TRAC OFF&#39;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">IFBW</span> <span class="o">=</span> <span class="n">ifbw</span>
 </pre></div>
 
@@ -5206,6 +5309,60 @@ window (using wx)</p></div>
   <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VNA.update_current_state" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.VNA.update_document">
+    <p>def <span class="ident">update_document</span>(</p><p>self)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument">VisaInstrument</a></code>.<code><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_document">update_document</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Updates the attribute document from the self.etree.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.VNA.update_document', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VNA.update_document" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates the attribute document from the self.etree. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.VNA.update_etree">
+    <p>def <span class="ident">update_etree</span>(</p><p>self)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument">VisaInstrument</a></code>.<code><a href="#pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_etree">update_etree</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Updates the attribute etree. Should be called anytime the xml content is changed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.VNA.update_etree', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VNA.update_etree" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_etree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Updates the attribute etree. Should be called anytime the xml content is changed&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
 </pre></div>
 
   </div>
@@ -5862,7 +6019,7 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
     <span class="n">file_out</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">())</span>
+    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">file_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
@@ -6107,6 +6264,52 @@ window (using wx)</p></div>
   <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_current_state" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_document">
+    <p>def <span class="ident">update_document</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute document from the self.etree.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_document', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_document" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates the attribute document from the self.etree. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_etree">
+    <p>def <span class="ident">update_etree</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute etree. Should be called anytime the xml content is changed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_etree', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.InstrumentControl.Instruments.VisaInstrument.update_etree" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_etree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Updates the attribute etree. Should be called anytime the xml content is changed&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
 </pre></div>
 
   </div>

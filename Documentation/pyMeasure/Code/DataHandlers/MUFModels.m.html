@@ -1069,6 +1069,17 @@ table {
     <h1>Index</h1>
     <ul id="index">
 
+    <li class="set"><h3><a href="#header-functions">Functions</a>
+	<input type="button" class="toggleButton"  value="+" onclick="toggleId('functionsNavigation',this)">
+	</h3>
+	<div id="functionsNavigation">
+      
+  <ul>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.run_muf_script">run_muf_script</a></li>
+  </ul>
+
+	 </div>
+    </li>
 
     <li class="set"><h3><a href="#header-classes">Classes</a>
 	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
@@ -1083,6 +1094,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.save_HTML">save_HTML</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.show">show</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.to_HTML">to_HTML</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.update_document">update_document</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.update_etree">update_etree</a></li>
   </ul>
 
         </li>
@@ -1096,6 +1109,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFModel.save_HTML">save_HTML</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFModel.show">show</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFModel.to_HTML">to_HTML</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFModel.update_document">update_document</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFModel.update_etree">update_etree</a></li>
   </ul>
 
         </li>
@@ -1105,10 +1120,21 @@ table {
           
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.__init__">__init__</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_distribution_type">get_distribution_type</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_distribution_width">get_distribution_width</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_mechanism_name">get_mechanism_name</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_units">get_units</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_value">get_value</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.save">save</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.save_HTML">save_HTML</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_distribution_type">set_distribution_type</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_distribution_width">set_distribution_width</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_units">set_units</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_value">set_value</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.show">show</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.to_HTML">to_HTML</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.update_document">update_document</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.update_etree">update_etree</a></li>
   </ul>
 
         </li>
@@ -1122,6 +1148,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.save_HTML">save_HTML</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.show">show</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.to_HTML">to_HTML</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.update_document">update_document</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.update_etree">update_etree</a></li>
   </ul>
 
         </li>
@@ -1131,10 +1159,23 @@ table {
           
   <ul>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.__init__">__init__</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.add_DUT">add_DUT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.clear_DUTs">clear_DUTs</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_DUTs">get_DUTs</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_number_montecarlo">get_number_montecarlo</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_number_standards">get_number_standards</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_results_directory">get_results_directory</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_standard_definition">get_standard_definition</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_standard_measurement_locations">get_standard_measurement_locations</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.save">save</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.save_HTML">save_HTML</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_number_montecarlo">set_number_montecarlo</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_results_directory">set_results_directory</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_standard_location">set_standard_location</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.show">show</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.to_HTML">to_HTML</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.update_document">update_document</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.update_etree">update_etree</a></li>
   </ul>
 
         </li>
@@ -1148,6 +1189,8 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.save_HTML">save_HTML</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.show">show</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.to_HTML">to_HTML</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.update_document">update_document</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.update_etree">update_etree</a></li>
   </ul>
 
         </li>
@@ -1168,10 +1211,13 @@ table {
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.IMAGE_FILE_EXTENSIONS">IMAGE_FILE_EXTENSIONS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.INSTRUMENT_SHEETS">INSTRUMENT_SHEETS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.METHOD_ALIASES">METHOD_ALIASES</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MODEL_DISTRIBUTION_LIST">MODEL_DISTRIBUTION_LIST</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.MODEL_UNIT_LIST">MODEL_UNIT_LIST</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.NODE_TYPE_DICTIONARY">NODE_TYPE_DICTIONARY</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.OS_STAT_FIELDS">OS_STAT_FIELDS</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.PIL_AVAILABLE">PIL_AVAILABLE</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
+    <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.SCRIPTABLE_MUF_LOCATION">SCRIPTABLE_MUF_LOCATION</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.StringTypes">StringTypes</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMeasure.Code.DataHandlers.MUFModels.XSLT_CAPABLE">XSLT_CAPABLE</a></li>
@@ -1211,6 +1257,8 @@ Most models are xml based</p>
 <span class="c1"># Standard Imports</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Third Party Imports</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span> <span class="n">__file__</span> <span class="p">),</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span><span class="s1">&#39;..&#39;</span><span class="p">))</span>
@@ -1220,8 +1268,19 @@ Most models are xml based</p>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module pyMeasure.Code.DataHandlers.XMLModels was not found,&quot;</span>
           <span class="s2">&quot;please put it on the python path&quot;</span><span class="p">)</span>
     <span class="k">raise</span> <span class="ne">ImportError</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">clr</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module clr had an error or was not found. Please check that it is on the path and &quot;</span>
+          <span class="s2">&quot;working properly&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ImportError</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Constants</span>
+<span class="n">SCRIPTABLE_MUF_LOCATION</span><span class="o">=</span><span class="s2">r&quot;C:\Share\MUF-develop\VNAUncertainty\bin\Debug&quot;</span>
+<span class="sd">&quot;&quot;&quot;Location of the MUF executable with modifications to make it scriptable.&quot;&quot;&quot;</span>
+<span class="n">MODEL_UNIT_LIST</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Unitless&quot;</span><span class="p">,</span><span class="s2">&quot;cm&quot;</span><span class="p">,</span><span class="s2">&quot;mm&quot;</span><span class="p">,</span><span class="s2">&quot;um&quot;</span><span class="p">,</span><span class="s2">&quot;GHz&quot;</span><span class="p">,</span><span class="s2">&quot;pf&quot;</span><span class="p">,</span><span class="s2">&quot;nH&quot;</span><span class="p">,</span><span class="s2">&quot;ohm&quot;</span><span class="p">,</span><span class="s2">&quot;mho&quot;</span><span class="p">,</span><span class="s2">&quot;pf/cm&quot;</span><span class="p">,</span><span class="s2">&quot;ns&quot;</span><span class="p">,</span><span class="s2">&quot;ps&quot;</span><span class="p">,</span><span class="s2">&quot;mV&quot;</span><span class="p">,</span><span class="s2">&quot;mA&quot;</span><span class="p">]</span>
+<span class="n">MODEL_DISTRIBUTION_LIST</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Rectangular&quot;</span><span class="p">,</span><span class="s2">&quot;Arc-sine&quot;</span><span class="p">,</span><span class="s2">&quot;Bernoulli (binary)&quot;</span><span class="p">,</span><span class="s2">&quot;Gaussain&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;2-D Uniform-Distribution Radius&quot;</span><span class="p">,</span><span class="s2">&quot;2-D Gaussian-Distribution Radius&quot;</span><span class="p">]</span>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Functions</span>
@@ -1229,11 +1288,181 @@ Most models are xml based</p>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Classes</span>
 <span class="k">class</span> <span class="nc">MUFParameter</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
-    <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the value of the parameter&quot;&quot;&quot;</span>
+        <span class="n">mechanism_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MechanismValue&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">mechanism_value</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the value (center of distribution)&quot;&quot;&quot;</span>
+        <span class="n">mechanism_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MechanismValue&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mechanism_value</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_distribution_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the type of Distribution. The choices are held in  DistributionType/Item.&quot;&quot;&quot;</span>
+        <span class="n">distribution_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionType&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">text</span><span class="o">=</span><span class="n">distribution_type</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">set_distribution_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">distribution_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the distribution type, accepts an integer or text value.</span>
+<span class="sd">        See the constant MODEL_DISTRIBUTION_LIST for possibilities. Rectangular is 0, Gaussian is 3. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">IntType</span><span class="p">,</span><span class="n">FloatType</span><span class="p">]:</span>
+            <span class="n">type_number</span><span class="o">=</span><span class="n">distribution_type</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">[</span><span class="n">distribution_type</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">distribution_type</span> <span class="ow">in</span> <span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">:</span>
+            <span class="n">type_number</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">)</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="n">distribution_type</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not set the type {0} please choose a&quot;</span>
+                  <span class="s2">&quot; type or index from {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">,</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="n">distribution_type_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionType&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">distribution_type_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">type_name</span>
+        <span class="n">distribution_type_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;SelectedIndex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">type_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_distribution_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the wdith of the distribution.&quot;&quot;&quot;</span>
+        <span class="n">distribution_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionLimits&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">text</span><span class="o">=</span><span class="n">distribution_width</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">set_distribution_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">distribution_width</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the distribution width&quot;&quot;&quot;</span>
+        <span class="n">distribution_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionLimits&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">distribution_width</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">distribution_width</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_units</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the units of the parameter&quot;&quot;&quot;</span>
+        <span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//Units&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">text</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">set_units</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">units</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the units of the parameter can accept either an index or value. Look at</span>
+<span class="sd">        MODEL_UNIT_LIST for complete set of possibilities&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">units</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">IntType</span><span class="p">,</span><span class="n">FloatType</span><span class="p">]:</span>
+            <span class="n">unit_number</span><span class="o">=</span><span class="n">units</span>
+            <span class="n">unit_name</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">[</span><span class="n">units</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">units</span> <span class="ow">in</span> <span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">:</span>
+            <span class="n">unit_number</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+            <span class="n">unit_name</span><span class="o">=</span><span class="n">units</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not set the units {0} please choose a&quot;</span>
+                  <span class="s2">&quot; type or index from {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">units</span><span class="p">,</span><span class="n">MODEL_UNIT_LIST</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="n">unit_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//Units&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">unit_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">unit_name</span>
+        <span class="n">unit_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;SelectedIndex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">unit_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_mechanism_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the mechanism name&quot;&quot;&quot;</span>
+        <span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MechanismName&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">text</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">text</span>
+
 <span class="k">class</span> <span class="nc">MUFModel</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
     <span class="k">pass</span>
 <span class="k">class</span> <span class="nc">MUFVNAUncert</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
-    <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">get_results_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the results directory&quot;</span>
+        <span class="n">results_directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MenuStripTextBoxes/ResultsDirectory&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">results_directory</span>
+
+    <span class="k">def</span> <span class="nf">set_results_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">directory</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="s2">&quot;Sets the results directory, default is the current working directory&quot;</span>
+        <span class="k">if</span> <span class="n">directory</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="n">results_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;ResultsDirectory&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">results_directory</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">attname</span><span class="o">=</span><span class="s2">&quot;Text&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">directory</span><span class="p">)</span>
+        <span class="n">check_box</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;SelectResultsDirectoryToolStripMenuItem&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">check_box</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">attname</span><span class="o">=</span><span class="s2">&quot;Checked&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;True&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_etree</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_number_standards</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the number of calibration standards in the before calibration&quot;</span>
+        <span class="n">sub_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_items</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_standard_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">standard_number</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the xml definition of the standard in position standard_number&quot;</span>
+        <span class="n">sub_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">sub_items</span><span class="p">[</span><span class="n">standard_number</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">get_standard_measurement_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the file locations for the measurement of the standards in a form of a list&quot;&quot;&quot;</span>
+        <span class="n">standards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item/SubItem[@Index=&#39;6&#39;]&quot;</span><span class="p">)</span>
+        <span class="n">locations</span><span class="o">=</span><span class="p">[</span><span class="n">standard</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">standard</span> <span class="ow">in</span> <span class="n">standards</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">locations</span>
+
+    <span class="k">def</span> <span class="nf">set_standard_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">standard_location</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">standard_number</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the location for the measurement of standard_number&quot;&quot;&quot;</span>
+        <span class="n">standards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item/SubItem[@Index=&#39;6&#39;]&quot;</span><span class="p">)</span>
+        <span class="n">standard</span><span class="o">=</span><span class="n">standards</span><span class="p">[</span><span class="n">standard_number</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">standard</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">standard_location</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_number_montecarlo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the number of montecarlo simulations&quot;</span>
+        <span class="n">montecarlo_text_box</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MenuStripTextBoxes/NumberMonteCarloSimulations&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">number_montecarlo</span><span class="o">=</span><span class="n">montecarlo_text_box</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">number_montecarlo</span>
+
+    <span class="k">def</span> <span class="nf">set_number_montecarlo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">number_montecarlo</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the number of montecarlo trials for the menu&quot;&quot;&quot;</span>
+        <span class="n">montecarlo_text_box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MenuStripTextBoxes/NumberMonteCarloSimulations&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">montecarlo_text_box</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">number_montecarlo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_DUTs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the names and locations of DUTs&quot;</span>
+        <span class="n">duts</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">names</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements/Item/SubItem[@Index=&#39;0&#39;]&quot;</span><span class="p">))</span>
+        <span class="n">locations</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements/Item/SubItem[@Index=&#39;1&#39;]&quot;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+            <span class="n">name_location_dictionary</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="n">name</span><span class="p">,</span><span class="s2">&quot;location&quot;</span><span class="p">:</span><span class="n">locations</span><span class="p">[</span><span class="n">index</span><span class="p">]}</span>
+            <span class="n">duts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name_location_dictionary</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">duts</span>
+
+    <span class="k">def</span> <span class="nf">add_DUT</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">location</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a DUT to the DUTMeasurements element&quot;&quot;&quot;</span>
+        <span class="c1"># get the name</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">location</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># first get the DUTMeasurement element</span>
+        <span class="n">dut_measurement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># next add one to the count attribute</span>
+        <span class="n">number_standards</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">dut_measurement</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">])</span>
+        <span class="n">number_standards</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">dut_measurement</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">number_standards</span><span class="p">)</span>
+        <span class="c1"># create a Item</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">dut_measurement</span><span class="p">,</span><span class="s2">&quot;Item&quot;</span><span class="p">,</span><span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Count&quot;</span><span class="p">:</span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="s2">&quot;Index&quot;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">number_standards</span><span class="p">),</span><span class="s2">&quot;Text&quot;</span><span class="p">:</span><span class="n">name</span><span class="p">})</span>
+        <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="s2">&quot;SubItem&quot;</span><span class="p">,</span><span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Index&quot;</span><span class="p">:</span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="s2">&quot;Text&quot;</span><span class="p">:</span><span class="n">name</span><span class="p">})</span>
+        <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="s2">&quot;SubItem&quot;</span><span class="p">,</span><span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Index&quot;</span><span class="p">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="s2">&quot;Text&quot;</span><span class="p">:</span><span class="n">location</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">clear_DUTs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Removes all DUTs&quot;&quot;&quot;</span>
+        <span class="n">dut_measurement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">items</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements/Item&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">dut_measurement</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+
+
+
+
+
+
+
+
+
 <span class="k">class</span> <span class="nc">MUFVNAUncertArchive</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
     <span class="k">pass</span>
 <span class="k">class</span> <span class="nc">MUFMeasurement</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
@@ -1243,6 +1472,27 @@ Most models are xml based</p>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Scripts</span>
+<span class="k">def</span> <span class="nf">run_muf_script</span><span class="p">(</span><span class="n">menu_location</span><span class="p">,</span><span class="n">timeit</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Opens a vnauncert or vnauncert_archive and runs it as is.&quot;&quot;&quot;</span>
+
+    <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SCRIPTABLE_MUF_LOCATION</span><span class="p">)</span>
+    <span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="s2">&quot;VNAUncertainty&quot;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">VNAUncertainty</span>
+    <span class="kn">from</span> <span class="nn">System</span> <span class="kn">import</span> <span class="n">EventArgs</span><span class="p">,</span> <span class="n">Object</span>
+    <span class="n">event</span><span class="o">=</span><span class="n">EventArgs</span><span class="p">()</span>
+    <span class="n">vna</span> <span class="o">=</span><span class="n">VNAUncertainty</span><span class="o">.</span><span class="n">VNAUncertainty</span><span class="p">()</span>
+    <span class="n">vna</span><span class="o">.</span><span class="n">OnLoad</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+    <span class="n">vna</span><span class="o">.</span><span class="n">myOpenMenu</span><span class="p">(</span><span class="n">menu_location</span><span class="p">)</span>
+    <span class="n">vna</span><span class="o">.</span><span class="n">OnLocationChanged</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+    <span class="n">vna</span><span class="o">.</span><span class="n">RunCalibration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">vna</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">timeit</span><span class="p">:</span>
+        <span class="n">stop</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+        <span class="n">runtime</span><span class="o">=</span><span class="n">stop</span><span class="o">-</span><span class="n">start</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;VNAUncertainty finished running  at {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stop</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The script took {0} seconds to run&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runtime</span><span class="o">.</span><span class="n">seconds</span><span class="p">))</span>
+
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Runner</span>
@@ -1256,6 +1506,47 @@ Most models are xml based</p>
 
   <section id="section-items">
 
+    <h2 class="section-title" id="header-functions">Functions</h2>
+      
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.run_muf_script">
+    <p>def <span class="ident">run_muf_script</span>(</p><p>menu_location, timeit=True)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Opens a vnauncert or vnauncert_archive and runs it as is.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.run_muf_script', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.run_muf_script" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">run_muf_script</span><span class="p">(</span><span class="n">menu_location</span><span class="p">,</span><span class="n">timeit</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Opens a vnauncert or vnauncert_archive and runs it as is.&quot;&quot;&quot;</span>
+
+    <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SCRIPTABLE_MUF_LOCATION</span><span class="p">)</span>
+    <span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="s2">&quot;VNAUncertainty&quot;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">VNAUncertainty</span>
+    <span class="kn">from</span> <span class="nn">System</span> <span class="kn">import</span> <span class="n">EventArgs</span><span class="p">,</span> <span class="n">Object</span>
+    <span class="n">event</span><span class="o">=</span><span class="n">EventArgs</span><span class="p">()</span>
+    <span class="n">vna</span> <span class="o">=</span><span class="n">VNAUncertainty</span><span class="o">.</span><span class="n">VNAUncertainty</span><span class="p">()</span>
+    <span class="n">vna</span><span class="o">.</span><span class="n">OnLoad</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+    <span class="n">vna</span><span class="o">.</span><span class="n">myOpenMenu</span><span class="p">(</span><span class="n">menu_location</span><span class="p">)</span>
+    <span class="n">vna</span><span class="o">.</span><span class="n">OnLocationChanged</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+    <span class="n">vna</span><span class="o">.</span><span class="n">RunCalibration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">vna</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">timeit</span><span class="p">:</span>
+        <span class="n">stop</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+        <span class="n">runtime</span><span class="o">=</span><span class="n">stop</span><span class="o">-</span><span class="n">start</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;VNAUncertainty finished running  at {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stop</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The script took {0} seconds to run&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runtime</span><span class="o">.</span><span class="n">seconds</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
 
     <h2 class="section-title" id="header-classes">Classes</h2>
       
@@ -1341,6 +1632,7 @@ Most models are xml based</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
         <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
 </pre></div>
 
   </div>
@@ -1366,7 +1658,7 @@ Most models are xml based</p>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
     <span class="n">file_out</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">())</span>
+    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">file_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
@@ -1487,6 +1779,52 @@ window (using wx)</p></div>
 
   </div>
   
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.update_document">
+    <p>def <span class="ident">update_document</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute document from the self.etree.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.update_document', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.update_document" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates the attribute document from the self.etree. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.update_etree">
+    <p>def <span class="ident">update_etree</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute etree. Should be called anytime the xml content is changed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.update_etree', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFMeasurement.update_etree" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_etree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Updates the attribute etree. Should be called anytime the xml content is changed&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
       </div>
       </div>
       
@@ -1572,6 +1910,7 @@ window (using wx)</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
         <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
 </pre></div>
 
   </div>
@@ -1597,7 +1936,7 @@ window (using wx)</p></div>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
     <span class="n">file_out</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">())</span>
+    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">file_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
@@ -1718,6 +2057,52 @@ window (using wx)</p></div>
 
   </div>
   
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFModel.update_document">
+    <p>def <span class="ident">update_document</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute document from the self.etree.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFModel.update_document', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFModel.update_document" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates the attribute document from the self.etree. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFModel.update_etree">
+    <p>def <span class="ident">update_etree</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute etree. Should be called anytime the xml content is changed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFModel.update_etree', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFModel.update_etree" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_etree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Updates the attribute etree. Should be called anytime the xml content is changed&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
       </div>
       </div>
       
@@ -1729,7 +2114,83 @@ window (using wx)</p></div>
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter" class="source">
     <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">MUFParameter</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
-    <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the value of the parameter&quot;&quot;&quot;</span>
+        <span class="n">mechanism_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MechanismValue&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">mechanism_value</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the value (center of distribution)&quot;&quot;&quot;</span>
+        <span class="n">mechanism_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MechanismValue&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mechanism_value</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_distribution_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the type of Distribution. The choices are held in  DistributionType/Item.&quot;&quot;&quot;</span>
+        <span class="n">distribution_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionType&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">text</span><span class="o">=</span><span class="n">distribution_type</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">set_distribution_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">distribution_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the distribution type, accepts an integer or text value.</span>
+<span class="sd">        See the constant MODEL_DISTRIBUTION_LIST for possibilities. Rectangular is 0, Gaussian is 3. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">IntType</span><span class="p">,</span><span class="n">FloatType</span><span class="p">]:</span>
+            <span class="n">type_number</span><span class="o">=</span><span class="n">distribution_type</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">[</span><span class="n">distribution_type</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">distribution_type</span> <span class="ow">in</span> <span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">:</span>
+            <span class="n">type_number</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">)</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="n">distribution_type</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not set the type {0} please choose a&quot;</span>
+                  <span class="s2">&quot; type or index from {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">,</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="n">distribution_type_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionType&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">distribution_type_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">type_name</span>
+        <span class="n">distribution_type_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;SelectedIndex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">type_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_distribution_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the wdith of the distribution.&quot;&quot;&quot;</span>
+        <span class="n">distribution_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionLimits&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">text</span><span class="o">=</span><span class="n">distribution_width</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">set_distribution_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">distribution_width</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the distribution width&quot;&quot;&quot;</span>
+        <span class="n">distribution_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionLimits&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">distribution_width</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">distribution_width</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_units</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the units of the parameter&quot;&quot;&quot;</span>
+        <span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//Units&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">text</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">set_units</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">units</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the units of the parameter can accept either an index or value. Look at</span>
+<span class="sd">        MODEL_UNIT_LIST for complete set of possibilities&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">units</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">IntType</span><span class="p">,</span><span class="n">FloatType</span><span class="p">]:</span>
+            <span class="n">unit_number</span><span class="o">=</span><span class="n">units</span>
+            <span class="n">unit_name</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">[</span><span class="n">units</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">units</span> <span class="ow">in</span> <span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">:</span>
+            <span class="n">unit_number</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+            <span class="n">unit_name</span><span class="o">=</span><span class="n">units</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not set the units {0} please choose a&quot;</span>
+                  <span class="s2">&quot; type or index from {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">units</span><span class="p">,</span><span class="n">MODEL_UNIT_LIST</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="n">unit_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//Units&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">unit_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">unit_name</span>
+        <span class="n">unit_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;SelectedIndex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">unit_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_mechanism_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the mechanism name&quot;&quot;&quot;</span>
+        <span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MechanismName&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">text</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">text</span>
 </pre></div>
 
   </div>
@@ -1803,6 +2264,132 @@ window (using wx)</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
         <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_distribution_type">
+    <p>def <span class="ident">get_distribution_type</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the type of Distribution. The choices are held in  DistributionType/Item.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_distribution_type', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_distribution_type" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_distribution_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the type of Distribution. The choices are held in  DistributionType/Item.&quot;&quot;&quot;</span>
+    <span class="n">distribution_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionType&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">distribution_type</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">text</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_distribution_width">
+    <p>def <span class="ident">get_distribution_width</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the wdith of the distribution.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_distribution_width', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_distribution_width" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_distribution_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the wdith of the distribution.&quot;&quot;&quot;</span>
+    <span class="n">distribution_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionLimits&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">distribution_width</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">text</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_mechanism_name">
+    <p>def <span class="ident">get_mechanism_name</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the mechanism name</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_mechanism_name', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_mechanism_name" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_mechanism_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the mechanism name&quot;&quot;&quot;</span>
+    <span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MechanismName&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">text</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_units">
+    <p>def <span class="ident">get_units</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the units of the parameter</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_units', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_units" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_units</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the units of the parameter&quot;&quot;&quot;</span>
+    <span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//Units&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">text</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_value">
+    <p>def <span class="ident">get_value</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the value of the parameter</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_value', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.get_value" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the value of the parameter&quot;&quot;&quot;</span>
+    <span class="n">mechanism_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MechanismValue&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">value</span><span class="o">=</span><span class="n">mechanism_value</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -1828,7 +2415,7 @@ window (using wx)</p></div>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
     <span class="n">file_out</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">())</span>
+    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">file_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
@@ -1864,6 +2451,132 @@ an XLST in self.options["XSLT"] and file_path=self.path.replace('.xml','.html')<
     <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">HTML</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_distribution_type">
+    <p>def <span class="ident">set_distribution_type</span>(</p><p>self, distribution_type)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Sets the distribution type, accepts an integer or text value.
+See the constant MODEL_DISTRIBUTION_LIST for possibilities. Rectangular is 0, Gaussian is 3.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_distribution_type', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_distribution_type" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_distribution_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">distribution_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the distribution type, accepts an integer or text value.</span>
+<span class="sd">    See the constant MODEL_DISTRIBUTION_LIST for possibilities. Rectangular is 0, Gaussian is 3. &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">IntType</span><span class="p">,</span><span class="n">FloatType</span><span class="p">]:</span>
+        <span class="n">type_number</span><span class="o">=</span><span class="n">distribution_type</span>
+        <span class="n">type_name</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">[</span><span class="n">distribution_type</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">distribution_type</span> <span class="ow">in</span> <span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">:</span>
+        <span class="n">type_number</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">)</span>
+        <span class="n">type_name</span><span class="o">=</span><span class="n">distribution_type</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not set the type {0} please choose a&quot;</span>
+              <span class="s2">&quot; type or index from {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">distribution_type</span><span class="p">,</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">))</span>
+        <span class="k">return</span>
+    <span class="n">distribution_type_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionType&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">distribution_type_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">type_name</span>
+    <span class="n">distribution_type_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;SelectedIndex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">type_number</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_distribution_width">
+    <p>def <span class="ident">set_distribution_width</span>(</p><p>self, distribution_width)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Sets the distribution width</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_distribution_width', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_distribution_width" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_distribution_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">distribution_width</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the distribution width&quot;&quot;&quot;</span>
+    <span class="n">distribution_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DistributionLimits&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">distribution_width</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">distribution_width</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_units">
+    <p>def <span class="ident">set_units</span>(</p><p>self, units)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Sets the units of the parameter can accept either an index or value. Look at
+MODEL_UNIT_LIST for complete set of possibilities</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_units', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_units" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_units</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">units</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the units of the parameter can accept either an index or value. Look at</span>
+<span class="sd">    MODEL_UNIT_LIST for complete set of possibilities&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">units</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">IntType</span><span class="p">,</span><span class="n">FloatType</span><span class="p">]:</span>
+        <span class="n">unit_number</span><span class="o">=</span><span class="n">units</span>
+        <span class="n">unit_name</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">[</span><span class="n">units</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">units</span> <span class="ow">in</span> <span class="n">MODEL_DISTRIBUTION_LIST</span><span class="p">:</span>
+        <span class="n">unit_number</span><span class="o">=</span><span class="n">MODEL_DISTRIBUTION_LIST</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+        <span class="n">unit_name</span><span class="o">=</span><span class="n">units</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not set the units {0} please choose a&quot;</span>
+              <span class="s2">&quot; type or index from {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">units</span><span class="p">,</span><span class="n">MODEL_UNIT_LIST</span><span class="p">))</span>
+        <span class="k">return</span>
+    <span class="n">unit_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//Units&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">unit_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">unit_name</span>
+    <span class="n">unit_tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;SelectedIndex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">unit_number</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_value">
+    <p>def <span class="ident">set_value</span>(</p><p>self, value)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Sets the value (center of distribution)</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_value', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.set_value" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the value (center of distribution)&quot;&quot;&quot;</span>
+    <span class="n">mechanism_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MechanismValue&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">mechanism_value</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;ControlText&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
 </pre></div>
 
   </div>
@@ -1942,6 +2655,52 @@ window (using wx)</p></div>
     <span class="n">XSL_transform</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">XSLT</span><span class="p">(</span><span class="n">XSL_data</span><span class="p">)</span>
     <span class="n">HTML</span><span class="o">=</span><span class="n">XSL_transform</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">()))</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">HTML</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.update_document">
+    <p>def <span class="ident">update_document</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute document from the self.etree.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.update_document', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.update_document" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates the attribute document from the self.etree. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.update_etree">
+    <p>def <span class="ident">update_etree</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute etree. Should be called anytime the xml content is changed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.update_etree', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFParameter.update_etree" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_etree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Updates the attribute etree. Should be called anytime the xml content is changed&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
 </pre></div>
 
   </div>
@@ -2034,6 +2793,7 @@ window (using wx)</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
         <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
 </pre></div>
 
   </div>
@@ -2059,7 +2819,7 @@ window (using wx)</p></div>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
     <span class="n">file_out</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">())</span>
+    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">file_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
@@ -2180,6 +2940,52 @@ window (using wx)</p></div>
 
   </div>
   
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.update_document">
+    <p>def <span class="ident">update_document</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute document from the self.etree.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.update_document', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.update_document" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates the attribute document from the self.etree. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.update_etree">
+    <p>def <span class="ident">update_etree</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute etree. Should be called anytime the xml content is changed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.update_etree', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFSolution.update_etree" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_etree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Updates the attribute etree. Should be called anytime the xml content is changed&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
       </div>
       </div>
       
@@ -2191,7 +2997,90 @@ window (using wx)</p></div>
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert" class="source">
     <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">MUFVNAUncert</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
-    <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">get_results_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the results directory&quot;</span>
+        <span class="n">results_directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MenuStripTextBoxes/ResultsDirectory&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">results_directory</span>
+
+    <span class="k">def</span> <span class="nf">set_results_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">directory</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="s2">&quot;Sets the results directory, default is the current working directory&quot;</span>
+        <span class="k">if</span> <span class="n">directory</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="n">results_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;ResultsDirectory&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">results_directory</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">attname</span><span class="o">=</span><span class="s2">&quot;Text&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">directory</span><span class="p">)</span>
+        <span class="n">check_box</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;SelectResultsDirectoryToolStripMenuItem&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">check_box</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">attname</span><span class="o">=</span><span class="s2">&quot;Checked&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;True&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_etree</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_number_standards</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the number of calibration standards in the before calibration&quot;</span>
+        <span class="n">sub_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_items</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_standard_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">standard_number</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the xml definition of the standard in position standard_number&quot;</span>
+        <span class="n">sub_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">sub_items</span><span class="p">[</span><span class="n">standard_number</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">get_standard_measurement_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the file locations for the measurement of the standards in a form of a list&quot;&quot;&quot;</span>
+        <span class="n">standards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item/SubItem[@Index=&#39;6&#39;]&quot;</span><span class="p">)</span>
+        <span class="n">locations</span><span class="o">=</span><span class="p">[</span><span class="n">standard</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">standard</span> <span class="ow">in</span> <span class="n">standards</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">locations</span>
+
+    <span class="k">def</span> <span class="nf">set_standard_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">standard_location</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">standard_number</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the location for the measurement of standard_number&quot;&quot;&quot;</span>
+        <span class="n">standards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item/SubItem[@Index=&#39;6&#39;]&quot;</span><span class="p">)</span>
+        <span class="n">standard</span><span class="o">=</span><span class="n">standards</span><span class="p">[</span><span class="n">standard_number</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">standard</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">standard_location</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_number_montecarlo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the number of montecarlo simulations&quot;</span>
+        <span class="n">montecarlo_text_box</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MenuStripTextBoxes/NumberMonteCarloSimulations&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">number_montecarlo</span><span class="o">=</span><span class="n">montecarlo_text_box</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">number_montecarlo</span>
+
+    <span class="k">def</span> <span class="nf">set_number_montecarlo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">number_montecarlo</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the number of montecarlo trials for the menu&quot;&quot;&quot;</span>
+        <span class="n">montecarlo_text_box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MenuStripTextBoxes/NumberMonteCarloSimulations&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">montecarlo_text_box</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">number_montecarlo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_DUTs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the names and locations of DUTs&quot;</span>
+        <span class="n">duts</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">names</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements/Item/SubItem[@Index=&#39;0&#39;]&quot;</span><span class="p">))</span>
+        <span class="n">locations</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements/Item/SubItem[@Index=&#39;1&#39;]&quot;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+            <span class="n">name_location_dictionary</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="n">name</span><span class="p">,</span><span class="s2">&quot;location&quot;</span><span class="p">:</span><span class="n">locations</span><span class="p">[</span><span class="n">index</span><span class="p">]}</span>
+            <span class="n">duts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name_location_dictionary</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">duts</span>
+
+    <span class="k">def</span> <span class="nf">add_DUT</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">location</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a DUT to the DUTMeasurements element&quot;&quot;&quot;</span>
+        <span class="c1"># get the name</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">location</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># first get the DUTMeasurement element</span>
+        <span class="n">dut_measurement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># next add one to the count attribute</span>
+        <span class="n">number_standards</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">dut_measurement</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">])</span>
+        <span class="n">number_standards</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">dut_measurement</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">number_standards</span><span class="p">)</span>
+        <span class="c1"># create a Item</span>
+        <span class="n">item</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">dut_measurement</span><span class="p">,</span><span class="s2">&quot;Item&quot;</span><span class="p">,</span><span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Count&quot;</span><span class="p">:</span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="s2">&quot;Index&quot;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">number_standards</span><span class="p">),</span><span class="s2">&quot;Text&quot;</span><span class="p">:</span><span class="n">name</span><span class="p">})</span>
+        <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="s2">&quot;SubItem&quot;</span><span class="p">,</span><span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Index&quot;</span><span class="p">:</span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="s2">&quot;Text&quot;</span><span class="p">:</span><span class="n">name</span><span class="p">})</span>
+        <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="s2">&quot;SubItem&quot;</span><span class="p">,</span><span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Index&quot;</span><span class="p">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="s2">&quot;Text&quot;</span><span class="p">:</span><span class="n">location</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">clear_DUTs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Removes all DUTs&quot;&quot;&quot;</span>
+        <span class="n">dut_measurement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">items</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements/Item&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">dut_measurement</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
 </pre></div>
 
   </div>
@@ -2265,6 +3154,221 @@ window (using wx)</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
         <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.add_DUT">
+    <p>def <span class="ident">add_DUT</span>(</p><p>self, location, name=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds a DUT to the DUTMeasurements element</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.add_DUT', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.add_DUT" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_DUT</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">location</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a DUT to the DUTMeasurements element&quot;&quot;&quot;</span>
+    <span class="c1"># get the name</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">location</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># first get the DUTMeasurement element</span>
+    <span class="n">dut_measurement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># next add one to the count attribute</span>
+    <span class="n">number_standards</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">dut_measurement</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">])</span>
+    <span class="n">number_standards</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="n">dut_measurement</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">number_standards</span><span class="p">)</span>
+    <span class="c1"># create a Item</span>
+    <span class="n">item</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">dut_measurement</span><span class="p">,</span><span class="s2">&quot;Item&quot;</span><span class="p">,</span><span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Count&quot;</span><span class="p">:</span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="s2">&quot;Index&quot;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">number_standards</span><span class="p">),</span><span class="s2">&quot;Text&quot;</span><span class="p">:</span><span class="n">name</span><span class="p">})</span>
+    <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="s2">&quot;SubItem&quot;</span><span class="p">,</span><span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Index&quot;</span><span class="p">:</span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="s2">&quot;Text&quot;</span><span class="p">:</span><span class="n">name</span><span class="p">})</span>
+    <span class="n">etree</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="s2">&quot;SubItem&quot;</span><span class="p">,</span><span class="n">attrib</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Index&quot;</span><span class="p">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="s2">&quot;Text&quot;</span><span class="p">:</span><span class="n">location</span><span class="p">})</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.clear_DUTs">
+    <p>def <span class="ident">clear_DUTs</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Removes all DUTs</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.clear_DUTs', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.clear_DUTs" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">clear_DUTs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Removes all DUTs&quot;&quot;&quot;</span>
+    <span class="n">dut_measurement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">items</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements/Item&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+        <span class="n">dut_measurement</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_DUTs">
+    <p>def <span class="ident">get_DUTs</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the names and locations of DUTs</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_DUTs', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_DUTs" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_DUTs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Returns the names and locations of DUTs&quot;</span>
+    <span class="n">duts</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">names</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements/Item/SubItem[@Index=&#39;0&#39;]&quot;</span><span class="p">))</span>
+    <span class="n">locations</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//DUTMeasurements/Item/SubItem[@Index=&#39;1&#39;]&quot;</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+        <span class="n">name_location_dictionary</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="n">name</span><span class="p">,</span><span class="s2">&quot;location&quot;</span><span class="p">:</span><span class="n">locations</span><span class="p">[</span><span class="n">index</span><span class="p">]}</span>
+        <span class="n">duts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name_location_dictionary</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">duts</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_number_montecarlo">
+    <p>def <span class="ident">get_number_montecarlo</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the number of montecarlo simulations</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_number_montecarlo', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_number_montecarlo" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_number_montecarlo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Returns the number of montecarlo simulations&quot;</span>
+    <span class="n">montecarlo_text_box</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MenuStripTextBoxes/NumberMonteCarloSimulations&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">number_montecarlo</span><span class="o">=</span><span class="n">montecarlo_text_box</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">number_montecarlo</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_number_standards">
+    <p>def <span class="ident">get_number_standards</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the number of calibration standards in the before calibration</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_number_standards', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_number_standards" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_number_standards</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Returns the number of calibration standards in the before calibration&quot;</span>
+    <span class="n">sub_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_items</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_results_directory">
+    <p>def <span class="ident">get_results_directory</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the results directory</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_results_directory', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_results_directory" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_results_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Returns the results directory&quot;</span>
+    <span class="n">results_directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MenuStripTextBoxes/ResultsDirectory&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">results_directory</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_standard_definition">
+    <p>def <span class="ident">get_standard_definition</span>(</p><p>self, standard_number=1)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the xml definition of the standard in position standard_number</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_standard_definition', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_standard_definition" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_standard_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">standard_number</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="s2">&quot;Returns the xml definition of the standard in position standard_number&quot;</span>
+    <span class="n">sub_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">sub_items</span><span class="p">[</span><span class="n">standard_number</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_standard_measurement_locations">
+    <p>def <span class="ident">get_standard_measurement_locations</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the file locations for the measurement of the standards in a form of a list</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_standard_measurement_locations', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.get_standard_measurement_locations" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_standard_measurement_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the file locations for the measurement of the standards in a form of a list&quot;&quot;&quot;</span>
+    <span class="n">standards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item/SubItem[@Index=&#39;6&#39;]&quot;</span><span class="p">)</span>
+    <span class="n">locations</span><span class="o">=</span><span class="p">[</span><span class="n">standard</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">standard</span> <span class="ow">in</span> <span class="n">standards</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">locations</span>
 </pre></div>
 
   </div>
@@ -2290,7 +3394,7 @@ window (using wx)</p></div>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
     <span class="n">file_out</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">())</span>
+    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">file_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
@@ -2326,6 +3430,86 @@ an XLST in self.options["XSLT"] and file_path=self.path.replace('.xml','.html')<
     <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">HTML</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_number_montecarlo">
+    <p>def <span class="ident">set_number_montecarlo</span>(</p><p>self, number_montecarlo=100)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Sets the number of montecarlo trials for the menu</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_number_montecarlo', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_number_montecarlo" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_number_montecarlo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">number_montecarlo</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the number of montecarlo trials for the menu&quot;&quot;&quot;</span>
+    <span class="n">montecarlo_text_box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//MenuStripTextBoxes/NumberMonteCarloSimulations&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">montecarlo_text_box</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">number_montecarlo</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_results_directory">
+    <p>def <span class="ident">set_results_directory</span>(</p><p>self, directory=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Sets the results directory, default is the current working directory</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_results_directory', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_results_directory" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_results_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">directory</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="s2">&quot;Sets the results directory, default is the current working directory&quot;</span>
+    <span class="k">if</span> <span class="n">directory</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">results_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;ResultsDirectory&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">results_directory</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">attname</span><span class="o">=</span><span class="s2">&quot;Text&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">directory</span><span class="p">)</span>
+    <span class="n">check_box</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;SelectResultsDirectoryToolStripMenuItem&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">check_box</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">attname</span><span class="o">=</span><span class="s2">&quot;Checked&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;True&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_etree</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_standard_location">
+    <p>def <span class="ident">set_standard_location</span>(</p><p>self, standard_location=None, standard_number=1)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Sets the location for the measurement of standard_number</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_standard_location', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.set_standard_location" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_standard_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">standard_location</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">standard_number</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the location for the measurement of standard_number&quot;&quot;&quot;</span>
+    <span class="n">standards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//BeforeCalibration/Item/SubItem[@Index=&#39;6&#39;]&quot;</span><span class="p">)</span>
+    <span class="n">standard</span><span class="o">=</span><span class="n">standards</span><span class="p">[</span><span class="n">standard_number</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">standard</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">standard_location</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_document</span><span class="p">()</span>
 </pre></div>
 
   </div>
@@ -2404,6 +3588,52 @@ window (using wx)</p></div>
     <span class="n">XSL_transform</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">XSLT</span><span class="p">(</span><span class="n">XSL_data</span><span class="p">)</span>
     <span class="n">HTML</span><span class="o">=</span><span class="n">XSL_transform</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">()))</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">HTML</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.update_document">
+    <p>def <span class="ident">update_document</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute document from the self.etree.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.update_document', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.update_document" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates the attribute document from the self.etree. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.update_etree">
+    <p>def <span class="ident">update_etree</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute etree. Should be called anytime the xml content is changed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.update_etree', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncert.update_etree" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_etree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Updates the attribute etree. Should be called anytime the xml content is changed&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
 </pre></div>
 
   </div>
@@ -2496,6 +3726,7 @@ window (using wx)</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
         <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="o">=</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
 </pre></div>
 
   </div>
@@ -2521,7 +3752,7 @@ window (using wx)</p></div>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
     <span class="n">file_out</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">())</span>
+    <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">file_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
@@ -2642,6 +3873,52 @@ window (using wx)</p></div>
 
   </div>
   
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.update_document">
+    <p>def <span class="ident">update_document</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute document from the self.etree.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.update_document', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.update_document" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates the attribute document from the self.etree. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">xml</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">etree</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.update_etree">
+    <p>def <span class="ident">update_etree</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Updates the attribute etree. Should be called anytime the xml content is changed</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.update_etree', this);">Show source &equiv;</a></p>
+  <div id="source-pyMeasure.Code.DataHandlers.MUFModels.MUFVNAUncertArchive.update_etree" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_etree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Updates the attribute etree. Should be called anytime the xml content is changed&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">etree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">toxml</span><span class="p">())</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
       </div>
       </div>
 
@@ -2705,6 +3982,22 @@ window (using wx)</p></div>
 
       </div>
       <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.MUFModels.MODEL_DISTRIBUTION_LIST" class="name">var <span class="ident">MODEL_DISTRIBUTION_LIST</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.MUFModels.MODEL_UNIT_LIST" class="name">var <span class="ident">MODEL_UNIT_LIST</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMeasure.Code.DataHandlers.MUFModels.NODE_TYPE_DICTIONARY" class="name">var <span class="ident">NODE_TYPE_DICTIONARY</span></p>
       
   
@@ -2732,6 +4025,15 @@ window (using wx)</p></div>
       <p id="pyMeasure.Code.DataHandlers.MUFModels.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
       
   
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMeasure.Code.DataHandlers.MUFModels.SCRIPTABLE_MUF_LOCATION" class="name">var <span class="ident">SCRIPTABLE_MUF_LOCATION</span></p>
+      
+  
+    <div class="desc"><p>Location of the MUF executable with modifications to make it scriptable.</p></div>
   <div class="source_cont">
 </div>
 

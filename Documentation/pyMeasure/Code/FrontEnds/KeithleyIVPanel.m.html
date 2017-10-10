@@ -1765,15 +1765,15 @@ table {
             <span class="p">[</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">number_points</span><span class="p">,</span><span class="n">settling_time</span><span class="p">,</span><span class="n">bowtie</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">StartControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span>
             <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">StopControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NumberOfPointsControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span>
             <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SettleTimeControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span><span class="bp">self</span><span class="o">.</span><span class="n">BowtieControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()]</span>
-            <span class="c1">#print start,stop,number_points,settle_time,bowtie</span>
+            <span class="c1">#print(start,stop,number_points,settle_time,bowtie)</span>
             <span class="n">voltage_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">make_voltage_list</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">number_points</span><span class="p">,</span><span class="n">bowtie</span><span class="p">)</span>
-            <span class="c1">#print voltage_list</span>
+            <span class="c1">#print(voltage_list)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">initialize_keithley</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">take_IV</span><span class="p">(</span><span class="n">voltage_list</span><span class="p">,</span><span class="n">settle_time</span><span class="o">=</span><span class="n">settling_time</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Entering fake mode, keithley did not respond fake R=12000.1&#39;</span>
-                <span class="k">print</span> <span class="n">text</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">NotesControl</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">NotesControl</span><span class="o">.</span><span class="n">SetBackgroundColour</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">Colour</span><span class="p">(</span><span class="mi">192</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
                 <span class="n">fake_list</span><span class="o">=</span><span class="n">voltage_list</span>
@@ -1790,7 +1790,7 @@ table {
  
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span>
-            <span class="k">print</span> <span class="s2">&quot;IV Button Failure&quot;</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;IV Button Failure&quot;</span><span class="p">)</span>
         
         
         <span class="n">event</span><span class="o">.</span><span class="n">Skip</span><span class="p">()</span>
@@ -2147,15 +2147,15 @@ table {
             <span class="p">[</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">number_points</span><span class="p">,</span><span class="n">settling_time</span><span class="p">,</span><span class="n">bowtie</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">StartControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span>
             <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">StopControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NumberOfPointsControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span>
             <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SettleTimeControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span><span class="bp">self</span><span class="o">.</span><span class="n">BowtieControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()]</span>
-            <span class="c1">#print start,stop,number_points,settle_time,bowtie</span>
+            <span class="c1">#print(start,stop,number_points,settle_time,bowtie)</span>
             <span class="n">voltage_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">make_voltage_list</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">number_points</span><span class="p">,</span><span class="n">bowtie</span><span class="p">)</span>
-            <span class="c1">#print voltage_list</span>
+            <span class="c1">#print(voltage_list)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">initialize_keithley</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">take_IV</span><span class="p">(</span><span class="n">voltage_list</span><span class="p">,</span><span class="n">settle_time</span><span class="o">=</span><span class="n">settling_time</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Entering fake mode, keithley did not respond fake R=12000.1&#39;</span>
-                <span class="k">print</span> <span class="n">text</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">NotesControl</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">NotesControl</span><span class="o">.</span><span class="n">SetBackgroundColour</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">Colour</span><span class="p">(</span><span class="mi">192</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
                 <span class="n">fake_list</span><span class="o">=</span><span class="n">voltage_list</span>
@@ -2172,7 +2172,7 @@ table {
  
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span>
-            <span class="k">print</span> <span class="s2">&quot;IV Button Failure&quot;</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;IV Button Failure&quot;</span><span class="p">)</span>
         
         
         <span class="n">event</span><span class="o">.</span><span class="n">Skip</span><span class="p">()</span>
@@ -8217,15 +8217,15 @@ equivalient to self.GetParent().NavigateIn().</p></div>
         <span class="p">[</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">number_points</span><span class="p">,</span><span class="n">settling_time</span><span class="p">,</span><span class="n">bowtie</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">StartControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span>
         <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">StopControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NumberOfPointsControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span>
         <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SettleTimeControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()),</span><span class="bp">self</span><span class="o">.</span><span class="n">BowtieControl</span><span class="o">.</span><span class="n">GetValue</span><span class="p">()]</span>
-        <span class="c1">#print start,stop,number_points,settle_time,bowtie</span>
+        <span class="c1">#print(start,stop,number_points,settle_time,bowtie)</span>
         <span class="n">voltage_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">make_voltage_list</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">number_points</span><span class="p">,</span><span class="n">bowtie</span><span class="p">)</span>
-        <span class="c1">#print voltage_list</span>
+        <span class="c1">#print(voltage_list)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">initialize_keithley</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">take_IV</span><span class="p">(</span><span class="n">voltage_list</span><span class="p">,</span><span class="n">settle_time</span><span class="o">=</span><span class="n">settling_time</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Entering fake mode, keithley did not respond fake R=12000.1&#39;</span>
-            <span class="k">print</span> <span class="n">text</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">NotesControl</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">NotesControl</span><span class="o">.</span><span class="n">SetBackgroundColour</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">Colour</span><span class="p">(</span><span class="mi">192</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
             <span class="n">fake_list</span><span class="o">=</span><span class="n">voltage_list</span>
@@ -8241,7 +8241,7 @@ equivalient to self.GetParent().NavigateIn().</p></div>
             <span class="n">dlg</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">raise</span>
-        <span class="k">print</span> <span class="s2">&quot;IV Button Failure&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;IV Button Failure&quot;</span><span class="p">)</span>
     
     
     <span class="n">event</span><span class="o">.</span><span class="n">Skip</span><span class="p">()</span>

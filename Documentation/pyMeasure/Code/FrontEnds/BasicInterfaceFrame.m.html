@@ -1623,8 +1623,8 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
     <span class="kn">from</span> <span class="nn">Code.FrontEnds.SimpleArbDBLowerInterfacePanel</span> <span class="kn">import</span> <span class="o">*</span>
     <span class="kn">from</span> <span class="nn">Code.FrontEnds.VisaDialog</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="k">except</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s2">&quot;&quot;&quot;Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path</span>
-<span class="s2">            Also check that the Boa Constructor Source is on sys.path --C:\Python27\Lib\site-packages&quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path</span>
+<span class="s2">            Also check that the Boa Constructor Source is on sys.path --C:\Python27\Lib\site-packages&quot;&quot;&quot;</span><span class="p">)</span>
     <span class="k">raise</span>
 
 <span class="c1">#-------------------------------------------------------------------------------</span>
@@ -1661,7 +1661,7 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
     <span class="sd">&quot;&quot;&quot;Returns the topmost parent window&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">parent</span><span class="o">=</span><span class="n">window</span><span class="o">.</span><span class="n">Parent</span>
-        <span class="k">print</span> <span class="n">parent</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span> <span class="ow">is</span> <span class="n">InstanceType</span><span class="p">:</span>
             <span class="k">raise</span>
         <span class="n">get_top_parent</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -2054,7 +2054,7 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;shell=locals()[&#39;self&#39;]&quot;</span><span class="p">)</span>
         <span class="c1">#This assumes the main frame is exactly 6 levels above</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;frame=shell.Parent.Parent.Parent.Parent.Parent.Parent&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;print &#39;\# The object corresponding to the main frame is called frame&#39;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;print(&#39;\# The object corresponding to the main frame is called frame&#39;)&quot;</span><span class="p">)</span>
         <span class="c1">#self.Shell.ShellEditor.pushLine(&quot;shell=locals()[&#39;self&#39;]&quot;,&#39;\n&#39;)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">right_control_panels</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">RightControlPanel</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_right_control_panel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">right_control_panels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2194,22 +2194,22 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
                         
                         <span class="c1">#event_handler.func_name=&#39;%s&#39;%index</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">event_handlers</span><span class="p">[</span><span class="n">menu_item</span><span class="o">.</span><span class="n">GetId</span><span class="p">()]</span><span class="o">=</span><span class="n">module_scripts</span><span class="p">[</span><span class="n">script</span><span class="p">]</span>
-                        <span class="c1">#print self.event_handlers</span>
+                        <span class="c1">#print(self.event_handlers)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">Bind</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">EVT_MENU</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">execute_script</span><span class="p">,</span><span class="nb">id</span><span class="o">=</span><span class="n">menu_item</span><span class="o">.</span><span class="n">GetId</span><span class="p">())</span>
-                    <span class="c1">#print self.event_handlers</span>
+                    <span class="c1">#print(self.event_handlers)</span>
                     <span class="c1">#self.bind_menu()        </span>
               
                 <span class="k">except</span><span class="p">:</span>
-                    <span class="k">print</span> <span class="s1">&#39;Could Not Import </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">module</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Could Not Import {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
                     <span class="k">raise</span>        
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">dlg</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>
             <span class="n">event</span><span class="o">.</span><span class="n">Skip</span><span class="p">()</span>
-            <span class="c1">#print self.event_handlers</span>
+            <span class="c1">#print(self.event_handlers)</span>
 
 <span class="c1">##    def bind_menu(self): </span>
 <span class="c1">##        for index,menu_item in enumerate(self.loaded_script_menu_items):</span>
-<span class="c1">##            print self.event_handlers[menu_item.GetId()],menu_item,menu_item.GetId()</span>
+<span class="c1">##            print(self.event_handlers[menu_item.GetId()],menu_item,menu_item.GetId())</span>
 <span class="c1">##            self.Bind(wx.EVT_MENU,self.event_handlers[menu_item.GetId()],id=menu_item.GetId())       </span>
    
    
@@ -2238,8 +2238,8 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
 
     <span class="k">def</span> <span class="nf">execute_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">event</span><span class="p">):</span>
 
-        <span class="c1">#print self.event_handlers</span>
-        <span class="c1">#print event.Id</span>
+        <span class="c1">#print(self.event_handlers)</span>
+        <span class="c1">#print(event.Id)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_handlers</span><span class="p">[</span><span class="n">event</span><span class="o">.</span><span class="n">Id</span><span class="p">]()</span>
 
         
@@ -2384,7 +2384,7 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
     <span class="sd">&quot;&quot;&quot;Returns the topmost parent window&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">parent</span><span class="o">=</span><span class="n">window</span><span class="o">.</span><span class="n">Parent</span>
-        <span class="k">print</span> <span class="n">parent</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span> <span class="ow">is</span> <span class="n">InstanceType</span><span class="p">:</span>
             <span class="k">raise</span>
         <span class="n">get_top_parent</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -2776,7 +2776,7 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;shell=locals()[&#39;self&#39;]&quot;</span><span class="p">)</span>
         <span class="c1">#This assumes the main frame is exactly 6 levels above</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;frame=shell.Parent.Parent.Parent.Parent.Parent.Parent&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;print &#39;\# The object corresponding to the main frame is called frame&#39;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;print(&#39;\# The object corresponding to the main frame is called frame&#39;)&quot;</span><span class="p">)</span>
         <span class="c1">#self.Shell.ShellEditor.pushLine(&quot;shell=locals()[&#39;self&#39;]&quot;,&#39;\n&#39;)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">right_control_panels</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">RightControlPanel</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_right_control_panel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">right_control_panels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2916,22 +2916,22 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
                         
                         <span class="c1">#event_handler.func_name=&#39;%s&#39;%index</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">event_handlers</span><span class="p">[</span><span class="n">menu_item</span><span class="o">.</span><span class="n">GetId</span><span class="p">()]</span><span class="o">=</span><span class="n">module_scripts</span><span class="p">[</span><span class="n">script</span><span class="p">]</span>
-                        <span class="c1">#print self.event_handlers</span>
+                        <span class="c1">#print(self.event_handlers)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">Bind</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">EVT_MENU</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">execute_script</span><span class="p">,</span><span class="nb">id</span><span class="o">=</span><span class="n">menu_item</span><span class="o">.</span><span class="n">GetId</span><span class="p">())</span>
-                    <span class="c1">#print self.event_handlers</span>
+                    <span class="c1">#print(self.event_handlers)</span>
                     <span class="c1">#self.bind_menu()        </span>
               
                 <span class="k">except</span><span class="p">:</span>
-                    <span class="k">print</span> <span class="s1">&#39;Could Not Import </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">module</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Could Not Import {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
                     <span class="k">raise</span>        
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">dlg</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>
             <span class="n">event</span><span class="o">.</span><span class="n">Skip</span><span class="p">()</span>
-            <span class="c1">#print self.event_handlers</span>
+            <span class="c1">#print(self.event_handlers)</span>
 
 <span class="c1">##    def bind_menu(self): </span>
 <span class="c1">##        for index,menu_item in enumerate(self.loaded_script_menu_items):</span>
-<span class="c1">##            print self.event_handlers[menu_item.GetId()],menu_item,menu_item.GetId()</span>
+<span class="c1">##            print(self.event_handlers[menu_item.GetId()],menu_item,menu_item.GetId())</span>
 <span class="c1">##            self.Bind(wx.EVT_MENU,self.event_handlers[menu_item.GetId()],id=menu_item.GetId())       </span>
    
    
@@ -2960,8 +2960,8 @@ is meant as a template for GUI design and a test bed for pyMeasure</p>
 
     <span class="k">def</span> <span class="nf">execute_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">event</span><span class="p">):</span>
 
-        <span class="c1">#print self.event_handlers</span>
-        <span class="c1">#print event.Id</span>
+        <span class="c1">#print(self.event_handlers)</span>
+        <span class="c1">#print(event.Id)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_handlers</span><span class="p">[</span><span class="n">event</span><span class="o">.</span><span class="n">Id</span><span class="p">]()</span>
 
         
@@ -4173,7 +4173,7 @@ integer.  On the other platforms this method returns zero.</p></div>
     <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;shell=locals()[&#39;self&#39;]&quot;</span><span class="p">)</span>
     <span class="c1">#This assumes the main frame is exactly 6 levels above</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;frame=shell.Parent.Parent.Parent.Parent.Parent.Parent&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;print &#39;\# The object corresponding to the main frame is called frame&#39;&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">Shell</span><span class="o">.</span><span class="n">ShellEditor</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s2">&quot;print(&#39;\# The object corresponding to the main frame is called frame&#39;)&quot;</span><span class="p">)</span>
     <span class="c1">#self.Shell.ShellEditor.pushLine(&quot;shell=locals()[&#39;self&#39;]&quot;,&#39;\n&#39;)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">right_control_panels</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">RightControlPanel</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">current_right_control_panel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">right_control_panels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -10306,13 +10306,13 @@ equivalient to self.GetParent().NavigateIn().</p></div>
                     
                     <span class="c1">#event_handler.func_name=&#39;%s&#39;%index</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">event_handlers</span><span class="p">[</span><span class="n">menu_item</span><span class="o">.</span><span class="n">GetId</span><span class="p">()]</span><span class="o">=</span><span class="n">module_scripts</span><span class="p">[</span><span class="n">script</span><span class="p">]</span>
-                    <span class="c1">#print self.event_handlers</span>
+                    <span class="c1">#print(self.event_handlers)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">Bind</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">EVT_MENU</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">execute_script</span><span class="p">,</span><span class="nb">id</span><span class="o">=</span><span class="n">menu_item</span><span class="o">.</span><span class="n">GetId</span><span class="p">())</span>
-                <span class="c1">#print self.event_handlers</span>
+                <span class="c1">#print(self.event_handlers)</span>
                 <span class="c1">#self.bind_menu()        </span>
           
             <span class="k">except</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s1">&#39;Could Not Import </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">module</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Could Not Import {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
                 <span class="k">raise</span>        
     <span class="k">finally</span><span class="p">:</span>
         <span class="n">dlg</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>
@@ -14233,8 +14233,8 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.FrontEnds.BasicInterfaceFrame.BasicInterfaceFrame.execute_script', this);">Show source &equiv;</a></p>
   <div id="source-pyMeasure.Code.FrontEnds.BasicInterfaceFrame.BasicInterfaceFrame.execute_script" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">execute_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">event</span><span class="p">):</span>
-    <span class="c1">#print self.event_handlers</span>
-    <span class="c1">#print event.Id</span>
+    <span class="c1">#print(self.event_handlers)</span>
+    <span class="c1">#print(event.Id)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_handlers</span><span class="p">[</span><span class="n">event</span><span class="o">.</span><span class="n">Id</span><span class="p">]()</span>
 </pre></div>
 

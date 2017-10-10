@@ -1851,11 +1851,11 @@ The custom tool bar is MyNavigationToolBar</p>
     <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="k">except</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s2">&quot;Please make sure matplotlib package is installed and in sys.path&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Please make sure matplotlib package is installed and in sys.path&quot;</span><span class="p">)</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">DataTable</span>
 <span class="k">except</span><span class="p">:</span> 
-    <span class="k">print</span> <span class="s2">&quot;import of pyMeasure.Code.DataHandlers.XMLModels failed&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;import of pyMeasure.Code.DataHandlers.XMLModels failed&quot;</span><span class="p">)</span>
     
 <span class="c1">#-------------------------------------------------------------------------------</span>
 <span class="c1"># Constants</span>
@@ -1914,8 +1914,8 @@ The custom tool bar is MyNavigationToolBar</p>
                     <span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                     <span class="c1"># This needs to be generalized with a chooser so that things with</span>
                     <span class="c1"># lots of columns can be plotted</span>
-                    <span class="c1">#print data_sheet.get_attribute_names()</span>
-                    
+                    <span class="c1">#print(data_sheet.get_attribute_names())</span>
+
                     <span class="k">if</span> <span class="s1">&#39;Current&#39;</span> <span class="ow">in</span> <span class="n">data_sheet</span><span class="o">.</span><span class="n">get_attribute_names</span><span class="p">():</span>
                         <span class="n">y_name</span><span class="o">=</span><span class="s1">&#39;Current&#39;</span>
                     <span class="k">if</span> <span class="s1">&#39;Voltage&#39;</span> <span class="ow">in</span> <span class="n">data_sheet</span><span class="o">.</span><span class="n">get_attribute_names</span><span class="p">():</span>
@@ -1933,7 +1933,7 @@ The custom tool bar is MyNavigationToolBar</p>
                     <span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">ticker</span><span class="o">.</span><span class="n">ScalarFormatter</span><span class="p">(</span><span class="n">useOffset</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">ticker</span><span class="o">.</span><span class="n">ScalarFormatter</span><span class="p">(</span><span class="n">useOffset</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
-                    <span class="c1">#print x_name,y_name</span>
+                    <span class="c1">#print(x_name,y_name)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_name</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_name</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
                     <span class="n">x_data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">data_sheet</span><span class="o">.</span><span class="n">to_list</span><span class="p">(</span><span class="n">x_name</span><span class="p">)))</span>
@@ -11693,8 +11693,8 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
                     <span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                     <span class="c1"># This needs to be generalized with a chooser so that things with</span>
                     <span class="c1"># lots of columns can be plotted</span>
-                    <span class="c1">#print data_sheet.get_attribute_names()</span>
-                    
+                    <span class="c1">#print(data_sheet.get_attribute_names())</span>
+
                     <span class="k">if</span> <span class="s1">&#39;Current&#39;</span> <span class="ow">in</span> <span class="n">data_sheet</span><span class="o">.</span><span class="n">get_attribute_names</span><span class="p">():</span>
                         <span class="n">y_name</span><span class="o">=</span><span class="s1">&#39;Current&#39;</span>
                     <span class="k">if</span> <span class="s1">&#39;Voltage&#39;</span> <span class="ow">in</span> <span class="n">data_sheet</span><span class="o">.</span><span class="n">get_attribute_names</span><span class="p">():</span>
@@ -11712,7 +11712,7 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
                     <span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">ticker</span><span class="o">.</span><span class="n">ScalarFormatter</span><span class="p">(</span><span class="n">useOffset</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">ticker</span><span class="o">.</span><span class="n">ScalarFormatter</span><span class="p">(</span><span class="n">useOffset</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
-                    <span class="c1">#print x_name,y_name</span>
+                    <span class="c1">#print(x_name,y_name)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_name</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_name</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
                     <span class="n">x_data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">data_sheet</span><span class="o">.</span><span class="n">to_list</span><span class="p">(</span><span class="n">x_name</span><span class="p">)))</span>
@@ -13021,7 +13021,7 @@ it.</p></div>
             
   <div class="item">
     <div class="name def" id="pyMeasure.Code.FrontEnds.MatplotlibWxPanel.MyNavigationToolbar.AddCheckLabelTool">
-    <p>def <span class="ident">AddCheckLabelTool</span>(</p><p>self, id, label, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x12975690&gt; &gt;, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
+    <p>def <span class="ident">AddCheckLabelTool</span>(</p><p>self, id, label, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x13af5690&gt; &gt;, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
     </div>
     
 
@@ -13048,7 +13048,7 @@ it.</p></div>
             
   <div class="item">
     <div class="name def" id="pyMeasure.Code.FrontEnds.MatplotlibWxPanel.MyNavigationToolbar.AddCheckTool">
-    <p>def <span class="ident">AddCheckTool</span>(</p><p>self, id, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x12975690&gt; &gt;, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
+    <p>def <span class="ident">AddCheckTool</span>(</p><p>self, id, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x13af5690&gt; &gt;, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
     </div>
     
 
@@ -13127,7 +13127,7 @@ functions so should not be required by the application programmer.</p></div>
             
   <div class="item">
     <div class="name def" id="pyMeasure.Code.FrontEnds.MatplotlibWxPanel.MyNavigationToolbar.AddLabelTool">
-    <p>def <span class="ident">AddLabelTool</span>(</p><p>self, id, label, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x12975690&gt; &gt;, kind=0, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
+    <p>def <span class="ident">AddLabelTool</span>(</p><p>self, id, label, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x13af5690&gt; &gt;, kind=0, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
     </div>
     
 
@@ -13184,7 +13184,7 @@ is created and used as the disabled image.</p></div>
             
   <div class="item">
     <div class="name def" id="pyMeasure.Code.FrontEnds.MatplotlibWxPanel.MyNavigationToolbar.AddRadioLabelTool">
-    <p>def <span class="ident">AddRadioLabelTool</span>(</p><p>self, id, label, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x12975690&gt; &gt;, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
+    <p>def <span class="ident">AddRadioLabelTool</span>(</p><p>self, id, label, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x13af5690&gt; &gt;, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
     </div>
     
 
@@ -13215,7 +13215,7 @@ other toggled radio tools in the same group when it happens</p></div>
             
   <div class="item">
     <div class="name def" id="pyMeasure.Code.FrontEnds.MatplotlibWxPanel.MyNavigationToolbar.AddRadioTool">
-    <p>def <span class="ident">AddRadioTool</span>(</p><p>self, id, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x12975690&gt; &gt;, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
+    <p>def <span class="ident">AddRadioTool</span>(</p><p>self, id, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x13af5690&gt; &gt;, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
     </div>
     
 
@@ -13321,7 +13321,7 @@ other toggled radio tools in the same group when it happens</p></div>
             
   <div class="item">
     <div class="name def" id="pyMeasure.Code.FrontEnds.MatplotlibWxPanel.MyNavigationToolbar.AddTool">
-    <p>def <span class="ident">AddTool</span>(</p><p>self, id, bitmap, pushedBitmap=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x12975690&gt; &gt;, isToggle=0, clientData=None, shortHelpString=&#39;&#39;, longHelpString=&#39;&#39;)</p>
+    <p>def <span class="ident">AddTool</span>(</p><p>self, id, bitmap, pushedBitmap=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x13af5690&gt; &gt;, isToggle=0, clientData=None, shortHelpString=&#39;&#39;, longHelpString=&#39;&#39;)</p>
     </div>
     
 
@@ -18217,7 +18217,7 @@ to the dialog via validators.</p></div>
             
   <div class="item">
     <div class="name def" id="pyMeasure.Code.FrontEnds.MatplotlibWxPanel.MyNavigationToolbar.InsertLabelTool">
-    <p>def <span class="ident">InsertLabelTool</span>(</p><p>self, pos, id, label, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x12975690&gt; &gt;, kind=0, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
+    <p>def <span class="ident">InsertLabelTool</span>(</p><p>self, pos, id, label, bitmap, bmpDisabled=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x13af5690&gt; &gt;, kind=0, shortHelp=&#39;&#39;, longHelp=&#39;&#39;, clientData=None)</p>
     </div>
     
 
@@ -18324,7 +18324,7 @@ is equivalent to AddTool()</p></div>
             
   <div class="item">
     <div class="name def" id="pyMeasure.Code.FrontEnds.MatplotlibWxPanel.MyNavigationToolbar.InsertTool">
-    <p>def <span class="ident">InsertTool</span>(</p><p>self, pos, id, bitmap, pushedBitmap=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x12975690&gt; &gt;, isToggle=0, clientData=None, shortHelpString=&#39;&#39;, longHelpString=&#39;&#39;)</p>
+    <p>def <span class="ident">InsertTool</span>(</p><p>self, pos, id, bitmap, pushedBitmap=&lt;wx._gdi.Bitmap; proxy of &lt;Swig Object of type &#39;wxBitmap *&#39; at 0x13af5690&gt; &gt;, isToggle=0, clientData=None, shortHelpString=&#39;&#39;, longHelpString=&#39;&#39;)</p>
     </div>
     
 

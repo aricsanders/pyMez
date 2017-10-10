@@ -1505,8 +1505,8 @@ is meant as a template for GUI design</p>
 
     <span class="c1">#from Code.FrontEnds.ShellPanel import *</span>
 <span class="k">except</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s2">&quot;&quot;&quot;Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path</span>
-<span class="s2">            Also check that the Boa Constructor Source is on sys.path --C:\Python25\Lib\site-packages&quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Cannot load Shell Panel or IEPanel add The folder above pyMeaure to sys.path</span>
+<span class="s2">            Also check that the Boa Constructor Source is on sys.path --C:\Python25\Lib\site-packages&quot;&quot;&quot;</span><span class="p">)</span>
     <span class="k">raise</span>
 <span class="c1">#-------------------------------------------------------------------------------</span>
 <span class="c1">#Functions</span>
@@ -1515,7 +1515,7 @@ is meant as a template for GUI design</p>
     <span class="sd">&quot;&quot;&quot;Returns the topmost parent window&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">parent</span><span class="o">=</span><span class="n">window</span><span class="o">.</span><span class="n">Parent</span>
-        <span class="k">print</span> <span class="n">parent</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span> <span class="ow">is</span> <span class="n">InstanceType</span><span class="p">:</span>
             <span class="k">raise</span>
         <span class="n">get_top_parent</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
@@ -1794,7 +1794,7 @@ is meant as a template for GUI design</p>
     <span class="sd">&quot;&quot;&quot;Returns the topmost parent window&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">parent</span><span class="o">=</span><span class="n">window</span><span class="o">.</span><span class="n">Parent</span>
-        <span class="k">print</span> <span class="n">parent</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span> <span class="ow">is</span> <span class="n">InstanceType</span><span class="p">:</span>
             <span class="k">raise</span>
         <span class="n">get_top_parent</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>

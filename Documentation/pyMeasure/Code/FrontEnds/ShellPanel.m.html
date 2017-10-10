@@ -3036,7 +3036,7 @@ end product import this in the module runner.</p>
     <span class="k">def</span> <span class="nf">execStartupScript</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">startupfile</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">startupfile</span><span class="p">:</span>
             <span class="n">startuptext</span> <span class="o">=</span> <span class="s1">&#39;## Startup script: &#39;</span> <span class="o">+</span> <span class="n">startupfile</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print </span><span class="si">%s</span><span class="s1">;execfile(</span><span class="si">%s</span><span class="s1">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="sb">`startuptext`</span><span class="p">,</span> <span class="sb">`startupfile`</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print({0};execfile({0}))&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sb">`startuptext`</span><span class="p">,</span> <span class="sb">`startupfile`</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 
@@ -3044,10 +3044,10 @@ end product import this in the module runner.</p>
         <span class="k">if</span> <span class="n">doDebug</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="n">debugger</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">## Debug mode turned on.&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;?&quot;&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;?&quot;)&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;## Debug mode turned </span><span class="si">%s</span><span class="s1">.&quot;&#39;</span><span class="o">%</span> <span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;## Debug mode turned {0}.&quot;)&#39;</span><span class="o">.</span><span class="n">format</span> <span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">OnUpdateUI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">Preferences</span><span class="o">.</span><span class="n">braceHighLight</span><span class="p">:</span>
@@ -3095,7 +3095,7 @@ end product import this in the module runner.</p>
                 <span class="n">prompt</span> <span class="o">=</span> <span class="n">Preferences</span><span class="o">.</span><span class="n">ps3</span>
                 <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span><span class="o">.</span><span class="n">getVarValue</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-                    <span class="k">print</span> <span class="n">val</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
                 <span class="k">return</span> <span class="bp">False</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">interp</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
                 <span class="n">prompt</span> <span class="o">=</span> <span class="n">Preferences</span><span class="o">.</span><span class="n">ps2</span>
@@ -3411,10 +3411,10 @@ end product import this in the module runner.</p>
         <span class="k">if</span> <span class="n">doDebug</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="n">debugger</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shellWin</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">## Debug mode turned on.&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;?&quot;&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;?&quot;)&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;## Debug mode turned </span><span class="si">%s</span><span class="s1">.&quot;&#39;</span><span class="o">%</span> <span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;## Debug mode turned {0}.&quot;)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
     
     <span class="k">def</span> <span class="nf">pushLine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">addText</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">addText</span><span class="p">:</span>
@@ -4662,10 +4662,10 @@ end product import this in the module runner.</p>
         <span class="k">if</span> <span class="n">doDebug</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="n">debugger</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shellWin</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">## Debug mode turned on.&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;?&quot;&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;?&quot;)&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;## Debug mode turned </span><span class="si">%s</span><span class="s1">.&quot;&#39;</span><span class="o">%</span> <span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;## Debug mode turned {0}.&quot;)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
     
     <span class="k">def</span> <span class="nf">pushLine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">addText</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">addText</span><span class="p">:</span>
@@ -14953,10 +14953,10 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
     <span class="k">if</span> <span class="n">doDebug</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="n">debugger</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shellWin</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">## Debug mode turned on.&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;?&quot;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;?&quot;)&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;## Debug mode turned </span><span class="si">%s</span><span class="s1">.&quot;&#39;</span><span class="o">%</span> <span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;## Debug mode turned {0}.&quot;)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
 </pre></div>
 
   </div>
@@ -15325,7 +15325,7 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
     <span class="k">def</span> <span class="nf">execStartupScript</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">startupfile</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">startupfile</span><span class="p">:</span>
             <span class="n">startuptext</span> <span class="o">=</span> <span class="s1">&#39;## Startup script: &#39;</span> <span class="o">+</span> <span class="n">startupfile</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print </span><span class="si">%s</span><span class="s1">;execfile(</span><span class="si">%s</span><span class="s1">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="sb">`startuptext`</span><span class="p">,</span> <span class="sb">`startupfile`</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print({0};execfile({0}))&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sb">`startuptext`</span><span class="p">,</span> <span class="sb">`startupfile`</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 
@@ -15333,10 +15333,10 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
         <span class="k">if</span> <span class="n">doDebug</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="n">debugger</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">## Debug mode turned on.&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;?&quot;&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;?&quot;)&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;## Debug mode turned </span><span class="si">%s</span><span class="s1">.&quot;&#39;</span><span class="o">%</span> <span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;## Debug mode turned {0}.&quot;)&#39;</span><span class="o">.</span><span class="n">format</span> <span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">OnUpdateUI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">Preferences</span><span class="o">.</span><span class="n">braceHighLight</span><span class="p">:</span>
@@ -15384,7 +15384,7 @@ like menu bar (un)wrapping or (dis)appearance of the scrollbars.</p></div>
                 <span class="n">prompt</span> <span class="o">=</span> <span class="n">Preferences</span><span class="o">.</span><span class="n">ps3</span>
                 <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span><span class="o">.</span><span class="n">getVarValue</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-                    <span class="k">print</span> <span class="n">val</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
                 <span class="k">return</span> <span class="bp">False</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">interp</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
                 <span class="n">prompt</span> <span class="o">=</span> <span class="n">Preferences</span><span class="o">.</span><span class="n">ps2</span>
@@ -45355,10 +45355,10 @@ replacing any text that is currently selected.</p></div>
     <span class="k">if</span> <span class="n">doDebug</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="n">debugger</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">## Debug mode turned on.&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;?&quot;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;?&quot;)&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print &quot;## Debug mode turned </span><span class="si">%s</span><span class="s1">.&quot;&#39;</span><span class="o">%</span> <span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print(&quot;## Debug mode turned {0}.&quot;)&#39;</span><span class="o">.</span><span class="n">format</span> <span class="p">(</span><span class="n">doDebug</span> <span class="ow">and</span> <span class="s1">&#39;on&#39;</span> <span class="ow">or</span> <span class="s1">&#39;off&#39;</span><span class="p">))</span>
 </pre></div>
 
   </div>
@@ -45453,7 +45453,7 @@ replacing any text that is currently selected.</p></div>
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">execStartupScript</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">startupfile</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">startupfile</span><span class="p">:</span>
         <span class="n">startuptext</span> <span class="o">=</span> <span class="s1">&#39;## Startup script: &#39;</span> <span class="o">+</span> <span class="n">startupfile</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print </span><span class="si">%s</span><span class="s1">;execfile(</span><span class="si">%s</span><span class="s1">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="sb">`startuptext`</span><span class="p">,</span> <span class="sb">`startupfile`</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;print({0};execfile({0}))&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sb">`startuptext`</span><span class="p">,</span> <span class="sb">`startupfile`</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pushLine</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 </pre></div>
@@ -45718,7 +45718,7 @@ replacing any text that is currently selected.</p></div>
             <span class="n">prompt</span> <span class="o">=</span> <span class="n">Preferences</span><span class="o">.</span><span class="n">ps3</span>
             <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_debugger</span><span class="o">.</span><span class="n">getVarValue</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="k">print</span> <span class="n">val</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">False</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">interp</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
             <span class="n">prompt</span> <span class="o">=</span> <span class="n">Preferences</span><span class="o">.</span><span class="n">ps2</span>
