@@ -209,8 +209,67 @@ class MUFVNAUncert(XMLBase):
             dut_measurement.remove(item)
         self.update_document()
 
+class MUFMeasurement(XMLBase):
+    def get_name_parameter_dictionary(self):
+        """Returns a dictionary of 'name':'parameter_name' pairs to correlate covariance files with their
+        mechanism names"""
+        out_dictionary={}
+        try:
+            names=map(lambda x: x.attrib["Text"],self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='0']"))
+            mechanisms=map(lambda x: x.attrib["Text"],self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='2']"))
+            for index,name in enumerate(names):
+                split_parameter_name=os.path.split(mechanisms[index])[-1]
+                parameter_name=split_parameter_name.split(".")[0]
+                out_dictionary[name]=parameter_name
+            return out_dictionary
+        except:
+            print("Could not retrieve the name - parameter dictionary")
+            pass
 
+    def get_covariance_dictionary(self):
+        """Returns a list of dictionaries that has the keys name, location, and parameter_location"""
+        covariance_list=[]
+        try:
+            names=map(lambda x: x.attrib["Text"],self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='0']"))
+            locations=map(lambda x: x.attrib["Text"],self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='1']"))
+            mechanisms = map(lambda x: x.attrib["Text"], self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='2']"))
+            for index,name in enumerate(names):
+                name_location_dictionary={"name":name,"location":locations[index],"parameter_location":mechanisms[index]}
+                covariance_list.append(name_location_dictionary)
+            return covariance_list
+        except:
+            print("Could not retrieve the covariance dictionary")
+            pass
 
+    def get_montecarlo_dictionary(self):
+        """Returns a list of dictionaries that has the keys name, location"""
+        montecarlo_list=[]
+        try:
+            names=map(lambda x: x.attrib["Text"],
+                      self.etree.findall(".//MonteCarloPerturbedSParams/Item/SubItem[@Index='0']"))
+            locations=map(lambda x: x.attrib["Text"],
+                          self.etree.findall(".//MonteCarloPerturbedSParams/Item/SubItem[@Index='1']"))
+            for index,name in enumerate(names):
+                name_location_dictionary={"name":name,"location":locations[index]}
+                montecarlo_list.append(name_location_dictionary)
+            return montecarlo_list
+        except:
+            print("Could not retrieve the montecarlo dictionary")
+            pass
+
+    def get_nominal_dictionary(self):
+        "Returns a single dictionary with nominal name and location"
+        nominal_dictionary={}
+        try:
+            location=map(lambda x: x.attrib["Text"],
+                      self.etree.findall(".//MeasSParams/Item/SubItem[@Index='1']"))[0]
+            name=os.path.split(location)[-1].split(".")[0]
+            nominal_dictionary["location"]=location
+            nominal_dictionary["name"]=name
+            return nominal_dictionary
+        except:
+            print("Could not get nominal path information")
+            pass
 
 
 
@@ -220,8 +279,7 @@ class MUFVNAUncert(XMLBase):
 
 class MUFVNAUncertArchive(XMLBase):
     pass
-class MUFMeasurement(XMLBase):
-    pass
+
 class MUFSolution(XMLBase):
     pass
 
