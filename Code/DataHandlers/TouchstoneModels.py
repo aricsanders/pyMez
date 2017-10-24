@@ -250,7 +250,8 @@ def parse_combined_float_list(float_string_list):
 
 def s2p_mean(list_s2p_models,**options):
     """Calculates the mean of the data of a list of
-    s2p model and returns a new s2p model. The formats should be the same"""
+    s2p model and returns a new s2p model. The formats should be the same. Note this is very slow for large number
+   of s2ps"""
     #This will work on any table that the data is stored in data, need to add a sparameter version
     defaults={"frequency_selector":0,"frequency_column_name":"Frequency"}
     average_options={}

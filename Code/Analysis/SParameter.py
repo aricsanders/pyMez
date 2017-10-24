@@ -1339,7 +1339,8 @@ def compare_s2p_plots(list_S2PV1,**options):
               "specific_descriptor":"comparison_Plot",
               "general_descriptor":"Plot",
               "file_name":None,
-              "labels":None}
+              "labels":None,
+              "title":None}
     comparison_plot_options={}
     for key,value in defaults.iteritems():
         comparison_plot_options[key]=value
@@ -1373,6 +1374,8 @@ def compare_s2p_plots(list_S2PV1,**options):
 
     compare_axes.flat[-2].set_xlabel('Frequency(GHz)',color='k')
     compare_axes.flat[-1].set_xlabel('Frequency(GHz)',color='k')
+    if comparison_plot_options["title"]:
+        fig.suptitle(comparison_plot_options["title"])
     fig.subplots_adjust(hspace=0)
     plt.tight_layout()
     # Dealing with the save option
