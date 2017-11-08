@@ -24,9 +24,21 @@ except:
           "please put it on the python path")
     raise ImportError
 try:
+    from Code.DataHandlers.GeneralModels import *
+except:
+    print("The module pyMeasure.Code.DataHandlers.XMLModels was not found,"
+          "please put it on the python path")
+    raise ImportError
+try:
     import clr
 except:
     print("The module clr had an error or was not found. Please check that it is on the path and "
+          "working properly")
+    raise ImportError
+try:
+    import matplotlib.pyplot as plt
+except:
+    print("The module matplotlib had an error or was not found. Please check that it is on the path and "
           "working properly")
     raise ImportError
 #-----------------------------------------------------------------------------
@@ -39,6 +51,22 @@ MODEL_DISTRIBUTION_LIST=["Rectangular","Arc-sine","Bernoulli (binary)","Gaussain
 
 #-----------------------------------------------------------------------------
 # Module Functions
+def make_parameter_table(parameter_directory):
+    """Creates a table from all the parameters in the parameter_directory, returns an AsciiDataTable"""
+    file_names=os.listdir(parameter_directory)
+    parameter_files=[]
+    for file_name in file_names:
+        if re.search(".parameter",file_name):
+            parameter_files.append(os.path.join(parameter_directory,file_name))
+    parameter_models=[MUFParameter(file_name) for file_name in parameter_files]
+    column_names=["Parameter_Name","Value","Distribution_Type","Width","Standard_Uncertainty","Units"]
+    data=[[parameter.get_mechanism_name(),parameter.get_value(),parameter.get_distribution_type(),
+           parameter.get_distribution_width(),parameter.get_standard_uncertainty(),
+           parameter.get_units()] for parameter in parameter_models]
+    data_table=AsciiDataTable(column_names=column_names,data=data)
+    return data_table
+
+
 
 #-----------------------------------------------------------------------------
 # Module Classes
@@ -120,6 +148,14 @@ class MUFParameter(XMLBase):
         units=self.etree.findall(".//MechanismName")[0]
         text=units.attrib["ControlText"]
         return text
+
+    def get_standard_uncertainty(self):
+        """returns the standard uncertainty of the parameter"""
+        uncertainty=self.etree.findall(".//StandardUncertainty")[0]
+        text = uncertainty.attrib["ControlText"]
+        number=float(text.split(":")[-1])
+        return number
+
 
 class MUFModel(XMLBase):
     pass
@@ -283,8 +319,89 @@ class MUFVNAUncertArchive(XMLBase):
 class MUFSolution(XMLBase):
     pass
 
+
+class MUFComplexModel(AsciiDataTable):
+    """MUFComplexModel is built for the .complex files used in eps etc """
+
+    def __init__(self, file_path, **options):
+        """Initializes the class MUFComplexModel"""
+        defaults = {"data_delimiter": "\t", "column_names_delimiter": ",", "specific_descriptor": 'Complex',
+                    "general_descriptor": 'EPS', "extension": 'complex', "comment_begin": "!", "comment_end": "\n",
+                    "header": None,
+                    "column_names": ["Frequency", "re", "im"],
+                    "column_names_begin_token": "!", "column_names_end_token": "\n", "data": None,
+                    "row_formatter_string": None, "data_table_element_separator": None, "row_begin_token": None,
+                    "row_end_token": None, "escape_character": None,
+                    "data_begin_token": None, "data_end_token": None,
+                    "column_types": ['float' for i in range(len(["Frequency", "re", "im"]))]
+                    }
+        self.options = {}
+        for key, value in defaults.iteritems():
+            self.options[key] = value
+        for key, value in options.iteritems():
+            self.options[key] = value
+        if file_path is not None:
+            self.path = file_path
+            self.__read_and_fix__()
+        AsciiDataTable.__init__(self, None, **self.options)
+        if file_path is not None:
+            self.path = file_path
+
+    def __read_and_fix__(self):
+        """Reads in the data and fixes any problems with delimiters, etc"""
+        in_file = open(self.path, 'r')
+        lines = []
+        for line in in_file:
+            lines.append(map(lambda x: float(x), line.split("\t")))
+        in_file.close()
+        self.options["data"] = lines
+        self.complex_data = []
+        for row in self.options["data"]:
+            frequency = [row[0]]
+            complex_numbers = row[1:]
+            # print np.array(complex_numbers[1::2])
+            complex_array = np.array(complex_numbers[0::2]) + 1.j * np.array(complex_numbers[1::2])
+            self.complex_data.append(frequency + complex_array.tolist())
+
+    def get_variation_parameter(self):
+        try:
+            re_data = self["re"][:]
+            re_data_var = map(lambda x: x - np.mean(re_data), re_data)
+            self.variation_parameter = 100 * max(map(lambda x: abs(x), re_data_var)) / np.mean(re_data)
+        except:
+            raise
+            self.variation_parameter = 0
+        return self.variation_parameter
+
+    def get_re_std(self):
+        return np.std(self["re"])
+
+    def get_re_mean(self):
+        return np.mean(self["re"])
+
+    def get_re_max(self):
+        return np.max(self["re"])
+
+    def show(self, **options):
+        fig, ax1 = plt.subplots()
+        ax1.plot(self["Frequency"], self["re"], 'b-')
+        ax1.set_xlabel('Frequency (GHz)')
+        # Make the y-axis label, ticks and tick labels match the line color.
+        ax1.set_ylabel('Real', color='b')
+        ax1.tick_params('y', colors='b')
+
+        ax2 = ax1.twinx()
+        ax2.plot(self["Frequency"], self["im"], 'r.')
+        ax2.set_ylabel('Imaginary', color='r')
+        ax2.tick_params('y', colors='r')
+
+        fig.tight_layout()
+        plt.show()
+
+
 #-----------------------------------------------------------------------------
 # Module Scripts
+
 def run_muf_script(menu_location,timeit=True):
     """Opens a vnauncert or vnauncert_archive and runs it as is."""
 
