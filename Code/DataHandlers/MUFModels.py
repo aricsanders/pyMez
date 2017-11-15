@@ -56,13 +56,20 @@ def make_parameter_table(parameter_directory):
     file_names=os.listdir(parameter_directory)
     parameter_files=[]
     for file_name in file_names:
-        if re.search(".parameter",file_name):
+        extension = file_name.split(".")[-1]
+        if re.search("parameter",extension,re.IGNORECASE) and extension not in ["parameterviewer"] :
             parameter_files.append(os.path.join(parameter_directory,file_name))
+    #print("{0} is {1}".format("parameter_files",parameter_files))
     parameter_models=[MUFParameter(file_name) for file_name in parameter_files]
     column_names=["Parameter_Name","Value","Distribution_Type","Width","Standard_Uncertainty","Units"]
-    data=[[parameter.get_mechanism_name(),parameter.get_value(),parameter.get_distribution_type(),
-           parameter.get_distribution_width(),parameter.get_standard_uncertainty(),
-           parameter.get_units()] for parameter in parameter_models]
+    data=[]
+    for index,parameter in enumerate(parameter_models):
+        print("Parameter Number: {0}, Name:{1}".format(index,parameter.get_mechanism_name()) )
+        row=[os.path.split(parameter.get_mechanism_name())[-1].split(".")[0],
+             parameter.get_value(),parameter.get_distribution_type(),
+             parameter.get_distribution_width(),parameter.get_standard_uncertainty(),
+             parameter.get_units()]
+        data.append(row)
     data_table=AsciiDataTable(column_names=column_names,data=data)
     return data_table
 
@@ -366,8 +373,8 @@ class MUFComplexModel(AsciiDataTable):
     def get_variation_parameter(self):
         try:
             re_data = self["re"][:]
-            re_data_var = map(lambda x: x - np.mean(re_data), re_data)
-            self.variation_parameter = 100 * max(map(lambda x: abs(x), re_data_var)) / np.mean(re_data)
+            re_data_var = [re_data[i + 2] - 2.0 * re_data[i + 1] + re_data[i] for i in range(len(re_data) - 2)]
+            self.variation_parameter = 100 * max(map(lambda x: abs(x), re_data_var))
         except:
             raise
             self.variation_parameter = 0
@@ -391,7 +398,7 @@ class MUFComplexModel(AsciiDataTable):
         ax1.tick_params('y', colors='b')
 
         ax2 = ax1.twinx()
-        ax2.plot(self["Frequency"], self["im"], 'r.')
+        ax2.plot(self["Frequency"], self["im"], 'r-')
         ax2.set_ylabel('Imaginary', color='r')
         ax2.tick_params('y', colors='r')
 
