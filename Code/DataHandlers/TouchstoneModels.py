@@ -1286,12 +1286,14 @@ class SNP(SNPBase):
                 raise TypeError("Cannot determine number of ports, please pass as number_ports=int")
             else:
                 # determine number of ports
-                if self.options["number_ports"] is not None:
-                    self.number_ports=self.options["number_ports"]
-                elif self.options["path"] is not None:
+
+                if self.options["path"] is not None:
                     self.number_ports=number_ports_from_file_name(self.options["path"])
                 elif file_path is not None:
                     self.number_ports=number_ports_from_file_name(file_path)
+        else:
+            self.number_ports = self.options["number_ports"]
+
         #self.number_ports = self.options["number_ports"]
         self.elements=['data','noiseparameter_data','comments','option_line']
         self.noiseparameter_data=[]
