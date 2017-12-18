@@ -562,9 +562,9 @@ class VNA(VisaInstrument):
         else:
             self.frequency_list = []
 
-    def initialize(self,**options):
+    def initialize(self, **options):
         """Intializes the system"""
-        defaults = {"reset":True}
+        defaults = {"reset": True}
         initialize_options = {}
         for key, value in defaults.iteritems():
             initialize_options[key] = value
@@ -778,16 +778,17 @@ class VNA(VisaInstrument):
         """Checks if the instrument is currently doing something and returns a boolean value"""
         opc = bool(self.resource.query("*OPC?"))
         return not opc
-    def clear_window(self,window=1):
+
+    def clear_window(self, window=1):
         """Clears the  window of traces. Does not delete the variables"""
-        string_response=self.query("DISPlay:WINDow{0}:CATalog?".format(window))
-        traces=string_response.split(",")
+        string_response = self.query("DISPlay:WINDow{0}:CATalog?".format(window))
+        traces = string_response.split(",")
         for trace in traces:
-            self.write("DISP:WIND{0}:TRAC{1}:DEL".format(window,trace))
+            self.write("DISP:WIND{0}:TRAC{1}:DEL".format(window, trace))
 
     def measure_switch_terms(self, **options):
         """Measures switch terms and returns a s2p table in forward and reverse format"""
-        defaults = {"view_trace":True}
+        defaults = {"view_trace": True}
         self.measure_switch_term_options = {}
         for key, value in defaults.iteritems():
             self.measure_switch_term_options[key] = value
@@ -800,7 +801,7 @@ class VNA(VisaInstrument):
         # Set the Channel to have 2 Traces
         self.write("CALC1:PAR:COUN 2")
         # Trace 1 This is port 2 or Forward Switch Terms
-        self.write("CALC1:PAR:DEF 'FWD',R2,1") # note this command is different for vector star A2,B2
+        self.write("CALC1:PAR:DEF 'FWD',R2,1")  # note this command is different for vector star A2,B2
         if self.measure_switch_term_options["view_trace"]:
             self.write("DISPlay:WINDow1:TRACe5:FEED 'FWD'")
         # Trace 2 This is port 1 or Reverse Switch Terms
@@ -918,6 +919,147 @@ class VNA(VisaInstrument):
         s2p = S2PV1(None, option_line=option_line, data=sparameter_data)
         s2p.change_frequency_units(self.frequency_units)
         return s2p
+
+    def initialize_w1p(self, **options):
+        """Intializes the system for w1p aquistion, default works for ZVA"""
+        defaults = {"reset": True, "port": 1, "b_name_list": ["A", "B", "C", "D"]}
+        initialize_options = {}
+        for key, value in defaults.iteritems():
+            initialize_options[key] = value
+        for key, value in options.iteritems():
+            initialize_options[key] = value
+        if initialize_options["reset"]:
+            self.write("SYST:FPRESET")
+        b_name = initialize_options["b_name_list"][initialize_options["port"] - 1]
+        self.write("DISPlay:WINDow1:STATE ON")
+        self.write("CALCulate:PARameter:DEFine 'A{0}_D{0}',R{0}".format(initialize_options["port"]))
+        self.write("DISPlay:WINDow1:TRACe1:FEED 'A{0}_D{0}'".format(initialize_options["port"]))
+        self.write("CALCulate:PARameter:DEFine 'B{0}_D{0}',{1}".format(initialize_options["port"],
+                                                                       b_name))
+        self.write("DISPlay:WINDow1:TRACe2:FEED 'B{0}_D{0}'".format(initialize_options["port"]))
+        self.sweep_type = self.get_sweep_type()
+        if re.search("LIN", self.sweep_type, re.IGNORECASE):
+            start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
+            stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
+            number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
+            self.frequency_list = np.linspace(start, stop, number_points).tolist()
+        elif re.search("LIN", self.sweep_type, re.IGNORECASE):
+            start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
+            stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
+            number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
+            logspace_start = np.log10(start)
+            logspace_stop = np.log10(stop)
+            self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
+                                                                                 num=number_points, base=10).tolist())
+        elif re.search("SEG", self.sweep_type, re.IGNORECASE):
+            number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
+            for i in range(number_segments):
+                start = float(self.query("SENS:SEGM{0}:FREQ:START?".format(i + 1)).replace("\n", ""))
+                stop = float(self.query("SENS:SEGM{0}:FREQ:STOP?".format(i + 1)).replace("\n", ""))
+                number_points = int(self.query("SENS:SEGM{0}:SWE:POIN?".format(i + 1)).replace("\n", ""))
+                step = (stop - start) / float(number_points - 1)
+                self.frequency_table.append({"start": start, "stop": stop,
+                                             "number_points": number_points, "step": step})
+                self.frequency_table = fix_segment_table(self.frequency_table)
+                frequency_list = []
+                for row in self.frequency_table[:]:
+                    new_list = np.linspace(row["start"], row["stop"], row["number_points"]).tolist()
+                    frequency_list = frequency_list + new_list
+                self.frequency_list = frequency_list
+        else:
+            self.frequency_list = []
+
+    def get_frequency_list(self):
+        "Returns the frequency list as read from the VNA"
+        self.sweep_type = self.get_sweep_type()
+        if re.search("LIN", self.sweep_type, re.IGNORECASE):
+            start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
+            stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
+            number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
+            self.frequency_list = np.linspace(start, stop, number_points).tolist()
+        elif re.search("LIN", self.sweep_type, re.IGNORECASE):
+            start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
+            stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
+            number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
+            logspace_start = np.log10(start)
+            logspace_stop = np.log10(stop)
+            self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
+                                                                                 num=number_points, base=10).tolist())
+        elif re.search("SEG", self.sweep_type, re.IGNORECASE):
+            number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
+            for i in range(number_segments):
+                start = float(self.query("SENS:SEGM{0}:FREQ:START?".format(i + 1)).replace("\n", ""))
+                stop = float(self.query("SENS:SEGM{0}:FREQ:STOP?".format(i + 1)).replace("\n", ""))
+                number_points = int(self.query("SENS:SEGM{0}:SWE:POIN?".format(i + 1)).replace("\n", ""))
+                step = (stop - start) / float(number_points - 1)
+                self.frequency_table.append({"start": start, "stop": stop,
+                                             "number_points": number_points, "step": step})
+                self.frequency_table = fix_segment_table(self.frequency_table)
+                frequency_list = []
+                for row in self.frequency_table[:]:
+                    new_list = np.linspace(row["start"], row["stop"], row["number_points"]).tolist()
+                    frequency_list = frequency_list + new_list
+                self.frequency_list = frequency_list
+        else:
+            self.frequency_list = []
+        return self.frequency_list[:]
+
+    def measure_w1p(self, **options):
+        """Triggers a single w1p measurement for a specified
+        port and returns a w1p object."""
+        defaults = {"trigger": "single", "port": 1, "b_name_list": ["A", "B", "C", "D"], "wnp_options": None}
+        self.measure_w1p_options = {}
+        for key, value in defaults.iteritems():
+            self.measure_w1p_options[key] = value
+        for key, value in options.iteritems():
+            self.measure_w1p_options[key] = value
+        if self.measure_w1p_options["trigger"] in ["single"]:
+            self.write("INITiate:CONTinuous OFF")
+            self.write("ABORT;INITiate:IMMediate;*wai")
+            # now go to sleep for the time to take the scan
+            time.sleep(len(self.frequency_list) * 2 / float(self.IFBW))
+
+        # wait for other functions to be completed
+        while self.is_busy():
+            time.sleep(.01)
+        # Set the format to ascii and set up sweep definitions
+        self.write('FORM:ASC,0')
+        # First get the A and Blists
+        self.write('CALC:PAR:SEL A{0}_D{0}'.format(self.measure_w1p_options["port"]))
+        self.write('CALC:FORM MLIN')
+        while self.is_busy():
+            time.sleep(.01)
+        a_string = self.query('CALC:DATA? SDATA')
+
+        self.write('CALC:PAR:SEL  B{0}_D{0}'.format(self.measure_w1p_options["port"]))
+        self.write('CALC:FORM MLIN')
+        while self.is_busy():
+            time.sleep(.01)
+        b_string = self.query('CALC:DATA? SDATA')
+        # String Parsing
+        a_list = a_string.replace("\n", "").split(",")
+        b_list = b_string.replace("\n", "").split(",")
+        # Construct a list of lists that is data in RI format
+        re_a = a_list[0::2]
+        im_a = a_list[1::2]
+        re_b = b_list[0::2]
+        im_b = b_list[1::2]
+        wparameter_data = []
+        for index, frequency in enumerate(self.frequency_list[:]):
+            new_row = [frequency / 10. ** 9,
+                       re_a[index], im_a[index],
+                       re_b[index], im_b[index]]
+            new_row = map(lambda x: float(x), new_row)
+            wparameter_data.append(new_row)
+        column_names = ["Frequency", "reA1_D1", "imA1_D1", "reB1_D1", "imB1_D1"]
+        # add some options here about auto saving
+        # do we want comment options?
+        options = {"column_names_begin_token": "!", "data_delimiter": "  ", "column_names": column_names,
+                   "data": wparameter_data, "specific_descriptor": "Wave_Parameters",
+                   "general_descriptor": "One_Port", "extension": "w1p"}
+        w1p = AsciiDataTable(None, **options)
+        return w1p
+
 
 #-------------------------------------------------------------------------------
 # Module Scripts

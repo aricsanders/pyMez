@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="DEFAULT_INSTRUMENT_STYLE.xsl"?>
+<!-- Written by Aric Sanders 04/2017 -->
+
+
+<Instrument>
+<!-- Information Specific To My ZVA110-->
+    <Specific_Information>
+        <Name>NRPPowerMeter</Name>
+        <Alias>RS_NRP_Power_Meter_4639_01</Alias>
+        <Location>Building 1, 4639</Location>
+        <Manual href="../Documentation/Manuals/RS_NRP2_Manual.pdf"/>
+        <Image href="./RS_NRP_Power_Meter_4639_01_Images/NRP.jpg"/>
+        <Price></Price>
+        <Serial></Serial>
+        <IDN>Rohde&amp;Schwarz,NRP,102508,06.01</IDN>
+        <Instrument_Type>GPIB</Instrument_Type>
+        <Instrument_Address>GPIB::14</Instrument_Address>
+        <Purchase_Date></Purchase_Date>
+        <NIST_Tag>935166</NIST_Tag>
+    </Specific_Information>
+<!-- Information Common To All NRP Power meters-->
+    <General_Information>
+    <Manufacturer>Rohde and Schwarz</Manufacturer>
+    <Manufacturer_Website href="https://www.rohde-schwarz.com/us/home_48230.html" />
+     <Commands_Description>
+        <Command>This is the command sent over the GPIB bus.</Command>
+        <Type>Whether or not it returns a value or just sets something.</Type>
+        <Argument>The parameter the command passes to the instrument. Optional parameters
+        are denoted with an *. The types of paramters are int=integer, float=floating point number,
+        string=string, and None=NULL.</Argument>
+        <Returns> What gets returned by the function. </Returns>
+        <Description>A one line describing the purpose of the function, for more detailed info look in the manual. </Description>
+    </Commands_Description>
+    <Commands>
+
+    </Commands>
+    <Command_Parameter_Definitions>
+
+    </Command_Parameter_Definitions>
+    <State_Commands>
+        <Tuple Set="SENS:FUNC" Query="SENS:FUNC?"/>
+        <Tuple Set="UNIT:POW" Query="UNIT:POW?"/>
+    </State_Commands>
+    </General_Information>
+	
+</Instrument>
+
+
