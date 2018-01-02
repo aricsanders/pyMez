@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>pyMeasure_Format_Handling</title>
+<title>pymez_Format_Handling</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11743,8 +11743,8 @@ div#notebook {
     </script>
     <!-- End of mathjax configuration --></head>
 <body>
-<a href="../../pyMeasure_Documentation.html">Documentation Home </a> |
-        <a href="../../pyMeasure/index.html">API Documentation </a> |
+<a href="../../pymez_Documentation.html">Documentation Home </a> |
+        <a href="../../pymez/index.html">API Documentation </a> |
         <a href="./Examples_Home.html">Examples</a> |
         <a href="../../Reference_Index.html">Index </a>  <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
@@ -11755,13 +11755,13 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a id="top"></a></p>
-<h1 id="pyMeasure-Format-Handling">pyMeasure Format Handling<a class="anchor-link" href="#pyMeasure-Format-Handling">&#182;</a></h1><p>This notebook documents some of the formats currently handled by the pyMeasure (backend library) and progress to integrate formats for data curration and analysis. The plan to promote interoperability is to create transformations linking these formats, all formats are imported using (10/2016)</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyMeasure</span>
+<h1 id="pymez-Format-Handling">pymez Format Handling<a class="anchor-link" href="#pymez-Format-Handling">&#182;</a></h1><p>This notebook documents some of the formats currently handled by the pymez (backend library) and progress to integrate formats for data curration and analysis. The plan to promote interoperability is to create transformations linking these formats, all formats are imported using (10/2016)</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pymez</span>
 </pre></div>
 <p>or</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMeasure</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pymez</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
-<p>to prevent the loading of the full pyMeasure application programming interface (API) add the folder pyMeasure to the sys.path variable and use</p>
+<p>to prevent the loading of the full pymez application programming interface (API) add the folder pymez to the sys.path variable and use</p>
 <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Code.DataHandlers.</span><span class="o">&lt;*</span><span class="n">Models</span><span class="o">&gt;</span> <span class="kn">import</span> <span class="o">&lt;</span><span class="n">Model</span> <span class="n">Name</span><span class="o">&gt;</span>
 <span class="c1"># example</span>
 <span class="kn">from</span> <span class="nn">Code.DataHandlers.TouchstoneModels</span> <span class="kn">import</span> <span class="n">SNP</span>
@@ -11808,18 +11808,18 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>All of the classes to handle these formats can be found at pyMeasure.Code.DataHandlers.NISTModels
+<p>All of the classes to handle these formats can be found at pymez.Code.DataHandlers.NISTModels
  <ol>
  <li>Raw Ascii Formats</li>
  These formats are a result of transforming files saved as BDAT data files using Ron Ginley's Converter (modified Calrep) HP Basic program. The summation of these files currently form the history tables for the check standard database.
  <ol>
- <li> pyMeasure:class:OnePortRawModel </li>
+ <li> pymez:class:OnePortRawModel </li>
  Model that deals with one-port raw measurements, currently this is restricted to checkstandard data but could be expanded to include raw one port measurements of customer data.
- <li> pyMeasure:class:TwoPortRawModel</li>
+ <li> pymez:class:TwoPortRawModel</li>
   Model that deals with two-port raw measurements, currently this is restricted to checkstandard data but could be expanded to include raw one port measurements of customer data.
- <li> pyMeasure:class:TwoPortNRRawModel</li>
+ <li> pymez:class:TwoPortNRRawModel</li>
    Model that deals with two-port non-reciprocal raw measurements, currently this is restricted to checkstandard data but could be expanded to include raw one port measurements of customer data.
-  <li> pyMeasure:class:PowerRawModel </li>
+  <li> pymez:class:PowerRawModel </li>
      Model that deals with power raw measurements, currently this is restricted to checkstandard data but could be expanded to include raw one port measurements of customer data.
    <li> Conversion to a CSV table and inclusion of SAS database</li>
    Data before ~2002 was stored in a summarized form in a SAS based database. It has been added to the history file using the script found in <a href="./Sparameter_Power_Data_Transformation_20160502_001.html"> Sparameter_Power_Data_Transformation_20160502_001.html </a>, there is currently an error with the columns known as correction factor and KP ( I have joined them, but they are not the same KP has Gamma in it)
@@ -11827,13 +11827,13 @@ div#notebook {
   <li>Data Formats Processed With Calrep</li>
  These formats are a result ruinning Calrep on a set of raw files to produce a measurement with uncertainty. These formats are saved as .asc files, .dut or as tables with a,b,c appended to the device name and .txt extension. All of the above are currently handled. They typically live in the ascii.dut folder in the impedance drive.There are files with sm in the name that are not raw and not fully analyzed for the calorimeter, these are not currently handled. 
  <ol>
- <li> pyMeasure:class:OnePortCalrepModel </li>
+ <li> pymez:class:OnePortCalrepModel </li>
  Model that deals with analyzed one-port measurements, currently this handles  .asc file and if the directory is the same any file in the a,b,c table format. The .asc file format is prefered due to the inclusion of an analysis date. 
-  <li> pyMeasure:class:OnePortDUTModel </li>
+  <li> pymez:class:OnePortDUTModel </li>
  Model that deals with analyzed one-port measurements, currently this handles .dut files. It was added to search for one port gamma measurements that will be loaded to a direct comparision system. 
- <li> pyMeasure:class:TwoPortCalrepModel</li>
+ <li> pymez:class:TwoPortCalrepModel</li>
  Model that deals with analyzed one-port measurements, currently this handles  .asc files and if the directory is the same any file in the a,b,c table format. The .asc file format is prefered due to the inclusion of an analysis date.
-  <li> pyMeasure:class:PowerCalrepModel </li>
+  <li> pymez:class:PowerCalrepModel </li>
  Model that deals with analyzed one-port measurements, currently this handles  .asc files and if the directory is the same any file in the a,b,c table format. The .asc file format is prefered due to the inclusion of an analysis date. This actually deals with both types of power formats, ones with 4 error components and ones with three.
    <li> Conversion to a CSV table and inclusion of SAS database</li>
 A script that walks through a directory tree and adds all files to a single database file (currently csv format) can be found in  <a href="./Sparameter_Power_Data_Transformation_20160502_001.html"> Sparameter_Power_Data_Transformation_20160502_001.html </a>.
@@ -11864,7 +11864,7 @@ A script that walks through a directory tree and adds all files to a single data
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>These classes deal with file formats that materials and on-wafer experiments have developed in parallel. The classes are spread out during development into pyMeasure.Code.DataHandlers.NISTModels, pyMeasure.Code.DataHandlers.TouchstoneModels and pyMeasure.Code.DataHandlers.RadiCALModels but may later be combined. Currently there are 3 basic formats, the ascii table format used to store data from the experiment, that data converted into s2p and the output from the radical program.</p>
+<p>These classes deal with file formats that materials and on-wafer experiments have developed in parallel. The classes are spread out during development into pymez.Code.DataHandlers.NISTModels, pymez.Code.DataHandlers.TouchstoneModels and pymez.Code.DataHandlers.RadiCALModels but may later be combined. Currently there are 3 basic formats, the ascii table format used to store data from the experiment, that data converted into s2p and the output from the radical program.</p>
 
 </div>
 </div>
@@ -11876,9 +11876,9 @@ A script that walks through a directory tree and adds all files to a single data
 <div class="text_cell_render border-box-sizing rendered_html">
 <ol>
 <li> Raw Ascii Formated Data </li>
-The class to handle this is pyMeasure:class:JBSparameter . This class does not yet a formated metadata handler, because the format has drifted over time and some metadata is not uniform. There is a conversion in translations to s2p.
+The class to handle this is pymez:class:JBSparameter . This class does not yet a formated metadata handler, because the format has drifted over time and some metadata is not uniform. There is a conversion in translations to s2p.
 <li> Radical Data</li>
-Radical data is stored in a single .mat file after processing. This file if saved in V7.3 is actually an hd5 file, and can be opened with the h5py package. However, the format stores the matlab type cell in a convoluted way and has to be extracted carefully. The model to process these files for data archiving is pyMeasure:class:RadicalDataModel, and is incomplete. It does currently have automatic retreival and conversion for calibrated and unclaibrated_short, calibrated and unclaibrated_Rs, calibrated_DUT, the frequency vector. All the other information is imported but not re organized or converted.
+Radical data is stored in a single .mat file after processing. This file if saved in V7.3 is actually an hd5 file, and can be opened with the h5py package. However, the format stores the matlab type cell in a convoluted way and has to be extracted carefully. The model to process these files for data archiving is pymez:class:RadicalDataModel, and is incomplete. It does currently have automatic retreival and conversion for calibrated and unclaibrated_short, calibrated and unclaibrated_Rs, calibrated_DUT, the frequency vector. All the other information is imported but not re organized or converted.
 <li> s2p see <a href="#touchstone">Touchstone</a> </li>
 </ol>
 </div>
@@ -11901,17 +11901,17 @@ Radical data is stored in a single .mat file after processing. This file if save
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>StatistiCAL is a program to create calibrations and uncertainties for calibrations for two-port measurements. pyMeasure has both a COM (Common Object Model) wrapper for the program and a series of classes to deal with the files that statistiCAL requires to run and outputs</p>
+<p>StatistiCAL is a program to create calibrations and uncertainties for calibrations for two-port measurements. pymez has both a COM (Common Object Model) wrapper for the program and a series of classes to deal with the files that statistiCAL requires to run and outputs</p>
 <ol>
 <li> The StatistiCAL wrapper </li>
-pyMeasure:class:StatistiCALWrapper provides a python wrapper for the statistiCAL program. It can open a menu, run a calibration and save resulting files. StatistiCAL must be already installed.
-<li> pyMeasure:class:StatistiCALMenuModel </li>
+pymez:class:StatistiCALWrapper provides a python wrapper for the statistiCAL program. It can open a menu, run a calibration and save resulting files. StatistiCAL must be already installed.
+<li> pymez:class:StatistiCALMenuModel </li>
 A class for dealing with StatistiCAL Menus. It supports printing,saving, clearing DUTS, and other manipulations of the menu. It needs to have a change_file_directories() method that rewrites all files to a selected directory.
-<li> pyMeasure:class:TwelveTermErrorModel </li>
-A class for using the 12 term VNA calibration coefficients output by statistiCAL. It lives in pyMeasure.Code.DataHandlers.NISTModels, in the anticipation that other programs may output this format. It provides an attribute complex_data that is used in corrections
-<li> pyMeasure:class:StatistiCALSolutionModel </li>
+<li> pymez:class:TwelveTermErrorModel </li>
+A class for using the 12 term VNA calibration coefficients output by statistiCAL. It lives in pymez.Code.DataHandlers.NISTModels, in the anticipation that other programs may output this format. It provides an attribute complex_data that is used in corrections
+<li> pymez:class:StatistiCALSolutionModel </li>
 A class for opening and manipulation the "Solution_Plus.txt" files generated by StatistiCAL. These files contain a large amount of information, but are used primarly for the 8-term error correction inside. This model provides the attribute eight_term_correction, a list of complex numbers and a frequency, which varies on intialization based on the option reciprocal=(True or False).
-<li> The four port error adapter can be opened and used for correction using pyMeasure:class:SNP, by acessing the attribute sparameter_complex see <a href="#touchstone">Touchstone</a> </li>
+<li> The four port error adapter can be opened and used for correction using pymez:class:SNP, by acessing the attribute sparameter_complex see <a href="#touchstone">Touchstone</a> </li>
 </ol>
 </div>
 </div>
@@ -11936,7 +11936,7 @@ A class for opening and manipulation the "Solution_Plus.txt" files generated by 
 <p>The Microwave Uncertainty Framework is a program written by Dylan Williams to create Monte Carlo based uncertainites on VNA based measurements. It is written using VB.NET and can be accessed at a base level by using the package pythonnet, in addition it has several data formats that can be seperated by type. The first type are XML based menu formats that populate the GUI used to manipulate them (.vnauncert,.meas for example) the next type are ascii formats with extensions to denote the type of information they hold (.eps,.iso,.switch) and finally the other types are of the touchstone family (<a href="#touchstone">Touchstone</a> &lt;/li&gt;) Currently the DataHandlers are being written to match the logic and meaning of the file formats, but all the formats can be acessed through the base classes.</p>
 <ol>
 <li> XML Based Menus </li>
-pyMeasure:class:XMLBase, need to extend this class to handle the particulars of the XML menus. To remotely operate the MUF we can manipulate the XML or run the program directly
+pymez:class:XMLBase, need to extend this class to handle the particulars of the XML menus. To remotely operate the MUF we can manipulate the XML or run the program directly
 <li> Ascii Based Formats </li>
 This should be an extension of AsciiDataTable with an appropriate __read_and_fix__. By using the AsciiDataTable class we will have a record of the metadata in the form of a schema
 <li> SNP file types (s2p,s4p) </li>
@@ -11963,17 +11963,17 @@ The error adapter is of type S4p and the results files are stored as directories
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a href="http://cp.literature.agilent.com/litweb/pdf/genesys200801/sim/linear_sim/sparams/touchstone_file_format.htm">Touchstone</a> is a series of formats for saving s-parameters and related data for network analyzer measurements. It is an ascii based format that can have several extensions associated with it. For a number of given number of ports it may have the file extension .snp where n is the number of ports. The most common extension is s2p, but other port numbers can exist and .ts can also represent a touchstone file of unknown port number.
-There are 2 versions of touchstone files, however version 1 is much more prevelent and currently all support in pyMeasure is based on version 1. All models that handle touchstone files can be found in pyMeasure.Code.DataHandlers.TouchstoneModels</p>
+There are 2 versions of touchstone files, however version 1 is much more prevelent and currently all support in pymez is based on version 1. All models that handle touchstone files can be found in pymez.Code.DataHandlers.TouchstoneModels</p>
 <ol>
 <li> General SNP files (ports 1-100) </li>
-pyMeasure:class:SNP handles all snp files that do not have noise parameters stored along with S-parameters. This general handler supports plotting, saving, printing, changing the format between (RI,DB, and MA), and changing the frequency units. It also handles comments properly. It has been tested with .s1p,s2p,s3p and s4p.
+pymez:class:SNP handles all snp files that do not have noise parameters stored along with S-parameters. This general handler supports plotting, saving, printing, changing the format between (RI,DB, and MA), and changing the frequency units. It also handles comments properly. It has been tested with .s1p,s2p,s3p and s4p.
 
 
 <li> The special case S2P </li>
-pyMeasure:class:S2PV1 handles s2p with noise parameters included.  
+pymez:class:S2PV1 handles s2p with noise parameters included.  
 
 <li> The special case S1PV1 </li>
-pyMeasure:class:S2PV1 handles s2p with noise parameters included.  
+pymez:class:S2PV1 handles s2p with noise parameters included.  
 </ol>
 </div>
 </div>
@@ -11995,22 +11995,22 @@ pyMeasure:class:S2PV1 handles s2p with noise parameters included.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>One of the primary ways to create a project file with a very portable GUI is to create an XML file and use XSLT to transform the data to a HTML page. This allows a lot of flexibility and a nice way to integrate it into CALNET as such there are XML models that represent Logs, InstrumentStates, DataTables, and a whole host of other files following specific patterns. Currently the test website displays data as interactive by reading it using the appropriate model, transforming it to a similar XML model, then transforming it to HTML using a XLST transform. All XMLModels are currently found in the module pyMeasure.Code.DataHandlers.XMLModels and the XSL (style sheets that transform the XML) can be found in folder pyMeasure/Code/DataHandlers/XSL</p>
+<p>One of the primary ways to create a project file with a very portable GUI is to create an XML file and use XSLT to transform the data to a HTML page. This allows a lot of flexibility and a nice way to integrate it into CALNET as such there are XML models that represent Logs, InstrumentStates, DataTables, and a whole host of other files following specific patterns. Currently the test website displays data as interactive by reading it using the appropriate model, transforming it to a similar XML model, then transforming it to HTML using a XLST transform. All XMLModels are currently found in the module pymez.Code.DataHandlers.XMLModels and the XSL (style sheets that transform the XML) can be found in folder pymez/Code/DataHandlers/XSL</p>
 <p><ol></p>
-<p><li> pyMeasure:class:XMLBase </li>
+<p><li> pymez:class:XMLBase </li>
 A cparent class that deals with general XML files. It supports printing, transforming to HTML, saving and other general manipulations</p>
-<p><li> pyMeasure:class:XMLLog </li>
-An XML log that supports a date, entry structure. It has attributes and methods that make it ready for integration into a GUI that is not HTML based. In addition there are several models that are the children of this model, pyMeasure:class:ChangeXMLLog,pyMeasure:class:EndOfDayXMLLog,pyMeasure:class:ErrorXMLLog and pyMeasure:class:ServiceXMLLog
-meant to be more specific instances of pyMeasure:class:XMLLog</p>
-<p><li> pyMeasure:class:DataTable </li>
+<p><li> pymez:class:XMLLog </li>
+An XML log that supports a date, entry structure. It has attributes and methods that make it ready for integration into a GUI that is not HTML based. In addition there are several models that are the children of this model, pymez:class:ChangeXMLLog,pymez:class:EndOfDayXMLLog,pymez:class:ErrorXMLLog and pymez:class:ServiceXMLLog
+meant to be more specific instances of pymez:class:XMLLog</p>
+<p><li> pymez:class:DataTable </li>
 The primary class for transforming Ascii based data tables to XML based data tables. It should be noted that the MUF uses a very similar algorithm when mapping s2p to XML (it just has slightly different tag and attribute names). This should be renamed.</p>
-<p><li> pyMeasure:class:FileRegister </li>
+<p><li> pymez:class:FileRegister </li>
 Class meant to hold a list of files and some information about their location. This forms an entity list for a specific ECPV pattern known as an arbitrary data base, or a list of files and metadata on those files. This should be renamed.</p>
-<p><li> pyMeasure:class:Metadata </li> 
+<p><li> pymez:class:Metadata </li> 
 Class that holds the metadata descriptions for an arbitrary database. This should be renamed.</p>
-<p><li>  pyMeasure:class:InstrumentSheet </li>
+<p><li>  pymez:class:InstrumentSheet </li>
 XML model for holding information about an instrument, used by instrument control to specify basic information</p>
-<p><li>  pyMeasure:class:InstrumentState </li>
+<p><li>  pymez:class:InstrumentState </li>
 XML model for holding instrument states for GPIB devices</p>
 
 </div>
@@ -12033,13 +12033,13 @@ XML model for holding instrument states for GPIB devices</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>One of the most important themes in both pyMeasure and Calnet is the creation and management of "projects" or collections of files with a description of that collection. Most programs do this implicitly, but it is our goal to make this explicit so that we can exchange data between users and programs effectively. There are several strategies for creating projects the ones that pyMeasure will focus on are:</p>
+<p>One of the most important themes in both pymez and Calnet is the creation and management of "projects" or collections of files with a description of that collection. Most programs do this implicitly, but it is our goal to make this explicit so that we can exchange data between users and programs effectively. There are several strategies for creating projects the ones that pymez will focus on are:</p>
 <p><ol></p>
 <p><li>Arbitrary Database Based Projects</li>
-This type of project lets the directory structure of the file system handle the files and really relies on a registry of file and a description of those files to do its buisness. The descriptions of the files can be thought of as an instance of a closed Encyclopedia, and the registry a Enitity Table (In the ECPV framework). pyMeasure:class:FileRegister and pyMeasure:class:Metadata are designed to handle these</p>
+This type of project lets the directory structure of the file system handle the files and really relies on a registry of file and a description of those files to do its buisness. The descriptions of the files can be thought of as an instance of a closed Encyclopedia, and the registry a Enitity Table (In the ECPV framework). pymez:class:FileRegister and pymez:class:Metadata are designed to handle these</p>
 <p><li>ZIP based projects</li> 
 Similar to an Arbitrary Database Based Project but with all the files collected, compressed and saved into a single file.
-pyMeasure.Code.DataHandlers.ZipModels, in particular pyMeasure:class:ZipArchive is designed to handle these. It should be noted that objects that have can display as a string can be saved into an archive without saving them to disk first.</p>
+pymez.Code.DataHandlers.ZipModels, in particular pymez:class:ZipArchive is designed to handle these. It should be noted that objects that have can display as a string can be saved into an archive without saving them to disk first.</p>
 <p><li> XML Based Projects </li>
 All the data in a project can be cast into XML and distrubuted that way. This is the principal behind the MUF archive data formats and is handy for transformation into HTML of very complex heterogenous data types. The basic idea would be to transform the constituents of the project into XML, join them and then define a XSL that transforms them into a HTML page. The UI for the checkstandard web interface will work this way.</p>
 <p><li>Binary Projects</li>
@@ -12065,7 +12065,7 @@ For those projects that are desired to be saved in Binary for processing speed, 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>One of the most popular ways to store data is to create a Ascii file with a header followed by a set of columns and potentially a footer. This general data pattern along with options for delimters and other seperators is found in pyMeasure.Code.DataHandlers.GeneralModels. The primary class is pyMeasure:class:AsciiDataTable and gives the user the ability to save an ad-hoc schema by pickling (python specific saving) the options. Most of the classes for sparameter/power are derived from this class. Touchstone models have a slightly different format (they  can save the data for a single frequency in multiple rows or have a different type of data present) so they inherit from a different base class. The AsciiDataTable is fairly general and can handle different data types, headers with different structures and changing units along with saving in different formats and retrieving and printing different logical units.
+<p>One of the most popular ways to store data is to create a Ascii file with a header followed by a set of columns and potentially a footer. This general data pattern along with options for delimters and other seperators is found in pymez.Code.DataHandlers.GeneralModels. The primary class is pymez:class:AsciiDataTable and gives the user the ability to save an ad-hoc schema by pickling (python specific saving) the options. Most of the classes for sparameter/power are derived from this class. Touchstone models have a slightly different format (they  can save the data for a single frequency in multiple rows or have a different type of data present) so they inherit from a different base class. The AsciiDataTable is fairly general and can handle different data types, headers with different structures and changing units along with saving in different formats and retrieving and printing different logical units.
 This class needs to be updated with more ways to save the schema and more robust error handling. In addition an algorithm to guess at the format would be very useful. The rectangular portion of this object (data attribute) can easily be converted to many different formats (excell, csv, matlab, hd5) however the header must have a structure specified to be parsed as anything other than text.</p>
 
 </div>
@@ -12088,7 +12088,7 @@ This class needs to be updated with more ways to save the schema and more robust
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Django is the python web framework of choice for CALNET and the Checkstandard database. It uses pyMeasure to analyze and track data. A django model is a specific data model that is directly cast into an SQL complient database such as Sqlite or MySQL. The models therefore shadow SQL column modelling and have attributes that are columns with the type specified by the class definition. Certain models are converted directly to these types and then stored inside of the website's database. There is a module pyMeasure.Code.DataHandlers.AbstractDjangoModules that stores basic patterns for reuse. Currently UserFile is the most important of these.</p>
+<p>Django is the python web framework of choice for CALNET and the Checkstandard database. It uses pymez to analyze and track data. A django model is a specific data model that is directly cast into an SQL complient database such as Sqlite or MySQL. The models therefore shadow SQL column modelling and have attributes that are columns with the type specified by the class definition. Certain models are converted directly to these types and then stored inside of the website's database. There is a module pymez.Code.DataHandlers.AbstractDjangoModules that stores basic patterns for reuse. Currently UserFile is the most important of these.</p>
 
 </div>
 </div>
@@ -12132,7 +12132,7 @@ This class needs to be updated with more ways to save the schema and more robust
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The guiding principal for pyMeasure will be one of data transformations and not a single data format. The transformations will follow a network approach that emphasizes formats that holds the same content as network nodes and the transformation as edges. Anytime content is changed it can be thought of as an off of graph transformation (jump). The basic data patterns that will have graphs defined are</p>
+<p>The guiding principal for pymez will be one of data transformations and not a single data format. The transformations will follow a network approach that emphasizes formats that holds the same content as network nodes and the transformation as edges. Anytime content is changed it can be thought of as an off of graph transformation (jump). The basic data patterns that will have graphs defined are</p>
 <ol>
 <li> string (already defined)</li>
 <li> rectangular data table </li>
