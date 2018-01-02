@@ -20,16 +20,22 @@ REPLACE_VALUE="pyMez"
 #-----------------------------------------------------------------------------
 # Module Functions
 def replace_all(top_directory):
-    """Tries to replace all occurances of ORIGINAL_TEXT with REPLACE_VALUE"""
+    """Tries to replace all occurances of ORIGINAL_TEXT with REPLACE_VALUE,
+    do not run it on the git directories it corrupts the index"""
     for directory, dirnames, filenames in os.walk(top_directory):
         for filename in filenames:
-            infile=open(os.path.join(directory,filename),"r")
-            infile_contents=infile.read()
-            infile_contents=infile_contents.replace(ORIGINAL_TEXT,REPLACE_VALUE)
-            infile.close()
-            out_file=open(os.path.join(directory,filename),"w")
-            out_file.write(infile_contents)
-            out_file.close()
+            try:
+                if re.search("git|idea",directory):
+                    raise
+                infile=open(os.path.join(directory,filename),"r")
+                infile_contents=infile.read()
+                infile_contents=infile_contents.replace(ORIGINAL_TEXT,REPLACE_VALUE)
+                infile.close()
+                out_file=open(os.path.join(directory,filename),"w")
+                out_file.write(infile_contents)
+                out_file.close()
+            except:
+                print("Could not replace term in file {0}".format(os.path.join(directory,filename)))
 #-----------------------------------------------------------------------------
 # Module Classes
 

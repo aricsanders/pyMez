@@ -1,8 +1,8 @@
 """
-pyMeasure is an open source package for scientific data handling, analysis and acquisition. By loading the pyMeasure
-package with the from pyMeasure import * style, the user gets the designed API with finished functionality. The
-pyMeasure library itself has other helper modules that are directly accessible by importing them in the standard
-fashion (from pyMeasure.Code.Subpackage.Module import class_or_function). For clarity purposes the pyMeasure
+pyMez is an open source package for scientific data handling, analysis and acquisition. By loading the pyMez
+package with the from pyMez import * style, the user gets the designed API with finished functionality. The
+pyMez library itself has other helper modules that are directly accessible by importing them in the standard
+fashion (from pyMez.Code.Subpackage.Module import class_or_function). For clarity purposes the pyMez
 package importer (this file) has a constant VERBOSE_IMPORT = True that prints a list of each of the packages as it is
 imported. To change the imported API, change the dictionary API_MODULES to have an entry
 API_MODULE["Code.Subpackage.Module"]=True
@@ -12,7 +12,7 @@ Designed by Aric Sanders 2016
  Examples
 --------
     #!python
-    >>from pyMeasure import *
+    >>from pyMez import *
     >>test_AdvancedInterfaceFrame()
 
  <h3><a href="../Examples/html/Examples_Home.html">All Examples</a></h3>
@@ -23,7 +23,7 @@ Requirements
 + [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
 + [lxml](http://lxml.de/)
 + [types](https://docs.python.org/2/library/types.html)
-+ [pyMeasure](https://github.com/aricsanders/pyMeasure)
++ [pyMez](https://github.com/aricsanders/pyMez)
 + [xml](https://docs.python.org/2/library/xml.html)
 + [datetime](https://docs.python.org/2/library/datetime.html)
 + [urlparse](https://docs.python.org/2/library/urlparse.html)
@@ -37,7 +37,7 @@ Requirements
 Help
 ---------------
 <div>
-<a href="../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../pyMez_Documentation.html">Documentation Home</a> |
 <a href="./index.html">API Documentation Home</a> |
 <a href="../Examples/html/Examples_Home.html">Examples Home</a> |
 <a href="../Reference_Index.html">Index</a>
@@ -52,7 +52,7 @@ VERBOSE_IMPORT=False
 TIMED_IMPORT=False
 
 "Constant that determines if import statements are echoed to output"
-# control the modules loaded in the API, this should be included in a pyMeasure Settings file
+# control the modules loaded in the API, this should be included in a pyMez Settings file
 # The new module load scheme can be for module in API_MODULES.keys()
 API_MODULES={"Code.Utils.Names":True,
              "Code.Utils.Alias":False,
@@ -61,7 +61,7 @@ API_MODULES={"Code.Utils.Names":True,
              "Code.Utils.HelpUtils":False,
              "Code.Utils.HPBasicUtils":False,
              "Code.Utils.PerformanceUtils":False,
-             "Code.Utils.pyMeasureUnitTest":False,
+             "Code.Utils.pyMezUnitTest":False,
              "Code.DataHandlers.AbstractDjangoModels":False,
              "Code.DataHandlers.GeneralModels":True,
              "Code.DataHandlers.GraphModels":True,
@@ -110,7 +110,7 @@ if TIMED_IMPORT:
     import datetime
     first_timer=datetime.datetime.utcnow()
     start_timer=datetime.datetime.utcnow()
-print("Importing pyMeasure, this should take roughly 30 seconds")
+print("Importing pyMez, this should take roughly 30 seconds")
 for module in sorted(API_MODULES.keys()):
     if API_MODULES[module]:
         if VERBOSE_IMPORT:
