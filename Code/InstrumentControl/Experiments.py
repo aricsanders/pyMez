@@ -14,6 +14,7 @@ import os
 import time
 import datetime
 import sys
+from types import *
 
 #-------------------------------------------------------------------------------
 # Third Party Imports
@@ -185,8 +186,62 @@ class KeithleyIV():
             voltage_list.append(float(data['Voltage']))
             current_list.append(float(data['Current']))
         [a,b,ar,br,err]=stats.linregress(voltage_list,current_list)
-        self.resistance=1/a     
-             
+        self.resistance=1/a
+
+
+class LSNACalibration():
+    """The LSNA Calibration requires the measurement of a calibrated power meter, a linear scattering
+    parameter calibration,  and the measurement of a phase reference. The calibration frequency grid should be larger
+    and more dense than the ultimate measurement frequency grid. This experiment assumes a power meter with a power
+    detector, and a VNA with the capability of measuring wave parameters. """
+    def __init__(self,**options):
+        "Intializes the experiment. Options include directory, power_meter, vna .."
+        defaults = {"reset": True,
+                    "port": 1,
+                    "b_name_list": ["A", "B", "C", "D"],
+                    "source_port":1,
+                    "power_meter":"NRPPowerMeter",
+                    "vna":"ZVA",
+                    "directory":os.getcwd(),
+                    "zip_all":True,
+                    "diagnostic_mode":False,
+                    "track_history":True,
+
+                    }
+        self.options = {}
+        for key, value in defaults.iteritems():
+            self.options[key] = value
+        for key, value in options.iteritems():
+            self.options[key] = value
+        # if the user passes a string then create an instrument, else assume it is some visa type with write and query
+
+        if self.options["diagnostic_mode"]:
+            self.vna = Code.InstrumentControl.FakeInstrument(self.options["vna"])
+        elif type(self.options["vna"]) is StringType:
+            self.vna=Code.InstrumentControl.VNA(self.options["vna"])
+        else:
+            self.vna=self.options["vna"]
+        if self.options["diagnostic_mode"]:
+            self.pm=Code.InstrumentControl.FakeInstrument(self.options["power_meter"])
+        elif type(self.options["power_meter"]) is StringType:
+            self.pm=Code.InstrumentControl.VisaInstrument(self.options["power_meter"])
+        else:
+            self.pm=self.options["power_meter"]
+
+
+
+
+    def measure_power_calibration(self,**options):
+        """Measures the power calibration. Begin by zeroing the meter with no input and then
+        connect to the port of interest."""
+        pass
+    def measure_harmonic_phase_reference(self,**options):
+        pass
+    def create_MUF_vnauncert(self,**options):
+        pass
+    def set_calibration_frequency_grid(self):
+        """Sets the calibration frequency grid for all measurements. """
+        pass
 #-------------------------------------------------------------------------------
 # Module Scripts
 

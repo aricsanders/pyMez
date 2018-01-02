@@ -919,10 +919,62 @@ class VNA(VisaInstrument):
         s2p = S2PV1(None, option_line=option_line, data=sparameter_data)
         s2p.change_frequency_units(self.frequency_units)
         return s2p
+    def initialize_w2p(self,**options):
+        """Initializes the system for w2p acquisition"""
+        defaults = {"reset": True, "port1": 1,"port2":2, "b_name_list": ["A", "B", "C", "D"]}
+        initialize_options = {}
+        for key, value in defaults.iteritems():
+            initialize_options[key] = value
+        for key, value in options.iteritems():
+            initialize_options[key] = value
+        if initialize_options["reset"]:
+            self.write("SYST:FPRESET")
+        b1_name = initialize_options["b_name_list"][initialize_options["port1"] - 1]
+        b2_name= initialize_options["b_name_list"][initialize_options["port2"] - 1]
+        # Initialize Port 1 traces A1_D1,B1_D1,B2_D1
+        self.write("DISPlay:WINDow1:STATE ON")
+        self.write("CALCulate:PARameter:DEFine 'A{0}_D{0}',R{0},{0}".format(initialize_options["port1"]))
+        self.write("DISPlay:WINDow1:TRACe1:FEED 'A{0}_D{0}'".format(initialize_options["port1"]))
+        self.write("CALCulate:PARameter:DEFine 'B{0}_D{0}',{1},{0}".format(initialize_options["port1"],b1_name))
+        self.write("DISPlay:WINDow1:TRACe2:FEED 'B{0}_D{0}'".format(initialize_options["port1"]))
+        self.write("CALCulate:PARameter:DEFine 'A{1}_D{0}',R{1},{0}".format(initialize_options["port1"],
+                                                                            initialize_options["port2"] ))
+        self.write("DISPlay:WINDow1:TRACe3:FEED 'A{1}_D{0}'".format(initialize_options["port1"],
+                                                                    initialize_options["port2"]))
+
+        self.write("CALCulate:PARameter:DEFine 'B{1}_D{0}',{2},{0}".format(initialize_options["port1"],
+                                                                           initialize_options["port2"],
+                                                                           b2_name))
+        self.write("DISPlay:WINDow1:TRACe4:FEED 'B{1}_D{0}'".format(initialize_options["port1"],
+                                                                           initialize_options["port2"]))
+        # Initialize Port 2 Traces A1_D2,B1_D2,
+
+        self.write("CALCulate:PARameter:DEFine 'A{0}_D{1}',R{0},{1}".format(initialize_options["port1"],
+                                                                            initialize_options["port2"] ))
+        self.write("DISPlay:WINDow1:TRACe5:FEED 'A{0}_D{1}'".format(initialize_options["port1"],
+                                                                    initialize_options["port2"]))
+        self.write("CALCulate:PARameter:DEFine 'B{0}_D{1}',{2},{1}".format(initialize_options["port1"],
+                                                                           initialize_options["port2"],
+                                                                           b1_name))
+        self.write("DISPlay:WINDow1:TRACe6:FEED 'B{0}_D{1}'".format(initialize_options["port1"],
+                                                                    initialize_options["port2"]))
+
+
+        self.write("CALCulate:PARameter:DEFine 'A{1}_D{1}',R{1},{1}".format(initialize_options["port1"],
+                                                                            initialize_options["port2"] ))
+        self.write("DISPlay:WINDow1:TRACe7:FEED 'A{1}_D{1}'".format(initialize_options["port1"],
+                                                                    initialize_options["port2"]))
+        self.write("CALCulate:PARameter:DEFine 'B{1}_D{1}',{2},{1}".format(initialize_options["port1"],
+                                                                           initialize_options["port2"],
+                                                                           b2_name))
+        self.write("DISPlay:WINDow1:TRACe8:FEED 'B{1}_D{1}'".format(initialize_options["port1"],
+                                                                    initialize_options["port2"]))
+        self.sweep_type = self.get_sweep_type()
+        self.frequency_list=self.get_frequency_list()
 
     def initialize_w1p(self, **options):
-        """Intializes the system for w1p aquistion, default works for ZVA"""
-        defaults = {"reset": True, "port": 1, "b_name_list": ["A", "B", "C", "D"]}
+        """Initializes the system for w1p acquisition, default works for ZVA"""
+        defaults = {"reset": True, "port": 1, "b_name_list": ["A", "B", "C", "D"],"source_port":1}
         initialize_options = {}
         for key, value in defaults.iteritems():
             initialize_options[key] = value
@@ -1007,7 +1059,9 @@ class VNA(VisaInstrument):
     def measure_w1p(self, **options):
         """Triggers a single w1p measurement for a specified
         port and returns a w1p object."""
-        defaults = {"trigger": "single", "port": 1, "b_name_list": ["A", "B", "C", "D"], "wnp_options": None}
+        defaults = {"trigger": "single", "port": 1,
+                    "b_name_list": ["A", "B", "C", "D"],
+                    "w1p_options": None}
         self.measure_w1p_options = {}
         for key, value in defaults.iteritems():
             self.measure_w1p_options[key] = value
@@ -1057,10 +1111,93 @@ class VNA(VisaInstrument):
         options = {"column_names_begin_token": "!", "data_delimiter": "  ", "column_names": column_names,
                    "data": wparameter_data, "specific_descriptor": "Wave_Parameters",
                    "general_descriptor": "One_Port", "extension": "w1p"}
+        if self.measure_w1p_options["w1p_options"]:
+            for key,value in self.measure_w1p_options["w1p_options"].iteritems():
+                options[key]=value
         w1p = AsciiDataTable(None, **options)
         return w1p
 
+    def measure_w2p(self, **options):
+        """Triggers a single w2p measurement for a specified
+        port and returns a w2p object."""
+        defaults = {"trigger": "single", "port1": 1,"port2":2,
+                    "b_name_list": ["A", "B", "C", "D"],
+                    "w2p_options": None}
+        self.measure_w2p_options = {}
+        for key, value in defaults.iteritems():
+            self.measure_w2p_options[key] = value
+        for key, value in options.iteritems():
+            self.measure_w2p_options[key] = value
+        if self.measure_w2p_options["trigger"] in ["single"]:
+            self.write("INITiate:CONTinuous OFF")
+            self.write("ABORT;INITiate:IMMediate;*wai")
+            # now go to sleep for the time to take the scan
+            time.sleep(len(self.frequency_list) * 2 / float(self.IFBW))
 
+        # wait for other functions to be completed
+        while self.is_busy():
+            time.sleep(.01)
+        # Set the format to ascii and set up sweep definitions
+        self.write('FORM:ASC,0')
+        # First get the A and B lists drive port 1
+        # Note this could be a loop over the list = [a1_d1,b1_d1,b2_d1...,b2_d2]
+        waveparameter_names=[]
+        for drive_port in [self.measure_w2p_options["port1"], self.measure_w2p_options["port2"]]:
+            for detect_port in [self.measure_w2p_options["port1"], self.measure_w2p_options["port2"]]:
+                for receiver in ["A","B"]:
+                    waveparameter_names.append("{0}{1}_D{2}".format(receiver,detect_port,drive_port))
+        # now get data for all of them
+        all_wave_raw_string=[]
+        for waveparameter in waveparameter_names:
+            self.write('CALC:PAR:SEL {0}'.format(waveparameter))
+            self.write('CALC:FORM MLIN')
+            while self.is_busy():
+                time.sleep(.01)
+            all_wave_raw_string .append(self.query('CALC:DATA? SDATA'))
+
+        # String Parsing
+        all_wave_list=map(lambda x:x.replace("\n","").split(","),all_wave_raw_string)
+        # Construct a list of lists that is data in RI format
+        re_all_wave_list = [a_list[0::2] for a_list in all_wave_list]
+        im_all_wave_list = [a_list[1::2] for a_list in all_wave_list]
+        wparameter_data = []
+        for index, frequency in enumerate(self.frequency_list[:]):
+            re_row=[re[index] for re in re_all_wave_list ]
+            im_row=[im[index] for im in im_all_wave_list]
+            wave_row=[]
+            for index,value in enumerate(re_row):
+                wave_row.append(value)
+                wave_row.append(im_row[index])
+            new_row = [frequency / 10. ** 9]+wave_row
+            new_row = map(lambda x: float(x), new_row)
+            wparameter_data.append(new_row)
+        waveparameter_column_names=[]
+        for drive_port in [self.measure_w2p_options["port1"], self.measure_w2p_options["port2"]]:
+            for detect_port in [self.measure_w2p_options["port1"], self.measure_w2p_options["port2"]]:
+                for receiver in ["A","B"]:
+                    for complex_type in ["re","im"]:
+                        waveparameter_column_names.append("{3}{0}{1}_D{2}".format(receiver,
+                                                                                  detect_port,
+                                                                                  drive_port,
+                                                                                  complex_type))
+        column_names = ["Frequency"]+waveparameter_column_names
+        # add some options here about auto saving
+        # do we want comment options?
+        options = {"column_names_begin_token": "!", "data_delimiter": "  ", "column_names": column_names,
+                   "data": wparameter_data, "specific_descriptor": "Wave_Parameters",
+                   "general_descriptor": "One_Port", "extension": "w2p"}
+        if self.measure_w2p_options["w2p_options"]:
+            for key,value in self.measure_w2p_options["w2p_options"].iteritems():
+                options[key]=value
+        w2p = AsciiDataTable(None, **options)
+        return w2p
+
+class NRPPowerMeter(VisaInstrument):
+    """Controls RS power meters"""
+    def get_reading(self):
+        """Intializes and fetches a reading"""
+        self.write("INIT")
+        return self.query("FETCh?")
 #-------------------------------------------------------------------------------
 # Module Scripts
 
