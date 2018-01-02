@@ -21,13 +21,13 @@ Requirements
 + [os](https://docs.python.org/2/library/os.html)
 + [re](https://docs.python.org/2/library/re.html)
 + [math](https://docs.python.org/2/library/math.html)
-+ [pyMeasure](https://github.com/aricsanders/pyMeasure)
++ [pyMez](https://github.com/aricsanders/pyMez)
 
 Help
 ---------------
-<a href="./index.html">`pyMeasure.Code.Analysis`</a>
+<a href="./index.html">`pyMez.Code.Analysis`</a>
 <div>
-<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
 <a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
 <a href="../../../Reference_Index.html">Index</a>

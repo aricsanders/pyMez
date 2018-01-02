@@ -15,7 +15,7 @@ import sys
 import os
 import wx
 from types import *
-# Add pyMeasure to sys.path (this allows imports that don't go through pyMeasure/__init__.py
+# Add pyMez to sys.path (this allows imports that don't go through pyMez/__init__.py
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     from Code.FrontEnds.IEPanel import *

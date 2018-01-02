@@ -7,7 +7,7 @@
 #-----------------------------------------------------------------------------
 """ XMLModels is dedicated to handling xml based models,
 requires lxml to be installed.
-see also <a href="./HTMLModels.m.html">`pyMeasure.Code.DataHandlers.HTMLModels`</a>.
+see also <a href="./HTMLModels.m.html">`pyMez.Code.DataHandlers.HTMLModels`</a>.
 XMLModels has components for basic manipulation, the creation of xml measurements, logs,
 Instrument states, instrument sheets and file indices.
 
@@ -25,7 +25,7 @@ Requirements
 + [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
 + [lxml](http://lxml.de/)
 + [types](https://docs.python.org/2/library/types.html)
-+ [pyMeasure](https://github.com/aricsanders/pyMeasure)
++ [pyMez](https://github.com/aricsanders/pyMez)
 + [xml](https://docs.python.org/2/library/xml.html)
 + [datetime](https://docs.python.org/2/library/datetime.html)
 + [urlparse](https://docs.python.org/2/library/urlparse.html)
@@ -34,9 +34,9 @@ Requirements
 
 Help
 ---------------
-<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
+<a href="./index.html">`pyMez.Code.DataHandlers`</a>
 <div>
-<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
 <a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
 <a href="../../../Reference_Index.html">Index</a>
@@ -77,7 +77,7 @@ try:
     METHOD_ALIASES=1
 except:
     raise
-    print("The module pyMeasure.Code.Utils.Alias was not found")
+    print("The module pyMez.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 # For Auto-naming of files if path is not specified
@@ -86,7 +86,7 @@ try:
     DEFAULT_FILE_NAME=None
     "Constant set to None if the auotname function is available."
 except:
-    print("The function auto_name in pyMeasure.Code.Utils.Names was not found")
+    print("The function auto_name in pyMez.Code.Utils.Names was not found")
     print("Setting Default file name to New_XML.xml")
     DEFAULT_FILE_NAME='New_XML.xml'
     pass
@@ -98,14 +98,14 @@ except:
     print "Can not find the module GetMetadata, please add it to sys.path"
     print "Anything that uses the functions from GetMetadata will be broken"
     pass
-#import pyMeasure
+#import pyMez
 #-----------------------------------------------------------------------------
 # Module Constants
 PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
-"The root directory of pyMeasure"
+"The root directory of pyMez"
 INSTRUMENT_SHEETS=fnmatch.filter(os.listdir(os.path.join(
 PYMEASURE_ROOT,'Instruments')),'*.xml')
-"A list of the available instrument sheet files in pyMeasure/Instruments"
+"A list of the available instrument sheet files in pyMez/Instruments"
 XSLT_REPOSITORY='../XSL'
 "A default location for the xsl repository."
 TESTS_DIRECTORY=os.path.join(os.path.dirname(os.path.realpath(__file__)),'Tests')

@@ -20,16 +20,16 @@ from types import *
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 # try:
-#     import pyMeasure
+#     import pyMez
 # except:
-#     print("The topmost pyMeasure folder was not found please make sure that the directory directly above it is on sys.path")
+#     print("The topmost pyMez folder was not found please make sure that the directory directly above it is on sys.path")
 #     raise
 
 try:
     import Code.InstrumentControl.Instruments
     import Code.DataHandlers.XMLModels
 except:
-    print "This module requires pyMeasure.Code to be on sys.path"
+    print "This module requires pyMez.Code to be on sys.path"
     raise
 
 try: 
@@ -42,7 +42,7 @@ except:
 # Module Constants
 
 PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
-"Root directory of pyMeasure"
+"Root directory of pyMez"
 KEITHLEY_INSTRUMENT_SHEET=os.path.join(PYMEASURE_ROOT,
 'Instruments','KEITHLEY6487_NSOM.xml').replace('\\','/')
 "The file path to the Keithley 6487 instrument sheet."
@@ -137,7 +137,7 @@ class KeithleyIV():
                 self.instrument.write("CURR:RANG:AUTO ON")
     def save_data(self):
         """ Saves the data in xml format"""
-##        self.current_state=pyMeasure.Code.DataHandlers.States.InstruemntState(**self.instrument.get_state())
+##        self.current_state=pyMez.Code.DataHandlers.States.InstruemntState(**self.instrument.get_state())
 ##        self.current_state.add_state_description({'Instrument_Description':self.instrument.path})
 ##        self.current_state.save()
         self.calculate_resistance()

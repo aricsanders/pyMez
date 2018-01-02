@@ -30,13 +30,13 @@ Requirements
 + [scipy](https://docs.scipy.org/doc/)
 + [pandas](http://pandas.pydata.org/)
 + [matplotlib](http://matplotlib.org/)
-+ [pyMeasure](https://github.com/aricsanders/pyMeasure)
++ [pyMez](https://github.com/aricsanders/pyMez)
 
 Help
 ---------------
-<a href="./index.html">`pyMeasure.Code.Analysis`</a>
+<a href="./index.html">`pyMez.Code.Analysis`</a>
 <div>
-<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
 <a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
 <a href="../../../Reference_Index.html">Index</a>
@@ -76,15 +76,15 @@ except:
 try:
     #Todo: this could lead to a cyclic dependency, it really should import only the models it analyzes
     #Todo: If analysis is to be in the top import, none of the models should rely on it
-    #import pyMeasure.Code.DataHandlers.NISTModels
+    #import pyMez.Code.DataHandlers.NISTModels
     from Code.DataHandlers.NISTModels import *
     from Code.DataHandlers.TouchstoneModels import *
     from Code.DataHandlers.GeneralModels import *
     from Code.Analysis.NISTUncertainty import *
     from Code.DataHandlers.Translations import *
-    #from pyMeasure import *
+    #from pyMez import *
 except:
-    print("The subpackage pyMeasure.Code.DataHandlers did not import properly,"
+    print("The subpackage pyMez.Code.DataHandlers did not import properly,"
           "please check that it is on the python path and that unit tests passed")
     raise ImportError
 try:
@@ -865,7 +865,7 @@ def uncorrect_sparameters_twelve_term(sparameters_complex,twelve_term_correction
 #TODO: Check that this works the way it should
 def correct_sparameters(sparameters,correction,**options):
     """Correction sparamters trys to return a corrected set of sparameters given uncorrected sparameters
-    and a correction. Correct sparameters will accept file_name's, pyMeasure classes,
+    and a correction. Correct sparameters will accept file_name's, pyMez classes,
     complex lists or a mixture, returns value in the form it was entered. Correction is assumed reciprocal
     unless reciprocal=False"""
     defaults={"reciprocal":True,"output_type":None,"file_path":None}

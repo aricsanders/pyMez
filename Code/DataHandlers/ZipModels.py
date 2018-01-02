@@ -13,7 +13,7 @@ or add files on disk, full directories, or strings as files.
 Examples
 --------
     #!python
-    >> from pyMeasure import *
+    >> from pyMez import *
     >> zip_file=ZipArchive()
     >> zip_file.add_file(os.path.join(TESTS_DIRECTORY,"test.png"))
     >> zip_file.save(os.path.join(TESTS_DIRECTORY,"test.zip")
@@ -22,11 +22,11 @@ Examples
 
 Help
 ---------------
-<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
+<a href="./index.html">`pyMez.Code.DataHandlers`</a>
 <div>
-<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
-<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMeasure</a>
+<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMez</a>
 </div>
 """
 
@@ -43,7 +43,7 @@ sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     from Code.Utils.Names import auto_name
 except:
-    print("The function auto_name in pyMeasure.Code.Utils.Names was not found or had an error")
+    print("The function auto_name in pyMez.Code.Utils.Names was not found or had an error")
     raise
 #-----------------------------------------------------------------------------
 # Module Constants

@@ -15,9 +15,9 @@ Analysis typically import from Utils and DataHandlers but __NOT__ from  Instrume
 
 Help
 -----
-<a href="../index.html">`pyMeasure.Code`</a>
+<a href="../index.html">`pyMez.Code`</a>
 <div>
-<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
 <a href="../../../Examples/html/Examples_Home.html">Examples</a> |
 <a href="../../../Reference_Index.html">Index </a>

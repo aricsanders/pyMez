@@ -39,7 +39,7 @@ try:
     InstrumentSheet=Code.DataHandlers.XMLModels.InstrumentSheet
     InstrumentState=Code.DataHandlers.XMLModels.InstrumentState
     DATA_SHEETS=1
-    #print dir(pyMeasure)
+    #print dir(pyMez)
 except:
     # If the import of DataHandlers Does not work 
     class  InstrumentSheet():pass
@@ -56,7 +56,7 @@ except:
 try:
     from Code.Utils.Names import *
 except:
-    print("Could not load pyMeasure.Code.Utils.Names")
+    print("Could not load pyMez.Code.Utils.Names")
     pass
 try:
     from Code.DataHandlers.TouchstoneModels import *
@@ -133,7 +133,7 @@ def determine_instrument_type(object):
                 except: pass 
                 
 def find_description(identifier,output='path',directory=None):
-    """ Finds an instrument description in pyMeasure/Instruments given an identifier, 
+    """ Finds an instrument description in pyMez/Instruments given an identifier, 
     outputs a path or the file. Right now this outputs the first sheet that matches the identifier"""
     if type(identifier) in StringTypes:
         # Now read in all the Instrument sheets and look for a match

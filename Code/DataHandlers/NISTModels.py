@@ -17,7 +17,7 @@ import os
 #-----------------------------------------------------------------------------
 # Third Party Imports
 
-# All imports in this section should only be from pyMeasure.Code.Utils or pyMeasure.Code.DataHandlers
+# All imports in this section should only be from pyMez.Code.Utils or pyMez.Code.DataHandlers
 # or external packages not in python 2.7. If an import is cyclic, that is this module imports another module
 # and that module imports this one, they should be joined.
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
@@ -25,19 +25,19 @@ try:
     from Code.Utils.Alias import *
     METHOD_ALIASES=1
 except:
-    print("The module pyMeasure.Code.Utils.Alias was not found")
+    print("The module pyMez.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 try:
     from Code.DataHandlers.GeneralModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.GeneralModels was not found,"
+    print("The module pyMez.Code.DataHandlers.GeneralModels was not found,"
           "please put it on the python path")
     raise ImportError
 try:
     from Code.DataHandlers.TouchstoneModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.TouchstoneModels was not found,"
+    print("The module pyMez.Code.DataHandlers.TouchstoneModels was not found,"
           "please put it on the python path")
     raise ImportError
 
@@ -1490,7 +1490,7 @@ class TwelveTermErrorModel(AsciiDataTable):
 
 class StandardErrorModel(AsciiDataTable):
     """Model that stores data for standard error in the form [[independent_variable,SEValue1,..,SEValueN]..]
-    See function `pyMeasure.Code.Analysis.Uncertainty.standard_error_data_table`"""
+    See function `pyMez.Code.Analysis.Uncertainty.standard_error_data_table`"""
     def __init__(self,file_path,**options):
         """Intializes the StandardErrorModel Class"""
         AsciiDataTable.__init__(self,file_path,**options)

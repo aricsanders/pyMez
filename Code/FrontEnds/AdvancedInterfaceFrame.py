@@ -10,17 +10,17 @@
 #-----------------------------------------------------------------------------
 #Boa:Frame:AdvancedInterfaceFrame
 """ Advanced wx.Frame with standard containers for interface and control this
-is meant as a template for GUI design and a test bed for pyMeasure"""
+is meant as a template for GUI design and a test bed for pyMez"""
 import sys
 import os
 import wx
 from types import *
 import re
 import copy
-# Add pyMeasure to sys.path (this allows imports that don't go through pyMeasure/__init__.py
+# Add pyMez to sys.path (this allows imports that don't go through pyMez/__init__.py
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
-    #import pyMeasure
+    #import pyMez
     from Code.FrontEnds.IEPanel import *
     from Code.FrontEnds.EndOfDayDialog import *
     #from Code.FrontEnds.ShellPanel import *

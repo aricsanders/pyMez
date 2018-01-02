@@ -8,13 +8,13 @@
 """
 Graph Models stores sub classes of graphs that define data translations. All edges
 or the functions that define translations from one format to another
-are found in <a href="./Translations.m.html">`pyMeasure.Code.DataHandlers.Translations`</a>.
+are found in <a href="./Translations.m.html">`pyMez.Code.DataHandlers.Translations`</a>.
 Currently, the module networkx is used to display the graph.
 
 Examples
 --------
     #!python
-    >>from pyMeasure import *
+    >>from pyMez import *
     >>image_graph=ImageGraph()
     >>image_graph.set_state('png','my_png.png')
     >>image_graph.move_to_node('EmbeddedHtml')
@@ -30,13 +30,13 @@ Requirements
 + [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
 + [networkx](http://networkx.github.io/)
 + [numpy](http://www.numpy.org/)
-+ [pyMeasure](https://github.com/aricsanders/pyMeasure)
++ [pyMez](https://github.com/aricsanders/pyMez)
 
 Help
 ---------------
-<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
+<a href="./index.html">`pyMez.Code.DataHandlers`</a>
 <div>
-<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
 <a href="../../Examples/Html/Examples_Home.html">Examples Home</a> |
 <a href="../../../Reference_Index.html">Index</a>
@@ -57,25 +57,25 @@ try:
     from Code.Utils.Alias import *
     METHOD_ALIASES=1
 except:
-    print("The module pyMeasure.Code.Utils.Alias was not found")
+    print("The module pyMez.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 try:
     from Code.DataHandlers.GeneralModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.GeneralModels was not found,"
+    print("The module pyMez.Code.DataHandlers.GeneralModels was not found,"
           "please put it on the python path")
     raise ImportError
 try:
     from Code.DataHandlers.TouchstoneModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.TouchstoneModels was not found,"
+    print("The module pyMez.Code.DataHandlers.TouchstoneModels was not found,"
           "please put it on the python path")
     raise ImportError
 try:
     from Code.DataHandlers.Translations import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.Translations was not found or had an error,"
+    print("The module pyMez.Code.DataHandlers.Translations was not found or had an error,"
           "please put it on the python path or resolve the error")
     raise ImportError
 try:

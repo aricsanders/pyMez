@@ -25,13 +25,13 @@ try:
     METHOD_ALIASES=1
     "Constant that is set to True if Method Alias is available."
 except:
-    print("The module pyMeasure.Code.Utils.Alias was not found")
+    print("The module pyMez.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 try:
     from Code.DataHandlers.GeneralModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.GeneralModels was not found,"
+    print("The module pyMez.Code.DataHandlers.GeneralModels was not found,"
           "please put it on the python path")
     raise ImportError
 try:

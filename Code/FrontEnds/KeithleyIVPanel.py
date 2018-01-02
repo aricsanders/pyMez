@@ -28,7 +28,7 @@ sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     from Code.InstrumentControl.Experiments import *
 except:
-    print('There was an error importing pyMeasure')
+    print('There was an error importing pyMez')
 IMAGE_DIRECTORY=os.path.join(os.path.dirname(os.path.realpath(__file__)),'img')
 
 [wxID_KEITHLEYIVPANEL, wxID_KEITHLEYIVPANELACTIONPANEL, 

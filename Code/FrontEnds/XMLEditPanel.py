@@ -12,14 +12,14 @@ import wx.html
 import wx.stc
 # This determines PYMEASURE_ROOT below and checks if everything is installed properly 
 try: 
-    import pyMeasure
+    import pyMez
 except:
-    print("The topmost pyMeasure folder was not found please make sure that the directory directly above it is on sys.path") 
+    print("The topmost pyMez folder was not found please make sure that the directory directly above it is on sys.path") 
     raise
 
 try:
-    from pyMeasure.Code.FrontEnds.XMLGeneral import *
-    from pyMeasure.Code.FrontEnds.StyledTextCtrlPanel import *
+    from pyMez.Code.FrontEnds.XMLGeneral import *
+    from pyMez.Code.FrontEnds.StyledTextCtrlPanel import *
     
 except:
     print("Could not import XMLGeneral")
@@ -31,7 +31,7 @@ except:
 
 #-------------------------------------------------------------------------------
 # Constants
-PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMeasure.__file__))
+PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMez.__file__))
 
 
 [wxID_XMLEDITPANEL, wxID_XMLEDITPANELEDITDISPLAYPANEL, 

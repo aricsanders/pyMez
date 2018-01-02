@@ -28,9 +28,9 @@ import StringIO
 
 # This determines PYMEASURE_ROOT below and checks if everything is installed properly 
 try: 
-    import pyMeasure
+    import pyMez
 except:
-    print("The topmost pyMeasure folder was not found please make sure that the directory directly above it is on sys.path") 
+    print("The topmost pyMez folder was not found please make sure that the directory directly above it is on sys.path") 
     raise
 # For XLST transformations of the data
 try:
@@ -43,10 +43,10 @@ except:
 
 # For auto generation of common method aliases
 try:
-    from pyMeasure.Code.Utils.Alias import *
+    from pyMez.Code.Utils.Alias import *
     METHOD_ALIASES=1
 except:
-    print("The module pyMeasure.Code.Utils.Alias was not found")
+    print("The module pyMez.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 #-------------------------------------------------------------------------------

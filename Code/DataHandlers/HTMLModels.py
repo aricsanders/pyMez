@@ -22,15 +22,15 @@ Requirements
 + [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
 + [lxml](http://lxml.de/)
 + [types](https://docs.python.org/2/library/types.html)
-+ [pyMeasure](https://github.com/aricsanders/pyMeasure)
++ [pyMez](https://github.com/aricsanders/pyMez)
 + [pdfkit](http://pdfkit.org/)
 + [wkhtmltopdf](http://wkhtmltopdf.org/)
 
 Help
 ---------------
-<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
+<a href="./index.html">`pyMez.Code.DataHandlers`</a>
 <div>
-<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
 <a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
 <a href="../../../Reference_Index.html">Index</a>
@@ -51,7 +51,7 @@ try:
     METHOD_ALIASES=1
 except:
     raise
-    print("The module pyMeasure.Code.Utils.Alias was not found")
+    print("The module pyMez.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
 # For Auto-naming of files if path is not specified
@@ -59,7 +59,7 @@ try:
     from Code.Utils.Names import auto_name,change_extension
     DEFAULT_FILE_NAME=None
 except:
-    print("The function auto_name in pyMeasure.Code.Utils.Names was not found")
+    print("The function auto_name in pyMez.Code.Utils.Names was not found")
     print("Setting Default file name to New_XML.xml")
     DEFAULT_FILE_NAME='New_XML.xml'
     pass

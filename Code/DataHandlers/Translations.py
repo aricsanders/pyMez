@@ -9,7 +9,7 @@
 Warning!!! The functions defined in this module break from normal naming practices to better
 reflect their purpose. A translation from one object or file takes the form UpperCamelCase_to_UpperCamelCase
 This change is meant to make consistent node names for graph models found in
-pyMeasure.Code.DataHandlers.GraphModels. Normal naming rules about
+pyMez.Code.DataHandlers.GraphModels. Normal naming rules about
  HTML and XML abbreviations are not followed. (XmlList not XMLList)
  All types that end with File are on-disk file types,
 composite types are denoted by ending the UpperCamelCase name with a full english version of the python
@@ -32,15 +32,15 @@ Requirements
 + [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
 + [lxml](http://lxml.de/)
 + [types](https://docs.python.org/2/library/types.html)
-+ [pyMeasure](https://github.com/aricsanders/pyMeasure)
++ [pyMez](https://github.com/aricsanders/pyMez)
 + [pdfkit](http://pdfkit.org/)
 + [wkhtmltopdf](http://wkhtmltopdf.org/)
 
 Help
 ---------------
-<a href="./index.html">`pyMeasure.Code.DataHandlers`</a>
+<a href="./index.html">`pyMez.Code.DataHandlers`</a>
 <div>
-<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
 <a href="../../Examples/html/Examples_Home.html">Examples Home</a> |
 <a href="../../../Reference_Index.html">Index</a>
@@ -64,38 +64,38 @@ sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     from Code.DataHandlers.GeneralModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.GeneralModels was not found or had an error,"
+    print("The module pyMez.Code.DataHandlers.GeneralModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
 try:
     from Code.DataHandlers.XMLModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.XMLModels was not found or had an error,"
+    print("The module pyMez.Code.DataHandlers.XMLModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
 try:
     from Code.DataHandlers.NISTModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.NISTModels was not found or had an error,"
+    print("The module pyMez.Code.DataHandlers.NISTModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
 try:
     from Code.DataHandlers.TouchstoneModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.TouchstoneModels was not found or had an error,"
+    print("The module pyMez.Code.DataHandlers.TouchstoneModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
 try:
     from Code.DataHandlers.StatistiCALModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.StatistiCALModels was not found or had an error,"
+    print("The module pyMez.Code.DataHandlers.StatistiCALModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
 
 try:
     from Code.DataHandlers.HTMLModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.HTMLModels was not found or had an error,"
+    print("The module pyMez.Code.DataHandlers.HTMLModels was not found or had an error,"
           "please check module or put it on the python path")
     raise ImportError
 

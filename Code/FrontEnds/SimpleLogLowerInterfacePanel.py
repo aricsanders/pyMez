@@ -16,19 +16,19 @@ import os
 import datetime
 # This determines PYMEASURE_ROOT below and checks if everything is installed properly 
 try: 
-    import pyMeasure
+    import pyMez
 except:
-    print("The topmost pyMeasure folder was not found please make sure that the directory directly above it is on sys.path") 
+    print("The topmost pyMez folder was not found please make sure that the directory directly above it is on sys.path") 
     raise
 try:
-    import pyMeasure.Code.DataHandlers.XMLModels as XMLModels
+    import pyMez.Code.DataHandlers.XMLModels as XMLModels
 except:
-    print """This module requires  pyMeasure.Code.DataHandlers.XMLModels to operate properly,
-            add the directory directly above pyMeasure to sys.path"""  
+    print """This module requires  pyMez.Code.DataHandlers.XMLModels to operate properly,
+            add the directory directly above pyMez to sys.path"""  
 import wx
 import wx.stc
 
-PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMeasure.__file__))
+PYMEASURE_ROOT=os.path.dirname(os.path.realpath(pyMez.__file__))
 LOGS_DIRECTORY=os.path.join(PYMEASURE_ROOT,'Data','Logs')
 
 def convert_datetime(ISO_datetime_string,format_string='%m/%d/%Y at %H:%M:%S'):

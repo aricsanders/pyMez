@@ -28,7 +28,7 @@ except:
 try:
     from Code.DataHandlers.GeneralModels import *
 except:
-    print("pyMeasure.Code.DataHandlers.GeneralModels is required to run StatistiCAL models")
+    print("pyMez.Code.DataHandlers.GeneralModels is required to run StatistiCAL models")
     raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants

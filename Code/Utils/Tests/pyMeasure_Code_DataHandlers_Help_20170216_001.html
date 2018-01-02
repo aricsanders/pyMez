@@ -3,7 +3,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
-    <title>pyMeasure.Code.DataHandlers API documentation</title>
+    <title>pyMez.Code.DataHandlers API documentation</title>
     <meta name="description" content="DataHandlers
 ------------
 The DataHandlers subpackage is designed to manipulate data, by allowing di..." />
@@ -1043,17 +1043,17 @@ table {
 
     <li class="set"><h3><a href="#header-submodules">Sub-modules</a></h3>
       <ul>
-        <li class="mono"><a href="GeneralModels.m.html">pyMeasure.Code.DataHandlers.GeneralModels</a></li>
-        <li class="mono"><a href="GraphModels.m.html">pyMeasure.Code.DataHandlers.GraphModels</a></li>
-        <li class="mono"><a href="HTMLModels.m.html">pyMeasure.Code.DataHandlers.HTMLModels</a></li>
-        <li class="mono"><a href="MUFModels.m.html">pyMeasure.Code.DataHandlers.MUFModels</a></li>
-        <li class="mono"><a href="NISTModels.m.html">pyMeasure.Code.DataHandlers.NISTModels</a></li>
-        <li class="mono"><a href="RadiCALModels.m.html">pyMeasure.Code.DataHandlers.RadiCALModels</a></li>
-        <li class="mono"><a href="StatistiCALModels.m.html">pyMeasure.Code.DataHandlers.StatistiCALModels</a></li>
-        <li class="mono"><a href="TouchstoneModels.m.html">pyMeasure.Code.DataHandlers.TouchstoneModels</a></li>
-        <li class="mono"><a href="Translations.m.html">pyMeasure.Code.DataHandlers.Translations</a></li>
-        <li class="mono"><a href="XMLModels.m.html">pyMeasure.Code.DataHandlers.XMLModels</a></li>
-        <li class="mono"><a href="ZipModels.m.html">pyMeasure.Code.DataHandlers.ZipModels</a></li>
+        <li class="mono"><a href="GeneralModels.m.html">pyMez.Code.DataHandlers.GeneralModels</a></li>
+        <li class="mono"><a href="GraphModels.m.html">pyMez.Code.DataHandlers.GraphModels</a></li>
+        <li class="mono"><a href="HTMLModels.m.html">pyMez.Code.DataHandlers.HTMLModels</a></li>
+        <li class="mono"><a href="MUFModels.m.html">pyMez.Code.DataHandlers.MUFModels</a></li>
+        <li class="mono"><a href="NISTModels.m.html">pyMez.Code.DataHandlers.NISTModels</a></li>
+        <li class="mono"><a href="RadiCALModels.m.html">pyMez.Code.DataHandlers.RadiCALModels</a></li>
+        <li class="mono"><a href="StatistiCALModels.m.html">pyMez.Code.DataHandlers.StatistiCALModels</a></li>
+        <li class="mono"><a href="TouchstoneModels.m.html">pyMez.Code.DataHandlers.TouchstoneModels</a></li>
+        <li class="mono"><a href="Translations.m.html">pyMez.Code.DataHandlers.Translations</a></li>
+        <li class="mono"><a href="XMLModels.m.html">pyMez.Code.DataHandlers.XMLModels</a></li>
+        <li class="mono"><a href="ZipModels.m.html">pyMez.Code.DataHandlers.ZipModels</a></li>
       </ul>
     </li>
     </ul>
@@ -1067,7 +1067,7 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">pyMeasure.Code.DataHandlers</span> module</h1>
+  <h1 class="title"><span class="name">pyMez.Code.DataHandlers</span> module</h1>
   <h2>DataHandlers</h2>
 <p>The DataHandlers subpackage is designed to manipulate data, by allowing different data types to be opened,
 created, saved and updated. The subpackage is further divided into modules grouped by a common theme. Classes for data
@@ -1075,7 +1075,7 @@ that are already on disk normally follows the following pattern:
 <code>instance=ClassName(file_path,**options)</code>
 For Example to
 open a XML file that you don't know the model, use
-<code>xml=pyMeasure.Code.DataHandlers.XMLModels.XMLBase('MyXML.xml')'
+<code>xml=pyMez.Code.DataHandlers.XMLModels.XMLBase('MyXML.xml')'
 or</code>xml=XMLBase('MyXML.xml')`</p>
 <p>All data models normally have save(), str() and if appropriate show() methods.</p>
 <h2>Import Structure</h2>
@@ -1083,8 +1083,8 @@ or</code>xml=XMLBase('MyXML.xml')`</p>
 <h2>Examples</h2>
 <p><a href="../../../Examples/How_To_Open_S2p.html"> How to open a s2p file </a></p>
   
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMeasure.Code.DataHandlers', this);">Show source &equiv;</a></p>
-  <div id="source-pyMeasure.Code.DataHandlers" class="source">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers" class="source">
     <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">DataHandlers</span>
 <span class="sd">------------</span>
@@ -1094,7 +1094,7 @@ or</code>xml=XMLBase('MyXML.xml')`</p>
 <span class="sd">`instance=ClassName(file_path,**options)`</span>
 <span class="sd">For Example to</span>
 <span class="sd">open a XML file that you don&#39;t know the model, use</span>
-<span class="sd">`xml=pyMeasure.Code.DataHandlers.XMLModels.XMLBase(&#39;MyXML.xml&#39;)&#39;</span>
+<span class="sd">`xml=pyMez.Code.DataHandlers.XMLModels.XMLBase(&#39;MyXML.xml&#39;)&#39;</span>
 <span class="sd">or</span>
 <span class="sd">`xml=XMLBase(&#39;MyXML.xml&#39;)`</span>
 
@@ -1121,28 +1121,28 @@ or</code>xml=XMLBase('MyXML.xml')`</p>
 
     <h2 class="section-title" id="header-submodules">Sub-modules</h2>
       <div class="item">
-      <p class="name"><a href="GeneralModels.m.html">pyMeasure.Code.DataHandlers.GeneralModels</a></p>
+      <p class="name"><a href="GeneralModels.m.html">pyMez.Code.DataHandlers.GeneralModels</a></p>
       
   
     <div class="desc"><p>Module that contains general data models and functions for handling them</p></div>
 
       </div>
       <div class="item">
-      <p class="name"><a href="GraphModels.m.html">pyMeasure.Code.DataHandlers.GraphModels</a></p>
+      <p class="name"><a href="GraphModels.m.html">pyMez.Code.DataHandlers.GraphModels</a></p>
       
   
     <div class="desc"><p>Graph Models stores sub classes of graphs that define data translations</p></div>
 
       </div>
       <div class="item">
-      <p class="name"><a href="HTMLModels.m.html">pyMeasure.Code.DataHandlers.HTMLModels</a></p>
+      <p class="name"><a href="HTMLModels.m.html">pyMez.Code.DataHandlers.HTMLModels</a></p>
       
   
     <div class="desc"><p>HTMLModels is a module for the creation and manipulation of HTML based models</p></div>
 
       </div>
       <div class="item">
-      <p class="name"><a href="MUFModels.m.html">pyMeasure.Code.DataHandlers.MUFModels</a></p>
+      <p class="name"><a href="MUFModels.m.html">pyMez.Code.DataHandlers.MUFModels</a></p>
       
   
     <div class="desc"><p>A module that holds the models associated with the Microwave Uncertainty Framework.
@@ -1150,14 +1150,14 @@ Most models are xml based</p></div>
 
       </div>
       <div class="item">
-      <p class="name"><a href="NISTModels.m.html">pyMeasure.Code.DataHandlers.NISTModels</a></p>
+      <p class="name"><a href="NISTModels.m.html">pyMez.Code.DataHandlers.NISTModels</a></p>
       
   
     <div class="desc"><p>NISTModels is a module to handle data types found at NIST in Boulder, CO</p></div>
 
       </div>
       <div class="item">
-      <p class="name"><a href="RadiCALModels.m.html">pyMeasure.Code.DataHandlers.RadiCALModels</a></p>
+      <p class="name"><a href="RadiCALModels.m.html">pyMez.Code.DataHandlers.RadiCALModels</a></p>
       
   
     <div class="desc"><p>Handles the data saved after running Radical to analyze data. The assumed
@@ -1167,7 +1167,7 @@ as an hd5 file with a .mat extension. Previous versions of m...</p></div>
 
       </div>
       <div class="item">
-      <p class="name"><a href="StatistiCALModels.m.html">pyMeasure.Code.DataHandlers.StatistiCALModels</a></p>
+      <p class="name"><a href="StatistiCALModels.m.html">pyMez.Code.DataHandlers.StatistiCALModels</a></p>
       
   
     <div class="desc"><p>A wrapper for the StatistiCAL com object and some python classes and functions for interacting with it. More
@@ -1176,7 +1176,7 @@ information on statistical can be found at
 
       </div>
       <div class="item">
-      <p class="name"><a href="TouchstoneModels.m.html">pyMeasure.Code.DataHandlers.TouchstoneModels</a></p>
+      <p class="name"><a href="TouchstoneModels.m.html">pyMez.Code.DataHandlers.TouchstoneModels</a></p>
       
   
     <div class="desc"><p>A module dedicated to the manipulation and storage of touchstone files, such as
@@ -1186,7 +1186,7 @@ not support T, Y, and Z transformations. On ...</p></div>
 
       </div>
       <div class="item">
-      <p class="name"><a href="Translations.m.html">pyMeasure.Code.DataHandlers.Translations</a></p>
+      <p class="name"><a href="Translations.m.html">pyMez.Code.DataHandlers.Translations</a></p>
       
   
     <div class="desc"><p>Translations.py holds stateless functions that map from one form to another.
@@ -1196,16 +1196,16 @@ This change is meant ...</p></div>
 
       </div>
       <div class="item">
-      <p class="name"><a href="XMLModels.m.html">pyMeasure.Code.DataHandlers.XMLModels</a></p>
+      <p class="name"><a href="XMLModels.m.html">pyMez.Code.DataHandlers.XMLModels</a></p>
       
   
     <div class="desc"><p>XMLModels is dedicated to handling xml based models,
 requires lxml to be installed.
-see also <a href="HTMLModels.m.html"><code>pyMeasure.Code.DataHandlers.HTMLModels</code></a></p></div>
+see also <a href="HTMLModels.m.html"><code>pyMez.Code.DataHandlers.HTMLModels</code></a></p></div>
 
       </div>
       <div class="item">
-      <p class="name"><a href="ZipModels.m.html">pyMeasure.Code.DataHandlers.ZipModels</a></p>
+      <p class="name"><a href="ZipModels.m.html">pyMez.Code.DataHandlers.ZipModels</a></p>
       
   
     <div class="desc"><p>ZipModels holds classes and functions for manipulating zip files</p></div>

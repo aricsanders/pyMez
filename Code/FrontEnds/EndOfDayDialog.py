@@ -12,12 +12,12 @@ from xml.dom.minidom import parse
 from os.path import normpath
 import os
 import sys
-# Add pyMeasure to sys.path (this allows imports that don't go through pyMeasure/__init__.py
+# Add pyMez to sys.path (this allows imports that don't go through pyMez/__init__.py
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     import Code.DataHandlers.XMLModels
 except:
-    print("Cannot find  pyMeasure.Code.DataHandlers.Logs")
+    print("Cannot find  pyMez.Code.DataHandlers.Logs")
 
 [wxID_EndOfDayDialog, wxID_EndOfDayDialogCLEAR_FILE, wxID_EndOfDayDialogDATA_FLAG, 
  wxID_EndOfDayDialogFILE_CHOOSER, wxID_EndOfDayDialogFILE_CHOOSER2,wxID_EndOfDayDialogFILE_DISP,wxID_EndOfDayDialogFILE_DISP2,wxID_EndOfDayDialogQUEST1, 

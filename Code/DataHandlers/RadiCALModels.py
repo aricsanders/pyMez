@@ -17,13 +17,13 @@ import os
 import sys
 #-----------------------------------------------------------------------------
 # Third Party Imports
-# magic statement that injects the pyMeasure folder into sys.path
-# This allows Code to be imported skipping pyMeasure/.__init__.py
+# magic statement that injects the pyMez folder into sys.path
+# This allows Code to be imported skipping pyMez/.__init__.py
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     from Code.DataHandlers.TouchstoneModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.TouchstoneModels was not found or had an error,"
+    print("The module pyMez.Code.DataHandlers.TouchstoneModels was not found or had an error,"
           "please put it on the python path")
     raise
 try:

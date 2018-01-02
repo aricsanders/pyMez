@@ -7,7 +7,7 @@ that are already on disk normally follows the following pattern:
 For Example to
 open a XML file that you don't know the model, use
 
-`xml=pyMeasure.Code.DataHandlers.XMLModels.XMLBase('MyXML.xml')'
+`xml=pyMez.Code.DataHandlers.XMLModels.XMLBase('MyXML.xml')'
 
 or
 
@@ -27,9 +27,9 @@ DataHandlers typically import from Utils but __NOT__ from Analysis, InstrumentCo
 
 Help
 -----
-<a href="../index.html">`pyMeasure.Code`</a>
+<a href="../index.html">`pyMez.Code`</a>
 <div>
-<a href="../../../pyMeasure_Documentation.html">Documentation Home</a> |
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
 <a href="../../../Examples/html/Examples_Home.html">Examples</a> |
 <a href="../../../Reference_Index.html">Index </a>

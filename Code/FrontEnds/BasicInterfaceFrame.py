@@ -7,7 +7,7 @@
 #-----------------------------------------------------------------------------
 #Boa:Frame:BasicInterfaceFrame
 """ Advanced wx.Frame with standard containers for interface and control this
-is meant as a template for GUI design and a test bed for pyMeasure"""
+is meant as a template for GUI design and a test bed for pyMez"""
 import sys
 import os
 import wx

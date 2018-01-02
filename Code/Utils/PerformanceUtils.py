@@ -6,7 +6,7 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ PerformanceUtils contains functions and classes for testing the performance of
- code in pyMeasure"""
+ code in pyMez"""
 
 #-----------------------------------------------------------------------------
 # Standard Imports

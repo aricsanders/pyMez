@@ -20,13 +20,13 @@ sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
     from Code.DataHandlers.XMLModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.XMLModels was not found,"
+    print("The module pyMez.Code.DataHandlers.XMLModels was not found,"
           "please put it on the python path")
     raise ImportError
 try:
     from Code.DataHandlers.GeneralModels import *
 except:
-    print("The module pyMeasure.Code.DataHandlers.XMLModels was not found,"
+    print("The module pyMez.Code.DataHandlers.XMLModels was not found,"
           "please put it on the python path")
     raise ImportError
 try:

@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <?xml-stylesheet type="text/xsl" href="../XSL/FR_STYLE.xsl"?>
 <File_Registry>
-	<File Date="2016-02-23T02:49:44.088000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.21" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMeasureNew/pyMeasure/Code/DataHandlers/Tests/Data_Table_021311_1.xml"/>
-	<File Date="2016-02-23T02:49:44.093000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.22" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMeasureNew/pyMeasure/Code/DataHandlers/Tests/Log_XML_20160222_001.xml"/>
-	<File Date="2016-02-23T02:49:44.101000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.23" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMeasureNew/pyMeasure/Code/DataHandlers/Tests/Log_XML_20160222_002.xml"/>
-	<File Date="2016-02-23T02:49:44.109000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.24" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMeasureNew/pyMeasure/Code/DataHandlers/Tests/XML_Document_20160222_001.xml"/>
-	<File Date="2016-02-23T02:49:44.121000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.25" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMeasureNew/pyMeasure/Code/DataHandlers/Tests/XML_Document_20160222_002.xml"/>
-	<File Date="2016-02-23T02:49:44.134000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.26" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMeasureNew/pyMeasure/Code/DataHandlers/Tests/XML_Document_20160222_003.xml"/>
-	<File Date="2016-02-23T02:49:44.149000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.27" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMeasureNew/pyMeasure/Code/DataHandlers/Tests/XML_Document_20160222_004.xml"/>
+	<File Date="2016-02-23T02:49:44.088000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.21" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMezNew/pyMez/Code/DataHandlers/Tests/Data_Table_021311_1.xml"/>
+	<File Date="2016-02-23T02:49:44.093000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.22" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMezNew/pyMez/Code/DataHandlers/Tests/Log_XML_20160222_001.xml"/>
+	<File Date="2016-02-23T02:49:44.101000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.23" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMezNew/pyMez/Code/DataHandlers/Tests/Log_XML_20160222_002.xml"/>
+	<File Date="2016-02-23T02:49:44.109000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.24" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMezNew/pyMez/Code/DataHandlers/Tests/XML_Document_20160222_001.xml"/>
+	<File Date="2016-02-23T02:49:44.121000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.25" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMezNew/pyMez/Code/DataHandlers/Tests/XML_Document_20160222_002.xml"/>
+	<File Date="2016-02-23T02:49:44.134000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.26" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMezNew/pyMez/Code/DataHandlers/Tests/XML_Document_20160222_003.xml"/>
+	<File Date="2016-02-23T02:49:44.149000" Host="686PIF-AS1.campus.nist.gov" Id="129.6.223.173.11.11.11.11.11.11.11.11.11.27" Type="Ordinary" URL="file:C:/Users/sandersa/PyCharm Projects/pyMezNew/pyMez/Code/DataHandlers/Tests/XML_Document_20160222_004.xml"/>
 </File_Registry>

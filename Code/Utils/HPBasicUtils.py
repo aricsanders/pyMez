@@ -18,7 +18,7 @@
 import os
 #-----------------------------------------------------------------------------
 # Third Party Imports
-from pyMeasure.Code.Utils.Names import auto_name
+from pyMez.Code.Utils.Names import auto_name
 #-----------------------------------------------------------------------------
 # Module Constants
 HTML_PREFIX="""<!DOCTYPE html>
@@ -43,7 +43,7 @@ HTML_POSTFIX="""</script>
 def HPBasic_to_HTML(file_name,file_path_output=None):
     """Converts HP BASIC code in DOS ASCII to a highlighted HTML file, requires prism.js"""
     # Default is to put the file in the current working directory under a different name
-    # I should use pyMeasure.Code.Utils.Names.auto_name here
+    # I should use pyMez.Code.Utils.Names.auto_name here
     if file_path_output is None:
         file_path_output=auto_name(file_name,'HPBasic_HTML',None,'html')
     in_lines=[]

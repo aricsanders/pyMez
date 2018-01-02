@@ -1,13 +1,13 @@
 #-----------------------------------------------------------------------------
 # Name:        MatplotlibWxPanel.py
-# Purpose:     To be a plugin advanced plot panel for pyMeasure
+# Purpose:     To be a plugin advanced plot panel for pyMez
 # Author:      Aric Sanders
 # Created:     3/02/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """
 An example of how to use wx or wxagg in an application with a custom
-toolbar, Modified to work inside of BOA by AWS. Serves as an advanced plot window for pyMeasure.
+toolbar, Modified to work inside of BOA by AWS. Serves as an advanced plot window for pyMez.
 The custom tool bar is MyNavigationToolBar
 """
 
@@ -41,7 +41,7 @@ except:
 try:
     from Code.DataHandlers.XMLModels import DataTable
 except: 
-    print("import of pyMeasure.Code.DataHandlers.XMLModels failed")
+    print("import of pyMez.Code.DataHandlers.XMLModels failed")
     
 #-------------------------------------------------------------------------------
 # Constants
