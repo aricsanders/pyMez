@@ -120,7 +120,7 @@ try:
     DEFAULT_INSTRUMENT_STATE_STYLE=os.path.join(XSLT_REPOSITORY,'DEFAULT_STATE_STYLE.xsl').replace('\\', '/')
 
 except:
-    raise
+    #raise
     print("Could not assign the data directory locations defaulting to the current working directory {0}".format(os.getcwd()))
     print("You must pass XML types the style_sheet to print in html")
     INSTRUMENT_SHEETS=os.getcwd()
