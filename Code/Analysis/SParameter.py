@@ -86,7 +86,7 @@ try:
 except:
     print("The subpackage pyMez.Code.DataHandlers did not import properly,"
           "please check that it is on the python path and that unit tests passed")
-    raise ImportError
+    raise
 try:
     import matplotlib.pyplot as plt
 except:
