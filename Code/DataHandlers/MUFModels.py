@@ -31,10 +31,11 @@ except:
     raise ImportError
 try:
     import clr
+    CLR=True
 except:
     print("The module clr had an error or was not found. Please check that it is on the path and "
           "working properly")
-    raise ImportError
+    CLR=False
 try:
     import matplotlib.pyplot as plt
 except:
@@ -408,27 +409,27 @@ class MUFComplexModel(AsciiDataTable):
 
 #-----------------------------------------------------------------------------
 # Module Scripts
+if CLR:
+    def run_muf_script(menu_location,timeit=True):
+        """Opens a vnauncert or vnauncert_archive and runs it as is."""
 
-def run_muf_script(menu_location,timeit=True):
-    """Opens a vnauncert or vnauncert_archive and runs it as is."""
-
-    start=datetime.datetime.utcnow()
-    sys.path.append(SCRIPTABLE_MUF_LOCATION)
-    clr.AddReference("VNAUncertainty")
-    import VNAUncertainty
-    from System import EventArgs, Object
-    event=EventArgs()
-    vna =VNAUncertainty.VNAUncertainty()
-    vna.OnLoad(event)
-    vna.myOpenMenu(menu_location)
-    vna.OnLocationChanged(event)
-    vna.RunCalibration(0)
-    vna.Close()
-    if timeit:
-        stop=datetime.datetime.utcnow()
-        runtime=stop-start
-        print("VNAUncertainty finished running  at {0}".format(stop))
-        print("The script took {0} seconds to run".format(runtime.seconds))
+        start=datetime.datetime.utcnow()
+        sys.path.append(SCRIPTABLE_MUF_LOCATION)
+        clr.AddReference("VNAUncertainty")
+        import VNAUncertainty
+        from System import EventArgs, Object
+        event=EventArgs()
+        vna =VNAUncertainty.VNAUncertainty()
+        vna.OnLoad(event)
+        vna.myOpenMenu(menu_location)
+        vna.OnLocationChanged(event)
+        vna.RunCalibration(0)
+        vna.Close()
+        if timeit:
+            stop=datetime.datetime.utcnow()
+            runtime=stop-start
+            print("VNAUncertainty finished running  at {0}".format(stop))
+            print("The script took {0} seconds to run".format(runtime.seconds))
 
 
 #-----------------------------------------------------------------------------

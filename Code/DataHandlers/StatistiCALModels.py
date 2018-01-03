@@ -943,17 +943,18 @@ class StatistiCALSolutionModel(AsciiDataTable):
                 raise
 #-----------------------------------------------------------------------------
 # Module Scripts
-def test_StatistiCALWrapper():
-    """ Tests the wrapper class for the COM object """
-    print("Initializing an instance of Statistical")
-    statiscal_app=StatistiCALWrapper()
-    print statiscal_app.Successful
-    statiscal_app.ShowStatistiCAL()
-
-def test_CalibrateDUTWrapper():
-    """ Tests the wrapper class for the COM object """
-    print("Initializing an instance of Statistical")
-    calibrate_app=CalibrateDUTWrapper()
+if WINDOWS_WRAPPER:
+    def test_StatistiCALWrapper():
+        """ Tests the wrapper class for the COM object """
+        print("Initializing an instance of Statistical")
+        statiscal_app=StatistiCALWrapper()
+        print statiscal_app.Successful
+        statiscal_app.ShowStatistiCAL()
+if WINDOWS_WRAPPER:
+    def test_CalibrateDUTWrapper():
+        """ Tests the wrapper class for the COM object """
+        print("Initializing an instance of Statistical")
+        calibrate_app=CalibrateDUTWrapper()
 
 def test_StatistiCALSolutionModel(file_path="Solution_Plus.txt"):
     """Tests the StatistiCALSolutionModel"""

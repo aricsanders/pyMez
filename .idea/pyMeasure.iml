@@ -16,6 +16,7 @@
     <orderEntry type="module" module-name="test_site" />
     <orderEntry type="module" module-name="check_standard" />
     <orderEntry type="module" module-name="test_site" />
+    <orderEntry type="module" module-name="Jupyter-Notebooks" />
   </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="Nosetests" />
