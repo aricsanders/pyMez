@@ -48,8 +48,8 @@ Help
 
 import os
 import sys
-VERBOSE_IMPORT=False
-TIMED_IMPORT=False
+VERBOSE_IMPORT=True
+TIMED_IMPORT=True
 
 "Constant that determines if import statements are echoed to output"
 # control the modules loaded in the API, this should be included in a pyMez Settings file
@@ -64,20 +64,20 @@ API_MODULES={"Code.Utils.Names":True,
              "Code.Utils.pyMezUnitTest":False,
              "Code.DataHandlers.AbstractDjangoModels":False,
              "Code.DataHandlers.GeneralModels":True,
-             "Code.DataHandlers.GraphModels":True,
+             "Code.DataHandlers.GraphModels":False,
              "Code.DataHandlers.HTMLModels":True,
-             "Code.DataHandlers.MUFModels":True,
+             "Code.DataHandlers.MUFModels":False,
              "Code.DataHandlers.NISTModels":True,
              "Code.DataHandlers.RadiCALModels":False,
-             "Code.DataHandlers.StatistiCALModels":True,
+             "Code.DataHandlers.StatistiCALModels":False,
              "Code.DataHandlers.TouchstoneModels":True,
-             "Code.DataHandlers.Translations":True,
+             "Code.DataHandlers.Translations":False,
              "Code.DataHandlers.XMLModels":True,
              "Code.DataHandlers.ZipModels":True,
-             "Code.Analysis.Fitting":True,
+             "Code.Analysis.Fitting":False,
              "Code.Analysis.Interpolation":False,
              "Code.Analysis.NISTUncertainty":False,
-             "Code.Analysis.SParameter":True,
+             "Code.Analysis.SParameter":False,
              "Code.Analysis.Uncertainty":False,
              "Code.InstrumentControl.Instruments":True,
              "Code.InstrumentControl.Experiments":True,
