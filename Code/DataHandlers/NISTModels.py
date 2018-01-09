@@ -106,6 +106,20 @@ __pdoc__={}
 __pdoc__['ONE_PORT_COLUMN_NAMES']="One port column names for the output of calrep such as .asc  "
 #-----------------------------------------------------------------------------
 # Module Functions
+def make_wave_parameter_column_names(drive_ports=[1,2],detect_ports=[1,2],receivers=["A","B"]):
+    "Creates the column_names for wave parameters"
+    #TODO: Add an option for wave parameters with no drive ports
+    waveparameter_column_names = []
+    for drive_port in drive_ports:
+        for detect_port in detect_ports:
+            for receiver in receivers:
+                for complex_type in ["re", "im"]:
+                    waveparameter_column_names.append("{3}{0}{1}_D{2}".format(receiver,
+                                                                              detect_port,
+                                                                              drive_port,
+                                                                              complex_type))
+    column_names = ["Frequency"] + waveparameter_column_names
+    return column_names
 def asc_type(file_contents):
     """asc_type determines the type of asc file given it's contents, returns the class name of the appropriate model"""
     if type(file_contents) is StringType:
@@ -1583,6 +1597,105 @@ class ReverbChamber():
     pass
 class RobotData():
     pass
+class W2P(AsciiDataTable):
+    """W2p is a class for holding 2 port wave parameters. The wave parameters are in the format used
+    by the uncertainty framework, [Frequency,reA1_D1,imA1_D1,reB1_D1..imB2_D2]"""
+    def __init__(self,file_path,**options):
+        """Intializes the TwelveTermErrorModel """
+        defaults= {"data_delimiter": " ", "column_names_delimiter": ",", "specific_descriptor": None,
+                   "general_descriptor": 'Wave_Parameters', "extension": 'w2p', "comment_begin": "!", "comment_end": "\n",
+                   "header": None,
+                   "column_names":make_wave_parameter_column_names(),
+                   "column_names_begin_token":"!","column_names_end_token": "\n", "data": None,
+                   "row_formatter_string": None, "data_table_element_separator": None,"row_begin_token":None,
+                   "row_end_token":None,"escape_character":None,
+                   "data_begin_token":None,"data_end_token":None,
+                   "column_types":['float' for i in range(len(make_wave_parameter_column_names))]
+                   }
+        self.options={}
+        for key,value in defaults.iteritems():
+            self.options[key]=value
+        for key,value in options.iteritems():
+            self.options[key]=value
+        if file_path is not None:
+            self.path=file_path
+            self.__read_and_fix__()
+        AsciiDataTable.__init__(self,None,**self.options)
+        if file_path is not None:
+            self.path=file_path
+
+    def __read_and_fix__(self):
+            """Reads in the data and fixes any problems with delimiters, etc"""
+            in_file=open(self.path,'r')
+            lines=[]
+            for line in in_file:
+                lines.append(map(lambda x:float(x),line.split(" ")))
+            in_file.close()
+            self.options["data"]=lines
+            self.complex_data=[]
+            for row in  self.options["data"]:
+                frequency=[row[0]]
+                complex_numbers=row[1:]
+                #print np.array(complex_numbers[1::2])
+                complex_array=np.array(complex_numbers[0::2])+1.j*np.array(complex_numbers[1::2])
+                self.complex_data.append(frequency+complex_array.tolist())
+
+    def show(self,**options):
+        """Shows a plot of the StandardErrorModel"""
+        #todo: plots per column is confusing
+        defaults={"display_legend":False,
+                  "save_plot":False,
+                  "directory":None,
+                  "specific_descriptor":self.options["specific_descriptor"],
+                  "general_descriptor":self.options["general_descriptor"]+"Plot",
+                  "file_name":None,
+                  "plots_per_column":2,
+                  "plot_format":'r--x',
+                 "fill_unit_rectangle":True,
+                 "fill_color":'b',
+                 "fill_opacity":.25,
+                 "fill_edge_color":'r',
+                  "plot_size":(8, 10),
+                  "dpi":80}
+
+        plot_options={}
+        for key,value in defaults.iteritems():
+            plot_options[key]=value
+        for key,value in options.iteritems():
+            plot_options[key]=value
+
+        frequency_list=self["Frequency"]
+        y_columns=self.column_names[1:]
+        number_plots=int(len(self.column_names)-1)
+        number_columns=int(plot_options["plots_per_column"])
+        number_rows=int(round(float(number_plots)/float(number_columns)))
+
+        fig, axes = plt.subplots(nrows=number_rows,ncols=number_columns,
+                                 figsize=plot_options["plot_size"],dpi=plot_options["dpi"])
+        for plot_index,ax in enumerate(axes.flat):
+            y_data=self.get_column(column_name=y_columns[plot_index])
+            ax.plot(frequency_list,y_data,plot_options["plot_format"],label=y_columns[plot_index])
+            ax.set_xlabel(self.column_names[0])
+            #ax.set_ylabel(y_columns[plot_index])
+            ax.set_title(y_columns[plot_index])
+            if plot_options["display_legend"]:
+                ax.legend()
+
+        plt.tight_layout()
+        # Dealing with the save option
+        if plot_options["file_name"] is None:
+            file_name=auto_name(specific_descriptor=plot_options["specific_descriptor"],
+                                general_descriptor=plot_options["general_descriptor"],
+                                directory=plot_options["directory"],extension='png',padding=3)
+        else:
+            file_name=plot_options["file_name"]
+        if plot_options["save_plot"]:
+            #print file_name
+            plt.savefig(os.path.join(plot_options["directory"],file_name))
+        else:
+            plt.show()
+        return fig
+
 
 #-----------------------------------------------------------------------------
 # Module Scripts

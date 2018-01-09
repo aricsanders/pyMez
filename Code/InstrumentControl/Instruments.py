@@ -356,7 +356,7 @@ class VisaInstrument(InstrumentSheet):
     """ General Class to communicate with COMM and GPIB instruments
     This is a blend of the pyvisa resource and an xml description. """
     def __init__(self,resource_name=None,**options):
-        """ Intializes the VisaInstrument Class"""
+        """ Initializes the VisaInstrument Class"""
         defaults={"state_directory":os.getcwd(),
                   "instrument_description_directory":os.path.join(PYMEASURE_ROOT,'Instruments')}
         self.options={}
@@ -1185,7 +1185,7 @@ class VNA(VisaInstrument):
         # do we want comment options?
         options = {"column_names_begin_token": "!", "data_delimiter": "  ", "column_names": column_names,
                    "data": wparameter_data, "specific_descriptor": "Wave_Parameters",
-                   "general_descriptor": "One_Port", "extension": "w2p"}
+                   "general_descriptor": "Two_Port", "extension": "w2p"}
         if self.measure_w2p_options["w2p_options"]:
             for key,value in self.measure_w2p_options["w2p_options"].iteritems():
                 options[key]=value
@@ -1194,10 +1194,22 @@ class VNA(VisaInstrument):
 
 class NRPPowerMeter(VisaInstrument):
     """Controls RS power meters"""
+    def initialize(self):
+        """Initializes the power meter to a state with W units, 10ms aperture and Avgerage power readings"""
+        self.write("*RST")
+        self.write("UNIT:POW W")
+        self.write("SENS:FUNC POW:AVG")
+        self.write("SENS:APER 10 MS")
+        self.write("INIT")
     def get_reading(self):
         """Intializes and fetches a reading"""
         self.write("INIT")
-        return self.query("FETCh?")
+        return float(self.query("FETCh?").replace("\n",""))
+    def set_units(self,unit):
+        """Sets the power meters units, aceptable units are W or adBM"""
+        # Todo put an input checker on this to only allow desired commands
+        self.write("UNIT:POW {0}".format(unit))
+
 #-------------------------------------------------------------------------------
 # Module Scripts
 

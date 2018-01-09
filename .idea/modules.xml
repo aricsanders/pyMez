@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://C:/Share/Diogo's Python Code/.idea/Diogo's Python Code.iml" filepath="C:/Share/Diogo's Python Code/.idea/Diogo's Python Code.iml" />
       <module fileurl="file://$USER_HOME$/PyCharmProjects/Jupyter-Notebooks/.idea/Jupyter-Notebooks.iml" filepath="$USER_HOME$/PyCharmProjects/Jupyter-Notebooks/.idea/Jupyter-Notebooks.iml" />
       <module fileurl="file://$PROJECT_DIR$/../aricsanders.github.io/.idea/aricsanders.github.io.iml" filepath="$PROJECT_DIR$/../aricsanders.github.io/.idea/aricsanders.github.io.iml" />
       <module fileurl="file://$PROJECT_DIR$/../boa/.idea/boa.iml" filepath="$PROJECT_DIR$/../boa/.idea/boa.iml" />
