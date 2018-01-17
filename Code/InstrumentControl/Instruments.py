@@ -1201,14 +1201,206 @@ class NRPPowerMeter(VisaInstrument):
         self.write("SENS:FUNC POW:AVG")
         self.write("SENS:APER 10 MS")
         self.write("INIT")
+
     def get_reading(self):
         """Intializes and fetches a reading"""
         self.write("INIT")
         return float(self.query("FETCh?").replace("\n",""))
+
     def set_units(self,unit):
         """Sets the power meters units, aceptable units are W or adBM"""
         # Todo put an input checker on this to only allow desired commands
         self.write("UNIT:POW {0}".format(unit))
+
+class HighSpeedOscope(VisaInstrument):
+    """Control Class for high speed oscilloscopes. Based on code from Diogo """
+    def initialize(self,**options):
+        """Initializes the oscilloscope  for data collection"""
+        defaults = {"reset": True}
+        initialize_options = {}
+        for key, value in defaults.iteritems():
+            initialize_options[key] = value
+        for key, value in options:
+            initialize_options[key] = value
+        pass
+
+    def measure_waves(self,**options):
+        """Returns data for a measurement in an AsciiDataTable"""
+        defaults = {"number_frames": 1,"number_points":self.get_number_points(),
+                    "timebase_scale":self.get_timebase_scale(),"channels":[1,2,3,4],
+                    "initial_time_offset":self.get_time_position(),"timeout_measurement":10000,
+                    "save_data":False,"data_format":"dat","directory":os.getcwd(),
+                    "specific_descriptor":"Scope","general_descriptor":"Measurement","add_header":False,
+                    "output_table_options":{"data_delimiter":"  ","treat_header_as_comment":True}
+                    }
+        self.measure_options = {}
+        for key, value in defaults.iteritems():
+            self.measure_options[key] = value
+        for key, value in options:
+            self.measure_options[key] = value
+
+
+        channel_string_list=["CHAN1","CHAN2","CHAN3","CHAN4"]
+
+        # begin by setting timeout to timeout_measurement
+        timeout=self.timeout
+        self.timeout=self.measure_options["timeout_measurement"]
+
+        # now calculate timestep
+        self.measure_options["timestep"]=self.measure_options["timebase_scale"]/self.measure_options["number_points"]
+        time_step=self.measure_options["timestep"]
+
+        # now configure the scope for data transfer
+        # define the way the data is transmitted from the instrument to the PC
+        # Word -> 16bit signed integer
+        self.write(':WAV:FORM WORD')
+        # little-endian
+        self.write(':WAV:BYT LSBF')
+        number_rows=self.measure_options["number_points"]*self.measure_options["number_frames"]
+        # this is the way diogo did it
+        # number of points
+        number_points = self.measure_options["number_points"]
+        measurement_data = [range(number_rows)
+                            for x in range(len(self.measure_options["channels"]))]
+        for frame_index in range(self.measure_options["number_frames"]):
+
+            # calculate time position for this frame
+            time_position=frame_index*self.measure_options["timebase_scale"]+self.measure_options["initial_time_offset"]
+
+            # define postion to start the acquisition
+            self.write(':TIM:POS {0}ns'.format(time_position))
+
+            # acquire channels desired
+            channel_string=[]
+            for channel_index,channel in enumerate(self.measurement_options["channels"]):
+                if channel_index==len(self.measurement_options["channels"])-1:
+                    channel_string=channel_string+"{0}".format(channel_string_list[channel-1])
+                else:
+                    channel_string = channel_string + "{0},".format(channel_string_list[channel - 1])
+            channel_command=":DIG {0}".format(channel_string)
+            self.write(channel_command)
+
+            # trigger reading and wait
+            self.write("*OPC?")
+
+            # get data from the necessary channels
+            for channel_read_index,channel_read in enumerate(self.measurement_options["channels"]):
+                # get data for channel 1
+                self.write(':WAV:SOUR CHAN{0}'.format(channel_read))
+                # get data
+                measurement_data[channel_read_index][frame_index*number_points:(frame_index+1)*number_points-1] = self.query_binary_values(':WAV:DATA?', datatype='h')
+         # reset timeout
+        self.timeout=timeout
+        data_out=[]
+        time_start=self.measure_options["initial_time_offset"]
+        for row_index,data_row in enumerate(measurement_data):
+            new_row=[time_start+row_index*time_step]+data_row
+            data_out.append(new_row)
+        if self.measure_options["add_header"]:
+            header=[]
+            for key,value in self.measure_options.iteritems():
+                header.append("{0} = {1}".format(key,value))
+        else:
+            header=None
+        table_options={"data":data_out,
+                       "header":header,
+                       "specific_descriptor":self.measure_options["specific_descriptor"],
+                       "general_descriptor":self.measure_options["general_descriptor"],
+                       "extension":"dat",
+                       "directory":self.measure_options["directory"]}
+        for key,value in self.measure_options["output_table_options"].iteritems():
+            table_options[key]=value
+        output_table=AsciiDataTable(None,**table_options)
+        if self.measure_options["save_data"]:
+
+            data_save_path=auto_name(specific_descriptor=self.measure_options["specific_descriptor"],
+                                     general_descriptor=self.measure_options["general_descriptor"],
+                                     directory=self.measure_options["directory"],
+                                     extension='dat'
+                                     ,padding=3)
+            output_table.path=data_save_path
+            output_table.save()
+        return output_table
+
+
+
+
+    def get_error_state(self):
+        """Returns the error state of the oscope"""
+        state=self.query(':SYSTEM:ERROR? STRING')
+        self.error_state=state
+        return state
+
+    def set_number_points(self,number_points=16384):
+        """Sets the number of points for the acquisition"""
+        self.write(':ACQ:POINTS {0}'.format(number_points))
+
+    def get_number_points(self):
+        """Returns the number of points in the waveform"""
+        number_points= int(self.query(':WAV:POINTS?'))
+        return number_points
+
+    def set_time_position(self,time=50):
+        """Sets the time in ns to start the acquisition"""
+        self.write(':TIM:POS {0}ns'.format(time))
+
+    def get_time_position(self):
+        """Returns the time position in ns"""
+        position=float(self.query(":TIM:POS?"))
+        return position*10**9
+
+    def set_timebase_scale(self,time_scale=40.96):
+        """Sets the timebase scale in ns"""
+        self.write(':TIM:SCAL {0}ns'.format(time_scale))
+
+    def get_timebase_scale(self):
+        """Returns the timebase scale in ns"""
+        time_scale=float(self.query(':TIM:SCAL?'))
+        return time_scale*10**9
+
+    def set_trigger_source(self,source="FPAN"):
+        """Sets the tigger source, 'FPAN' Frontpanel or 'FRUN' freerun"""
+        self.write(':TRIG:SOUR {0}'.format(source))
+
+    def get_trigger_source(self):
+        """Returns the trigger source FPAN for FrontPanel or FRUN for free run"""
+        source=self.query(':TRIG:SOUR?')
+
+    def set_trigger_level(self,level=10):
+        """Sets the trigger level in mv"""
+        self.write(':TRIG:LEV {0}m'.format(level))
+
+    def get_trigger_level(self):
+        """Returns the trigger level"""
+        level=self.query(':TRIG:LEV?')
+
+    def set_channel_scale(self,scale=10,channel=1):
+        """Sets the scale in mv of channel. Default is 10mv/division on channel 1"""
+        self.write(':CHAN{0}:SCAL {1}m'.format(channel,scale))
+
+    def get_channel_scale(self,channel=1):
+        "Returns the scale for a specified channel, the default is channel 1"
+        scale=self.query(':CHAN{0}:SCAL?'.format(channel))
+        return scale
+
+    def set_channel_bandwidth(self,bandwidth="LOW",channel=1):
+        """Sets the specified channel's bandwith to LOW, MED or HIGH, default is to set channel 1 to LOW"""
+        self.write(':CHAN{0}:BAND {1}'.format(channel,bandwidth))
+
+    def get_channel_bandwidth(self,channel=1):
+        """Returns the selected channels bandwidth"""
+        bandwidth=self.query(':CHAN{0}:BAND?'.format(channel))
+        return bandwidth
+
+    def set_trigger_slope(self,slope="POS"):
+        """Sets the trigger slope on the oscope choose from POS or NEG"""
+        self.write(':TRIG:SLOP {0}'.format(slope))
+
+    def get_trigger_slope(self):
+        """Returns the trigger slope either POS or NEG"""
+        slope=self.query(":TRIG:SLOP?")
+        return slope
+
 
 #-------------------------------------------------------------------------------
 # Module Scripts
