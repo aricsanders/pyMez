@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="DEFAULT_INSTRUMENT_STYLE.xsl"?>
+<!-- Written by Aric Sanders 02/2016 -->
+<!-- Updated by Aric Sanders 07/2016 -->
+
+
+<Instrument>
+<!-- Information Specific To My E8361A-->
+    <Specific_Information>
+        <Name>86100C</Name>
+        <Alias>Agilent_86100C_4627_001</Alias>
+        <Location>Building 1, 4627</Location>
+        <Manual href="../Documenation/Manuals/86100_Programming_Guide.pdf"/>
+        <Image href="./86100C_Oscope_01_Images/86100C.jpg"/>
+        <Price></Price>
+        <Serial></Serial>
+        <IDN>Agilent Technologies,86100C,MY47440684,A.08.00</IDN>
+        <Instrument_Type>GPIB</Instrument_Type>
+        <Instrument_Address>GPIB::7</Instrument_Address>
+        <Purchase_Date></Purchase_Date>
+        <NIST_Tag>941783</NIST_Tag>
+    </Specific_Information>
+<!-- Information Common To All E8361A-->
+    <General_Information>
+    <Manufacturer>Agilent</Manufacturer>
+    <Manufacturer_Website href="http://www.keysight.com/" />
+     <Commands_Description>
+        <Command>This is the command sent over the GPIB bus.</Command>
+        <Type>Whether or not it returns a value or just sets something.</Type>
+        <Argument>The parameter the command passes to the instrument. Optional parameters
+        are denoted with an *. The types of paramters are int=integer, float=floating point number,
+        string=string, and None=NULL.</Argument>
+        <Returns> What gets returned by the function. </Returns>
+        <Description>A one line describing the purpose of the function, for more detailed info look in the manual. </Description>
+    </Commands_Description>
+     <Commands>
+
+
+    </Commands>
+    <Command_Parameter_Definitions>
+
+    </Command_Parameter_Definitions>
+    <State_Commands>
+        <Tuple Set=":ACQ:POINTS" Query=":WAV:POINTS?"/>
+        <Tuple Set=":TIM:POS" Query=":TIM:POS?"/>
+        <Tuple Set=":TIM:SCAL" Query=":TIM:SCAL?"/>
+        <Tuple Set=":TRIG:SOUR" Query=":TRIG:SOUR?"/>
+		<Tuple Set=":TRIG:LEV" Query=":TRIG:LEV?"/>
+		<Tuple Set=":TRIG:SLOP" Query=":TRIG:SLOP?"/>
+		<Tuple Set="SENS:SWE:TYPE" Query="SENS:SWE:TYPE?"/>
+    </State_Commands>
+    </General_Information>
+	
+</Instrument>
+
+
