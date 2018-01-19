@@ -1255,10 +1255,11 @@ class HighSpeedOscope(VisaInstrument):
 
         # now configure the scope for data transfer
         # define the way the data is transmitted from the instrument to the PC
+        self.write(':WAV:FORM ASCII')
         # Word -> 16bit signed integer
-        self.write(':WAV:FORM WORD')
+        #self.write(':WAV:FORM WORD')
         # little-endian
-        self.write(':WAV:BYT LSBF')
+        #self.write(':WAV:BYT LSBF')
         number_rows = self.measure_options["number_points"] * self.measure_options["number_frames"]
         # this is the way diogo did it
         # number of points
@@ -1292,7 +1293,8 @@ class HighSpeedOscope(VisaInstrument):
                 # get data for channel 1
                 self.write(':WAV:SOUR CHAN{0}'.format(channel_read))
                 # get data
-                data_column = self.resource.query_binary_values(':WAV:DATA?', datatype='h')
+                #data_column = self.resource.query_binary_values(':WAV:DATA?', datatype='h')
+                data_column = self.resource.query(':WAV:DATA?')
                 new_frame.append(data_column)
                 # print("{0} is {1}".format("data_column",data_column))
             frames_data.append(new_frame)
@@ -1309,8 +1311,8 @@ class HighSpeedOscope(VisaInstrument):
             for column_index, column in enumerate(frame):
                 for row_index, row in enumerate(column):
                     number_rows = len(column)
-                    print("{0} is {1}".format("([row_index+frame_index*number_rows],[column_index],[frame_index])",
-                                              ([row_index + frame_index * number_rows], [column_index], [frame_index])))
+                    # print("{0} is {1}".format("([row_index+frame_index*number_rows],[column_index],[frame_index])",
+                    #                           ([row_index + frame_index * number_rows], [column_index], [frame_index])))
                     measurement_data[row_index + frame_index * number_rows][column_index] = \
                     frames_data[frame_index][column_index][row_index]
         # reset timeout
