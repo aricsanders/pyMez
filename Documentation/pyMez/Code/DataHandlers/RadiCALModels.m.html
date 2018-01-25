@@ -5,7 +5,7 @@
 
     <title>pyMez.Code.DataHandlers.RadiCALModels API documentation</title>
     <meta name="description" content="Handles the data saved after running Radical to analyze data. The assumed
-format is .mat V7.3, if sa..." />
+ format is .mat V7.3, if s..." />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
@@ -1151,10 +1151,33 @@ table {
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMez.Code.DataHandlers.RadiCALModels</span> module</h1>
   <p>Handles the data saved after running Radical to analyze data. The assumed
-format is .mat V7.3, if saved in the older format, resave by setting preferences
-in matlab Environment-&gt;Preferences-&gt;General-&gt;MAT-Files-&gt;V7.3. This stores the result
-as an hd5 file with a .mat extension. Previous versions of matlab can be handled using
-scipy.io.loadmat, but this module does not use this function</p>
+ format is .mat V7.3, if saved in the older format, resave by setting preferences
+ in matlab Environment-&gt;Preferences-&gt;General-&gt;MAT-Files-&gt;V7.3. This stores the result
+ as an hd5 file with a .mat extension. Previous versions of matlab can be handled using
+ scipy.io.loadmat, but this module does not use this function
+ Examples</p>
+<hr />
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">rad</span><span class="o">=</span><span class="n">RadicalDataModel</span><span class="p">(</span><span class="s2">&quot;radical_datafile&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span><span class="n">rad</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+
+<h2>Requirements</h2>
+<ul>
+<li><a href="https://docs.python.org/2/library/sys.html">sys</a></li>
+<li><a href="https://docs.python.org/2/library/os.html?highlight=os#module-os">os</a></li>
+<li><a href="https://docs.python.org/2/library/types.html">types</a></li>
+<li><a href="https://github.com/aricsanders/pyMez">pyMez</a></li>
+<li>[h5py][http://www.h5py.org/]</li>
+</ul>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMez.Code.DataHandlers</code></a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.RadiCALModels', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.DataHandlers.RadiCALModels" class="source">
@@ -1169,7 +1192,33 @@ scipy.io.loadmat, but this module does not use this function</p>
 <span class="sd"> format is .mat V7.3, if saved in the older format, resave by setting preferences</span>
 <span class="sd"> in matlab Environment-&gt;Preferences-&gt;General-&gt;MAT-Files-&gt;V7.3. This stores the result</span>
 <span class="sd"> as an hd5 file with a .mat extension. Previous versions of matlab can be handled using</span>
-<span class="sd"> scipy.io.loadmat, but this module does not use this function&quot;&quot;&quot;</span>
+<span class="sd"> scipy.io.loadmat, but this module does not use this function</span>
+<span class="sd"> Examples</span>
+<span class="sd">--------</span>
+<span class="sd">    #!python</span>
+<span class="sd">    &gt;&gt;rad=RadicalDataModel(&quot;radical_datafile&quot;)</span>
+<span class="sd">    &gt;&gt;rad.show()</span>
+
+
+
+<span class="sd">Requirements</span>
+<span class="sd">------------</span>
+<span class="sd">+ [sys](https://docs.python.org/2/library/sys.html)</span>
+<span class="sd">+ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)</span>
+<span class="sd">+ [types](https://docs.python.org/2/library/types.html)</span>
+<span class="sd">+ [pyMez](https://github.com/aricsanders/pyMez)</span>
+<span class="sd">+ [h5py][http://www.h5py.org/]</span>
+
+
+<span class="sd">Help</span>
+<span class="sd">---------------</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMez.Code.DataHandlers`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMez_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Examples/Html/Examples_Home.html&quot;&gt;Examples Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;&quot;&quot;&quot;</span>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Standard Imports</span>

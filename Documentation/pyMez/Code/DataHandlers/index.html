@@ -1207,14 +1207,31 @@ It provides a model to open, print, add to and convert html to pdf.</p>
       
   
     <div class="desc"><p>A module that holds the models associated with the Microwave Uncertainty Framework.
-Most models are xml based</p></div>
+Most models are xml based. Has an interface for running .net as scripts</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">vna_uncert</span><span class="o">=</span><span class="n">MUFVNAUncert</span><span class="p">(</span><span class="s2">&quot;MyUncertaintyMenu.VNAUncert&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span><span class="n">vna_uncert</span><span class="o">.</span><span class="n">get_results_directory</span><span class="p">()</span>
+</pre></div>
+
+
+<p><h3>&lt;a h...</p></div>
 
       </div>
       <div class="item">
       <p class="name"><a href="NISTModels.m.html">pyMez.Code.DataHandlers.NISTModels</a></p>
       
   
-    <div class="desc"><p>NISTModels is a module to handle data types found at NIST in Boulder, CO</p></div>
+    <div class="desc"><p>NISTModels is a module to handle data types found at NIST in Boulder, CO</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">test_OnePortDUTModel</span><span class="p">()</span>
+</pre></div>
+
+
+<p><h3><a href="../../../Examples/Html/NISTModels_Example.html">NISTModels Example</a></h3></p>
+<h2>Requirements</h2>
+<ul>
+<li>[sys](https://docs.python.org/2/library/sys.h...</li>
+</ul></div>
 
       </div>
       <div class="item">
@@ -1222,9 +1239,9 @@ Most models are xml based</p></div>
       
   
     <div class="desc"><p>Handles the data saved after running Radical to analyze data. The assumed
-format is .mat V7.3, if saved in the older format, resave by setting preferences
-in matlab Environment-&gt;Preferences-&gt;General-&gt;MAT-Files-&gt;V7.3. This stores the result
-as an hd5 file with a .mat extension. Previous versions of m...</p></div>
+ format is .mat V7.3, if saved in the older format, resave by setting preferences
+ in matlab Environment-&gt;Preferences-&gt;General-&gt;MAT-Files-&gt;V7.3. This stores the result
+ as an hd5 file with a .mat extension. Previous versions o...</p></div>
 
       </div>
       <div class="item">

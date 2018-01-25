@@ -14,7 +14,7 @@ Instrument states, instrument sheets and file indices.
  Examples
 --------
     #!python
-    >>new_xml=HTMLBase(os.path.join(TESTS_DIRECTORY,"One_Port_Sparameter_20160303_001.xml"))
+    >>new_xml=XMLBase(os.path.join(TESTS_DIRECTORY,"One_Port_Sparameter_20160303_001.xml"))
     >>print(new_xml)
 
  <h3><a href="../../../Examples/Html/XMLModels_Example.html">XMLModels Example</a></h3>
