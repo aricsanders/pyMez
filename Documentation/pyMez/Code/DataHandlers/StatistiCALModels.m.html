@@ -2185,17 +2185,18 @@ information on statistical can be found at
                 <span class="k">raise</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Scripts</span>
-<span class="k">def</span> <span class="nf">test_StatistiCALWrapper</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot; Tests the wrapper class for the COM object &quot;&quot;&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Initializing an instance of Statistical&quot;</span><span class="p">)</span>
-    <span class="n">statiscal_app</span><span class="o">=</span><span class="n">StatistiCALWrapper</span><span class="p">()</span>
-    <span class="k">print</span> <span class="n">statiscal_app</span><span class="o">.</span><span class="n">Successful</span>
-    <span class="n">statiscal_app</span><span class="o">.</span><span class="n">ShowStatistiCAL</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">test_CalibrateDUTWrapper</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot; Tests the wrapper class for the COM object &quot;&quot;&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Initializing an instance of Statistical&quot;</span><span class="p">)</span>
-    <span class="n">calibrate_app</span><span class="o">=</span><span class="n">CalibrateDUTWrapper</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">WINDOWS_WRAPPER</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">test_StatistiCALWrapper</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot; Tests the wrapper class for the COM object &quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Initializing an instance of Statistical&quot;</span><span class="p">)</span>
+        <span class="n">statiscal_app</span><span class="o">=</span><span class="n">StatistiCALWrapper</span><span class="p">()</span>
+        <span class="k">print</span> <span class="n">statiscal_app</span><span class="o">.</span><span class="n">Successful</span>
+        <span class="n">statiscal_app</span><span class="o">.</span><span class="n">ShowStatistiCAL</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">WINDOWS_WRAPPER</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">test_CalibrateDUTWrapper</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot; Tests the wrapper class for the COM object &quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Initializing an instance of Statistical&quot;</span><span class="p">)</span>
+        <span class="n">calibrate_app</span><span class="o">=</span><span class="n">CalibrateDUTWrapper</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">test_StatistiCALSolutionModel</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;Solution_Plus.txt&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Tests the StatistiCALSolutionModel&quot;&quot;&quot;</span>

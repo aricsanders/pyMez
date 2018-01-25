@@ -11752,26 +11752,26 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a id="top"></a></p>
-<h1 id="Welcome-to-pymez,-an-open-source-python-library-for-science.">Welcome to pymez, an open source python library for science.<a class="anchor-link" href="#Welcome-to-pymez,-an-open-source-python-library-for-science.">&#182;</a></h1><p>This documentation is for the pymez package, designed by Aric Sanders <a href="mailto:aric.sanders@gmail.com"> aric.sanders@gmail.com </a> 2016.</p>
-<p><a href="./pymez/index.html">API Documentation </a> |
+<h1 id="Welcome-to-pyMez,-an-open-source-python-library-for-science.">Welcome to pyMez, an open source python library for science.<a class="anchor-link" href="#Welcome-to-pyMez,-an-open-source-python-library-for-science.">&#182;</a></h1><p>This documentation is for the pyMez package, designed by Aric Sanders <a href="mailto:aric.sanders@gmail.com"> aric.sanders@gmail.com </a> 2016.</p>
+<p><a href="./pyMez/index.html">API Documentation </a> |
 <a href="./Examples/html/Examples_Home.html">Examples</a> |
 <a href="./Reference_Index.html">Index </a></p>
 <h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">&#182;</a></h2><p><hr style="border-top: 3px double #8c8b8b;"/></p>
 <ol style="list-style-type: upper-roman">
 <li><h3> <a href="#intro">Introduction</a> </h3></li>
-A brief introduction to pymez and its motivation.
-<li><h3> <a href="#install">Installing and Loading pymez</a></h3> </li>
-How to install pymez and its requirements 
+A brief introduction to pyMez and its motivation.
+<li><h3> <a href="#install">Installing and Loading pyMez</a></h3> </li>
+How to install pyMez and its requirements 
 <li><h3> <a href="#help">Getting Help</a></h3> </li>
-How to get help on the pymez package and general.
-<li> <h3><a href="#design">The Design of pymez</a> </h3></li>
-The overall design of pymez, including how to contribute.
+How to get help on the pyMez package and general.
+<li> <h3><a href="#design">The Design of pyMez</a> </h3></li>
+The overall design of pyMez, including how to contribute.
 
 <li> <h3><a href="#license">License</a></h3> </li>
-pymez License Statement
+pyMez License Statement
 <!--
-<li><h3> <a href="#pymez-examples">pymez Specific Examples</a></h3> </li>
-Examples specific to the pymez package.
+<li><h3> <a href="#pyMez-examples">pyMez Specific Examples</a></h3> </li>
+Examples specific to the pyMez package.
 <li><h3> <a href="#general-examples">General Examples</a> </h3></li>
 Examples for general tasks in python and related packages.
 <li> <h3><a href="#nist-examples">NIST Examples</a> </h3></li>
@@ -11796,7 +11796,7 @@ Examples pertinent to work at NIST in Boulder.-->
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>pymez is a python package born out of the daily needs of a laboratory scientist. In particular, there is a constant need to use external equipment to acquire data, store that data in a sensible way, analyze the stored data, and generate collections and reports after analyzing the data. In the world of scientific computation there is an endless universe of solutions to do this, however none of the solutions met my personal daily needs and philosophy simultaneously. This package tries to stitch together many tools to meet those needs, while serving as a backend library to a webserver. It thus has a lot of other packages. It relies on these packages in different ways and may operate differently on different oeprating systems.Although it currently has a single primary developer, it is my hope that it will be adopted by at least 10's of people and help them accomplish their daily scientific goals.</p>
+<p>pyMez is a python package born out of the daily needs of a laboratory scientist. In particular, there is a constant need to use external equipment to acquire data, store that data in a sensible way, analyze the stored data, and generate collections and reports after analyzing the data. In the world of scientific computation there is an endless universe of solutions to do this, however none of the solutions met my personal daily needs and philosophy simultaneously. This package tries to stitch together many tools to meet those needs, while serving as a backend library to a webserver. It thus has a lot of other packages. It relies on these packages in different ways and may operate differently on different oeprating systems.Although it currently has a single primary developer, it is my hope that it will be adopted by at least 10's of people and help them accomplish their daily scientific goals.</p>
 
 </div>
 </div>
@@ -11808,7 +11808,7 @@ Examples pertinent to work at NIST in Boulder.-->
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a href="#top"> <em>back to top</em></a>  |  <a href="#intro"> <em>previous topic</em></a>  |  <a href="#install"> <em>next topic</em></a>
  <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="install">Installing and Loading pymez</a> </h2>
+<h2><a id="install">Installing and Loading pyMez</a> </h2>
 </div>
 </div>
 </div>
@@ -11822,7 +11822,7 @@ Examples pertinent to work at NIST in Boulder.-->
 <li>Install pyvisa using pip install pyvisa</li>
 <li>Install NI-Visa from <a href="http://www.ni.com/download/ni-visa-15.0.1/5693/en/">http://www.ni.com/download/ni-visa-15.0.1/5693/en/</a></li>
 <li>Clone boa repository to Anaconda2/Lib/site-packages</li>
-<li>Clone pymez to Anaconda2/Lib/site-packages</li>
+<li>Clone pyMez to Anaconda2/Lib/site-packages</li>
 <li>Install wx from source forge <a href="http://wxpython.org/">http://wxpython.org/</a></li>
 <li>In addition, the USB-GPIB interface needs drivers from NI (NI488.2 version 15) and a computer restart.</li>
 </ol>
@@ -11834,14 +11834,14 @@ Examples pertinent to work at NIST in Boulder.-->
 </ol>
 <h3 id="Development-Environment-Details">Development Environment Details<a class="anchor-link" href="#Development-Environment-Details">&#182;</a></h3><p>A detailed description of my development environment can be found <a href="./Examples/html/Development_Stack.html">here</a></p>
 <h3 id="Accessing-the-API-after-installation">Accessing the API after installation<a class="anchor-link" href="#Accessing-the-API-after-installation">&#182;</a></h3><p>The API is best accessed by importing as</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pymez</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMez</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 <p>However, if a specific function or class is required then direct import also works (this form imports the full API)</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pymez.Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyMez.Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
 </pre></div>
-<p>If you want to have the import skip the API, then add the pymez folder to sys.path and then import beginning with Code</p>
+<p>If you want to have the import skip the API, then add the pyMez folder to sys.path and then import beginning with Code</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">r&quot;C:\ProgramData\Anaconda2\Lib\site-packages\pymez&quot;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">r&quot;C:\ProgramData\Anaconda2\Lib\site-packages\pyMez&quot;</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">Code.DataHandlers.XMLModels</span> <span class="kn">import</span> <span class="n">XMLBase</span>
 </pre></div>
 
@@ -11864,19 +11864,19 @@ Examples pertinent to work at NIST in Boulder.-->
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>There are many ways to get help on pymez. Internal to pymez there are several primary help components:</p>
+<p>There are many ways to get help on pyMez. Internal to pyMez there are several primary help components:</p>
 <p><ul></p>
 <li>This page</li>
-<li> <a href="./pymez/index.html">API help</a></li>
+<li> <a href="./pyMez/index.html">API help</a></li>
 <li> <a href="./Examples/html/Examples_Home.html">Html Examples </a></li>
 <li> <a href="./Examples/jupyter/Examples_Home.ipynb">Jupyter Interactive Examples </a></li>
-<li><a href="./Reference_Index.html">Index of All Classes and Functions in pymez </a></li><p>&lt;/ul&gt;
+<li><a href="./Reference_Index.html">Index of All Classes and Functions in pyMez </a></li><p>&lt;/ul&gt;
 Additionally, python has a series of help functions including the command line tool
 pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help(object).</p>
 <div class="highlight"><pre><span></span><span class="err">?</span><span class="n">XMLBase</span>
 <span class="n">help</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">)</span>
 </pre></div>
-<p>In addition there are several tools in <a href="./pymez/Code/Utils/HelpUtils.m.html">pymez.Code.Utils.HelpUtils</a> for generating html based help files.</p>
+<p>In addition there are several tools in <a href="./pyMez/Code/Utils/HelpUtils.m.html">pyMez.Code.Utils.HelpUtils</a> for generating html based help files.</p>
 
 </div>
 </div>
@@ -11888,7 +11888,7 @@ pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a href="#top"> <em>back to top</em></a>  |  <a href="#help"> <em>previous topic</em></a>  |  <a href="#design"> <em>next topic</em></a>
  <hr style="border-top: 2px double #8c8b8b;"/></p>
-<h2><a id="design">The Design of pymez</a> </h2>
+<h2><a id="design">The Design of pyMez</a> </h2>
 </div>
 </div>
 </div>
@@ -11897,13 +11897,13 @@ pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Overall-Design-Goal">Overall Design Goal<a class="anchor-link" href="#Overall-Design-Goal">&#182;</a></h3><p>pymez was designed with the overal goal of being easy to use, well documented, well tested and modular. The overall design follows a pattern of Models (DataHandlers), View and View-Controllers (FrontEnds), Anaylsis and Instrument Control. The python modules that compose pymez follow these <a href="./Examples/jupyter/pymez_Module_Specification.ipynb">jupyter version of the guidelines</a> or <a href="./Examples/html/pymez_Module_Specification.html">html version of the guidelines</a></p>
+<h3 id="Overall-Design-Goal">Overall Design Goal<a class="anchor-link" href="#Overall-Design-Goal">&#182;</a></h3><p>pyMez was designed with the overall goal of being easy to use, well documented, well tested and modular. The overall design follows a pattern of Models (DataHandlers), View and View-Controllers (FrontEnds), Anaylsis and Instrument Control. The python modules that compose pyMez follow these <a href="./Examples/jupyter/pyMez_Module_Specification.ipynb">jupyter version of the guidelines</a> or <a href="./Examples/html/pyMez_Module_Specification.html">html version of the guidelines</a></p>
 <h3 id="Directory-Structure">Directory Structure<a class="anchor-link" href="#Directory-Structure">&#182;</a></h3><ul>
-<li> pymez : The top directory that should be installed in python27/Lib/site-packages or C:\ProgramData\Anaconda2\Lib\site-packages
+<li> pyMez : The top directory that should be installed in python27/Lib/site-packages or C:\ProgramData\Anaconda2\Lib\site-packages
 <ul>
 <li> Code: The top level folder for the code repository </li>
 <ul>
-<li>Utils: Subpackage for utility functions needed by all of pymez</li>
+<li>Utils: Subpackage for utility functions needed by all of pyMez</li>
 <li>DataHandlers: Data models needed by everything but Utils</li>
 <li>Analysis: Functions and classes based on analyzing data. Requires Utils and DataHandlers.</li>
 <li>InstrumentControl: Functions and classes that communicate with external devices. Requires Utils and DataHandlers</li>
@@ -11921,11 +11921,11 @@ pydoc, in <code>jupyter</code> or Ipython help can be reached by ?object or help
 </ul>
 </ul>
 </li>
-</ul><h3 id="Testing-Infrastructure">Testing Infrastructure<a class="anchor-link" href="#Testing-Infrastructure">&#182;</a></h3><p>pymez has a multi-tiered testing infrastructure. It is comprised of basic unit tests, mesoscopic in-module tests, and integration tests.</p>
+</ul><h3 id="Testing-Infrastructure">Testing Infrastructure<a class="anchor-link" href="#Testing-Infrastructure">&#182;</a></h3><p>pyMez has a multi-tiered testing infrastructure. It is comprised of basic unit tests, mesoscopic in-module tests, and integration tests.</p>
 <ol>
-<li><strong>Unit tests :</strong> These tests check if functions and classes with a basic input return what is expected. They are found in the module <a href="./pymez/Code/Utils/pymezUnitTest.m.html">pymez.Code.Utils.pymezUnitTests</a> </li>
-<li><strong>In Module Tests :</strong> Theses tests are scripts included in each module that test a series of things about functions or classes, they are typically named test_thing_of_interest(). For example in the module pymez.Code.DataHandlers.XMLModels there are &gt;15 scripts to test functions and classes with names like <a href="./pymez/Code/DataHandlers/XMLModels.m.html#pymez.Code.DataHandlers.XMLModels.test_get_header">test_get_header</a>.</li>
-<li><strong>Integration Tests:</strong> These tests check if a large number of interacting components work as expected. For the wx frontend this is primarily the class <a href="./pymez/Code/FrontEnds/AdvancedInterfaceFrame.m.html"> AdvancedInterfaceFrame</a>, or an integrated application that can open new window panels, run the in module tests and check if data objects appear as they are expected. For the django FrontEnd this is a Test_Server run using Django's development server found in manage.py. For Jupyter, this is a series of <a href="./Examples/jupyter/Examples_Home.ipynb">examples</a> that live in pymez/Documentation/Examples. </li>
+<li><strong>Unit tests :</strong> These tests check if functions and classes with a basic input return what is expected. They are found in the module <a href="./pyMez/Code/Utils/pyMezUnitTest.m.html">pyMez.Code.Utils.pyMezUnitTests</a> </li>
+<li><strong>In Module Tests :</strong> Theses tests are scripts included in each module that test a series of things about functions or classes, they are typically named test_thing_of_interest(). For example in the module pyMez.Code.DataHandlers.XMLModels there are &gt;15 scripts to test functions and classes with names like <a href="./pyMez/Code/DataHandlers/XMLModels.m.html#pyMez.Code.DataHandlers.XMLModels.test_get_header">test_get_header</a>.</li>
+<li><strong>Integration Tests:</strong> These tests check if a large number of interacting components work as expected. For the wx frontend this is primarily the class <a href="./pyMez/Code/FrontEnds/AdvancedInterfaceFrame.m.html"> AdvancedInterfaceFrame</a>, or an integrated application that can open new window panels, run the in module tests and check if data objects appear as they are expected. For the django FrontEnd this is a Test_Server run using Django's development server found in manage.py. For Jupyter, this is a series of <a href="./Examples/jupyter/Examples_Home.ipynb">examples</a> that live in pyMez/Documentation/Examples. </li>
 </ol>
 
 </div>

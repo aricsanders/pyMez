@@ -1253,7 +1253,15 @@ table {
 	<div id="variablesNavigation">
       
   <ul>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.CLR">CLR</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.DEFAULT_INSTRUMENT_SHEET_STYLE">DEFAULT_INSTRUMENT_SHEET_STYLE</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.DEFAULT_INSTRUMENT_STATE_STYLE">DEFAULT_INSTRUMENT_STATE_STYLE</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.DEFAULT_LOG_STYLE">DEFAULT_LOG_STYLE</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.DEFAULT_MEASUREMENT_STYLE">DEFAULT_MEASUREMENT_STYLE</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.DEFAULT_METADATA_STYLE">DEFAULT_METADATA_STYLE</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.DEFAULT_REGISTER_STYLE">DEFAULT_REGISTER_STYLE</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.DEFAULT_STYLE">DEFAULT_STYLE</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.DRIVER_FILE_EXTENSIONS">DRIVER_FILE_EXTENSIONS</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.EXIF_AVAILABLE">EXIF_AVAILABLE</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.MUFModels.GET_STATS_FIELDS">GET_STATS_FIELDS</a></li>
@@ -1326,10 +1334,11 @@ Most models are xml based</p>
     <span class="k">raise</span> <span class="ne">ImportError</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">clr</span>
+    <span class="n">CLR</span><span class="o">=</span><span class="bp">True</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module clr had an error or was not found. Please check that it is on the path and &quot;</span>
           <span class="s2">&quot;working properly&quot;</span><span class="p">)</span>
-    <span class="k">raise</span> <span class="ne">ImportError</span>
+    <span class="n">CLR</span><span class="o">=</span><span class="bp">False</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="k">except</span><span class="p">:</span>
@@ -1703,27 +1712,27 @@ Most models are xml based</p>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Scripts</span>
+<span class="k">if</span> <span class="n">CLR</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">run_muf_script</span><span class="p">(</span><span class="n">menu_location</span><span class="p">,</span><span class="n">timeit</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Opens a vnauncert or vnauncert_archive and runs it as is.&quot;&quot;&quot;</span>
 
-<span class="k">def</span> <span class="nf">run_muf_script</span><span class="p">(</span><span class="n">menu_location</span><span class="p">,</span><span class="n">timeit</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Opens a vnauncert or vnauncert_archive and runs it as is.&quot;&quot;&quot;</span>
-
-    <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SCRIPTABLE_MUF_LOCATION</span><span class="p">)</span>
-    <span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="s2">&quot;VNAUncertainty&quot;</span><span class="p">)</span>
-    <span class="kn">import</span> <span class="nn">VNAUncertainty</span>
-    <span class="kn">from</span> <span class="nn">System</span> <span class="kn">import</span> <span class="n">EventArgs</span><span class="p">,</span> <span class="n">Object</span>
-    <span class="n">event</span><span class="o">=</span><span class="n">EventArgs</span><span class="p">()</span>
-    <span class="n">vna</span> <span class="o">=</span><span class="n">VNAUncertainty</span><span class="o">.</span><span class="n">VNAUncertainty</span><span class="p">()</span>
-    <span class="n">vna</span><span class="o">.</span><span class="n">OnLoad</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-    <span class="n">vna</span><span class="o">.</span><span class="n">myOpenMenu</span><span class="p">(</span><span class="n">menu_location</span><span class="p">)</span>
-    <span class="n">vna</span><span class="o">.</span><span class="n">OnLocationChanged</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-    <span class="n">vna</span><span class="o">.</span><span class="n">RunCalibration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">vna</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">timeit</span><span class="p">:</span>
-        <span class="n">stop</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
-        <span class="n">runtime</span><span class="o">=</span><span class="n">stop</span><span class="o">-</span><span class="n">start</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;VNAUncertainty finished running  at {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stop</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The script took {0} seconds to run&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runtime</span><span class="o">.</span><span class="n">seconds</span><span class="p">))</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SCRIPTABLE_MUF_LOCATION</span><span class="p">)</span>
+        <span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="s2">&quot;VNAUncertainty&quot;</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">VNAUncertainty</span>
+        <span class="kn">from</span> <span class="nn">System</span> <span class="kn">import</span> <span class="n">EventArgs</span><span class="p">,</span> <span class="n">Object</span>
+        <span class="n">event</span><span class="o">=</span><span class="n">EventArgs</span><span class="p">()</span>
+        <span class="n">vna</span> <span class="o">=</span><span class="n">VNAUncertainty</span><span class="o">.</span><span class="n">VNAUncertainty</span><span class="p">()</span>
+        <span class="n">vna</span><span class="o">.</span><span class="n">OnLoad</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="n">vna</span><span class="o">.</span><span class="n">myOpenMenu</span><span class="p">(</span><span class="n">menu_location</span><span class="p">)</span>
+        <span class="n">vna</span><span class="o">.</span><span class="n">OnLocationChanged</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="n">vna</span><span class="o">.</span><span class="n">RunCalibration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">vna</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">timeit</span><span class="p">:</span>
+            <span class="n">stop</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+            <span class="n">runtime</span><span class="o">=</span><span class="n">stop</span><span class="o">-</span><span class="n">start</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;VNAUncertainty finished running  at {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stop</span><span class="p">))</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The script took {0} seconds to run&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runtime</span><span class="o">.</span><span class="n">seconds</span><span class="p">))</span>
 
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
@@ -1795,7 +1804,6 @@ Most models are xml based</p>
   <div id="source-pyMez.Code.DataHandlers.MUFModels.run_muf_script" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">run_muf_script</span><span class="p">(</span><span class="n">menu_location</span><span class="p">,</span><span class="n">timeit</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Opens a vnauncert or vnauncert_archive and runs it as is.&quot;&quot;&quot;</span>
-
     <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SCRIPTABLE_MUF_LOCATION</span><span class="p">)</span>
     <span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="s2">&quot;VNAUncertainty&quot;</span><span class="p">)</span>
@@ -3599,7 +3607,7 @@ In addition, it will update the options dictionary to reflect added rows, change
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
-            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">])</span>
+            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">]))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">insertBefore</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">DEFAULT_FILE_NAME</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
@@ -4015,7 +4023,7 @@ window (using wx)</p></div>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
-            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">])</span>
+            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">]))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">insertBefore</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">DEFAULT_FILE_NAME</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
@@ -4376,7 +4384,7 @@ window (using wx)</p></div>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
-            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">])</span>
+            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">]))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">insertBefore</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">DEFAULT_FILE_NAME</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
@@ -4931,7 +4939,7 @@ window (using wx)</p></div>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
-            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">])</span>
+            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">]))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">insertBefore</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">DEFAULT_FILE_NAME</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
@@ -5292,7 +5300,7 @@ window (using wx)</p></div>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
-            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">])</span>
+            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">]))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">insertBefore</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">DEFAULT_FILE_NAME</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
@@ -5864,7 +5872,7 @@ window (using wx)</p></div>
         <span class="c1"># Should be a relative path for</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;style_sheet&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">new_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createProcessingInstruction</span><span class="p">(</span><span class="s1">&#39;xml-stylesheet&#39;</span><span class="p">,</span>
-            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">])</span>
+            <span class="s1">u&#39;type=&quot;text/xsl&quot; href=&quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;style_sheet&#39;</span><span class="p">]))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">insertBefore</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">DEFAULT_FILE_NAME</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
@@ -6079,7 +6087,71 @@ window (using wx)</p></div>
 	
     <h2 class="section-title" id="header-variables">Module variables</h2>
       <div class="item">
+      <p id="pyMez.Code.DataHandlers.MUFModels.CLR" class="name">var <span class="ident">CLR</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMez.Code.DataHandlers.MUFModels.DEFAULT_FILE_NAME" class="name">var <span class="ident">DEFAULT_FILE_NAME</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.DataHandlers.MUFModels.DEFAULT_INSTRUMENT_SHEET_STYLE" class="name">var <span class="ident">DEFAULT_INSTRUMENT_SHEET_STYLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.DataHandlers.MUFModels.DEFAULT_INSTRUMENT_STATE_STYLE" class="name">var <span class="ident">DEFAULT_INSTRUMENT_STATE_STYLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.DataHandlers.MUFModels.DEFAULT_LOG_STYLE" class="name">var <span class="ident">DEFAULT_LOG_STYLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.DataHandlers.MUFModels.DEFAULT_MEASUREMENT_STYLE" class="name">var <span class="ident">DEFAULT_MEASUREMENT_STYLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.DataHandlers.MUFModels.DEFAULT_METADATA_STYLE" class="name">var <span class="ident">DEFAULT_METADATA_STYLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.DataHandlers.MUFModels.DEFAULT_REGISTER_STYLE" class="name">var <span class="ident">DEFAULT_REGISTER_STYLE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.DataHandlers.MUFModels.DEFAULT_STYLE" class="name">var <span class="ident">DEFAULT_STYLE</span></p>
       
   
   <div class="source_cont">

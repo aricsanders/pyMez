@@ -1074,6 +1074,7 @@ table {
 	<div id="functionsNavigation">
       
   <ul>
+    <li class="mono"><a href="#pyMez.rename_all.add_init_to_all">add_init_to_all</a></li>
     <li class="mono"><a href="#pyMez.rename_all.replace_all">replace_all</a></li>
   </ul>
 
@@ -1127,17 +1128,17 @@ table {
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Constants</span>
-<span class="n">ORIGINAL_TEXT</span><span class="o">=</span><span class="s2">&quot;pyMeasure&quot;</span>
+<span class="n">ORIGINAL_TEXT</span><span class="o">=</span><span class="s2">&quot;pymez&quot;</span>
 <span class="n">REPLACE_VALUE</span><span class="o">=</span><span class="s2">&quot;pyMez&quot;</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
-<span class="c1"># Module Functions</span>
+<span class="c1"># Module Scripts</span>
 <span class="k">def</span> <span class="nf">replace_all</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Tries to replace all occurances of ORIGINAL_TEXT with REPLACE_VALUE,</span>
-<span class="sd">    do not run it on the git directories it corrupts the index&quot;&quot;&quot;</span>
+<span class="sd">    do not run it on the git directories it corrupts the index or on images&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;git|idea&quot;</span><span class="p">,</span><span class="n">directory</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;git|idea|png|jpg|gif|bmp&quot;</span><span class="p">,</span><span class="n">filename</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
                     <span class="k">raise</span>
                 <span class="n">infile</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="n">filename</span><span class="p">),</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
                 <span class="n">infile_contents</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -1148,16 +1149,28 @@ table {
                 <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not replace term in file {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="n">filename</span><span class="p">)))</span>
-<span class="c1">#-----------------------------------------------------------------------------</span>
-<span class="c1"># Module Classes</span>
+<span class="k">def</span> <span class="nf">add_init_to_all</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Script that looks for an __init__.py file in every folder and if it is not there inserts one. This is a</span>
+<span class="sd">    very uninspired hack to the problem of including data in the distribution&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;git|idea&quot;</span><span class="p">,</span><span class="n">directory</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
 
-<span class="c1">#-----------------------------------------------------------------------------</span>
-<span class="c1"># Module Scripts</span>
+            <span class="k">if</span> <span class="s2">&quot;__init__.py&quot;</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+                <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Runner</span>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">replace_all</span><span class="p">(</span><span class="s2">&quot;C:\ProgramData\Anaconda2\Lib\site-packages\pymez\Code&quot;</span><span class="p">)</span>
+    <span class="c1">#replace_all(&quot;C:\ProgramData\Anaconda2\Lib\site-packages\pymez\Code&quot;)</span>
+    <span class="n">replace_all</span><span class="p">(</span><span class="s2">r&quot;C:\ProgramData\Anaconda2\Lib\site-packages\pyMez\Documentation&quot;</span><span class="p">)</span>
+
 
     
 </pre></div>
@@ -1171,6 +1184,39 @@ table {
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
+    <div class="name def" id="pyMez.rename_all.add_init_to_all">
+    <p>def <span class="ident">add_init_to_all</span>(</p><p>top_directory)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Script that looks for an <strong>init</strong>.py file in every folder and if it is not there inserts one. This is a
+very uninspired hack to the problem of including data in the distribution</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.rename_all.add_init_to_all', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.rename_all.add_init_to_all" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_init_to_all</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Script that looks for an __init__.py file in every folder and if it is not there inserts one. This is a</span>
+<span class="sd">    very uninspired hack to the problem of including data in the distribution&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;git|idea&quot;</span><span class="p">,</span><span class="n">directory</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="s2">&quot;__init__.py&quot;</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+                <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
     <div class="name def" id="pyMez.rename_all.replace_all">
     <p>def <span class="ident">replace_all</span>(</p><p>top_directory)</p>
     </div>
@@ -1179,17 +1225,17 @@ table {
     
   
     <div class="desc"><p>Tries to replace all occurances of ORIGINAL_TEXT with REPLACE_VALUE,
-do not run it on the git directories it corrupts the index</p></div>
+do not run it on the git directories it corrupts the index or on images</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.rename_all.replace_all', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.rename_all.replace_all" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">replace_all</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Tries to replace all occurances of ORIGINAL_TEXT with REPLACE_VALUE,</span>
-<span class="sd">    do not run it on the git directories it corrupts the index&quot;&quot;&quot;</span>
+<span class="sd">    do not run it on the git directories it corrupts the index or on images&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;git|idea&quot;</span><span class="p">,</span><span class="n">directory</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;git|idea|png|jpg|gif|bmp&quot;</span><span class="p">,</span><span class="n">filename</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
                     <span class="k">raise</span>
                 <span class="n">infile</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="n">filename</span><span class="p">),</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
                 <span class="n">infile_contents</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>

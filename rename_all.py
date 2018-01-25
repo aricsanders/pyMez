@@ -15,7 +15,7 @@ import re
 
 #-----------------------------------------------------------------------------
 # Module Constants
-ORIGINAL_TEXT="pyMeasure"
+ORIGINAL_TEXT="pymez"
 REPLACE_VALUE="pyMez"
 #-----------------------------------------------------------------------------
 # Module Scripts
@@ -25,7 +25,7 @@ def replace_all(top_directory):
     for directory, dirnames, filenames in os.walk(top_directory):
         for filename in filenames:
             try:
-                if re.search("git|idea|png|jpg|gif|bmp",directory,re.IGNORECASE):
+                if re.search("git|idea|png|jpg|gif|bmp",filename,re.IGNORECASE):
                     raise
                 infile=open(os.path.join(directory,filename),"r")
                 infile_contents=infile.read()
@@ -56,7 +56,7 @@ def add_init_to_all(top_directory):
 # Module Runner
 if __name__ == '__main__':
     #replace_all("C:\ProgramData\Anaconda2\Lib\site-packages\pymez\Code")
-    add_init_to_all(r"C:\Users\sandersa\Desktop\Distribution\src\pyMez")
+    replace_all(r"C:\ProgramData\Anaconda2\Lib\site-packages\pyMez\Documentation")
 
 
     

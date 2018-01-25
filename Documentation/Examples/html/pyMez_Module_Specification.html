@@ -11754,7 +11754,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 style="text-align:center">pymez Module Specification</h1><p><hr style="border-top: 3px double #8c8b8b;"/></p>
+<h1 style="text-align:center">pyMez Module Specification</h1><p><hr style="border-top: 3px double #8c8b8b;"/></p>
 <p><ol style='list-style-type: upper-roman;'></p>
 <p><h2><li>Module Naming Convention </li></h2> 
 Modules are named as UpperCamelCase (breaking from python tradition)</p>
@@ -11764,13 +11764,13 @@ Modules are named as UpperCamelCase (breaking from python tradition)</p>
 <div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Graph Models stores sub classes of graphs that define data translations. All edges</span>
 <span class="sd">or the functions that define translations from one format to another</span>
-<span class="sd">are found in &lt;a href=&quot;./Translations.m.html&quot;&gt;`pymez.Code.DataHandlers.Translations`&lt;/a&gt;.</span>
+<span class="sd">are found in &lt;a href=&quot;./Translations.m.html&quot;&gt;`pyMez.Code.DataHandlers.Translations`&lt;/a&gt;.</span>
 <span class="sd">Currently, the module networkx is used to display the graph.</span>
 
 <span class="sd">Examples</span>
 <span class="sd">--------</span>
 <span class="sd">    #!python</span>
-<span class="sd">    &gt;&gt;from pymez import *</span>
+<span class="sd">    &gt;&gt;from pyMez import *</span>
 <span class="sd">    &gt;&gt;image_graph=ImageGraph()</span>
 <span class="sd">    &gt;&gt;image_graph.set_state(&#39;png&#39;,&#39;my_png.png&#39;)</span>
 <span class="sd">    &gt;&gt;image_graph.move_to_node(&#39;EmbeddedHtml&#39;)</span>
@@ -11786,13 +11786,13 @@ Modules are named as UpperCamelCase (breaking from python tradition)</p>
 <span class="sd">+ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)</span>
 <span class="sd">+ [networkx](http://networkx.github.io/)</span>
 <span class="sd">+ [numpy](http://www.numpy.org/)</span>
-<span class="sd">+ [pymez](https://github.com/aricsanders/pymez)</span>
+<span class="sd">+ [pyMez](https://github.com/aricsanders/pyMez)</span>
 
 <span class="sd">Help</span>
 <span class="sd">---------------</span>
-<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pymez.Code.DataHandlers`&lt;/a&gt;</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMez.Code.DataHandlers`&lt;/a&gt;</span>
 <span class="sd">&lt;div&gt;</span>
-<span class="sd">&lt;a href=&quot;../../../pymez_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../pyMez_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
 <span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
 <span class="sd">&lt;a href=&quot;../../Examples/Html/Examples_Home.html&quot;&gt;Examples Home&lt;/a&gt; |</span>
 <span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index&lt;/a&gt;</span>
@@ -11809,7 +11809,7 @@ Modules are named as UpperCamelCase (breaking from python tradition)</p>
 <div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">Code.DataHandlers.GeneralModels</span> <span class="kn">import</span> <span class="o">*</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module pymez.Code.DataHandlers.GeneralModels was not found,&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module pyMez.Code.DataHandlers.GeneralModels was not found,&quot;</span>
               <span class="s2">&quot;please put it on the python path&quot;</span><span class="p">)</span>
         <span class="k">raise</span>  <span class="ne">ImportError</span>
 </pre></div>
@@ -11851,7 +11851,7 @@ There are several exceptions to the naming rules</p>
  <span class="kn">from</span> <span class="nn">Code.Utils.Alias</span> <span class="kn">import</span> <span class="o">*</span>
  <span class="n">METHOD_ALIASES</span><span class="o">=</span><span class="mi">1</span>
 <span class="k">except</span><span class="p">:</span>
- <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module pymez.Code.Utils.Alias was not found&quot;</span><span class="p">)</span>
+ <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module pyMez.Code.Utils.Alias was not found&quot;</span><span class="p">)</span>
  <span class="n">METHOD_ALIASES</span><span class="o">=</span><span class="mi">0</span>
  <span class="k">pass</span>
 </pre></div>
