@@ -9,7 +9,33 @@
  format is .mat V7.3, if saved in the older format, resave by setting preferences
  in matlab Environment->Preferences->General->MAT-Files->V7.3. This stores the result
  as an hd5 file with a .mat extension. Previous versions of matlab can be handled using
- scipy.io.loadmat, but this module does not use this function"""
+ scipy.io.loadmat, but this module does not use this function
+ Examples
+--------
+    #!python
+    >>rad=RadicalDataModel("radical_datafile")
+    >>rad.show()
+
+
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
++ [types](https://docs.python.org/2/library/types.html)
++ [pyMez](https://github.com/aricsanders/pyMez)
++ [h5py][http://www.h5py.org/]
+
+
+Help
+---------------
+<a href="./index.html">`pyMez.Code.DataHandlers`</a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>"""
 
 #-----------------------------------------------------------------------------
 # Standard Imports

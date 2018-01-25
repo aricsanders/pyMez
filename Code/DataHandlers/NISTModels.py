@@ -5,7 +5,34 @@
 # Created:     2/22/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" NISTModels is a module to handle data types found at NIST in Boulder, CO """
+""" NISTModels is a module to handle data types found at NIST in Boulder, CO
+
+Examples
+--------
+    #!python
+    >>test_OnePortDUTModel()
+
+
+ <h3><a href="../../../Examples/Html/NISTModels_Example.html">NISTModels Example</a></h3>
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
++ [types](https://docs.python.org/2/library/types.html)
++ [pyMez](https://github.com/aricsanders/pyMez)
++ [numpy][http://www.numpy.org/]
+
+
+Help
+---------------
+<a href="./index.html">`pyMez.Code.DataHandlers`</a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>"""
 
 #-----------------------------------------------------------------------------
 # Standard Imports

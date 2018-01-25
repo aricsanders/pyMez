@@ -6,7 +6,34 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ A module that holds the models associated with the Microwave Uncertainty Framework.
-Most models are xml based"""
+Most models are xml based. Has an interface for running .net as scripts
+
+Examples
+--------
+    #!python
+    >>vna_uncert=MUFVNAUncert("MyUncertaintyMenu.VNAUncert")
+    >>vna_uncert.get_results_directory()
+
+ <h3><a href="../../../Examples/Html/MUFModels_Example.html">MUFModels Example</a></h3>
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
++ [types](https://docs.python.org/2/library/types.html)
++ [pyMez](https://github.com/aricsanders/pyMez)
++ [pythonnet][https://github.com/pythonnet/pythonnet]
+
+
+Help
+---------------
+<a href="./index.html">`pyMez.Code.DataHandlers`</a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>"""
 
 #-----------------------------------------------------------------------------
 # Standard Imports
