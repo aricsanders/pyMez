@@ -1032,7 +1032,7 @@ def mean_from_history(history_frame,**options):
     defaults={"Device_Id":None, "System_Id":None,"Measurement_Timestamp":None,
               "Connector_Type_Measurement":None,
              "Measurement_Date":None,"Measurement_Time":None,"Direction":None,
-              "column_names":['Frequency','magS11','argS11']}
+              "column_names":['Frequency','magS11','argS11'],"outlier_removal":True}
     mean_options={}
     for key,value in defaults.iteritems():
         mean_options[key]=value
@@ -1047,6 +1047,11 @@ def mean_from_history(history_frame,**options):
             temp_frame=temp_frame[temp_frame[filter_type]==mean_options[filter_type]]
 #     temp_frame=temp_frame[temp_frame["Device_Id"]==mean_options["Device_Id"]]
 #     temp_frame=temp_frame[temp_frame["System_Id"]==mean_options["System_Id"]]
+    if mean_options["outlier_removal"]:
+        mean_s11=np.mean(temp_frame["magS11"])
+        std_s11=np.std(temp_frame["magS11"])
+        temp_frame=temp_frame[temp_frame["magS11"]<(mean_s11+3*std_s11)]
+        temp_frame = temp_frame[temp_frame["magS11"] > (mean_s11 + 3 * std_s11)]
     unique_frequency_list=temp_frame["Frequency"].unique()
     mean_array=[]
     for index,freq in enumerate(unique_frequency_list):
@@ -1069,7 +1074,7 @@ def median_from_history(history_frame,**options):
     defaults={"Device_Id":None, "System_Id":None,"Measurement_Timestamp":None,
               "Connector_Type_Measurement":None,
              "Measurement_Date":None,"Measurement_Time":None,"Direction":None,
-              "column_names":['Frequency','magS11','argS11']}
+              "column_names":['Frequency','magS11','argS11'],"outlier_removal":True}
     median_options={}
     for key,value in defaults.iteritems():
         median_options[key]=value
@@ -1082,6 +1087,11 @@ def median_from_history(history_frame,**options):
     for index,filter_type in enumerate(filters):
         if median_options[filter_type] is not None:
             temp_frame=temp_frame[temp_frame[filter_type]==median_options[filter_type]]
+    if median_options["outlier_removal"]:
+        mean_s11=np.mean(temp_frame["magS11"])
+        std_s11=np.std(temp_frame["magS11"])
+        temp_frame=temp_frame[temp_frame["magS11"]<(mean_s11+3*std_s11)]
+        temp_frame = temp_frame[temp_frame["magS11"] > (mean_s11 + 3 * std_s11)]
 #     temp_frame=temp_frame[temp_frame["Device_Id"]==median_options["Device_Id"]]
 #     temp_frame=temp_frame[temp_frame["System_Id"]==median_options["System_Id"]]
     unique_frequency_list=temp_frame["Frequency"].unique()
