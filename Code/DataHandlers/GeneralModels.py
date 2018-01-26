@@ -1672,6 +1672,18 @@ class AsciiDataTable():
         out_list=[self.data[i][column_selector] for i in range(len(self.data))]
         return out_list
 
+    def get_unique_column_values(self,column_name=None,column_index=None):
+        """Returns the unique values in a  column as a list given a column name or column index"""
+        if column_name is None:
+            if column_index is None:
+                return
+            else:
+                column_selector=column_index
+        else:
+            column_selector=self.column_names.index(column_name)
+        out_list=list(set([self.data[i][column_selector] for i in range(len(self.data))]))
+        return out_list
+
     def __getitem__(self, items):
         """Controls how the model responds to self["Item"]"""
         out_data=[]
