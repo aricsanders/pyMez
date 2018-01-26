@@ -56,7 +56,7 @@ def add_init_to_all(top_directory):
 # Module Runner
 if __name__ == '__main__':
     #replace_all("C:\ProgramData\Anaconda2\Lib\site-packages\pymez\Code")
-    replace_all(r"C:\ProgramData\Anaconda2\Lib\site-packages\pyMez\Documentation")
-
+    #replace_all(r"C:\ProgramData\Anaconda2\Lib\site-packages\pyMez\Documentation")
+    add_init_to_all(r"C:\Users\sandersa\Desktop\Distribution\src\pyMez")
 
     
