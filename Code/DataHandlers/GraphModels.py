@@ -783,24 +783,24 @@ class ImageGraph(Graph):
         for key,value in options.iteritems():
             self.options[key]=value
         Graph.__init__(self,**self.options)
-        self.add_node("jpg","Image",lambda x: Image_to_FileType(x,file_path="test",extension="jpg"),
+        self.add_node("Jpg","Image",lambda x: Image_to_FileType(x,file_path="test",extension="jpg"),
                              "Image",File_to_Image,node_description="Jpg File")
-        self.add_node("tiff","Image",lambda x: Image_to_FileType(x,file_path="test",extension="tiff"),
+        self.add_node("Tiff","Image",lambda x: Image_to_FileType(x,file_path="test",extension="tiff"),
                              "Image",File_to_Image,node_description="Tif File")
-        self.add_node("gif","Image",lambda x: Image_to_FileType(x,file_path="test",extension="gif"),
+        self.add_node("Gif","Image",lambda x: Image_to_FileType(x,file_path="test",extension="gif"),
                              "Image",File_to_Image,node_description="Gif File")
-        self.add_node("bmp","Image",lambda x: Image_to_FileType(x,file_path="test",extension="bmp"),
+        self.add_node("Bmp","Image",lambda x: Image_to_FileType(x,file_path="test",extension="bmp"),
                              "Image",File_to_Image,node_description="BMP File")
-        self.add_node("base64","png",PngFile_to_Base64,
-                             "png",Base64_to_PngFile,node_description="Base 64 PNG")
-        self.add_node("embeddedHTML","base64",Base64Png_to_EmbeddedHtmlString,
-                             "base64",EmbeddedHtmlString_to_Base64Png,node_description="Embedded HTML of PNG")
-        self.add_node("ndarray","png",PngFile_to_Ndarray,
-                             "png",Ndarray_to_PngFile,node_description="Numpy Array")
-        self.add_node("MatplotlibFigure","ndarray",Ndarray_to_MatplotlibFigure,
-                             "png",MatplotlibFigure_to_PngFile,node_description="MatplotlibFigure")
-        self.add_external_node("thumbnail","Image",Image_to_ThumbnailFile,external_node_description="JPEG Thumbnail")
-        self.add_external_node("matplotlib","ndarray",Ndarray_to_Matplotlib,
+        self.add_node("Base64","Png",PngFile_to_Base64,
+                             "Png",Base64_to_PngFile,node_description="Base 64 PNG")
+        self.add_node("EmbeddedHTML","Base64",Base64Png_to_EmbeddedHtmlString,
+                             "Base64",EmbeddedHtmlString_to_Base64Png,node_description="Embedded HTML of PNG")
+        self.add_node("Ndarray","Png",PngFile_to_Ndarray,
+                             "Png",Ndarray_to_PngFile,node_description="Numpy Array")
+        self.add_node("MatplotlibFigure","Ndarray",Ndarray_to_MatplotlibFigure,
+                             "Png",MatplotlibFigure_to_PngFile,node_description="MatplotlibFigure")
+        self.add_external_node("Thumbnail","Image",Image_to_ThumbnailFile,external_node_description="JPEG Thumbnail")
+        self.add_external_node("Matplotlib","Ndarray",Ndarray_to_Matplotlib,
                                       external_node_description="Matplotlib Plot")
 
 class MetadataGraph(Graph):

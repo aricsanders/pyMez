@@ -205,7 +205,8 @@ class HTMLBase(object):
             self.root.insert(0,head)
         else:
             print("head already exists, tag was not added ")
-            pass
+
+        self.head=self.root.head
 
     def add_body(self):
         """Adds a body tag to the model if it does not exist"""
@@ -216,6 +217,13 @@ class HTMLBase(object):
         else:
             print("body already exists, tag was not added ")
             pass
+        self.body=self.root.body
+
+    def clear(self):
+        """Clears all content in the HTML"""
+        element_list=self.root.getchildren()
+        for child in element_list:
+            self.root.remove(child)
 
     def append_to_body(self,element):
         """Appends the element to the body of the model, if it is a string it parses first, if it is a

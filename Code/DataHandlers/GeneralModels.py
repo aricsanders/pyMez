@@ -537,7 +537,7 @@ class TypeConversionError(Exception):
     """An error in the conversion of rows with provided types"""
     pass
 
-class AsciiDataTable():
+class AsciiDataTable(object):
     """ An AsciiDatable is a generalized model of a data table with optional header,
     column names,rectangular array of data, and footer """
     def __init__(self,file_path=None,**options):
