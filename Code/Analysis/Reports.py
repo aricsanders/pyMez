@@ -166,9 +166,176 @@ class HTMLReport(HTMLBase):
                                                    mime_type=mime_type))
 
 
-class CheckStandardReport(object):
-    """CheckStandardReport generates an HTML report based on a raw calibrated measurement of a checkstandard """
-    pass
+class CheckStandardReport(HTMLReport):
+    """Class that creates a report based on a calibrated measurement of a checkstandard. Input can be a file path to
+    any of the ascii data
+    types returned by the modified measlp program or a multiconnect mulitdirectional set of
+    measurements in magnitude / angle format.
+    The locations of the
+    CheckStandard data bases in csv format and the directory of the results files are required.
+    The report is composed of:
+    1. A plot of the raw file
+    2. A plot of the file with calrep style errors
+    3. A plot comparing the file with calrep style errors to the old results database
+    4. A plot comparing the difference of the file to the old results database
+    5. A plot comparing the file with calrep style errors to the mean of the new database with outliers excluded
+    6. A history plot of the check standard for the current measurement and the last n measurements (default is 5)
+    7. A complete history plot of the check standard
+    8. A set of download links in text and the formats set in options
+
+    If no file is specified and a checkstandard_name is, then only history and means of that checkstandard are shown in the
+    report"""
+
+    def __init__(self, file_path=None, **options):
+        """Initializes the CheckStandardReport Class"""
+        defaults = {"Device_Id": "CTN112",
+                    "results_directory": r'C:\Share\resfiles',
+                    "one_port_csv": COMBINED_ONE_PORT_CHKSTD_CSV,
+                    "two_port_csv": COMBINED_TWO_PORT_CHKSTD_CSV,
+                    "two_port_nr_csv": TWO_PORT_NR_CHKSTD_CSV,
+                    "power_csv": COMBINED_POWER_CHKSTD_CSV,
+                    "outlier_removal": True,
+                    }
+        self.options = {}
+        for key, value in defaults.iteritems():
+            self.options[key] = value
+        for key, value in options.iteritems():
+            self.options[key] = value
+
+        # html_options={}
+
+        HTMLReport.__init__(self, None, **self.options)
+        self.plots = {}
+        # set up dtypes for pandas
+        one_port_dtype = ONE_PORT_DTYPE
+        # this reads the NISTModels constant
+        if COMBINE_S11_S22:
+            one_port_dtype["arg"] = 'float'
+            one_port_dtype["mag"] = 'float'
+        else:
+            one_port_dtype["argS11"] = 'float'
+            one_port_dtype["magS11"] = 'float'
+            one_port_dtype["argS22"] = 'float'
+            one_port_dtype["magS22"] = 'float'
+        # create a history dictionary.
+        # print("{0} is {1}".format("self.options",self.options))
+        self.history_dict = {'1-port': pandas.read_csv(self.options["one_port_csv"], dtype=one_port_dtype),
+                             '2-port': pandas.read_csv(self.options["two_port_csv"]),
+                             '2-portNR': pandas.read_csv(self.options["two_port_nr_csv"]),
+                             'power': pandas.read_csv(self.options["power_csv"])}
+
+        if file_path is None:
+            # plot the results file
+            self.build_checkstandard_report()
+        else:
+            self.build_comparison_report(file_path)
+
+    def build_checkstandard_report(self):
+        """Builds the report for the options Device_Id"""
+        self.clear()
+        measurement_type = self.options["Device_Id"][-3]
+        if re.match("1", measurement_type):
+            self.options["Measurement_Type"] = "1-port"
+        elif re.match("2", measurement_type):
+            self.options["Measurement_Type"] = "2-port"
+        elif re.match("p", measurement_type, re.IGNORECASE):
+            self.options["Measurement_Type"] = "2-port"
+
+        self.results_file = ResultFileModel(os.path.join(self.options["results_directory"], self.options["Device_Id"]))
+        options = {"Device_Id": self.options["Device_Id"], "System_Id": None, "Measurement_Timestamp": None,
+                   "Connector_Type_Measurement": None,
+                   "Measurement_Date": None, "Measurement_Time": None, "outlier_removal": False}
+        if re.search('2-port', self.options["Measurement_Type"], re.IGNORECASE):
+            history_key = '2-port'
+            options["column_names"] = ['Frequency', 'magS11', 'argS11', 'magS21', 'argS21', 'magS22', 'argS22']
+
+        elif re.search('1-port', self.options["Measurement_Type"], re.IGNORECASE):
+            history_key = '1-port'
+            if COMBINE_S11_S22:
+                options["column_names"] = ['Frequency', 'magS11', 'argS11']
+            else:
+                options["column_names"] = ['Frequency', 'magS11', 'argS11', 'magS22', 'argS22']
+        elif re.search('Dry Cal|Thermistor|power', self.options["Measurement_Type"], re.IGNORECASE):
+            history_key = 'power'
+            options["column_names"] = ['Frequency', 'magS11', 'argS11', 'Efficiency', 'Calibration_Factor']
+        # print history[history_key][:5]
+        # print history_key
+        database = self.history_dict[history_key]
+        self.device_history = database[database["Device_Id"] == self.options["Device_Id"]]
+
+        self.mean_frame = mean_from_history(self.device_history, **options)
+
+    def build_comparison_report(self, raw_file_path=None):
+        """Builds the report for a raw file comparison, requires a raw_file_path to process"""
+        self.clear()
+        self.raw_measurement_model = sparameter_power_type(raw_file_path)
+        self.raw_measurement = globals()[self.raw_measurement_model](raw_file_path)
+        # print("{0} is {1}".format("self.raw_measurement.column_names",self.raw_measurement.column_names))
+        table = self.raw_measurement
+        self.plots["raw_plot"] = self.raw_measurement.show();
+        self.calrep_measurement = calrep(self.raw_measurement)
+        self.plots["calrep_plot"] = plot_calrep(self.calrep_measurement);
+        try:
+            self.results_file = ResultFileModel(os.path.join(self.options["results_directory"],
+                                                             self.calrep_measurement.metadata["Device_Id"]))
+        except:
+            self.results_file = None
+        options = {"Device_Id": table.metadata["Device_Id"], "System_Id": table.metadata["System_Id"],
+                   "Measurement_Timestamp": None,
+                   "Connector_Type_Measurement": table.metadata["Connector_Type_Measurement"],
+                   "Measurement_Date": None, "Measurement_Time": None, "outlier_removal": False}
+        if re.search('2-port',
+                     table.metadata["Measurement_Type"],
+                     re.IGNORECASE) and not re.search('2-portNR',
+                                                      table.metadata["Measurement_Type"],
+                                                      re.IGNORECASE):
+            history_key = '2-port'
+            options["column_names"] = ['Frequency', 'magS11', 'argS11', 'magS21', 'argS21', 'magS22', 'argS22']
+        elif re.search('2-portNR', table.metadata["Measurement_Type"], re.IGNORECASE):
+            history_key = '2-portNR'
+            options["column_names"] = ['Frequency', 'magS11', 'argS11', 'magS12', 'argS12', 'magS21', 'argS21',
+                                       'magS22', 'argS22']
+        elif re.search('1-port', table.metadata["Measurement_Type"], re.IGNORECASE):
+            history_key = '1-port'
+            if COMBINE_S11_S22:
+                options["column_names"] = ['Frequency', 'magS11', 'argS11']
+            else:
+                options["column_names"] = ['Frequency', 'magS11', 'argS11', 'magS22', 'argS22']
+        elif re.search('Dry Cal|Thermistor|power', table.metadata["Measurement_Type"], re.IGNORECASE):
+            history_key = 'power'
+            options["column_names"] = ['Frequency', 'magS11', 'argS11', 'Efficiency', 'Calibration_Factor']
+        # print history[history_key][:5]
+        # print history_key
+        database = self.history_dict[history_key]
+        self.device_history = database[database["Device_Id"] == self.options["Device_Id"]]
+
+        self.mean_frame = mean_from_history(self.device_history.copy(), **options)
+        # print mean_frame
+        self.difference_frame = raw_difference_frame(table, self.mean_frame)
+        # print("{0} is {1}".format("self.raw_measurement.column_names",self.raw_measurement.column_names))
+        # print difference_frame
+        self.plots["raw_compare_figure"] = raw_comparison_plot_with_residuals(table, self.mean_frame,
+                                                                              self.difference_frame)
+        #         stop_time=datetime.datetime.now()
+        #         diff=stop_time-start_time
+        self.plots["old_database"] = plot_calrep_results_comparison(self.calrep_measurement, self.results_file,
+                                                                    display_legend=True);
+        self.plots["old_database_difference"] = plot_calrep_results_difference_comparison(self.calrep_measurement,
+                                                                                          self.results_file,
+                                                                                          display_legend=True);
+
+    def get_measurement_dates(self):
+        """Returns measurement dates from self.device_history"""
+        dates = sorted(self.device_history["Measurement_Timestamp"].unique())
+        self.measurement_dates = dates[:]
+        return dates
+
+    def outlier_removal(self):
+        """Removes outliers frome self.device_history"""
+        mean_s11 = np.mean(self.device_history["magS11"])
+        std_s11 = np.std(self.device_history["magS11"])
+        self.device_history = self.device_history[self.device_history["magS11"] < (mean_s11 + 3 * std_s11)]
+        self.device_history = self.device_history[self.device_history["magS11"] > (mean_s11 - 3 * std_s11)]
 #-----------------------------------------------------------------------------
 # Module Scripts
 

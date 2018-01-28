@@ -1051,7 +1051,7 @@ def mean_from_history(history_frame,**options):
         mean_s11=np.mean(temp_frame["magS11"])
         std_s11=np.std(temp_frame["magS11"])
         temp_frame=temp_frame[temp_frame["magS11"]<(mean_s11+3*std_s11)]
-        temp_frame = temp_frame[temp_frame["magS11"] > (mean_s11 + 3 * std_s11)]
+        temp_frame = temp_frame[temp_frame["magS11"] > (mean_s11 - 3 * std_s11)]
     unique_frequency_list=temp_frame["Frequency"].unique()
     mean_array=[]
     for index,freq in enumerate(unique_frequency_list):
@@ -1091,7 +1091,7 @@ def median_from_history(history_frame,**options):
         mean_s11=np.mean(temp_frame["magS11"])
         std_s11=np.std(temp_frame["magS11"])
         temp_frame=temp_frame[temp_frame["magS11"]<(mean_s11+3*std_s11)]
-        temp_frame = temp_frame[temp_frame["magS11"] > (mean_s11 + 3 * std_s11)]
+        temp_frame = temp_frame[temp_frame["magS11"] > (mean_s11 - 3 * std_s11)]
 #     temp_frame=temp_frame[temp_frame["Device_Id"]==median_options["Device_Id"]]
 #     temp_frame=temp_frame[temp_frame["System_Id"]==median_options["System_Id"]]
     unique_frequency_list=temp_frame["Frequency"].unique()
