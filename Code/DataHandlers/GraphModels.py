@@ -770,8 +770,8 @@ class ImageGraph(Graph):
         """
     def __init__(self,**options):
         defaults={"graph_name":"Image Graph",
-                  "node_names":['Image','png'],
-                  "node_descriptions":["PIL Image","png"],
+                  "node_names":['Image','Png'],
+                  "node_descriptions":["PIL Image","Png"],
                   "current_node":'Image',
                   "state":[1,0],
                   "data":PIL.Image.open(os.path.join(TESTS_DIRECTORY,'test.png')),

@@ -1612,8 +1612,199 @@ def plot_calrep(calrep_model):
     plt.tight_layout()
     plt.show()
     return fig
+def plot_calrep_uncertainty(calrep_model,**options):
+    """Plots the uncertainty values for a calrep model versus frequency"""
+    defaults = {"display_legend": True,
+                "save_plot": False,
+                "directory": None,
+                "specific_descriptor": "Calrep_Uncertainty",
+                "general_descriptor": "Plot",
+                "file_name": None,
+                "error_suffixes":['b','a','d','g'] ,
+                "error_names":['Type B','SNIST','Connect','Total Uncertainty'],
+                "error_plot_formats": ['r-x','b-x','g-x','k-x']}
+    comparison_plot_options = {}
+    for key, value in defaults.iteritems():
+        comparison_plot_options[key] = value
+    for key, value in options.iteritems():
+        comparison_plot_options[key] = value
+    # figure out the number of plots based on the measurement type
+    measurement_type = calrep_model.metadata["Measurement_Type"]
+    if re.search('1|one', measurement_type, re.IGNORECASE):
+        number_plots = 2
+        column_names = ['magS11', 'argS11']
+    elif re.search('2|two', measurement_type, re.IGNORECASE):
+        if re.search('NR', measurement_type, re.IGNORECASE):
+            number_plots = 8
+            column_names = ['magS11', 'argS11', 'magS12', 'argS12', 'magS21', 'argS21', 'magS22', 'argS22']
+        else:
+            number_plots = 6
+            column_names = ['magS11', 'argS11', 'magS21', 'argS21', 'magS22', 'argS22']
+    else:
+        number_plots = 3
+        column_names = ['magS11', 'argS11', 'Efficiency']
+    # create the error column names
+    error_columns = []
+    for column in column_names[:]:
+        error_columns_per_plot=[]
+        for suffix in comparison_plot_options["error_suffixes"]:
+            error_column = column.replace("mag", "uM" +suffix )
+            error_column = error_column.replace("arg", "uA" + suffix)
+            error_column = error_column.replace("Efficiency", "uE" +suffix)
+            error_columns_per_plot.append(error_column)
+        error_columns.append(error_columns_per_plot)
+
+    # We want plots that have frequency as the x-axis and y that has an error
+    calrep_x = calrep_model["Frequency"]
+    number_rows = int(round(float(number_plots) / 2))
+    fig, compare_axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col', figsize=(8, 6), dpi=80)
+    # each axis has an error column
+    for plot_index, ax in enumerate(compare_axes.flat[:]):
+        for error_index,error_column in enumerate(error_columns[plot_index]):
+
+            error = np.array(calrep_model[error_column])
+            ax.plot(calrep_x, error, comparison_plot_options['error_plot_formats'][error_index],
+                    label='{0}'.format(comparison_plot_options['error_names'][error_index]))
+            ax.set_title(column_names[plot_index])
+
+        if comparison_plot_options["display_legend"]:
+            ax.legend()
+
+    # Dealing with the save option
+    if comparison_plot_options["file_name"] is None:
+        file_name = auto_name(specific_descriptor=comparison_plot_options["specific_descriptor"],
+                              general_descriptor=comparison_plot_options["general_descriptor"],
+                              directory=comparison_plot_options["directory"]
+                              , extension='png', padding=3)
+    else:
+        file_name = comparison_plot_options["file_name"]
+    if comparison_plot_options["save_plot"]:
+        # print file_name
+        plt.savefig(os.path.join(comparison_plot_options["directory"], file_name))
+    else:
+        plt.show()
+    return fig
+
+def plot_checkstandard_history(device_history, **options):
+    """Creates a plot of all of the measurements of a device from a history frame (pandas.DataFrame).
+     """
+    defaults = {"display_legend": True,
+                "save_plot": False,
+                "directory": None,
+                "specific_descriptor": "Checkstandard_History",
+                "general_descriptor": "Plot",
+                "file_name": None,
+                "min_num": 0,
+                "max_num": None,
+                "error_style": "area",
+                "extra_plots": None,
+                "extra_plot_labels": None,
+                "extra_plot_formats": None}
+    history_plot_options = {}
+    for key, value in defaults.iteritems():
+        history_plot_options[key] = value
+    for key, value in options.iteritems():
+        history_plot_options[key] = value
+    device_id = device_history["Device_Id"].unique().tolist()[0]
+    measurement_type = device_history["Measurement_Type"].unique().tolist()[0]
+    # The new method relies on metadata and not the class
+
+    try:
+        if re.search("1", measurement_type, re.IGNORECASE):
+            model = "OnePort"
+        elif re.search("2", measurement_type, re.IGNORECASE):
+            model = "TwoPort"
+        elif re.search('Dry Cal|Thermistor|power', measurement_type):
+            model = "Power"
+    except:
+        model = ""
+
+    # print("{0} is {1}".format("model",model))
+    unique_measurement_dates = sorted(device_history["Measurement_Timestamp"].unique().tolist())
+    number_dates = len(unique_measurement_dates[history_plot_options["min_num"]:history_plot_options["max_num"]])
+    extra_length = 0
+    if history_plot_options['extra_plots']:
+        extra_length = len(history_plot_options['extra_plots'])
+    number_measurements = number_dates + extra_length
+    # print("{0} are {1}".format("unique_measurement_dates",unique_measurement_dates))
+    number_rows = 0
+    if re.search('Power', model):
+        number_rows = 2
+        column_names = ['magS11', 'argS11', 'Efficiency', 'Calibration_Factor']
 
 
+    elif re.search('OnePort', model):
+        number_rows = 1
+        column_names = ['magS11', 'argS11']
+
+
+    elif re.search('TwoPort', model):
+        number_rows = 3
+        column_names = ['magS11', 'argS11', 'magS21', 'argS21', 'magS22', 'argS22']
+
+    fig, compare_axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col', figsize=(8, 6), dpi=80)
+    for index, ax in enumerate(compare_axes.flat):
+
+        # ax.xaxis.set_visible(False)
+        if re.search('arg', column_names[index]):
+            ax.set_ylabel('Phase(Degrees)', color='green')
+        elif re.search('mag', column_names[index]):
+            ax.set_ylabel(r'|{0}|'.format(column_names[index]), color='green')
+        # ax.set_title(column_names[index])
+        # initial plot of
+        if history_plot_options["extra_plots"]:
+            if history_plot_options["extra_plot_formats"]:
+                plot_formats = history_plot_options["extra_plot_formats"]
+            else:
+                plot_formats = ["r--" for plot in history_plot_options["extra_plots"]]
+            if history_plot_options["extra_plot_labels"]:
+                for model_index, model in enumerate(history_plot_options["extra_plots"]):
+                    x = model["Frequency"]
+                    y = model[column_names[index]]
+                    ax.plot(x, y, plot_formats[model_index],
+                            label=history_plot_options["extra_plot_labels"][model_index])
+            else:
+                for model_index, model in enumerate(history_plot_options["extra_plots"]):
+                    x = model["Frequency"]
+                    y = model[column_names[index]]
+                    ax.plot(x, y, plot_formats[model_index], label="Comparison {0}".format(model_index))
+
+        for date_index, date in enumerate(
+                unique_measurement_dates[history_plot_options["min_num"]:history_plot_options["max_num"]]):
+            number_lines = len(
+                unique_measurement_dates[history_plot_options["min_num"]:history_plot_options["max_num"]])
+            date_device_history = device_history[device_history["Measurement_Timestamp"] == date]
+            if not date_device_history.empty:
+                x_date = date_device_history['Frequency']
+                y_date = np.array(date_device_history[column_names[index]].tolist())
+                date_color = (1 - float(date_index + 1) / number_lines, 0, float(date_index + 1) / number_lines, .5)
+                ax.plot(x_date, y_date,
+                        color=date_color, label=date)
+
+        # ax.sharex(diff_axes[index])
+        if history_plot_options["display_legend"]:
+            if index == 1:
+                ax.legend(loc="center left", bbox_to_anchor=(1.05, .5),
+                          ncol=int(max([round(float(number_measurements) / 28.), 1])), shadow=True,
+                          title="Measurement Dates", fancybox=True)
+    compare_axes.flat[-2].set_xlabel('Frequency(GHz)', color='k')
+    compare_axes.flat[-1].set_xlabel('Frequency(GHz)', color='k')
+    fig.subplots_adjust(hspace=0)
+    plt.tight_layout()
+    fig.suptitle(device_id + "\n", fontsize=18, fontweight='bold', y=1.05, )
+    # Dealing with the save option
+    if history_plot_options["file_name"] is None:
+        file_name = auto_name(specific_descriptor=history_plot_options["specific_descriptor"],
+                              general_descriptor=history_plot_options["general_descriptor"],
+                              directory=history_plot_options["directory"], extension='png', padding=3)
+    else:
+        file_name = history_plot_options["file_name"]
+    if history_plot_options["save_plot"]:
+        # print file_name
+        plt.savefig(os.path.join(history_plot_options["directory"], file_name))
+    else:
+        plt.show()
+    return fig
 
 def plot_calrep_results_comparison(calrep_model, results_model, **options):
     """Plots a calrep file and a results file on the same axis. Input is a calrep table from the sparameter
@@ -1830,6 +2021,128 @@ def plot_calrep_comparison(calrep_model_list):
                 break
     plt.tight_layout()
     plt.show()
+    return fig
+
+
+def plot_checkstandard_history(device_history, **options):
+    """Creates a plot of all of the measurements of a device from a history frame (pandas.DataFrame).
+     """
+    defaults = {"display_legend": True,
+                "save_plot": False,
+                "directory": None,
+                "specific_descriptor": "Checkstandard_History",
+                "general_descriptor": "Plot",
+                "file_name": None,
+                "min_num": 0,
+                "max_num": None,
+                "error_style": "area",
+                "extra_plots": None,
+                "extra_plot_labels": None,
+                "extra_plot_formats": None}
+    history_plot_options = {}
+    for key, value in defaults.iteritems():
+        history_plot_options[key] = value
+    for key, value in options.iteritems():
+        history_plot_options[key] = value
+    device_id = device_history["Device_Id"].unique().tolist()[0]
+    measurement_type = device_history["Measurement_Type"].unique().tolist()[0]
+    # The new method relies on metadata and not the class
+
+    try:
+        if re.search("1", measurement_type, re.IGNORECASE):
+            model = "OnePort"
+        elif re.search("2", measurement_type, re.IGNORECASE):
+            model = "TwoPort"
+        elif re.search('Dry Cal|Thermistor|power', measurement_type):
+            model = "Power"
+    except:
+        model = ""
+
+    # print("{0} is {1}".format("model",model))
+    unique_measurement_dates = sorted(device_history["Measurement_Timestamp"].unique().tolist())
+    number_dates = len(unique_measurement_dates[history_plot_options["min_num"]:history_plot_options["max_num"]])
+    extra_length = 0
+    if history_plot_options['extra_plots']:
+        extra_length = len(history_plot_options['extra_plots'])
+    number_measurements = number_dates + extra_length
+    # print("{0} are {1}".format("unique_measurement_dates",unique_measurement_dates))
+    number_rows = 0
+    if re.search('Power', model):
+        number_rows = 2
+        column_names = ['magS11', 'argS11', 'Efficiency', 'Calibration_Factor']
+
+
+    elif re.search('OnePort', model):
+        number_rows = 1
+        column_names = ['magS11', 'argS11']
+
+
+    elif re.search('TwoPort', model):
+        number_rows = 3
+        column_names = ['magS11', 'argS11', 'magS21', 'argS21', 'magS22', 'argS22']
+
+    fig, compare_axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col', figsize=(8, 6), dpi=80)
+    for index, ax in enumerate(compare_axes.flat):
+
+        # ax.xaxis.set_visible(False)
+        if re.search('arg', column_names[index]):
+            ax.set_ylabel('Phase(Degrees)', color='green')
+        elif re.search('mag', column_names[index]):
+            ax.set_ylabel(r'|{0}|'.format(column_names[index]), color='green')
+        # ax.set_title(column_names[index])
+        # initial plot of
+        if history_plot_options["extra_plots"]:
+            if history_plot_options["extra_plot_formats"]:
+                plot_formats = history_plot_options["extra_plot_formats"]
+            else:
+                plot_formats = ["r--" for plot in history_plot_options["extra_plots"]]
+            if history_plot_options["extra_plot_labels"]:
+                for model_index, model in enumerate(history_plot_options["extra_plots"]):
+                    x = model["Frequency"]
+                    y = model[column_names[index]]
+                    ax.plot(x, y, plot_formats[model_index],
+                            label=history_plot_options["extra_plot_labels"][model_index])
+            else:
+                for model_index, model in enumerate(history_plot_options["extra_plots"]):
+                    x = model["Frequency"]
+                    y = model[column_names[index]]
+                    ax.plot(x, y, plot_formats[model_index], label="Comparison {0}".format(model_index))
+
+        for date_index, date in enumerate(
+                unique_measurement_dates[history_plot_options["min_num"]:history_plot_options["max_num"]]):
+            number_lines = len(
+                unique_measurement_dates[history_plot_options["min_num"]:history_plot_options["max_num"]])
+            date_device_history = device_history[device_history["Measurement_Timestamp"] == date]
+            if not date_device_history.empty:
+                x_date = date_device_history['Frequency']
+                y_date = np.array(date_device_history[column_names[index]].tolist())
+                date_color = (1 - float(date_index + 1) / number_lines, 0, float(date_index + 1) / number_lines, .5)
+                ax.plot(x_date, y_date,
+                        color=date_color, label=date)
+
+        # ax.sharex(diff_axes[index])
+        if history_plot_options["display_legend"]:
+            if index == 1:
+                ax.legend(loc="center left", bbox_to_anchor=(1.05, .5),
+                          ncol=int(max([round(float(number_measurements) / 28.), 1])), shadow=True,
+                          title="Measurement Dates", fancybox=True)
+    compare_axes.flat[-2].set_xlabel('Frequency(GHz)', color='k')
+    compare_axes.flat[-1].set_xlabel('Frequency(GHz)', color='k')
+    fig.subplots_adjust(hspace=0)
+    plt.tight_layout()
+    fig.suptitle(device_id + "\n", fontsize=18, fontweight='bold', y=1.05, )
+    # Dealing with the save option
+    if history_plot_options["file_name"] is None:
+        file_name = auto_name(specific_descriptor=history_plot_options["specific_descriptor"],
+                              general_descriptor=history_plot_options["general_descriptor"],
+                              directory=history_plot_options["directory"], extension='png', padding=3)
+    else:
+        file_name = history_plot_options["file_name"]
+    if history_plot_options["save_plot"]:
+        # print file_name
+        plt.savefig(os.path.join(history_plot_options["directory"], file_name))
+    else:
+        plt.show()
     return fig
 
 def plot_raw_MUF_comparison(raw_directory=r"C:\Share\35CalComp\35_ascii_results",

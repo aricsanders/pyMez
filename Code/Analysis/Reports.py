@@ -5,7 +5,8 @@
 # Created:     1/26/2018
 # License:     MIT License
 #-----------------------------------------------------------------------------
-"""Reports is a module dedicated to generating reports after data collection or analysis
+"""Reports is a module dedicated to generating reports after data collection or analysis. It contains models for
+basic html reports and the checkstandard reporting process.
 
   Examples
 --------
@@ -41,6 +42,16 @@ import re
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
 try:
+    from Code.Analysis.SParameter import *
+except:
+    print("Code.Analysis.SParameter did not import correctly")
+    raise ImportError
+try:
+    from Code.Analysis.Uncertainty import *
+except:
+    print("Code.Analysis.Uncertainty did not import correctly")
+    raise ImportError
+try:
     from Code.DataHandlers.NISTModels import *
 except:
     print("Code.DataHandlers.NISTModels did not import correctly")
@@ -62,6 +73,16 @@ except:
     raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants
+
+TWO_PORT_NR_CHKSTD_CSV=r"C:\Share\Converted_Check_Standard\Two_Port_NR_Check_Standard.csv"
+COMBINED_ONE_PORT_CHKSTD_CSV=r"C:\Share\Converted_Check_Standard\Combined_One_Port_Check_Standard.csv"
+COMBINED_TWO_PORT_CHKSTD_CSV=r"C:\Share\Converted_Check_Standard\Combined_Two_Port_Check_Standard.csv"
+COMBINED_POWER_CHKSTD_CSV=r"C:\Share\Converted_Check_Standard\Combined_Power_Check_Standard.csv"
+ONE_PORT_CALREP_CSV=r"C:\Share\Converted_DUT\One_Port_DUT.csv"
+TWO_PORT_CALREP_CSV=r"C:\Share\Converted_DUT\Two_Port_DUT.csv"
+POWER_3TERM_CALREP_CSV=r"C:\Share\Converted_DUT\Power_3Term_DUT.csv"
+POWER_4TERM_CALREP_CSV=r"C:\Share\Converted_DUT\Power_4Term_DUT.csv"
+
 DEFAULT_TOGGLE_SCRIPT="""<script type="text/javascript">
     function toggleId(id,$link){
     $node = document.getElementById(id);
@@ -141,10 +162,11 @@ class HTMLReport(HTMLBase):
         # might change this to self.ImageGraph and use it elsewhere
         image_graph = ImageGraph()
         image_graph.set_state(image_mode, image)
-        image_graph.move_to_node("embeddedHTML")
+        image_graph.move_to_node("EmbeddedHTML")
         self.append_to_body(image_graph.data)
 
-    def embedd_image_figure(self, image, image_mode="MatplotlibFigure", figure_id="image", caption="", **options):
+    def embedd_image_figure(self, image, image_mode="MatplotlibFigure", figure_id="image", caption="", style="",
+                            **options):
         """Embedds an image in the report. image_mode can be  MatplotlibFigure (a reference to the figure class),
         Image (the PIL class),
         Base64 (a string of the values),
@@ -153,10 +175,11 @@ class HTMLReport(HTMLBase):
         # might change this to self.ImageGraph and use it elsewhere
         image_graph = ImageGraph()
         image_graph.set_state(image_mode, image)
-        image_graph.move_to_node("embeddedHTML")
-        self.append_to_body("<figure id='{0}'>{1}<figcaption>{2}</figcaption></figure>".format(figure_id,
-                                                                                               image_graph.data,
-                                                                                               caption))
+        image_graph.move_to_node("EmbeddedHTML")
+        self.append_to_body("<figure id='{0}' style='{3}'>{1}<figcaption>{2}</figcaption></figure>".format(figure_id,
+                                                                                                           image_graph.data,
+                                                                                                           caption,
+                                                                                                           style))
 
     def add_download_link(self, content_string, text="Download File", suggested_name="test.txt",
                           mime_type="text/plain"):
@@ -164,6 +187,12 @@ class HTMLReport(HTMLBase):
         self.append_to_body(String_to_DownloadLink(content_string, text=text,
                                                    suggested_name=suggested_name,
                                                    mime_type=mime_type))
+
+    def clear(self):
+        """Clears all content in the HTML"""
+        element_list = self.root.getchildren()
+        for child in element_list:
+            self.root.remove(child)
 
 
 class CheckStandardReport(HTMLReport):
@@ -195,17 +224,29 @@ class CheckStandardReport(HTMLReport):
                     "two_port_nr_csv": TWO_PORT_NR_CHKSTD_CSV,
                     "power_csv": COMBINED_POWER_CHKSTD_CSV,
                     "outlier_removal": True,
+                    "last_n": 5,
+                    "download_formats": ["Csv"]
                     }
         self.options = {}
         for key, value in defaults.iteritems():
             self.options[key] = value
         for key, value in options.iteritems():
             self.options[key] = value
-
+        self.conversion_defaults = {"base_name": None,
+                                    "nodes": ['XmlFile', 'CsvFile', 'ExcelFile', 'OdsFile', 'MatFile', 'HtmlFile',
+                                              'JsonFile'],
+                                    "extensions": ['xml', 'csv', 'xlsx', 'ods', 'mat', 'html', 'json'],
+                                    "mime_types": ['application/xml', 'text/plain',
+                                                   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                                   'application/vnd.oasis.opendocument.spreadsheet',
+                                                   'application/x-matlab-data', 'text/html', 'application/json']}
         # html_options={}
 
         HTMLReport.__init__(self, None, **self.options)
-        self.plots = {}
+        self.plots = []
+        self.plot_ids = []
+        self.plot_titles = []
+        self.plot_captions = []
         # set up dtypes for pandas
         one_port_dtype = ONE_PORT_DTYPE
         # this reads the NISTModels constant
@@ -233,6 +274,10 @@ class CheckStandardReport(HTMLReport):
     def build_checkstandard_report(self):
         """Builds the report for the options Device_Id"""
         self.clear()
+        self.plots = []
+        self.plot_ids = []
+        self.plot_captions = []
+        self.plot_titles = []
         measurement_type = self.options["Device_Id"][-3]
         if re.match("1", measurement_type):
             self.options["Measurement_Type"] = "1-port"
@@ -262,19 +307,68 @@ class CheckStandardReport(HTMLReport):
         # print history_key
         database = self.history_dict[history_key]
         self.device_history = database[database["Device_Id"] == self.options["Device_Id"]]
-
+        if self.options["outlier_removal"]:
+            self.outlier_removal()
         self.mean_frame = mean_from_history(self.device_history, **options)
+        self.plots.append(plot_checkstandard_history(self.device_history))
+        self.plot_ids.append("completeHistory")
+        self.plot_titles.append("The Complete History of {0}".format(self.options["Device_Id"]))
+        self.plot_captions.append("""Figure {0}. Every measurement of {1} currently
+        in the database.""".format(len(self.plots), self.options["Device_Id"]))
+
+        self.plots.append(plot_checkstandard_history(self.device_history,
+                                                     min_num=len(self.get_measurement_dates()) - self.options[
+                                                         "last_n"] - 1,
+                                                     max_num=len(self.get_measurement_dates()) - 1,
+                                                     extra_plots=[self.results_file,
+                                                                  self.mean_frame],
+                                                     extra_plot_labels=["Historical Database", "Mean of New Database"],
+                                                     extra_plot_formats=["r--", "k^"]))
+        self.plot_ids.append("partialHistory")
+        self.plot_titles.append("""The last {0} measurements of {1}
+        compared with the historical database and mean. """.format(self.options["last_n"], self.options["Device_Id"]))
+        self.plot_captions.append("""Figure {0}. Last  {1} measurements of {2}
+        compared with historical database and mean""".format(len(self.plots),
+                                                             self.options["last_n"], self.options["Device_Id"]))
+
+        self.add_toggle_support()
+        summary_text = """
+        This device has been measured {0} times from {1} to {2}""".format(len(self.get_measurement_dates()),
+                                                                          min(self.get_measurement_dates()),
+                                                                          max(self.get_measurement_dates()))
+        self.add_report_heading()
+        self.append_to_body({"tag": "p", "text": summary_text})
+        self.add_all_plots()
 
     def build_comparison_report(self, raw_file_path=None):
         """Builds the report for a raw file comparison, requires a raw_file_path to process"""
         self.clear()
+        self.plots = []
+        self.plot_ids = []
+        self.plot_captions = []
+        self.plot_titles = []
         self.raw_measurement_model = sparameter_power_type(raw_file_path)
         self.raw_measurement = globals()[self.raw_measurement_model](raw_file_path)
         # print("{0} is {1}".format("self.raw_measurement.column_names",self.raw_measurement.column_names))
         table = self.raw_measurement
-        self.plots["raw_plot"] = self.raw_measurement.show();
+        self.options["Device_Id"] = table.metadata["Device_Id"]
+        self.plots.append(self.raw_measurement.show())
+        self.plot_ids.append("rawMeasurement")
+        self.plot_titles.append("Raw Measurement of {0}".format(self.options["Device_Id"]))
+        self.plot_captions.append("""Figure {0}. Raw measurement of {1}. The measurement of check standard {1}
+        in a calibrated mode.""".format(len(self.plots), self.options["Device_Id"]))
         self.calrep_measurement = calrep(self.raw_measurement)
-        self.plots["calrep_plot"] = plot_calrep(self.calrep_measurement);
+        self.plots.append(plot_calrep(self.calrep_measurement))
+        self.plot_ids.append("clarepMeasurement")
+        self.plot_titles.append("Plot of {0} with uncertainty".format(self.options["Device_Id"]))
+        self.plot_captions.append("""Figure {0}. Measurement of {1}. The measurement of check standard {1}
+        with nist total uncertainty.""".format(len(self.plots), self.options["Device_Id"]))
+        self.plots.append(plot_calrep_uncertainty(self.calrep_measurement))
+        self.plot_ids.append("clarepUncert")
+        self.plot_titles.append("Plot  Uncertainty Components".format(self.options["Device_Id"]))
+        self.plot_captions.append("""Figure {0}. Uncertainty Components.
+        The uncertainty in measurement of check standard {1}
+        .""".format(len(self.plots), self.options["Device_Id"]))
         try:
             self.results_file = ResultFileModel(os.path.join(self.options["results_directory"],
                                                              self.calrep_measurement.metadata["Device_Id"]))
@@ -308,21 +402,95 @@ class CheckStandardReport(HTMLReport):
         # print history_key
         database = self.history_dict[history_key]
         self.device_history = database[database["Device_Id"] == self.options["Device_Id"]]
-
+        if self.options["outlier_removal"]:
+            self.outlier_removal()
         self.mean_frame = mean_from_history(self.device_history.copy(), **options)
         # print mean_frame
         self.difference_frame = raw_difference_frame(table, self.mean_frame)
         # print("{0} is {1}".format("self.raw_measurement.column_names",self.raw_measurement.column_names))
         # print difference_frame
-        self.plots["raw_compare_figure"] = raw_comparison_plot_with_residuals(table, self.mean_frame,
-                                                                              self.difference_frame)
+        self.plots.append(raw_comparison_plot_with_residuals(table, self.mean_frame, self.difference_frame))
+        self.plot_ids.append("rawSummary")
+        self.plot_titles.append("Summary of Measurement and Mean of Complete Database with Resisduals")
+        self.plot_captions.append("""Figure {0}. Summary of Measurement and Mean with Resisduals.
+        Data for all measurements are being used""".format(len(self.plots)))
         #         stop_time=datetime.datetime.now()
         #         diff=stop_time-start_time
-        self.plots["old_database"] = plot_calrep_results_comparison(self.calrep_measurement, self.results_file,
-                                                                    display_legend=True);
-        self.plots["old_database_difference"] = plot_calrep_results_difference_comparison(self.calrep_measurement,
-                                                                                          self.results_file,
-                                                                                          display_legend=True);
+        self.plots.append(plot_calrep_results_comparison(self.calrep_measurement, self.results_file,
+                                                         display_legend=True))
+        self.plot_ids.append("compareWithUncertainty")
+        self.plot_titles.append("Measurement with Uncertainties compared with Historical Database")
+        self.plot_captions.append("""Figure {0}. Measurement with Uncertainties compared with Historical Database.
+        This is the current selection criteria""".format(len(self.plots)))
+
+        self.plots.append(plot_calrep_results_difference_comparison(self.calrep_measurement,
+                                                                    self.results_file,
+                                                                    display_legend=True))
+        self.plot_ids.append("compareWithUncertaintyDifference")
+        self.plot_titles.append("The Difference of Measurement with Uncertainties compared with Historical Database")
+        self.plot_captions.append("""Figure {0}. The Difference of Measurement with Uncertainties
+        compared with Historical Database.
+        This is the current selection criteria.""".format(len(self.plots)))
+
+        column_names = return_calrep_value_column_names(self.calrep_measurement)
+        error_column_names = return_calrep_error_column_names(column_names)
+        self.standard_error = standard_error_data_table(self.calrep_measurement, self.results_file,
+                                                        table_1_uncertainty_column_names=error_column_names,
+                                                        value_column_names=column_names, expansion_factor=1)
+        number_columns_pass = self.standard_error.get_conformation_dictionary().values().count(True)
+        number_columns = len(self.standard_error.get_conformation_dictionary().values())
+        good = int(round(float(number_columns_pass - 1) / float(number_columns - 1)))
+        pass_fail = ""
+        if good:
+            pass_fail = "PASSES"
+        else:
+            pass_fail = "FAILS"
+        self.plots.append(self.standard_error.show())
+        self.plot_ids.append("standardErrror")
+        self.plot_titles.append(
+            "The Standard Error of Measurement with Uncertainties compared with Historical Database")
+        self.plot_captions.append("""Figure {0}. The Standard Error of Measurement with Uncertainties
+        compared with Historical Database.
+        This is the current selection criteria.""".format(len(self.plots)))
+
+        self.plots.append(plot_checkstandard_history(self.device_history))
+        self.plot_ids.append("completeHistory")
+        self.plot_titles.append("The Complete History of {0}".format(self.options["Device_Id"]))
+        self.plot_captions.append("""Figure {0}. Every measurement of {1} currently
+        in the database.""".format(len(self.plots), self.options["Device_Id"]))
+
+        self.plots.append(plot_checkstandard_history(self.device_history,
+                                                     min_num=len(self.get_measurement_dates()) - self.options[
+                                                         "last_n"] - 1,
+                                                     max_num=len(self.get_measurement_dates()) - 1,
+                                                     extra_plots=[self.results_file,
+                                                                  self.mean_frame],
+                                                     extra_plot_labels=["Historical Database", "Mean of New Database"],
+                                                     extra_plot_formats=["r--", "k^"]))
+        self.plot_ids.append("partialHistory")
+        self.plot_titles.append("""The last {0} measurements of {1}
+        compared with the historical database and mean. """.format(self.options["last_n"], self.options["Device_Id"]))
+        self.plot_captions.append("""Figure {0}. Last  {1} measurements of {2}
+        compared with historical database and mean""".format(len(self.plots),
+                                                             self.options["last_n"], self.options["Device_Id"]))
+
+        self.add_toggle_support()
+        summary_text = """This is a summary of the measurement of {0} made on {1} by {2}. This measurement
+        {3} the checkstandard process.
+        This device has been measured {4} times from {5} to {6}""".format(self.options["Device_Id"],
+                                                                          self.raw_measurement.metadata[
+                                                                              "Measurement_Date"],
+                                                                          self.raw_measurement.metadata["Operator"],
+                                                                          pass_fail,
+                                                                          len(self.get_measurement_dates()),
+                                                                          min(self.get_measurement_dates()),
+                                                                          max(self.get_measurement_dates()))
+        self.add_report_heading()
+        self.append_to_body({"tag": "p", "text": summary_text})
+        self.add_download_table()
+        self.add_table_border_style()
+        self.add_metadata_section()
+        self.add_all_plots()
 
     def get_measurement_dates(self):
         """Returns measurement dates from self.device_history"""
@@ -336,11 +504,132 @@ class CheckStandardReport(HTMLReport):
         std_s11 = np.std(self.device_history["magS11"])
         self.device_history = self.device_history[self.device_history["magS11"] < (mean_s11 + 3 * std_s11)]
         self.device_history = self.device_history[self.device_history["magS11"] > (mean_s11 - 3 * std_s11)]
+
+    def add_all_plots(self, **options):
+        """Adds all plots in the attribute self.plots"""
+        defaults = {"clear_before": False,
+                    "style": "display:none",
+                    "figure_width": 14}
+        add_options = {}
+        for key, value in defaults.iteritems():
+            add_options[key] = value
+        for key, value in options.iteritems():
+            add_optionss[key] = value
+        if add_options["clear_before"]:
+            self.clear()
+        for index, plot in enumerate(self.plots):
+            id_text = self.plot_ids[index]
+            self.append_to_body({"tag": "hr"})
+            self.append_to_body({"tag": "h2", "text": self.plot_titles[index]})
+            self.add_toggle(id_text)
+            plot.set_figwidth(add_options["figure_width"])
+            self.embedd_image_figure(plot, figure_id="{0}".format(id_text),
+                                     style=add_options["style"], caption=self.plot_captions[index])
+            self.append_to_body({"tag": "hr"})
+
+    def add_report_heading(self, heading_text=None, **options):
+        """Adds a heading to the report, clears the report by default"""
+        defaults = {"clear_before": False}
+        add_options = {}
+        for key, value in defaults.iteritems():
+            add_options[key] = value
+        for key, value in options.iteritems():
+            add_optionss[key] = value
+        if add_options["clear_before"]:
+            self.clear()
+        if heading_text is None:
+            heading_text = "Check Standard Report for {0}".format(self.options["Device_Id"])
+        self.append_to_body({"tag": "h1", "text": heading_text})
+
+    def add_toggle_support(self):
+        """Adds a toggle style and script to the report"""
+        self.add_toggle_script()
+        self.add_toggle_style()
+
+    def add_download_table(self,
+                           download_formats=["CsvFile", "ExcelFile"],
+                           download_extensions=["csv", "xlsx"],
+                           mime_types=["text/plain",
+                                       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+                           **options):
+        """Adds a table of downloadable files"""
+        defaults = {"clear_before": False,
+                    "download_files": [self.raw_measurement, self.calrep_measurement, self.results_file,
+                                       self.mean_frame, self.device_history],
+                    "download_files_input_format": ["AsciiDataTable", "AsciiDataTable", "AsciiDataTable", "DataFrame",
+                                                    "DataFrame"],
+                    "download_files_base_names": ["Raw_Measurement.txt",
+                                                  "Measurement_NIST_Uncertainties.txt",
+                                                  "Historical_Database.txt",
+                                                  "Mean_Database.txt",
+                                                  "Device_History.txt"],
+                    "style": "display:none;border:1;"}
+
+        add_options = {}
+        for key, value in defaults.iteritems():
+            add_options[key] = value
+        for key, value in options.iteritems():
+            add_optionss[key] = value
+        if add_options["clear_before"]:
+            self.clear()
+        self.append_to_body({"tag": "h2", "text": "Downloads"})
+        self.add_toggle("downloads")
+        table_graph = TableGraph()
+        # convert all data to AsciiDataTable format
+        download_table = "<table id='downloads' style='{0}'>".format(add_options["style"])
+        for index, download in enumerate(add_options["download_files"][:]):
+            if add_options["download_files_input_format"][index] not in ["AsciiDataTable"]:
+                table_graph.set_state(add_options["download_files_input_format"][index], download)
+                table_graph.move_to_node("AsciiDataTable")
+                download = table_graph.data.copy()
+            # now we cycle throught the download formats, for each file we load the graph and then create the download links
+            ascii_download = String_to_DownloadLink(string=str(download),
+                                                    mime_type="text/plain",
+                                                    suggested_name=add_options["download_files_base_names"][index],
+                                                    text=add_options["download_files_base_names"][index])
+            print("{0} is {1}".format("index", index))
+            table_graph.set_state("AsciiDataTable", download)
+
+            download_links = TableGraph_to_Links(table_graph,
+                                                 base_name=add_options["download_files_base_names"][index],
+                                                 nodes=download_formats,
+                                                 extensions=download_extensions,
+                                                 mime_types=mime_types)
+
+            download_table = download_table + "<tr><td>{0}</td><td>{1}</td></tr>".format(ascii_download, download_links)
+        download_table = download_table + "</table>"
+        self.append_to_body(download_table)
+        self.append_to_body({"tag": "hr"})
+
+    def add_metadata_section(self, style="display:none;border: 1px solid black;"):
+        """Adds a metadata section if self.raw_measurement exits"""
+        try:
+            self.append_to_body({"tag": "h2", "text": "Measurement Metadata"})
+            self.add_toggle("metadata")
+            self.append_to_body({"tag": "hr"})
+            meta_table = "<table id='metadata' style='{0}'>".format(style)
+            for key, value in self.raw_measurement.metadata.iteritems():
+                meta_table = meta_table + "<tr><td>{0}</td><td>{1}</td></tr>".format(key, value)
+            meta_table = meta_table + "</table>"
+            self.append_to_body(meta_table)
+        except:
+            pass
+
+    def add_table_border_style(self):
+        """Adds a css style tag to the head of the sheet to display all borders"""
+        self.append_to_head({"tag": "style", "text": """table, th, td {
+        border: 1px solid black;}"""})
+
+
 #-----------------------------------------------------------------------------
 # Module Scripts
+def test_CheckStandardReport(raw_file_path=os.path.join(TESTS_DIRECTORY,'CTN208.R1_062614')):
+        """Tests the checkstandard report class"""
+        report=CheckStandardReport(raw_file_path)
+        report.show()
 
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    pass
+    test_CheckStandardReport()
     
