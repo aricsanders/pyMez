@@ -1249,8 +1249,7 @@ class HighSpeedOscope(VisaInstrument):
         self.resource.timeout = self.measure_options["timeout_measurement"]
 
         # now calculate timestep
-        self.measure_options["timestep"] = self.measure_options["timebase_scale"] / self.measure_options[
-            "number_points"]
+        self.measure_options["timestep"] = 10.*float(self.measure_options["timebase_scale"]) / float(self.measure_options["number_points"])
         time_step = self.measure_options["timestep"]
 
         # now configure the scope for data transfer
@@ -1294,7 +1293,7 @@ class HighSpeedOscope(VisaInstrument):
                 self.write(':WAV:SOUR CHAN{0}'.format(channel_read))
                 # get data
                 data_column = self.resource.query(':WAV:DATA?')
-                data_column = data_column.replace("\n", "").split(",")
+                data_column = data_column.replace("\n", "").replace("1-","-").split(",")
                 new_frame.append(data_column)
                 # print("{0} is {1}".format("data_column",data_column))
             frames_data.append(new_frame)
@@ -1321,11 +1320,11 @@ class HighSpeedOscope(VisaInstrument):
 
                     for row_index, data_row in enumerate(measurement_data):
                         new_row = [time_start + row_index * time_step] + data_row
-                    data_out.append(new_row)
+                        data_out.append(new_row)
                     if self.measure_options["add_header"]:
                         header = []
-                    for key, value in self.measure_options.iteritems():
-                        header.append("{0} = {1}".format(key, value))
+                        for key, value in self.measure_options.iteritems():
+                            header.append("{0} = {1}".format(key, value))
                     else:
                         header = None
                     column_names = ["Time"]
@@ -1347,8 +1346,8 @@ class HighSpeedOscope(VisaInstrument):
                                                    directory=self.measure_options["directory"],
                                                    extension='dat'
                                                    , padding=3)
-                    output_table.path = data_save_path
-                    output_table.save()
+                        output_table.path = data_save_path
+                        output_table.save()
 
         return output_table
 

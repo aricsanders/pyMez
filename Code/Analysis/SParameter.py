@@ -389,9 +389,24 @@ def plot_reference_curve(reference_curve, **options):
 def calrep(raw_model,**options):
     """ Performs the calrep analysis routine on a raw data format (such as OnePortRawModel, TwoPortRawModel,PowerRawModel)
     Differs from the HP BASIC program in that it keeps the metadata Needs to be checked, returns 4 error terms for power
-    Also does not calculate all the same rows for power, expansion factor is set to 2"""
-    mean_file=frequency_model_collapse_multiple_measurements(raw_model)
-    standard_deviation_file=frequency_model_collapse_multiple_measurements(raw_model,method="std")
+    Also does not calculate all the same rows for power, expansion factor is set to 2, requires that the raw model
+    has the attribute raw_model.metadata["Connector_Type_Measurement"] defined. If the columns passed in raw_model
+    do not have repeat values or contain text the result will set connect uncertainty to zero"""
+    try:
+        mean_file=frequency_model_collapse_multiple_measurements(raw_model)
+    except:
+        mean_file=raw_model
+    try:
+        standard_deviation_file=frequency_model_collapse_multiple_measurements(raw_model,method="std")
+    except:
+        std_data=[]
+        for row in mean_file.data:
+            new_row=[]
+            for column in mean_file.data[0]:
+                new_row.append(0)
+            std_data.append(new_row)
+        standard_deviation_file=AsciiDataTable(None,column_names=raw_model.column_names,
+                                               data=std_data,column_types=raw_model.options["column_types"])
     if "Direction" in mean_file.column_names and "Connect" in mean_file.column_names:
         mean_file.remove_column("Direction")
         mean_file.remove_column("Connect")
