@@ -7,7 +7,7 @@
 #-----------------------------------------------------------------------------
 """ This module handles HPBasic code when it has already been converted to .txt (DOS ASCII).
  To convert from native format to DOS ASCII, install HPBasic, Run HP Basic and
-  type: SAVE CONFIGURE ASCII OFF
+  type: CONFIGURE SAVE ASCII OFF
   Then
   LOAD "My_File"
   SAVE "My_ASCII_File"
@@ -30,7 +30,7 @@ HTML_PREFIX="""<!DOCTYPE html>
 </head>
 <body>
 <h1> A highlighted Plain Text version of %s Basic Program</h1>
-<pre><code class="language-basic"><script>"""
+<pre><code class="language-basic line-numbers"><script>"""
 HTML_POSTFIX="""</script>
 
 </code></pre>
@@ -49,7 +49,7 @@ def HPBasic_to_HTML(file_name,file_path_output=None):
     in_lines=[]
     in_file=open(file_name,'r')
     for line in in_file:
-        in_lines.append(line)
+        in_lines.append(str(line))
     out_file=open(file_path_output,'w')
     out_file.write(HTML_PREFIX%(file_name,file_name))
     for line in in_lines:
@@ -84,4 +84,7 @@ class HPBasicCode():
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    pass
+    HPBasic_to_HTML(r"C:\Share\DC\calrep14_4_ascii")
+    HPBasic_to_HTML(r"C:\Share\DC\meas14_3DC_ascii")
+
+
