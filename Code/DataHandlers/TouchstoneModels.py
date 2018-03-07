@@ -529,17 +529,33 @@ class S1PV1(SNPBase):
             # set the values associated with the option line
             for key,value in match.groupdict().iteritems():
                 self.__dict__[key.lower()]=value
+            if re.match('db',self.format,re.IGNORECASE):
+                self.column_names=S2P_DB_COLUMN_NAMES
+                self.row_pattern=make_row_match_string(S2P_DB_COLUMN_NAMES)
+            elif re.match('ma',self.format,re.IGNORECASE):
+                self.column_names=S2P_MA_COLUMN_NAMES
+                self.row_pattern=make_row_match_string(S2P_MA_COLUMN_NAMES)
+            elif re.match('ri',self.format,re.IGNORECASE):
+                self.column_names=S2P_RI_COLUMN_NAMES
+                self.row_pattern=make_row_match_string(S2P_RI_COLUMN_NAMES)
             # now we handle the cases if data or sparameter_complex is specified
             if self.data is [] and self.sparameter_complex is[]:
                 pass
-            elif self.sparameter_complex is []:
+            elif self.sparameter_complex in [[],None]:
                 for row in self.data:
                     self.add_sparameter_complex_row(row)
                     #print("{0} is {1}".format("row",row))
-            elif self.data is []:
-                self.data=[[0,0,0,0,0,0,0,0,0] for row in self.sparameter_complex]
+            elif self.data in [[],None]:
+                self.data=[[0,0,0] for row in self.sparameter_complex]
                 #print self.data
                 self.change_data_format(new_format=self.format)
+            if self.comments is None:
+                number_line_comments=0
+            else:
+                number_line_comments=[str(comment[2]) for comment in self.comments].count('0')
+            self.options["sparameter_begin_line"]=number_line_comments+1
+            self.options["sparameter_end_line"]= self.options["sparameter_begin_line"]\
+                                                 +len(self.data)+1
 
             if self.options["path"] is None:
                 self.path=auto_name(self.options["specific_descriptor"],self.options["general_descriptor"],
