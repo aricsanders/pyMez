@@ -2605,17 +2605,16 @@ instruments; GPIB,RS232 and other visa instruments</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timeout_measurement&quot;</span><span class="p">]</span>
 
         <span class="c1"># now calculate timestep</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span>
-            <span class="s2">&quot;number_points&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_points&quot;</span><span class="p">])</span>
         <span class="n">time_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span>
 
         <span class="c1"># now configure the scope for data transfer</span>
         <span class="c1"># define the way the data is transmitted from the instrument to the PC</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
         <span class="c1"># Word -&gt; 16bit signed integer</span>
-        <span class="c1">#self.write(&#39;:WAV:FORM WORD&#39;)</span>
+        <span class="c1"># self.write(&#39;:WAV:FORM WORD&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
         <span class="c1"># little-endian</span>
-        <span class="c1">#self.write(&#39;:WAV:BYT LSBF&#39;)</span>
+        <span class="c1"># self.write(&#39;:WAV:BYT LSBF&#39;)</span>
         <span class="n">number_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_points&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_frames&quot;</span><span class="p">]</span>
         <span class="c1"># this is the way diogo did it</span>
         <span class="c1"># number of points</span>
@@ -2649,8 +2648,8 @@ instruments; GPIB,RS232 and other visa instruments</p>
                 <span class="c1"># get data for channel 1</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:SOUR CHAN{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel_read</span><span class="p">))</span>
                 <span class="c1"># get data</span>
-                <span class="c1">#data_column = self.resource.query_binary_values(&#39;:WAV:DATA?&#39;, datatype=&#39;h&#39;)</span>
                 <span class="n">data_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">)</span>
+                <span class="n">data_column</span> <span class="o">=</span> <span class="n">data_column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;1-&quot;</span><span class="p">,</span><span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
                 <span class="n">new_frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_column</span><span class="p">)</span>
                 <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;data_column&quot;,data_column))</span>
             <span class="n">frames_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_frame</span><span class="p">)</span>
@@ -2668,45 +2667,46 @@ instruments; GPIB,RS232 and other visa instruments</p>
                 <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
                     <span class="n">number_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
                     <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;([row_index+frame_index*number_rows],[column_index],[frame_index])&quot;,</span>
-                    <span class="c1">#                           ([row_index + frame_index * number_rows], [column_index], [frame_index])))</span>
-                    <span class="n">measurement_data</span><span class="p">[</span><span class="n">row_index</span> <span class="o">+</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="n">number_rows</span><span class="p">][</span><span class="n">column_index</span><span class="p">]</span> <span class="o">=</span> \
-                    <span class="n">frames_data</span><span class="p">[</span><span class="n">frame_index</span><span class="p">][</span><span class="n">column_index</span><span class="p">][</span><span class="n">row_index</span><span class="p">]</span>
-        <span class="c1"># reset timeout</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
-        <span class="n">data_out</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">time_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;initial_time_offset&quot;</span><span class="p">]</span>
+                    <span class="c1">#([row_index + frame_index * number_rows], [column_index], [frame_index])))</span>
+                    <span class="n">measurement_data</span><span class="p">[</span><span class="n">row_index</span> <span class="o">+</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="n">number_rows</span><span class="p">][</span><span class="n">column_index</span><span class="p">]</span> <span class="o">=</span><span class="n">frames_data</span><span class="p">[</span><span class="n">frame_index</span><span class="p">][</span><span class="n">column_index</span><span class="p">][</span><span class="n">row_index</span><span class="p">]</span>
+                    <span class="c1"># reset timeout</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+                    <span class="n">data_out</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">time_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;initial_time_offset&quot;</span><span class="p">]</span>
 
-        <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">data_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">measurement_data</span><span class="p">):</span>
-            <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_start</span> <span class="o">+</span> <span class="n">row_index</span> <span class="o">*</span> <span class="n">time_step</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_row</span>
-            <span class="n">data_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;add_header&quot;</span><span class="p">]:</span>
-            <span class="n">header</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-                <span class="n">header</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{0} = {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="n">column_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">]:</span>
-            <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">channel_string_list</span><span class="p">[</span><span class="n">channel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                    <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">data_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">measurement_data</span><span class="p">):</span>
+                        <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_start</span> <span class="o">+</span> <span class="n">row_index</span> <span class="o">*</span> <span class="n">time_step</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_row</span>
+                        <span class="n">data_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;add_header&quot;</span><span class="p">]:</span>
+                        <span class="n">header</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                            <span class="n">header</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{0} = {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="n">column_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">]:</span>
+                        <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">channel_string_list</span><span class="p">[</span><span class="n">channel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
 
-        <span class="n">table_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data_out</span><span class="p">,</span>
-                         <span class="s2">&quot;header&quot;</span><span class="p">:</span> <span class="n">header</span><span class="p">,</span>
-                         <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
-                         <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
-                         <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;dat&quot;</span><span class="p">,</span>
-                         <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="s2">&quot;column_names&quot;</span><span class="p">:</span> <span class="n">column_names</span><span class="p">}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;output_table_options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="n">table_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="n">output_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">table_options</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;save_data&quot;</span><span class="p">]:</span>
-            <span class="n">data_save_path</span> <span class="o">=</span> <span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
-                                       <span class="n">general_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
-                                       <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span>
-                                       <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;dat&#39;</span>
-                                       <span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-            <span class="n">output_table</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">data_save_path</span>
-            <span class="n">output_table</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                    <span class="n">table_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data_out</span><span class="p">,</span>
+                                     <span class="s2">&quot;header&quot;</span><span class="p">:</span> <span class="n">header</span><span class="p">,</span>
+                                     <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
+                                     <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
+                                     <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;dat&quot;</span><span class="p">,</span>
+                                     <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="s2">&quot;column_names&quot;</span><span class="p">:</span> <span class="n">column_names</span><span class="p">}</span>
+                    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;output_table_options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                        <span class="n">table_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="n">output_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">table_options</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;save_data&quot;</span><span class="p">]:</span>
+                        <span class="n">data_save_path</span> <span class="o">=</span> <span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
+                                                   <span class="n">general_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
+                                                   <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span>
+                                                   <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;dat&#39;</span>
+                                                   <span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                        <span class="n">output_table</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">data_save_path</span>
+                        <span class="n">output_table</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
         <span class="k">return</span> <span class="n">output_table</span>
+
 
     <span class="k">def</span> <span class="nf">get_error_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the error state of the oscope&quot;&quot;&quot;</span>
@@ -2714,70 +2714,86 @@ instruments; GPIB,RS232 and other visa instruments</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">error_state</span> <span class="o">=</span> <span class="n">state</span>
         <span class="k">return</span> <span class="n">state</span>
 
+
     <span class="k">def</span> <span class="nf">set_number_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_points</span><span class="o">=</span><span class="mi">16384</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the number of points for the acquisition&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:ACQ:POINTS {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number_points</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_number_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the number of points in the waveform&quot;&quot;&quot;</span>
         <span class="n">number_points</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:ACQ:POINTS?&#39;</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">number_points</span>
 
+
     <span class="k">def</span> <span class="nf">set_time_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the time in ns to start the acquisition&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TIM:POS {0}ns&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_time_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the time position in ns&quot;&quot;&quot;</span>
         <span class="n">position</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;:TIM:POS?&quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">position</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">9</span>
 
+
     <span class="k">def</span> <span class="nf">set_timebase_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_scale</span><span class="o">=</span><span class="mf">40.96</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the timebase scale in ns&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TIM:SCAL {0}ns&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_scale</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_timebase_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the timebase scale in ns&quot;&quot;&quot;</span>
         <span class="n">time_scale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:TIM:SCAL?&#39;</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">time_scale</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">9</span>
 
+
     <span class="k">def</span> <span class="nf">set_trigger_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;FPAN&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the tigger source, &#39;FPAN&#39; Frontpanel or &#39;FRUN&#39; freerun&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TRIG:SOUR {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_trigger_source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the trigger source FPAN for FrontPanel or FRUN for free run&quot;&quot;&quot;</span>
         <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:TRIG:SOUR?&#39;</span><span class="p">)</span>
 
+
     <span class="k">def</span> <span class="nf">set_trigger_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the trigger level in mv&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TRIG:LEV {0}m&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_trigger_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the trigger level&quot;&quot;&quot;</span>
         <span class="n">level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:TRIG:LEV?&#39;</span><span class="p">)</span>
 
+
     <span class="k">def</span> <span class="nf">set_channel_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the scale in mv of channel. Default is 10mv/division on channel 1&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:SCAL {1}m&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">scale</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_channel_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="s2">&quot;Returns the scale for a specified channel, the default is channel 1&quot;</span>
         <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:SCAL?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">scale</span>
 
+
     <span class="k">def</span> <span class="nf">set_channel_bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the specified channel&#39;s bandwith to LOW, MED or HIGH, default is to set channel 1 to LOW&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:BAND {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_channel_bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the selected channels bandwidth&quot;&quot;&quot;</span>
         <span class="n">bandwidth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:BAND?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">bandwidth</span>
 
+
     <span class="k">def</span> <span class="nf">set_trigger_slope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slope</span><span class="o">=</span><span class="s2">&quot;POS&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the trigger slope on the oscope choose from POS or NEG&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TRIG:SLOP {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slope</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_trigger_slope</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the trigger slope either POS or NEG&quot;&quot;&quot;</span>
@@ -4106,17 +4122,16 @@ window (using wx)</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timeout_measurement&quot;</span><span class="p">]</span>
 
         <span class="c1"># now calculate timestep</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span>
-            <span class="s2">&quot;number_points&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_points&quot;</span><span class="p">])</span>
         <span class="n">time_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span>
 
         <span class="c1"># now configure the scope for data transfer</span>
         <span class="c1"># define the way the data is transmitted from the instrument to the PC</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
         <span class="c1"># Word -&gt; 16bit signed integer</span>
-        <span class="c1">#self.write(&#39;:WAV:FORM WORD&#39;)</span>
+        <span class="c1"># self.write(&#39;:WAV:FORM WORD&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
         <span class="c1"># little-endian</span>
-        <span class="c1">#self.write(&#39;:WAV:BYT LSBF&#39;)</span>
+        <span class="c1"># self.write(&#39;:WAV:BYT LSBF&#39;)</span>
         <span class="n">number_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_points&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_frames&quot;</span><span class="p">]</span>
         <span class="c1"># this is the way diogo did it</span>
         <span class="c1"># number of points</span>
@@ -4150,8 +4165,8 @@ window (using wx)</p></div>
                 <span class="c1"># get data for channel 1</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:SOUR CHAN{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel_read</span><span class="p">))</span>
                 <span class="c1"># get data</span>
-                <span class="c1">#data_column = self.resource.query_binary_values(&#39;:WAV:DATA?&#39;, datatype=&#39;h&#39;)</span>
                 <span class="n">data_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">)</span>
+                <span class="n">data_column</span> <span class="o">=</span> <span class="n">data_column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;1-&quot;</span><span class="p">,</span><span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
                 <span class="n">new_frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_column</span><span class="p">)</span>
                 <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;data_column&quot;,data_column))</span>
             <span class="n">frames_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_frame</span><span class="p">)</span>
@@ -4169,45 +4184,46 @@ window (using wx)</p></div>
                 <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
                     <span class="n">number_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
                     <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;([row_index+frame_index*number_rows],[column_index],[frame_index])&quot;,</span>
-                    <span class="c1">#                           ([row_index + frame_index * number_rows], [column_index], [frame_index])))</span>
-                    <span class="n">measurement_data</span><span class="p">[</span><span class="n">row_index</span> <span class="o">+</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="n">number_rows</span><span class="p">][</span><span class="n">column_index</span><span class="p">]</span> <span class="o">=</span> \
-                    <span class="n">frames_data</span><span class="p">[</span><span class="n">frame_index</span><span class="p">][</span><span class="n">column_index</span><span class="p">][</span><span class="n">row_index</span><span class="p">]</span>
-        <span class="c1"># reset timeout</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
-        <span class="n">data_out</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">time_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;initial_time_offset&quot;</span><span class="p">]</span>
+                    <span class="c1">#([row_index + frame_index * number_rows], [column_index], [frame_index])))</span>
+                    <span class="n">measurement_data</span><span class="p">[</span><span class="n">row_index</span> <span class="o">+</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="n">number_rows</span><span class="p">][</span><span class="n">column_index</span><span class="p">]</span> <span class="o">=</span><span class="n">frames_data</span><span class="p">[</span><span class="n">frame_index</span><span class="p">][</span><span class="n">column_index</span><span class="p">][</span><span class="n">row_index</span><span class="p">]</span>
+                    <span class="c1"># reset timeout</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+                    <span class="n">data_out</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">time_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;initial_time_offset&quot;</span><span class="p">]</span>
 
-        <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">data_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">measurement_data</span><span class="p">):</span>
-            <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_start</span> <span class="o">+</span> <span class="n">row_index</span> <span class="o">*</span> <span class="n">time_step</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_row</span>
-            <span class="n">data_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;add_header&quot;</span><span class="p">]:</span>
-            <span class="n">header</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-                <span class="n">header</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{0} = {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="n">column_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">]:</span>
-            <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">channel_string_list</span><span class="p">[</span><span class="n">channel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                    <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">data_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">measurement_data</span><span class="p">):</span>
+                        <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_start</span> <span class="o">+</span> <span class="n">row_index</span> <span class="o">*</span> <span class="n">time_step</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_row</span>
+                        <span class="n">data_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;add_header&quot;</span><span class="p">]:</span>
+                        <span class="n">header</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                            <span class="n">header</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{0} = {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="n">column_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">]:</span>
+                        <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">channel_string_list</span><span class="p">[</span><span class="n">channel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
 
-        <span class="n">table_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data_out</span><span class="p">,</span>
-                         <span class="s2">&quot;header&quot;</span><span class="p">:</span> <span class="n">header</span><span class="p">,</span>
-                         <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
-                         <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
-                         <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;dat&quot;</span><span class="p">,</span>
-                         <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="s2">&quot;column_names&quot;</span><span class="p">:</span> <span class="n">column_names</span><span class="p">}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;output_table_options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="n">table_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="n">output_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">table_options</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;save_data&quot;</span><span class="p">]:</span>
-            <span class="n">data_save_path</span> <span class="o">=</span> <span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
-                                       <span class="n">general_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
-                                       <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span>
-                                       <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;dat&#39;</span>
-                                       <span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-            <span class="n">output_table</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">data_save_path</span>
-            <span class="n">output_table</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                    <span class="n">table_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data_out</span><span class="p">,</span>
+                                     <span class="s2">&quot;header&quot;</span><span class="p">:</span> <span class="n">header</span><span class="p">,</span>
+                                     <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
+                                     <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
+                                     <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;dat&quot;</span><span class="p">,</span>
+                                     <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="s2">&quot;column_names&quot;</span><span class="p">:</span> <span class="n">column_names</span><span class="p">}</span>
+                    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;output_table_options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                        <span class="n">table_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="n">output_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">table_options</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;save_data&quot;</span><span class="p">]:</span>
+                        <span class="n">data_save_path</span> <span class="o">=</span> <span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
+                                                   <span class="n">general_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
+                                                   <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span>
+                                                   <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;dat&#39;</span>
+                                                   <span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                        <span class="n">output_table</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">data_save_path</span>
+                        <span class="n">output_table</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
         <span class="k">return</span> <span class="n">output_table</span>
+
 
     <span class="k">def</span> <span class="nf">get_error_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the error state of the oscope&quot;&quot;&quot;</span>
@@ -4215,70 +4231,86 @@ window (using wx)</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">error_state</span> <span class="o">=</span> <span class="n">state</span>
         <span class="k">return</span> <span class="n">state</span>
 
+
     <span class="k">def</span> <span class="nf">set_number_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_points</span><span class="o">=</span><span class="mi">16384</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the number of points for the acquisition&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:ACQ:POINTS {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number_points</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_number_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the number of points in the waveform&quot;&quot;&quot;</span>
         <span class="n">number_points</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:ACQ:POINTS?&#39;</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">number_points</span>
 
+
     <span class="k">def</span> <span class="nf">set_time_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the time in ns to start the acquisition&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TIM:POS {0}ns&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_time_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the time position in ns&quot;&quot;&quot;</span>
         <span class="n">position</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;:TIM:POS?&quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">position</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">9</span>
 
+
     <span class="k">def</span> <span class="nf">set_timebase_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_scale</span><span class="o">=</span><span class="mf">40.96</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the timebase scale in ns&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TIM:SCAL {0}ns&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_scale</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_timebase_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the timebase scale in ns&quot;&quot;&quot;</span>
         <span class="n">time_scale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:TIM:SCAL?&#39;</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">time_scale</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">9</span>
 
+
     <span class="k">def</span> <span class="nf">set_trigger_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;FPAN&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the tigger source, &#39;FPAN&#39; Frontpanel or &#39;FRUN&#39; freerun&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TRIG:SOUR {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_trigger_source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the trigger source FPAN for FrontPanel or FRUN for free run&quot;&quot;&quot;</span>
         <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:TRIG:SOUR?&#39;</span><span class="p">)</span>
 
+
     <span class="k">def</span> <span class="nf">set_trigger_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the trigger level in mv&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TRIG:LEV {0}m&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_trigger_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the trigger level&quot;&quot;&quot;</span>
         <span class="n">level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:TRIG:LEV?&#39;</span><span class="p">)</span>
 
+
     <span class="k">def</span> <span class="nf">set_channel_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the scale in mv of channel. Default is 10mv/division on channel 1&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:SCAL {1}m&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">scale</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_channel_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="s2">&quot;Returns the scale for a specified channel, the default is channel 1&quot;</span>
         <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:SCAL?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">scale</span>
 
+
     <span class="k">def</span> <span class="nf">set_channel_bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the specified channel&#39;s bandwith to LOW, MED or HIGH, default is to set channel 1 to LOW&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:BAND {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_channel_bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the selected channels bandwidth&quot;&quot;&quot;</span>
         <span class="n">bandwidth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:BAND?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">bandwidth</span>
 
+
     <span class="k">def</span> <span class="nf">set_trigger_slope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slope</span><span class="o">=</span><span class="s2">&quot;POS&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the trigger slope on the oscope choose from POS or NEG&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TRIG:SLOP {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slope</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">get_trigger_slope</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the trigger slope either POS or NEG&quot;&quot;&quot;</span>
@@ -4975,16 +5007,15 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
     <span class="n">timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">timeout</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timeout_measurement&quot;</span><span class="p">]</span>
     <span class="c1"># now calculate timestep</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span>
-        <span class="s2">&quot;number_points&quot;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_points&quot;</span><span class="p">])</span>
     <span class="n">time_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span>
     <span class="c1"># now configure the scope for data transfer</span>
     <span class="c1"># define the way the data is transmitted from the instrument to the PC</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
     <span class="c1"># Word -&gt; 16bit signed integer</span>
-    <span class="c1">#self.write(&#39;:WAV:FORM WORD&#39;)</span>
+    <span class="c1"># self.write(&#39;:WAV:FORM WORD&#39;)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
     <span class="c1"># little-endian</span>
-    <span class="c1">#self.write(&#39;:WAV:BYT LSBF&#39;)</span>
+    <span class="c1"># self.write(&#39;:WAV:BYT LSBF&#39;)</span>
     <span class="n">number_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_points&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_frames&quot;</span><span class="p">]</span>
     <span class="c1"># this is the way diogo did it</span>
     <span class="c1"># number of points</span>
@@ -5013,8 +5044,8 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
             <span class="c1"># get data for channel 1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:SOUR CHAN{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel_read</span><span class="p">))</span>
             <span class="c1"># get data</span>
-            <span class="c1">#data_column = self.resource.query_binary_values(&#39;:WAV:DATA?&#39;, datatype=&#39;h&#39;)</span>
             <span class="n">data_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">)</span>
+            <span class="n">data_column</span> <span class="o">=</span> <span class="n">data_column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;1-&quot;</span><span class="p">,</span><span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
             <span class="n">new_frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_column</span><span class="p">)</span>
             <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;data_column&quot;,data_column))</span>
         <span class="n">frames_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_frame</span><span class="p">)</span>
@@ -5030,42 +5061,41 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
             <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
                 <span class="n">number_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
                 <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;([row_index+frame_index*number_rows],[column_index],[frame_index])&quot;,</span>
-                <span class="c1">#                           ([row_index + frame_index * number_rows], [column_index], [frame_index])))</span>
-                <span class="n">measurement_data</span><span class="p">[</span><span class="n">row_index</span> <span class="o">+</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="n">number_rows</span><span class="p">][</span><span class="n">column_index</span><span class="p">]</span> <span class="o">=</span> \
-                <span class="n">frames_data</span><span class="p">[</span><span class="n">frame_index</span><span class="p">][</span><span class="n">column_index</span><span class="p">][</span><span class="n">row_index</span><span class="p">]</span>
-    <span class="c1"># reset timeout</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
-    <span class="n">data_out</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">time_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;initial_time_offset&quot;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">data_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">measurement_data</span><span class="p">):</span>
-        <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_start</span> <span class="o">+</span> <span class="n">row_index</span> <span class="o">*</span> <span class="n">time_step</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_row</span>
-        <span class="n">data_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;add_header&quot;</span><span class="p">]:</span>
-        <span class="n">header</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="n">header</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{0} = {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">column_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">]:</span>
-        <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">channel_string_list</span><span class="p">[</span><span class="n">channel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
-    <span class="n">table_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data_out</span><span class="p">,</span>
-                     <span class="s2">&quot;header&quot;</span><span class="p">:</span> <span class="n">header</span><span class="p">,</span>
-                     <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
-                     <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
-                     <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;dat&quot;</span><span class="p">,</span>
-                     <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="s2">&quot;column_names&quot;</span><span class="p">:</span> <span class="n">column_names</span><span class="p">}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;output_table_options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="n">table_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="n">output_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">table_options</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;save_data&quot;</span><span class="p">]:</span>
-        <span class="n">data_save_path</span> <span class="o">=</span> <span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
-                                   <span class="n">general_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
-                                   <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span>
-                                   <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;dat&#39;</span>
-                                   <span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">output_table</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">data_save_path</span>
-        <span class="n">output_table</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="c1">#([row_index + frame_index * number_rows], [column_index], [frame_index])))</span>
+                <span class="n">measurement_data</span><span class="p">[</span><span class="n">row_index</span> <span class="o">+</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="n">number_rows</span><span class="p">][</span><span class="n">column_index</span><span class="p">]</span> <span class="o">=</span><span class="n">frames_data</span><span class="p">[</span><span class="n">frame_index</span><span class="p">][</span><span class="n">column_index</span><span class="p">][</span><span class="n">row_index</span><span class="p">]</span>
+                <span class="c1"># reset timeout</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+                <span class="n">data_out</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">time_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;initial_time_offset&quot;</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">data_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">measurement_data</span><span class="p">):</span>
+                    <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_start</span> <span class="o">+</span> <span class="n">row_index</span> <span class="o">*</span> <span class="n">time_step</span><span class="p">]</span> <span class="o">+</span> <span class="n">data_row</span>
+                    <span class="n">data_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;add_header&quot;</span><span class="p">]:</span>
+                    <span class="n">header</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                        <span class="n">header</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{0} = {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
+                <span class="n">column_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">]:</span>
+                    <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">channel_string_list</span><span class="p">[</span><span class="n">channel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="n">table_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data_out</span><span class="p">,</span>
+                                 <span class="s2">&quot;header&quot;</span><span class="p">:</span> <span class="n">header</span><span class="p">,</span>
+                                 <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
+                                 <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
+                                 <span class="s2">&quot;extension&quot;</span><span class="p">:</span> <span class="s2">&quot;dat&quot;</span><span class="p">,</span>
+                                 <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="s2">&quot;column_names&quot;</span><span class="p">:</span> <span class="n">column_names</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;output_table_options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                    <span class="n">table_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="n">output_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">table_options</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;save_data&quot;</span><span class="p">]:</span>
+                    <span class="n">data_save_path</span> <span class="o">=</span> <span class="n">auto_name</span><span class="p">(</span><span class="n">specific_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">],</span>
+                                               <span class="n">general_descriptor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;general_descriptor&quot;</span><span class="p">],</span>
+                                               <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span>
+                                               <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;dat&#39;</span>
+                                               <span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                    <span class="n">output_table</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">data_save_path</span>
+                    <span class="n">output_table</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">output_table</span>
 </pre></div>
 

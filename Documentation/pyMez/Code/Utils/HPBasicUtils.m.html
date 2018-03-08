@@ -1123,7 +1123,7 @@ table {
   <h1 class="title"><span class="name">pyMez.Code.Utils.HPBasicUtils</span> module</h1>
   <p>This module handles HPBasic code when it has already been converted to .txt (DOS ASCII).
 To convert from native format to DOS ASCII, install HPBasic, Run HP Basic and
- type: SAVE CONFIGURE ASCII OFF
+ type: CONFIGURE SAVE ASCII OFF
  Then
  LOAD "My_File"
  SAVE "My_ASCII_File"</p>
@@ -1139,7 +1139,7 @@ To convert from native format to DOS ASCII, install HPBasic, Run HP Basic and
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot; This module handles HPBasic code when it has already been converted to .txt (DOS ASCII).</span>
 <span class="sd"> To convert from native format to DOS ASCII, install HPBasic, Run HP Basic and</span>
-<span class="sd">  type: SAVE CONFIGURE ASCII OFF</span>
+<span class="sd">  type: CONFIGURE SAVE ASCII OFF</span>
 <span class="sd">  Then</span>
 <span class="sd">  LOAD &quot;My_File&quot;</span>
 <span class="sd">  SAVE &quot;My_ASCII_File&quot;</span>
@@ -1162,7 +1162,7 @@ To convert from native format to DOS ASCII, install HPBasic, Run HP Basic and
 <span class="s2">&lt;/head&gt;</span>
 <span class="s2">&lt;body&gt;</span>
 <span class="s2">&lt;h1&gt; A highlighted Plain Text version of </span><span class="si">%s</span><span class="s2"> Basic Program&lt;/h1&gt;</span>
-<span class="s2">&lt;pre&gt;&lt;code class=&quot;language-basic&quot;&gt;&lt;script&gt;&quot;&quot;&quot;</span>
+<span class="s2">&lt;pre&gt;&lt;code class=&quot;language-basic line-numbers&quot;&gt;&lt;script&gt;&quot;&quot;&quot;</span>
 <span class="n">HTML_POSTFIX</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;/script&gt;</span>
 
 <span class="s2">&lt;/code&gt;&lt;/pre&gt;</span>
@@ -1181,7 +1181,7 @@ To convert from native format to DOS ASCII, install HPBasic, Run HP Basic and
     <span class="n">in_lines</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
-        <span class="n">in_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">in_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
     <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_path_output</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">HTML_PREFIX</span><span class="o">%</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="n">file_name</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_lines</span><span class="p">:</span>
@@ -1216,7 +1216,8 @@ To convert from native format to DOS ASCII, install HPBasic, Run HP Basic and
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Runner</span>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="k">pass</span>
+    <span class="n">HPBasic_to_HTML</span><span class="p">(</span><span class="s2">r&quot;C:\Share\DC\calrep14_4_ascii&quot;</span><span class="p">)</span>
+    <span class="n">HPBasic_to_HTML</span><span class="p">(</span><span class="s2">r&quot;C:\Share\DC\meas14_3DC_ascii&quot;</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -1248,7 +1249,7 @@ To convert from native format to DOS ASCII, install HPBasic, Run HP Basic and
     <span class="n">in_lines</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
-        <span class="n">in_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">in_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
     <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_path_output</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">HTML_PREFIX</span><span class="o">%</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="n">file_name</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_lines</span><span class="p">:</span>

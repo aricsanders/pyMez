@@ -1099,6 +1099,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLBase.add_head">add_head</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLBase.append_to_body">append_to_body</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLBase.append_to_head">append_to_head</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLBase.clear">clear</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLBase.save">save</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLBase.show">show</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLBase.to_HTML">to_HTML</a></li>
@@ -1116,6 +1117,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLHelpPage.add_head">add_head</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLHelpPage.append_to_body">append_to_body</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLHelpPage.append_to_head">append_to_head</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLHelpPage.clear">clear</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLHelpPage.save">save</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLHelpPage.show">show</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLHelpPage.to_HTML">to_HTML</a></li>
@@ -1393,7 +1395,8 @@ It provides a model to open, print, add to and convert html to pdf.</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;head already exists, tag was not added &quot;</span><span class="p">)</span>
-            <span class="k">pass</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
 
     <span class="k">def</span> <span class="nf">add_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds a body tag to the model if it does not exist&quot;&quot;&quot;</span>
@@ -1404,6 +1407,13 @@ It provides a model to open, print, add to and convert html to pdf.</p>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;body already exists, tag was not added &quot;</span><span class="p">)</span>
             <span class="k">pass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clears all content in the HTML&quot;&quot;&quot;</span>
+        <span class="n">element_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">element_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">append_to_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">element</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Appends the element to the body of the model, if it is a string it parses first, if it is a</span>
@@ -1831,7 +1841,8 @@ can inherit from it</p></div>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;head already exists, tag was not added &quot;</span><span class="p">)</span>
-            <span class="k">pass</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
 
     <span class="k">def</span> <span class="nf">add_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds a body tag to the model if it does not exist&quot;&quot;&quot;</span>
@@ -1842,6 +1853,13 @@ can inherit from it</p></div>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;body already exists, tag was not added &quot;</span><span class="p">)</span>
             <span class="k">pass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clears all content in the HTML&quot;&quot;&quot;</span>
+        <span class="n">element_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">element_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">append_to_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">element</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Appends the element to the body of the model, if it is a string it parses first, if it is a</span>
@@ -2031,6 +2049,7 @@ can inherit from it</p></div>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;body already exists, tag was not added &quot;</span><span class="p">)</span>
         <span class="k">pass</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
 </pre></div>
 
   </div>
@@ -2060,7 +2079,7 @@ can inherit from it</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;head already exists, tag was not added &quot;</span><span class="p">)</span>
-        <span class="k">pass</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
 </pre></div>
 
   </div>
@@ -2147,6 +2166,31 @@ lxml.html.HtmlElement it appends it</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not add {0} to head&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.HTMLModels.HTMLBase.clear">
+    <p>def <span class="ident">clear</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Clears all content in the HTML</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.HTMLModels.HTMLBase.clear', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.HTMLModels.HTMLBase.clear" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Clears all content in the HTML&quot;&quot;&quot;</span>
+    <span class="n">element_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">element_list</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -2407,6 +2451,7 @@ the resulting file to self.path with pdf as the extension</p></div>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;body already exists, tag was not added &quot;</span><span class="p">)</span>
         <span class="k">pass</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
 </pre></div>
 
   </div>
@@ -2440,7 +2485,7 @@ the resulting file to self.path with pdf as the extension</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;head already exists, tag was not added &quot;</span><span class="p">)</span>
-        <span class="k">pass</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
 </pre></div>
 
   </div>
@@ -2535,6 +2580,35 @@ lxml.html.HtmlElement it appends it</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not add {0} to head&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.HTMLModels.HTMLHelpPage.clear">
+    <p>def <span class="ident">clear</span>(</p><p>self)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLBase">HTMLBase</a></code>.<code><a href="#pyMez.Code.DataHandlers.HTMLModels.HTMLBase.clear">clear</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Clears all content in the HTML</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.HTMLModels.HTMLHelpPage.clear', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.HTMLModels.HTMLHelpPage.clear" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Clears all content in the HTML&quot;&quot;&quot;</span>
+    <span class="n">element_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">element_list</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
 </pre></div>
 
   </div>
