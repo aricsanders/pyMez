@@ -6,7 +6,7 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ Transformations is a module with tools for changing data from one format to another, while not
-preserving the content. It complements translations, and can be added as jumps to graph models.
+preserving the content. It complements pyMez.Code.DataHandlers.Translations, and can be added as jumps to graph models.
 
 
 
@@ -84,7 +84,8 @@ def W2p_to_SwitchTerms(w2p):
     return s2p_out
 
 def W2p_to_S2p(w2p):
-    """Creates a s2p with given a w2p assumes data columns are [Frequency,reA1_D1,imA1_D1,reB1_D1,imB1_D1...imB2_D2]"""
+    """Creates a s2p with given a w2p assumes data columns are [Frequency,reA1_D1,imA1_D1,reB1_D1,imB1_D1...imB2_D2]
+    Returns the 3 -reciever sparameters or b1/a1 etc."""
     complex_sparameters=[]
     for row_index,row in enumerate(w2p.data[:]):
         # B1_D1/A1_D1
@@ -99,6 +100,44 @@ def W2p_to_S2p(w2p):
         complex_sparameters.append(new_row)
     s2p_out=S2PV1(None,sparameter_complex=complex_sparameters)
     return s2p_out
+def S2p_to_S1p(s2p,column="S11"):
+    """Creates an s1p from an s2p by taking column and frequency, column can be any value in ["S11","S21","S12","S22"]"""
+    columns=["S11","S21","S12","S22"]
+    s2p.change_data_format("RI")
+    s2p.change_frequency_units("GHz")
+    index=columns.index(column)+1
+    sparameter_complex=[]
+    for row_index,row in enumerate(s2p.sparameter_complex[:]):
+        sparameter_complex.append([row[0],row[index]])
+    options=s2p.options.copy()
+    options["column_names"]=["Frequency","reS11","imS11"]
+    options["sparameter_complex"]=sparameter_complex
+    options["number_ports"]=1
+    s1p_out=S1PV1(None,**options)
+    return s1p_out
+
+def S1ps_toS2p(S11_s1p,S22_s1p,S21_fill_value=complex(0,0)):
+    """Creates an s2p from two s1ps by filling S11 with S11_s1p and S22 with S22_s1p and S21, and S12 with S21_fill_value,
+    Default is 0+ 0i. Assumes both have the same frequency list. """
+    #first make sure both s1p 's  are in the right format
+    S11_s1p.change_data_format("RI")
+    S22_s1p.change_data_format("RI")
+    #check the frequency lists
+    if len(S11_s1p.data)!=len(S22_s1p.data):
+        raise
+    sparameter_complex=[]
+    for row_index, row in enumerate(S11_s1p.data):
+        new_row=[row[0],
+                 complex(row[1],row[2]),
+                 S21_fill_value,
+                 S21_fill_value,
+                 complex(S22_s1p.data[row_index][1],rowS22_s1p.data[row_index][2])]
+        sparameter_complex.append(new_row)
+    options={}
+    options["sparameter_complex"]=sparameter_complex
+    s2p=S2PV1(None,**options)
+    return s2p
+
 #-----------------------------------------------------------------------------
 # Module Classes
 

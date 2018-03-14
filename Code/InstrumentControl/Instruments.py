@@ -787,8 +787,9 @@ class VNA(VisaInstrument):
             self.write("DISP:WIND{0}:TRAC{1}:DEL".format(window, trace))
 
     def measure_switch_terms(self, **options):
-        """Measures switch terms and returns a s2p table in forward and reverse format"""
-        defaults = {"view_trace": True}
+        """Measures switch terms and returns a s2p table in forward and reverse format. To return in port format
+        set the option order= "PORT"""
+        defaults = {"view_trace": True,"initialize":True,"order":"FR"}
         self.measure_switch_term_options = {}
         for key, value in defaults.iteritems():
             self.measure_switch_term_options[key] = value
@@ -798,16 +799,18 @@ class VNA(VisaInstrument):
         # Set VS to be remotely triggered by GPIB
         self.write("SENS:HOLD:FUNC HOLD")
         self.write("TRIG:REM:TYP CHAN")
-        # Set the Channel to have 2 Traces
-        self.write("CALC1:PAR:COUN 2")
-        # Trace 1 This is port 2 or Forward Switch Terms
-        self.write("CALC1:PAR:DEF 'FWD',R2,1")  # note this command is different for vector star A2,B2
-        if self.measure_switch_term_options["view_trace"]:
-            self.write("DISPlay:WINDow1:TRACe5:FEED 'FWD'")
-        # Trace 2 This is port 1 or Reverse Switch Terms
-        self.write("CALC1:PAR:DEF 'REV',R1,2")
-        if self.measure_switch_term_options["view_trace"]:
-            self.write("DISPlay:WINDow1:TRACe6:FEED 'REV'")
+        if self.measure_switch_term_options["initialize"]:
+
+            # Set the Channel to have 2 Traces
+            self.write("CALC1:PAR:COUN 2")
+            # Trace 1 This is port 2 or Forward Switch Terms
+            self.write("CALC1:PAR:DEF 'FWD',R2,1")  # note this command is different for vector star A2,B2
+            if self.measure_switch_term_options["view_trace"]:
+                self.write("DISPlay:WINDow1:TRACe5:FEED 'FWD'")
+            # Trace 2 This is port 1 or Reverse Switch Terms
+            self.write("CALC1:PAR:DEF 'REV',R1,2")
+            if self.measure_switch_term_options["view_trace"]:
+                self.write("DISPlay:WINDow1:TRACe6:FEED 'REV'")
 
         # Select Channel
         self.write("CALC1:SEL;")
@@ -834,14 +837,24 @@ class VNA(VisaInstrument):
         real_reverse = reverse_switch_list[0::2]
         imaginary_reverse = reverse_switch_list[1::2]
         switch_data = []
-        for index, frequency in enumerate(self.frequency_list[:]):
-            new_row = [frequency,
-                       real_foward[index], imaginary_forward[index],
-                       real_reverse[index], imaginary_reverse[index],
-                       0, 0,
-                       0, 0]
-            new_row = map(lambda x: float(x), new_row)
-            switch_data.append(new_row)
+        if re.search("f",self.measure_switch_term_options["order"],re.IGNORECASE):
+            for index, frequency in enumerate(self.frequency_list[:]):
+                new_row = [frequency,
+                           real_foward[index], imaginary_forward[index],
+                           real_reverse[index], imaginary_reverse[index],
+                           0, 0,
+                           0, 0]
+                new_row = map(lambda x: float(x), new_row)
+                switch_data.append(new_row)
+        elif re.search("p",self.measure_switch_term_options["order"],re.IGNORECASE):
+            for index, frequency in enumerate(self.frequency_list[:]):
+                new_row = [frequency,
+                           real_reverse[index], imaginary_reverse[index],
+                           real_foward[index], imaginary_forward[index],
+                           0, 0,
+                           0, 0]
+                new_row = map(lambda x: float(x), new_row)
+                switch_data.append(new_row)
         option_line = "# Hz S RI R 50"
         # add some options here about auto saving
         # do we want comment options?
@@ -1110,7 +1123,8 @@ class VNA(VisaInstrument):
         # do we want comment options?
         options = {"column_names_begin_token": "!", "data_delimiter": "  ", "column_names": column_names,
                    "data": wparameter_data, "specific_descriptor": "Wave_Parameters",
-                   "general_descriptor": "One_Port", "extension": "w1p"}
+                   "general_descriptor": "One_Port", "extension": "w1p",
+                   "column_types":["float" for column in column_names]}
         if self.measure_w1p_options["w1p_options"]:
             for key,value in self.measure_w1p_options["w1p_options"].iteritems():
                 options[key]=value
@@ -1185,7 +1199,8 @@ class VNA(VisaInstrument):
         # do we want comment options?
         options = {"column_names_begin_token": "!", "data_delimiter": "  ", "column_names": column_names,
                    "data": wparameter_data, "specific_descriptor": "Wave_Parameters",
-                   "general_descriptor": "Two_Port", "extension": "w2p"}
+                   "general_descriptor": "Two_Port", "extension": "w2p",
+                   "column_types":["float" for column in column_names]}
         if self.measure_w2p_options["w2p_options"]:
             for key,value in self.measure_w2p_options["w2p_options"].iteritems():
                 options[key]=value
