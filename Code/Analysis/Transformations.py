@@ -131,7 +131,7 @@ def S1ps_toS2p(S11_s1p,S22_s1p,S21_fill_value=complex(0,0)):
                  complex(row[1],row[2]),
                  S21_fill_value,
                  S21_fill_value,
-                 complex(S22_s1p.data[row_index][1],rowS22_s1p.data[row_index][2])]
+                 complex(S22_s1p.data[row_index][1],S22_s1p.data[row_index][2])]
         sparameter_complex.append(new_row)
     options={}
     options["sparameter_complex"]=sparameter_complex
