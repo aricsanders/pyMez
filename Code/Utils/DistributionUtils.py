@@ -1,11 +1,12 @@
 #-----------------------------------------------------------------------------
-# Name:        rename_all
+# Name:        DistributionUtils
 # Purpose:    
 # Author:      Aric Sanders
 # Created:     1/1/2018
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" Module Docstring """
+""" Tools to help distribution. This began by renaming all instances of pyMeasure to
+ pyMez to avoid PYPI conflicts with another package"""
 #-----------------------------------------------------------------------------
 # Standard Imports
 import os
