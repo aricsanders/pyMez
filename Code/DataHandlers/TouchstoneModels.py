@@ -225,6 +225,34 @@ def build_snp_column_names(number_of_ports=2,format="RI"):
         column_names[3:7]=[S21_1,S21_2,S12_1,S12_2]
     return column_names
 
+def build_parameter_column_names(number_of_ports=2,format="RI",parameter="S"):
+    """Return a list of column names based on the format and number of ports. Enter
+    number_or_ports as a integer and format as text string such as 'RI','MA' or 'DB'"""
+    column_names=["Frequency"]
+    prefix_1=""
+    prefix_2=""
+    if re.search('ri',format,re.IGNORECASE):
+        prefix_1="re"
+        prefix_2="im"
+    elif re.search('ma',format,re.IGNORECASE):
+        prefix_1="mag"
+        prefix_2="arg"
+    elif re.search('db',format,re.IGNORECASE):
+        prefix_1="db"
+        prefix_2="arg"
+    else:
+        raise TypeError("format must be RI, DB or MA")
+    for i in range(number_of_ports):
+        for j in range(number_of_ports):
+            column_names.append(prefix_1+parameter+str(i+1)+str(j+1))
+            column_names.append(prefix_2+parameter+str(i+1)+str(j+1))
+    if number_of_ports==2:
+        #switch S21 and S12
+        [S12_1,S12_2,S21_1,S21_2]=column_names[3:7]
+        column_names[3:7]=[S21_1,S21_2,S12_1,S12_2]
+    return column_names
+
+
 def combine_segments(segment_list):
     """Combines a list of lists that are segments (each segment is list of strings)
     and returns a single list of strings, segments are assumed to be the same length"""
