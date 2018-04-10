@@ -3,8 +3,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
-    <title>pyMez.rename_all API documentation</title>
-    <meta name="description" content="Module Docstring" />
+    <title>pyMez.Code.Utils.DistributionUtils API documentation</title>
+    <meta name="description" content="Tools to help distribution. This began by renaming all instances of pyMeasure to
+pyMez to avoid PYPI..." />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
@@ -1074,8 +1075,8 @@ table {
 	<div id="functionsNavigation">
       
   <ul>
-    <li class="mono"><a href="#pyMez.rename_all.add_init_to_all">add_init_to_all</a></li>
-    <li class="mono"><a href="#pyMez.rename_all.replace_all">replace_all</a></li>
+    <li class="mono"><a href="#pyMez.Code.Utils.DistributionUtils.add_init_to_all">add_init_to_all</a></li>
+    <li class="mono"><a href="#pyMez.Code.Utils.DistributionUtils.replace_all">replace_all</a></li>
   </ul>
 
 	 </div>
@@ -1089,8 +1090,8 @@ table {
 	<div id="variablesNavigation">
       
   <ul>
-    <li class="mono"><a href="#pyMez.rename_all.ORIGINAL_TEXT">ORIGINAL_TEXT</a></li>
-    <li class="mono"><a href="#pyMez.rename_all.REPLACE_VALUE">REPLACE_VALUE</a></li>
+    <li class="mono"><a href="#pyMez.Code.Utils.DistributionUtils.ORIGINAL_TEXT">ORIGINAL_TEXT</a></li>
+    <li class="mono"><a href="#pyMez.Code.Utils.DistributionUtils.REPLACE_VALUE">REPLACE_VALUE</a></li>
   </ul>
 
 	  </div>
@@ -1106,19 +1107,21 @@ table {
 
 
   <header id="section-intro">
-  <h1 class="title"><span class="name">pyMez.rename_all</span> module</h1>
-  <p>Module Docstring</p>
+  <h1 class="title"><span class="name">pyMez.Code.Utils.DistributionUtils</span> module</h1>
+  <p>Tools to help distribution. This began by renaming all instances of pyMeasure to
+pyMez to avoid PYPI conflicts with another package</p>
   
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.rename_all', this);">Show source &equiv;</a></p>
-  <div id="source-pyMez.rename_all" class="source">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Utils.DistributionUtils', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Utils.DistributionUtils" class="source">
     <div class="codehilite"><pre><span></span><span class="c1">#-----------------------------------------------------------------------------</span>
-<span class="c1"># Name:        rename_all</span>
+<span class="c1"># Name:        DistributionUtils</span>
 <span class="c1"># Purpose:    </span>
 <span class="c1"># Author:      Aric Sanders</span>
 <span class="c1"># Created:     1/1/2018</span>
 <span class="c1"># License:     MIT License</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
-<span class="sd">&quot;&quot;&quot; Module Docstring &quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot; Tools to help distribution. This began by renaming all instances of pyMeasure to</span>
+<span class="sd"> pyMez to avoid PYPI conflicts with another package&quot;&quot;&quot;</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Standard Imports</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -1184,7 +1187,7 @@ table {
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
-    <div class="name def" id="pyMez.rename_all.add_init_to_all">
+    <div class="name def" id="pyMez.Code.Utils.DistributionUtils.add_init_to_all">
     <p>def <span class="ident">add_init_to_all</span>(</p><p>top_directory)</p>
     </div>
     
@@ -1194,8 +1197,8 @@ table {
     <div class="desc"><p>Script that looks for an <strong>init</strong>.py file in every folder and if it is not there inserts one. This is a
 very uninspired hack to the problem of including data in the distribution</p></div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.rename_all.add_init_to_all', this);">Show source &equiv;</a></p>
-  <div id="source-pyMez.rename_all.add_init_to_all" class="source">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Utils.DistributionUtils.add_init_to_all', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Utils.DistributionUtils.add_init_to_all" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_init_to_all</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Script that looks for an __init__.py file in every folder and if it is not there inserts one. This is a</span>
 <span class="sd">    very uninspired hack to the problem of including data in the distribution&quot;&quot;&quot;</span>
@@ -1217,7 +1220,7 @@ very uninspired hack to the problem of including data in the distribution</p></d
   
       
   <div class="item">
-    <div class="name def" id="pyMez.rename_all.replace_all">
+    <div class="name def" id="pyMez.Code.Utils.DistributionUtils.replace_all">
     <p>def <span class="ident">replace_all</span>(</p><p>top_directory)</p>
     </div>
     
@@ -1227,8 +1230,8 @@ very uninspired hack to the problem of including data in the distribution</p></d
     <div class="desc"><p>Tries to replace all occurances of ORIGINAL_TEXT with REPLACE_VALUE,
 do not run it on the git directories it corrupts the index or on images</p></div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.rename_all.replace_all', this);">Show source &equiv;</a></p>
-  <div id="source-pyMez.rename_all.replace_all" class="source">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Utils.DistributionUtils.replace_all', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Utils.DistributionUtils.replace_all" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">replace_all</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Tries to replace all occurances of ORIGINAL_TEXT with REPLACE_VALUE,</span>
 <span class="sd">    do not run it on the git directories it corrupts the index or on images&quot;&quot;&quot;</span>
@@ -1259,7 +1262,7 @@ do not run it on the git directories it corrupts the index or on images</p></div
 	
     <h2 class="section-title" id="header-variables">Module variables</h2>
       <div class="item">
-      <p id="pyMez.rename_all.ORIGINAL_TEXT" class="name">var <span class="ident">ORIGINAL_TEXT</span></p>
+      <p id="pyMez.Code.Utils.DistributionUtils.ORIGINAL_TEXT" class="name">var <span class="ident">ORIGINAL_TEXT</span></p>
       
   
   <div class="source_cont">
@@ -1267,7 +1270,7 @@ do not run it on the git directories it corrupts the index or on images</p></div
 
       </div>
       <div class="item">
-      <p id="pyMez.rename_all.REPLACE_VALUE" class="name">var <span class="ident">REPLACE_VALUE</span></p>
+      <p id="pyMez.Code.Utils.DistributionUtils.REPLACE_VALUE" class="name">var <span class="ident">REPLACE_VALUE</span></p>
       
   
   <div class="source_cont">

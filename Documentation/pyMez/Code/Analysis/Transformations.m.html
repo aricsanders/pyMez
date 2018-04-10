@@ -1075,6 +1075,8 @@ table {
 	<div id="functionsNavigation">
       
   <ul>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.S1ps_toS2p">S1ps_toS2p</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.S2p_to_S1p">S2p_to_S1p</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.W2p_to_S2p">W2p_to_S2p</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.W2p_to_SwitchTerms">W2p_to_SwitchTerms</a></li>
   </ul>
@@ -1133,7 +1135,7 @@ table {
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMez.Code.Analysis.Transformations</span> module</h1>
   <p>Transformations is a module with tools for changing data from one format to another, while not
-preserving the content. It complements translations, and can be added as jumps to graph models.</p>
+preserving the content. It complements pyMez.Code.DataHandlers.Translations, and can be added as jumps to graph models.</p>
 <h2>Examples</h2>
 <div class="codehilite"><pre><span></span>
 </pre></div>
@@ -1172,7 +1174,7 @@ preserving the content. It complements translations, and can be added as jumps t
 <span class="c1"># License:     MIT License</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot; Transformations is a module with tools for changing data from one format to another, while not</span>
-<span class="sd">preserving the content. It complements translations, and can be added as jumps to graph models.</span>
+<span class="sd">preserving the content. It complements pyMez.Code.DataHandlers.Translations, and can be added as jumps to graph models.</span>
 
 
 
@@ -1250,7 +1252,8 @@ preserving the content. It complements translations, and can be added as jumps t
     <span class="k">return</span> <span class="n">s2p_out</span>
 
 <span class="k">def</span> <span class="nf">W2p_to_S2p</span><span class="p">(</span><span class="n">w2p</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates a s2p with given a w2p assumes data columns are [Frequency,reA1_D1,imA1_D1,reB1_D1,imB1_D1...imB2_D2]&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Creates a s2p with given a w2p assumes data columns are [Frequency,reA1_D1,imA1_D1,reB1_D1,imB1_D1...imB2_D2]</span>
+<span class="sd">    Returns the 3 -reciever sparameters or b1/a1 etc.&quot;&quot;&quot;</span>
     <span class="n">complex_sparameters</span><span class="o">=</span><span class="p">[]</span>
     <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span><span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">w2p</span><span class="o">.</span><span class="n">data</span><span class="p">[:]):</span>
         <span class="c1"># B1_D1/A1_D1</span>
@@ -1265,6 +1268,44 @@ preserving the content. It complements translations, and can be added as jumps t
         <span class="n">complex_sparameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
     <span class="n">s2p_out</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">sparameter_complex</span><span class="o">=</span><span class="n">complex_sparameters</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">s2p_out</span>
+<span class="k">def</span> <span class="nf">S2p_to_S1p</span><span class="p">(</span><span class="n">s2p</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;S11&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates an s1p from an s2p by taking column and frequency, column can be any value in [&quot;S11&quot;,&quot;S21&quot;,&quot;S12&quot;,&quot;S22&quot;]&quot;&quot;&quot;</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S11&quot;</span><span class="p">,</span><span class="s2">&quot;S21&quot;</span><span class="p">,</span><span class="s2">&quot;S12&quot;</span><span class="p">,</span><span class="s2">&quot;S22&quot;</span><span class="p">]</span>
+    <span class="n">s2p</span><span class="o">.</span><span class="n">change_data_format</span><span class="p">(</span><span class="s2">&quot;RI&quot;</span><span class="p">)</span>
+    <span class="n">s2p</span><span class="o">.</span><span class="n">change_frequency_units</span><span class="p">(</span><span class="s2">&quot;GHz&quot;</span><span class="p">)</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">columns</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">column</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">sparameter_complex</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span><span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s2p</span><span class="o">.</span><span class="n">sparameter_complex</span><span class="p">[:]):</span>
+        <span class="n">sparameter_complex</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="n">index</span><span class="p">]])</span>
+    <span class="n">options</span><span class="o">=</span><span class="n">s2p</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;reS11&quot;</span><span class="p">,</span><span class="s2">&quot;imS11&quot;</span><span class="p">]</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_complex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">sparameter_complex</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;number_ports&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">s1p_out</span><span class="o">=</span><span class="n">S1PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s1p_out</span>
+
+<span class="k">def</span> <span class="nf">S1ps_toS2p</span><span class="p">(</span><span class="n">S11_s1p</span><span class="p">,</span><span class="n">S22_s1p</span><span class="p">,</span><span class="n">S21_fill_value</span><span class="o">=</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;Creates an s2p from two s1ps by filling S11 with S11_s1p and S22 with S22_s1p and S21, and S12 with S21_fill_value,</span>
+<span class="sd">    Default is 0+ 0i. Assumes both have the same frequency list. &quot;&quot;&quot;</span>
+    <span class="c1">#first make sure both s1p &#39;s  are in the right format</span>
+    <span class="n">S11_s1p</span><span class="o">.</span><span class="n">change_data_format</span><span class="p">(</span><span class="s2">&quot;RI&quot;</span><span class="p">)</span>
+    <span class="n">S22_s1p</span><span class="o">.</span><span class="n">change_data_format</span><span class="p">(</span><span class="s2">&quot;RI&quot;</span><span class="p">)</span>
+    <span class="c1">#check the frequency lists</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">S11_s1p</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">!=</span><span class="nb">len</span><span class="p">(</span><span class="n">S22_s1p</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">raise</span>
+    <span class="n">sparameter_complex</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">S11_s1p</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">new_row</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                 <span class="nb">complex</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+                 <span class="n">S21_fill_value</span><span class="p">,</span>
+                 <span class="n">S21_fill_value</span><span class="p">,</span>
+                 <span class="nb">complex</span><span class="p">(</span><span class="n">S22_s1p</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row_index</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">S22_s1p</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row_index</span><span class="p">][</span><span class="mi">2</span><span class="p">])]</span>
+        <span class="n">sparameter_complex</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_complex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">sparameter_complex</span>
+    <span class="n">s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s2p</span>
+
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Classes</span>
 
@@ -1287,6 +1328,83 @@ preserving the content. It complements translations, and can be added as jumps t
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Transformations.S1ps_toS2p">
+    <p>def <span class="ident">S1ps_toS2p</span>(</p><p>S11_s1p, S22_s1p, S21_fill_value=0j)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates an s2p from two s1ps by filling S11 with S11_s1p and S22 with S22_s1p and S21, and S12 with S21_fill_value,
+Default is 0+ 0i. Assumes both have the same frequency list.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Transformations.S1ps_toS2p', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Transformations.S1ps_toS2p" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">S1ps_toS2p</span><span class="p">(</span><span class="n">S11_s1p</span><span class="p">,</span><span class="n">S22_s1p</span><span class="p">,</span><span class="n">S21_fill_value</span><span class="o">=</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;Creates an s2p from two s1ps by filling S11 with S11_s1p and S22 with S22_s1p and S21, and S12 with S21_fill_value,</span>
+<span class="sd">    Default is 0+ 0i. Assumes both have the same frequency list. &quot;&quot;&quot;</span>
+    <span class="c1">#first make sure both s1p &#39;s  are in the right format</span>
+    <span class="n">S11_s1p</span><span class="o">.</span><span class="n">change_data_format</span><span class="p">(</span><span class="s2">&quot;RI&quot;</span><span class="p">)</span>
+    <span class="n">S22_s1p</span><span class="o">.</span><span class="n">change_data_format</span><span class="p">(</span><span class="s2">&quot;RI&quot;</span><span class="p">)</span>
+    <span class="c1">#check the frequency lists</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">S11_s1p</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">!=</span><span class="nb">len</span><span class="p">(</span><span class="n">S22_s1p</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">raise</span>
+    <span class="n">sparameter_complex</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">S11_s1p</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">new_row</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                 <span class="nb">complex</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+                 <span class="n">S21_fill_value</span><span class="p">,</span>
+                 <span class="n">S21_fill_value</span><span class="p">,</span>
+                 <span class="nb">complex</span><span class="p">(</span><span class="n">S22_s1p</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row_index</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">S22_s1p</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row_index</span><span class="p">][</span><span class="mi">2</span><span class="p">])]</span>
+        <span class="n">sparameter_complex</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_complex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">sparameter_complex</span>
+    <span class="n">s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s2p</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Transformations.S2p_to_S1p">
+    <p>def <span class="ident">S2p_to_S1p</span>(</p><p>s2p, column=&#39;S11&#39;)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates an s1p from an s2p by taking column and frequency, column can be any value in ["S11","S21","S12","S22"]</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Transformations.S2p_to_S1p', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Transformations.S2p_to_S1p" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">S2p_to_S1p</span><span class="p">(</span><span class="n">s2p</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;S11&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates an s1p from an s2p by taking column and frequency, column can be any value in [&quot;S11&quot;,&quot;S21&quot;,&quot;S12&quot;,&quot;S22&quot;]&quot;&quot;&quot;</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S11&quot;</span><span class="p">,</span><span class="s2">&quot;S21&quot;</span><span class="p">,</span><span class="s2">&quot;S12&quot;</span><span class="p">,</span><span class="s2">&quot;S22&quot;</span><span class="p">]</span>
+    <span class="n">s2p</span><span class="o">.</span><span class="n">change_data_format</span><span class="p">(</span><span class="s2">&quot;RI&quot;</span><span class="p">)</span>
+    <span class="n">s2p</span><span class="o">.</span><span class="n">change_frequency_units</span><span class="p">(</span><span class="s2">&quot;GHz&quot;</span><span class="p">)</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">columns</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">column</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">sparameter_complex</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span><span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s2p</span><span class="o">.</span><span class="n">sparameter_complex</span><span class="p">[:]):</span>
+        <span class="n">sparameter_complex</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="n">index</span><span class="p">]])</span>
+    <span class="n">options</span><span class="o">=</span><span class="n">s2p</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;reS11&quot;</span><span class="p">,</span><span class="s2">&quot;imS11&quot;</span><span class="p">]</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_complex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">sparameter_complex</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;number_ports&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">s1p_out</span><span class="o">=</span><span class="n">S1PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s1p_out</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
     <div class="name def" id="pyMez.Code.Analysis.Transformations.W2p_to_S2p">
     <p>def <span class="ident">W2p_to_S2p</span>(</p><p>w2p)</p>
     </div>
@@ -1294,12 +1412,14 @@ preserving the content. It complements translations, and can be added as jumps t
 
     
   
-    <div class="desc"><p>Creates a s2p with given a w2p assumes data columns are [Frequency,reA1_D1,imA1_D1,reB1_D1,imB1_D1...imB2_D2]</p></div>
+    <div class="desc"><p>Creates a s2p with given a w2p assumes data columns are [Frequency,reA1_D1,imA1_D1,reB1_D1,imB1_D1...imB2_D2]
+Returns the 3 -reciever sparameters or b1/a1 etc.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Transformations.W2p_to_S2p', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Transformations.W2p_to_S2p" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">W2p_to_S2p</span><span class="p">(</span><span class="n">w2p</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates a s2p with given a w2p assumes data columns are [Frequency,reA1_D1,imA1_D1,reB1_D1,imB1_D1...imB2_D2]&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Creates a s2p with given a w2p assumes data columns are [Frequency,reA1_D1,imA1_D1,reB1_D1,imB1_D1...imB2_D2]</span>
+<span class="sd">    Returns the 3 -reciever sparameters or b1/a1 etc.&quot;&quot;&quot;</span>
     <span class="n">complex_sparameters</span><span class="o">=</span><span class="p">[]</span>
     <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span><span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">w2p</span><span class="o">.</span><span class="n">data</span><span class="p">[:]):</span>
         <span class="c1"># B1_D1/A1_D1</span>

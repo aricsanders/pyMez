@@ -1075,6 +1075,7 @@ table {
 	<div id="functionsNavigation">
       
   <ul>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.TouchstoneModels.build_parameter_column_names">build_parameter_column_names</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.TouchstoneModels.build_row_formatter">build_row_formatter</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.TouchstoneModels.build_snp_column_names">build_snp_column_names</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.TouchstoneModels.build_snp_row_formatter">build_snp_row_formatter</a></li>
@@ -1469,6 +1470,34 @@ changed to data to align better with other class models.</p>
         <span class="p">[</span><span class="n">S12_1</span><span class="p">,</span><span class="n">S12_2</span><span class="p">,</span><span class="n">S21_1</span><span class="p">,</span><span class="n">S21_2</span><span class="p">]</span><span class="o">=</span><span class="n">column_names</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
         <span class="n">column_names</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">S21_1</span><span class="p">,</span><span class="n">S21_2</span><span class="p">,</span><span class="n">S12_1</span><span class="p">,</span><span class="n">S12_2</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">column_names</span>
+
+<span class="k">def</span> <span class="nf">build_parameter_column_names</span><span class="p">(</span><span class="n">number_of_ports</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">format</span><span class="o">=</span><span class="s2">&quot;RI&quot;</span><span class="p">,</span><span class="n">parameter</span><span class="o">=</span><span class="s2">&quot;S&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a list of column names based on the format and number of ports. Enter</span>
+<span class="sd">    number_or_ports as a integer and format as text string such as &#39;RI&#39;,&#39;MA&#39; or &#39;DB&#39;&quot;&quot;&quot;</span>
+    <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">]</span>
+    <span class="n">prefix_1</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="n">prefix_2</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;ri&#39;</span><span class="p">,</span><span class="n">format</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="n">prefix_1</span><span class="o">=</span><span class="s2">&quot;re&quot;</span>
+        <span class="n">prefix_2</span><span class="o">=</span><span class="s2">&quot;im&quot;</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;ma&#39;</span><span class="p">,</span><span class="n">format</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="n">prefix_1</span><span class="o">=</span><span class="s2">&quot;mag&quot;</span>
+        <span class="n">prefix_2</span><span class="o">=</span><span class="s2">&quot;arg&quot;</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;db&#39;</span><span class="p">,</span><span class="n">format</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="n">prefix_1</span><span class="o">=</span><span class="s2">&quot;db&quot;</span>
+        <span class="n">prefix_2</span><span class="o">=</span><span class="s2">&quot;arg&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;format must be RI, DB or MA&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_ports</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_ports</span><span class="p">):</span>
+            <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix_1</span><span class="o">+</span><span class="n">parameter</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix_2</span><span class="o">+</span><span class="n">parameter</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">number_of_ports</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+        <span class="c1">#switch S21 and S12</span>
+        <span class="p">[</span><span class="n">S12_1</span><span class="p">,</span><span class="n">S12_2</span><span class="p">,</span><span class="n">S21_1</span><span class="p">,</span><span class="n">S21_2</span><span class="p">]</span><span class="o">=</span><span class="n">column_names</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+        <span class="n">column_names</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">S21_1</span><span class="p">,</span><span class="n">S21_2</span><span class="p">,</span><span class="n">S12_1</span><span class="p">,</span><span class="n">S12_2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">column_names</span>
+
 
 <span class="k">def</span> <span class="nf">combine_segments</span><span class="p">(</span><span class="n">segment_list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Combines a list of lists that are segments (each segment is list of strings)</span>
@@ -3185,6 +3214,53 @@ changed to data to align better with other class models.</p>
   <section id="section-items">
 
     <h2 class="section-title" id="header-functions">Functions</h2>
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.TouchstoneModels.build_parameter_column_names">
+    <p>def <span class="ident">build_parameter_column_names</span>(</p><p>number_of_ports=2, format=&#39;RI&#39;, parameter=&#39;S&#39;)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Return a list of column names based on the format and number of ports. Enter
+number_or_ports as a integer and format as text string such as 'RI','MA' or 'DB'</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.TouchstoneModels.build_parameter_column_names', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.TouchstoneModels.build_parameter_column_names" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">build_parameter_column_names</span><span class="p">(</span><span class="n">number_of_ports</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">format</span><span class="o">=</span><span class="s2">&quot;RI&quot;</span><span class="p">,</span><span class="n">parameter</span><span class="o">=</span><span class="s2">&quot;S&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a list of column names based on the format and number of ports. Enter</span>
+<span class="sd">    number_or_ports as a integer and format as text string such as &#39;RI&#39;,&#39;MA&#39; or &#39;DB&#39;&quot;&quot;&quot;</span>
+    <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">]</span>
+    <span class="n">prefix_1</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="n">prefix_2</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;ri&#39;</span><span class="p">,</span><span class="n">format</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="n">prefix_1</span><span class="o">=</span><span class="s2">&quot;re&quot;</span>
+        <span class="n">prefix_2</span><span class="o">=</span><span class="s2">&quot;im&quot;</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;ma&#39;</span><span class="p">,</span><span class="n">format</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="n">prefix_1</span><span class="o">=</span><span class="s2">&quot;mag&quot;</span>
+        <span class="n">prefix_2</span><span class="o">=</span><span class="s2">&quot;arg&quot;</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;db&#39;</span><span class="p">,</span><span class="n">format</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="n">prefix_1</span><span class="o">=</span><span class="s2">&quot;db&quot;</span>
+        <span class="n">prefix_2</span><span class="o">=</span><span class="s2">&quot;arg&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;format must be RI, DB or MA&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_ports</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_ports</span><span class="p">):</span>
+            <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix_1</span><span class="o">+</span><span class="n">parameter</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix_2</span><span class="o">+</span><span class="n">parameter</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">number_of_ports</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+        <span class="c1">#switch S21 and S12</span>
+        <span class="p">[</span><span class="n">S12_1</span><span class="p">,</span><span class="n">S12_2</span><span class="p">,</span><span class="n">S21_1</span><span class="p">,</span><span class="n">S21_2</span><span class="p">]</span><span class="o">=</span><span class="n">column_names</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+        <span class="n">column_names</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">S21_1</span><span class="p">,</span><span class="n">S21_2</span><span class="p">,</span><span class="n">S12_1</span><span class="p">,</span><span class="n">S12_2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">column_names</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
       
   <div class="item">
     <div class="name def" id="pyMez.Code.DataHandlers.TouchstoneModels.build_row_formatter">

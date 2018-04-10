@@ -261,7 +261,10 @@ def create_examples_html_script(jupyter_examples_directory):
     html_examples_directory=os.path.join(jupyter_examples_directory,"..","html")
     os.chdir(jupyter_examples_directory)
     os.system("jupyter nbconvert *.ipynb --to html")
-    shutil.rmtree(html_examples_directory)
+    try:
+        shutil.rmtree(html_examples_directory)
+    except:
+        print("Could not remove {0}".format(html_examples_directory))
     shutil.copytree(jupyter_examples_directory,html_examples_directory)
     os.chdir(html_examples_directory)
     file_names=os.listdir(html_examples_directory)
