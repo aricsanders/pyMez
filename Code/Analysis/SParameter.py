@@ -415,16 +415,20 @@ def plot_reference_curve_comparison(reference_curve_list, **options):
         labels=plot_options["labels"]
     else:
         labels=map(lambda x:x.path,reference_curve_list)
+    value_columns = reference_curve_list[0].options["value_column_names"]
+    uncertainty_columns = reference_curve_list[0].options["uncertainty_column_names"]
+    number_plots = len(value_columns)
+    number_columns = int(plot_options["plots_per_column"])
+    number_rows = int(round(float(number_plots) / float(number_columns)))
+    fig, reference_axes = plt.subplots(nrows=number_rows, ncols=number_columns,
+                                       sharex=plot_options["share_x"],
+                                       figsize=plot_options["plot_size"],
+                                       dpi=plot_options["dpi"])
     for index,reference_curve in enumerate(reference_curve_list[:]):
         value_columns = reference_curve.options["value_column_names"]
         uncertainty_columns = reference_curve.options["uncertainty_column_names"]
-        number_plots = len(value_columns)
-        number_columns = int(plot_options["plots_per_column"])
-        number_rows = int(round(float(number_plots) / float(number_columns)))
-        fig, reference_axes = plt.subplots(nrows=number_rows, ncols=number_columns,
-                                           sharex=plot_options["share_x"],
-                                           figsize=plot_options["plot_size"],
-                                           dpi=plot_options["dpi"])
+
+
         x_data = reference_curve[plot_options["independent_axis_column_name"]]
         for axes_index, ax in enumerate(reference_axes.flat):
             y_data = np.array(reference_curve[value_columns[axes_index]])
