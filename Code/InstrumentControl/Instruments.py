@@ -80,6 +80,24 @@ VNA_FREQUENCY_UNIT_MULTIPLIERS={"Hz":1.,"kHz":10.**3,"MHz":10.**6,"GHz":10.**9,"
 # Module Functions
 
 #TODO: Move these functions to DataHandlers.Instruments instead
+def whos_there():
+    """Whos_there is a function that prints the idn string for all
+    GPIB instruments connected"""
+    resource_manager = visa.ResourceManager()
+    resource_list=resource_manager.list_resources()
+    gpib_resources=[]
+    gpib_idn_dictionary={}
+    for instrument in resource_list:
+        if re.search("GPIB",instrument,re.IGNORECASE):
+            resource=resource_manager.open_resource(instrument)
+            gpib_resources.append(resource)
+            idn=resource.query("*IDN?")
+            gpib_idn_dictionary[instrument]=idn
+    for instrument_name,idn in gpib_idn_dictionary.iteritems():
+        print("{0} is at address {1}".format(idn,instrument_name))
+    #return gpib_idn_dictionary
+
+
 
 def determine_instrument_type_from_string(string):
     """ Given a string returns the instrument type"""

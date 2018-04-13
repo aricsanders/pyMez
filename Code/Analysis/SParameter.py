@@ -385,6 +385,73 @@ def plot_reference_curve(reference_curve, **options):
         plt.show()
     return fig
 
+def plot_reference_curve_comparison(reference_curve_list, **options):
+    """Plots a list of frequency based reference curves
+     by using the options value_column_names and uncertainty_column_names.
+     Options """
+    defaults = {"display_legend": False,
+                "save_plot": False,
+                "directory": os.getcwd(),
+                "specific_descriptor": "Reference_Curve",
+                "general_descriptor": "Plot",
+                "file_name": None,
+                "plots_per_column": 2,
+                "plot_format": '-',
+                "fill_color": 'k',
+                "fill_opacity": .25,
+                "fill_edge_color": 'k',
+                "plot_size": (8, 10),
+                "dpi": 80,
+                "independent_axis_column_name": "Frequency",
+                "share_x": "col",
+                "labels":None}
+    plot_options = {}
+
+    for key, value in defaults.iteritems():
+        plot_options[key] = value
+    for key, value in options.iteritems():
+        plot_options[key] = value
+    if plot_options["labels"]:
+        labels=plot_options["labels"]
+    else:
+        labels=map(lambda x:x.path,reference_curve_list)
+    for index,reference_curve in enumerate(reference_curve_list[:]):
+        value_columns = reference_curve.options["value_column_names"]
+        uncertainty_columns = reference_curve.options["uncertainty_column_names"]
+        number_plots = len(value_columns)
+        number_columns = int(plot_options["plots_per_column"])
+        number_rows = int(round(float(number_plots) / float(number_columns)))
+        fig, reference_axes = plt.subplots(nrows=number_rows, ncols=number_columns,
+                                           sharex=plot_options["share_x"],
+                                           figsize=plot_options["plot_size"],
+                                           dpi=plot_options["dpi"])
+        x_data = reference_curve[plot_options["independent_axis_column_name"]]
+        for axes_index, ax in enumerate(reference_axes.flat):
+            y_data = np.array(reference_curve[value_columns[axes_index]])
+            error = np.array(reference_curve[uncertainty_columns[axes_index]])
+            ax.plot(x_data, y_data, plot_options["plot_format"],label=labels[index])
+            ax.fill_between(x_data, y_data - error, y_data + error,
+                            color=plot_options["fill_color"],
+                            alpha=plot_options["fill_opacity"],
+                            edgecolor=plot_options["fill_edge_color"])
+            ax.set_title(value_columns[axes_index])
+
+    plt.tight_layout()
+    if plot_options["display_legend"]:
+        plt.legend()
+    # Dealing with the save option
+    if plot_options["file_name"] is None:
+        file_name = auto_name(specific_descriptor=plot_options["specific_descriptor"],
+                              general_descriptor=plot_options["general_descriptor"],
+                              directory=plot_options["directory"], extension='png', padding=3)
+    else:
+        file_name = plot_options["file_name"]
+    if plot_options["save_plot"]:
+        # print file_name
+        plt.savefig(os.path.join(plot_options["directory"], file_name))
+    else:
+        plt.show()
+    return fig
 
 def calrep(raw_model,**options):
     """ Performs the calrep analysis routine on a raw data format (such as OnePortRawModel, TwoPortRawModel,PowerRawModel)
