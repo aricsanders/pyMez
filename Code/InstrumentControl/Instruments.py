@@ -93,9 +93,12 @@ def whos_there():
             gpib_resources.append(resource)
             idn=resource.query("*IDN?")
             gpib_idn_dictionary[instrument]=idn
-    for instrument_name,idn in gpib_idn_dictionary.iteritems():
-        print("{0} is at address {1}".format(idn,instrument_name))
-    #return gpib_idn_dictionary
+    if gpib_resources:
+        for instrument_name,idn in gpib_idn_dictionary.iteritems():
+            print("{0} is at address {1}".format(idn,instrument_name))
+        #return gpib_idn_dictionary
+    else:
+        print("There are no GPIB resources available")
 
 
 
@@ -579,6 +582,66 @@ class VNA(VisaInstrument):
                 self.frequency_list = frequency_list
         else:
             self.frequency_list = []
+    def add_all_traces(self,**options):
+        """Adds all Sparameter and wave parameter traces.
+        Does not initialize the instrument. The trace names match those in the
+        measure methods (S11,S12,..S22) and (A1_D1,B1_D1..B2_D2) by default it
+        assumes port 1 and port 2 are being used. In addition, it assumes the B receiver names are [A,B,C,D] """
+        defaults = {"port1": 1,"port2":2, "b_name_list": ["A", "B", "C", "D"]}
+        initialize_options = {}
+        for key, value in defaults.iteritems():
+            initialize_options[key] = value
+        for key, value in options.iteritems():
+            initialize_options[key] = value
+        self.write("DISPlay:WINDow1:STATE ON")
+        scattering_parameter_names=["S11","S12","S21","S22"]
+        trace_definitions=["S{0}{1}".format(initialize_options["port1"],initialize_options["port1"]),
+                           "S{0}{1}".format(initialize_options["port1"], initialize_options["port2"]),
+                           "S{0}{1}".format(initialize_options["port2"], initialize_options["port1"]),
+                           "S{0}{1}".format(initialize_options["port2"], initialize_options["port2"])]
+        for index,name in enumerate(scattering_parameter_names):
+            self.write("CALCulate:PARameter:DEFine '{0}',{1}".format(name,trace_definitions[index]))
+            self.write("DISPlay:WINDow1:TRACe1:FEED '{0}'".format(name))
+        b1_name = initialize_options["b_name_list"][initialize_options["port1"] - 1]
+        b2_name= initialize_options["b_name_list"][initialize_options["port2"] - 1]
+        # Initialize Port 1 traces A1_D1,B1_D1,B2_D1
+        self.write("CALCulate:PARameter:DEFine 'A{0}_D{0}',R{0},{0}".format(initialize_options["port1"]))
+        self.write("DISPlay:WINDow1:TRACe1:FEED 'A{0}_D{0}'".format(initialize_options["port1"]))
+        self.write("CALCulate:PARameter:DEFine 'B{0}_D{0}',{1},{0}".format(initialize_options["port1"],b1_name))
+        self.write("DISPlay:WINDow1:TRACe2:FEED 'B{0}_D{0}'".format(initialize_options["port1"]))
+        self.write("CALCulate:PARameter:DEFine 'A{1}_D{0}',R{1},{0}".format(initialize_options["port1"],
+                                                                            initialize_options["port2"] ))
+        self.write("DISPlay:WINDow1:TRACe3:FEED 'A{1}_D{0}'".format(initialize_options["port1"],
+                                                                    initialize_options["port2"]))
+
+        self.write("CALCulate:PARameter:DEFine 'B{1}_D{0}',{2},{0}".format(initialize_options["port1"],
+                                                                           initialize_options["port2"],
+                                                                           b2_name))
+        self.write("DISPlay:WINDow1:TRACe4:FEED 'B{1}_D{0}'".format(initialize_options["port1"],
+                                                                           initialize_options["port2"]))
+        # Initialize Port 2 Traces A1_D2,B1_D2,
+
+        self.write("CALCulate:PARameter:DEFine 'A{0}_D{1}',R{0},{1}".format(initialize_options["port1"],
+                                                                            initialize_options["port2"] ))
+        self.write("DISPlay:WINDow1:TRACe5:FEED 'A{0}_D{1}'".format(initialize_options["port1"],
+                                                                    initialize_options["port2"]))
+        self.write("CALCulate:PARameter:DEFine 'B{0}_D{1}',{2},{1}".format(initialize_options["port1"],
+                                                                           initialize_options["port2"],
+                                                                           b1_name))
+        self.write("DISPlay:WINDow1:TRACe6:FEED 'B{0}_D{1}'".format(initialize_options["port1"],
+                                                                    initialize_options["port2"]))
+
+
+        self.write("CALCulate:PARameter:DEFine 'A{1}_D{1}',R{1},{1}".format(initialize_options["port1"],
+                                                                            initialize_options["port2"] ))
+        self.write("DISPlay:WINDow1:TRACe7:FEED 'A{1}_D{1}'".format(initialize_options["port1"],
+                                                                    initialize_options["port2"]))
+        self.write("CALCulate:PARameter:DEFine 'B{1}_D{1}',{2},{1}".format(initialize_options["port1"],
+                                                                           initialize_options["port2"],
+                                                                           b2_name))
+        self.write("DISPlay:WINDow1:TRACe8:FEED 'B{1}_D{1}'".format(initialize_options["port1"],
+                                                                    initialize_options["port2"]))
+
 
     def initialize(self, **options):
         """Intializes the system"""
