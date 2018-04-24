@@ -1466,7 +1466,11 @@ def compare_s2p_plots(list_S2PV1,**options):
             y=np.array(s2p.get_column(column_names[index]))
             ax.plot(x,y,label=labels[s2p_index])
             if comparison_plot_options["display_legend"]:
-                ax.legend(loc=1,fontsize='8')
+                if index == 1:
+                    ax.legend(loc="center left", bbox_to_anchor=(1.05, .5),
+                              shadow=True,
+                              fancybox=True)
+
 
     compare_axes.flat[-2].set_xlabel('Frequency(GHz)',color='k')
     compare_axes.flat[-1].set_xlabel('Frequency(GHz)',color='k')

@@ -100,6 +100,19 @@ def W2p_to_S2p(w2p):
         complex_sparameters.append(new_row)
     s2p_out=S2PV1(None,sparameter_complex=complex_sparameters)
     return s2p_out
+
+def W1p_to_S1p(w1p):
+    """Creates a s1p with given a w1p assumes data columns are [Frequency,reA1_D1,imA1_D1,reB1_D1,imB1_D1]
+    returns a S1PV1 model with columns [Frequency,reS11,imS11]"""
+    complex_sparameters=[]
+    for row_index,row in enumerate(w1p.data[:]):
+        # B1_D1/A1_D1
+        S11=complex(row[3],row[4])/complex(row[1],row[2])
+        new_row=[row[0],S11]
+        complex_sparameters.append(new_row)
+    s1p_out=S1PV1(None,sparameter_complex=complex_sparameters)
+    return s1p_out
+
 def S2p_to_S1p(s2p,column="S11"):
     """Creates an s1p from an s2p by taking column and frequency, column can be any value in ["S11","S21","S12","S22"]"""
     columns=["S11","S21","S12","S22"]
