@@ -1330,7 +1330,8 @@ class HighSpeedOscope(VisaInstrument):
                     "initial_time_offset": self.get_time_position(), "timeout_measurement": 10000,
                     "save_data": False, "data_format": "dat", "directory": os.getcwd(),
                     "specific_descriptor": "Scope", "general_descriptor": "Measurement", "add_header": False,
-                    "output_table_options": {"data_delimiter": "  ", "treat_header_as_comment": True}
+                    "output_table_options": {"data_delimiter": "\t", "treat_header_as_comment": True},
+                    "download_format":"ASCII"
                     }
         self.measure_options = {}
         for key, value in defaults.iteritems():
@@ -1352,10 +1353,13 @@ class HighSpeedOscope(VisaInstrument):
         # now configure the scope for data transfer
         # define the way the data is transmitted from the instrument to the PC
         # Word -> 16bit signed integer
-        # self.write(':WAV:FORM WORD')
-        self.write(':WAV:FORM ASCII')
-        # little-endian
-        # self.write(':WAV:BYT LSBF')
+        # now we choose if you want it to be bin or ASCII
+        if re.search("asc",self.measure_options["download_format"],re.IGNORECASE):
+            self.write(':WAV:FORM ASCII')
+        else:
+            self.write(':WAV:FORM WORD')
+            # little-endian
+            self.write(':WAV:BYT LSBF')
         number_rows = self.measure_options["number_points"] * self.measure_options["number_frames"]
         # this is the way diogo did it
         # number of points
@@ -1389,7 +1393,13 @@ class HighSpeedOscope(VisaInstrument):
                 # get data for channel 1
                 self.write(':WAV:SOUR CHAN{0}'.format(channel_read))
                 # get data
-                data_column = self.resource.query(':WAV:DATA?')
+                if re.search("asc", self.measure_options["download_format"], re.IGNORECASE):
+                    data_column = self.resource.query(':WAV:DATA?')
+                else:
+                    # This downloads the data as signed 16bit ints
+                    # Need a conversion to volts
+                    data_column=self.resource.query_binary_values(':WAV:DATA?', datatype='h')
+
                 data_column = data_column.replace("\n", "").replace("1-","-").split(",")
                 new_frame.append(data_column)
                 # print("{0} is {1}".format("data_column",data_column))
