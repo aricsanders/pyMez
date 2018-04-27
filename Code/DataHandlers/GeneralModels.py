@@ -756,17 +756,17 @@ class AsciiDataTable(object):
             if re.search(begin_token,line,re.IGNORECASE):
                 return index
 
-    def update_import_options(self,import_table):
+    def update_import_options(self,import_table,verbose=False):
         """Updates the options in the import table"""
         # discovered slight bug 2017-01-18 the variable index is not the right one to have here
         # it should be i from 0 to len(import_table)
         defined_element_index=0
         for index,element in enumerate(['header','column_names','data','footer']):
             if self.__dict__[element] is not None:
-
-                print("The {0} variable is {1}".format('index',index))
-                print("The {0} variable is {1}".format('element',element))
-                print("The {0} variable is {1}".format('import_table',import_table))
+                if verbose:
+                    print("The {0} variable is {1}".format('index',index))
+                    print("The {0} variable is {1}".format('element',element))
+                    print("The {0} variable is {1}".format('import_table',import_table))
                 [self.options['%s_begin_line'%element],
                                 self.options['%s_end_line'%element],
                                 self.options['%s_begin_token'%element],

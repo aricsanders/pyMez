@@ -6,7 +6,8 @@
 # Created:     2016/06/23
 # Licence:     MIT
 #-----------------------------------------------------------------------------
-""" Experiments is a base module for controlling experiments"""
+""" Experiments is a base module for controlling experiments. Its purpose is to integrate
+multiple instrument data acquisition with data  """
 
 #-------------------------------------------------------------------------------
 # Standard Imports

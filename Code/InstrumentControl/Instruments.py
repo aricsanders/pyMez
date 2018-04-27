@@ -1395,12 +1395,14 @@ class HighSpeedOscope(VisaInstrument):
                 # get data
                 if re.search("asc", self.measure_options["download_format"], re.IGNORECASE):
                     data_column = self.resource.query(':WAV:DATA?')
+                    data_column = data_column.replace("\n", "").replace("1-", "-").split(",")
                 else:
                     # This downloads the data as signed 16bit ints
                     # Need a conversion to volts
                     data_column=self.resource.query_binary_values(':WAV:DATA?', datatype='h')
 
-                data_column = data_column.replace("\n", "").replace("1-","-").split(",")
+
+
                 new_frame.append(data_column)
                 # print("{0} is {1}".format("data_column",data_column))
             frames_data.append(new_frame)
@@ -1529,6 +1531,15 @@ class HighSpeedOscope(VisaInstrument):
         scale = self.query(':CHAN{0}:SCAL?'.format(channel))
         return scale
 
+    def set_channel_offset(self, offset=0, channel=1):
+        """Sets the scale in mv of channel. Default is 10mv/division on channel 1"""
+        self.write(':CHAN{0}:OFFSet {1}'.format(channel, offset))
+
+
+    def get_channel_offset(self, channel=1):
+        "Returns the scale for a specified channel, the default is channel 1"
+        offset = self.query(':CHAN{0}:OFFSet?'.format(channel))
+        return offset
 
     def set_channel_bandwidth(self, bandwidth="LOW", channel=1):
         """Sets the specified channel's bandwith to LOW, MED or HIGH, default is to set channel 1 to LOW"""
