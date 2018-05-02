@@ -5,7 +5,39 @@
 # Created:     2/24/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" Module that contains general data models and functions for handling them """
+""" GeneralModels is a module that contains general data models and functions for handling them. Its key
+ class is AsciiDataTable that is an abstracted model of a data table with a header full of metadata, a
+ column modeled table (like excel or a csv table) and a footer. The
+
+
+Examples
+--------
+    #!python
+    >>from pyMez import *
+    >>table=AsciiDataTable(None,data=[[0,1],[1,0]],column_names=["a","b])
+    >>print(table)
+    >>table.header=["A header for you"]
+    >>print(table)
+
+
+<h3><a href="../../../Examples/Html/AsciiDataTable_Example.html">Data Table Example</a></h3>
+
+Requirements
+------------
++ [sys](https://docs.python.org/2/library/sys.html)
++ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)
++ [numpy](http://www.numpy.org/)
++ [pyMez](https://github.com/aricsanders/pyMez)
+
+Help
+---------------
+<a href="./index.html">`pyMez.Code.DataHandlers`</a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>"""
 #-----------------------------------------------------------------------------
 # Standard Imports
 from types import *
