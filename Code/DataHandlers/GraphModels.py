@@ -793,7 +793,7 @@ class ImageGraph(Graph):
                              "Image",File_to_Image,node_description="BMP File")
         self.add_node("Base64","Png",PngFile_to_Base64,
                              "Png",Base64_to_PngFile,node_description="Base 64 PNG")
-        self.add_node("EmbeddedHTML","Base64",Base64Png_to_EmbeddedHtmlString,
+        self.add_node("EmbeddedHtml","Base64",Base64Png_to_EmbeddedHtmlString,
                              "Base64",EmbeddedHtmlString_to_Base64Png,node_description="Embedded HTML of PNG")
         self.add_node("Ndarray","Png",PngFile_to_Ndarray,
                              "Png",Ndarray_to_PngFile,node_description="Numpy Array")
