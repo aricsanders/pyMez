@@ -534,7 +534,7 @@ class CheckStandardReport(HTMLReport):
         for key, value in defaults.iteritems():
             add_options[key] = value
         for key, value in options.iteritems():
-            add_optionss[key] = value
+            add_options[key] = value
         if add_options["clear_before"]:
             self.clear()
         if heading_text is None:
@@ -569,7 +569,7 @@ class CheckStandardReport(HTMLReport):
         for key, value in defaults.iteritems():
             add_options[key] = value
         for key, value in options.iteritems():
-            add_optionss[key] = value
+            add_options[key] = value
         if add_options["clear_before"]:
             self.clear()
         self.append_to_body({"tag": "h2", "text": "Downloads"})

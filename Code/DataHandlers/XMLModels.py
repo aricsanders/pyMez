@@ -1483,9 +1483,8 @@ class InstrumentState(XMLBase):
                                       self.state_node.getElementsByTagName('Tuple')])
 
     def add_state_description(self):
-        """Adds the tag named State_Description and its information
-        Currently data can be entered as a dictionary of the form {'State_Description':{tag_name:tag_value}}
-        or as an element or as a string"""
+        """Adds the tag named State_Description
+        """
         state_description = self.document.createElement("State_Description")
         if len(self.document.childNodes) == 0:
             self.document.documentElement.appendChild(state_description)
@@ -1497,8 +1496,13 @@ class InstrumentState(XMLBase):
             pass
 
     def append_description(self, description_dictionary):
-        """Adds the description_dictionary to State_Description. Description"""
-        state_description = self.document.getElementsByTagName('State_Description')[0]
+        """Adds the description_dictionary to State_Description. Description dictionary is a key value pair
+        describing the state. """
+        try:
+            state_description = self.document.getElementsByTagName('State_Description')[0]
+        except:
+            self.add_state_description()
+            state_description = self.document.getElementsByTagName('State_Description')[0]
         for key, value in description_dictionary.iteritems():
             element = self.document.createElement("{0}".format(key))
             text = self.document.createTextNode("{0}".format(value))
