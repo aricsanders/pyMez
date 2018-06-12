@@ -2159,7 +2159,7 @@ def plot_checkstandard_history(device_history, **options):
     number_rows = 0
     if re.search('Power', model):
         number_rows = 2
-        column_names = ['magS11', 'argS11', 'Efficiency', 'Calibration_Factor']
+        column_names = ['magS11', 'argS11', 'Efficiency']
 
 
     elif re.search('OnePort', model):
@@ -2174,13 +2174,16 @@ def plot_checkstandard_history(device_history, **options):
     fig, compare_axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col', figsize=(8, 6), dpi=80)
     for index, ax in enumerate(compare_axes.flat):
 
-        # ax.xaxis.set_visible(False)
-        if re.search('arg', column_names[index]):
-            ax.set_ylabel('Phase(Degrees)', color='green')
-        elif re.search('mag', column_names[index]):
-            ax.set_ylabel(r'|{0}|'.format(column_names[index]), color='green')
-        # ax.set_title(column_names[index])
-        # initial plot of
+        try:
+            # ax.xaxis.set_visible(False)
+            if re.search('arg', column_names[index]):
+                ax.set_ylabel('Phase(Degrees)', color='green')
+            elif re.search('mag', column_names[index]):
+                ax.set_ylabel(r'|{0}|'.format(column_names[index]), color='green')
+            # ax.set_title(column_names[index])
+            # initial plot of
+        except:
+            pass
         if history_plot_options["extra_plots"]:
             if history_plot_options["extra_plot_formats"]:
                 plot_formats = history_plot_options["extra_plot_formats"]
@@ -2203,13 +2206,15 @@ def plot_checkstandard_history(device_history, **options):
             number_lines = len(
                 unique_measurement_dates[history_plot_options["min_num"]:history_plot_options["max_num"]])
             date_device_history = device_history[device_history["Measurement_Timestamp"] == date]
-            if not date_device_history.empty:
-                x_date = date_device_history['Frequency']
-                y_date = np.array(date_device_history[column_names[index]].tolist())
-                date_color = (1 - float(date_index + 1) / number_lines, 0, float(date_index + 1) / number_lines, .5)
-                ax.plot(x_date, y_date,
-                        color=date_color, label=date)
-
+            try:
+                if not date_device_history.empty:
+                    x_date = date_device_history['Frequency']
+                    y_date = np.array(date_device_history[column_names[index]].tolist())
+                    date_color = (1 - float(date_index + 1) / number_lines, 0, float(date_index + 1) / number_lines, .5)
+                    ax.plot(x_date, y_date,
+                            color=date_color, label=date)
+            except:
+                pass
         # ax.sharex(diff_axes[index])
         if history_plot_options["display_legend"]:
             if index == 1:
