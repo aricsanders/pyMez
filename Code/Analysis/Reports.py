@@ -162,7 +162,7 @@ class HTMLReport(HTMLBase):
         # might change this to self.ImageGraph and use it elsewhere
         image_graph = ImageGraph()
         image_graph.set_state(image_mode, image)
-        image_graph.move_to_node("EmbeddedHTML")
+        image_graph.move_to_node("EmbeddedHtml")
         self.append_to_body(image_graph.data)
 
     def embedd_image_figure(self, image, image_mode="MatplotlibFigure", figure_id="image", caption="", style="",
@@ -175,7 +175,7 @@ class HTMLReport(HTMLBase):
         # might change this to self.ImageGraph and use it elsewhere
         image_graph = ImageGraph()
         image_graph.set_state(image_mode, image)
-        image_graph.move_to_node("EmbeddedHTML")
+        image_graph.move_to_node("EmbeddedHtml")
         self.append_to_body("<figure id='{0}' style='{3}'>{1}<figcaption>{2}</figcaption></figure>".format(figure_id,
                                                                                                            image_graph.data,
                                                                                                            caption,
@@ -273,6 +273,8 @@ class CheckStandardReport(HTMLReport):
 
     def build_checkstandard_report(self):
         """Builds the report for the options Device_Id"""
+        self.raw_measurement=None
+        self.calrep_measurement=None
         self.clear()
         self.plots = []
         self.plot_ids = []
@@ -284,8 +286,8 @@ class CheckStandardReport(HTMLReport):
         elif re.match("2", measurement_type):
             self.options["Measurement_Type"] = "2-port"
         elif re.match("p", measurement_type, re.IGNORECASE):
-            self.options["Measurement_Type"] = "2-port"
-
+            self.options["Measurement_Type"] = "power"
+        print("{0} is {1}".format("measurement_type",measurement_type))
         self.results_file = ResultFileModel(os.path.join(self.options["results_directory"], self.options["Device_Id"]))
         options = {"Device_Id": self.options["Device_Id"], "System_Id": None, "Measurement_Timestamp": None,
                    "Connector_Type_Measurement": None,
@@ -302,7 +304,7 @@ class CheckStandardReport(HTMLReport):
                 options["column_names"] = ['Frequency', 'magS11', 'argS11', 'magS22', 'argS22']
         elif re.search('Dry Cal|Thermistor|power', self.options["Measurement_Type"], re.IGNORECASE):
             history_key = 'power'
-            options["column_names"] = ['Frequency', 'magS11', 'argS11', 'Efficiency', 'Calibration_Factor']
+            options["column_names"] = ['Frequency', 'magS11', 'argS11', 'Efficiency']
         # print history[history_key][:5]
         # print history_key
         database = self.history_dict[history_key]
@@ -338,6 +340,16 @@ class CheckStandardReport(HTMLReport):
                                                                           max(self.get_measurement_dates()))
         self.add_report_heading()
         self.append_to_body({"tag": "p", "text": summary_text})
+        download_options={"clear_before": False,
+         "download_files": [self.results_file,
+                            self.mean_frame, self.device_history],
+         "download_files_input_format": ["AsciiDataTable", "DataFrame",
+                                         "DataFrame"],
+         "download_files_base_names": ["Historical_Database.txt",
+                                       "Mean_Database.txt",
+                                       "Device_History.txt"],
+         "style": "display:none;border:1;"}
+        self.add_download_table(**download_options)
         self.add_all_plots()
 
     def build_comparison_report(self, raw_file_path=None):
@@ -397,7 +409,7 @@ class CheckStandardReport(HTMLReport):
                 options["column_names"] = ['Frequency', 'magS11', 'argS11', 'magS22', 'argS22']
         elif re.search('Dry Cal|Thermistor|power', table.metadata["Measurement_Type"], re.IGNORECASE):
             history_key = 'power'
-            options["column_names"] = ['Frequency', 'magS11', 'argS11', 'Efficiency', 'Calibration_Factor']
+            options["column_names"] = ['Frequency', 'magS11', 'argS11', 'Efficiency']
         # print history[history_key][:5]
         # print history_key
         database = self.history_dict[history_key]

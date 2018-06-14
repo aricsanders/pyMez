@@ -2158,20 +2158,22 @@ def plot_checkstandard_history(device_history, **options):
     # print("{0} are {1}".format("unique_measurement_dates",unique_measurement_dates))
     number_rows = 0
     if re.search('Power', model):
-        number_rows = 2
+        number_rows = 3
         column_names = ['magS11', 'argS11', 'Efficiency']
+        number_columns=1
 
 
     elif re.search('OnePort', model):
         number_rows = 1
         column_names = ['magS11', 'argS11']
-
+        number_columns = 2
 
     elif re.search('TwoPort', model):
         number_rows = 3
         column_names = ['magS11', 'argS11', 'magS21', 'argS21', 'magS22', 'argS22']
+        number_columns = 2
 
-    fig, compare_axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col', figsize=(8, 6), dpi=80)
+    fig, compare_axes = plt.subplots(nrows=number_rows, ncols=number_columns, sharex='col', figsize=(8, 6), dpi=80)
     for index, ax in enumerate(compare_axes.flat):
 
         try:
@@ -2180,27 +2182,29 @@ def plot_checkstandard_history(device_history, **options):
                 ax.set_ylabel('Phase(Degrees)', color='green')
             elif re.search('mag', column_names[index]):
                 ax.set_ylabel(r'|{0}|'.format(column_names[index]), color='green')
+            elif re.search('Ef', column_names[index]):
+                ax.set_ylabel(r'|{0}|'.format(column_names[index]), color='green')
             # ax.set_title(column_names[index])
             # initial plot of
+
+            if history_plot_options["extra_plots"]:
+                if history_plot_options["extra_plot_formats"]:
+                    plot_formats = history_plot_options["extra_plot_formats"]
+                else:
+                    plot_formats = ["r--" for plot in history_plot_options["extra_plots"]]
+                if history_plot_options["extra_plot_labels"]:
+                    for model_index, model in enumerate(history_plot_options["extra_plots"]):
+                        x = model["Frequency"]
+                        y = model[column_names[index]]
+                        ax.plot(x, y, plot_formats[model_index],
+                                label=history_plot_options["extra_plot_labels"][model_index])
+                else:
+                    for model_index, model in enumerate(history_plot_options["extra_plots"]):
+                        x = model["Frequency"]
+                        y = model[column_names[index]]
+                        ax.plot(x, y, plot_formats[model_index], label="Comparison {0}".format(model_index))
         except:
             pass
-        if history_plot_options["extra_plots"]:
-            if history_plot_options["extra_plot_formats"]:
-                plot_formats = history_plot_options["extra_plot_formats"]
-            else:
-                plot_formats = ["r--" for plot in history_plot_options["extra_plots"]]
-            if history_plot_options["extra_plot_labels"]:
-                for model_index, model in enumerate(history_plot_options["extra_plots"]):
-                    x = model["Frequency"]
-                    y = model[column_names[index]]
-                    ax.plot(x, y, plot_formats[model_index],
-                            label=history_plot_options["extra_plot_labels"][model_index])
-            else:
-                for model_index, model in enumerate(history_plot_options["extra_plots"]):
-                    x = model["Frequency"]
-                    y = model[column_names[index]]
-                    ax.plot(x, y, plot_formats[model_index], label="Comparison {0}".format(model_index))
-
         for date_index, date in enumerate(
                 unique_measurement_dates[history_plot_options["min_num"]:history_plot_options["max_num"]]):
             number_lines = len(

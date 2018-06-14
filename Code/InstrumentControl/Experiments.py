@@ -7,7 +7,17 @@
 # Licence:     MIT
 #-----------------------------------------------------------------------------
 """ Experiments is a base module for controlling experiments. Its purpose is to integrate
-multiple instrument data acquisition with data  """
+multiple instrument data acquisition with data
+
+
+ Help
+---------------
+<a href="./index.html">`pyMez.Code.InstrumentControl`</a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMez</a>
+</div>"""
 
 #-------------------------------------------------------------------------------
 # Standard Imports

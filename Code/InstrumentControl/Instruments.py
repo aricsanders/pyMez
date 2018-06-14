@@ -5,7 +5,29 @@
 # Created:     2016/06/23
 #-----------------------------------------------------------------------------
 """ The Module Instruments Contains Classes and functions to control 
-instruments; GPIB,RS232 and other visa instruments """
+instruments; GPIB,RS232 and other visa instruments. Instrument control classes are
+wrappers around the pyvisa instrument class with static xml based metadata added in.
+
+
+Examples
+--------
+    #!python
+    >> from pyMez import *
+    >> vna=VNA("GPIB::16")
+    >> vna.initialize()
+    >> s2p=vna.measure_sparameters()
+    >> s2p.show()
+
+<a href="../../../Examples/Html/VNA_Measurement_Example_WR15.html">VNA Measurement Examples</a>
+
+ Help
+---------------
+<a href="./index.html">`pyMez.Code.InstrumentControl`</a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMez</a>
+</div>"""
 
 # TODO:Fix Save State, and importing from DataHandlers
 #-------------------------------------------------------------------------------

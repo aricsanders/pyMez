@@ -1,7 +1,10 @@
 # pyMez
 Measurement, Analysis and Data Management Software. To load the API interface use from pyMez import *.
+Installation using pip
+----------------------
+`>>pip install pyMez`
 
-Installation
+Long Installation
 ------------
 1.	Install Anaconda 2.7 from https://www.continuum.io/downloads
 2.	Install pyvisa using pip install pyvisa

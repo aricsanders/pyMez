@@ -2937,9 +2937,8 @@ Instrument states, instrument sheets and file indices.</p>
                                       <span class="bp">self</span><span class="o">.</span><span class="n">state_node</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;Tuple&#39;</span><span class="p">)])</span>
 
     <span class="k">def</span> <span class="nf">add_state_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description and its information</span>
-<span class="sd">        Currently data can be entered as a dictionary of the form {&#39;State_Description&#39;:{tag_name:tag_value}}</span>
-<span class="sd">        or as an element or as a string&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s2">&quot;State_Description&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">childNodes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">state_description</span><span class="p">)</span>
@@ -2951,8 +2950,13 @@ Instrument states, instrument sheets and file indices.</p>
             <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">append_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description_dictionary</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds the description_dictionary to State_Description. Description&quot;&quot;&quot;</span>
-        <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State_Description&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="sd">&quot;&quot;&quot;Adds the description_dictionary to State_Description. Description dictionary is a key value pair</span>
+<span class="sd">        describing the state. &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State_Description&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_state_description</span><span class="p">()</span>
+            <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State_Description&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">description_dictionary</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s2">&quot;{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
             <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createTextNode</span><span class="p">(</span><span class="s2">&quot;{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
@@ -8955,9 +8959,8 @@ state.save()</p>
                                       <span class="bp">self</span><span class="o">.</span><span class="n">state_node</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;Tuple&#39;</span><span class="p">)])</span>
 
     <span class="k">def</span> <span class="nf">add_state_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description and its information</span>
-<span class="sd">        Currently data can be entered as a dictionary of the form {&#39;State_Description&#39;:{tag_name:tag_value}}</span>
-<span class="sd">        or as an element or as a string&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s2">&quot;State_Description&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">childNodes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">state_description</span><span class="p">)</span>
@@ -8969,8 +8972,13 @@ state.save()</p>
             <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">append_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description_dictionary</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds the description_dictionary to State_Description. Description&quot;&quot;&quot;</span>
-        <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State_Description&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="sd">&quot;&quot;&quot;Adds the description_dictionary to State_Description. Description dictionary is a key value pair</span>
+<span class="sd">        describing the state. &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State_Description&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_state_description</span><span class="p">()</span>
+            <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State_Description&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">description_dictionary</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s2">&quot;{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
             <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createTextNode</span><span class="p">(</span><span class="s2">&quot;{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
@@ -9173,16 +9181,13 @@ state.save()</p>
 
     
   
-    <div class="desc"><p>Adds the tag named State_Description and its information
-Currently data can be entered as a dictionary of the form {'State_Description':{tag_name:tag_value}}
-or as an element or as a string</p></div>
+    <div class="desc"><p>Adds the tag named State_Description</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.XMLModels.InstrumentState.add_state_description', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.DataHandlers.XMLModels.InstrumentState.add_state_description" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_state_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description and its information</span>
-<span class="sd">    Currently data can be entered as a dictionary of the form {&#39;State_Description&#39;:{tag_name:tag_value}}</span>
-<span class="sd">    or as an element or as a string&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Adds the tag named State_Description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s2">&quot;State_Description&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">childNodes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">documentElement</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">state_description</span><span class="p">)</span>
@@ -9208,13 +9213,19 @@ or as an element or as a string</p></div>
 
     
   
-    <div class="desc"><p>Adds the description_dictionary to State_Description. Description</p></div>
+    <div class="desc"><p>Adds the description_dictionary to State_Description. Description dictionary is a key value pair
+describing the state.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.XMLModels.InstrumentState.append_description', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.DataHandlers.XMLModels.InstrumentState.append_description" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">append_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description_dictionary</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adds the description_dictionary to State_Description. Description&quot;&quot;&quot;</span>
-    <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State_Description&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;Adds the description_dictionary to State_Description. Description dictionary is a key value pair</span>
+<span class="sd">    describing the state. &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State_Description&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_state_description</span><span class="p">()</span>
+        <span class="n">state_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;State_Description&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">description_dictionary</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s2">&quot;{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
         <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">createTextNode</span><span class="p">(</span><span class="s2">&quot;{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>

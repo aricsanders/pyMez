@@ -1082,6 +1082,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.test_VisaInstrument">test_VisaInstrument</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.test_determine_instrument_type">test_determine_instrument_type</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.test_find_description">test_find_description</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.whos_there">whos_there</a></li>
   </ul>
 
 	 </div>
@@ -1129,6 +1130,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.ask">ask</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.close">close</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.get_channel_bandwidth">get_channel_bandwidth</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.get_channel_offset">get_channel_offset</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.get_channel_scale">get_channel_scale</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.get_error_state">get_error_state</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.get_image_path">get_image_path</a></li>
@@ -1150,6 +1152,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.save_current_state">save_current_state</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.save_state">save_state</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.set_channel_bandwidth">set_channel_bandwidth</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.set_channel_offset">set_channel_offset</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.set_channel_scale">set_channel_scale</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.set_number_points">set_number_points</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.set_state">set_state</a></li>
@@ -1205,6 +1208,7 @@ table {
           
   <ul>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.__init__">__init__</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.add_all_traces">add_all_traces</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.add_entry">add_entry</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.add_segment">add_segment</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.ask">ask</a></li>
@@ -1350,7 +1354,25 @@ table {
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMez.Code.InstrumentControl.Instruments</span> module</h1>
   <p>The Module Instruments Contains Classes and functions to control 
-instruments; GPIB,RS232 and other visa instruments</p>
+instruments; GPIB,RS232 and other visa instruments. Instrument control classes are
+wrappers around the pyvisa instrument class with static xml based metadata added in.</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pyMez</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;</span> <span class="n">vna</span><span class="o">=</span><span class="n">VNA</span><span class="p">(</span><span class="s2">&quot;GPIB::16&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">vna</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+<span class="o">&gt;&gt;</span> <span class="n">s2p</span><span class="o">=</span><span class="n">vna</span><span class="o">.</span><span class="n">measure_sparameters</span><span class="p">()</span>
+<span class="o">&gt;&gt;</span> <span class="n">s2p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+
+<p><a href="../../../Examples/Html/VNA_Measurement_Example_WR15.html">VNA Measurement Examples</a></p>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMez.Code.InstrumentControl</code></a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMez</a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.InstrumentControl.Instruments" class="source">
@@ -1361,7 +1383,29 @@ instruments; GPIB,RS232 and other visa instruments</p>
 <span class="c1"># Created:     2016/06/23</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot; The Module Instruments Contains Classes and functions to control </span>
-<span class="sd">instruments; GPIB,RS232 and other visa instruments &quot;&quot;&quot;</span>
+<span class="sd">instruments; GPIB,RS232 and other visa instruments. Instrument control classes are</span>
+<span class="sd">wrappers around the pyvisa instrument class with static xml based metadata added in.</span>
+
+
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">    #!python</span>
+<span class="sd">    &gt;&gt; from pyMez import *</span>
+<span class="sd">    &gt;&gt; vna=VNA(&quot;GPIB::16&quot;)</span>
+<span class="sd">    &gt;&gt; vna.initialize()</span>
+<span class="sd">    &gt;&gt; s2p=vna.measure_sparameters()</span>
+<span class="sd">    &gt;&gt; s2p.show()</span>
+
+<span class="sd">&lt;a href=&quot;../../../Examples/Html/VNA_Measurement_Example_WR15.html&quot;&gt;VNA Measurement Examples&lt;/a&gt;</span>
+
+<span class="sd"> Help</span>
+<span class="sd">---------------</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMez.Code.InstrumentControl`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMez_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index of all Functions and Classes in pyMez&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;&quot;&quot;&quot;</span>
 
 <span class="c1"># TODO:Fix Save State, and importing from DataHandlers</span>
 <span class="c1">#-------------------------------------------------------------------------------</span>
@@ -1436,6 +1480,27 @@ instruments; GPIB,RS232 and other visa instruments</p>
 <span class="c1"># Module Functions</span>
 
 <span class="c1">#TODO: Move these functions to DataHandlers.Instruments instead</span>
+<span class="k">def</span> <span class="nf">whos_there</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Whos_there is a function that prints the idn string for all</span>
+<span class="sd">    GPIB instruments connected&quot;&quot;&quot;</span>
+    <span class="n">resource_manager</span> <span class="o">=</span> <span class="n">visa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
+    <span class="n">resource_list</span><span class="o">=</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">list_resources</span><span class="p">()</span>
+    <span class="n">gpib_resources</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">gpib_idn_dictionary</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;GPIB&quot;</span><span class="p">,</span><span class="n">instrument</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="n">instrument</span><span class="p">)</span>
+            <span class="n">gpib_resources</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
+            <span class="n">idn</span><span class="o">=</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;*IDN?&quot;</span><span class="p">)</span>
+            <span class="n">gpib_idn_dictionary</span><span class="p">[</span><span class="n">instrument</span><span class="p">]</span><span class="o">=</span><span class="n">idn</span>
+    <span class="k">if</span> <span class="n">gpib_resources</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">instrument_name</span><span class="p">,</span><span class="n">idn</span> <span class="ow">in</span> <span class="n">gpib_idn_dictionary</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is at address {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idn</span><span class="p">,</span><span class="n">instrument_name</span><span class="p">))</span>
+        <span class="c1">#return gpib_idn_dictionary</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;There are no GPIB resources available&quot;</span><span class="p">)</span>
+
+
 
 <span class="k">def</span> <span class="nf">determine_instrument_type_from_string</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Given a string returns the instrument type&quot;&quot;&quot;</span>
@@ -1917,6 +1982,67 @@ instruments; GPIB,RS232 and other visa instruments</p>
                 <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="n">frequency_list</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">add_all_traces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds all Sparameter and wave parameter traces.</span>
+<span class="sd">        Does not initialize the instrument. The trace names match those in the</span>
+<span class="sd">        measure methods (S11,S12,..S22) and (A1_D1,B1_D1..B2_D2) by default it</span>
+<span class="sd">        assumes port 1 and port 2 are being used. In addition, it assumes the B receiver names are [A,B,C,D].</span>
+<span class="sd">         This method will cause an error if the traces are already defined&quot;&quot;&quot;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;port1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s2">&quot;port2&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;b_name_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">]}</span>
+        <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:STATE ON&quot;</span><span class="p">)</span>
+        <span class="n">scattering_parameter_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S11&quot;</span><span class="p">,</span><span class="s2">&quot;S12&quot;</span><span class="p">,</span><span class="s2">&quot;S21&quot;</span><span class="p">,</span><span class="s2">&quot;S22&quot;</span><span class="p">]</span>
+        <span class="n">trace_definitions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]),</span>
+                           <span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]),</span>
+                           <span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]),</span>
+                           <span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">])]</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scattering_parameter_names</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;{0}&#39;,{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">trace_definitions</span><span class="p">[</span><span class="n">index</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe{1}:FEED &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">b1_name</span> <span class="o">=</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;b_name_list&quot;</span><span class="p">][</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">b2_name</span><span class="o">=</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;b_name_list&quot;</span><span class="p">][</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># Initialize Port 1 traces A1_D1,B1_D1,B2_D1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{0}_D{0}&#39;,R{0},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe5:FEED &#39;A{0}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{0}_D{0}&#39;,{1},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span><span class="n">b1_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe6:FEED &#39;B{0}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{1}_D{0}&#39;,R{1},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                            <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe7:FEED &#39;A{1}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                    <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{1}_D{0}&#39;,{2},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                           <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
+                                                                           <span class="n">b2_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe8:FEED &#39;B{1}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                           <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+        <span class="c1"># Initialize Port 2 Traces A1_D2,B1_D2,</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{0}_D{1}&#39;,R{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                            <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe9:FEED &#39;A{0}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                    <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{0}_D{1}&#39;,{2},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                           <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
+                                                                           <span class="n">b1_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe10:FEED &#39;B{0}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                    <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{1}_D{1}&#39;,R{1},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                            <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe11:FEED &#39;A{1}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                    <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{1}_D{1}&#39;,{2},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                           <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
+                                                                           <span class="n">b2_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe12:FEED &#39;B{1}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                    <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+
 
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Intializes the system&quot;&quot;&quot;</span>
@@ -2604,7 +2730,8 @@ instruments; GPIB,RS232 and other visa instruments</p>
                     <span class="s2">&quot;initial_time_offset&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_time_position</span><span class="p">(),</span> <span class="s2">&quot;timeout_measurement&quot;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
                     <span class="s2">&quot;save_data&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;data_format&quot;</span><span class="p">:</span> <span class="s2">&quot;dat&quot;</span><span class="p">,</span> <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
                     <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Scope&quot;</span><span class="p">,</span> <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Measurement&quot;</span><span class="p">,</span> <span class="s2">&quot;add_header&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-                    <span class="s2">&quot;output_table_options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+                    <span class="s2">&quot;output_table_options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+                    <span class="s2">&quot;download_format&quot;</span><span class="p">:</span><span class="s2">&quot;ASCII&quot;</span>
                     <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -2626,10 +2753,13 @@ instruments; GPIB,RS232 and other visa instruments</p>
         <span class="c1"># now configure the scope for data transfer</span>
         <span class="c1"># define the way the data is transmitted from the instrument to the PC</span>
         <span class="c1"># Word -&gt; 16bit signed integer</span>
-        <span class="c1"># self.write(&#39;:WAV:FORM WORD&#39;)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
-        <span class="c1"># little-endian</span>
-        <span class="c1"># self.write(&#39;:WAV:BYT LSBF&#39;)</span>
+        <span class="c1"># now we choose if you want it to be bin or ASCII</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;asc&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;download_format&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM WORD&#39;</span><span class="p">)</span>
+            <span class="c1"># little-endian</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:BYT LSBF&#39;</span><span class="p">)</span>
         <span class="n">number_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_points&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_frames&quot;</span><span class="p">]</span>
         <span class="c1"># this is the way diogo did it</span>
         <span class="c1"># number of points</span>
@@ -2663,8 +2793,16 @@ instruments; GPIB,RS232 and other visa instruments</p>
                 <span class="c1"># get data for channel 1</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:SOUR CHAN{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel_read</span><span class="p">))</span>
                 <span class="c1"># get data</span>
-                <span class="n">data_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">)</span>
-                <span class="n">data_column</span> <span class="o">=</span> <span class="n">data_column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;1-&quot;</span><span class="p">,</span><span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;asc&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;download_format&quot;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">data_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">)</span>
+                    <span class="n">data_column</span> <span class="o">=</span> <span class="n">data_column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;1-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># This downloads the data as signed 16bit ints</span>
+                    <span class="c1"># Need a conversion to volts</span>
+                    <span class="n">data_column</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query_binary_values</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span>
+
+
+
                 <span class="n">new_frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_column</span><span class="p">)</span>
                 <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;data_column&quot;,data_column))</span>
             <span class="n">frames_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_frame</span><span class="p">)</span>
@@ -2793,6 +2931,15 @@ instruments; GPIB,RS232 and other visa instruments</p>
         <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:SCAL?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">scale</span>
 
+    <span class="k">def</span> <span class="nf">set_channel_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the scale in mv of channel. Default is 10mv/division on channel 1&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:OFFSet {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">offset</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">get_channel_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the scale for a specified channel, the default is channel 1&quot;</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:OFFSet?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">offset</span>
 
     <span class="k">def</span> <span class="nf">set_channel_bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the specified channel&#39;s bandwith to LOW, MED or HIGH, default is to set channel 1 to LOW&quot;&quot;&quot;</span>
@@ -3133,6 +3280,46 @@ frequency and has no overlapping points</p></div>
     <span class="k">print</span> <span class="s2">&quot;The path of the description of </span><span class="si">%s</span><span class="s2"> is </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="s1">&#39;Lockin2&#39;</span><span class="p">,</span><span class="n">find_description</span><span class="p">(</span><span class="s1">&#39;Lockin2&#39;</span><span class="p">))</span>
     <span class="k">print</span> <span class="s2">&quot;The File Contents are:&quot;</span>
     <span class="k">print</span> <span class="n">find_description</span><span class="p">(</span><span class="s1">&#39;Lockin2&#39;</span><span class="p">,</span><span class="s1">&#39;file&#39;</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.InstrumentControl.Instruments.whos_there">
+    <p>def <span class="ident">whos_there</span>(</p><p>)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Whos_there is a function that prints the idn string for all
+GPIB instruments connected</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments.whos_there', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.InstrumentControl.Instruments.whos_there" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">whos_there</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Whos_there is a function that prints the idn string for all</span>
+<span class="sd">    GPIB instruments connected&quot;&quot;&quot;</span>
+    <span class="n">resource_manager</span> <span class="o">=</span> <span class="n">visa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
+    <span class="n">resource_list</span><span class="o">=</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">list_resources</span><span class="p">()</span>
+    <span class="n">gpib_resources</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">gpib_idn_dictionary</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;GPIB&quot;</span><span class="p">,</span><span class="n">instrument</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="n">instrument</span><span class="p">)</span>
+            <span class="n">gpib_resources</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
+            <span class="n">idn</span><span class="o">=</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;*IDN?&quot;</span><span class="p">)</span>
+            <span class="n">gpib_idn_dictionary</span><span class="p">[</span><span class="n">instrument</span><span class="p">]</span><span class="o">=</span><span class="n">idn</span>
+    <span class="k">if</span> <span class="n">gpib_resources</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">instrument_name</span><span class="p">,</span><span class="n">idn</span> <span class="ow">in</span> <span class="n">gpib_idn_dictionary</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is at address {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idn</span><span class="p">,</span><span class="n">instrument_name</span><span class="p">))</span>
+        <span class="c1">#return gpib_idn_dictionary</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;There are no GPIB resources available&quot;</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -4121,7 +4308,8 @@ window (using wx)</p></div>
                     <span class="s2">&quot;initial_time_offset&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_time_position</span><span class="p">(),</span> <span class="s2">&quot;timeout_measurement&quot;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
                     <span class="s2">&quot;save_data&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;data_format&quot;</span><span class="p">:</span> <span class="s2">&quot;dat&quot;</span><span class="p">,</span> <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
                     <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Scope&quot;</span><span class="p">,</span> <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Measurement&quot;</span><span class="p">,</span> <span class="s2">&quot;add_header&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-                    <span class="s2">&quot;output_table_options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+                    <span class="s2">&quot;output_table_options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+                    <span class="s2">&quot;download_format&quot;</span><span class="p">:</span><span class="s2">&quot;ASCII&quot;</span>
                     <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -4143,10 +4331,13 @@ window (using wx)</p></div>
         <span class="c1"># now configure the scope for data transfer</span>
         <span class="c1"># define the way the data is transmitted from the instrument to the PC</span>
         <span class="c1"># Word -&gt; 16bit signed integer</span>
-        <span class="c1"># self.write(&#39;:WAV:FORM WORD&#39;)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
-        <span class="c1"># little-endian</span>
-        <span class="c1"># self.write(&#39;:WAV:BYT LSBF&#39;)</span>
+        <span class="c1"># now we choose if you want it to be bin or ASCII</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;asc&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;download_format&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM WORD&#39;</span><span class="p">)</span>
+            <span class="c1"># little-endian</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:BYT LSBF&#39;</span><span class="p">)</span>
         <span class="n">number_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_points&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_frames&quot;</span><span class="p">]</span>
         <span class="c1"># this is the way diogo did it</span>
         <span class="c1"># number of points</span>
@@ -4180,8 +4371,16 @@ window (using wx)</p></div>
                 <span class="c1"># get data for channel 1</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:SOUR CHAN{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel_read</span><span class="p">))</span>
                 <span class="c1"># get data</span>
-                <span class="n">data_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">)</span>
-                <span class="n">data_column</span> <span class="o">=</span> <span class="n">data_column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;1-&quot;</span><span class="p">,</span><span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;asc&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;download_format&quot;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">data_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">)</span>
+                    <span class="n">data_column</span> <span class="o">=</span> <span class="n">data_column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;1-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># This downloads the data as signed 16bit ints</span>
+                    <span class="c1"># Need a conversion to volts</span>
+                    <span class="n">data_column</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query_binary_values</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span>
+
+
+
                 <span class="n">new_frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_column</span><span class="p">)</span>
                 <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;data_column&quot;,data_column))</span>
             <span class="n">frames_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_frame</span><span class="p">)</span>
@@ -4310,6 +4509,15 @@ window (using wx)</p></div>
         <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:SCAL?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">scale</span>
 
+    <span class="k">def</span> <span class="nf">set_channel_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the scale in mv of channel. Default is 10mv/division on channel 1&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:OFFSet {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">offset</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">get_channel_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="s2">&quot;Returns the scale for a specified channel, the default is channel 1&quot;</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:OFFSet?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">offset</span>
 
     <span class="k">def</span> <span class="nf">set_channel_bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the specified channel&#39;s bandwith to LOW, MED or HIGH, default is to set channel 1 to LOW&quot;&quot;&quot;</span>
@@ -4609,6 +4817,30 @@ window (using wx)</p></div>
     <span class="sd">&quot;&quot;&quot;Returns the selected channels bandwidth&quot;&quot;&quot;</span>
     <span class="n">bandwidth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:BAND?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">bandwidth</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.get_channel_offset">
+    <p>def <span class="ident">get_channel_offset</span>(</p><p>self, channel=1)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns the scale for a specified channel, the default is channel 1</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.get_channel_offset', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.get_channel_offset" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_channel_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="s2">&quot;Returns the scale for a specified channel, the default is channel 1&quot;</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:OFFSet?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">offset</span>
 </pre></div>
 
   </div>
@@ -5009,7 +5241,8 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
                 <span class="s2">&quot;initial_time_offset&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_time_position</span><span class="p">(),</span> <span class="s2">&quot;timeout_measurement&quot;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
                 <span class="s2">&quot;save_data&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;data_format&quot;</span><span class="p">:</span> <span class="s2">&quot;dat&quot;</span><span class="p">,</span> <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
                 <span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Scope&quot;</span><span class="p">,</span> <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span> <span class="s2">&quot;Measurement&quot;</span><span class="p">,</span> <span class="s2">&quot;add_header&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-                <span class="s2">&quot;output_table_options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+                <span class="s2">&quot;output_table_options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+                <span class="s2">&quot;download_format&quot;</span><span class="p">:</span><span class="s2">&quot;ASCII&quot;</span>
                 <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -5027,10 +5260,13 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
     <span class="c1"># now configure the scope for data transfer</span>
     <span class="c1"># define the way the data is transmitted from the instrument to the PC</span>
     <span class="c1"># Word -&gt; 16bit signed integer</span>
-    <span class="c1"># self.write(&#39;:WAV:FORM WORD&#39;)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
-    <span class="c1"># little-endian</span>
-    <span class="c1"># self.write(&#39;:WAV:BYT LSBF&#39;)</span>
+    <span class="c1"># now we choose if you want it to be bin or ASCII</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;asc&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;download_format&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM ASCII&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:FORM WORD&#39;</span><span class="p">)</span>
+        <span class="c1"># little-endian</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:BYT LSBF&#39;</span><span class="p">)</span>
     <span class="n">number_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_points&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;number_frames&quot;</span><span class="p">]</span>
     <span class="c1"># this is the way diogo did it</span>
     <span class="c1"># number of points</span>
@@ -5059,8 +5295,13 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
             <span class="c1"># get data for channel 1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:WAV:SOUR CHAN{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel_read</span><span class="p">))</span>
             <span class="c1"># get data</span>
-            <span class="n">data_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">)</span>
-            <span class="n">data_column</span> <span class="o">=</span> <span class="n">data_column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;1-&quot;</span><span class="p">,</span><span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;asc&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;download_format&quot;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                <span class="n">data_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">)</span>
+                <span class="n">data_column</span> <span class="o">=</span> <span class="n">data_column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;1-&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># This downloads the data as signed 16bit ints</span>
+                <span class="c1"># Need a conversion to volts</span>
+                <span class="n">data_column</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">query_binary_values</span><span class="p">(</span><span class="s1">&#39;:WAV:DATA?&#39;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span>
             <span class="n">new_frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_column</span><span class="p">)</span>
             <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;data_column&quot;,data_column))</span>
         <span class="n">frames_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_frame</span><span class="p">)</span>
@@ -5331,6 +5572,29 @@ an XLST in self.options["XSLT"] and file_path=self.path.replace('.xml','.html')<
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_channel_bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Sets the specified channel&#39;s bandwith to LOW, MED or HIGH, default is to set channel 1 to LOW&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:BAND {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.set_channel_offset">
+    <p>def <span class="ident">set_channel_offset</span>(</p><p>self, offset=0, channel=1)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Sets the scale in mv of channel. Default is 10mv/division on channel 1</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.set_channel_offset', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope.set_channel_offset" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_channel_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the scale in mv of channel. Default is 10mv/division on channel 1&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:CHAN{0}:OFFSet {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">offset</span><span class="p">))</span>
 </pre></div>
 
   </div>
@@ -6761,6 +7025,67 @@ stores the frequency points as Hz.</p></div>
                 <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="n">frequency_list</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">add_all_traces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds all Sparameter and wave parameter traces.</span>
+<span class="sd">        Does not initialize the instrument. The trace names match those in the</span>
+<span class="sd">        measure methods (S11,S12,..S22) and (A1_D1,B1_D1..B2_D2) by default it</span>
+<span class="sd">        assumes port 1 and port 2 are being used. In addition, it assumes the B receiver names are [A,B,C,D].</span>
+<span class="sd">         This method will cause an error if the traces are already defined&quot;&quot;&quot;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;port1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s2">&quot;port2&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;b_name_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">]}</span>
+        <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:STATE ON&quot;</span><span class="p">)</span>
+        <span class="n">scattering_parameter_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S11&quot;</span><span class="p">,</span><span class="s2">&quot;S12&quot;</span><span class="p">,</span><span class="s2">&quot;S21&quot;</span><span class="p">,</span><span class="s2">&quot;S22&quot;</span><span class="p">]</span>
+        <span class="n">trace_definitions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]),</span>
+                           <span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]),</span>
+                           <span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]),</span>
+                           <span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">])]</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scattering_parameter_names</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;{0}&#39;,{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">trace_definitions</span><span class="p">[</span><span class="n">index</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe{1}:FEED &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">b1_name</span> <span class="o">=</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;b_name_list&quot;</span><span class="p">][</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">b2_name</span><span class="o">=</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;b_name_list&quot;</span><span class="p">][</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># Initialize Port 1 traces A1_D1,B1_D1,B2_D1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{0}_D{0}&#39;,R{0},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe5:FEED &#39;A{0}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{0}_D{0}&#39;,{1},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span><span class="n">b1_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe6:FEED &#39;B{0}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{1}_D{0}&#39;,R{1},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                            <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe7:FEED &#39;A{1}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                    <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{1}_D{0}&#39;,{2},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                           <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
+                                                                           <span class="n">b2_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe8:FEED &#39;B{1}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                           <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+        <span class="c1"># Initialize Port 2 Traces A1_D2,B1_D2,</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{0}_D{1}&#39;,R{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                            <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe9:FEED &#39;A{0}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                    <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{0}_D{1}&#39;,{2},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                           <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
+                                                                           <span class="n">b1_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe10:FEED &#39;B{0}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                    <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{1}_D{1}&#39;,R{1},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                            <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe11:FEED &#39;A{1}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                    <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{1}_D{1}&#39;,{2},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                           <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
+                                                                           <span class="n">b2_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe12:FEED &#39;B{1}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                    <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+
 
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Intializes the system&quot;&quot;&quot;</span>
@@ -7618,6 +7943,86 @@ stores the frequency points as Hz.</p></div>
             <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="n">frequency_list</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.InstrumentControl.Instruments.VNA.add_all_traces">
+    <p>def <span class="ident">add_all_traces</span>(</p><p>self, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds all Sparameter and wave parameter traces.
+Does not initialize the instrument. The trace names match those in the
+measure methods (S11,S12,..S22) and (A1_D1,B1_D1..B2_D2) by default it
+assumes port 1 and port 2 are being used. In addition, it assumes the B receiver names are [A,B,C,D].
+ This method will cause an error if the traces are already defined</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments.VNA.add_all_traces', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.InstrumentControl.Instruments.VNA.add_all_traces" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_all_traces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds all Sparameter and wave parameter traces.</span>
+<span class="sd">    Does not initialize the instrument. The trace names match those in the</span>
+<span class="sd">    measure methods (S11,S12,..S22) and (A1_D1,B1_D1..B2_D2) by default it</span>
+<span class="sd">    assumes port 1 and port 2 are being used. In addition, it assumes the B receiver names are [A,B,C,D].</span>
+<span class="sd">     This method will cause an error if the traces are already defined&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;port1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s2">&quot;port2&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;b_name_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">]}</span>
+    <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:STATE ON&quot;</span><span class="p">)</span>
+    <span class="n">scattering_parameter_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S11&quot;</span><span class="p">,</span><span class="s2">&quot;S12&quot;</span><span class="p">,</span><span class="s2">&quot;S21&quot;</span><span class="p">,</span><span class="s2">&quot;S22&quot;</span><span class="p">]</span>
+    <span class="n">trace_definitions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]),</span>
+                       <span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]),</span>
+                       <span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]),</span>
+                       <span class="s2">&quot;S{0}{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">])]</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scattering_parameter_names</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;{0}&#39;,{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">trace_definitions</span><span class="p">[</span><span class="n">index</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe{1}:FEED &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">b1_name</span> <span class="o">=</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;b_name_list&quot;</span><span class="p">][</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">b2_name</span><span class="o">=</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;b_name_list&quot;</span><span class="p">][</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># Initialize Port 1 traces A1_D1,B1_D1,B2_D1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{0}_D{0}&#39;,R{0},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe5:FEED &#39;A{0}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{0}_D{0}&#39;,{1},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span><span class="n">b1_name</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe6:FEED &#39;B{0}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{1}_D{0}&#39;,R{1},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                        <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe7:FEED &#39;A{1}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{1}_D{0}&#39;,{2},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                       <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
+                                                                       <span class="n">b2_name</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe8:FEED &#39;B{1}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                       <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+    <span class="c1"># Initialize Port 2 Traces A1_D2,B1_D2,</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{0}_D{1}&#39;,R{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                        <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe9:FEED &#39;A{0}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{0}_D{1}&#39;,{2},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                       <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
+                                                                       <span class="n">b1_name</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe10:FEED &#39;B{0}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{1}_D{1}&#39;,R{1},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                        <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe11:FEED &#39;A{1}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{1}_D{1}&#39;,{2},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                       <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
+                                                                       <span class="n">b2_name</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe12:FEED &#39;B{1}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
+                                                                <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
 </pre></div>
 
   </div>

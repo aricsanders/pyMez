@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
     <title>pyMez.Code.DataHandlers.GeneralModels API documentation</title>
-    <meta name="description" content="Module that contains general data models and functions for handling them" />
+    <meta name="description" content="GeneralModels is a module that contains general data models and functions for handling them. Its key..." />
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
   
@@ -1258,7 +1258,35 @@ table {
 
   <header id="section-intro">
   <h1 class="title"><span class="name">pyMez.Code.DataHandlers.GeneralModels</span> module</h1>
-  <p>Module that contains general data models and functions for handling them</p>
+  <p>GeneralModels is a module that contains general data models and functions for handling them. Its key
+ class is AsciiDataTable that is an abstracted model of a data table with a header full of metadata, a
+ column modeled table (like excel or a csv table) and a footer. The</p>
+<h2>Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="kn">from</span> <span class="nn">pyMez</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;</span><span class="n">table</span><span class="o">=</span><span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span><span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;b])</span>
+<span class="o">&gt;&gt;</span><span class="k">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span><span class="n">table</span><span class="o">.</span><span class="n">header</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A header for you&quot;</span><span class="p">]</span>
+<span class="o">&gt;&gt;</span><span class="k">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+</pre></div>
+
+
+<h3><a href="../../../Examples/Html/AsciiDataTable_Example.html">Data Table Example</a></h3>
+
+<h2>Requirements</h2>
+<ul>
+<li><a href="https://docs.python.org/2/library/sys.html">sys</a></li>
+<li><a href="https://docs.python.org/2/library/os.html?highlight=os#module-os">os</a></li>
+<li><a href="http://www.numpy.org/">numpy</a></li>
+<li><a href="https://github.com/aricsanders/pyMez">pyMez</a></li>
+</ul>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMez.Code.DataHandlers</code></a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../Examples/Html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div></p>
   
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.DataHandlers.GeneralModels" class="source">
@@ -1269,7 +1297,39 @@ table {
 <span class="c1"># Created:     2/24/2016</span>
 <span class="c1"># License:     MIT License</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
-<span class="sd">&quot;&quot;&quot; Module that contains general data models and functions for handling them &quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot; GeneralModels is a module that contains general data models and functions for handling them. Its key</span>
+<span class="sd"> class is AsciiDataTable that is an abstracted model of a data table with a header full of metadata, a</span>
+<span class="sd"> column modeled table (like excel or a csv table) and a footer. The</span>
+
+
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">    #!python</span>
+<span class="sd">    &gt;&gt;from pyMez import *</span>
+<span class="sd">    &gt;&gt;table=AsciiDataTable(None,data=[[0,1],[1,0]],column_names=[&quot;a&quot;,&quot;b])</span>
+<span class="sd">    &gt;&gt;print(table)</span>
+<span class="sd">    &gt;&gt;table.header=[&quot;A header for you&quot;]</span>
+<span class="sd">    &gt;&gt;print(table)</span>
+
+
+<span class="sd">&lt;h3&gt;&lt;a href=&quot;../../../Examples/Html/AsciiDataTable_Example.html&quot;&gt;Data Table Example&lt;/a&gt;&lt;/h3&gt;</span>
+
+<span class="sd">Requirements</span>
+<span class="sd">------------</span>
+<span class="sd">+ [sys](https://docs.python.org/2/library/sys.html)</span>
+<span class="sd">+ [os](https://docs.python.org/2/library/os.html?highlight=os#module-os)</span>
+<span class="sd">+ [numpy](http://www.numpy.org/)</span>
+<span class="sd">+ [pyMez](https://github.com/aricsanders/pyMez)</span>
+
+<span class="sd">Help</span>
+<span class="sd">---------------</span>
+<span class="sd">&lt;a href=&quot;./index.html&quot;&gt;`pyMez.Code.DataHandlers`&lt;/a&gt;</span>
+<span class="sd">&lt;div&gt;</span>
+<span class="sd">&lt;a href=&quot;../../../pyMez_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../Examples/Html/Examples_Home.html&quot;&gt;Examples Home&lt;/a&gt; |</span>
+<span class="sd">&lt;a href=&quot;../../../Reference_Index.html&quot;&gt;Index&lt;/a&gt;</span>
+<span class="sd">&lt;/div&gt;&quot;&quot;&quot;</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Standard Imports</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="o">*</span>
@@ -2020,17 +2080,17 @@ table {
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">begin_token</span><span class="p">,</span><span class="n">line</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">index</span>
 
-    <span class="k">def</span> <span class="nf">update_import_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">import_table</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">update_import_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">import_table</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Updates the options in the import table&quot;&quot;&quot;</span>
         <span class="c1"># discovered slight bug 2017-01-18 the variable index is not the right one to have here</span>
         <span class="c1"># it should be i from 0 to len(import_table)</span>
         <span class="n">defined_element_index</span><span class="o">=</span><span class="mi">0</span>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;header&#39;</span><span class="p">,</span><span class="s1">&#39;column_names&#39;</span><span class="p">,</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;footer&#39;</span><span class="p">]):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-
-                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span><span class="n">index</span><span class="p">))</span>
-                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;element&#39;</span><span class="p">,</span><span class="n">element</span><span class="p">))</span>
-                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;import_table&#39;</span><span class="p">,</span><span class="n">import_table</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span><span class="n">index</span><span class="p">))</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;element&#39;</span><span class="p">,</span><span class="n">element</span><span class="p">))</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;import_table&#39;</span><span class="p">,</span><span class="n">import_table</span><span class="p">))</span>
                 <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_begin_line&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_end_line&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_begin_token&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
@@ -5520,17 +5580,17 @@ column names,rectangular array of data, and footer</p></div>
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">begin_token</span><span class="p">,</span><span class="n">line</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">index</span>
 
-    <span class="k">def</span> <span class="nf">update_import_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">import_table</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">update_import_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">import_table</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Updates the options in the import table&quot;&quot;&quot;</span>
         <span class="c1"># discovered slight bug 2017-01-18 the variable index is not the right one to have here</span>
         <span class="c1"># it should be i from 0 to len(import_table)</span>
         <span class="n">defined_element_index</span><span class="o">=</span><span class="mi">0</span>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;header&#39;</span><span class="p">,</span><span class="s1">&#39;column_names&#39;</span><span class="p">,</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;footer&#39;</span><span class="p">]):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-
-                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span><span class="n">index</span><span class="p">))</span>
-                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;element&#39;</span><span class="p">,</span><span class="n">element</span><span class="p">))</span>
-                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;import_table&#39;</span><span class="p">,</span><span class="n">import_table</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span><span class="n">index</span><span class="p">))</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;element&#39;</span><span class="p">,</span><span class="n">element</span><span class="p">))</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;import_table&#39;</span><span class="p">,</span><span class="n">import_table</span><span class="p">))</span>
                 <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_begin_line&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_end_line&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_begin_token&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
@@ -8112,7 +8172,7 @@ attribute in its base state derived from self.options["metadata]</p></div>
             
   <div class="item">
     <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.AsciiDataTable.update_import_options">
-    <p>def <span class="ident">update_import_options</span>(</p><p>self, import_table)</p>
+    <p>def <span class="ident">update_import_options</span>(</p><p>self, import_table, verbose=False)</p>
     </div>
     
 
@@ -8122,16 +8182,17 @@ attribute in its base state derived from self.options["metadata]</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.AsciiDataTable.update_import_options', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.DataHandlers.GeneralModels.AsciiDataTable.update_import_options" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_import_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">import_table</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_import_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">import_table</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Updates the options in the import table&quot;&quot;&quot;</span>
     <span class="c1"># discovered slight bug 2017-01-18 the variable index is not the right one to have here</span>
     <span class="c1"># it should be i from 0 to len(import_table)</span>
     <span class="n">defined_element_index</span><span class="o">=</span><span class="mi">0</span>
     <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;header&#39;</span><span class="p">,</span><span class="s1">&#39;column_names&#39;</span><span class="p">,</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;footer&#39;</span><span class="p">]):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span><span class="n">index</span><span class="p">))</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;element&#39;</span><span class="p">,</span><span class="n">element</span><span class="p">))</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;import_table&#39;</span><span class="p">,</span><span class="n">import_table</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span><span class="n">index</span><span class="p">))</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;element&#39;</span><span class="p">,</span><span class="n">element</span><span class="p">))</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;import_table&#39;</span><span class="p">,</span><span class="n">import_table</span><span class="p">))</span>
             <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_begin_line&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_end_line&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_begin_token&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
@@ -10288,7 +10349,7 @@ attribute in its base state derived from self.options["metadata]</p></div>
             
   <div class="item">
     <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.KnowledgeSystem.update_import_options">
-    <p>def <span class="ident">update_import_options</span>(</p><p>self, import_table)</p>
+    <p>def <span class="ident">update_import_options</span>(</p><p>self, import_table, verbose=False)</p>
     </div>
     
     <p class="inheritance">
@@ -10302,16 +10363,17 @@ attribute in its base state derived from self.options["metadata]</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.KnowledgeSystem.update_import_options', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.DataHandlers.GeneralModels.KnowledgeSystem.update_import_options" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_import_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">import_table</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">update_import_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">import_table</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Updates the options in the import table&quot;&quot;&quot;</span>
     <span class="c1"># discovered slight bug 2017-01-18 the variable index is not the right one to have here</span>
     <span class="c1"># it should be i from 0 to len(import_table)</span>
     <span class="n">defined_element_index</span><span class="o">=</span><span class="mi">0</span>
     <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;header&#39;</span><span class="p">,</span><span class="s1">&#39;column_names&#39;</span><span class="p">,</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;footer&#39;</span><span class="p">]):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span><span class="n">index</span><span class="p">))</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;element&#39;</span><span class="p">,</span><span class="n">element</span><span class="p">))</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;import_table&#39;</span><span class="p">,</span><span class="n">import_table</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span><span class="n">index</span><span class="p">))</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;element&#39;</span><span class="p">,</span><span class="n">element</span><span class="p">))</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The {0} variable is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;import_table&#39;</span><span class="p">,</span><span class="n">import_table</span><span class="p">))</span>
             <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_begin_line&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_end_line&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_begin_token&#39;</span><span class="o">%</span><span class="n">element</span><span class="p">],</span>
