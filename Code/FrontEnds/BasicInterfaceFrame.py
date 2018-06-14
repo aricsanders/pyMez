@@ -7,7 +7,17 @@
 #-----------------------------------------------------------------------------
 #Boa:Frame:BasicInterfaceFrame
 """ Advanced wx.Frame with standard containers for interface and control this
-is meant as a template for GUI design and a test bed for pyMez"""
+is meant as a template for GUI design and a test bed for pyMez
+
+Help
+---------------
+<a href="./index.html">`pyMez.Code.FrontEnds`</a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>"""
 import sys
 import os
 import wx

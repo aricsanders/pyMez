@@ -18,15 +18,16 @@ Examples
     >> s2p=vna.measure_sparameters()
     >> s2p.show()
 
-<a href="../../../Examples/Html/VNA_Measurement_Example_WR15.html">VNA Measurement Examples</a>
+<a href="../../../Examples/html/VNA_Measurement_Example_WR15.html">VNA Measurement Examples</a>
 
- Help
+Help
 ---------------
 <a href="./index.html">`pyMez.Code.InstrumentControl`</a>
 <div>
 <a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
-<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMez</a>
+<a href="../../../Examples/html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
 </div>"""
 
 # TODO:Fix Save State, and importing from DataHandlers

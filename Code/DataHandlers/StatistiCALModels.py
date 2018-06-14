@@ -7,7 +7,17 @@
 #-----------------------------------------------------------------------------
 """ A wrapper for the StatistiCAL com object and some python classes and functions for interacting with it. More
 information on statistical can be found at
- http://www.nist.gov/ctl/rf-technology/related-software.cfm """
+ http://www.nist.gov/ctl/rf-technology/related-software.cfm
+
+ Help
+---------------
+<a href="./index.html">`pyMez.Code.DataHandlers`</a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>"""
 #-----------------------------------------------------------------------------
 # Standard Imports
 import sys

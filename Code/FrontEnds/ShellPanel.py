@@ -8,7 +8,17 @@
 
 """This is a shell, modified from the shell in Boa Constructor, updated to work with wx 3 and python 2.7
 The shell causes a wxWidgets Debug alert to occur because of the wx.stc module, to avoid it in the
-end product import this in the module runner."""
+end product import this in the module runner.
+
+Help
+---------------
+<a href="./index.html">`pyMez.Code.FrontEnds`</a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>"""
 
 # A trick to make sure the boa directory is on sys.path
 import sys

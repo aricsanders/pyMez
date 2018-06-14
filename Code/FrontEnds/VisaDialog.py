@@ -5,7 +5,16 @@
 # Created:     3/02/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
-""" VisaDialog is a very simple dialog for writing and reading commands over GPIB and RS232"""
+""" VisaDialog is a very simple dialog for writing and reading commands over GPIB and RS232
+Help
+---------------
+<a href="./index.html">`pyMez.Code.FrontEnds`</a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+<a href="../../../Examples/html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
+</div>"""
 #Boa:Dialog:VisaDialog
 try:
     import wx

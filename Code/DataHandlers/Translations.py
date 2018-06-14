@@ -24,7 +24,7 @@ Examples
     #!python
     >>test_JBSparameter_to_S2PV1()
 
- <h3><a href="../../../Examples/Html/Translations_Example.html">Translations Example</a></h3>
+ <h3><a href="../../../Examples/html/Translations_Example.html">Translations Example</a></h3>
 
 Requirements
 ------------

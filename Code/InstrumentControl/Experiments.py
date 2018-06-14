@@ -10,13 +10,14 @@
 multiple instrument data acquisition with data
 
 
- Help
+Help
 ---------------
 <a href="./index.html">`pyMez.Code.InstrumentControl`</a>
 <div>
 <a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
-<a href="../../../Reference_Index.html">Index of all Functions and Classes in pyMez</a>
+<a href="../../../Examples/html/Examples_Home.html">Examples Home</a> |
+<a href="../../../Reference_Index.html">Index</a>
 </div>"""
 
 #-------------------------------------------------------------------------------
