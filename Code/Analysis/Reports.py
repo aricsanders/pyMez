@@ -225,7 +225,12 @@ class CheckStandardReport(HTMLReport):
                     "power_csv": COMBINED_POWER_CHKSTD_CSV,
                     "outlier_removal": True,
                     "last_n": 5,
-                    "download_formats": ["Csv"]
+                    "download_formats": ["Csv"],
+                    "conversion_options":{
+                                    "nodes": ['CsvFile', 'ExcelFile'],
+                                    "extensions": [ 'csv', 'xlsx'],
+                                    "mime_types": ['text/plain',
+                                                   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']}
                     }
         self.options = {}
         for key, value in defaults.iteritems():
@@ -241,7 +246,10 @@ class CheckStandardReport(HTMLReport):
                                                    'application/vnd.oasis.opendocument.spreadsheet',
                                                    'application/x-matlab-data', 'text/html', 'application/json']}
         # html_options={}
-
+        if self.options["conversion_options"] is None:
+            self.conversion_options=self.conversion_defaults
+        else:
+            self.conversion_options=self.options["conversion_options"]
         HTMLReport.__init__(self, None, **self.options)
         self.plots = []
         self.plot_ids = []
@@ -340,7 +348,10 @@ class CheckStandardReport(HTMLReport):
                                                                           max(self.get_measurement_dates()))
         self.add_report_heading()
         self.append_to_body({"tag": "p", "text": summary_text})
-        download_options={"clear_before": False,
+        download_options={"mime_types":self.conversion_options["mime_types"],
+         "download_formats":self.conversion_options["nodes"],
+         "download_extensions":self.conversion_options["extensions"],
+         "clear_before": False,
          "download_files": [self.results_file,
                             self.mean_frame, self.device_history],
          "download_files_input_format": ["AsciiDataTable", "DataFrame",
@@ -499,7 +510,10 @@ class CheckStandardReport(HTMLReport):
                                                                           max(self.get_measurement_dates()))
         self.add_report_heading()
         self.append_to_body({"tag": "p", "text": summary_text})
-        self.add_download_table()
+
+        self.add_download_table(download_extensions=self.conversion_options["extensions"],
+                                download_formats=self.conversion_options["nodes"],
+                                mime_types=self.conversion_options["mime_types"])
         self.add_table_border_style()
         self.add_metadata_section()
         self.add_all_plots()
