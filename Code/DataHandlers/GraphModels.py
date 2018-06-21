@@ -219,6 +219,8 @@ def remove_circular_paths(path):
 #-----------------------------------------------------------------------------
 # Module Classes
 
+# getting around to adding a breadth first graph solver to Graph class
+# modify the find_path method
 class Graph(object):
     """The Graph class creates a content graph that has as nodes different formats. As
     a format is added via graph.add_node() by specifying a node name and a function from an
@@ -228,147 +230,158 @@ class Graph(object):
     need to recode the find_path method using a shortest path alogrithm like
     [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm).
     """
-    def __init__(self,**options):
-        """Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required"""
-        defaults={"graph_name":"Graph",
-                  "node_names":['n1','n2'],
-                  "node_descriptions":["A plain string",
-                                       "A list of strings with no \\n, created with string.splitlines()"],
-                  "current_node":'n1',
-                  "state":[1,0],
-                  "data":"This is a test string\n it has to have multiple lines \n and many characters 34%6\n^",
-                  "edge_2_to_1":edge_2_to_1,
-                  "edge_1_to_2":edge_1_to_2
-                 }
-        self.options={}
-        for key,value in defaults.iteritems():
-            self.options[key]=value
-        for key,value in options.iteritems():
-            self.options[key]=value
-        self.elements=['graph_name','node_names','node_descriptions','current_node','state','data']
-        for element in self.elements:
-            self.__dict__[element]=self.options[element]
-        self.edges=[]
-        self.edge_matrices=[]
-        self.state_matrix=np.matrix(self.state).T
-        # Add the first 2 edges, required to intialize the graph properly
-        self.display_graph=networkx.DiGraph()
 
-        self.add_edge(self.node_names[0],self.node_names[1],self.options["edge_1_to_2"])
-        self.add_edge(self.node_names[1],self.node_names[0],self.options["edge_2_to_1"])
-        self.jumps=[]
-        self.external_node_names=[]
-        self.external_node_descriptions=[]
-        self.display_layout=networkx.spring_layout(self.display_graph)
+    def __init__(self, **options):
+        """Initializes the graph. The first 2 nodes and two edges forming a bijection between them are required"""
+        defaults = {"graph_name": "Graph",
+                    "node_names": ['n1', 'n2'],
+                    "node_descriptions": ["A plain string",
+                                          "A list of strings with no \\n, created with string.splitlines()"],
+                    "current_node": 'n1',
+                    "state": [1, 0],
+                    "data": "This is a test string\n it has to have multiple lines \n and many characters 34%6\n^",
+                    "edge_2_to_1": edge_2_to_1,
+                    "edge_1_to_2": edge_1_to_2
+                    }
+        self.options = {}
+        for key, value in defaults.iteritems():
+            self.options[key] = value
+        for key, value in options.iteritems():
+            self.options[key] = value
+        self.elements = ['graph_name', 'node_names', 'node_descriptions', 'current_node', 'state', 'data']
+        for element in self.elements:
+            self.__dict__[element] = self.options[element]
+        self.edges = []
+        self.edge_matrices = []
+        self.state_matrix = np.matrix(self.state).T
+        # Add the first 2 edges, required to intialize the graph properly
+        self.display_graph = networkx.DiGraph()
+
+        self.add_edge(self.node_names[0], self.node_names[1], self.options["edge_1_to_2"])
+        self.add_edge(self.node_names[1], self.node_names[0], self.options["edge_2_to_1"])
+        self.jumps = []
+        self.external_node_names = []
+        self.external_node_descriptions = []
+        self.display_layout = networkx.spring_layout(self.display_graph)
 
     def get_description_dictionary(self):
         "returns a dictionary of the form {NodeName:Node Description for all of the current nodes"
-        dictionary={node_name:self.node_descriptions[index] for index,node_name in enumerate(self.node_names)}
+        dictionary = {node_name: self.node_descriptions[index] for index, node_name in enumerate(self.node_names)}
         return dictionary
 
-    def set_state(self,node_name,node_data):
+    def set_state(self, node_name, node_data):
         """Sets the graph state to be the state specified by node_name, and node_data"""
         try:
-            current_node_state_position=self.node_names.index(node_name)
-            self.current_node=node_name
-            self.data=node_data
-            self.state=[0 for i in range(len(self.node_names))]
-            self.state[current_node_state_position]=1
-            self.state_matrix=np.matrix(self.state).T
+            current_node_state_position = self.node_names.index(node_name)
+            self.current_node = node_name
+            self.data = node_data
+            self.state = [0 for i in range(len(self.node_names))]
+            self.state[current_node_state_position] = 1
+            self.state_matrix = np.matrix(self.state).T
         except:
             print("Could not set the state of graph: {0}".format(self.graph_name))
             raise
 
-    def add_edge(self,begin_node=None,end_node=None,edge_function=None):
+    def add_edge(self, begin_node=None, end_node=None, edge_function=None):
         """Adds an edge mapping one node to another, required input is begin_node (it's name)
         end_node, and the edge function"""
         # check to see if edge is defined if it is increment a number
-        edge_match=re.compile("edge_{0}_{1}".format(begin_node,end_node))
-        keys=self.__dict__.keys()
-        #print keys
-        iterator=0
+        edge_match = re.compile("edge_{0}_{1}".format(begin_node, end_node))
+        keys = self.__dict__.keys()
+        # print keys
+        iterator = 0
         for key in keys:
-            if re.match(edge_match,key):
-                iterator+=1
-        edge_name="edge_{0}_{1}_{2:0>3d}".format(begin_node,end_node,iterator)
-        self.__dict__[edge_name]=edge_function
+            if re.match(edge_match, key):
+                iterator += 1
+        edge_name = "edge_{0}_{1}_{2:0>3d}".format(begin_node, end_node, iterator)
+        self.__dict__[edge_name] = edge_function
         self.edges.append(edge_name)
-        edge_matrix=np.zeros((len(self.state),len(self.state)))
-        begin_position=self.node_names.index(begin_node)
-        end_position=self.node_names.index(end_node)
-        edge_matrix[end_position][begin_position]=1
-        edge_matrix=np.matrix(edge_matrix)
+        edge_matrix = np.zeros((len(self.state), len(self.state)))
+        begin_position = self.node_names.index(begin_node)
+        end_position = self.node_names.index(end_node)
+        edge_matrix[end_position][begin_position] = 1
+        edge_matrix = np.matrix(edge_matrix)
         self.edge_matrices.append(edge_matrix)
-        self.display_graph.add_edge(begin_node,end_node)
-        self.display_layout=networkx.spring_layout(self.display_graph)
+        self.display_graph.add_edge(begin_node, end_node)
+        self.display_layout = networkx.spring_layout(self.display_graph)
 
-    def add_jump(self,begin_node=None,end_node=None,jump_function=None):
+    def add_jump(self, begin_node=None, end_node=None, jump_function=None):
         """Adds a jump mapping one internal node to an external node, required input is begin_node (it's name)
         end_node, and the edge function"""
         # check to see if edge is defined if it is increment a number
-        jump_match=re.compile("jump_{0}_{1}".format(begin_node,end_node))
-        keys=self.__dict__.keys()
-        #print keys
-        iterator=0
+        jump_match = re.compile("jump_{0}_{1}".format(begin_node, end_node))
+        keys = self.__dict__.keys()
+        # print keys
+        iterator = 0
         for key in keys:
-            if re.match(jump_match,key):
-                iterator+=1
-        jump_name="jump_{0}_{1}_{2:0>3d}".format(begin_node,end_node,iterator)
-        self.__dict__[jump_name]=jump_function
+            if re.match(jump_match, key):
+                iterator += 1
+        jump_name = "jump_{0}_{1}_{2:0>3d}".format(begin_node, end_node, iterator)
+        self.__dict__[jump_name] = jump_function
         self.jumps.append(jump_name)
-        self.display_graph.add_edge(begin_node,end_node)
-        self.display_layout=networkx.spring_layout(self.display_graph)
-    def move_to(self,path):
-        """Changes the state of the graph by moving along the path specified"""
-        print path
-        for index,edge in enumerate(path):
-            #print edge
-            edge_pattern='edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)'
-            match=re.match(edge_pattern,edge)
-            begin_node=match.groupdict()['begin_node']
-            end_node=match.groupdict()['end_node']
-            print("moving {0} -> {1}".format(begin_node,end_node))
-            #print self.data
-            self.data=self.__dict__[edge](self.data)
-            #print self.data
-            self.current_node=match.groupdict()['end_node']
-            self.state=[0 for i in range(len(self.node_names))]
-            position=self.node_names.index(self.current_node)
-            self.state[position]=1
-            self.state_matrix=np.matrix(self.state).T
-            #print self.state
-            #print self.current_node
+        self.display_graph.add_edge(begin_node, end_node)
+        self.display_layout = networkx.spring_layout(self.display_graph)
 
-    def virtual_move_to(self,path):
+    def move_to(self, path, **options):
+        """Changes the state of the graph by moving along the path specified"""
+        defaults = {"debug": False, "verbose": False}
+        move_options = {}
+        for key, value in defaults.iteritems():
+            move_options[key] = value
+        for key, value in options.iteritems():
+            move_options[key] = value
+
+        if move_options["debug"]:
+            print(path)
+        for index, edge in enumerate(path):
+            # print edge
+            edge_pattern = 'edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)'
+            match = re.match(edge_pattern, edge)
+            begin_node = match.groupdict()['begin_node']
+            end_node = match.groupdict()['end_node']
+            if move_options["verbose"]:
+                print("moving {0} -> {1}".format(begin_node, end_node))
+            # print self.data
+            self.data = self.__dict__[edge](self.data)
+            # print self.data
+            self.current_node = match.groupdict()['end_node']
+            self.state = [0 for i in range(len(self.node_names))]
+            position = self.node_names.index(self.current_node)
+            self.state[position] = 1
+            self.state_matrix = np.matrix(self.state).T
+            # print self.state
+            # print self.current_node
+
+    def virtual_move_to(self, path):
         """virtual_move_to simulates moving but does not change the state of the graph"""
-        #print path
-        temp_state=self.state
-        temp_data=self.data
-        temp_current_node=self.current_node
-        temp_node_names=self.node_names
-        for index,edge in enumerate(path):
-            #print edge
-            edge_pattern='edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)'
-            match=re.match(edge_pattern,edge)
-            begin_node=match.groupdict()['begin_node']
-            end_node=match.groupdict()['end_node']
-            #print("moving {0} -> {1}".format(begin_node,end_node))
-            #print self.data
-            temp_data=self.__dict__[edge](temp_data)
-            #print self.data
-            temp_current_node=match.groupdict()['end_node']
-            temp_state=[0 for i in range(len(temp_node_names))]
-            position=temp_node_names.index(temp_current_node)
-            temp_state[position]=1
-            #print temp_state
-            #print self.state
-            #print self.current_node
+        # print path
+        temp_state = self.state
+        temp_data = self.data
+        temp_current_node = self.current_node
+        temp_node_names = self.node_names
+        for index, edge in enumerate(path):
+            # print edge
+            edge_pattern = 'edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)'
+            match = re.match(edge_pattern, edge)
+            begin_node = match.groupdict()['begin_node']
+            end_node = match.groupdict()['end_node']
+            # print("moving {0} -> {1}".format(begin_node,end_node))
+            # print self.data
+            temp_data = self.__dict__[edge](temp_data)
+            # print self.data
+            temp_current_node = match.groupdict()['end_node']
+            temp_state = [0 for i in range(len(temp_node_names))]
+            position = temp_node_names.index(temp_current_node)
+            temp_state[position] = 1
+            # print temp_state
+            # print self.state
+            # print self.current_node
 
     def __str__(self):
         return str(self.data)
 
-    def add_node(self,node_name,edge_into_node_begin,edge_into_node_function,edge_out_node_end,
-                 edge_out_node_function,node_description=None):
+    def add_node(self, node_name, edge_into_node_begin, edge_into_node_function, edge_out_node_end,
+                 edge_out_node_function, node_description=None):
         """Adds a node to the graph. Required input is node_name (a string with no spaces),
         a reference to an entering node,the function mapping the entering node to the new node,
         a reference to an exiting node and the function mapping the
@@ -376,241 +389,225 @@ class Graph(object):
         # first check if node into and out of node is good
         self.node_names.append(node_name)
         self.state.append(0)
-        self.state_matrix=np.matrix(self.state).T
-        for index,matrix in enumerate(self.edge_matrices):
-            pad_row=np.zeros((1,len(matrix)))
-            new_matrix=np.concatenate((matrix, pad_row), axis=0)
-            pad_column=np.zeros((1,len(self.node_names)))
-            new_matrix=np.concatenate((new_matrix, pad_column.T), axis=1)
-            #print("New matrix is :\n{0}".format(new_matrix))
-            self.edge_matrices[index]=new_matrix
-        self.add_edge(begin_node=node_name,end_node=edge_out_node_end,edge_function=edge_out_node_function)
-        self.add_edge(begin_node=edge_into_node_begin,end_node=node_name,edge_function=edge_into_node_function)
+        self.state_matrix = np.matrix(self.state).T
+        for index, matrix in enumerate(self.edge_matrices):
+            pad_row = np.zeros((1, len(matrix)))
+            new_matrix = np.concatenate((matrix, pad_row), axis=0)
+            pad_column = np.zeros((1, len(self.node_names)))
+            new_matrix = np.concatenate((new_matrix, pad_column.T), axis=1)
+            # print("New matrix is :\n{0}".format(new_matrix))
+            self.edge_matrices[index] = new_matrix
+        self.add_edge(begin_node=node_name, end_node=edge_out_node_end, edge_function=edge_out_node_function)
+        self.add_edge(begin_node=edge_into_node_begin, end_node=node_name, edge_function=edge_into_node_function)
         if node_description:
             self.node_descriptions.append(node_description)
         self.display_graph.add_node(node_name)
-        self.display_graph.add_edge(node_name,edge_out_node_end)
-        self.display_graph.add_edge(edge_into_node_begin,node_name)
-        self.display_layout=networkx.spring_layout(self.display_graph)
+        self.display_graph.add_edge(node_name, edge_out_node_end)
+        self.display_graph.add_edge(edge_into_node_begin, node_name)
+        self.display_layout = networkx.spring_layout(self.display_graph)
 
-    def add_external_node(self,external_node_name,jump_into_node_begin,
-                          jump_into_node_function,external_node_description=None):
+    def add_external_node(self, external_node_name, jump_into_node_begin,
+                          jump_into_node_function, external_node_description=None):
         """Adds an external node to the graph. Required input is node_name (a string with no spaces),
         a reference to an entering node,the function mapping the entering node to the new external node"""
         # first check if node into and out of node is good
         self.external_node_names.append(external_node_name)
-        self.add_jump(begin_node=jump_into_node_begin,end_node=external_node_name,jump_function=jump_into_node_function)
+        self.add_jump(begin_node=jump_into_node_begin, end_node=external_node_name,
+                      jump_function=jump_into_node_function)
         if external_node_description:
             self.external_node_descriptions.append(external_node_description)
         self.display_graph.add_node(external_node_name)
-        self.display_graph.add_edge(jump_into_node_begin,external_node_name)
-        self.display_layout=networkx.spring_layout(self.display_graph)
+        self.display_graph.add_edge(jump_into_node_begin, external_node_name)
+        self.display_layout = networkx.spring_layout(self.display_graph)
 
-    def jump_to_external_node(self,external_node_name,**options):
+    def jump_to_external_node(self, external_node_name, **options):
         """Returns the result of the jump, the graph is left in the node that is the begining of the jump"""
-        end_node=external_node_name
-        jump_pattern='jump_(?P<begin_node>\w+)_{0}_(?P<iterator>\w+)'.format(end_node)
+        end_node = external_node_name
+        jump_pattern = 'jump_(?P<begin_node>\w+)_{0}_(?P<iterator>\w+)'.format(end_node)
         for jump in self.jumps[:]:
-            jump_match=re.match(jump_pattern,jump,re.IGNORECASE)
+            jump_match = re.match(jump_pattern, jump, re.IGNORECASE)
             if jump_match:
-                jump_to_use=jump
-                begin_node=jump_match.groupdict()["begin_node"]
+                jump_to_use = jump
+                begin_node = jump_match.groupdict()["begin_node"]
 
         self.move_to_node(begin_node)
-        return self.__dict__[jump_to_use](self.data,**options)
+        return self.__dict__[jump_to_use](self.data, **options)
 
-
-
-    def path_length(self,path,num_repeats=10):
+    def path_length(self, path, num_repeats=10):
         """Determines the length of a given path, currently the metric is based on the time to move to."""
-        begin_time=datetime.datetime.now()
-        #num_repeats=100
+        begin_time = datetime.datetime.now()
+        # num_repeats=100
         for i in range(num_repeats):
             self.virtual_move_to(path)
-        end_time=datetime.datetime.now()
-        delta_t=end_time-begin_time
-        path_length=delta_t.total_seconds()/float(num_repeats)
-        if path_length ==0.0:
+        end_time = datetime.datetime.now()
+        delta_t = end_time - begin_time
+        path_length = delta_t.total_seconds() / float(num_repeats)
+        if path_length == 0.0:
             print("Warning the path length is less than 1 microsecond,"
                   "make sure num_repeats is high enough to measure it.")
         return path_length
 
-    def is_path_valid(self,path):
+    def is_path_valid(self, path):
         """Returns True if the path is valid from the current node position or False otherwise"""
-        null_state=[0 for i in range(len(self.node_names))]
-        null_state_matrix=np.matrix(null_state).T
-        new_state=np.matrix(self.state).T
-        for index,edge in enumerate(path):
-            #print index
-            #print edge
-            edge_position=self.edges.index(edge)
-            move_matrix=self.edge_matrices[edge_position]
-            #print move_matrix
-            new_state=move_matrix*new_state
-            if new_state.any()==null_state_matrix.any():
-                #print new_state
-                #print null_state_matrix
+        null_state = [0 for i in range(len(self.node_names))]
+        null_state_matrix = np.matrix(null_state).T
+        new_state = np.matrix(self.state).T
+        for index, edge in enumerate(path):
+            # print index
+            # print edge
+            edge_position = self.edges.index(edge)
+            move_matrix = self.edge_matrices[edge_position]
+            # print move_matrix
+            new_state = move_matrix * new_state
+            if new_state.any() == null_state_matrix.any():
+                # print new_state
+                # print null_state_matrix
                 return False
         return True
 
-
-    def get_entering_nodes(self,node):
+    def get_entering_nodes(self, node):
         """Returns all nodes that have an edge that enter the specificed node"""
-        enter_edge_pattern=re.compile('edge_(?P<begin_node>\w+)_{0}_(?P<iterator>\w+)'.format(node))
-        enter_nodes=[]
-        for index,edge in enumerate(self.edges):
-            enter_match=re.match(enter_edge_pattern,edge)
+        enter_edge_pattern = re.compile('edge_(?P<begin_node>\w+)_{0}_(?P<iterator>\w+)'.format(node))
+        enter_nodes = []
+        for index, edge in enumerate(self.edges):
+            enter_match = re.match(enter_edge_pattern, edge)
             if enter_match:
-                enter_node=enter_match.groupdict()['begin_node']
+                enter_node = enter_match.groupdict()['begin_node']
                 enter_nodes.append(enter_node)
         return enter_nodes
 
-    def get_entering_edges(self,node):
+    def get_entering_edges(self, node):
         """Returns all edges that enter the specificed node"""
-        enter_edge_pattern=re.compile('edge_(?P<begin_node>\w+)_{0}_(?P<iterator>\w+)'.format(node))
-        enter_edges=[]
-        for index,edge in enumerate(self.edges):
-            if re.match(enter_edge_pattern,edge):
+        enter_edge_pattern = re.compile('edge_(?P<begin_node>\w+)_{0}_(?P<iterator>\w+)'.format(node))
+        enter_edges = []
+        for index, edge in enumerate(self.edges):
+            if re.match(enter_edge_pattern, edge):
                 enter_edges.append(edge)
         return enter_edges
 
-    def get_exiting_edges(self,node):
+    def get_exiting_edges(self, node):
         """Returns all edges that exit the specificed node"""
-        exit_edge_pattern=re.compile('edge_{0}_(?P<end_node>\w+)_(?P<iterator>\w+)'.format(node))
-        exit_edges=[]
-        for index,edge in enumerate(self.edges):
-            if re.match(exit_edge_pattern,edge):
+        exit_edge_pattern = re.compile('edge_{0}_(?P<end_node>\w+)_(?P<iterator>\w+)'.format(node))
+        exit_edges = []
+        for index, edge in enumerate(self.edges):
+            if re.match(exit_edge_pattern, edge):
                 exit_edges.append(edge)
         return exit_edges
 
-    def get_exiting_nodes(self,node):
+    def get_exiting_nodes(self, node):
         """Returns all nodes that have an edge leaving the specificed node"""
-        exit_edge_pattern=re.compile('edge_{0}_(?P<end_node>\w+)_(?P<iterator>\w+)'.format(node))
-        exit_nodes=[]
-        for index,edge in enumerate(self.edges):
-            exit_match=re.match(exit_edge_pattern,edge)
+        exit_edge_pattern = re.compile('edge_{0}_(?P<end_node>\w+)_(?P<iterator>\w+)'.format(node))
+        exit_nodes = []
+        for index, edge in enumerate(self.edges):
+            exit_match = re.match(exit_edge_pattern, edge)
             if exit_match:
-                exit_node=exit_match.groupdict()['end_node']
+                exit_node = exit_match.groupdict()['end_node']
                 exit_nodes.append(exit_node)
         return exit_nodes
 
-    def get_path(self,first_node,last_node):
-        """Returns the first path found between first node and last node, five step paths are broken"""
-        #todo: long paths are not found have to add a follow right hand side algorithm
-        #Remove circular paths added 12/2016
-        edge_pattern=re.compile('edge_(?P<begin_node>\w+)_(?P<end_node>\w+)_(?P<iterator>\w+)')
-        exit_paths=self.get_exiting_edges(first_node)
-        next_nodes=self.get_exiting_nodes(first_node)
-        #be careful here using the wrong assignment statement breaks this function
-        possible_paths=[]
-        for exit_path in exit_paths:
-            possible_paths.append([exit_path])
-        #print("{0} is {1}".format('possible_paths',possible_paths))
-        for i in range(len(self.node_names)**3):
-            #print("{0} is {1}".format('i',i))
-            #print("{0} is {1}".format('possible_paths',possible_paths))
-            for index,path in enumerate(possible_paths):
-                #print("{0} is {1}".format('index',index))
-                last_edge=path[-1]
-                #print("{0} is {1}".format('last_edge',last_edge))
-                match=re.match(edge_pattern,last_edge)
-                begin_node=match.groupdict()['begin_node']
-                end_node=match.groupdict()['end_node']
-                #print("{0} is {1}".format('end_node',end_node))
-                if end_node==last_node:
-                    #print("The path found is {0}".format(path))
-                    return remove_circular_paths(path)
-                next_possible_paths=[]
-                next_edges=self.get_exiting_edges(end_node)
-                next_nodes=self.get_exiting_nodes(end_node)
-                #print("{0} is {1}".format('next_edges',next_edges))
-                for next_edge_index,next_edge in enumerate(next_edges):
-                    #print("{0} is {1}".format('next_edge_index',next_edge_index))
-                    #be careful here using the wrong assignment statement breaks this function
-                    #next_path=path is a deal breaker!!
-                    next_path=[]
-                    for edge in path:
-                        next_path.append(edge)
-                    #print("{0} is {1}".format('next_path',next_path))
-                    #print("{0} is {1}".format('next_edge',next_edge))
-                    #next_node=next_nodes[index]
-                    #print next_node
-                    next_match=re.match(edge_pattern,next_edge)
-                    next_node=next_match.groupdict()["end_node"]
-                    begin_node_next_edge=next_match.groupdict()["begin_node"]
-                    #print("{0} is {1}".format('next_node',next_node))
-                    #print("{0} is {1}".format('begin_node_next_edge',begin_node_next_edge))
-                    if next_node==last_node and begin_node_next_edge==end_node:
-                        next_path.append(next_edge)
-                        #print("The path found is {0}".format(next_path))
-                        return remove_circular_paths(next_path)
-                    elif begin_node_next_edge==end_node:
-                        next_path.append(next_edge)
-                        # This keeps it from getting stuck on circular paths
-                        if next_edge in path:
-                        #ossible_paths=possible_paths
-                            #print("next_edge was already in path")
-                            continue
-                        next_possible_paths.append(next_path)
+    def get_path(self, first_node, last_node, **options):
+        """Returns the first path found between first node and last node, uses a breadth first search algorithm"""
+        defaults = {"debug": False, "method": "BreathFirst"}
+        self.get_path_options = {}
+        for key, value in defaults.iteritems():
+            self.get_path_options[key] = value
+        for key, value in options.iteritems():
+            self.get_path_options[key] = value
+        unvisited_nodes = self.node_names[:]
+        unvisited_nodes.remove(first_node)
+        visited_nodes = [first_node]
+        node_history = []
+        edge_history = []
+        path_queue = []
+        possible_paths = []
+        queue = []
+        current_edge = []
+        queue.append(first_node)
+        path = {first_node: []}
+        while queue:
+            # first remove the
+            current_node = queue.pop(0)
+            if path_queue != []:
+                current_edge = path_queue.pop(0)
+                edge_history.append(current_edge)
+            node_history.append(current_node)
+            if self.get_path_options["debug"]:
+                print("current_node is {0}".format(current_node))
+                print("current_edge is {0}".format(current_edge))
+            # if this node is the destination exit returning the path
+            if current_node == last_node:
+                if self.get_path_options["debug"]:
+                    print("Node path was found to be {0}".format(node_path))
+                    print("path was found to be {0}".format(edge_path))
+                    print("{0} is {1}".format("path", path))
+                return path[last_node][::-1]
 
-                        #print("{0} is {1}".format('next_possible_paths',next_possible_paths))
-                    else:
-                        print("Path is not found")
-                        pass
+            adjacent_nodes = test_graph.get_exiting_nodes(current_node)
+            adjacent_paths = test_graph.get_exiting_edges(current_node)
+            if self.get_path_options["debug"]:
+                print("{0} are {1}".format("adjacent_nodes", adjacent_nodes))
+                print("{0} are {1}".format("adjacent_paths", adjacent_paths))
+            current_history = edge_history
+            for node_index, node in enumerate(adjacent_nodes):
+                if node not in visited_nodes:
+                    queue.append(node)
+                    path_queue.append(adjacent_paths[node_index])
+                    visited_nodes.append(node)
+                    path[node] = [adjacent_paths[node_index]] + path[current_node]
+                    path[node]
+                    # possible_paths.append(current_path.append(node))
+                    if self.get_path_options["debug"]:
+                        print("{0} is {1}".format("path_queue", path_queue))
 
-                    #print("{0} is {1}".format('next_possible_paths',next_possible_paths))
-                if next_possible_paths:
-                    possible_paths=next_possible_paths
-                #print("{0} is {1}".format('possible_paths',possible_paths))
-
-    def move_to_node(self,node):
+    def move_to_node(self, node):
         """Moves from current_node to the specified node"""
-        path=self.get_path(self.current_node,node)
+        path = self.get_path(self.current_node, node)
         self.move_to(path)
 
     def check_closed_path(self):
         """Checks that data is not changed for the first closed path found. Returns True if data==data after
         moving around the closed path, False otherwise. Starting point is current_node """
-        temp_data=self.data
-        path=self.get_path(self.current_node,self.current_node)
+        temp_data = self.data
+        path = self.get_path(self.current_node, self.current_node)
         if self.is_path_valid(path):
             pass
         else:
             print("Path is not valid, graph definition is broken")
             raise
-        out=temp_data==self.data
-        out_list=[self.current_node,path,out]
+        out = temp_data == self.data
+        out_list = [self.current_node, path, out]
         print("The assertion that the data remains unchanged,\n"
               "for node {0} following path {1} is {2}".format(*out_list))
         return out
 
     def is_graph_isomorphic(self):
         """Returns True if all nodes have closed paths that preserve the data, False otherwise"""
-        out=True
+        out = True
         for node in self.node_names:
             self.move_to_node(node)
             if not self.check_closed_path:
-                out=False
+                out = False
         return out
 
-    def show(self,**options):
+    def show(self, **options):
         """Shows the graph using matplotlib and networkx"""
         # Should be seperated to allow for fixed presentation?
-        defaults={"descriptions":False,"edge_descriptions":False,"save_plot":False,
-                 "path":None,"active_node":True,"directory":None,"specific_descriptor":self.graph_name.replace(" ","_"),
-                  "general_descriptor":"plot","file_name":None,
-                 "arrows":True,"node_size":1000,"font_size":10,"fix_layout":True}
-        show_options={}
-        for key,value in defaults.iteritems():
-            show_options[key]=value
-        for key,value in options.iteritems():
-            show_options[key]=value
+        defaults = {"descriptions": False, "edge_descriptions": False, "save_plot": False,
+                    "path": None, "active_node": True, "directory": None,
+                    "specific_descriptor": self.graph_name.replace(" ", "_"),
+                    "general_descriptor": "plot", "file_name": None,
+                    "arrows": True, "node_size": 1000, "font_size": 10, "fix_layout": True}
+        show_options = {}
+        for key, value in defaults.iteritems():
+            show_options[key] = value
+        for key, value in options.iteritems():
+            show_options[key] = value
         if show_options["directory"] is None:
-            show_options["directory"]=os.getcwd()
+            show_options["directory"] = os.getcwd()
         if show_options["active_node"]:
-            node_colors=[]
+            node_colors = []
             for node in self.display_graph.nodes():
-                if node==self.current_node:
+                if node == self.current_node:
                     node_colors.append('b')
                 else:
                     if node in self.node_names:
@@ -618,40 +615,40 @@ class Graph(object):
                     elif node in self.external_node_names:
                         node_colors.append('g')
         else:
-            node_colors=['r' for node in self.node_names]+['g' for node in self.node_names]
-        #print("{0} is {1}".format('node_colors',node_colors))
+            node_colors = ['r' for node in self.node_names] + ['g' for node in self.node_names]
+        # print("{0} is {1}".format('node_colors',node_colors))
         if show_options["descriptions"]:
-            node_labels={node:self.node_descriptions[index] for index,
-                               node in enumerate(self.node_names)}
+            node_labels = {node: self.node_descriptions[index] for index,
+                                                                   node in enumerate(self.node_names)}
             if self.external_node_names:
-                for index,node in enumerate(self.external_node_names):
-                    node_labels[node]=self.external_node_descriptions[index]
-            networkx.draw_networkx(self.display_graph,arrows=show_options["arrows"],
-                       labels=node_labels,node_color=node_colors,
-                                   node_size=show_options["node_size"],font_size=show_options["font_size"],
+                for index, node in enumerate(self.external_node_names):
+                    node_labels[node] = self.external_node_descriptions[index]
+            networkx.draw_networkx(self.display_graph, arrows=show_options["arrows"],
+                                   labels=node_labels, node_color=node_colors,
+                                   node_size=show_options["node_size"], font_size=show_options["font_size"],
                                    pos=self.display_layout)
-            #print("{0} is {1}".format('node_labels',node_labels))
+            # print("{0} is {1}".format('node_labels',node_labels))
         else:
-            networkx.draw_networkx(self.display_graph,arrows=show_options["arrows"],node_color=node_colors,
-                                  node_size=show_options["node_size"],font_size=show_options["font_size"],
+            networkx.draw_networkx(self.display_graph, arrows=show_options["arrows"], node_color=node_colors,
+                                   node_size=show_options["node_size"], font_size=show_options["font_size"],
                                    pos=self.display_layout)
 
         plt.suptitle(self.options["graph_name"])
         if show_options["file_name"] is None:
-            file_name=auto_name(specific_descriptor=show_options["specific_descriptor"],
-                                general_descriptor=show_options["general_descriptor"],
-                                directory=show_options["directory"],extension='png',padding=3)
+            file_name = auto_name(specific_descriptor=show_options["specific_descriptor"],
+                                  general_descriptor=show_options["general_descriptor"],
+                                  directory=show_options["directory"], extension='png', padding=3)
         else:
-            file_name=show_options["file_name"]
+            file_name = show_options["file_name"]
         if show_options["save_plot"]:
-            #print file_name
+            # print file_name
             if show_options["path"]:
                 plt.savefig(show_options["path"])
             else:
-                plt.savefig(os.path.join(show_options["directory"],file_name))
+                plt.savefig(os.path.join(show_options["directory"], file_name))
         else:
             plt.show()
-            fig=plt.gcf()
+            fig = plt.gcf()
             return fig
 
 
@@ -955,6 +952,7 @@ class TwoPortParameterGraph(Graph):
 #-----------------------------------------------------------------------------
 # Module Scripts
 #TODO: Add test_Graph script currently lives in jupyter-notebooks
+
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
