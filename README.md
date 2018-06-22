@@ -1,5 +1,9 @@
 # pyMez
 Measurement, Analysis and Data Management Software. To load the API interface use from pyMez import *.
+[Read the docs](https://aricsanders.github.io/)
+
+
+
 Installation using pip
 ----------------------
 `>>pip install pyMez`

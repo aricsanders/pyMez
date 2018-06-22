@@ -542,8 +542,8 @@ class Graph(object):
                     print("{0} is {1}".format("path", path))
                 return path[last_node][::-1]
 
-            adjacent_nodes = test_graph.get_exiting_nodes(current_node)
-            adjacent_paths = test_graph.get_exiting_edges(current_node)
+            adjacent_nodes = self.get_exiting_nodes(current_node)
+            adjacent_paths = self.get_exiting_edges(current_node)
             if self.get_path_options["debug"]:
                 print("{0} are {1}".format("adjacent_nodes", adjacent_nodes))
                 print("{0} are {1}".format("adjacent_paths", adjacent_paths))
