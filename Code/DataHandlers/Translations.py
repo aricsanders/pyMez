@@ -148,6 +148,10 @@ except:
     print("The module win32com was not found or had an error,"
           "please check module or put it on the python path, if OS is not Windows ignore this warning")
     WINDOWS_COM=False
+try:
+    import h5py
+except:
+    print("Could not import h5py")
     #raise ImportError
 #-----------------------------------------------------------------------------
 # Module Constants
@@ -387,13 +391,148 @@ def DataFrameDictionary_to_ExcelFile(DataFrame_dict,excel_file_name="Test.xlsx")
     for key in keys:
         #print key
         DataFrame_dict[key].to_excel(writer,sheet_name=key,index=False)
-        writer.close()
+    writer.close()
     return excel_file_name
+
+
+def DataFrameDictionary_to_AsciiDataTable(DataFrame_dict, **options):
+    """Given a dictionary of pandas DataFrames returns an AsciiDataTable"""
+    defaults = {"comment_begin": "!", "comment_end": "\n",
+                "column_names_begin_token": "!", "column_names_end_token": "\n",
+                "data_delimiter": "  ", "data_table_element_separator": None}
+    # defaults={}
+    table_options = {}
+    for key, value in defaults.iteritems():
+        table_options[key] = value
+    for key, value in options.iteritems():
+        table_options[key] = value
+    keys = DataFrame_dict.keys()
+    for key in keys:
+        table_key = key
+        if re.search("comments", key, re.IGNORECASE):
+            table_key = "inline_comments"
+            table_options[table_key] = DataFrame_dict[key].as_matrix().tolist()
+
+        elif key in ["data", "Data"]:
+            table_options["column_names"] = DataFrame_dict[key].columns.tolist()
+            table_options["column_types"] = map(lambda x: str(x), DataFrame_dict[key].dtypes.tolist())
+            table_options["data"] = DataFrame_dict[key].as_matrix().tolist()
+
+        elif re.search("footer", key, re.IGNORECASE):
+            list_of_lists = DataFrame_dict[key].as_matrix().tolist()
+            list_of_strings = [str(row[0]) for row in list_of_lists]
+            table_options["footer"] = list_of_strings
+
+        elif re.search("header", key, re.IGNORECASE):
+            table_options["treat_header_as_comment"] = True
+            list_of_lists = DataFrame_dict[key].as_matrix().tolist()
+            list_of_strings = [str(row[0]) for row in list_of_lists]
+            # print("{0} is {1}".format("list_of_lists",list_of_lists))
+            table_options["header"] = list_of_strings
+
+        elif re.search("meta", key, re.IGNORECASE):
+            list_of_lists = DataFrame_dict[key].as_matrix().tolist()
+            dictionary = {str(row[0]): str(row[1]) for row in list_of_lists}
+            table_options["metadata"] = dictionary
+
+    new_table = AsciiDataTable(None, **table_options)
+    return new_table
+
 
 def ExcelFile_to_DataFrameDictionary(excel_file_name):
     """Reads an excel file into a dictionary of data frames"""
-    data_frame_dictionary=pandas.read_excel(excel_file_name,sheetname=None)
+    data_frame_dictionary = pandas.read_excel(excel_file_name, sheetname=None)
     return data_frame_dictionary
+
+
+def DataFrameDictionary_to_HdfFile(DataFrame_dict, hdf_file_name="Test.hd5"):
+    """Transforms a dictionary of pandas.DataFrames to a single HD5 file with groups determined by the keys"""
+    keys = sorted(DataFrame_dict.keys())
+    for key in keys:
+        DataFrame_dict[key].to_hdf(hdf_file_name, key)
+    print("{0} is {1}".format('key', key))
+    return hdf_file_name
+
+
+def HdfFile_to_DataFrameDictionary(hdf_file_name):
+    """Creates a dictionary of pandas.DataFrames given a hd5 file name, does this require the table names?
+    """
+    hdf = h5py.File(hdf_file_name)
+    keys = hdf.keys()
+    pandas_dictionary = {key: pandas.read_hdf(hdf_file_name, key) for key in keys}
+    return pandas_dictionary
+
+
+def AsciiDataTable_to_CsvFile(ascii_data_table, file_name="test.csv", schema_file_name="schema_csv"):
+    """Converts an AsciiDataTable into an csv file by setting options and saving"""
+    original_options = ascii_data_table.options.copy()
+    ascii_data_table.options["column_names_begin_token"] = ""
+    ascii_data_table.options["column_names_end_token"] = "\n"
+    ascii_data_table.options["data_table_element_separator"] = None
+    ascii_data_table.options["data_begin_token"] = None
+    ascii_data_table.options["data_end_token"] = None
+    ascii_data_table.options["data_delimiter"] = ","
+    ascii_data_table.options["column_names_delimiter"] = ","
+    if ascii_data_table.header is not None:
+        ascii_data_table.options["comment_begin"] = "#"
+        ascii_data_table.options["comment_end"] = "\n"
+        ascii_data_table.options["treat_header_as_comment"] = True
+    if ascii_data_table.footer is not None:
+        ascii_data_table.options["comment_begin"] = "#"
+        ascii_data_table.options["comment_end"] = "\n"
+        ascii_data_table.options["treat_footer_as_comment"] = True
+    # ascii_data_table.update_model()
+    ascii_data_table.save_schema(schema_file_name)
+    ascii_data_table.save(file_name)
+    ascii_data_table.options = original_options
+    return [file_name, schema_file_name]
+
+
+def AsciiDataTable_to_HpFile(ascii_data_table, file_name="test.txt", schema_file_name="schema_hp"):
+    """Converts an AsciiDataTable into an csv file by setting options and saving"""
+    original_options = ascii_data_table.options.copy()
+    ascii_data_table.options["column_names_begin_token"] = "!"
+    ascii_data_table.options["column_names_end_token"] = "\n"
+    ascii_data_table.options["data_table_element_separator"] = None
+    ascii_data_table.options["data_begin_token"] = None
+    ascii_data_table.options["data_end_token"] = None
+    ascii_data_table.options["data_delimiter"] = "  "
+    ascii_data_table.options["column_names_delimiter"] = "  "
+    if ascii_data_table.header is not None:
+        ascii_data_table.options["comment_begin"] = "!"
+        ascii_data_table.options["comment_end"] = "\n"
+        ascii_data_table.options["treat_header_as_comment"] = True
+    if ascii_data_table.footer is not None:
+        ascii_data_table.options["comment_begin"] = "!"
+        ascii_data_table.options["comment_end"] = "\n"
+        # ascii_data_table.options["treat_header_as_comment"]=True
+        ascii_data_table.options["treat_footer_as_comment"] = True
+    # ascii_data_table.update_model()
+    ascii_data_table.save_schema(schema_file_name)
+    ascii_data_table.save(file_name)
+    ascii_data_table.options = original_options
+    return [file_name, schema_file_name]
+
+
+def File_to_AsciiDataTable(paths):
+    [file_name, schema] = paths
+    options = read_schema(schema)
+    table = AsciiDataTable(file_name, **options)
+    print table
+    return table
+
+
+def AsciiDataTable_to_File(ascii_data_table, file_name="Test.txt", schema_file_name="schema"):
+    paths = [file_name, schema_file_name]
+    ascii_data_table.save(file_name)
+    ascii_data_table.save_schema(schema_file_name)
+    return paths
+
+
+# def ExcelFile_to_DataFrameDictionary(excel_file_name):
+#     """Reads an excel file into a dictionary of data frames"""
+#     data_frame_dictionary=pandas.read_excel(excel_file_name,sheetname=None)
+#     return data_frame_dictionary
 
 def DataFrame_to_AsciiDataTable(pandas_data_frame,**options):
     """Converts a pandas.DataFrame to an AsciiDataTable"""

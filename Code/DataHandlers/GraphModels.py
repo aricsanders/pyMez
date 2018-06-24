@@ -948,7 +948,49 @@ class TwoPortParameterGraph(Graph):
         self.add_edge(begin_node="ABCDFrequencyList",
                         end_node="SFrequencyList",
                         edge_function=ABCDFrequencyList_to_SFrequencyList)
+class DataTableGraph(Graph):
+    """     Class that transforms a row modelled header and metadata to several different data types
+        #!python
+        defaults={"graph_name":"Data Table Graph",
+                  "node_names":['DataFrameDictionary','AsciiDataTable'],
+                  "node_descriptions":["Pandas Data Frame Dictionary","AsciiDataTable"],
+                  "current_node":'DataFrameDictionary',
+                  "state":[1,0],
+                  "data":AsciiDataTable_to_DataFrameDictionary(TwoPortRawModel(os.path.join(TESTS_DIRECTORY,'TestFileTwoPortRaw.txt'))),
+                  "edge_2_to_1":AsciiDataTable_to_DataFrameDictionary,
+                  "edge_1_to_2":DataFrameDictionary_to_AsciiDataTable
+                 }
+        """
+    def __init__(self,**options):
 
+        defaults={"graph_name":"Data Table Graph",
+                  "node_names":['DataFrameDictionary','AsciiDataTable'],
+                  "node_descriptions":["Pandas Data Frame Dictionary","AsciiDataTable"],
+                  "current_node":'DataFrameDictionary',
+                  "state":[1,0],
+                  "data":AsciiDataTable_to_DataFrameDictionary(TwoPortRawModel(os.path.join(TESTS_DIRECTORY,'TestFileTwoPortRaw.txt'))),
+                  "edge_2_to_1":AsciiDataTable_to_DataFrameDictionary,
+                  "edge_1_to_2":DataFrameDictionary_to_AsciiDataTable
+                 }
+        graph_options={}
+        for key,value in defaults.iteritems():
+            graph_options[key]=value
+        for key,value in options.iteritems():
+            graph_options[key]=value
+        Graph.__init__(self, **graph_options)
+
+        self.add_node("ExcelFile", "DataFrameDictionary", DataFrameDictionary_to_ExcelFile,
+                                  "DataFrameDictionary", ExcelFile_to_DataFrameDictionary,
+                                  node_description="Excel Workbook")
+        self.add_node("HdfFile", "DataFrameDictionary", DataFrameDictionary_to_HdfFile,
+                                  "DataFrameDictionary", HdfFile_to_DataFrameDictionary, node_description="HD5 File")
+        self.add_node("CsvFile", "AsciiDataTable", AsciiDataTable_to_CsvFile,
+                                  "AsciiDataTable", File_to_AsciiDataTable, node_description="CSV File")
+        self.add_node("HpFile", "AsciiDataTable", AsciiDataTable_to_HpFile,
+                                  "AsciiDataTable", File_to_AsciiDataTable, node_description="hp format File")
+        self.add_external_node(external_node_name="XMLDataTable", jump_into_node_begin="AsciiDataTable",
+                                           jump_into_node_function=AsciiDataTable_to_XmlDataTable,
+                                           external_node_description="XMLDataTable")
 #-----------------------------------------------------------------------------
 # Module Scripts
 #TODO: Add test_Graph script currently lives in jupyter-notebooks
