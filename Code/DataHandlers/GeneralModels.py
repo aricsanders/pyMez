@@ -1828,40 +1828,7 @@ class AsciiDataTable(object):
         "Creates a shallow copy of the data table"
         return copy.copy(self)
 
-class AsciiDataTableCollection():
-    """A collection of multiple AsciiDataTables. The class can be created from a file path with options or can
-    be created without a file path as a empty container. """
-    def __init__(self,file_path=None,table_names=None,**options):
-        # The primary attritbute should be self.tables=list of tables
-        # since there is no way to know how many tables or their options,
-        # you can't read them in without **options-> self.tables
-        # which can be passed as an option. Each table is an independent entity
-        # but can have options set by global_options
-        global_defaults={"table_delimiter":'\n',"tables":None,"table_names":None}
 
-        if file_path is None:
-            pass
-        else:
-            # it is impossible to read a file without a known number of tables
-            if table_names is None and options["table_names"] is None:
-                raise
-            else:
-                file_in=open(file_path,'r')
-                # in order to parse the file we need to know line #'s, once we deduce them we use __parse__
-                self.lines=[]
-                for line in file_in:
-                    self.lines.append(line)
-                file_in.close()
-                self.path=file_path
-
-    def build_string(self,**temp_options):
-        """Builds the string for the table collection using the temp_options"""
-        out_string=""
-        out_string_list=[]
-        for index,table in enumerate(self.tables):
-            out_string_list.append(table.build_string())
-        out_string=string_list_collapse(out_string_list,self.options["table_delimiter"])
-        return out_string
 class KnowledgeSystem(AsciiDataTable):
     """A Knowledge System is a collection of properties (context) and a collection of metadata about those properties
     (obligate contexts). """
@@ -1972,11 +1939,121 @@ class KnowledgeSystem(AsciiDataTable):
 
         self.add_column(column_name=obligate_name,column_data=column_data)
 
-class ECPVModel():
-    """ECPVmodel is a class that deals with Entity-Context-Property-Value models. An ECPV model is a model
-     for providing a description of an entity. It can be thought of a virtual file system, in which its members
-     have metadata describing them stored for analysis and manipulation"""
-    pass
+
+class Encyclopedia(object):
+    """An Encyclopedia is a collection of descriptions"""
+
+    def __init__(self, file_path=None, **options):
+        """Initializes an Encyclopedia"""
+        defaults = {"key_formatter_string": "{Entity}-{Context}-{Property}",
+                    "key_value__formatter": None,
+                    "key_value_pattern": None,
+                    "entity_table": None,
+                    "entity_attributes": None,
+                    "universe": None,
+                    "context_obligate_delimiter": ".",
+                    "encyclopedia_begin_token": "Begin Encyclopedia",
+                    "encyclopedia_end_token": "End Encyclopedia",
+                    "entity_table_primary_key": "index",
+                    "entity_table_begin_token": "Begin Entity Table",
+                    "entity_table_end_token": "End Entity Table",
+                    "universe_begin_token": "Begin Universe",
+                    "universe_end_token": "End Universe",
+                    "description_begin_token": "Begin Descriptions",
+                    "descriptions_end_token": "End Descriptions",
+                    "knowledge_system_begin_prefix": "Begin Knowledge System",
+                    "knowledge_system_end_prefix": "End Knowledge System"
+                    }
+        self.options = {}
+        for key, value in defaults.iteritems():
+            self.options[key] = value
+        for key, value in options.iteritems():
+            self.options[key] = value
+        if file_path is None:
+            # Create a new encylcopedia
+            self.entity_table = AsciiDataTable(None, column_names=["Entity"], data=[["self"]])
+            self.universe = {}
+            self.descriptions = AsciiDataTable(None, column_names=["Entity", "Context", "Property", "Value"])
+            self.contexts = []
+        else:
+            pass
+        # parse an existing data table
+        # requires options to be set properly
+
+    def set_entity_primary_key(entity_table_column_name):
+        """Sets the column name to use for the entity primary key,
+        by default the primary key is row number (index)"""
+        # The primary key is a column or columns that can be refered to instead of the full row of the entity table
+        self.entity_primary_key = entity_table_column_name
+
+    def add_description(self, entity, context, property_name, value, obligate=None):
+        """Adds a description to the encyclopedia, the entity, context (or knowledge_system name),property_name,
+        and value are required. If the context is an obligate-context then add obligate"""
+        if obligate is not None:
+            context = context + self.options["context_obligate_deilimiter"] + obligate
+
+        self.descriptions.add_row([entity, context, property_name, value])
+
+    def add_knowledge_system(self, knowledge_system):
+        """Adds a knowledge system to the universe being used for the encyclopedia"""
+        self.universe[knowledge_system.context] = knowledge_system
+        self.contexts = sorted(self.universe.keys()[:])
+
+    def add_entity(self, entity):
+        """Adds an entity to entity_table. The entity is a row in the entity table"""
+        self.entity_table.add_row(entity)
+
+    def get_entity(self, entity_reference, by="row"):
+        """Gets an entity, it can be by row index (i.e index) or the primary key"""
+        if re.search("pk|primary|key", by, re.IGNORECASE) and not re.match("index", self.entity_primary_key):
+            try:
+                row_number = self.entity_table[self.entity_primary_key].index(entity)
+                return self.entity_table.data[:][row_number]
+            except:
+                print("Could not find {0} in entity table".format(entity_reference))
+        else:
+            return self.entity_table.data[:][entity_reference]
+
+    def __str__(self):
+        """Controls the string behavior of the encyclopedia"""
+        out_string = ""
+        if self.entity_table:
+            out_string = "Begin Entity\n" + str(self.entity_table) + "\nEnd Entity\n"
+        if self.contexts:
+            for key in self.contexts[:]:
+                out_string = out_string + "\nBegin Knowledge System {0} \n".format(key) + str(self.universe[key]) + \
+                             "\nEnd Knowledge System: {0} \n".format(key)
+        if self.descriptions:
+            out_string = out_string + "\nBegin Descriptions \n" + str(self.descriptions) + "\nEnd Descriptions \n"
+        return out_string
+
+    def get_descriptions(self, entity):
+        """Returns all descriptions of an entity"""
+        results = filter(lambda x: x[0] == entity, self.descriptions.data)
+        return results
+
+    def get_entities(self, context, property_name, value, obligate=None):
+        """Returns a subset of entity table that has context:property=Value"""
+        if obligate is not None:
+            context = context + self.options["context_obligate_deilimiter"] + obligate
+        results = filter(lambda x: x[1] == context and x[2] == property_name and x[3] == value, self.descriptions.data)
+        return results[0]
+
+    def get_flat_table(self):
+        """Returns a flat table representation of the Encyclopedia"""
+        # makes sure the entity is expanded and the context is of the form context.obligate
+        pass
+
+    def get_description_dictionary(self):
+        """Returns a python dictionary of descriptions where the key is determined by key_formatter_string"""
+        dictionary_form = {}
+        descriptions_dictionary_list = self.descriptions.get_data_dictionary_list()
+        for row_index, description in enumerate(self.descriptions.data[:]):
+            key = self.options["key_formatter_string"].format(**descriptions_dictionary_list[row_index])
+            dictionary_form[key] = descriptions_dictionary_list[row_index]["Value"]
+        return dictionary_form
+
+
 #-----------------------------------------------------------------------------
 # Module Scripts
 def test_AsciiDataTable():

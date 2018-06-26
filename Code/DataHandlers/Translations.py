@@ -382,6 +382,19 @@ def AsciiDataTable_to_DataFrameDictionary(AsciiDataTable):
                 output_dict["Comments"]=inline_comments
     return output_dict
 
+def AsciiDataTable_to_NumpyArray(data_table,exclude_columns=None):
+    """Converts a table's data into a 1-D np.array"""
+    column_names=data_table.column_names[:]
+    if exclude_columns:
+        for column_name in column_names:
+            if column_name in exclude_columns:
+                column_names.remove(column_name)
+    data_list=[]
+    for column_name in column_names:
+        data_list=data_list+data_table[column_name]
+    numpy_array=np.array(data_list)
+    return numpy_array
+
 def DataFrameDictionary_to_ExcelFile(DataFrame_dict,excel_file_name="Test.xlsx"):
     """Converts a dictionary of pandas DataFrames to a single excel file with sheet names
     determined by keys"""
