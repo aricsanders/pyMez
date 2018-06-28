@@ -117,7 +117,6 @@ def S2p_to_S1p(s2p,column="S11"):
     """Creates an s1p from an s2p by taking column and frequency, column can be any value in ["S11","S21","S12","S22"]"""
     columns=["S11","S21","S12","S22"]
     s2p.change_data_format("RI")
-    s2p.change_frequency_units("GHz")
     index=columns.index(column)+1
     sparameter_complex=[]
     for row_index,row in enumerate(s2p.sparameter_complex[:]):
@@ -126,6 +125,7 @@ def S2p_to_S1p(s2p,column="S11"):
     options["column_names"]=["Frequency","reS11","imS11"]
     options["sparameter_complex"]=sparameter_complex
     options["number_ports"]=1
+    options["extension"]="s1p"
     s1p_out=S1PV1(None,**options)
     return s1p_out
 
