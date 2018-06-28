@@ -1079,9 +1079,13 @@ table {
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.ABCDFrequencyList_to_SFrequencyList">ABCDFrequencyList_to_SFrequencyList</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.ABCDFrequencyList_to_YFrequencyList">ABCDFrequencyList_to_YFrequencyList</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.ABCDFrequencyList_to_ZFrequencyList">ABCDFrequencyList_to_ZFrequencyList</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_CsvFile">AsciiDataTable_to_CsvFile</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_DataFrame">AsciiDataTable_to_DataFrame</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_DataFrameDictionary">AsciiDataTable_to_DataFrameDictionary</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_ExcelFile">AsciiDataTable_to_ExcelFile</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_File">AsciiDataTable_to_File</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_HpFile">AsciiDataTable_to_HpFile</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_NumpyArray">AsciiDataTable_to_NumpyArray</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_XmlDataTable">AsciiDataTable_to_XmlDataTable</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.AsciiTable_to_HtmlString">AsciiTable_to_HtmlString</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.AsciiTable_to_MatFile">AsciiTable_to_MatFile</a></li>
@@ -1090,7 +1094,9 @@ table {
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.CStringIo_to_String">CStringIo_to_String</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.CsvFile_to_AsciiDataTable">CsvFile_to_AsciiDataTable</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.CsvFile_to_DataFrame">CsvFile_to_DataFrame</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.DataFrameDictionary_to_AsciiDataTable">DataFrameDictionary_to_AsciiDataTable</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.DataFrameDictionary_to_ExcelFile">DataFrameDictionary_to_ExcelFile</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.DataFrameDictionary_to_HdfFile">DataFrameDictionary_to_HdfFile</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.DataFrame_to_AsciiDataTable">DataFrame_to_AsciiDataTable</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.DataFrame_to_CsvFile">DataFrame_to_CsvFile</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.DataFrame_to_Dictionary">DataFrame_to_Dictionary</a></li>
@@ -1117,6 +1123,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.ExcelFile_to_DataFrameDictionary">ExcelFile_to_DataFrameDictionary</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.ExcelFile_to_OdsFile">ExcelFile_to_OdsFile</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.FigFile_to_MatplotlibFigure">FigFile_to_MatplotlibFigure</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.File_to_AsciiDataTable">File_to_AsciiDataTable</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.File_to_Image">File_to_Image</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.File_to_Model">File_to_Model</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.File_to_String">File_to_String</a></li>
@@ -1124,6 +1131,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.FrequencyMatrixList_to_FrequencyList">FrequencyMatrixList_to_FrequencyList</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.HFrequencyList_to_ZFrequencyList">HFrequencyList_to_ZFrequencyList</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.HdfFile_to_DataFrame">HdfFile_to_DataFrame</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.HdfFile_to_DataFrameDictionary">HdfFile_to_DataFrameDictionary</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.HeaderList_to_Dictionary">HeaderList_to_Dictionary</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.HtmlFile_to_DataFrame">HtmlFile_to_DataFrame</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.Translations.HtmlFile_to_HtmlString">HtmlFile_to_HtmlString</a></li>
@@ -1497,6 +1505,10 @@ software:
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The module win32com was not found or had an error,&quot;</span>
           <span class="s2">&quot;please check module or put it on the python path, if OS is not Windows ignore this warning&quot;</span><span class="p">)</span>
     <span class="n">WINDOWS_COM</span><span class="o">=</span><span class="bp">False</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">h5py</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not import h5py&quot;</span><span class="p">)</span>
     <span class="c1">#raise ImportError</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Constants</span>
@@ -1727,6 +1739,19 @@ software:
                 <span class="n">output_dict</span><span class="p">[</span><span class="s2">&quot;Comments&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">inline_comments</span>
     <span class="k">return</span> <span class="n">output_dict</span>
 
+<span class="k">def</span> <span class="nf">AsciiDataTable_to_NumpyArray</span><span class="p">(</span><span class="n">data_table</span><span class="p">,</span><span class="n">exclude_columns</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a table&#39;s data into a 1-D np.array&quot;&quot;&quot;</span>
+    <span class="n">column_names</span><span class="o">=</span><span class="n">data_table</span><span class="o">.</span><span class="n">column_names</span><span class="p">[:]</span>
+    <span class="k">if</span> <span class="n">exclude_columns</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">column_names</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">exclude_columns</span><span class="p">:</span>
+                <span class="n">column_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
+    <span class="n">data_list</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">column_names</span><span class="p">:</span>
+        <span class="n">data_list</span><span class="o">=</span><span class="n">data_list</span><span class="o">+</span><span class="n">data_table</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span>
+    <span class="n">numpy_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">numpy_array</span>
+
 <span class="k">def</span> <span class="nf">DataFrameDictionary_to_ExcelFile</span><span class="p">(</span><span class="n">DataFrame_dict</span><span class="p">,</span><span class="n">excel_file_name</span><span class="o">=</span><span class="s2">&quot;Test.xlsx&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Converts a dictionary of pandas DataFrames to a single excel file with sheet names</span>
 <span class="sd">    determined by keys&quot;&quot;&quot;</span>
@@ -1736,13 +1761,148 @@ software:
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
         <span class="c1">#print key</span>
         <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-        <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">excel_file_name</span>
+
+
+<span class="k">def</span> <span class="nf">DataFrameDictionary_to_AsciiDataTable</span><span class="p">(</span><span class="n">DataFrame_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a dictionary of pandas DataFrames returns an AsciiDataTable&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">:</span> <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;comment_end&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;column_names_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;column_names_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="s2">&quot;data_table_element_separator&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">}</span>
+    <span class="c1"># defaults={}</span>
+    <span class="n">table_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">table_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">table_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="n">table_key</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;comments&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">table_key</span> <span class="o">=</span> <span class="s2">&quot;inline_comments&quot;</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="n">table_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;Data&quot;</span><span class="p">]:</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;column_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;footer&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">list_of_lists</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">list_of_strings</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">list_of_lists</span><span class="p">]</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;footer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_of_strings</span>
+
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">list_of_lists</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">list_of_strings</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">list_of_lists</span><span class="p">]</span>
+            <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;list_of_lists&quot;,list_of_lists))</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;header&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_of_strings</span>
+
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;meta&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">list_of_lists</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">dictionary</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">list_of_lists</span><span class="p">}</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dictionary</span>
+
+    <span class="n">new_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">table_options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_table</span>
+
 
 <span class="k">def</span> <span class="nf">ExcelFile_to_DataFrameDictionary</span><span class="p">(</span><span class="n">excel_file_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Reads an excel file into a dictionary of data frames&quot;&quot;&quot;</span>
-    <span class="n">data_frame_dictionary</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel_file_name</span><span class="p">,</span><span class="n">sheetname</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+    <span class="n">data_frame_dictionary</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel_file_name</span><span class="p">,</span> <span class="n">sheetname</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data_frame_dictionary</span>
+
+
+<span class="k">def</span> <span class="nf">DataFrameDictionary_to_HdfFile</span><span class="p">(</span><span class="n">DataFrame_dict</span><span class="p">,</span> <span class="n">hdf_file_name</span><span class="o">=</span><span class="s2">&quot;Test.hd5&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transforms a dictionary of pandas.DataFrames to a single HD5 file with groups determined by the keys&quot;&quot;&quot;</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">DataFrame_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span><span class="n">hdf_file_name</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">hdf_file_name</span>
+
+
+<span class="k">def</span> <span class="nf">HdfFile_to_DataFrameDictionary</span><span class="p">(</span><span class="n">hdf_file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates a dictionary of pandas.DataFrames given a hd5 file name, does this require the table names?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hdf</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">hdf_file_name</span><span class="p">)</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">hdf</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="n">pandas_dictionary</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="n">hdf_file_name</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">pandas_dictionary</span>
+
+
+<span class="k">def</span> <span class="nf">AsciiDataTable_to_CsvFile</span><span class="p">(</span><span class="n">ascii_data_table</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.csv&quot;</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="o">=</span><span class="s2">&quot;schema_csv&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts an AsciiDataTable into an csv file by setting options and saving&quot;&quot;&quot;</span>
+    <span class="n">original_options</span> <span class="o">=</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_begin_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_end_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_table_element_separator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_begin_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_end_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
+    <span class="k">if</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">header</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">footer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;treat_footer_as_comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="c1"># ascii_data_table.update_model()</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save_schema</span><span class="p">(</span><span class="n">schema_file_name</span><span class="p">)</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">original_options</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">file_name</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">AsciiDataTable_to_HpFile</span><span class="p">(</span><span class="n">ascii_data_table</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.txt&quot;</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="o">=</span><span class="s2">&quot;schema_hp&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts an AsciiDataTable into an csv file by setting options and saving&quot;&quot;&quot;</span>
+    <span class="n">original_options</span> <span class="o">=</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_begin_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;!&quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_end_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_table_element_separator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_begin_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_end_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;  &quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;  &quot;</span>
+    <span class="k">if</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">header</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;!&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">footer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;!&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="c1"># ascii_data_table.options[&quot;treat_header_as_comment&quot;]=True</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;treat_footer_as_comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="c1"># ascii_data_table.update_model()</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save_schema</span><span class="p">(</span><span class="n">schema_file_name</span><span class="p">)</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">original_options</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">file_name</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">File_to_AsciiDataTable</span><span class="p">(</span><span class="n">paths</span><span class="p">):</span>
+    <span class="p">[</span><span class="n">file_name</span><span class="p">,</span> <span class="n">schema</span><span class="p">]</span> <span class="o">=</span> <span class="n">paths</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">read_schema</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">table</span>
+    <span class="k">return</span> <span class="n">table</span>
+
+
+<span class="k">def</span> <span class="nf">AsciiDataTable_to_File</span><span class="p">(</span><span class="n">ascii_data_table</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;Test.txt&quot;</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="o">=</span><span class="s2">&quot;schema&quot;</span><span class="p">):</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">file_name</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="p">]</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save_schema</span><span class="p">(</span><span class="n">schema_file_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">paths</span>
+
+
+<span class="c1"># def ExcelFile_to_DataFrameDictionary(excel_file_name):</span>
+<span class="c1">#     &quot;&quot;&quot;Reads an excel file into a dictionary of data frames&quot;&quot;&quot;</span>
+<span class="c1">#     data_frame_dictionary=pandas.read_excel(excel_file_name,sheetname=None)</span>
+<span class="c1">#     return data_frame_dictionary</span>
 
 <span class="k">def</span> <span class="nf">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">pandas_data_frame</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Converts a pandas.DataFrame to an AsciiDataTable&quot;&quot;&quot;</span>
@@ -3241,6 +3401,49 @@ inverse of ZFrequencyList_to_ABCDFrequencyList</p></div>
   
       
   <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_CsvFile">
+    <p>def <span class="ident">AsciiDataTable_to_CsvFile</span>(</p><p>ascii_data_table, file_name=&#39;test.csv&#39;, schema_file_name=&#39;schema_csv&#39;)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Converts an AsciiDataTable into an csv file by setting options and saving</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_CsvFile', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_CsvFile" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">AsciiDataTable_to_CsvFile</span><span class="p">(</span><span class="n">ascii_data_table</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.csv&quot;</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="o">=</span><span class="s2">&quot;schema_csv&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts an AsciiDataTable into an csv file by setting options and saving&quot;&quot;&quot;</span>
+    <span class="n">original_options</span> <span class="o">=</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_begin_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_end_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_table_element_separator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_begin_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_end_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
+    <span class="k">if</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">header</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">footer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;treat_footer_as_comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="c1"># ascii_data_table.update_model()</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save_schema</span><span class="p">(</span><span class="n">schema_file_name</span><span class="p">)</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">original_options</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">file_name</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="p">]</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
     <div class="name def" id="pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_DataFrame">
     <p>def <span class="ident">AsciiDataTable_to_DataFrame</span>(</p><p>ascii_data_table)</p>
     </div>
@@ -3331,6 +3534,106 @@ discarding any header or footer information</p></div>
     <span class="sd">&quot;&quot;&quot;Converts an AsciiDataTable to an excel spreadsheet using pandas&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">header</span><span class="p">:</span>
         <span class="n">data_frame</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ascii_data_table</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">ascii_data_table</span><span class="o">.</span><span class="n">column_names</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_File">
+    <p>def <span class="ident">AsciiDataTable_to_File</span>(</p><p>ascii_data_table, file_name=&#39;Test.txt&#39;, schema_file_name=&#39;schema&#39;)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_File', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_File" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">AsciiDataTable_to_File</span><span class="p">(</span><span class="n">ascii_data_table</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;Test.txt&quot;</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="o">=</span><span class="s2">&quot;schema&quot;</span><span class="p">):</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">file_name</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="p">]</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save_schema</span><span class="p">(</span><span class="n">schema_file_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">paths</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_HpFile">
+    <p>def <span class="ident">AsciiDataTable_to_HpFile</span>(</p><p>ascii_data_table, file_name=&#39;test.txt&#39;, schema_file_name=&#39;schema_hp&#39;)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Converts an AsciiDataTable into an csv file by setting options and saving</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_HpFile', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_HpFile" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">AsciiDataTable_to_HpFile</span><span class="p">(</span><span class="n">ascii_data_table</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.txt&quot;</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="o">=</span><span class="s2">&quot;schema_hp&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts an AsciiDataTable into an csv file by setting options and saving&quot;&quot;&quot;</span>
+    <span class="n">original_options</span> <span class="o">=</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_begin_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;!&quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_end_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_table_element_separator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_begin_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_end_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data_delimiter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;  &quot;</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names_delimiter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;  &quot;</span>
+    <span class="k">if</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">header</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;!&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">footer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;!&quot;</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comment_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="c1"># ascii_data_table.options[&quot;treat_header_as_comment&quot;]=True</span>
+        <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;treat_footer_as_comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="c1"># ascii_data_table.update_model()</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save_schema</span><span class="p">(</span><span class="n">schema_file_name</span><span class="p">)</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="n">ascii_data_table</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">original_options</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">file_name</span><span class="p">,</span> <span class="n">schema_file_name</span><span class="p">]</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_NumpyArray">
+    <p>def <span class="ident">AsciiDataTable_to_NumpyArray</span>(</p><p>data_table, exclude_columns=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Converts a table's data into a 1-D np.array</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_NumpyArray', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.Translations.AsciiDataTable_to_NumpyArray" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">AsciiDataTable_to_NumpyArray</span><span class="p">(</span><span class="n">data_table</span><span class="p">,</span><span class="n">exclude_columns</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a table&#39;s data into a 1-D np.array&quot;&quot;&quot;</span>
+    <span class="n">column_names</span><span class="o">=</span><span class="n">data_table</span><span class="o">.</span><span class="n">column_names</span><span class="p">[:]</span>
+    <span class="k">if</span> <span class="n">exclude_columns</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">column_names</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">exclude_columns</span><span class="p">:</span>
+                <span class="n">column_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
+    <span class="n">data_list</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">column_names</span><span class="p">:</span>
+        <span class="n">data_list</span><span class="o">=</span><span class="n">data_list</span><span class="o">+</span><span class="n">data_table</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span>
+    <span class="n">numpy_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">numpy_array</span>
 </pre></div>
 
   </div>
@@ -3584,6 +3887,68 @@ Inverse of DataFrame_to_CsvFile</p></div>
   
       
   <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.Translations.DataFrameDictionary_to_AsciiDataTable">
+    <p>def <span class="ident">DataFrameDictionary_to_AsciiDataTable</span>(</p><p>DataFrame_dict, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Given a dictionary of pandas DataFrames returns an AsciiDataTable</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.Translations.DataFrameDictionary_to_AsciiDataTable', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.Translations.DataFrameDictionary_to_AsciiDataTable" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">DataFrameDictionary_to_AsciiDataTable</span><span class="p">(</span><span class="n">DataFrame_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a dictionary of pandas DataFrames returns an AsciiDataTable&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;comment_begin&quot;</span><span class="p">:</span> <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;comment_end&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;column_names_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;column_names_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="s2">&quot;data_table_element_separator&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">}</span>
+    <span class="c1"># defaults={}</span>
+    <span class="n">table_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">table_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">table_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="n">table_key</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;comments&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">table_key</span> <span class="o">=</span> <span class="s2">&quot;inline_comments&quot;</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="n">table_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;Data&quot;</span><span class="p">]:</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;column_types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;footer&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">list_of_lists</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">list_of_strings</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">list_of_lists</span><span class="p">]</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;footer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_of_strings</span>
+
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;treat_header_as_comment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">list_of_lists</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">list_of_strings</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">list_of_lists</span><span class="p">]</span>
+            <span class="c1"># print(&quot;{0} is {1}&quot;.format(&quot;list_of_lists&quot;,list_of_lists))</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;header&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_of_strings</span>
+
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;meta&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">list_of_lists</span> <span class="o">=</span> <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">dictionary</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">list_of_lists</span><span class="p">}</span>
+            <span class="n">table_options</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dictionary</span>
+
+    <span class="n">new_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">table_options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_table</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
     <div class="name def" id="pyMez.Code.DataHandlers.Translations.DataFrameDictionary_to_ExcelFile">
     <p>def <span class="ident">DataFrameDictionary_to_ExcelFile</span>(</p><p>DataFrame_dict, excel_file_name=&#39;Test.xlsx&#39;)</p>
     </div>
@@ -3605,8 +3970,35 @@ determined by keys</p></div>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
         <span class="c1">#print key</span>
         <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-        <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">excel_file_name</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.Translations.DataFrameDictionary_to_HdfFile">
+    <p>def <span class="ident">DataFrameDictionary_to_HdfFile</span>(</p><p>DataFrame_dict, hdf_file_name=&#39;Test.hd5&#39;)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Transforms a dictionary of pandas.DataFrames to a single HD5 file with groups determined by the keys</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.Translations.DataFrameDictionary_to_HdfFile', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.Translations.DataFrameDictionary_to_HdfFile" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">DataFrameDictionary_to_HdfFile</span><span class="p">(</span><span class="n">DataFrame_dict</span><span class="p">,</span> <span class="n">hdf_file_name</span><span class="o">=</span><span class="s2">&quot;Test.hd5&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transforms a dictionary of pandas.DataFrames to a single HD5 file with groups determined by the keys&quot;&quot;&quot;</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">DataFrame_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="n">DataFrame_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span><span class="n">hdf_file_name</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">hdf_file_name</span>
 </pre></div>
 
   </div>
@@ -4294,7 +4686,7 @@ returns a unencoded text string</p></div>
   <div id="source-pyMez.Code.DataHandlers.Translations.ExcelFile_to_DataFrameDictionary" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">ExcelFile_to_DataFrameDictionary</span><span class="p">(</span><span class="n">excel_file_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Reads an excel file into a dictionary of data frames&quot;&quot;&quot;</span>
-    <span class="n">data_frame_dictionary</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel_file_name</span><span class="p">,</span><span class="n">sheetname</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+    <span class="n">data_frame_dictionary</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel_file_name</span><span class="p">,</span> <span class="n">sheetname</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data_frame_dictionary</span>
 </pre></div>
 
@@ -4421,6 +4813,31 @@ Returns the new file name</p></div>
     <span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
     <span class="n">show</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.Translations.File_to_AsciiDataTable">
+    <p>def <span class="ident">File_to_AsciiDataTable</span>(</p><p>paths)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.Translations.File_to_AsciiDataTable', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.Translations.File_to_AsciiDataTable" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">File_to_AsciiDataTable</span><span class="p">(</span><span class="n">paths</span><span class="p">):</span>
+    <span class="p">[</span><span class="n">file_name</span><span class="p">,</span> <span class="n">schema</span><span class="p">]</span> <span class="o">=</span> <span class="n">paths</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">read_schema</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">table</span>
+    <span class="k">return</span> <span class="n">table</span>
 </pre></div>
 
   </div>
@@ -4620,6 +5037,33 @@ Returns data in the form
     <span class="sd">&quot;&quot;&quot;Opens a HDF with a Group named table and creates a pandas.DataFrame&quot;&quot;&quot;</span>
     <span class="n">pandas_data_frame</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="n">hdf_file_name</span><span class="p">,</span><span class="s2">&quot;table&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pandas_data_frame</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.Translations.HdfFile_to_DataFrameDictionary">
+    <p>def <span class="ident">HdfFile_to_DataFrameDictionary</span>(</p><p>hdf_file_name)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates a dictionary of pandas.DataFrames given a hd5 file name, does this require the table names?</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.Translations.HdfFile_to_DataFrameDictionary', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.Translations.HdfFile_to_DataFrameDictionary" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">HdfFile_to_DataFrameDictionary</span><span class="p">(</span><span class="n">hdf_file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates a dictionary of pandas.DataFrames given a hd5 file name, does this require the table names?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hdf</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">hdf_file_name</span><span class="p">)</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">hdf</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="n">pandas_dictionary</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="n">hdf_file_name</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">pandas_dictionary</span>
 </pre></div>
 
   </div>

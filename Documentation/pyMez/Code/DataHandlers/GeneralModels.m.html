@@ -1160,22 +1160,26 @@ table {
 
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection">AsciiDataTableCollection</a></span>
-        
-          
-  <ul>
-    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection.__init__">__init__</a></li>
-    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection.build_string">build_string</a></li>
-  </ul>
-
-        </li>
-        <li class="mono">
         <span class="class_name"><a href="#pyMez.Code.DataHandlers.GeneralModels.DataDimensionError">DataDimensionError</a></span>
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#pyMez.Code.DataHandlers.GeneralModels.ECPVModel">ECPVModel</a></span>
+        <span class="class_name"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia">Encyclopedia</a></span>
         
+          
+  <ul>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.__init__">__init__</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_description">add_description</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_entity">add_entity</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_knowledge_system">add_knowledge_system</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_description_dictionary">get_description_dictionary</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_descriptions">get_descriptions</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_entities">get_entities</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_entity">get_entity</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_flat_table">get_flat_table</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.set_entity_primary_key">set_entity_primary_key</a></li>
+  </ul>
+
         </li>
         <li class="mono">
         <span class="class_name"><a href="#pyMez.Code.DataHandlers.GeneralModels.KnowledgeSystem">KnowledgeSystem</a></span>
@@ -3120,40 +3124,7 @@ table {
         <span class="s2">&quot;Creates a shallow copy of the data table&quot;</span>
         <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">AsciiDataTableCollection</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;A collection of multiple AsciiDataTables. The class can be created from a file path with options or can</span>
-<span class="sd">    be created without a file path as a empty container. &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">table_names</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="c1"># The primary attritbute should be self.tables=list of tables</span>
-        <span class="c1"># since there is no way to know how many tables or their options,</span>
-        <span class="c1"># you can&#39;t read them in without **options-&gt; self.tables</span>
-        <span class="c1"># which can be passed as an option. Each table is an independent entity</span>
-        <span class="c1"># but can have options set by global_options</span>
-        <span class="n">global_defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;table_delimiter&quot;</span><span class="p">:</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="s2">&quot;tables&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span><span class="s2">&quot;table_names&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">}</span>
 
-        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># it is impossible to read a file without a known number of tables</span>
-            <span class="k">if</span> <span class="n">table_names</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;table_names&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="k">raise</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">file_in</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-                <span class="c1"># in order to parse the file we need to know line #&#39;s, once we deduce them we use __parse__</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">=</span><span class="p">[]</span>
-                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_in</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-                <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
-
-    <span class="k">def</span> <span class="nf">build_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">temp_options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Builds the string for the table collection using the temp_options&quot;&quot;&quot;</span>
-        <span class="n">out_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-        <span class="n">out_string_list</span><span class="o">=</span><span class="p">[]</span>
-        <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">table</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tables</span><span class="p">):</span>
-            <span class="n">out_string_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">build_string</span><span class="p">())</span>
-        <span class="n">out_string</span><span class="o">=</span><span class="n">string_list_collapse</span><span class="p">(</span><span class="n">out_string_list</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;table_delimiter&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">out_string</span>
 <span class="k">class</span> <span class="nc">KnowledgeSystem</span><span class="p">(</span><span class="n">AsciiDataTable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A Knowledge System is a collection of properties (context) and a collection of metadata about those properties</span>
 <span class="sd">    (obligate contexts). &quot;&quot;&quot;</span>
@@ -3264,11 +3235,121 @@ table {
 
         <span class="bp">self</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">column_name</span><span class="o">=</span><span class="n">obligate_name</span><span class="p">,</span><span class="n">column_data</span><span class="o">=</span><span class="n">column_data</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">ECPVModel</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;ECPVmodel is a class that deals with Entity-Context-Property-Value models. An ECPV model is a model</span>
-<span class="sd">     for providing a description of an entity. It can be thought of a virtual file system, in which its members</span>
-<span class="sd">     have metadata describing them stored for analysis and manipulation&quot;&quot;&quot;</span>
-    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Encyclopedia</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An Encyclopedia is a collection of descriptions&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes an Encyclopedia&quot;&quot;&quot;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key_formatter_string&quot;</span><span class="p">:</span> <span class="s2">&quot;{Entity}-{Context}-{Property}&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;key_value__formatter&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;key_value_pattern&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;entity_table&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;entity_attributes&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;universe&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;context_obligate_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;encyclopedia_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Encyclopedia&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;encyclopedia_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Encyclopedia&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;entity_table_primary_key&quot;</span><span class="p">:</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;entity_table_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Entity Table&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;entity_table_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Entity Table&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;universe_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Universe&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;universe_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Universe&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;description_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Descriptions&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;descriptions_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Descriptions&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;knowledge_system_begin_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Knowledge System&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;knowledge_system_end_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;End Knowledge System&quot;</span>
+                    <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c1"># Create a new encylcopedia</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Entity&quot;</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;self&quot;</span><span class="p">]])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">universe</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Entity&quot;</span><span class="p">,</span> <span class="s2">&quot;Context&quot;</span><span class="p">,</span> <span class="s2">&quot;Property&quot;</span><span class="p">,</span> <span class="s2">&quot;Value&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="c1"># parse an existing data table</span>
+        <span class="c1"># requires options to be set properly</span>
+
+    <span class="k">def</span> <span class="nf">set_entity_primary_key</span><span class="p">(</span><span class="n">entity_table_column_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the column name to use for the entity primary key,</span>
+<span class="sd">        by default the primary key is row number (index)&quot;&quot;&quot;</span>
+        <span class="c1"># The primary key is a column or columns that can be refered to instead of the full row of the entity table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_primary_key</span> <span class="o">=</span> <span class="n">entity_table_column_name</span>
+
+    <span class="k">def</span> <span class="nf">add_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">property_name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">obligate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a description to the encyclopedia, the entity, context (or knowledge_system name),property_name,</span>
+<span class="sd">        and value are required. If the context is an obligate-context then add obligate&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">obligate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;context_obligate_deilimiter&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">obligate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="n">entity</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">property_name</span><span class="p">,</span> <span class="n">value</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">add_knowledge_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knowledge_system</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a knowledge system to the universe being used for the encyclopedia&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">universe</span><span class="p">[</span><span class="n">knowledge_system</span><span class="o">.</span><span class="n">context</span><span class="p">]</span> <span class="o">=</span> <span class="n">knowledge_system</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">universe</span><span class="o">.</span><span class="n">keys</span><span class="p">()[:])</span>
+
+    <span class="k">def</span> <span class="nf">add_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds an entity to entity_table. The entity is a row in the entity table&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_reference</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets an entity, it can be by row index (i.e index) or the primary key&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;pk|primary|key&quot;</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_primary_key</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">row_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">entity_primary_key</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="o">.</span><span class="n">data</span><span class="p">[:][</span><span class="n">row_number</span><span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not find {0} in entity table&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entity_reference</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="o">.</span><span class="n">data</span><span class="p">[:][</span><span class="n">entity_reference</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Controls the string behavior of the encyclopedia&quot;&quot;&quot;</span>
+        <span class="n">out_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="p">:</span>
+            <span class="n">out_string</span> <span class="o">=</span> <span class="s2">&quot;Begin Entity</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">End Entity</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">[:]:</span>
+                <span class="n">out_string</span> <span class="o">=</span> <span class="n">out_string</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Begin Knowledge System {0} </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">universe</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">+</span> \
+                             <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">End Knowledge System: {0} </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="p">:</span>
+            <span class="n">out_string</span> <span class="o">=</span> <span class="n">out_string</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Begin Descriptions </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">End Descriptions </span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">out_string</span>
+
+    <span class="k">def</span> <span class="nf">get_descriptions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all descriptions of an entity&quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">entity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span>
+
+    <span class="k">def</span> <span class="nf">get_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">property_name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">obligate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a subset of entity table that has context:property=Value&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">obligate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;context_obligate_deilimiter&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">obligate</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">context</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">property_name</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_flat_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a flat table representation of the Encyclopedia&quot;&quot;&quot;</span>
+        <span class="c1"># makes sure the entity is expanded and the context is of the form context.obligate</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">get_description_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a python dictionary of descriptions where the key is determined by key_formatter_string&quot;&quot;&quot;</span>
+        <span class="n">dictionary_form</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">descriptions_dictionary_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">get_data_dictionary_list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">data</span><span class="p">[:]):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;key_formatter_string&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">descriptions_dictionary_list</span><span class="p">[</span><span class="n">row_index</span><span class="p">])</span>
+            <span class="n">dictionary_form</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">descriptions_dictionary_list</span><span class="p">[</span><span class="n">row_index</span><span class="p">][</span><span class="s2">&quot;Value&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">dictionary_form</span>
+
+
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Scripts</span>
 <span class="k">def</span> <span class="nf">test_AsciiDataTable</span><span class="p">():</span>
@@ -8283,132 +8364,6 @@ In addition, it will update the options dictionary to reflect added rows, change
       </div>
       
       <div class="item">
-      <p id="pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection" class="name">class <span class="ident">AsciiDataTableCollection</span></p>
-      
-  
-    <div class="desc"><p>A collection of multiple AsciiDataTables. The class can be created from a file path with options or can
-be created without a file path as a empty container.</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection', this);">Show source &equiv;</a></p>
-  <div id="source-pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">AsciiDataTableCollection</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;A collection of multiple AsciiDataTables. The class can be created from a file path with options or can</span>
-<span class="sd">    be created without a file path as a empty container. &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">table_names</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="c1"># The primary attritbute should be self.tables=list of tables</span>
-        <span class="c1"># since there is no way to know how many tables or their options,</span>
-        <span class="c1"># you can&#39;t read them in without **options-&gt; self.tables</span>
-        <span class="c1"># which can be passed as an option. Each table is an independent entity</span>
-        <span class="c1"># but can have options set by global_options</span>
-        <span class="n">global_defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;table_delimiter&quot;</span><span class="p">:</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="s2">&quot;tables&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span><span class="s2">&quot;table_names&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">}</span>
-
-        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># it is impossible to read a file without a known number of tables</span>
-            <span class="k">if</span> <span class="n">table_names</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;table_names&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="k">raise</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">file_in</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-                <span class="c1"># in order to parse the file we need to know line #&#39;s, once we deduce them we use __parse__</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">=</span><span class="p">[]</span>
-                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_in</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-                <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
-
-    <span class="k">def</span> <span class="nf">build_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">temp_options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Builds the string for the table collection using the temp_options&quot;&quot;&quot;</span>
-        <span class="n">out_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-        <span class="n">out_string_list</span><span class="o">=</span><span class="p">[]</span>
-        <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">table</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tables</span><span class="p">):</span>
-            <span class="n">out_string_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">build_string</span><span class="p">())</span>
-        <span class="n">out_string</span><span class="o">=</span><span class="n">string_list_collapse</span><span class="p">(</span><span class="n">out_string_list</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;table_delimiter&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">out_string</span>
-</pre></div>
-
-  </div>
-</div>
-
-
-      <div class="class">
-          <h3>Ancestors (in MRO)</h3>
-          <ul class="class_list">
-          <li><a href="#pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection">AsciiDataTableCollection</a></li>
-          </ul>
-          <h3>Methods</h3>
-            
-  <div class="item">
-    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection.__init__">
-    <p>def <span class="ident">__init__</span>(</p><p>self, file_path=None, table_names=None, **options)</p>
-    </div>
-    
-
-    
-  
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection.__init__', this);">Show source &equiv;</a></p>
-  <div id="source-pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection.__init__" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">table_names</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="c1"># The primary attritbute should be self.tables=list of tables</span>
-    <span class="c1"># since there is no way to know how many tables or their options,</span>
-    <span class="c1"># you can&#39;t read them in without **options-&gt; self.tables</span>
-    <span class="c1"># which can be passed as an option. Each table is an independent entity</span>
-    <span class="c1"># but can have options set by global_options</span>
-    <span class="n">global_defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;table_delimiter&quot;</span><span class="p">:</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="s2">&quot;tables&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span><span class="s2">&quot;table_names&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">}</span>
-    <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">pass</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># it is impossible to read a file without a known number of tables</span>
-        <span class="k">if</span> <span class="n">table_names</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;table_names&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">raise</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">file_in</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-            <span class="c1"># in order to parse the file we need to know line #&#39;s, once we deduce them we use __parse__</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">=</span><span class="p">[]</span>
-            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_in</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-            <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-            
-  <div class="item">
-    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection.build_string">
-    <p>def <span class="ident">build_string</span>(</p><p>self, **temp_options)</p>
-    </div>
-    
-
-    
-  
-    <div class="desc"><p>Builds the string for the table collection using the temp_options</p></div>
-  <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection.build_string', this);">Show source &equiv;</a></p>
-  <div id="source-pyMez.Code.DataHandlers.GeneralModels.AsciiDataTableCollection.build_string" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">build_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">temp_options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Builds the string for the table collection using the temp_options&quot;&quot;&quot;</span>
-    <span class="n">out_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-    <span class="n">out_string_list</span><span class="o">=</span><span class="p">[]</span>
-    <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">table</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tables</span><span class="p">):</span>
-        <span class="n">out_string_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">build_string</span><span class="p">())</span>
-    <span class="n">out_string</span><span class="o">=</span><span class="n">string_list_collapse</span><span class="p">(</span><span class="n">out_string_list</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;table_delimiter&quot;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">out_string</span>
-</pre></div>
-
-  </div>
-</div>
-
-  </div>
-  
-      </div>
-      </div>
-      
-      <div class="item">
       <p id="pyMez.Code.DataHandlers.GeneralModels.DataDimensionError" class="name">class <span class="ident">DataDimensionError</span></p>
       
   
@@ -8458,20 +8413,125 @@ be created without a file path as a empty container.</p></div>
       </div>
       
       <div class="item">
-      <p id="pyMez.Code.DataHandlers.GeneralModels.ECPVModel" class="name">class <span class="ident">ECPVModel</span></p>
+      <p id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia" class="name">class <span class="ident">Encyclopedia</span></p>
       
   
-    <div class="desc"><p>ECPVmodel is a class that deals with Entity-Context-Property-Value models. An ECPV model is a model
-for providing a description of an entity. It can be thought of a virtual file system, in which its members
-have metadata describing them stored for analysis and manipulation</p></div>
+    <div class="desc"><p>An Encyclopedia is a collection of descriptions</p></div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.ECPVModel', this);">Show source &equiv;</a></p>
-  <div id="source-pyMez.Code.DataHandlers.GeneralModels.ECPVModel" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">ECPVModel</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;ECPVmodel is a class that deals with Entity-Context-Property-Value models. An ECPV model is a model</span>
-<span class="sd">     for providing a description of an entity. It can be thought of a virtual file system, in which its members</span>
-<span class="sd">     have metadata describing them stored for analysis and manipulation&quot;&quot;&quot;</span>
-    <span class="k">pass</span>
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Encyclopedia</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An Encyclopedia is a collection of descriptions&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes an Encyclopedia&quot;&quot;&quot;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key_formatter_string&quot;</span><span class="p">:</span> <span class="s2">&quot;{Entity}-{Context}-{Property}&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;key_value__formatter&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;key_value_pattern&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;entity_table&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;entity_attributes&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;universe&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;context_obligate_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;encyclopedia_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Encyclopedia&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;encyclopedia_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Encyclopedia&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;entity_table_primary_key&quot;</span><span class="p">:</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;entity_table_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Entity Table&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;entity_table_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Entity Table&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;universe_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Universe&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;universe_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Universe&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;description_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Descriptions&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;descriptions_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Descriptions&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;knowledge_system_begin_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Knowledge System&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;knowledge_system_end_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;End Knowledge System&quot;</span>
+                    <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c1"># Create a new encylcopedia</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Entity&quot;</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;self&quot;</span><span class="p">]])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">universe</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Entity&quot;</span><span class="p">,</span> <span class="s2">&quot;Context&quot;</span><span class="p">,</span> <span class="s2">&quot;Property&quot;</span><span class="p">,</span> <span class="s2">&quot;Value&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="c1"># parse an existing data table</span>
+        <span class="c1"># requires options to be set properly</span>
+
+    <span class="k">def</span> <span class="nf">set_entity_primary_key</span><span class="p">(</span><span class="n">entity_table_column_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the column name to use for the entity primary key,</span>
+<span class="sd">        by default the primary key is row number (index)&quot;&quot;&quot;</span>
+        <span class="c1"># The primary key is a column or columns that can be refered to instead of the full row of the entity table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_primary_key</span> <span class="o">=</span> <span class="n">entity_table_column_name</span>
+
+    <span class="k">def</span> <span class="nf">add_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">property_name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">obligate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a description to the encyclopedia, the entity, context (or knowledge_system name),property_name,</span>
+<span class="sd">        and value are required. If the context is an obligate-context then add obligate&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">obligate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;context_obligate_deilimiter&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">obligate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="n">entity</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">property_name</span><span class="p">,</span> <span class="n">value</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">add_knowledge_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knowledge_system</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a knowledge system to the universe being used for the encyclopedia&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">universe</span><span class="p">[</span><span class="n">knowledge_system</span><span class="o">.</span><span class="n">context</span><span class="p">]</span> <span class="o">=</span> <span class="n">knowledge_system</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">universe</span><span class="o">.</span><span class="n">keys</span><span class="p">()[:])</span>
+
+    <span class="k">def</span> <span class="nf">add_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds an entity to entity_table. The entity is a row in the entity table&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_reference</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets an entity, it can be by row index (i.e index) or the primary key&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;pk|primary|key&quot;</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_primary_key</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">row_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">entity_primary_key</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="o">.</span><span class="n">data</span><span class="p">[:][</span><span class="n">row_number</span><span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not find {0} in entity table&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entity_reference</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="o">.</span><span class="n">data</span><span class="p">[:][</span><span class="n">entity_reference</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Controls the string behavior of the encyclopedia&quot;&quot;&quot;</span>
+        <span class="n">out_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="p">:</span>
+            <span class="n">out_string</span> <span class="o">=</span> <span class="s2">&quot;Begin Entity</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">End Entity</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">[:]:</span>
+                <span class="n">out_string</span> <span class="o">=</span> <span class="n">out_string</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Begin Knowledge System {0} </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">universe</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">+</span> \
+                             <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">End Knowledge System: {0} </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="p">:</span>
+            <span class="n">out_string</span> <span class="o">=</span> <span class="n">out_string</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Begin Descriptions </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">End Descriptions </span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">out_string</span>
+
+    <span class="k">def</span> <span class="nf">get_descriptions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all descriptions of an entity&quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">entity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span>
+
+    <span class="k">def</span> <span class="nf">get_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">property_name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">obligate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a subset of entity table that has context:property=Value&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">obligate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;context_obligate_deilimiter&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">obligate</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">context</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">property_name</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_flat_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a flat table representation of the Encyclopedia&quot;&quot;&quot;</span>
+        <span class="c1"># makes sure the entity is expanded and the context is of the form context.obligate</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">get_description_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a python dictionary of descriptions where the key is determined by key_formatter_string&quot;&quot;&quot;</span>
+        <span class="n">dictionary_form</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">descriptions_dictionary_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">get_data_dictionary_list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">data</span><span class="p">[:]):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;key_formatter_string&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">descriptions_dictionary_list</span><span class="p">[</span><span class="n">row_index</span><span class="p">])</span>
+            <span class="n">dictionary_form</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">descriptions_dictionary_list</span><span class="p">[</span><span class="n">row_index</span><span class="p">][</span><span class="s2">&quot;Value&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">dictionary_form</span>
 </pre></div>
 
   </div>
@@ -8481,8 +8541,307 @@ have metadata describing them stored for analysis and manipulation</p></div>
       <div class="class">
           <h3>Ancestors (in MRO)</h3>
           <ul class="class_list">
-          <li><a href="#pyMez.Code.DataHandlers.GeneralModels.ECPVModel">ECPVModel</a></li>
+          <li><a href="#pyMez.Code.DataHandlers.GeneralModels.Encyclopedia">Encyclopedia</a></li>
+          <li>__builtin__.object</li>
           </ul>
+          <h3>Instance variables</h3>
+            <div class="item">
+            <p id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.options" class="name">var <span class="ident">options</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, file_path=None, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Initializes an Encyclopedia</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.__init__', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.__init__" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Initializes an Encyclopedia&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key_formatter_string&quot;</span><span class="p">:</span> <span class="s2">&quot;{Entity}-{Context}-{Property}&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;key_value__formatter&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;key_value_pattern&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;entity_table&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;entity_attributes&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;universe&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;context_obligate_delimiter&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;encyclopedia_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Encyclopedia&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;encyclopedia_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Encyclopedia&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;entity_table_primary_key&quot;</span><span class="p">:</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;entity_table_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Entity Table&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;entity_table_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Entity Table&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;universe_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Universe&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;universe_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Universe&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;description_begin_token&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Descriptions&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;descriptions_end_token&quot;</span><span class="p">:</span> <span class="s2">&quot;End Descriptions&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;knowledge_system_begin_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin Knowledge System&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;knowledge_system_end_prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;End Knowledge System&quot;</span>
+                <span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="c1"># Create a new encylcopedia</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Entity&quot;</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;self&quot;</span><span class="p">]])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">universe</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Entity&quot;</span><span class="p">,</span> <span class="s2">&quot;Context&quot;</span><span class="p">,</span> <span class="s2">&quot;Property&quot;</span><span class="p">,</span> <span class="s2">&quot;Value&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_description">
+    <p>def <span class="ident">add_description</span>(</p><p>self, entity, context, property_name, value, obligate=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds a description to the encyclopedia, the entity, context (or knowledge_system name),property_name,
+and value are required. If the context is an obligate-context then add obligate</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_description', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_description" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">property_name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">obligate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a description to the encyclopedia, the entity, context (or knowledge_system name),property_name,</span>
+<span class="sd">    and value are required. If the context is an obligate-context then add obligate&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">obligate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;context_obligate_deilimiter&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">obligate</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="n">entity</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">property_name</span><span class="p">,</span> <span class="n">value</span><span class="p">])</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_entity">
+    <p>def <span class="ident">add_entity</span>(</p><p>self, entity)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds an entity to entity_table. The entity is a row in the entity table</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_entity', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_entity" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds an entity to entity_table. The entity is a row in the entity table&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_knowledge_system">
+    <p>def <span class="ident">add_knowledge_system</span>(</p><p>self, knowledge_system)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds a knowledge system to the universe being used for the encyclopedia</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_knowledge_system', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.add_knowledge_system" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_knowledge_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knowledge_system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a knowledge system to the universe being used for the encyclopedia&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">universe</span><span class="p">[</span><span class="n">knowledge_system</span><span class="o">.</span><span class="n">context</span><span class="p">]</span> <span class="o">=</span> <span class="n">knowledge_system</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">universe</span><span class="o">.</span><span class="n">keys</span><span class="p">()[:])</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_description_dictionary">
+    <p>def <span class="ident">get_description_dictionary</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns a python dictionary of descriptions where the key is determined by key_formatter_string</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_description_dictionary', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_description_dictionary" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_description_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a python dictionary of descriptions where the key is determined by key_formatter_string&quot;&quot;&quot;</span>
+    <span class="n">dictionary_form</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">descriptions_dictionary_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">get_data_dictionary_list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">data</span><span class="p">[:]):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;key_formatter_string&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">descriptions_dictionary_list</span><span class="p">[</span><span class="n">row_index</span><span class="p">])</span>
+        <span class="n">dictionary_form</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">descriptions_dictionary_list</span><span class="p">[</span><span class="n">row_index</span><span class="p">][</span><span class="s2">&quot;Value&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dictionary_form</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_descriptions">
+    <p>def <span class="ident">get_descriptions</span>(</p><p>self, entity)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns all descriptions of an entity</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_descriptions', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_descriptions" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_descriptions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns all descriptions of an entity&quot;&quot;&quot;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">entity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_entities">
+    <p>def <span class="ident">get_entities</span>(</p><p>self, context, property_name, value, obligate=None)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns a subset of entity table that has context:property=Value</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_entities', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_entities" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">property_name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">obligate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a subset of entity table that has context:property=Value&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">obligate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;context_obligate_deilimiter&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">obligate</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">context</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">property_name</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_entity">
+    <p>def <span class="ident">get_entity</span>(</p><p>self, entity_reference, by=&#39;row&#39;)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Gets an entity, it can be by row index (i.e index) or the primary key</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_entity', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_entity" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_reference</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets an entity, it can be by row index (i.e index) or the primary key&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;pk|primary|key&quot;</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_primary_key</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">row_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">entity_primary_key</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="o">.</span><span class="n">data</span><span class="p">[:][</span><span class="n">row_number</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not find {0} in entity table&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entity_reference</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">entity_table</span><span class="o">.</span><span class="n">data</span><span class="p">[:][</span><span class="n">entity_reference</span><span class="p">]</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_flat_table">
+    <p>def <span class="ident">get_flat_table</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns a flat table representation of the Encyclopedia</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_flat_table', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.get_flat_table" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">get_flat_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a flat table representation of the Encyclopedia&quot;&quot;&quot;</span>
+    <span class="c1"># makes sure the entity is expanded and the context is of the form context.obligate</span>
+    <span class="k">pass</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.set_entity_primary_key">
+    <p>def <span class="ident">set_entity_primary_key</span>(</p><p>entity_table_column_name)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Sets the column name to use for the entity primary key,
+by default the primary key is row number (index)</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.set_entity_primary_key', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.Encyclopedia.set_entity_primary_key" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_entity_primary_key</span><span class="p">(</span><span class="n">entity_table_column_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the column name to use for the entity primary key,</span>
+<span class="sd">    by default the primary key is row number (index)&quot;&quot;&quot;</span>
+    <span class="c1"># The primary key is a column or columns that can be refered to instead of the full row of the entity table</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">entity_primary_key</span> <span class="o">=</span> <span class="n">entity_table_column_name</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
       </div>
       </div>
       

@@ -1497,7 +1497,12 @@ basic html reports and the checkstandard reporting process.</p>
                     <span class="s2">&quot;power_csv&quot;</span><span class="p">:</span> <span class="n">COMBINED_POWER_CHKSTD_CSV</span><span class="p">,</span>
                     <span class="s2">&quot;outlier_removal&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
                     <span class="s2">&quot;last_n&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                    <span class="s2">&quot;download_formats&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Csv&quot;</span><span class="p">]</span>
+                    <span class="s2">&quot;download_formats&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Csv&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;conversion_options&quot;</span><span class="p">:{</span>
+                                    <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CsvFile&#39;</span><span class="p">,</span> <span class="s1">&#39;ExcelFile&#39;</span><span class="p">],</span>
+                                    <span class="s2">&quot;extensions&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="s1">&#39;xlsx&#39;</span><span class="p">],</span>
+                                    <span class="s2">&quot;mime_types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;text/plain&#39;</span><span class="p">,</span>
+                                                   <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;</span><span class="p">]}</span>
                     <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -1513,7 +1518,10 @@ basic html reports and the checkstandard reporting process.</p>
                                                    <span class="s1">&#39;application/vnd.oasis.opendocument.spreadsheet&#39;</span><span class="p">,</span>
                                                    <span class="s1">&#39;application/x-matlab-data&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">]}</span>
         <span class="c1"># html_options={}</span>
-
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;conversion_options&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_defaults</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;conversion_options&quot;</span><span class="p">]</span>
         <span class="n">HTMLReport</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_ids</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1612,7 +1620,10 @@ basic html reports and the checkstandard reporting process.</p>
                                                                           <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_measurement_dates</span><span class="p">()))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_report_heading</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">({</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">summary_text</span><span class="p">})</span>
-        <span class="n">download_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;clear_before&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+        <span class="n">download_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mime_types&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;mime_types&quot;</span><span class="p">],</span>
+         <span class="s2">&quot;download_formats&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">],</span>
+         <span class="s2">&quot;download_extensions&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;extensions&quot;</span><span class="p">],</span>
+         <span class="s2">&quot;clear_before&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
          <span class="s2">&quot;download_files&quot;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">results_file</span><span class="p">,</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">mean_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_history</span><span class="p">],</span>
          <span class="s2">&quot;download_files_input_format&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;AsciiDataTable&quot;</span><span class="p">,</span> <span class="s2">&quot;DataFrame&quot;</span><span class="p">,</span>
@@ -1771,7 +1782,10 @@ basic html reports and the checkstandard reporting process.</p>
                                                                           <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_measurement_dates</span><span class="p">()))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_report_heading</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">({</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">summary_text</span><span class="p">})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_download_table</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_download_table</span><span class="p">(</span><span class="n">download_extensions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;extensions&quot;</span><span class="p">],</span>
+                                <span class="n">download_formats</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">],</span>
+                                <span class="n">mime_types</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;mime_types&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_table_border_style</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_metadata_section</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_all_plots</span><span class="p">()</span>
@@ -2007,7 +2021,12 @@ report</p></div>
                     <span class="s2">&quot;power_csv&quot;</span><span class="p">:</span> <span class="n">COMBINED_POWER_CHKSTD_CSV</span><span class="p">,</span>
                     <span class="s2">&quot;outlier_removal&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
                     <span class="s2">&quot;last_n&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                    <span class="s2">&quot;download_formats&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Csv&quot;</span><span class="p">]</span>
+                    <span class="s2">&quot;download_formats&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Csv&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;conversion_options&quot;</span><span class="p">:{</span>
+                                    <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CsvFile&#39;</span><span class="p">,</span> <span class="s1">&#39;ExcelFile&#39;</span><span class="p">],</span>
+                                    <span class="s2">&quot;extensions&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="s1">&#39;xlsx&#39;</span><span class="p">],</span>
+                                    <span class="s2">&quot;mime_types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;text/plain&#39;</span><span class="p">,</span>
+                                                   <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;</span><span class="p">]}</span>
                     <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -2023,7 +2042,10 @@ report</p></div>
                                                    <span class="s1">&#39;application/vnd.oasis.opendocument.spreadsheet&#39;</span><span class="p">,</span>
                                                    <span class="s1">&#39;application/x-matlab-data&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">]}</span>
         <span class="c1"># html_options={}</span>
-
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;conversion_options&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_defaults</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;conversion_options&quot;</span><span class="p">]</span>
         <span class="n">HTMLReport</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_ids</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2122,7 +2144,10 @@ report</p></div>
                                                                           <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_measurement_dates</span><span class="p">()))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_report_heading</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">({</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">summary_text</span><span class="p">})</span>
-        <span class="n">download_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;clear_before&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+        <span class="n">download_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mime_types&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;mime_types&quot;</span><span class="p">],</span>
+         <span class="s2">&quot;download_formats&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">],</span>
+         <span class="s2">&quot;download_extensions&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;extensions&quot;</span><span class="p">],</span>
+         <span class="s2">&quot;clear_before&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
          <span class="s2">&quot;download_files&quot;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">results_file</span><span class="p">,</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">mean_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_history</span><span class="p">],</span>
          <span class="s2">&quot;download_files_input_format&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;AsciiDataTable&quot;</span><span class="p">,</span> <span class="s2">&quot;DataFrame&quot;</span><span class="p">,</span>
@@ -2281,7 +2306,10 @@ report</p></div>
                                                                           <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_measurement_dates</span><span class="p">()))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_report_heading</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">({</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">summary_text</span><span class="p">})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_download_table</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_download_table</span><span class="p">(</span><span class="n">download_extensions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;extensions&quot;</span><span class="p">],</span>
+                                <span class="n">download_formats</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">],</span>
+                                <span class="n">mime_types</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;mime_types&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_table_border_style</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_metadata_section</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_all_plots</span><span class="p">()</span>
@@ -2526,7 +2554,12 @@ report</p></div>
                 <span class="s2">&quot;power_csv&quot;</span><span class="p">:</span> <span class="n">COMBINED_POWER_CHKSTD_CSV</span><span class="p">,</span>
                 <span class="s2">&quot;outlier_removal&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
                 <span class="s2">&quot;last_n&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                <span class="s2">&quot;download_formats&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Csv&quot;</span><span class="p">]</span>
+                <span class="s2">&quot;download_formats&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Csv&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;conversion_options&quot;</span><span class="p">:{</span>
+                                <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CsvFile&#39;</span><span class="p">,</span> <span class="s1">&#39;ExcelFile&#39;</span><span class="p">],</span>
+                                <span class="s2">&quot;extensions&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="s1">&#39;xlsx&#39;</span><span class="p">],</span>
+                                <span class="s2">&quot;mime_types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;text/plain&#39;</span><span class="p">,</span>
+                                               <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;</span><span class="p">]}</span>
                 <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -2542,6 +2575,10 @@ report</p></div>
                                                <span class="s1">&#39;application/vnd.oasis.opendocument.spreadsheet&#39;</span><span class="p">,</span>
                                                <span class="s1">&#39;application/x-matlab-data&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">]}</span>
     <span class="c1"># html_options={}</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;conversion_options&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_defaults</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;conversion_options&quot;</span><span class="p">]</span>
     <span class="n">HTMLReport</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">plot_ids</span> <span class="o">=</span> <span class="p">[]</span>
@@ -3155,7 +3192,10 @@ lxml.html.HtmlElement it appends it</p></div>
                                                                       <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_measurement_dates</span><span class="p">()))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">add_report_heading</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">({</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">summary_text</span><span class="p">})</span>
-    <span class="n">download_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;clear_before&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">download_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mime_types&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;mime_types&quot;</span><span class="p">],</span>
+     <span class="s2">&quot;download_formats&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">],</span>
+     <span class="s2">&quot;download_extensions&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;extensions&quot;</span><span class="p">],</span>
+     <span class="s2">&quot;clear_before&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
      <span class="s2">&quot;download_files&quot;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">results_file</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">mean_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_history</span><span class="p">],</span>
      <span class="s2">&quot;download_files_input_format&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;AsciiDataTable&quot;</span><span class="p">,</span> <span class="s2">&quot;DataFrame&quot;</span><span class="p">,</span>
@@ -3328,7 +3368,9 @@ lxml.html.HtmlElement it appends it</p></div>
                                                                       <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_measurement_dates</span><span class="p">()))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">add_report_heading</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">({</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">summary_text</span><span class="p">})</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">add_download_table</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_download_table</span><span class="p">(</span><span class="n">download_extensions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;extensions&quot;</span><span class="p">],</span>
+                            <span class="n">download_formats</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">],</span>
+                            <span class="n">mime_types</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="p">[</span><span class="s2">&quot;mime_types&quot;</span><span class="p">])</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">add_table_border_style</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">add_metadata_section</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">add_all_plots</span><span class="p">()</span>
