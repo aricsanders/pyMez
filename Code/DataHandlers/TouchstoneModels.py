@@ -512,7 +512,81 @@ class SNPBase():
                 out_data.append(new_row)
             return out_data
 
+    def show(self, **options):
+        """Plots any table with frequency as its x-axis and column_names as the x-axis in a
+        series of subplots"""
+        defaults = {"display_legend": False,
+                    "save_plot": False,
+                    "directory": None,
+                    "specific_descriptor": "Touchstone",
+                    "general_descriptor": "Plot",
+                    "file_name": None,
+                    "plots_per_column": 2,
+                    "plot_format": 'b-',
+                    "share_x": False,
+                    "subplots_title": True,
+                    "plot_title": None,
+                    "plot_size": (8, 6),
+                    "dpi": 80,
+                    "format": "MA",
+                    "x_label": True,
+                    "grid": True}
+        plot_options = {}
+        for key, value in defaults.iteritems():
+            plot_options[key] = value
+        for key, value in options.iteritems():
+            plot_options[key] = value
 
+        current_format = self.format[:]
+        if plot_options["format"]:
+            if plot_options["format"] is current_format:
+                pass
+            elif re.search("R", plot_options["format"], re.IGNORECASE):
+                self.change_data_format("RI")
+            elif re.search("M", plot_options["format"], re.IGNORECASE):
+                self.change_data_format("MA")
+            elif re.search("D", plot_options["format"], re.IGNORECASE):
+                self.change_data_format("DB")
+        x_data = np.array(self["Frequency"])
+        y_data_columns = self.column_names[:]
+        y_data_columns.remove("Frequency")
+        number_plots = len(y_data_columns)
+        number_columns = plot_options["plots_per_column"]
+        number_rows = int(round(float(number_plots) / float(number_columns)))
+        figure, axes = plt.subplots(ncols=number_columns, nrows=number_rows, sharex=plot_options["share_x"],
+                                    figsize=plot_options["plot_size"], dpi=plot_options["dpi"])
+        for plot_index, ax in enumerate(axes.flat):
+            if plot_index < number_plots:
+                y_data = np.array(self[y_data_columns[plot_index]])
+                ax.plot(x_data, y_data, plot_options["plot_format"], label=y_data_columns[plot_index])
+                if plot_options["display_legend"]:
+                    ax.legend()
+                if plot_options["subplots_title"]:
+                    ax.set_title(y_data_columns[plot_index])
+                if plot_options["x_label"]:
+                    ax.set_xlabel("Frequency ({0})".format(self.frequency_units))
+                if plot_options["grid"]:
+                    ax.grid()
+            else:
+                pass
+
+        if plot_options["plot_title"]:
+            plt.suptitle(plot_options["plot_title"])
+        self.change_data_format(current_format)
+        plt.tight_layout()
+        # Dealing with the save option
+        if plot_options["file_name"] is None:
+            file_name = auto_name(specific_descriptor=plot_options["specific_descriptor"],
+                                  general_descriptor=plot_options["general_descriptor"],
+                                  directory=plot_options["directory"], extension='png', padding=3)
+        else:
+            file_name = plot_options["file_name"]
+        if plot_options["save_plot"]:
+            # print file_name
+            plt.savefig(os.path.join(plot_options["directory"], file_name))
+        else:
+            plt.show()
+        return figure
 
 
 class S1PV1(SNPBase):
@@ -822,31 +896,7 @@ class S1PV1(SNPBase):
             return
 
 
-    def show(self,type='matplotlib'):
-        """Shows the touchstone file"""
-        # plot data
-        if re.search('smith',type,re.IGNORECASE):
-            plt.figure(figsize=(8, 8))
-            val1=[row[1] for row in self.sparameter_complex]
-            ax = plt.subplot(1, 1, 1, projection='smith', axes_norm=50)
-            plt.plot(val1, markevery=1, label="S11")
-           #ax.plot_vswr_circle(0.3 - 0.7j, real=1, solution2=True, label="Re(Z)->1")
-            plt.legend(loc="lower right")
-            plt.title("Matplotlib Smith Chart Projection")
-            fig=plt.gcf()
-            plt.show()
-            return fig
-        else:
-            current_format=self.format
-            self.change_data_format('MA')
-            fig, (ax0, ax1) = plt.subplots(nrows=2, sharex=True)
-            ax0.plot(self.get_column('Frequency'),self.get_column('magS11'),'k--')
-            ax1.plot(self.get_column('Frequency'),self.get_column('argS11'),'ro')
-            ax0.set_title('Magnitude S11')
-            ax1.set_title('Phase S11')
-            self.change_data_format(current_format)
-            plt.show()
-            return fig
+
 
 class S2PV1(SNPBase):
     """A container for s2p version 1 files. Files consist of comments, option line, S parameter data
@@ -1252,45 +1302,7 @@ class S2PV1(SNPBase):
             self.corrected_data.append([row[0],S11_corrected,S21_corrected,S12_corrected,S22_corrected])
 
 
-    def show(self,type='matplotlib'):
-        """Shows the touchstone file"""
-        # plot data
-        if re.search('smith',type,re.IGNORECASE):
-            plt.figure(figsize=(8, 8))
-            val1=[row[1] for row in self.sparameter_complex]
-            val2=[row[4] for row in self.sparameter_complex]
-            ax = plt.subplot(1, 1, 1, projection='smith', axes_norm=50)
-            plt.plot(val1, markevery=1, label="S11")
-            plt.plot(val2, markevery=1, label="S22")
-           #ax.plot_vswr_circle(0.3 - 0.7j, real=1, solution2=True, label="Re(Z)->1")
-            plt.legend(loc="lower right")
-            plt.title("Matplotlib Smith Chart Projection")
-            fig=plt.gcf()
-            plt.show()
-            return fig
-        else:
-            current_format=self.format
-            self.change_data_format('MA')
-            fig, axes = plt.subplots(nrows=3, ncols=2)
-            ax0, ax1, ax2, ax3, ax4, ax5 = axes.flat
-            ax0.plot(self.get_column('Frequency'),self.get_column('magS11'),'k-o')
-            ax0.set_title('Magnitude S11')
-            ax1.plot(self.get_column('Frequency'),self.get_column('argS11'),'ro')
-            ax1.set_title('Phase S11')
-            ax2.plot(self.get_column('Frequency'),self.get_column('magS21'),'k-o')
-            ax2.plot(self.get_column('Frequency'),self.get_column('magS12'),'b-o')
-            ax2.set_title('Magnitude S21 and S12')
-            ax3.plot(self.get_column('Frequency'),self.get_column('argS21'),'ro')
-            ax3.plot(self.get_column('Frequency'),self.get_column('argS12'),'bo')
-            ax3.set_title('Phase S21 and S12')
-            ax4.plot(self.get_column('Frequency'),self.get_column('magS22'),'k-o')
-            ax4.set_title('Magnitude S22')
-            ax5.plot(self.get_column('Frequency'),self.get_column('argS22'),'ro')
-            ax5.set_title('Phase S22')
-            plt.tight_layout()
-            self.change_data_format(current_format)
-            plt.show()
-            return fig
+
 
 class SNP(SNPBase):
     """SNP is a class that holds touchstone files of more than 2 ports. Use S1PV1 and S2PV2
