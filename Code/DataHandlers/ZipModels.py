@@ -115,6 +115,9 @@ class ZipArchive():
         if path is None:
             pass
         else:
+            if not self.options["temp_directory"]:
+                os.mkdir("./Temp")
+                self.options["temp_directory"]="./Temp"
             temp_path=os.path.join(self.options["temp_directory"],"temp_file")
             temp_extracted=extract_all(self.zip_file,temp_path)
             temp_zip=zipfile.ZipFile(path,'w')
@@ -122,6 +125,7 @@ class ZipArchive():
             # need to delete the temp folder
             shutil.rmtree(temp_path)
             temp_zip.close()
+
 
     def extract_all(self,destination_directory=None):
         """Extract all in the destination directory (default is current working directory)"""
@@ -150,6 +154,7 @@ class ZipArchive():
     def write_string(self,data_string,archive_file_name=None):
         """writes data string to the zipped file archive_name in the archive"""
         self.zip_file.writestr(archive_file_name,data_string)
+        self.files = self.zip_file.namelist()
 
     def __del__(self):
         "Class Destructor"

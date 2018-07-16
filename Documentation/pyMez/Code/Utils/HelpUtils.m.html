@@ -2,6 +2,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
 
     <title>pyMez.Code.Utils.HelpUtils API documentation</title>
     <meta name="description" content="The HelpUtils module has tools for interacting with help files. It uses pdoc for
@@ -1060,7 +1061,29 @@ table {
   </script>
 </head>
 <body>
-<a href="#" id="top">Top</a>
+<a id="top"></a>
+        <table style='border-style:none;'>
+        <tr style="border-style:none;">
+        <td style="border-style:none;">
+        <a href='../../../pyMez_Documentation.html'><button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">Documentation Home</span></button></a>
+        </td>
+        <td style="border-style:none;">
+        <a href='../../index.html'><button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">API Documentation</span></button></a>
+        </td>
+        <td style="border-style:none;">
+        <a href='../../../Examples/html/Examples_Home.html'>
+        <button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">Examples</span></button></a>
+        </td>
+        <td style="border-style:none;">
+        <a href='../../../Reference_Index.html'>
+        <button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">Index</span></button></a>
+        </td>
+        </tr>
+        </table><a href="#" id="top">Top</a>
 
 <div id="container">
     
@@ -1075,6 +1098,7 @@ table {
 	<div id="functionsNavigation">
       
   <ul>
+    <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.add_navigation_all_api_script">add_navigation_all_api_script</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.add_navigation_script">add_navigation_script</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.autogenerate_api_documentation_script">autogenerate_api_documentation_script</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.change_links_examples_script">change_links_examples_script</a></li>
@@ -1101,13 +1125,17 @@ table {
 	<div id="variablesNavigation">
       
   <ul>
+    <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.API_INDEX">API_INDEX</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.DOCUMENTATION_DIRECTORY">DOCUMENTATION_DIRECTORY</a></li>
+    <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.DOCUMENTATION_INDEX">DOCUMENTATION_INDEX</a></li>
+    <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.EXAMPLES_INDEX">EXAMPLES_INDEX</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.IMPORT_HMTL_PREFIX">IMPORT_HMTL_PREFIX</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.INDEX_HTML_POSTFIX">INDEX_HTML_POSTFIX</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.INDEX_HTML_PREFIX">INDEX_HTML_PREFIX</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.METHOD_ALIASES">METHOD_ALIASES</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
+    <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.REFERENCE_INDEX">REFERENCE_INDEX</a></li>
     <li class="mono"><a href="#pyMez.Code.Utils.HelpUtils.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
   </ul>
 
@@ -1196,9 +1224,14 @@ table {
 <span class="n">TESTS_DIRECTORY</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span><span class="s1">&#39;Tests&#39;</span><span class="p">)</span>
 <span class="n">PYMEASURE_ROOT</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span><span class="s1">&#39;..&#39;</span><span class="p">,</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="n">DOCUMENTATION_DIRECTORY</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PYMEASURE_ROOT</span><span class="p">,</span><span class="s2">&quot;Documentation&quot;</span><span class="p">)</span>
+<span class="n">DOCUMENTATION_INDEX</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;pyMez_Documentation.html&quot;</span><span class="p">)</span>
+<span class="n">EXAMPLES_INDEX</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Examples/html&quot;</span><span class="p">,</span><span class="s2">&quot;Examples_Home.html&quot;</span><span class="p">)</span>
+<span class="n">API_INDEX</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;pyMez&quot;</span><span class="p">,</span><span class="s2">&quot;index.html&quot;</span><span class="p">)</span>
+<span class="n">REFERENCE_INDEX</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Reference_Index.html&quot;</span><span class="p">)</span>
+
 <span class="n">INDEX_HTML_PREFIX</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;html&gt;</span>
 <span class="s2">&lt;head&gt;</span>
-
+<span class="s2">&lt;link href=&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;/&gt;</span>
 <span class="s2">    &lt;style&gt;</span>
 <span class="s2">          body {</span>
 <span class="s2">    background: #fff;</span>
@@ -1220,13 +1253,28 @@ table {
 <span class="s2">    &lt;/style&gt;</span>
 <span class="s2">&lt;/head&gt;</span>
 <span class="s2">&lt;body&gt;</span>
-<span class="s2">&lt;a href=&quot;./pyMez_Documentation.html&quot;&gt;Documentation Home&lt;/a&gt; |</span>
-<span class="s2">&lt;a href=&quot;./pyMez/index.html&quot;&gt;API Documentation Home&lt;/a&gt; |</span>
-<span class="s2">&lt;a href=&quot;./Examples/html/Examples_Home.html&quot;&gt;Examples Home&lt;/a&gt; |</span>
-<span class="s2">&lt;a href=&quot;./Reference_Index.html&quot;&gt;Index &lt;/a&gt;</span>
-<span class="s2">&lt;h1&gt;Index of All Functions and Classes in pyMez&lt;/h1&gt;</span>
-<span class="s2">&lt;ol&gt;&quot;&quot;&quot;</span>
-<span class="n">INDEX_HTML_POSTFIX</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;/ol&gt;&lt;/body&gt;&lt;/html&gt;&quot;&quot;&quot;</span>
+<span class="s2">        &lt;table style=&#39;border-style:none;&#39;&gt;</span>
+<span class="s2">        &lt;tr style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&quot;./pyMez_Documentation.html&quot;&gt;&lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;Documentation Home&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&quot;./pyMez/index.html&quot;&gt;&lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;API Documentation&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&quot;./Examples/html/Examples_Home.html&quot;&gt;</span>
+<span class="s2">        &lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;Examples&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;/tr&gt;</span>
+<span class="s2">        &lt;/table&gt;</span>
+<span class="s2">&lt;hr/&gt;</span>
+<span class="s2">&lt;h1 class=&quot;h1&quot;&gt;Index of All Functions and Classes in pyMez&lt;/h1&gt;</span>
+<span class="s2">&lt;hr/&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">INDEX_HTML_POSTFIX</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;/body&gt;&lt;/html&gt;&quot;&quot;&quot;</span>
 <span class="n">IMPORT_HMTL_PREFIX</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;html&gt;</span>
 <span class="s2">&lt;head&gt;</span>
 
@@ -1308,14 +1356,27 @@ table {
         <span class="k">pass</span>
     <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python pdoc --html --overwrite --template-dir {0} pyMez&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template_directory</span><span class="p">))</span>
 
-<span class="k">def</span> <span class="nf">create_index_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">create_index_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">group</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;create_index returns an html page with links to the autogenerated help page for all</span>
 <span class="sd">    functions and classes in .py files in the directory structure. Uses the module constants INDEX_HTML_PREFIX</span>
-<span class="sd">    and INDEX_HTML_POSTFIX to wrap the resulting html elements. &quot;&quot;&quot;</span>
+<span class="sd">    and INDEX_HTML_POSTFIX to wrap the resulting html elements. Added the ability to group the functions and</span>
+<span class="sd">    classes by sub package. &quot;&quot;&quot;</span>
+    <span class="n">subpackages</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FrontEnds&quot;</span><span class="p">,</span><span class="s2">&quot;InstrumentControl&quot;</span><span class="p">,</span><span class="s2">&quot;Analysis&quot;</span><span class="p">,</span><span class="s2">&quot;DataHandlers&quot;</span><span class="p">,</span><span class="s2">&quot;Utils&quot;</span><span class="p">]</span>
+    <span class="n">subpackage_descriptions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;&quot;Function and classes for user interaction. pyMez targets three methods of</span>
+<span class="s2">    user interaction, scripting (for example in spyder or a jupyter notebook), desktop gui (using the wx package),</span>
+<span class="s2">    and web applications (using the django web framework).&quot;&quot;&quot;</span><span class="p">,</span>
+                             <span class="sd">&quot;&quot;&quot;Functions and classes used in controlling instruments. Experiment classes integrate</span>
+<span class="sd">                             instruments and data manipulation. Instruments are a set of control classes that</span>
+<span class="sd">                              have static metadata, dynamic metadata (state saving and loading) and data formatting.&quot;&quot;&quot;</span><span class="p">,</span>
+                             <span class="sd">&quot;&quot;&quot;Functions and classes used in Analyzing data or processes.&quot;&quot;&quot;</span><span class="p">,</span>
+                             <span class="sd">&quot;&quot;&quot;Functions in classes used in data storage and format manipulation.&quot;&quot;&quot;</span><span class="p">,</span>
+                             <span class="sd">&quot;&quot;&quot;Functions and classes that are base utilities for the pyMez package.&quot;&quot;&quot;</span><span class="p">]</span>
     <span class="n">classes_and_functions</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">class_pattern</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;class (?P&lt;name&gt;\w+)\(&#39;</span><span class="p">)</span>
     <span class="n">function_pattern</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;def (?P&lt;name&gt;\w+)\(&#39;</span><span class="p">)</span>
     <span class="n">links_dictionary</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">group_links_dictionary</span><span class="o">=</span><span class="p">{}</span>
+
     <span class="n">link_template</span><span class="o">=</span><span class="s2">&quot;&lt;li&gt;&lt;a href=&#39;{0}&#39;&gt;{1}&lt;/a&gt;&lt;/li&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
     <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">file_names</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
         <span class="n">clean_directory</span><span class="o">=</span><span class="n">directory</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
@@ -1346,6 +1407,7 @@ table {
                         <span class="n">reference</span><span class="o">=</span><span class="n">reference_file</span><span class="o">+</span><span class="s2">&quot;#&quot;</span><span class="o">+</span><span class="n">reference_id</span>
                         <span class="n">links_dictionary</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">=</span><span class="n">link_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span>
                                                           <span class="n">name</span><span class="p">)</span>
+
     <span class="c1">#print(&quot;{0} is {1}&quot;.format(&#39;classes_and_functions&#39;,classes_and_functions))</span>
     <span class="c1">#print(&quot;{0} is {1}&quot;.format(&#39;links_string&#39;,links_string))</span>
     <span class="c1"># now arrange all in alphabetical order</span>
@@ -1353,7 +1415,26 @@ table {
     <span class="n">links_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sorted_keys</span><span class="p">:</span>
         <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span><span class="n">links_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="n">links_string</span> <span class="o">=</span> <span class="n">INDEX_HTML_PREFIX</span> <span class="o">+</span> <span class="n">links_string</span> <span class="o">+</span> <span class="n">INDEX_HTML_POSTFIX</span>
+    <span class="n">links_string</span> <span class="o">=</span> <span class="n">INDEX_HTML_PREFIX</span> <span class="o">+</span><span class="s2">&quot;&lt;ol&gt;&quot;</span> <span class="o">+</span><span class="n">links_string</span> <span class="o">+</span> <span class="s2">&quot;&lt;/ol&gt;&quot;</span><span class="o">+</span><span class="n">INDEX_HTML_POSTFIX</span>
+
+    <span class="c1"># if group is true group the links and add a group title</span>
+    <span class="k">if</span> <span class="n">group</span><span class="p">:</span>
+        <span class="n">links_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">subpackage_index</span><span class="p">,</span><span class="n">subpackage</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">subpackages</span><span class="p">):</span>
+            <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span><span class="s2">&quot;&lt;h2&gt;{0}&lt;/h2&gt;&lt;p&gt;{1}&lt;/p&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subpackage</span><span class="p">,</span>
+                                                                      <span class="n">subpackage_descriptions</span><span class="p">[</span><span class="n">subpackage_index</span><span class="p">])</span><span class="o">+</span><span class="s2">&quot;&lt;ol&gt;&quot;</span>
+            <span class="n">group_links_dictionary</span><span class="p">[</span><span class="n">subpackage</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span>
+            <span class="n">group_keys</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sorted_keys</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">subpackage</span><span class="p">,</span><span class="n">links_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">group_links_dictionary</span><span class="p">[</span><span class="n">subpackage</span><span class="p">][</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">links_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="n">group_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">group_keys</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">group_keys</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">group_keys</span><span class="p">:</span>
+                <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span><span class="n">links_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span><span class="s2">&quot;&lt;/ol&gt;&quot;</span>
+        <span class="n">links_string</span><span class="o">=</span><span class="n">INDEX_HTML_PREFIX</span>  <span class="o">+</span> <span class="n">links_string</span>  <span class="o">+</span> <span class="n">INDEX_HTML_POSTFIX</span>
+
     <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Reference_Index.html&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">links_string</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1458,29 +1539,83 @@ table {
             <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">new_content</span><span class="p">)</span>
             <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<span class="k">def</span> <span class="nf">add_navigation_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">add_navigation_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span> <span class="n">navigation_style</span><span class="o">=</span><span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Adds navigation links to the body tag of all html files in top_directory,</span>
 <span class="sd">    designed to add navigation to all files in Documentation/Examples/html&quot;&quot;&quot;</span>
-    <span class="n">navigation_html</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;a href=&quot;../../pyMez_Documentation.html&quot;&gt;Documentation Home &lt;/a&gt; |</span>
-<span class="s2">        &lt;a href=&quot;../../pyMez/index.html&quot;&gt;API Documentation &lt;/a&gt; |</span>
-<span class="s2">        &lt;a href=&quot;./Examples_Home.html&quot;&gt;Examples&lt;/a&gt; |</span>
-<span class="s2">        &lt;a href=&quot;../../Reference_Index.html&quot;&gt;Index &lt;/a&gt;&quot;&quot;&quot;</span>
-    <span class="n">file_names</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">top_directory</span><span class="p">)</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Documentation Home&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;API Documentation&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;Examples&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;Index&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;page_locations&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">DOCUMENTATION_INDEX</span><span class="p">,</span> <span class="n">API_INDEX</span><span class="p">,</span> <span class="n">EXAMPLES_INDEX</span><span class="p">,</span> <span class="n">REFERENCE_INDEX</span><span class="p">]}</span>
+    <span class="n">navigation_options</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">navigation_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">navigation_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">simple_navigation_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;a href=&#39;{Documentation Home}&#39;&gt;Documentation Home &lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&#39;{API Documentation}&#39;&gt;API Documentation &lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&#39;{Examples}&#39;&gt;Examples&lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&#39;{Index}&#39;&gt;Index &lt;/a&gt;&quot;&quot;&quot;</span>
+    <span class="n">button_navigation_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;a id=&quot;top&quot;&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;table style=&#39;border-style:none;&#39;&gt;</span>
+<span class="s2">        &lt;tr style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&#39;{Documentation Home}&#39;&gt;&lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;Documentation Home&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&#39;{API Documentation}&#39;&gt;&lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;API Documentation&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&#39;{Examples}&#39;&gt;</span>
+<span class="s2">        &lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;Examples&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&#39;{Index}&#39;&gt;</span>
+<span class="s2">        &lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;Index&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;/tr&gt;</span>
+<span class="s2">        &lt;/table&gt;&quot;&quot;&quot;</span>
+    <span class="n">page_location_dictionary</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;but|nav|bar&#39;</span><span class="p">,</span> <span class="n">navigation_style</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="n">navigation_html</span> <span class="o">=</span> <span class="n">button_navigation_html</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">navigation_html</span> <span class="o">=</span> <span class="n">simple_navigation_html</span>
+    <span class="n">file_names</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">top_directory</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
-        <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;htm&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-            <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-            <span class="n">lines</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">extension</span> <span class="o">=</span> <span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;htm&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">in_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;\&lt;body\&gt;&quot;</span><span class="p">,</span><span class="n">line</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                    <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="o">+</span><span class="n">navigation_html</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;\&lt;body\&gt;&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">page_index</span><span class="p">,</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">navigation_options</span><span class="p">[</span><span class="s2">&quot;pages&quot;</span><span class="p">]):</span>
+                        <span class="n">relative_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">navigation_options</span><span class="p">[</span><span class="s2">&quot;page_locations&quot;</span><span class="p">][</span><span class="n">page_index</span><span class="p">],</span>
+                                                        <span class="n">top_directory</span><span class="p">)</span>
+
+                        <span class="n">page_location_dictionary</span><span class="p">[</span><span class="n">page</span><span class="p">]</span> <span class="o">=</span> <span class="n">relative_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># print(page_location_dictionary)</span>
+                    <span class="n">navigation_html</span> <span class="o">=</span> <span class="n">navigation_html</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">page_location_dictionary</span><span class="p">)</span>
+                    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span> <span class="o">+</span> <span class="n">navigation_html</span>
                     <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
             <span class="n">in_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
             <span class="n">out_file</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
             <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">add_navigation_all_api_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a navigation script to all files under top directory. This is specifically designed to</span>
+<span class="sd">    use after the API documentation is generated&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+        <span class="n">add_navigation_script</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">test_create_index_html</span><span class="p">(</span><span class="n">top_directory</span><span class="o">=</span><span class="n">PYMEASURE_ROOT</span><span class="p">):</span>
     <span class="s2">&quot;Tests the create_index_html_script by applying it to pyMez itself. &quot;</span>
@@ -1500,6 +1635,7 @@ table {
     <span class="n">create_examples_html_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Examples&quot;</span><span class="p">,</span><span class="s2">&quot;jupyter&quot;</span><span class="p">))</span>
     <span class="n">change_links_examples_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span> <span class="s2">&quot;Examples&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">))</span>
     <span class="n">add_navigation_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span> <span class="s2">&quot;Examples&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">))</span>
+    <span class="n">add_navigation_all_api_script</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;pyMez&quot;</span><span class="p">))</span>
     <span class="c1">#create_modules_html_script(PYMEASURE_ROOT)</span>
 </pre></div>
 
@@ -1512,8 +1648,34 @@ table {
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
+    <div class="name def" id="pyMez.Code.Utils.HelpUtils.add_navigation_all_api_script">
+    <p>def <span class="ident">add_navigation_all_api_script</span>(</p><p>top_directory)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds a navigation script to all files under top directory. This is specifically designed to
+use after the API documentation is generated</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Utils.HelpUtils.add_navigation_all_api_script', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Utils.HelpUtils.add_navigation_all_api_script" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_navigation_all_api_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a navigation script to all files under top directory. This is specifically designed to</span>
+<span class="sd">    use after the API documentation is generated&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+        <span class="n">add_navigation_script</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
     <div class="name def" id="pyMez.Code.Utils.HelpUtils.add_navigation_script">
-    <p>def <span class="ident">add_navigation_script</span>(</p><p>top_directory)</p>
+    <p>def <span class="ident">add_navigation_script</span>(</p><p>top_directory, navigation_style=&#39;button&#39;, **options)</p>
     </div>
     
 
@@ -1524,27 +1686,75 @@ designed to add navigation to all files in Documentation/Examples/html</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Utils.HelpUtils.add_navigation_script', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Utils.HelpUtils.add_navigation_script" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_navigation_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_navigation_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span> <span class="n">navigation_style</span><span class="o">=</span><span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Adds navigation links to the body tag of all html files in top_directory,</span>
 <span class="sd">    designed to add navigation to all files in Documentation/Examples/html&quot;&quot;&quot;</span>
-    <span class="n">navigation_html</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;a href=&quot;../../pyMez_Documentation.html&quot;&gt;Documentation Home &lt;/a&gt; |</span>
-<span class="s2">        &lt;a href=&quot;../../pyMez/index.html&quot;&gt;API Documentation &lt;/a&gt; |</span>
-<span class="s2">        &lt;a href=&quot;./Examples_Home.html&quot;&gt;Examples&lt;/a&gt; |</span>
-<span class="s2">        &lt;a href=&quot;../../Reference_Index.html&quot;&gt;Index &lt;/a&gt;&quot;&quot;&quot;</span>
-    <span class="n">file_names</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">top_directory</span><span class="p">)</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Documentation Home&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;API Documentation&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;Examples&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;Index&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;page_locations&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">DOCUMENTATION_INDEX</span><span class="p">,</span> <span class="n">API_INDEX</span><span class="p">,</span> <span class="n">EXAMPLES_INDEX</span><span class="p">,</span> <span class="n">REFERENCE_INDEX</span><span class="p">]}</span>
+    <span class="n">navigation_options</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">navigation_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">navigation_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">simple_navigation_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;a href=&#39;{Documentation Home}&#39;&gt;Documentation Home &lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&#39;{API Documentation}&#39;&gt;API Documentation &lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&#39;{Examples}&#39;&gt;Examples&lt;/a&gt; |</span>
+<span class="s2">        &lt;a href=&#39;{Index}&#39;&gt;Index &lt;/a&gt;&quot;&quot;&quot;</span>
+    <span class="n">button_navigation_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;a id=&quot;top&quot;&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;table style=&#39;border-style:none;&#39;&gt;</span>
+<span class="s2">        &lt;tr style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&#39;{Documentation Home}&#39;&gt;&lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;Documentation Home&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&#39;{API Documentation}&#39;&gt;&lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;API Documentation&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&#39;{Examples}&#39;&gt;</span>
+<span class="s2">        &lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;Examples&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;td style=&quot;border-style:none;&quot;&gt;</span>
+<span class="s2">        &lt;a href=&#39;{Index}&#39;&gt;</span>
+<span class="s2">        &lt;button type=&quot;button&quot; class=&#39;btn btn-primary&#39;&gt;</span>
+<span class="s2">        &lt;span style=&quot;font-size:20px&quot;&gt;Index&lt;/span&gt;&lt;/button&gt;&lt;/a&gt;</span>
+<span class="s2">        &lt;/td&gt;</span>
+<span class="s2">        &lt;/tr&gt;</span>
+<span class="s2">        &lt;/table&gt;&quot;&quot;&quot;</span>
+    <span class="n">page_location_dictionary</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;but|nav|bar&#39;</span><span class="p">,</span> <span class="n">navigation_style</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="n">navigation_html</span> <span class="o">=</span> <span class="n">button_navigation_html</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">navigation_html</span> <span class="o">=</span> <span class="n">simple_navigation_html</span>
+    <span class="n">file_names</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">top_directory</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
-        <span class="n">extension</span><span class="o">=</span><span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;htm&#39;</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-            <span class="n">in_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-            <span class="n">lines</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">extension</span> <span class="o">=</span> <span class="n">file_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;htm&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">in_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;\&lt;body\&gt;&quot;</span><span class="p">,</span><span class="n">line</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                    <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="o">+</span><span class="n">navigation_html</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;\&lt;body\&gt;&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">page_index</span><span class="p">,</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">navigation_options</span><span class="p">[</span><span class="s2">&quot;pages&quot;</span><span class="p">]):</span>
+                        <span class="n">relative_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">navigation_options</span><span class="p">[</span><span class="s2">&quot;page_locations&quot;</span><span class="p">][</span><span class="n">page_index</span><span class="p">],</span>
+                                                        <span class="n">top_directory</span><span class="p">)</span>
+
+                        <span class="n">page_location_dictionary</span><span class="p">[</span><span class="n">page</span><span class="p">]</span> <span class="o">=</span> <span class="n">relative_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># print(page_location_dictionary)</span>
+                    <span class="n">navigation_html</span> <span class="o">=</span> <span class="n">navigation_html</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">page_location_dictionary</span><span class="p">)</span>
+                    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span> <span class="o">+</span> <span class="n">navigation_html</span>
                     <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
             <span class="n">in_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
             <span class="n">out_file</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
             <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
@@ -1788,7 +1998,7 @@ contains all of the imports and the file that imports them.</p></div>
       
   <div class="item">
     <div class="name def" id="pyMez.Code.Utils.HelpUtils.create_index_html_script">
-    <p>def <span class="ident">create_index_html_script</span>(</p><p>top_directory)</p>
+    <p>def <span class="ident">create_index_html_script</span>(</p><p>top_directory, group=True)</p>
     </div>
     
 
@@ -1796,18 +2006,32 @@ contains all of the imports and the file that imports them.</p></div>
   
     <div class="desc"><p>create_index returns an html page with links to the autogenerated help page for all
 functions and classes in .py files in the directory structure. Uses the module constants INDEX_HTML_PREFIX
-and INDEX_HTML_POSTFIX to wrap the resulting html elements.</p></div>
+and INDEX_HTML_POSTFIX to wrap the resulting html elements. Added the ability to group the functions and
+classes by sub package.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Utils.HelpUtils.create_index_html_script', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Utils.HelpUtils.create_index_html_script" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">create_index_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">create_index_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">group</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;create_index returns an html page with links to the autogenerated help page for all</span>
 <span class="sd">    functions and classes in .py files in the directory structure. Uses the module constants INDEX_HTML_PREFIX</span>
-<span class="sd">    and INDEX_HTML_POSTFIX to wrap the resulting html elements. &quot;&quot;&quot;</span>
+<span class="sd">    and INDEX_HTML_POSTFIX to wrap the resulting html elements. Added the ability to group the functions and</span>
+<span class="sd">    classes by sub package. &quot;&quot;&quot;</span>
+    <span class="n">subpackages</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FrontEnds&quot;</span><span class="p">,</span><span class="s2">&quot;InstrumentControl&quot;</span><span class="p">,</span><span class="s2">&quot;Analysis&quot;</span><span class="p">,</span><span class="s2">&quot;DataHandlers&quot;</span><span class="p">,</span><span class="s2">&quot;Utils&quot;</span><span class="p">]</span>
+    <span class="n">subpackage_descriptions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;&quot;Function and classes for user interaction. pyMez targets three methods of</span>
+<span class="s2">    user interaction, scripting (for example in spyder or a jupyter notebook), desktop gui (using the wx package),</span>
+<span class="s2">    and web applications (using the django web framework).&quot;&quot;&quot;</span><span class="p">,</span>
+                             <span class="sd">&quot;&quot;&quot;Functions and classes used in controlling instruments. Experiment classes integrate</span>
+<span class="sd">                             instruments and data manipulation. Instruments are a set of control classes that</span>
+<span class="sd">                              have static metadata, dynamic metadata (state saving and loading) and data formatting.&quot;&quot;&quot;</span><span class="p">,</span>
+                             <span class="sd">&quot;&quot;&quot;Functions and classes used in Analyzing data or processes.&quot;&quot;&quot;</span><span class="p">,</span>
+                             <span class="sd">&quot;&quot;&quot;Functions in classes used in data storage and format manipulation.&quot;&quot;&quot;</span><span class="p">,</span>
+                             <span class="sd">&quot;&quot;&quot;Functions and classes that are base utilities for the pyMez package.&quot;&quot;&quot;</span><span class="p">]</span>
     <span class="n">classes_and_functions</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">class_pattern</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;class (?P&lt;name&gt;\w+)\(&#39;</span><span class="p">)</span>
     <span class="n">function_pattern</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;def (?P&lt;name&gt;\w+)\(&#39;</span><span class="p">)</span>
     <span class="n">links_dictionary</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">group_links_dictionary</span><span class="o">=</span><span class="p">{}</span>
+
     <span class="n">link_template</span><span class="o">=</span><span class="s2">&quot;&lt;li&gt;&lt;a href=&#39;{0}&#39;&gt;{1}&lt;/a&gt;&lt;/li&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
     <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">file_names</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top_directory</span><span class="p">):</span>
         <span class="n">clean_directory</span><span class="o">=</span><span class="n">directory</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
@@ -1838,6 +2062,7 @@ and INDEX_HTML_POSTFIX to wrap the resulting html elements.</p></div>
                         <span class="n">reference</span><span class="o">=</span><span class="n">reference_file</span><span class="o">+</span><span class="s2">&quot;#&quot;</span><span class="o">+</span><span class="n">reference_id</span>
                         <span class="n">links_dictionary</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">=</span><span class="n">link_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span>
                                                           <span class="n">name</span><span class="p">)</span>
+
     <span class="c1">#print(&quot;{0} is {1}&quot;.format(&#39;classes_and_functions&#39;,classes_and_functions))</span>
     <span class="c1">#print(&quot;{0} is {1}&quot;.format(&#39;links_string&#39;,links_string))</span>
     <span class="c1"># now arrange all in alphabetical order</span>
@@ -1845,7 +2070,26 @@ and INDEX_HTML_POSTFIX to wrap the resulting html elements.</p></div>
     <span class="n">links_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sorted_keys</span><span class="p">:</span>
         <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span><span class="n">links_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="n">links_string</span> <span class="o">=</span> <span class="n">INDEX_HTML_PREFIX</span> <span class="o">+</span> <span class="n">links_string</span> <span class="o">+</span> <span class="n">INDEX_HTML_POSTFIX</span>
+    <span class="n">links_string</span> <span class="o">=</span> <span class="n">INDEX_HTML_PREFIX</span> <span class="o">+</span><span class="s2">&quot;&lt;ol&gt;&quot;</span> <span class="o">+</span><span class="n">links_string</span> <span class="o">+</span> <span class="s2">&quot;&lt;/ol&gt;&quot;</span><span class="o">+</span><span class="n">INDEX_HTML_POSTFIX</span>
+
+    <span class="c1"># if group is true group the links and add a group title</span>
+    <span class="k">if</span> <span class="n">group</span><span class="p">:</span>
+        <span class="n">links_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">subpackage_index</span><span class="p">,</span><span class="n">subpackage</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">subpackages</span><span class="p">):</span>
+            <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span><span class="s2">&quot;&lt;h2&gt;{0}&lt;/h2&gt;&lt;p&gt;{1}&lt;/p&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subpackage</span><span class="p">,</span>
+                                                                      <span class="n">subpackage_descriptions</span><span class="p">[</span><span class="n">subpackage_index</span><span class="p">])</span><span class="o">+</span><span class="s2">&quot;&lt;ol&gt;&quot;</span>
+            <span class="n">group_links_dictionary</span><span class="p">[</span><span class="n">subpackage</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span>
+            <span class="n">group_keys</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sorted_keys</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">subpackage</span><span class="p">,</span><span class="n">links_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="n">group_links_dictionary</span><span class="p">[</span><span class="n">subpackage</span><span class="p">][</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">links_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="n">group_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">group_keys</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">group_keys</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">group_keys</span><span class="p">:</span>
+                <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span><span class="n">links_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">links_string</span><span class="o">=</span><span class="n">links_string</span><span class="o">+</span><span class="s2">&quot;&lt;/ol&gt;&quot;</span>
+        <span class="n">links_string</span><span class="o">=</span><span class="n">INDEX_HTML_PREFIX</span>  <span class="o">+</span> <span class="n">links_string</span>  <span class="o">+</span> <span class="n">INDEX_HTML_POSTFIX</span>
+
     <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DOCUMENTATION_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Reference_Index.html&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">links_string</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1996,6 +2240,14 @@ and INDEX_HTML_POSTFIX to wrap the resulting html elements.</p></div>
 	
     <h2 class="section-title" id="header-variables">Module variables</h2>
       <div class="item">
+      <p id="pyMez.Code.Utils.HelpUtils.API_INDEX" class="name">var <span class="ident">API_INDEX</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMez.Code.Utils.HelpUtils.DEFAULT_FILE_NAME" class="name">var <span class="ident">DEFAULT_FILE_NAME</span></p>
       
   
@@ -2005,6 +2257,22 @@ and INDEX_HTML_POSTFIX to wrap the resulting html elements.</p></div>
       </div>
       <div class="item">
       <p id="pyMez.Code.Utils.HelpUtils.DOCUMENTATION_DIRECTORY" class="name">var <span class="ident">DOCUMENTATION_DIRECTORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.Utils.HelpUtils.DOCUMENTATION_INDEX" class="name">var <span class="ident">DOCUMENTATION_INDEX</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.Utils.HelpUtils.EXAMPLES_INDEX" class="name">var <span class="ident">EXAMPLES_INDEX</span></p>
       
   
   <div class="source_cont">
@@ -2045,6 +2313,14 @@ and INDEX_HTML_POSTFIX to wrap the resulting html elements.</p></div>
       </div>
       <div class="item">
       <p id="pyMez.Code.Utils.HelpUtils.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.Utils.HelpUtils.REFERENCE_INDEX" class="name">var <span class="ident">REFERENCE_INDEX</span></p>
       
   
   <div class="source_cont">

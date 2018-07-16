@@ -2,6 +2,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
 
     <title>pyMez.Code.Analysis.Transformations API documentation</title>
     <meta name="description" content="Transformations is a module with tools for changing data from one format to another, while not
@@ -1060,7 +1061,29 @@ table {
   </script>
 </head>
 <body>
-<a href="#" id="top">Top</a>
+<a id="top"></a>
+        <table style='border-style:none;'>
+        <tr style="border-style:none;">
+        <td style="border-style:none;">
+        <a href='../../../pyMez_Documentation.html'><button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">Documentation Home</span></button></a>
+        </td>
+        <td style="border-style:none;">
+        <a href='../../index.html'><button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">API Documentation</span></button></a>
+        </td>
+        <td style="border-style:none;">
+        <a href='../../../Examples/html/Examples_Home.html'>
+        <button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">Examples</span></button></a>
+        </td>
+        <td style="border-style:none;">
+        <a href='../../../Reference_Index.html'>
+        <button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">Index</span></button></a>
+        </td>
+        </tr>
+        </table><a href="#" id="top">Top</a>
 
 <div id="container">
     
@@ -1286,7 +1309,6 @@ preserving the content. It complements pyMez.Code.DataHandlers.Translations, and
     <span class="sd">&quot;&quot;&quot;Creates an s1p from an s2p by taking column and frequency, column can be any value in [&quot;S11&quot;,&quot;S21&quot;,&quot;S12&quot;,&quot;S22&quot;]&quot;&quot;&quot;</span>
     <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S11&quot;</span><span class="p">,</span><span class="s2">&quot;S21&quot;</span><span class="p">,</span><span class="s2">&quot;S12&quot;</span><span class="p">,</span><span class="s2">&quot;S22&quot;</span><span class="p">]</span>
     <span class="n">s2p</span><span class="o">.</span><span class="n">change_data_format</span><span class="p">(</span><span class="s2">&quot;RI&quot;</span><span class="p">)</span>
-    <span class="n">s2p</span><span class="o">.</span><span class="n">change_frequency_units</span><span class="p">(</span><span class="s2">&quot;GHz&quot;</span><span class="p">)</span>
     <span class="n">index</span><span class="o">=</span><span class="n">columns</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">column</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
     <span class="n">sparameter_complex</span><span class="o">=</span><span class="p">[]</span>
     <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span><span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s2p</span><span class="o">.</span><span class="n">sparameter_complex</span><span class="p">[:]):</span>
@@ -1295,6 +1317,7 @@ preserving the content. It complements pyMez.Code.DataHandlers.Translations, and
     <span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;reS11&quot;</span><span class="p">,</span><span class="s2">&quot;imS11&quot;</span><span class="p">]</span>
     <span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_complex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">sparameter_complex</span>
     <span class="n">options</span><span class="p">[</span><span class="s2">&quot;number_ports&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;s1p&quot;</span>
     <span class="n">s1p_out</span><span class="o">=</span><span class="n">S1PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">s1p_out</span>
 
@@ -1399,7 +1422,6 @@ Default is 0+ 0i. Assumes both have the same frequency list.</p></div>
     <span class="sd">&quot;&quot;&quot;Creates an s1p from an s2p by taking column and frequency, column can be any value in [&quot;S11&quot;,&quot;S21&quot;,&quot;S12&quot;,&quot;S22&quot;]&quot;&quot;&quot;</span>
     <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S11&quot;</span><span class="p">,</span><span class="s2">&quot;S21&quot;</span><span class="p">,</span><span class="s2">&quot;S12&quot;</span><span class="p">,</span><span class="s2">&quot;S22&quot;</span><span class="p">]</span>
     <span class="n">s2p</span><span class="o">.</span><span class="n">change_data_format</span><span class="p">(</span><span class="s2">&quot;RI&quot;</span><span class="p">)</span>
-    <span class="n">s2p</span><span class="o">.</span><span class="n">change_frequency_units</span><span class="p">(</span><span class="s2">&quot;GHz&quot;</span><span class="p">)</span>
     <span class="n">index</span><span class="o">=</span><span class="n">columns</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">column</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
     <span class="n">sparameter_complex</span><span class="o">=</span><span class="p">[]</span>
     <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span><span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s2p</span><span class="o">.</span><span class="n">sparameter_complex</span><span class="p">[:]):</span>
@@ -1408,6 +1430,7 @@ Default is 0+ 0i. Assumes both have the same frequency list.</p></div>
     <span class="n">options</span><span class="p">[</span><span class="s2">&quot;column_names&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;reS11&quot;</span><span class="p">,</span><span class="s2">&quot;imS11&quot;</span><span class="p">]</span>
     <span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_complex&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">sparameter_complex</span>
     <span class="n">options</span><span class="p">[</span><span class="s2">&quot;number_ports&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;s1p&quot;</span>
     <span class="n">s1p_out</span><span class="o">=</span><span class="n">S1PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">s1p_out</span>
 </pre></div>

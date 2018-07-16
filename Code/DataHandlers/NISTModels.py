@@ -1624,104 +1624,188 @@ class ReverbChamber():
     pass
 class RobotData():
     pass
+
+
 class W2P(AsciiDataTable):
     """W2p is a class for holding 2 port wave parameters. The wave parameters are in the format used
     by the uncertainty framework, [Frequency,reA1_D1,imA1_D1,reB1_D1..imB2_D2]"""
-    def __init__(self,file_path,**options):
+
+    def __init__(self, file_path=None, **options):
         """Intializes the TwelveTermErrorModel """
-        defaults= {"data_delimiter": " ", "column_names_delimiter": ",", "specific_descriptor": None,
-                   "general_descriptor": 'Wave_Parameters', "extension": 'w2p', "comment_begin": "!", "comment_end": "\n",
-                   "header": None,
-                   "column_names":make_wave_parameter_column_names(),
-                   "column_names_begin_token":"!","column_names_end_token": "\n", "data": None,
-                   "row_formatter_string": None, "data_table_element_separator": None,"row_begin_token":None,
-                   "row_end_token":None,"escape_character":None,
-                   "data_begin_token":None,"data_end_token":None,
-                   "column_types":['float' for i in range(len(make_wave_parameter_column_names))]
-                   }
-        self.options={}
-        for key,value in defaults.iteritems():
-            self.options[key]=value
-        for key,value in options.iteritems():
-            self.options[key]=value
-        if file_path is not None:
-            self.path=file_path
+        defaults = {"data_delimiter": "  ", "column_names_delimiter": ",", "specific_descriptor": None,
+                    "general_descriptor": 'Wave_Parameters', "extension": 'w2p', "comment_begin": "!",
+                    "comment_end": "\n",
+                    "header": None,
+                    "column_names": make_wave_parameter_column_names(),
+                    "column_names_begin_token": "!", "column_names_end_token": "\n", "data": None,
+                    "row_formatter_string": None, "data_table_element_separator": None, "row_begin_token": None,
+                    "row_end_token": None, "escape_character": None,
+                    "data_begin_token": None, "data_end_token": None,
+                    "column_types": ['float' for i in range(len(make_wave_parameter_column_names()))],
+                    "column_units": ["GHz"] + [None for i in range(len(make_wave_parameter_column_names()) - 1)]
+                    }
+        self.options = {}
+        for key, value in defaults.iteritems():
+            self.options[key] = value
+        for key, value in options.iteritems():
+            self.options[key] = value
+        try:
+            AsciiDataTable.__init__(self, file_path, **self.options)
+
+        except:
+            print("Moving to parsing unknown schema")
             self.__read_and_fix__()
-        AsciiDataTable.__init__(self,None,**self.options)
-        if file_path is not None:
-            self.path=file_path
+            self.options["data"] = self.data
+            self.options["comments"] = self.comments
+            AsciiDataTable.__init__(self, **self.options)
+            if file_path:
+                self.path = file_path
+
+            print("{0} sucessfully parsed".format(self.path))
+        self.update_complex_data()
+
+    def update_complex_data(self):
+        """Uses self.data to update the complex_data attribute. """
+        if self.data:
+            self.complex_data = []
+            self.complex_column_names = ["Frequency"] + map(lambda x: x.replace("re", ""),
+                                                            self.column_names[1::2])
+            for row in self.data[:]:
+                row = map(lambda x: float(x), row)
+                frequency = row[0]
+                real_data = row[1::2]
+                imaginary_data = row[2::2]
+                new_row = [frequency] + [complex(real, imaginary_data[index]) for index, real in enumerate(real_data)]
+                self.complex_data.append(new_row)
+
+    def get_amplitude(self, parameter_name=None, column_index=None):
+        """Returns a list of amplitudes of the complex wave parameter specified by parameter_name,
+        or column_index"""
+        if not column_index:
+            column_index = self.complex_column_names.index(parameter_name)
+        amplitudes = map(lambda x: abs(x[column_index]), self.complex_data[:])
+        return amplitudes
+
+    def get_phase(self, parameter_name=None, column_index=None):
+        """Returns a list of amplitudes of the complex wave parameter specified by parameter_name,
+        or column_index"""
+        if not column_index:
+            column_index = self.complex_column_names.index(parameter_name)
+        amplitudes = map(lambda x: 180. / np.pi * cmath.phase(x[column_index]), self.complex_data[:])
+        return amplitudes
 
     def __read_and_fix__(self):
-            """Reads in the data and fixes any problems with delimiters, etc"""
-            in_file=open(self.path,'r')
-            lines=[]
-            for line in in_file:
-                lines.append(map(lambda x:float(x),line.split(" ")))
-            in_file.close()
-            self.options["data"]=lines
-            self.complex_data=[]
-            for row in  self.options["data"]:
-                frequency=[row[0]]
-                complex_numbers=row[1:]
-                #print np.array(complex_numbers[1::2])
-                complex_array=np.array(complex_numbers[0::2])+1.j*np.array(complex_numbers[1::2])
-                self.complex_data.append(frequency+complex_array.tolist())
+        """Reads a w2p file and fixes any problems with delimiters. Since w2p files may use
+        any white space or combination of white space as data delimiters it reads the data and creates
+        a uniform delimter. This means a file saved with save() will not be the same as the original if the
+        whitespace is not uniform. It will also remove blank lines. """
 
-    def show(self,**options):
-        """Shows a plot of the StandardErrorModel"""
-        #todo: plots per column is confusing
-        defaults={"display_legend":False,
-                  "save_plot":False,
-                  "directory":None,
-                  "specific_descriptor":self.options["specific_descriptor"],
-                  "general_descriptor":self.options["general_descriptor"]+"Plot",
-                  "file_name":None,
-                  "plots_per_column":2,
-                  "plot_format":'r--x',
-                 "fill_unit_rectangle":True,
-                 "fill_color":'b',
-                 "fill_opacity":.25,
-                 "fill_edge_color":'r',
-                  "plot_size":(8, 10),
-                  "dpi":80}
+        in_file = open(self.path, 'r')
+        # to keep the logic clean we will repeatedly cycle through self.lines
+        # but in theory we could do it all on the line input stage
+        self.lines = []
+        for line in in_file:
+            self.lines.append(line)
+        # now we need to collect and extract all the inline comments
+        # There should be two types ones that have char position EOL, -1 or 0
+        self.comments = collect_inline_comments(self.lines, begin_token="!", end_token="\n")
+        # change all of them to be 0 or -1
+        if self.comments is None:
+            pass
+        else:
+            for index, comment in enumerate(self.comments):
+                if comment[2] > 1:
+                    self.comments[index][2] = -1
+                else:
+                    self.comments[index][2] = 0
 
-        plot_options={}
-        for key,value in defaults.iteritems():
-            plot_options[key]=value
-        for key,value in options.iteritems():
-            plot_options[key]=value
+        # now use our w2p column names
+        self.column_names = make_wave_parameter_column_names()
+        # print("{0} are {1}".format("self.column_names",self.column_names))
 
-        frequency_list=self["Frequency"]
-        y_columns=self.column_names[1:]
-        number_plots=int(len(self.column_names)-1)
-        number_columns=int(plot_options["plots_per_column"])
-        number_rows=int(round(float(number_plots)/float(number_columns)))
+        # remove the comments
+        stripped_lines = strip_inline_comments(self.lines, begin_token="!", end_token="\n")
+        # print stripped_lines
+        self.data = []
+        self.options["data_begin_line"] = self.options["data_end_line"] = 0
+        data_lines = []
+        self.row_pattern = make_row_match_string(self.column_names)
+        # print("{0} is {1}".format("self.row_pattern",self.row_pattern))
+        for index, line in enumerate(stripped_lines):
+            if re.search(self.row_pattern, line):
+                data_lines.append(index)
+                # print re.search(self.row_pattern,line).groupdict()
+                row_data = re.search(self.row_pattern, line).groupdict()
+                self.add_row(row_data=row_data)
 
-        fig, axes = plt.subplots(nrows=number_rows,ncols=number_columns,
-                                 figsize=plot_options["plot_size"],dpi=plot_options["dpi"])
-        for plot_index,ax in enumerate(axes.flat):
-            y_data=self.get_column(column_name=y_columns[plot_index])
-            ax.plot(frequency_list,y_data,plot_options["plot_format"],label=y_columns[plot_index])
-            ax.set_xlabel(self.column_names[0])
-            #ax.set_ylabel(y_columns[plot_index])
-            ax.set_title(y_columns[plot_index])
-            if plot_options["display_legend"]:
-                ax.legend()
+        if data_lines != []:
+            self.options["data_begin_line"] = min(data_lines) + len(self.comments)
+            self.options["data_end_line"] = max(data_lines) + len(self.comments)
 
+    def show(self, **options):
+        """Plots any table with frequency as its x-axis and column_names as the x-axis in a
+        series of subplots"""
+        defaults = {"display_legend": False,
+                    "save_plot": False,
+                    "directory": None,
+                    "specific_descriptor": "WaveParameter",
+                    "general_descriptor": "Plot",
+                    "file_name": None,
+                    "plots_per_column": 2,
+                    "plot_format": 'b-',
+                    "share_x": False,
+                    "subplots_title": True,
+                    "plot_title": None,
+                    "plot_size": (12, 24),
+                    "dpi": 80,
+                    "format": "MA",
+                    "x_label": True,
+                    "grid": True}
+        plot_options = {}
+        for key, value in defaults.iteritems():
+            plot_options[key] = value
+        for key, value in options.iteritems():
+            plot_options[key] = value
+
+        x_data = np.array(self["Frequency"])
+        y_data_columns = self.column_names[:]
+        y_data_columns.remove("Frequency")
+        number_plots = len(y_data_columns)
+        number_columns = plot_options["plots_per_column"]
+        number_rows = int(round(float(number_plots) / float(number_columns)))
+        figure, axes = plt.subplots(ncols=number_columns, nrows=number_rows, sharex=plot_options["share_x"],
+                                    figsize=plot_options["plot_size"], dpi=plot_options["dpi"])
+        for plot_index, ax in enumerate(axes.flat):
+            if plot_index < number_plots:
+                y_data = np.array(self[y_data_columns[plot_index]])
+                ax.plot(x_data, y_data, plot_options["plot_format"], label=y_data_columns[plot_index])
+                if plot_options["display_legend"]:
+                    ax.legend()
+                if plot_options["subplots_title"]:
+                    ax.set_title(y_data_columns[plot_index])
+                if plot_options["x_label"]:
+                    ax.set_xlabel("Frequency ")
+                if plot_options["grid"]:
+                    ax.grid()
+            else:
+                pass
+
+        if plot_options["plot_title"]:
+            plt.suptitle(plot_options["plot_title"])
         plt.tight_layout()
         # Dealing with the save option
         if plot_options["file_name"] is None:
-            file_name=auto_name(specific_descriptor=plot_options["specific_descriptor"],
-                                general_descriptor=plot_options["general_descriptor"],
-                                directory=plot_options["directory"],extension='png',padding=3)
+            file_name = auto_name(specific_descriptor=plot_options["specific_descriptor"],
+                                  general_descriptor=plot_options["general_descriptor"],
+                                  directory=plot_options["directory"], extension='png', padding=3)
         else:
-            file_name=plot_options["file_name"]
+            file_name = plot_options["file_name"]
         if plot_options["save_plot"]:
-            #print file_name
-            plt.savefig(os.path.join(plot_options["directory"],file_name))
+            # print file_name
+            plt.savefig(os.path.join(plot_options["directory"], file_name))
         else:
             plt.show()
-        return fig
+        return figure
 
 
 #-----------------------------------------------------------------------------

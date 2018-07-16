@@ -2,6 +2,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
 
     <title>pyMez.Code.DataHandlers.ZipModels API documentation</title>
     <meta name="description" content="ZipModels holds classes and functions for manipulating zip files. A zipped archive is represented
@@ -1060,7 +1061,29 @@ table {
   </script>
 </head>
 <body>
-<a href="#" id="top">Top</a>
+<a id="top"></a>
+        <table style='border-style:none;'>
+        <tr style="border-style:none;">
+        <td style="border-style:none;">
+        <a href='../../../pyMez_Documentation.html'><button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">Documentation Home</span></button></a>
+        </td>
+        <td style="border-style:none;">
+        <a href='../../index.html'><button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">API Documentation</span></button></a>
+        </td>
+        <td style="border-style:none;">
+        <a href='../../../Examples/html/Examples_Home.html'>
+        <button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">Examples</span></button></a>
+        </td>
+        <td style="border-style:none;">
+        <a href='../../../Reference_Index.html'>
+        <button type="button" class='btn btn-primary'>
+        <span style="font-size:20px">Index</span></button></a>
+        </td>
+        </tr>
+        </table><a href="#" id="top">Top</a>
 
 <div id="container">
     
@@ -1256,6 +1279,9 @@ or add files on disk, full directories, or strings as files.</p>
         <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">]:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;./Temp&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;./Temp&quot;</span>
             <span class="n">temp_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">],</span><span class="s2">&quot;temp_file&quot;</span><span class="p">)</span>
             <span class="n">temp_extracted</span><span class="o">=</span><span class="n">extract_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="p">,</span><span class="n">temp_path</span><span class="p">)</span>
             <span class="n">temp_zip</span><span class="o">=</span><span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
@@ -1263,6 +1289,7 @@ or add files on disk, full directories, or strings as files.</p>
             <span class="c1"># need to delete the temp folder</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">temp_path</span><span class="p">)</span>
             <span class="n">temp_zip</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
 
     <span class="k">def</span> <span class="nf">extract_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">destination_directory</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Extract all in the destination directory (default is current working directory)&quot;&quot;&quot;</span>
@@ -1291,6 +1318,7 @@ or add files on disk, full directories, or strings as files.</p>
     <span class="k">def</span> <span class="nf">write_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data_string</span><span class="p">,</span><span class="n">archive_file_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;writes data string to the zipped file archive_name in the archive&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">archive_file_name</span><span class="p">,</span><span class="n">data_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="s2">&quot;Class Destructor&quot;</span>
@@ -1473,6 +1501,9 @@ and save zip archives.
         <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">]:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;./Temp&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;./Temp&quot;</span>
             <span class="n">temp_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">],</span><span class="s2">&quot;temp_file&quot;</span><span class="p">)</span>
             <span class="n">temp_extracted</span><span class="o">=</span><span class="n">extract_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="p">,</span><span class="n">temp_path</span><span class="p">)</span>
             <span class="n">temp_zip</span><span class="o">=</span><span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
@@ -1480,6 +1511,7 @@ and save zip archives.
             <span class="c1"># need to delete the temp folder</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">temp_path</span><span class="p">)</span>
             <span class="n">temp_zip</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
 
     <span class="k">def</span> <span class="nf">extract_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">destination_directory</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Extract all in the destination directory (default is current working directory)&quot;&quot;&quot;</span>
@@ -1508,6 +1540,7 @@ and save zip archives.
     <span class="k">def</span> <span class="nf">write_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data_string</span><span class="p">,</span><span class="n">archive_file_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;writes data string to the zipped file archive_name in the archive&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">archive_file_name</span><span class="p">,</span><span class="n">data_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="s2">&quot;Class Destructor&quot;</span>
@@ -1718,6 +1751,9 @@ and save zip archives.
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">]:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;./Temp&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;./Temp&quot;</span>
         <span class="n">temp_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">],</span><span class="s2">&quot;temp_file&quot;</span><span class="p">)</span>
         <span class="n">temp_extracted</span><span class="o">=</span><span class="n">extract_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="p">,</span><span class="n">temp_path</span><span class="p">)</span>
         <span class="n">temp_zip</span><span class="o">=</span><span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
@@ -1748,6 +1784,7 @@ and save zip archives.
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">write_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data_string</span><span class="p">,</span><span class="n">archive_file_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;writes data string to the zipped file archive_name in the archive&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">archive_file_name</span><span class="p">,</span><span class="n">data_string</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
 </pre></div>
 
   </div>
