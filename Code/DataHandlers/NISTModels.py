@@ -1649,6 +1649,9 @@ class W2P(AsciiDataTable):
             self.options[key] = value
         for key, value in options.iteritems():
             self.options[key] = value
+        if file_path:
+            self.path = file_path
+
         try:
             AsciiDataTable.__init__(self, file_path, **self.options)
 
@@ -1658,9 +1661,9 @@ class W2P(AsciiDataTable):
             self.options["data"] = self.data
             self.options["comments"] = self.comments
             AsciiDataTable.__init__(self, **self.options)
+
             if file_path:
                 self.path = file_path
-
             print("{0} sucessfully parsed".format(self.path))
         self.update_complex_data()
 
