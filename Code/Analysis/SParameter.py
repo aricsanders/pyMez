@@ -1436,7 +1436,8 @@ def compare_s2p_plots(list_S2PV1,**options):
               "general_descriptor":"Plot",
               "file_name":None,
               "labels":None,
-              "title":None}
+              "title":None,
+              "grid":True}
     comparison_plot_options={}
     for key,value in defaults.iteritems():
         comparison_plot_options[key]=value
@@ -1457,9 +1458,11 @@ def compare_s2p_plots(list_S2PV1,**options):
         for index, ax in enumerate(compare_axes.flat):
             #ax.xaxis.set_visible(False)
             if re.search('arg',column_names[index]):
-                ax.set_ylabel('Phase(Degrees)',color='green')
+                ax.set_ylabel('Phase(Degrees)',color='black')
             elif re.search('mag',column_names[index]):
-                ax.set_ylabel(r'|${\Gamma} $|',color='green')
+                ax.set_ylabel(r'|{0}|'.format(column_names[index].replace("mag","")),color='green')
+            if comparison_plot_options["grid"]:
+                ax.grid(True)
             ax.set_title(column_names[index])
             # initial plot of
             x=s2p.get_column('Frequency')
@@ -1492,6 +1495,7 @@ def compare_s2p_plots(list_S2PV1,**options):
     else:
         plt.show()
     return fig
+
 def return_calrep_value_column_names(calrep_model):
     """Returns the column names for values in a calrep model. For example if the
     calrep model is a 1-port, then it returns ["magS11","argS11"] """
