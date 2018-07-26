@@ -1324,10 +1324,13 @@ table {
       
   <ul>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.ACTIVE_COMPONENTS">ACTIVE_COMPONENTS</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.COMBINE_S11_S22">COMBINE_S11_S22</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.COMMENT_PATTERN">COMMENT_PATTERN</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.CONVERT_S21">CONVERT_S21</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.DATA_SHEETS">DATA_SHEETS</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.DEFAULT_MODE">DEFAULT_MODE</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.DUT_COLUMN_NAMES">DUT_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.EXTENSION_PATTERN">EXTENSION_PATTERN</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.FORMATS">FORMATS</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.FREQUENCY_UNITS">FREQUENCY_UNITS</a></li>
@@ -1338,10 +1341,18 @@ table {
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.MINIMUM_DB_ARG_VALUE">MINIMUM_DB_ARG_VALUE</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.MINIMUM_DB_VALUE">MINIMUM_DB_VALUE</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.NUMBER_MATCH_STRING">NUMBER_MATCH_STRING</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.ONE_PORT_COLUMN_NAMES">ONE_PORT_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.OPTION_LINE_PATTERN">OPTION_LINE_PATTERN</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.PARAMETERS">PARAMETERS</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.PIL_AVAILABLE">PIL_AVAILABLE</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.POWER_3TERM_COLUMN_DESCRIPTIONS">POWER_3TERM_COLUMN_DESCRIPTIONS</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.POWER_3TERM_COLUMN_NAMES">POWER_3TERM_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.POWER_4TERM_COLUMN_DESCRIPTIONS">POWER_4TERM_COLUMN_DESCRIPTIONS</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.POWER_4TERM_COLUMN_NAMES">POWER_4TERM_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.PYMEASURE_ROOT">PYMEASURE_ROOT</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.RESULTS_FILE_ONE_PORT_COLUMN_NAMES">RESULTS_FILE_ONE_PORT_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.RESULTS_FILE_POWER_COLUMN_NAMES">RESULTS_FILE_POWER_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.RESULTS_FILE_TWO_PORT_COLUMN_NAMES">RESULTS_FILE_TWO_PORT_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.RTLD_GLOBAL">RTLD_GLOBAL</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.RTLD_LOCAL">RTLD_LOCAL</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.S1P_DB_COLUMN_NAMES">S1P_DB_COLUMN_NAMES</a></li>
@@ -1359,6 +1370,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.StringTypes">StringTypes</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.TOUCHSTONE_KEYWORDS">TOUCHSTONE_KEYWORDS</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.TWELVE_TERM_ERROR_COLUMN_NAMES">TWELVE_TERM_ERROR_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA_FREQUENCY_UNIT_MULTIPLIERS">VNA_FREQUENCY_UNIT_MULTIPLIERS</a></li>
   </ul>
 
@@ -1487,6 +1499,11 @@ wrappers around the pyvisa instrument class with static xml based metadata added
     <span class="kn">from</span> <span class="nn">Code.DataHandlers.TouchstoneModels</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not load Code.DataHandlers.TouchstoneModels&quot;</span><span class="p">)</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">Code.DataHandlers.NISTModels</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not load Code.DataHandlers.NISTModels&quot;</span><span class="p">)</span>
     <span class="k">pass</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -2075,7 +2092,7 @@ wrappers around the pyvisa instrument class with static xml based metadata added
         <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SYST:FPRESET&quot;</span><span class="p">)</span>
@@ -2300,7 +2317,7 @@ wrappers around the pyvisa instrument class with static xml based metadata added
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="c1"># this resets the traces to be based on swith terms</span>
         <span class="c1"># Set VS to be remotely triggered by GPIB</span>
@@ -2375,7 +2392,7 @@ wrappers around the pyvisa instrument class with static xml based metadata added
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span><span class="p">[</span><span class="s2">&quot;trigger&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;single&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;INITiate:CONTinuous OFF&quot;</span><span class="p">)</span>
@@ -2711,7 +2728,7 @@ wrappers around the pyvisa instrument class with static xml based metadata added
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_w2p_options</span><span class="p">[</span><span class="s2">&quot;w2p_options&quot;</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_w2p_options</span><span class="p">[</span><span class="s2">&quot;w2p_options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
                 <span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-        <span class="n">w2p</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">w2p</span> <span class="o">=</span> <span class="n">W2P</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">w2p</span>
 
 <span class="k">class</span> <span class="nc">NRPPowerMeter</span><span class="p">(</span><span class="n">VisaInstrument</span><span class="p">):</span>
@@ -7118,7 +7135,7 @@ stores the frequency points as Hz.</p></div>
         <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SYST:FPRESET&quot;</span><span class="p">)</span>
@@ -7343,7 +7360,7 @@ stores the frequency points as Hz.</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="c1"># this resets the traces to be based on swith terms</span>
         <span class="c1"># Set VS to be remotely triggered by GPIB</span>
@@ -7418,7 +7435,7 @@ stores the frequency points as Hz.</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span><span class="p">[</span><span class="s2">&quot;trigger&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;single&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;INITiate:CONTinuous OFF&quot;</span><span class="p">)</span>
@@ -7754,7 +7771,7 @@ stores the frequency points as Hz.</p></div>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_w2p_options</span><span class="p">[</span><span class="s2">&quot;w2p_options&quot;</span><span class="p">]:</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_w2p_options</span><span class="p">[</span><span class="s2">&quot;w2p_options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
                 <span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-        <span class="n">w2p</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">w2p</span> <span class="o">=</span> <span class="n">W2P</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">w2p</span>
 </pre></div>
 
@@ -8557,7 +8574,7 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
     <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">if</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SYST:FPRESET&quot;</span><span class="p">)</span>
@@ -8816,7 +8833,7 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
     <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_sparameter_options</span><span class="p">[</span><span class="s2">&quot;trigger&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;single&quot;</span><span class="p">]:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;INITiate:CONTinuous OFF&quot;</span><span class="p">)</span>
@@ -8906,7 +8923,7 @@ set the option order= "PORT</p></div>
     <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="c1"># this resets the traces to be based on swith terms</span>
     <span class="c1"># Set VS to be remotely triggered by GPIB</span>
@@ -9144,7 +9161,7 @@ port and returns a w2p object.</p></div>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_w2p_options</span><span class="p">[</span><span class="s2">&quot;w2p_options&quot;</span><span class="p">]:</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_w2p_options</span><span class="p">[</span><span class="s2">&quot;w2p_options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-    <span class="n">w2p</span> <span class="o">=</span> <span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">w2p</span> <span class="o">=</span> <span class="n">W2P</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">w2p</span>
 </pre></div>
 
@@ -10752,7 +10769,23 @@ window (using wx)</p></div>
 
       </div>
       <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.COMBINE_S11_S22" class="name">var <span class="ident">COMBINE_S11_S22</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMez.Code.InstrumentControl.Instruments.COMMENT_PATTERN" class="name">var <span class="ident">COMMENT_PATTERN</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.CONVERT_S21" class="name">var <span class="ident">CONVERT_S21</span></p>
       
   
   <div class="source_cont">
@@ -10777,6 +10810,14 @@ window (using wx)</p></div>
       </div>
       <div class="item">
       <p id="pyMez.Code.InstrumentControl.Instruments.DEFAULT_MODE" class="name">var <span class="ident">DEFAULT_MODE</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.DUT_COLUMN_NAMES" class="name">var <span class="ident">DUT_COLUMN_NAMES</span></p>
       
   
   <div class="source_cont">
@@ -10864,6 +10905,14 @@ window (using wx)</p></div>
 
       </div>
       <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.ONE_PORT_COLUMN_NAMES" class="name">var <span class="ident">ONE_PORT_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMez.Code.InstrumentControl.Instruments.OPTION_LINE_PATTERN" class="name">var <span class="ident">OPTION_LINE_PATTERN</span></p>
       
   
@@ -10888,7 +10937,63 @@ window (using wx)</p></div>
 
       </div>
       <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.POWER_3TERM_COLUMN_DESCRIPTIONS" class="name">var <span class="ident">POWER_3TERM_COLUMN_DESCRIPTIONS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.POWER_3TERM_COLUMN_NAMES" class="name">var <span class="ident">POWER_3TERM_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.POWER_4TERM_COLUMN_DESCRIPTIONS" class="name">var <span class="ident">POWER_4TERM_COLUMN_DESCRIPTIONS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.POWER_4TERM_COLUMN_NAMES" class="name">var <span class="ident">POWER_4TERM_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMez.Code.InstrumentControl.Instruments.PYMEASURE_ROOT" class="name">var <span class="ident">PYMEASURE_ROOT</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.RESULTS_FILE_ONE_PORT_COLUMN_NAMES" class="name">var <span class="ident">RESULTS_FILE_ONE_PORT_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.RESULTS_FILE_POWER_COLUMN_NAMES" class="name">var <span class="ident">RESULTS_FILE_POWER_COLUMN_NAMES</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.RESULTS_FILE_TWO_PORT_COLUMN_NAMES" class="name">var <span class="ident">RESULTS_FILE_TWO_PORT_COLUMN_NAMES</span></p>
       
   
   <div class="source_cont">
@@ -11025,6 +11130,14 @@ window (using wx)</p></div>
       </div>
       <div class="item">
       <p id="pyMez.Code.InstrumentControl.Instruments.TOUCHSTONE_KEYWORDS" class="name">var <span class="ident">TOUCHSTONE_KEYWORDS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.TWELVE_TERM_ERROR_COLUMN_NAMES" class="name">var <span class="ident">TWELVE_TERM_ERROR_COLUMN_NAMES</span></p>
       
   
   <div class="source_cont">

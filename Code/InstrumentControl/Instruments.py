@@ -87,6 +87,11 @@ except:
     print("Could not load Code.DataHandlers.TouchstoneModels")
     pass
 try:
+    from Code.DataHandlers.NISTModels import *
+except:
+    print("Could not load Code.DataHandlers.NISTModels")
+    pass
+try:
     import numpy as np
 except:
     print("Could not load numpy")
@@ -673,7 +678,7 @@ class VNA(VisaInstrument):
         initialize_options = {}
         for key, value in defaults.iteritems():
             initialize_options[key] = value
-        for key, value in options:
+        for key, value in options.iteritems():
             initialize_options[key] = value
         if initialize_options["reset"]:
             self.write("SYST:FPRESET")
@@ -898,7 +903,7 @@ class VNA(VisaInstrument):
         self.measure_switch_term_options = {}
         for key, value in defaults.iteritems():
             self.measure_switch_term_options[key] = value
-        for key, value in options:
+        for key, value in options.iteritems():
             self.measure_switch_term_options[key] = value
         # this resets the traces to be based on swith terms
         # Set VS to be remotely triggered by GPIB
@@ -973,7 +978,7 @@ class VNA(VisaInstrument):
         self.measure_sparameter_options = {}
         for key, value in defaults.iteritems():
             self.measure_sparameter_options[key] = value
-        for key, value in options:
+        for key, value in options.iteritems():
             self.measure_sparameter_options[key] = value
         if self.measure_sparameter_options["trigger"] in ["single"]:
             self.write("INITiate:CONTinuous OFF")
@@ -1309,7 +1314,7 @@ class VNA(VisaInstrument):
         if self.measure_w2p_options["w2p_options"]:
             for key,value in self.measure_w2p_options["w2p_options"].iteritems():
                 options[key]=value
-        w2p = AsciiDataTable(None, **options)
+        w2p = W2P(None, **options)
         return w2p
 
 class NRPPowerMeter(VisaInstrument):

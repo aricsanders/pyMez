@@ -2715,7 +2715,8 @@ see also <a href="./NISTUncertainty.m.html">NISTUncertainty</a></p>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s2">&quot;Plot&quot;</span><span class="p">,</span>
               <span class="s2">&quot;file_name&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
               <span class="s2">&quot;labels&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;title&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">}</span>
+              <span class="s2">&quot;title&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+              <span class="s2">&quot;grid&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">}</span>
     <span class="n">comparison_plot_options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="n">comparison_plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
@@ -2736,9 +2737,11 @@ see also <a href="./NISTUncertainty.m.html">NISTUncertainty</a></p>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">compare_axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
             <span class="c1">#ax.xaxis.set_visible(False)</span>
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;arg&#39;</span><span class="p">,</span><span class="n">column_names</span><span class="p">[</span><span class="n">index</span><span class="p">]):</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Phase(Degrees)&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Phase(Degrees)&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span><span class="n">column_names</span><span class="p">[</span><span class="n">index</span><span class="p">]):</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r&#39;|${\Gamma} $|&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r&#39;|{0}|&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column_names</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;mag&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">comparison_plot_options</span><span class="p">[</span><span class="s2">&quot;grid&quot;</span><span class="p">]:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">column_names</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
             <span class="c1"># initial plot of</span>
             <span class="n">x</span><span class="o">=</span><span class="n">s2p</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
@@ -2771,6 +2774,7 @@ see also <a href="./NISTUncertainty.m.html">NISTUncertainty</a></p>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">fig</span>
+
 <span class="k">def</span> <span class="nf">return_calrep_value_column_names</span><span class="p">(</span><span class="n">calrep_model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the column names for values in a calrep model. For example if the</span>
 <span class="sd">    calrep model is a 1-port, then it returns [&quot;magS11&quot;,&quot;argS11&quot;] &quot;&quot;&quot;</span>
@@ -4285,7 +4289,8 @@ key word dictionary.</p></div>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s2">&quot;Plot&quot;</span><span class="p">,</span>
               <span class="s2">&quot;file_name&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
               <span class="s2">&quot;labels&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
-              <span class="s2">&quot;title&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">}</span>
+              <span class="s2">&quot;title&quot;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span>
+              <span class="s2">&quot;grid&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">}</span>
     <span class="n">comparison_plot_options</span><span class="o">=</span><span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="n">comparison_plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
@@ -4306,9 +4311,11 @@ key word dictionary.</p></div>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">compare_axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
             <span class="c1">#ax.xaxis.set_visible(False)</span>
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;arg&#39;</span><span class="p">,</span><span class="n">column_names</span><span class="p">[</span><span class="n">index</span><span class="p">]):</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Phase(Degrees)&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Phase(Degrees)&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span><span class="n">column_names</span><span class="p">[</span><span class="n">index</span><span class="p">]):</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r&#39;|${\Gamma} $|&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">r&#39;|{0}|&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column_names</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;mag&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)),</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">comparison_plot_options</span><span class="p">[</span><span class="s2">&quot;grid&quot;</span><span class="p">]:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">column_names</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
             <span class="c1"># initial plot of</span>
             <span class="n">x</span><span class="o">=</span><span class="n">s2p</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>

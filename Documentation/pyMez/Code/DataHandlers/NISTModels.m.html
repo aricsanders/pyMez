@@ -3395,6 +3395,9 @@ table {
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">file_path</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="n">AsciiDataTable</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
 
@@ -3404,9 +3407,9 @@ table {
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comments&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span>
             <span class="n">AsciiDataTable</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">file_path</span>
-
             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} sucessfully parsed&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_complex_data</span><span class="p">()</span>
 
@@ -23202,6 +23205,9 @@ by the uncertainty framework, [Frequency,reA1_D1,imA1_D1,reB1_D1..imB2_D2]</p></
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">file_path</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="n">AsciiDataTable</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
 
@@ -23211,9 +23217,9 @@ by the uncertainty framework, [Frequency,reA1_D1,imA1_D1,reB1_D1..imB2_D2]</p></
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;comments&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span>
             <span class="n">AsciiDataTable</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">file_path</span>
-
             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} sucessfully parsed&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_complex_data</span><span class="p">()</span>
 
@@ -23416,6 +23422,8 @@ by the uncertainty framework, [Frequency,reA1_D1,imA1_D1,reB1_D1..imB2_D2]</p></
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">file_path</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">AsciiDataTable</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
