@@ -481,7 +481,7 @@ def parse_lines(string_list,**options):
 def ascii_data_table_join(column_selector,table_1,table_2):
     """Given a column selector (name or zero based index) and
     two tables a data_table with extra columns is returned. The options from table 1 are inherited
-    headers and footers are added, if the tables have a diffferent number of rows problems may occur"""
+    headers and footers are added, if the tables have a different number of rows problems may occur"""
     if len(table_1.data) != len(table_2.data):
         raise DataDimensionError('The dim {0} is not equal to {1}'.format(len(table_1.data),len(table_2.data)))
     if table_1.header is None and table_2.header is None:
@@ -545,6 +545,15 @@ def ascii_data_table_join(column_selector,table_1,table_2):
             new_table.add_column(column,column_type=column_type,column_data=column_data)
 
     return new_table
+
+def join_ascii_data_table_list(table_list):
+    """Joins a list of any subclass of AsciiDataTable returns a new table of the same type, input
+    is assume to be a list of AsciiDataTable objects or any sub class. """
+    first=table_list[0]
+    joined_table=first.copy()
+    for table in table_list[1:]:
+        joined_table+table
+    return joined_table
 
 def structure_metadata(header_string,metadata_fact_delimiter=";",metadata_key_value_delimiter="=",comment_character="#"):
     """Strucutre Metadata returns a metadata string and returns a metadata dictionary"""
