@@ -530,7 +530,8 @@ class SNPBase():
                     "dpi": 80,
                     "format": "MA",
                     "x_label": True,
-                    "grid": True}
+                    "grid": True,
+                    "silent":False}
         plot_options = {}
         for key, value in defaults.iteritems():
             plot_options[key] = value
@@ -584,6 +585,8 @@ class SNPBase():
         if plot_options["save_plot"]:
             # print file_name
             plt.savefig(os.path.join(plot_options["directory"], file_name))
+        elif plot_options["silent"]:
+            pass
         else:
             plt.show()
         return figure
