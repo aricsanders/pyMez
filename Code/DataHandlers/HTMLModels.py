@@ -161,9 +161,15 @@ class HTMLBase(object):
         else:
             self.path=file_path
             self.document=lxml.html.parse(file_path)
-            self.root=self.document.getroot()
-            self.head=self.root.head
-            self.body=self.root.body
+            try:
+                self.root=self.document.getroot()
+            except:pass
+            try:
+                self.head=self.root.head
+            except:pass
+            try:
+                self.body=self.root.body
+            except:pass
 
     def __str__(self):
         """Defines the response when str() or print() is called"""
@@ -283,7 +289,7 @@ class HTMLBase(object):
         # if the models don't have a head or body add them
         if not "head" in tags_model_1:
             head = make_html_element(tag="head", text="")
-            self.root.inset(0,head)
+            self.root.insert(0,head)
         if not "body" in tags_model_1:
             body=make_html_element(tag="body", text="")
             self.root.append(body)
