@@ -92,7 +92,7 @@ class KeithleyIV():
             # TODO: Check for Instrument Errors
             
         except:
-            print('An error intializing the keithley has occurred')
+            print('An error initializing the keithley has occurred')
         
     def write_voltage(self,voltage):
         """Sets the Keithley to a specified voltage """
