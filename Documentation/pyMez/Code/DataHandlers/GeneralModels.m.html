@@ -1104,6 +1104,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.convert_row">convert_row</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.ensure_string">ensure_string</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.insert_inline_comment">insert_inline_comment</a></li>
+    <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.join_ascii_data_table_list">join_ascii_data_table_list</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.line_comment_string">line_comment_string</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.line_list_comment_string">line_list_comment_string</a></li>
     <li class="mono"><a href="#pyMez.Code.DataHandlers.GeneralModels.list_list_to_string">list_list_to_string</a></li>
@@ -1800,7 +1801,7 @@ table {
 <span class="k">def</span> <span class="nf">ascii_data_table_join</span><span class="p">(</span><span class="n">column_selector</span><span class="p">,</span><span class="n">table_1</span><span class="p">,</span><span class="n">table_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a column selector (name or zero based index) and</span>
 <span class="sd">    two tables a data_table with extra columns is returned. The options from table 1 are inherited</span>
-<span class="sd">    headers and footers are added, if the tables have a diffferent number of rows problems may occur&quot;&quot;&quot;</span>
+<span class="sd">    headers and footers are added, if the tables have a different number of rows problems may occur&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">table_1</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">table_2</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">DataDimensionError</span><span class="p">(</span><span class="s1">&#39;The dim {0} is not equal to {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table_1</span><span class="o">.</span><span class="n">data</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">table_2</span><span class="o">.</span><span class="n">data</span><span class="p">)))</span>
     <span class="k">if</span> <span class="n">table_1</span><span class="o">.</span><span class="n">header</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">table_2</span><span class="o">.</span><span class="n">header</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -1864,6 +1865,15 @@ table {
             <span class="n">new_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">column</span><span class="p">,</span><span class="n">column_type</span><span class="o">=</span><span class="n">column_type</span><span class="p">,</span><span class="n">column_data</span><span class="o">=</span><span class="n">column_data</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">new_table</span>
+
+<span class="k">def</span> <span class="nf">join_ascii_data_table_list</span><span class="p">(</span><span class="n">table_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Joins a list of any subclass of AsciiDataTable returns a new table of the same type, input</span>
+<span class="sd">    is assume to be a list of AsciiDataTable objects or any sub class. &quot;&quot;&quot;</span>
+    <span class="n">first</span><span class="o">=</span><span class="n">table_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">joined_table</span><span class="o">=</span><span class="n">first</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">table_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">joined_table</span><span class="o">+</span><span class="n">table</span>
+    <span class="k">return</span> <span class="n">joined_table</span>
 
 <span class="k">def</span> <span class="nf">structure_metadata</span><span class="p">(</span><span class="n">header_string</span><span class="p">,</span><span class="n">metadata_fact_delimiter</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span><span class="n">metadata_key_value_delimiter</span><span class="o">=</span><span class="s2">&quot;=&quot;</span><span class="p">,</span><span class="n">comment_character</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Strucutre Metadata returns a metadata string and returns a metadata dictionary&quot;&quot;&quot;</span>
@@ -3851,14 +3861,14 @@ table {
   
     <div class="desc"><p>Given a column selector (name or zero based index) and
 two tables a data_table with extra columns is returned. The options from table 1 are inherited
-headers and footers are added, if the tables have a diffferent number of rows problems may occur</p></div>
+headers and footers are added, if the tables have a different number of rows problems may occur</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.ascii_data_table_join', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.DataHandlers.GeneralModels.ascii_data_table_join" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">ascii_data_table_join</span><span class="p">(</span><span class="n">column_selector</span><span class="p">,</span><span class="n">table_1</span><span class="p">,</span><span class="n">table_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a column selector (name or zero based index) and</span>
 <span class="sd">    two tables a data_table with extra columns is returned. The options from table 1 are inherited</span>
-<span class="sd">    headers and footers are added, if the tables have a diffferent number of rows problems may occur&quot;&quot;&quot;</span>
+<span class="sd">    headers and footers are added, if the tables have a different number of rows problems may occur&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">table_1</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">table_2</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">DataDimensionError</span><span class="p">(</span><span class="s1">&#39;The dim {0} is not equal to {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table_1</span><span class="o">.</span><span class="n">data</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">table_2</span><span class="o">.</span><span class="n">data</span><span class="p">)))</span>
     <span class="k">if</span> <span class="n">table_1</span><span class="o">.</span><span class="n">header</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">table_2</span><span class="o">.</span><span class="n">header</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -4137,6 +4147,35 @@ if it is a list of strings, returns a collapsed version. If is another type of o
     <span class="k">else</span><span class="p">:</span>
         <span class="n">list_of_strings</span><span class="p">[</span><span class="n">line_number</span><span class="p">]</span><span class="o">=</span><span class="n">list_of_strings</span><span class="p">[</span><span class="n">line_number</span><span class="p">][:</span><span class="n">string_position</span><span class="p">]</span><span class="o">+</span><span class="n">inline_comment</span><span class="o">+</span><span class="n">list_of_strings</span><span class="p">[</span><span class="n">line_number</span><span class="p">][</span><span class="n">string_position</span><span class="p">:]</span>
     <span class="k">return</span> <span class="n">list_of_strings</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.DataHandlers.GeneralModels.join_ascii_data_table_list">
+    <p>def <span class="ident">join_ascii_data_table_list</span>(</p><p>table_list)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Joins a list of any subclass of AsciiDataTable returns a new table of the same type, input
+is assume to be a list of AsciiDataTable objects or any sub class.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.DataHandlers.GeneralModels.join_ascii_data_table_list', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.DataHandlers.GeneralModels.join_ascii_data_table_list" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">join_ascii_data_table_list</span><span class="p">(</span><span class="n">table_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Joins a list of any subclass of AsciiDataTable returns a new table of the same type, input</span>
+<span class="sd">    is assume to be a list of AsciiDataTable objects or any sub class. &quot;&quot;&quot;</span>
+    <span class="n">first</span><span class="o">=</span><span class="n">table_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">joined_table</span><span class="o">=</span><span class="n">first</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">table_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">joined_table</span><span class="o">+</span><span class="n">table</span>
+    <span class="k">return</span> <span class="n">joined_table</span>
 </pre></div>
 
   </div>

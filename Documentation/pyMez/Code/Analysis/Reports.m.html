@@ -3830,9 +3830,15 @@ the resulting file to self.path with pdf as the extension</p></div>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
 </pre></div>
 
   </div>

@@ -1808,7 +1808,8 @@ table {
                     <span class="s2">&quot;dpi&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
                     <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;MA&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;x_label&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-                    <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+                    <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                    <span class="s2">&quot;silent&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">}</span>
         <span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -1862,6 +1863,8 @@ table {
         <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;save_plot&quot;</span><span class="p">]:</span>
             <span class="c1"># print file_name</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">file_name</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;silent&quot;</span><span class="p">]:</span>
+            <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">figure</span>
@@ -5132,7 +5135,8 @@ series of subplots</p></div>
                 <span class="s2">&quot;dpi&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
                 <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;MA&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;x_label&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-                <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+                <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s2">&quot;silent&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">}</span>
     <span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -5184,6 +5188,8 @@ series of subplots</p></div>
     <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;save_plot&quot;</span><span class="p">]:</span>
         <span class="c1"># print file_name</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">file_name</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;silent&quot;</span><span class="p">]:</span>
+        <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">figure</span>
@@ -6422,7 +6428,8 @@ series of subplots</p></div>
                 <span class="s2">&quot;dpi&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
                 <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;MA&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;x_label&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-                <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+                <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s2">&quot;silent&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">}</span>
     <span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -6474,6 +6481,8 @@ series of subplots</p></div>
     <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;save_plot&quot;</span><span class="p">]:</span>
         <span class="c1"># print file_name</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">file_name</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;silent&quot;</span><span class="p">]:</span>
+        <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">figure</span>
@@ -8087,7 +8096,8 @@ It is only meant as a base class to inherit, not to instantiate by itself</p></d
                     <span class="s2">&quot;dpi&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
                     <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;MA&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;x_label&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-                    <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+                    <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                    <span class="s2">&quot;silent&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">}</span>
         <span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -8141,6 +8151,8 @@ It is only meant as a base class to inherit, not to instantiate by itself</p></d
         <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;save_plot&quot;</span><span class="p">]:</span>
             <span class="c1"># print file_name</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">file_name</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;silent&quot;</span><span class="p">]:</span>
+            <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">figure</span>
@@ -8430,7 +8442,8 @@ series of subplots</p></div>
                 <span class="s2">&quot;dpi&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
                 <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;MA&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;x_label&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-                <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+                <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s2">&quot;silent&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">}</span>
     <span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -8482,6 +8495,8 @@ series of subplots</p></div>
     <span class="k">if</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;save_plot&quot;</span><span class="p">]:</span>
         <span class="c1"># print file_name</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="n">file_name</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;silent&quot;</span><span class="p">]:</span>
+        <span class="k">pass</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">figure</span>

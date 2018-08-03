@@ -1374,9 +1374,15 @@ It provides a model to open, print, add to and convert html to pdf.</p>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
+            <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+            <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Defines the response when str() or print() is called&quot;&quot;&quot;</span>
@@ -1496,7 +1502,7 @@ It provides a model to open, print, add to and convert html to pdf.</p>
         <span class="c1"># if the models don&#39;t have a head or body add them</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;head&quot;</span> <span class="ow">in</span> <span class="n">tags_model_1</span><span class="p">:</span>
             <span class="n">head</span> <span class="o">=</span> <span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">inset</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;body&quot;</span> <span class="ow">in</span> <span class="n">tags_model_1</span><span class="p">:</span>
             <span class="n">body</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
@@ -1820,9 +1826,15 @@ can inherit from it</p></div>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
+            <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+            <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Defines the response when str() or print() is called&quot;&quot;&quot;</span>
@@ -1942,7 +1954,7 @@ can inherit from it</p></div>
         <span class="c1"># if the models don&#39;t have a head or body add them</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;head&quot;</span> <span class="ow">in</span> <span class="n">tags_model_1</span><span class="p">:</span>
             <span class="n">head</span> <span class="o">=</span> <span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">inset</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;body&quot;</span> <span class="ow">in</span> <span class="n">tags_model_1</span><span class="p">:</span>
             <span class="n">body</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
@@ -2040,9 +2052,15 @@ can inherit from it</p></div>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
 </pre></div>
 
   </div>
@@ -2438,9 +2456,15 @@ the resulting file to self.path with pdf as the extension</p></div>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">=</span><span class="n">file_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
 </pre></div>
 
   </div>
