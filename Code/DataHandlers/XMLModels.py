@@ -902,263 +902,281 @@ class DataTable(XMLBase):
                 return out
         except:
             raise
+
+
 class FileRegister(XMLBase):
     """ The base class for arbitrary database, which processes the
     File Register XML File."""
 
-    def __init__(self,file_path=None,**options):
+    def __init__(self, file_path=None, **options):
         """ Initializes the File Register Class."""
 
         # This is a general pattern for adding a lot of options
         # The next more advanced thing to do is retrieve defaults from a settings file
-        defaults={"root":"File_Registry",
-                  "style_sheet":DEFAULT_REGISTER_STYLE,
-                  "specific_descriptor":'Resource',
-                  "general_descriptor":'Registry',
-                  "directory":None,
-                  "extension":'xml'
-                  }
-        self.options={}
-        for key,value in defaults.iteritems():
-            self.options[key]=value
-        for key,value in options.iteritems():
-            self.options[key]=value
-        XMLBase.__init__(self,file_path,**self.options)
+        defaults = {"root": "File_Registry",
+                    "style_sheet": DEFAULT_REGISTER_STYLE,
+                    "specific_descriptor": 'Resource',
+                    "general_descriptor": 'Registry',
+                    "directory": None,
+                    "extension": 'xml'
+                    }
+        self.options = {}
+        for key, value in defaults.iteritems():
+            self.options[key] = value
+        for key, value in options.iteritems():
+            self.options[key] = value
+        XMLBase.__init__(self, file_path, **self.options)
 
-        self.Id_dictionary=dict([(str(node.getAttribute('URL')),
-            str(node.getAttribute('Id'))) for node in
-            self.document.getElementsByTagName('File')])
+        self.Id_dictionary = dict([(str(node.getAttribute('URL')),
+                                    str(node.getAttribute('Id'))) for node in
+                                   self.document.getElementsByTagName('File')])
 
-    def create_Id(self,URL):
+    def create_Id(self, URL):
         """ Returns or returns the existing Id element of a URL"""
-        parsed_URL=urlparse.urlparse(condition_URL(URL))
-        try: # Look in self.Id_dictionary, if it is not there catch
-             # the exception KeyError and generate an Id.
-            return self.Id_dictionary[URL.replace('///','')]
+        parsed_URL = urlparse.urlparse(condition_URL(URL))
+        try:  # Look in self.Id_dictionary, if it is not there catch
+            # the exception KeyError and generate an Id.
+            return self.Id_dictionary[URL.replace('///', '')]
         except KeyError:
             # The Id is not in the existing list so start buliding Id.
             # Determine the IP Address of the host in the URL
-            if parsed_URL[1] in ['',u'']: #if it is empty assume local host
-                IP_address=socket.gethostbyaddr(socket.gethostname())[2][0]
+            if parsed_URL[1] in ['', u'']:  # if it is empty assume local host
+                IP_address = socket.gethostbyaddr(socket.gethostname())[2][0]
             else:
-                IP_address= socket.gethostbyaddr(parsed_URL[1])[2][0]
-            Id_cache={}
+                IP_address = socket.gethostbyaddr(parsed_URL[1])[2][0]
+            Id_cache = {}
             # We begin with all the entries with the same IP address
-            for (key,value) in self.Id_dictionary.iteritems():
+            for (key, value) in self.Id_dictionary.iteritems():
                 if value.startswith(IP_address):
-                        Id_cache[key]=value
+                    Id_cache[key] = value
             # If the Id_cache is empty then we just assign the number
-            temp_Id=IP_address
-            path_list=parsed_URL[2].split('/')
-            file_extension=path_list[-1].split('.')[-1]
+            temp_Id = IP_address
+            path_list = parsed_URL[2].split('/')
+            file_extension = path_list[-1].split('.')[-1]
             if len(Id_cache) is 0:
-                for index,part in enumerate(path_list):
-                    if index<len(path_list)-1:
-                        temp_Id=temp_Id+'.'+'11'
-                    elif index==len(path_list)-1:
+                for index, part in enumerate(path_list):
+                    if index < len(path_list) - 1:
+                        temp_Id = temp_Id + '.' + '11'
+                    elif index == len(path_list) - 1:
                         if (file_extension in DRIVER_FILE_EXTENSIONS):
-                            temp_Id=temp_Id+'.'+'31'
+                            temp_Id = temp_Id + '.' + '31'
                         elif os.path.isdir(parsed_URL[2]):
-                            temp_Id=temp_Id+'.'+'11'
+                            temp_Id = temp_Id + '.' + '11'
                         else:
-                            temp_Id=temp_Id+'.'+'21'
+                            temp_Id = temp_Id + '.' + '21'
                 return temp_Id
             # if it is not empty we have to a little work
             # remove the information about IP address
-            place=0
-            #print path_list
-            while place<=len(path_list):
-              # If the Id_cache is empty assign the rest of the Id.
-               if len(Id_cache) is 0:
-                    for index,part in enumerate(path_list[place:]):
-                        if index<len(path_list[place:])-1:
-                            temp_Id=temp_Id+'.'+'11'
-                        elif index==len(path_list[place:])-1:
+            place = 0
+            # print path_list
+            while place <= len(path_list):
+                # If the Id_cache is empty assign the rest of the Id.
+                if len(Id_cache) is 0:
+                    for index, part in enumerate(path_list[place:]):
+                        if index < len(path_list[place:]) - 1:
+                            temp_Id = temp_Id + '.' + '11'
+                        elif index == len(path_list[place:]) - 1:
                             if (file_extension in DRIVER_FILE_EXTENSIONS):
-                                temp_Id=temp_Id+'.'+'31'
+                                temp_Id = temp_Id + '.' + '31'
                             elif os.path.isdir(parsed_URL[2]):
-                                temp_Id=temp_Id+'.'+'11'
+                                temp_Id = temp_Id + '.' + '11'
                             else:
-                                temp_Id=temp_Id+'.'+'21'
+                                temp_Id = temp_Id + '.' + '21'
                     return temp_Id
 
-                # If the Id_cache is not empty
-               else:
-                    path_cache=dict([(URL,URL_to_path(URL,form='list'))
-                        for URL in Id_cache.keys()])
-                    print Id_cache
-                    part_cache=dict([(URL,[path_cache[URL][place],
-                        Id_cache[URL].split('.')[place+4]])
-                        for URL in Id_cache.keys()])
-                    parts_list=[part_cache[URL][0]for URL in Id_cache.keys()]
-                    node_number=max([int(Id_cache[URL].split('.')[place+4][1:])
-                        for URL in Id_cache.keys()])
-                # If it is the last place
-                    if place==len(path_list)-1:
-                        new_node_number=node_number+1
+                    # If the Id_cache is not empty
+                else:
+                    path_cache = dict([(URL, URL_to_path(URL, form='list'))
+                                       for URL in Id_cache.keys()])
+                    # print Id_cache
+                    part_cache = dict([(URL, [path_cache[URL][place],
+                                              Id_cache[URL].split('.')[place + 4]])
+                                       for URL in Id_cache.keys()])
+                    parts_list = [part_cache[URL][0] for URL in Id_cache.keys()]
+                    node_number = max([int(Id_cache[URL].split('.')[place + 4][1:])
+                                       for URL in Id_cache.keys()])
+                    # If it is the last place
+                    if place == len(path_list) - 1:
+                        new_node_number = node_number + 1
                         if (file_extension in DRIVER_FILE_EXTENSIONS):
-                            new_node_type='3'
+                            new_node_type = '3'
                         elif os.path.isdir(parsed_URL[2]):
-                            new_node_type='1'
+                            new_node_type = '1'
                         else:
-                            new_node_type='2'
-                        temp_Id=temp_Id+'.'+new_node_type+str(new_node_number)
+                            new_node_type = '2'
+                        temp_Id = temp_Id + '.' + new_node_type + str(new_node_number)
                         return temp_Id
-                # If it is not the last place assume it is a directory
+                        # If it is not the last place assume it is a directory
                     else:
-                        new_node_type='1'
+                        new_node_type = '1'
                         # Check to see if it is already in the FR
                         if path_list[place] in parts_list:
                             for URL in Id_cache.keys():
-                                if part_cache[URL][0]==path_list[place]:
-                                    new_node=part_cache[URL][1]
+                                if part_cache[URL][0] == path_list[place]:
+                                    new_node = part_cache[URL][1]
 
                         # If not add one to node
                         else:
-                            new_node_number=node_number+1
-                            new_node=new_node_type+str(new_node_number)
-                        temp_Id=temp_Id+'.'+new_node
+                            new_node_number = node_number + 1
+                            new_node = new_node_type + str(new_node_number)
+                        temp_Id = temp_Id + '.' + new_node
                         # Update the Id_cache for the next round, and the place
                         for URL in Id_cache.keys():
                             try:
-                                if not part_cache[URL][0]==path_list[place]:
-                                    del(Id_cache[URL])
-                                Id_cache[URL].split('.')[place+5]
+                                if not part_cache[URL][0] == path_list[place]:
+                                    del (Id_cache[URL])
+                                Id_cache[URL].split('.')[place + 5]
                             except KeyError:
                                 pass
                             except IndexError:
-                                #print Id_cache,URL
-                                del(Id_cache[URL])
-                        place=place+1
+                                # print Id_cache,URL
+                                del (Id_cache[URL])
+                        place = place + 1
 
-    def add_entry(self,URL):
+    def add_entry(self, URL):
         """ Adds an entry to the current File Register """
-        URL=condition_URL(URL)
+        URL = condition_URL(URL)
         if URL in self.Id_dictionary.keys():
             print 'Already there'
             return
         # the xml entry is <File Date="" Host="" Type="" Id="" URL=""/>
-        File_Registry=self.document.documentElement
-        new_entry=self.document.createElement('File')
+        File_Registry = self.document.documentElement
+        new_entry = self.document.createElement('File')
         # Make all the new attributes
-        attributes=['Id','Host','Date','URL','Type']
-        new_attributes=dict([(attribute,
-        self.document.createAttribute(attribute)) for attribute in \
-        attributes])
+        attributes = ['Id', 'Host', 'Date', 'URL', 'Type']
+        new_attributes = dict([(attribute,
+                                self.document.createAttribute(attribute)) for attribute in \
+                               attributes])
         # Add the new attributes to the new entry
         for attribute in attributes:
             new_entry.setAttributeNode(new_attributes[attribute])
         # Now assign the values
-        attribute_values={}
-        attribute_values['URL']=URL
-        attribute_values['Id']=self.create_Id(URL)
-        attribute_values['Date']=datetime.datetime.utcnow().isoformat()
-        type_code=attribute_values['Id'].split('.')[-1][0]
-        if type_code in ['1',u'1']:
-            attribute_values['Type']="Directory"
-        elif type_code in ['2',u'2']:
-            attribute_values['Type']="Ordinary"
-        elif type_code in ['3',u'3']:
-            attribute_values['Type']="Driver"
+        attribute_values = {}
+        attribute_values['URL'] = URL
+        attribute_values['Id'] = self.create_Id(URL)
+        attribute_values['Date'] = datetime.datetime.utcnow().isoformat()
+        type_code = attribute_values['Id'].split('.')[-1][0]
+        if type_code in ['1', u'1']:
+            attribute_values['Type'] = "Directory"
+        elif type_code in ['2', u'2']:
+            attribute_values['Type'] = "Ordinary"
+        elif type_code in ['3', u'3']:
+            attribute_values['Type'] = "Driver"
         else:
-            attribute_values['Type']="Other"
-        parsed_URL=urlparse.urlparse(condition_URL(URL))
-        if parsed_URL[1] in ['',u'']: #if it is empty assume local host
-            attribute_values['Host']= socket.gethostbyaddr(socket.gethostname())[0]
+            attribute_values['Type'] = "Other"
+        parsed_URL = urlparse.urlparse(condition_URL(URL))
+        if parsed_URL[1] in ['', u'']:  # if it is empty assume local host
+            attribute_values['Host'] = socket.gethostbyaddr(socket.gethostname())[0]
         else:
-            attribute_values['Host']= parsed_URL[1]
+            attribute_values['Host'] = parsed_URL[1]
 
         # Now set them all in the actual attribute
-        for (key,value) in attribute_values.iteritems():
-            new_entry.setAttribute(key,value)
+        for (key, value) in attribute_values.iteritems():
+            new_entry.setAttribute(key, value)
         File_Registry.appendChild(new_entry)
         # Finally update the self.Id_dictionary
         # Added boolean switch to speed up adding a lot of entries
 
-        self.Id_dictionary=dict([(str(node.getAttribute('URL')),
-            str(node.getAttribute('Id'))) for node in
-            self.document.getElementsByTagName('File')])
+        self.Id_dictionary = dict([(str(node.getAttribute('URL')),
+                                    str(node.getAttribute('Id'))) for node in
+                                   self.document.getElementsByTagName('File')])
+
     # TODO : Add an input filter that guesses at what you inputed
 
-    def add_tree(self,root,**options):
+    def add_tree(self, root, **options):
         """ Adds a directory and all sub folders and sub directories, **options
         provides a way to {'ignore','.pyc|etc'} or {'only','.png|.bmp'}"""
 
         # Deal with the optional parameters, these tend to make life easier
-        default_options={'ignore':None,'only':None,'print_ignored_files':True,
-        'directories_only':False,'files_only':False}
-        tree_options=default_options
-        for option,value in options.iteritems():
-            tree_options[option]=value
-        #print tree_options
-        #condition the URL
-        root_URL=condition_URL(root)
-        path=URL_to_path(root_URL)
+        default_options = {'ignore': None, 'only': None, 'print_ignored_files': True,
+                           'directories_only': False, 'files_only': False}
+        tree_options = default_options
+        for option, value in options.iteritems():
+            tree_options[option] = value
+        # print tree_options
+        # condition the URL
+        root_URL = condition_URL(root)
+        path = URL_to_path(root_URL)
         # now we add the files and directories that jive with the options
         try:
 
-            for (home,directories,files) in os.walk(path):
-                #print (home,directories,files)
-                for directory in directories:# had to change this, used to be first element in list
+            for (home, directories, files) in os.walk(path):
+                # print (home,directories,files)
+                for directory in directories:  # had to change this, used to be first element in list
                     try:
                         if tree_options['files_only']:
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it is not a file"%file
+                                print "ignoring %s because it is not a file" % file
                             raise
-                        if tree_options['ignore'] is not None and re.search(tree_options['ignore'],directory):
+                        if tree_options['ignore'] is not None and re.search(tree_options['ignore'], directory):
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it does not match the only option"%directory
+                                print "ignoring %s because it does not match the only option" % directory
                             raise
-                        elif tree_options['only'] is not None and not re.search(tree_options['only'],directory):
+                        elif tree_options['only'] is not None and not re.search(tree_options['only'], directory):
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it does not match the only option"%directory
+                                print "ignoring %s because it does not match the only option" % directory
                             raise
                         else:
-                            self.add_entry(condition_URL(os.path.join(home,directory)))
+                            self.add_entry(condition_URL(os.path.join(home, directory)))
                             self.save()
-                    except:pass
-                for file in files: # had to change this 12/2012, used to be Second element in list
+                    except:
+                        pass
+                for file in files:  # had to change this 12/2012, used to be Second element in list
                     try:
                         if tree_options['directories_only']:
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it is not a directory"%file
+                                print "ignoring %s because it is not a directory" % file
                             raise
-                        if tree_options['ignore'] is not None and re.search(tree_options['ignore'],file):
+                        if tree_options['ignore'] is not None and re.search(tree_options['ignore'], file):
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it matches the ignore option"%file
+                                print "ignoring %s because it matches the ignore option" % file
                             raise
-                        elif tree_options['only'] is not None and not re.search(tree_options['only'],file):
+                        elif tree_options['only'] is not None and not re.search(tree_options['only'], file):
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it does not match the only option"%file
+                                print "ignoring %s because it does not match the only option" % file
                             raise
                         else:
-                            #print (home,file)
-                            self.add_entry(condition_URL(os.path.join(home,file)))
+                            # print (home,file)
+                            self.add_entry(condition_URL(os.path.join(home, file)))
                             self.save()
-                    except:raise
+                    except:
+                        raise
         except:
             raise
-        #After all the files are added update the Id_dictionary
-        self.Id_dictionary=dict([(str(node.getAttribute('URL')),
-            str(node.getAttribute('Id'))) for node in
-            self.document.getElementsByTagName('File')])
+        # After all the files are added update the Id_dictionary
+        self.Id_dictionary = dict([(str(node.getAttribute('URL')),
+                                    str(node.getAttribute('Id'))) for node in
+                                   self.document.getElementsByTagName('File')])
 
-    def remove_entry(self,URL=None,Id=None):
+    def remove_entry(self, URL=None, Id=None):
         """ Removes an entry in the current File Register """
-        File_Registry=self.document.documentElement
+        File_Registry = self.document.documentElement
         if not URL is None:
-            URL=condition_URL(URL)
-            URL_FileNode_dictionary=dict([(node.getAttribute('URL'),
-            node) for node in self.document.getElementsByTagName('File')])
+            URL = condition_URL(URL)
+            URL_FileNode_dictionary = dict([(node.getAttribute('URL'),
+                                             node) for node in self.document.getElementsByTagName('File')])
             File_Registry.removeChild(URL_FileNode_dictionary[URL])
         else:
-            Id_FileNode_dictionary=dict([(node.getAttribute('Id'),
-            node) for node in self.document.getElementsByTagName('File')])
+            Id_FileNode_dictionary = dict([(node.getAttribute('Id'),
+                                            node) for node in self.document.getElementsByTagName('File')])
             File_Registry.removeChild(Id_FileNode_dictionary[Id])
         # Finally update the self.Id_dictionary
-        self.Id_dictionary=dict([(str(node.getAttribute('URL')),
-        str(node.getAttribute('Id'))) for node in \
-        self.document.getElementsByTagName('File')])
+        self.Id_dictionary = dict([(str(node.getAttribute('URL')),
+                                    str(node.getAttribute('Id'))) for node in \
+                                   self.document.getElementsByTagName('File')])
+
+    def get_data(self):
+        """Gets a list of lists that represent the data in the file register"""
+        node_list = self.document.getElementsByTagName("File")
+        data = [[attribute[1] for attribute in item.attributes.items()] for item in node_list]
+        return data
+
+    def get_data_dictionary_list(self):
+        """Returns a list of dictionaries that have the data in the file register attributes"""
+        node_list = self.document.getElementsByTagName("File")
+        data_dictionary_list = [{attribute[0]: attribute[1] for attribute in item.attributes.items()} for item in
+                                node_list]
+        return data_dictionary_list
 
 class Metadata(XMLBase):
     """ Metadata holds the metadata tags for a FileRegistry, If it already exists
