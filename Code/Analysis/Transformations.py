@@ -64,6 +64,17 @@ except:
 
 #-----------------------------------------------------------------------------
 # Module Functions
+def SixteenTerm_to_EightTermList(s4p_model):
+    """Returns two s2p's of the error boxes, with s2p number 1, the same as S11,S13,S31,S33 of error adaptor and
+    s2p number 2 as S22,S24,S42,S44 of error adaptor"""
+    # sparameter_complex=[Frequency[0],S11[1],S12[2],S13[3],S14[4],S21[5],S22[6],S23[7],S24[8],S31[9],
+    # S32[10],S33[11],S34[12],S41[13],S42[14],S43[15],S44[16]]
+    s2p_1_complex=[[row[0],row[1],row[3],row[9],row[11]] for row in s4p_model.sparameter_complex]
+    s2p_2_complex=[[row[0],row[6],row[8],row[14],row[16]] for row in s4p_model.sparameter_complex]
+    s2p_1=S2PV1(sparameter_complex=s2p_1_complex)
+    s2p_2=S2PV1(sparameter_complex=s2p_2_complex)
+    return [s2p_1,s2p_2]
+
 def W2p_to_SwitchTerms(w2p):
     """Creates a s2p with switch terms in port1 (reverse), port2 (foward) format given a w2p of a thru."""
     reA1_D2_index=w2p.column_names.index("reA1_D2")
@@ -129,7 +140,7 @@ def S2p_to_S1p(s2p,column="S11"):
     s1p_out=S1PV1(None,**options)
     return s1p_out
 
-def S1ps_toS2p(S11_s1p,S22_s1p,S21_fill_value=complex(0,0)):
+def S1ps_to_S2p(S11_s1p,S22_s1p,S21_fill_value=complex(0,0)):
     """Creates an s2p from two s1ps by filling S11 with S11_s1p and S22 with S22_s1p and S21, and S12 with S21_fill_value,
     Default is 0+ 0i. Assumes both have the same frequency list. """
     #first make sure both s1p 's  are in the right format

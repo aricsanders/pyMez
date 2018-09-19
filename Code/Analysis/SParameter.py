@@ -122,6 +122,22 @@ def cascade(s1,s2):
         out_sparameters.append(new_row)
     return out_sparameters
 
+def add_white_noise_s2p(s2p_model,noise_level=.0005):
+    """Adds white noise to a s2p in RI format and returns a new s2p with the noise added to each real and imaginary component"""
+    s2p_model.change_data_format("RI")
+    s2p_data=s2p_model.data[:]
+    noisy_data=[]
+    for row in s2p_data:
+        new_row=[row[0]]
+        sparameters=np.array(row[1:])+np.random.normal(loc=0,scale=noise_level,size=len(row[1:]))
+        new_row=new_row+sparameters.tolist()
+        noisy_data.append(new_row)
+    options=s2p_model.options.copy()
+    options["file_path"]=None
+    options["data"]=noisy_data
+    options["sparameter_complex"]=[]
+    noisy_s2p=S2PV1(**options)
+    return noisy_s2p
 
 def frequency_model_collapse_multiple_measurements(model, **options):
     """Returns a model with a single set of frequencies. Default is to average values together
