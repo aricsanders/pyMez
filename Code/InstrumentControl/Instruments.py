@@ -621,13 +621,14 @@ class VNA(VisaInstrument):
             self.write("CALCulate:PARameter:DEFine '{0}',{1},{2}".format(trace_name, trace_parameter,drive_port))
         if display_trace:
             self.write("DISPlay:WINDow1:TRACe1:FEED '{0}'".format(trace_name))
+
     def read_trace(self,trace_name):
         """Returns a 2-d list of [[reParameter1,imParameter1],..[reParameterN,imParameterN]] where
          n is the number of points in the sweep. User is responsible for triggering the sweep and retrieving
           the frequency array vna.get_frequency_list()"""
         self.write('FORM:ASC,0')
         # First get the A and Blists
-        self.write('CALC:PAR:SEL {0}'.format(trace_name))
+        self.write('CALC:PAR:SEL "{0}"'.format(trace_name))
         self.write('CALC:FORM MLIN')
         while self.is_busy():
             time.sleep(.01)
