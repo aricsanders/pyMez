@@ -610,6 +610,49 @@ class VNA(VisaInstrument):
                 self.frequency_list = frequency_list
         else:
             self.frequency_list = []
+
+    def add_trace(self,trace_name,trace_parameter,drive_port=1,display_trace=True):
+        """Adds a single trace to the VNA. Trace parameters vary by instrument and can be ratios of
+        recievers or raw receiver values. For instance, R1 is the a1 wave. Traditional Sparameters
+        do not require the identification of a drive_port. Does not display trace on the front panel"""
+        if re.search("S",trace_parameter,re.IGNORECASE):
+            self.write("CALCulate:PARameter:DEFine '{0}',{1}".format(trace_name,trace_parameter))
+        else:
+            self.write("CALCulate:PARameter:DEFine '{0}',{1},{2}".format(trace_name, trace_parameter,drive_port))
+        if display_trace:
+            self.write("DISPlay:WINDow1:TRACe1:FEED '{0}'".format(trace_name))
+    def read_trace(self,trace_name):
+        """Returns a 2-d list of [[reParameter1,imParameter1],..[reParameterN,imParameterN]] where
+         n is the number of points in the sweep. User is responsible for triggering the sweep and retrieving
+          the frequency array vna.get_frequency_list()"""
+        self.write('FORM:ASC,0')
+        # First get the A and Blists
+        self.write('CALC:PAR:SEL {0}'.format(trace_name))
+        self.write('CALC:FORM MLIN')
+        while self.is_busy():
+            time.sleep(.01)
+        out_string = self.query('CALC:DATA? SDATA')
+        out_string=out_string.replace("\n", "").split(",")
+        re_list=out_string[0::2]
+        im_list=out_string[1::2]
+        out_list=[[float(real_parameter),float(im_list[index])] for index,real_parameter in enumerate(re_list)]
+        return out_list
+    def trigger_sweep(self):
+        """Triggers a single sweep of the VNA, note you need to wait for the sweep to finish before reading the
+        values. It takes ~ #ports sourced*#points/IFBW """
+        self.write("INITiate:CONTinuous OFF")
+        self.write("ABORT;INITiate:IMMediate;*wai")
+
+
+    def set_source_output(self,state=0):
+        """Sets all of the outputs of the VNA to OFF(0) or ON (1). This disables/enables all the source outputs."""
+        self.write("OUTP {0}".format(state))
+
+    def get_source_output(self):
+        """Returns the state of the outputs. This is equivelent to vna.query('OUTP?')"""
+        state=self.query("OUTP?")
+        return int(state.replace("\n",""))
+
     def add_all_traces(self,**options):
         """Adds all Sparameter and wave parameter traces.
         Does not initialize the instrument. The trace names match those in the
@@ -1359,13 +1402,16 @@ class HighSpeedOscope(VisaInstrument):
                     "save_data": False, "data_format": "dat", "directory": os.getcwd(),
                     "specific_descriptor": "Scope", "general_descriptor": "Measurement", "add_header": False,
                     "output_table_options": {"data_delimiter": "\t", "treat_header_as_comment": True},
-                    "download_format":"ASCII"
+                    "download_format":"ASCII","verbose_timing":False,
                     }
         self.measure_options = {}
         for key, value in defaults.iteritems():
             self.measure_options[key] = value
         for key, value in options.iteritems():
             self.measure_options[key] = value
+        if self.measure_options["verbose_timing"]:
+            start_timer=datetime.datetime.now()
+            print("The .measure_waves method began at {0}".format(start_timer))
 
         self.set_number_points(self.measure_options["number_points"])
         channel_string_list = ["CHAN1", "CHAN2", "CHAN3", "CHAN4"]
@@ -1392,8 +1438,18 @@ class HighSpeedOscope(VisaInstrument):
         # this is the way diogo did it
         # number of points
         number_points = self.measure_options["number_points"]
+        if self.measure_options["verbose_timing"]:
+            setup_timer=datetime.datetime.now()
+            time_difference=setup_timer-start_timer
+            print("The setup of the sweep finished at {0} and took {1} seconds".format(setup_timer,time_difference))
         frames_data = []
         for frame_index in range(self.measure_options["number_frames"]):
+            if self.measure_options["verbose_timing"]:
+                frame_timer=datetime.datetime.now()
+                time_difference=frame_timer-start_timer
+                print(" Frame {0} began at {1}, {2} seconds from measure_waves begin ".format(frame_index,
+                                                                                              frame_timer,
+                                                                                              time_difference.seconds))
             new_frame = []
 
             # calculate time position for this frame
@@ -1402,6 +1458,10 @@ class HighSpeedOscope(VisaInstrument):
 
             # define postion to start the acquisition
             self.write(':TIM:POS {0}ns'.format(time_position))
+
+            if self.measure_options["verbose_timing"]:
+                timer=datetime.datetime.now()
+                print("Writing Channel Command at {0}".format(timer))
 
             # acquire channels desired
             channel_string = ""
@@ -1413,9 +1473,15 @@ class HighSpeedOscope(VisaInstrument):
             channel_command = ":DIG {0}".format(channel_string)
             self.write(channel_command)
 
+            if self.measure_options["verbose_timing"]:
+                timer=datetime.datetime.now()
+                print("Finished Writing Channel Command at {0}".format(timer))
             # trigger reading and wait
             self.write("*OPC?")
 
+            if self.measure_options["verbose_timing"]:
+                timer=datetime.datetime.now()
+                print("Finshed Trigger Command and Started to Read Channels at {0}".format(timer))
             # get data from the necessary channels
             for channel_read_index, channel_read in enumerate(self.measure_options["channels"]):
                 # get data for channel 1
@@ -1430,11 +1496,17 @@ class HighSpeedOscope(VisaInstrument):
                     data_column=self.resource.query_binary_values(':WAV:DATA?', datatype='h')
 
 
-
                 new_frame.append(data_column)
                 # print("{0} is {1}".format("data_column",data_column))
+                if self.measure_options["verbose_timing"]:
+                    timer = datetime.datetime.now()
+                    print("Finshed Data Acquistion for Channel {0} at {1}".format(channel_read,timer))
             frames_data.append(new_frame)
 
+
+        if self.measure_options["verbose_timing"]:
+            timer = datetime.datetime.now()
+            print("Data Manipulation Began at {0}".format(timer))
         # reshape measurement data
         measurement_data = [range(len(frames_data[0])) for x in range(number_points * len(frames_data))]
         #         print(len(measurement_data))
@@ -1473,10 +1545,18 @@ class HighSpeedOscope(VisaInstrument):
                                      "specific_descriptor": self.measure_options["specific_descriptor"],
                                      "general_descriptor": self.measure_options["general_descriptor"],
                                      "extension": "dat",
-                                     "directory": self.measure_options["directory"], "column_names": column_names}
+                                     "directory": self.measure_options["directory"],
+                                     "column_names": column_names}
+                    if re.search("asc",self.measure_options["download_format"],re.IGNORECASE):
+                        table_options["column_types"]=["float" for i in range(len(column_names))]
+                    else:
+                        table_options["column_types"]=["float"]+["int" for i in range(len(column_names)-1)]
+
                     for key, value in self.measure_options["output_table_options"].iteritems():
                         table_options[key] = value
+
                     output_table = AsciiDataTable(None, **table_options)
+
                     if self.measure_options["save_data"]:
                         data_save_path = auto_name(specific_descriptor=self.measure_options["specific_descriptor"],
                                                    general_descriptor=self.measure_options["general_descriptor"],
@@ -1485,6 +1565,10 @@ class HighSpeedOscope(VisaInstrument):
                                                    , padding=3)
                         output_table.path = data_save_path
                         output_table.save()
+
+        if self.measure_options["verbose_timing"]:
+            timer = datetime.datetime.now()
+            print("Data Manipulation Ended at {0}".format(timer))
 
         return output_table
 
