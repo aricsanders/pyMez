@@ -1514,7 +1514,9 @@ class HighSpeedOscope(VisaInstrument):
         #         print("{0} is{1}".format("len(frames_data)",len(frames_data)))
         #         print("{0} is{1}".format("len(frames_data[0])",len(frames_data[0])))
         #         print("{0} is{1}".format("len(frames_data[0][0])",len(frames_data[0][0])))
-
+        if self.measure_options["verbose_timing"]:
+            timer = datetime.datetime.now()
+            print("Data reshaping step1 ended at {0}".format(timer))
         for frame_index, frame in enumerate(frames_data):
             for column_index, column in enumerate(frame):
                 for row_index, row in enumerate(column):
@@ -1522,49 +1524,53 @@ class HighSpeedOscope(VisaInstrument):
                     # print("{0} is {1}".format("([row_index+frame_index*number_rows],[column_index],[frame_index])",
                     #([row_index + frame_index * number_rows], [column_index], [frame_index])))
                     measurement_data[row_index + frame_index * number_rows][column_index] =frames_data[frame_index][column_index][row_index]
-                    # reset timeout
-                    self.resource.timeout = timeout
-                    data_out = []
-                    time_start = self.measure_options["initial_time_offset"]
 
-                    for row_index, data_row in enumerate(measurement_data):
-                        new_row = [time_start + row_index * time_step] + data_row
-                        data_out.append(new_row)
-                    if self.measure_options["add_header"]:
-                        header = []
-                        for key, value in self.measure_options.iteritems():
-                            header.append("{0} = {1}".format(key, value))
-                    else:
-                        header = None
-                    column_names = ["Time"]
-                    for channel in self.measure_options["channels"]:
-                        column_names.append(channel_string_list[channel - 1])
+        if self.measure_options["verbose_timing"]:
+            timer = datetime.datetime.now()
+            print("Data reshaping step 2 ended at {0}".format(timer))
+        # reset timeout
+        self.resource.timeout = timeout
+        data_out = []
+        time_start = self.measure_options["initial_time_offset"]
 
-                    table_options = {"data": data_out,
-                                     "header": header,
-                                     "specific_descriptor": self.measure_options["specific_descriptor"],
-                                     "general_descriptor": self.measure_options["general_descriptor"],
-                                     "extension": "dat",
-                                     "directory": self.measure_options["directory"],
-                                     "column_names": column_names}
-                    if re.search("asc",self.measure_options["download_format"],re.IGNORECASE):
-                        table_options["column_types"]=["float" for i in range(len(column_names))]
-                    else:
-                        table_options["column_types"]=["float"]+["int" for i in range(len(column_names)-1)]
+        for row_index, data_row in enumerate(measurement_data):
+            new_row = [time_start + row_index * time_step] + data_row
+            data_out.append(new_row)
+        if self.measure_options["add_header"]:
+            header = []
+            for key, value in self.measure_options.iteritems():
+                header.append("{0} = {1}".format(key, value))
+        else:
+            header = None
+        column_names = ["Time"]
+        for channel in self.measure_options["channels"]:
+            column_names.append(channel_string_list[channel - 1])
 
-                    for key, value in self.measure_options["output_table_options"].iteritems():
-                        table_options[key] = value
+        table_options = {"data": data_out,
+                         "header": header,
+                         "specific_descriptor": self.measure_options["specific_descriptor"],
+                         "general_descriptor": self.measure_options["general_descriptor"],
+                         "extension": "dat",
+                         "directory": self.measure_options["directory"],
+                         "column_names": column_names}
+        if re.search("asc",self.measure_options["download_format"],re.IGNORECASE):
+            table_options["column_types"]=["float" for i in range(len(column_names))]
+        else:
+            table_options["column_types"]=["float"]+["int" for i in range(len(column_names)-1)]
 
-                    output_table = AsciiDataTable(None, **table_options)
+        for key, value in self.measure_options["output_table_options"].iteritems():
+            table_options[key] = value
 
-                    if self.measure_options["save_data"]:
-                        data_save_path = auto_name(specific_descriptor=self.measure_options["specific_descriptor"],
-                                                   general_descriptor=self.measure_options["general_descriptor"],
-                                                   directory=self.measure_options["directory"],
-                                                   extension='dat'
-                                                   , padding=3)
-                        output_table.path = data_save_path
-                        output_table.save()
+        output_table = AsciiDataTable(None, **table_options)
+
+        if self.measure_options["save_data"]:
+            data_save_path = auto_name(specific_descriptor=self.measure_options["specific_descriptor"],
+                                       general_descriptor=self.measure_options["general_descriptor"],
+                                       directory=self.measure_options["directory"],
+                                       extension='dat'
+                                       , padding=3)
+            output_table.path = data_save_path
+            output_table.save()
 
         if self.measure_options["verbose_timing"]:
             timer = datetime.datetime.now()
