@@ -1098,8 +1098,9 @@ table {
 	<div id="functionsNavigation">
       
   <ul>
-    <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.S1ps_toS2p">S1ps_toS2p</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.S1ps_to_S2p">S1ps_to_S2p</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.S2p_to_S1p">S2p_to_S1p</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.SixteenTerm_to_EightTermList">SixteenTerm_to_EightTermList</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.W1p_to_S1p">W1p_to_S1p</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.W2p_to_S2p">W2p_to_S2p</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Transformations.W2p_to_SwitchTerms">W2p_to_SwitchTerms</a></li>
@@ -1256,6 +1257,17 @@ preserving the content. It complements pyMez.Code.DataHandlers.Translations, and
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Functions</span>
+<span class="k">def</span> <span class="nf">SixteenTerm_to_EightTermList</span><span class="p">(</span><span class="n">s4p_model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns two s2p&#39;s of the error boxes, with s2p number 1, the same as S11,S13,S31,S33 of error adaptor and</span>
+<span class="sd">    s2p number 2 as S22,S24,S42,S44 of error adaptor&quot;&quot;&quot;</span>
+    <span class="c1"># sparameter_complex=[Frequency[0],S11[1],S12[2],S13[3],S14[4],S21[5],S22[6],S23[7],S24[8],S31[9],</span>
+    <span class="c1"># S32[10],S33[11],S34[12],S41[13],S42[14],S43[15],S44[16]]</span>
+    <span class="n">s2p_1_complex</span><span class="o">=</span><span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">11</span><span class="p">]]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">s4p_model</span><span class="o">.</span><span class="n">sparameter_complex</span><span class="p">]</span>
+    <span class="n">s2p_2_complex</span><span class="o">=</span><span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">16</span><span class="p">]]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">s4p_model</span><span class="o">.</span><span class="n">sparameter_complex</span><span class="p">]</span>
+    <span class="n">s2p_1</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="n">sparameter_complex</span><span class="o">=</span><span class="n">s2p_1_complex</span><span class="p">)</span>
+    <span class="n">s2p_2</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="n">sparameter_complex</span><span class="o">=</span><span class="n">s2p_2_complex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">s2p_1</span><span class="p">,</span><span class="n">s2p_2</span><span class="p">]</span>
+
 <span class="k">def</span> <span class="nf">W2p_to_SwitchTerms</span><span class="p">(</span><span class="n">w2p</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates a s2p with switch terms in port1 (reverse), port2 (foward) format given a w2p of a thru.&quot;&quot;&quot;</span>
     <span class="n">reA1_D2_index</span><span class="o">=</span><span class="n">w2p</span><span class="o">.</span><span class="n">column_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;reA1_D2&quot;</span><span class="p">)</span>
@@ -1321,7 +1333,7 @@ preserving the content. It complements pyMez.Code.DataHandlers.Translations, and
     <span class="n">s1p_out</span><span class="o">=</span><span class="n">S1PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">s1p_out</span>
 
-<span class="k">def</span> <span class="nf">S1ps_toS2p</span><span class="p">(</span><span class="n">S11_s1p</span><span class="p">,</span><span class="n">S22_s1p</span><span class="p">,</span><span class="n">S21_fill_value</span><span class="o">=</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
+<span class="k">def</span> <span class="nf">S1ps_to_S2p</span><span class="p">(</span><span class="n">S11_s1p</span><span class="p">,</span><span class="n">S22_s1p</span><span class="p">,</span><span class="n">S21_fill_value</span><span class="o">=</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
     <span class="sd">&quot;&quot;&quot;Creates an s2p from two s1ps by filling S11 with S11_s1p and S22 with S22_s1p and S21, and S12 with S21_fill_value,</span>
 <span class="sd">    Default is 0+ 0i. Assumes both have the same frequency list. &quot;&quot;&quot;</span>
     <span class="c1">#first make sure both s1p &#39;s  are in the right format</span>
@@ -1365,8 +1377,8 @@ preserving the content. It complements pyMez.Code.DataHandlers.Translations, and
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
-    <div class="name def" id="pyMez.Code.Analysis.Transformations.S1ps_toS2p">
-    <p>def <span class="ident">S1ps_toS2p</span>(</p><p>S11_s1p, S22_s1p, S21_fill_value=0j)</p>
+    <div class="name def" id="pyMez.Code.Analysis.Transformations.S1ps_to_S2p">
+    <p>def <span class="ident">S1ps_to_S2p</span>(</p><p>S11_s1p, S22_s1p, S21_fill_value=0j)</p>
     </div>
     
 
@@ -1375,9 +1387,9 @@ preserving the content. It complements pyMez.Code.DataHandlers.Translations, and
     <div class="desc"><p>Creates an s2p from two s1ps by filling S11 with S11_s1p and S22 with S22_s1p and S21, and S12 with S21_fill_value,
 Default is 0+ 0i. Assumes both have the same frequency list.</p></div>
   <div class="source_cont">
-  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Transformations.S1ps_toS2p', this);">Show source &equiv;</a></p>
-  <div id="source-pyMez.Code.Analysis.Transformations.S1ps_toS2p" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">S1ps_toS2p</span><span class="p">(</span><span class="n">S11_s1p</span><span class="p">,</span><span class="n">S22_s1p</span><span class="p">,</span><span class="n">S21_fill_value</span><span class="o">=</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Transformations.S1ps_to_S2p', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Transformations.S1ps_to_S2p" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">S1ps_to_S2p</span><span class="p">(</span><span class="n">S11_s1p</span><span class="p">,</span><span class="n">S22_s1p</span><span class="p">,</span><span class="n">S21_fill_value</span><span class="o">=</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
     <span class="sd">&quot;&quot;&quot;Creates an s2p from two s1ps by filling S11 with S11_s1p and S22 with S22_s1p and S21, and S12 with S21_fill_value,</span>
 <span class="sd">    Default is 0+ 0i. Assumes both have the same frequency list. &quot;&quot;&quot;</span>
     <span class="c1">#first make sure both s1p &#39;s  are in the right format</span>
@@ -1433,6 +1445,37 @@ Default is 0+ 0i. Assumes both have the same frequency list.</p></div>
     <span class="n">options</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;s1p&quot;</span>
     <span class="n">s1p_out</span><span class="o">=</span><span class="n">S1PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">s1p_out</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Transformations.SixteenTerm_to_EightTermList">
+    <p>def <span class="ident">SixteenTerm_to_EightTermList</span>(</p><p>s4p_model)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns two s2p's of the error boxes, with s2p number 1, the same as S11,S13,S31,S33 of error adaptor and
+s2p number 2 as S22,S24,S42,S44 of error adaptor</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Transformations.SixteenTerm_to_EightTermList', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Transformations.SixteenTerm_to_EightTermList" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">SixteenTerm_to_EightTermList</span><span class="p">(</span><span class="n">s4p_model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns two s2p&#39;s of the error boxes, with s2p number 1, the same as S11,S13,S31,S33 of error adaptor and</span>
+<span class="sd">    s2p number 2 as S22,S24,S42,S44 of error adaptor&quot;&quot;&quot;</span>
+    <span class="c1"># sparameter_complex=[Frequency[0],S11[1],S12[2],S13[3],S14[4],S21[5],S22[6],S23[7],S24[8],S31[9],</span>
+    <span class="c1"># S32[10],S33[11],S34[12],S41[13],S42[14],S43[15],S44[16]]</span>
+    <span class="n">s2p_1_complex</span><span class="o">=</span><span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">11</span><span class="p">]]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">s4p_model</span><span class="o">.</span><span class="n">sparameter_complex</span><span class="p">]</span>
+    <span class="n">s2p_2_complex</span><span class="o">=</span><span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">16</span><span class="p">]]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">s4p_model</span><span class="o">.</span><span class="n">sparameter_complex</span><span class="p">]</span>
+    <span class="n">s2p_1</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="n">sparameter_complex</span><span class="o">=</span><span class="n">s2p_1_complex</span><span class="p">)</span>
+    <span class="n">s2p_2</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="n">sparameter_complex</span><span class="o">=</span><span class="n">s2p_2_complex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">s2p_1</span><span class="p">,</span><span class="n">s2p_2</span><span class="p">]</span>
 </pre></div>
 
   </div>

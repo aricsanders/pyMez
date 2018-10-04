@@ -1100,6 +1100,7 @@ table {
   <ul>
     <li class="mono"><a href="#pyMez.Code.Analysis.SParameter.S_to_T">S_to_T</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.SParameter.T_to_S">T_to_S</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.SParameter.add_white_noise_s2p">add_white_noise_s2p</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.SParameter.average_one_port_sparameters">average_one_port_sparameters</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.SParameter.calrep">calrep</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.SParameter.calrep_history_plot">calrep_history_plot</a></li>
@@ -1401,6 +1402,22 @@ see also <a href="./NISTUncertainty.m.html">NISTUncertainty</a></p>
         <span class="n">out_sparameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out_sparameters</span>
 
+<span class="k">def</span> <span class="nf">add_white_noise_s2p</span><span class="p">(</span><span class="n">s2p_model</span><span class="p">,</span><span class="n">noise_level</span><span class="o">=.</span><span class="mo">0005</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds white noise to a s2p in RI format and returns a new s2p with the noise added to each real and imaginary component&quot;&quot;&quot;</span>
+    <span class="n">s2p_model</span><span class="o">.</span><span class="n">change_data_format</span><span class="p">(</span><span class="s2">&quot;RI&quot;</span><span class="p">)</span>
+    <span class="n">s2p_data</span><span class="o">=</span><span class="n">s2p_model</span><span class="o">.</span><span class="n">data</span><span class="p">[:]</span>
+    <span class="n">noisy_data</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">s2p_data</span><span class="p">:</span>
+        <span class="n">new_row</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">sparameters</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="n">noise_level</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+        <span class="n">new_row</span><span class="o">=</span><span class="n">new_row</span><span class="o">+</span><span class="n">sparameters</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">noisy_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+    <span class="n">options</span><span class="o">=</span><span class="n">s2p_model</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;file_path&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">noisy_data</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_complex&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">noisy_s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">noisy_s2p</span>
 
 <span class="k">def</span> <span class="nf">frequency_model_collapse_multiple_measurements</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns a model with a single set of frequencies. Default is to average values together</span>
@@ -3905,6 +3922,42 @@ format. Returns a list in [frequency, np.matrix] format.</p></div>
         <span class="n">S22</span><span class="o">=-</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">S_list</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">frequency</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="n">S11</span><span class="p">,</span><span class="n">S12</span><span class="p">],[</span><span class="n">S21</span><span class="p">,</span><span class="n">S22</span><span class="p">]])])</span>
     <span class="k">return</span> <span class="n">S_list</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.SParameter.add_white_noise_s2p">
+    <p>def <span class="ident">add_white_noise_s2p</span>(</p><p>s2p_model, noise_level=0.0005)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Adds white noise to a s2p in RI format and returns a new s2p with the noise added to each real and imaginary component</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.SParameter.add_white_noise_s2p', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.SParameter.add_white_noise_s2p" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_white_noise_s2p</span><span class="p">(</span><span class="n">s2p_model</span><span class="p">,</span><span class="n">noise_level</span><span class="o">=.</span><span class="mo">0005</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds white noise to a s2p in RI format and returns a new s2p with the noise added to each real and imaginary component&quot;&quot;&quot;</span>
+    <span class="n">s2p_model</span><span class="o">.</span><span class="n">change_data_format</span><span class="p">(</span><span class="s2">&quot;RI&quot;</span><span class="p">)</span>
+    <span class="n">s2p_data</span><span class="o">=</span><span class="n">s2p_model</span><span class="o">.</span><span class="n">data</span><span class="p">[:]</span>
+    <span class="n">noisy_data</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">s2p_data</span><span class="p">:</span>
+        <span class="n">new_row</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">sparameters</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="n">noise_level</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+        <span class="n">new_row</span><span class="o">=</span><span class="n">new_row</span><span class="o">+</span><span class="n">sparameters</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">noisy_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+    <span class="n">options</span><span class="o">=</span><span class="n">s2p_model</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;file_path&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">noisy_data</span>
+    <span class="n">options</span><span class="p">[</span><span class="s2">&quot;sparameter_complex&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">noisy_s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">noisy_s2p</span>
 </pre></div>
 
   </div>
