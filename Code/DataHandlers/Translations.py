@@ -110,7 +110,8 @@ try:
 except:
     print("The module odo was not found or had an error,"
           "please check module or put it on the python path")
-    raise ImportError
+    pass
+    #raise ImportError
 try:
     import PIL
 except:
