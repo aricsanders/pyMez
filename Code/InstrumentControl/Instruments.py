@@ -1361,26 +1361,50 @@ class VNA(VisaInstrument):
         w2p = W2P(None, **options)
         return w2p
 
-class NRPPowerMeter(VisaInstrument):
+class PowerMeter(VisaInstrument):
+    """Controls power meters"""
+    def initialize(self):
+        """Initializes the power meter to a state with W units"""
+        self.write("*RST")
+        time.sleep(.1)
+        self.write("UNIT:POW W")
+        self.write("INIT")
+
+    def set_frequency(self,frequency=1*10**9):
+        """Sets the frequency of the power meter"""
+        self.write("SENS:FREQ {0}".format(frequency))
+
+    def get_frequency(self):
+        "Returns the frequency of the power meter"
+        frequency=self.query("SENS:FREQ?").replace("\n","")
+        return float(frequency)
+
+    def get_reading(self):
+        """Initializes and fetches a reading"""
+        self.write("INIT")
+        return float(self.query("FETCh?").replace("\n",""))
+
+    def set_units(self,unit="W"):
+        """Sets the power meters units, acceptable units are W or adBM"""
+        # Todo put an input checker on this to only allow desired commands
+        self.write("UNIT:POW {0}".format(unit))
+
+    def get_units(self,unit="W"):
+        """Gets the power meters units"""
+        # Todo put an input checker on this to only allow desired commands
+        unit=self.query("UNIT:POW?").replace("\n","")
+        return unit
+
+class NRPPowerMeter(PowerMeter):
     """Controls RS power meters"""
     def initialize(self):
         """Initializes the power meter to a state with W units, 10ms aperture and Avgerage power readings"""
         self.write("*RST")
+        time.sleep(.1)
         self.write("UNIT:POW W")
         self.write("SENS:FUNC POW:AVG")
         self.write("SENS:APER 10 MS")
         self.write("INIT")
-
-    def get_reading(self):
-        """Intializes and fetches a reading"""
-        self.write("INIT")
-        return float(self.query("FETCh?").replace("\n",""))
-
-    def set_units(self,unit):
-        """Sets the power meters units, aceptable units are W or adBM"""
-        # Todo put an input checker on this to only allow desired commands
-        self.write("UNIT:POW {0}".format(unit))
-
 
 class HighSpeedOscope(VisaInstrument):
     """Control Class for high speed oscilloscopes. Based on code from Diogo """
