@@ -403,7 +403,8 @@ class FakeInstrument(InstrumentSheet):
         
 class VisaInstrument(InstrumentSheet):
     """ General Class to communicate with COMM and GPIB instruments
-    This is a blend of the pyvisa resource and an xml description. """
+    This is a blend of the pyvisa resource and an xml description. If there is no device connected
+     enters into a fake mode. Where all the commands are logged as .history"""
     def __init__(self,resource_name=None,**options):
         """ Initializes the VisaInstrument Class"""
         defaults={"state_directory":os.getcwd(),
@@ -441,25 +442,35 @@ class VisaInstrument(InstrumentSheet):
         
         self.state_buffer=[]
         self.STATE_BUFFER_MAX_LENGTH=10
-        
-        self.resource_manager=visa.ResourceManager()
-        # Call the visa instrument class-- this gives ask,write,read
-        self.resource=self.resource_manager.open_resource(self.instrument_address)
+        try:
+            self.resource_manager=visa.ResourceManager()
+            # Call the visa instrument class-- this gives ask,write,read
+            self.resource=self.resource_manager.open_resource(self.instrument_address)
+            self.fake_mode = False
+        except:
+            print("Unable to load resource entering fake mode ...")
+            self.resource=FakeInstrument(self.instrument_address)
+            self.history=self.resource.history
+            self.fake_mode=True
         self.current_state=self.get_state()
         
 
     def write(self,command):
         "Writes command to instrument"
         return self.resource.write(command)
+
     def read(self):
         "Reads from the instrument"
         return self.resource.read()
+
     def query(self,command):
         "Writes command and then reads a response"
         return self.resource.query(command)
+
     def ask(self,command):
         "Writes command and then reads a response"
         return self.resource.query(command)
+
     def set_state(self,state_dictionary=None,state_table=None):
         """ Sets the instrument to the state specified by Command:Value pairs"""
         if state_dictionary:
@@ -574,42 +585,50 @@ class VNA(VisaInstrument):
         for key, value in options.iteritems():
             self.options[key] = value
         VisaInstrument.__init__(self, resource_name, **self.options)
-        self.power = self.get_power()
-        self.IFBW = self.get_IFBW()
-        self.frequency_units = self.options["frequency_units"]
-        self.frequency_table = []
-        # this should be if SENS:SWE:TYPE? is LIN or LOG
-        self.sweep_type = self.get_sweep_type()
-        if re.search("LIN", self.sweep_type, re.IGNORECASE):
-            start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
-            stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
-            number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
-            self.frequency_list = np.linspace(start, stop, number_points).tolist()
-        elif re.search("LIN", self.sweep_type, re.IGNORECASE):
-            start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
-            stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
-            number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
-            logspace_start = np.log10(start)
-            logspace_stop = np.log10(stop)
-            self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
-                                                                                 num=number_points, base=10).tolist())
-        elif re.search("SEG", self.sweep_type, re.IGNORECASE):
-            number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
-            for i in range(number_segments):
-                start = float(self.query("SENS:SEGM{0}:FREQ:START?".format(i + 1)).replace("\n", ""))
-                stop = float(self.query("SENS:SEGM{0}:FREQ:STOP?".format(i + 1)).replace("\n", ""))
-                number_points = int(self.query("SENS:SEGM{0}:SWE:POIN?".format(i + 1)).replace("\n", ""))
-                step = (stop - start) / float(number_points - 1)
-                self.frequency_table.append({"start": start, "stop": stop,
-                                             "number_points": number_points, "step": step})
-                self.frequency_table = fix_segment_table(self.frequency_table)
-                frequency_list = []
-                for row in self.frequency_table[:]:
-                    new_list = np.linspace(row["start"], row["stop"], row["number_points"]).tolist()
-                    frequency_list = frequency_list + new_list
-                self.frequency_list = frequency_list
+        if self.fake_mode:
+            self.power = -20
+            self.IFBW = 10
+            self.frequency_units = self.options["frequency_units"]
+            self.frequency_table = []
+            # this should be if SENS:SWE:TYPE? is LIN or LOG
+            self.sweep_type ="LIN"
         else:
-            self.frequency_list = []
+            self.power = self.get_power()
+            self.IFBW = self.get_IFBW()
+            self.frequency_units = self.options["frequency_units"]
+            self.frequency_table = []
+            # this should be if SENS:SWE:TYPE? is LIN or LOG
+            self.sweep_type = self.get_sweep_type()
+            if re.search("LIN", self.sweep_type, re.IGNORECASE):
+                start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
+                stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
+                number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
+                self.frequency_list = np.linspace(start, stop, number_points).tolist()
+            elif re.search("LIN", self.sweep_type, re.IGNORECASE):
+                start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
+                stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
+                number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
+                logspace_start = np.log10(start)
+                logspace_stop = np.log10(stop)
+                self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
+                                                                                     num=number_points, base=10).tolist())
+            elif re.search("SEG", self.sweep_type, re.IGNORECASE):
+                number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
+                for i in range(number_segments):
+                    start = float(self.query("SENS:SEGM{0}:FREQ:START?".format(i + 1)).replace("\n", ""))
+                    stop = float(self.query("SENS:SEGM{0}:FREQ:STOP?".format(i + 1)).replace("\n", ""))
+                    number_points = int(self.query("SENS:SEGM{0}:SWE:POIN?".format(i + 1)).replace("\n", ""))
+                    step = (stop - start) / float(number_points - 1)
+                    self.frequency_table.append({"start": start, "stop": stop,
+                                                 "number_points": number_points, "step": step})
+                    self.frequency_table = fix_segment_table(self.frequency_table)
+                    frequency_list = []
+                    for row in self.frequency_table[:]:
+                        new_list = np.linspace(row["start"], row["stop"], row["number_points"]).tolist()
+                        frequency_list = frequency_list + new_list
+                    self.frequency_list = frequency_list
+            else:
+                self.frequency_list = []
 
     def add_trace(self,trace_name,trace_parameter,drive_port=1,display_trace=True):
         """Adds a single trace to the VNA. Trace parameters vary by instrument and can be ratios of
@@ -638,6 +657,7 @@ class VNA(VisaInstrument):
         im_list=out_string[1::2]
         out_list=[[float(real_parameter),float(im_list[index])] for index,real_parameter in enumerate(re_list)]
         return out_list
+
     def trigger_sweep(self):
         """Triggers a single sweep of the VNA, note you need to wait for the sweep to finish before reading the
         values. It takes ~ #ports sourced*#points/IFBW """
@@ -958,11 +978,11 @@ class VNA(VisaInstrument):
             # Set the Channel to have 2 Traces
             self.write("CALC1:PAR:COUN 2")
             # Trace 1 This is port 2 or Forward Switch Terms
-            self.write("CALC1:PAR:DEF 'FWD',R2,1")  # note this command is different for vector star A2,B2
+            self.write("CALC1:PAR:DEF 'FWD',R2B,1")  # note this command is different for vector star A2,B2
             if self.measure_switch_term_options["view_trace"]:
                 self.write("DISPlay:WINDow1:TRACe5:FEED 'FWD'")
             # Trace 2 This is port 1 or Reverse Switch Terms
-            self.write("CALC1:PAR:DEF 'REV',R1,2")
+            self.write("CALC1:PAR:DEF 'REV',R1A,2")
             if self.measure_switch_term_options["view_trace"]:
                 self.write("DISPlay:WINDow1:TRACe6:FEED 'REV'")
 
@@ -977,11 +997,11 @@ class VNA(VisaInstrument):
         # Set the read format
         self.write("FORM:ASC,0")
         # Read in the data
-        self.write("CALC:PAR:SEL FWD;")
+        self.write("CALC:PAR:SEL 'FWD';")
         foward_switch_string = self.query("CALC:DATA? SDATA")
         while self.is_busy():
             time.sleep(.01)
-        self.write("CALC:PAR:SEL REV;")
+        self.write("CALC:PAR:SEL 'REV';")
         reverse_switch_string = self.query("CALC:DATA? SDATA")
         # Now parse the string
         foward_switch_list = foward_switch_string.replace("\n", "").split(",")
