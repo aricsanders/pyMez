@@ -404,7 +404,7 @@ class FakeInstrument(InstrumentSheet):
 class VisaInstrument(InstrumentSheet):
     """ General Class to communicate with COMM and GPIB instruments
     This is a blend of the pyvisa resource and an xml description. If there is no device connected
-     enters into a fake mode. Where all the commands are logged as .history"""
+     enters into a fake mode. Where all the commands are logged as .history and the attribute fake_mode=True"""
     def __init__(self,resource_name=None,**options):
         """ Initializes the VisaInstrument Class"""
         defaults={"state_directory":os.getcwd(),
