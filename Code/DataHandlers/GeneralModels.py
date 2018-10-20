@@ -7,7 +7,9 @@
 #-----------------------------------------------------------------------------
 """ GeneralModels is a module that contains general data models and functions for handling them. Its key
  class is AsciiDataTable that is an abstracted model of a data table with a header full of metadata, a
- column modeled table (like excel or a csv table) and a footer. The
+ column modeled table (like excel or a csv table) and a footer. Made a change 10/19/2018 to AsciiDataTable
+ that now by default saves a .schema file and looks for one to open the table (save_schema=True,
+ open_with_schema =True )
 
 
 Examples
@@ -56,7 +58,7 @@ except:
     METHOD_ALIASES=0
     pass
 try:
-    from Code.Utils.Names import auto_name
+    from Code.Utils.Names import *
     DEFAULT_FILE_NAME=None
 except:
     print("The function auto_name in pyMez.Code.Utils.Names was not found")
@@ -797,8 +799,17 @@ class AsciiDataTable(object):
                             if self.lines_defined():
                                 self.__parse__()
                             else:
-                                print("FAILED to import file!")
-                                raise
+                                try:
+                                    print("No schema was found, trying pandas parser, this may take a little while..")
+                                    import pandas
+                                    self.pandas_data_frame=pandas.read_csv(file_path)
+                                    self.column_names =self. pandas_data_frame.columns.tolist()[:]
+                                    self.data = self.pandas_data_frame.as_matrix().tolist()[:]
+                                    self.options["column_types"] = map(lambda x: str(x),
+                                                                             self.pandas_data_frame.dtypes.tolist()[:])
+                                except:
+                                    print("FAILED to import file!")
+                                    raise
     def structure_metadata(self):
         """Function that should be overridden by whatever model the datatable has, it only responds with a self.metadata
         attribute in its base state derived from self.options["metadata]"""
