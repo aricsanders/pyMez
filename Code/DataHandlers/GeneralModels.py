@@ -633,7 +633,9 @@ class AsciiDataTable(object):
                   "treat_header_as_comment":None,
                   "treat_footer_as_comment":None,
                   "metadata":None,
-                  "data_list_dictionary":None
+                  "data_list_dictionary":None,
+                  "save_schema":True,
+                  "open_with_schema":True
                   }
         #some of the options have the abiltiy to confilct with each other, so there has to be a
         #built-in way to determine the precedence of each option, for import lines first, then begin and then end
@@ -696,6 +698,16 @@ class AsciiDataTable(object):
             # we can just return an error right now and then have an __autoload__ method
             # we can assume it is in ascii or utf-8
             # set any attribute that has no options to None
+
+            # try to parse schema
+            try:
+                if self.options["open_with_schema"]:
+                    new_options=read_schema(change_extension(file_path,new_extension="schema"))
+                    for key,value in new_options.iteritems():
+                        self.options[key]=value
+            except:
+                pass
+
             self.structure_metadata()
             import_table=[]
             for item in self.elements:
@@ -1026,6 +1038,8 @@ class AsciiDataTable(object):
         file_out=open(path,'w')
         file_out.write(out_string)
         file_out.close()
+        if self.options["save_schema"]:
+            self.save_schema(change_extension(path,new_extension="schema"))
         self.options=original_options
 
     def build_string(self,**temp_options):
