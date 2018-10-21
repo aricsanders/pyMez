@@ -295,7 +295,7 @@ class OnePortCalrepModel(AsciiDataTable):
         # This is a general pattern for adding a lot of options
         defaults= {"data_delimiter": ",", "column_names_delimiter": ",", "specific_descriptor": 'One_Port',
                    "general_descriptor": 'Sparameter', "extension": 'txt', "comment_begin": "#", "comment_end": "\n",
-                   "column_types": ['float' for i in range(11)],
+                   "column_types": ['float' for i in range(len(ONE_PORT_COLUMN_NAMES))],
                    "column_descriptions": {"Frequency": "Frequency in GHz", "magS11": "Linear magnitude",
                                            "uMb": "Uncertainty in magnitude due to standards",
                                            "uMa": "Uncertainty in magnitude due to electronics",
@@ -347,9 +347,9 @@ class OnePortCalrepModel(AsciiDataTable):
         table_type=self.path.split(".")[-1]
         in_file=open(self.path,'r')
         for line in in_file:
-            #if not re.match('[\s]+(?!\w+)',line):
+            if not re.match('[\s]+(?!\w+)',line):
                 #print line
-            lines.append(line)
+                lines.append(line)
         in_file.close()
         # Handle the cases in which it is the comma delimited table
         if re.match('txt',table_type,re.IGNORECASE):
@@ -1057,6 +1057,7 @@ class TwoPortCalrepModel(object):
             for index,table in enumerate(self.tables):
                 column_names=[]
                 for column_number,column in enumerate(table.column_names):
+                    column=column.replace("S11","")
                     if column is not "Frequency":
                         column_names.append(column+self.table_names[index])
                     else:
@@ -1642,7 +1643,8 @@ class W2P(AsciiDataTable):
                     "row_end_token": None, "escape_character": None,
                     "data_begin_token": None, "data_end_token": None,
                     "column_types": ['float' for i in range(len(make_wave_parameter_column_names()))],
-                    "column_units": ["GHz"] + [None for i in range(len(make_wave_parameter_column_names()) - 1)]
+                    "column_units": ["GHz"] + [None for i in range(len(make_wave_parameter_column_names()) - 1)],
+                    "use_alternative_parser":False
                     }
         self.options = {}
         for key, value in defaults.iteritems():
@@ -1954,6 +1956,7 @@ def test_OnePortDUTModel(file_path="69329.dut"):
     print one_port.__dict__
     print("The metadata for the OnePortDUT model is {0} ".format(one_port.metadata))
     print one_port
+
 def test_TwelveTermErrorModel(file_path='CalCoefficients.txt'):
     "Tests the TwelveTermErrorModel"
     os.chdir(TESTS_DIRECTORY)
@@ -1963,17 +1966,17 @@ def test_TwelveTermErrorModel(file_path='CalCoefficients.txt'):
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    #test_OnePortCalrepModel()
-    #test_OnePortCalrepModel('700437.asc')
-    #test_OnePortCalrepModel_Ctable(file_path_1='922729c.txt')
+    test_OnePortCalrepModel()
+    test_OnePortCalrepModel('700437.asc')
+    test_OnePortCalrepModel_Ctable(file_path_1='922729c.txt')
     #test_OnePortRawModel()
     #test_OnePortRawModel('OnePortRawTestFile_002.txt')
     #test_TwoPortRawModel()
     #test_PowerRawModel('CTNP15.A1_042601')
     #test_PowerRawModel()
-    test_JBSparameter()
-    test_JBSparameter('QuartzRefExample_L1_g10_HF')
-    #test_TwoPortCalrepModel()
+    #test_JBSparameter()
+    #test_JBSparameter('QuartzRefExample_L1_g10_HF')
+    test_TwoPortCalrepModel()
     #test_TwoPortCalrepModel('N205RV.asc')
     #test_PowerCalrepModel()
     #test_PowerCalrepModel('700083b.txt')
