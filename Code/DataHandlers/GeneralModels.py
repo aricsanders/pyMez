@@ -637,7 +637,8 @@ class AsciiDataTable(object):
                   "metadata":None,
                   "data_list_dictionary":None,
                   "save_schema":True,
-                  "open_with_schema":True
+                  "open_with_schema":True,
+                  "use_alternative_parser":True,
                   }
         #some of the options have the abiltiy to confilct with each other, so there has to be a
         #built-in way to determine the precedence of each option, for import lines first, then begin and then end
@@ -800,9 +801,11 @@ class AsciiDataTable(object):
                                 self.__parse__()
                             else:
                                 try:
+                                    if not self.options["use_alternative_parser"]:raise
                                     print("No schema was found, trying pandas parser, this may take a little while..")
                                     import pandas
-                                    self.pandas_data_frame=pandas.read_csv(file_path)
+                                    self.pandas_data_frame=pandas.read_csv(file_path,
+                                                                           sep=self.options["data_delimiter"])
                                     self.column_names =self. pandas_data_frame.columns.tolist()[:]
                                     self.data = self.pandas_data_frame.as_matrix().tolist()[:]
                                     self.options["column_types"] = map(lambda x: str(x),
