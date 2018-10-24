@@ -194,7 +194,7 @@ def build_snp_row_formatter(number_ports=2,precision=None,number_columns=None):
     number_rows_per_frequency=number_ports**2/4
     row_formatter=""
     if precision is None:
-        precision=4
+        precision=10
     for i in range(number_columns):
         if i==number_columns-1:
             row_formatter=row_formatter+"{"+str(i)+":.%sg}"%precision
@@ -613,7 +613,7 @@ class S1PV1(SNPBase):
                   "extension":'s1p',
                   "metadata":None,
                   "column_descriptions":None,
-                  "sparameter_row_formatter_string":build_row_formatter(None,3),
+                  "sparameter_row_formatter_string":build_row_formatter(10,3),
                   "data":[],
                   "sparameter_complex":[],
                   "noiseparameter_data":[],

@@ -7,6 +7,17 @@
 #-----------------------------------------------------------------------------
 """ Tools to help distribution. This began by renaming all instances of pyMeasure to
  pyMez to avoid PYPI conflicts with another package.
+ Procedure:
+ + update the src folder
+ + update the setup.py file to contain at least a higher number of version
+ + run this module to add init to all of the directories
+ + from the command line in the directory with setup.py run
+ >>python setup.py sdist
+ >>python setup.py sdist upload
+
+ If this fails to upload, check that the $HOME directory is properly defined and that the
+ user name and password is right in .pypirc file
+ After this module is ran (update the src folder
 
  Help
 ---------------

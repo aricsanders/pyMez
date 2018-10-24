@@ -704,12 +704,12 @@ class AdvancedInterfaceFrame(wx.Frame):
         module_directory=os.path.split(file_name)[0]
         module_name=os.path.split(file_name)[1].replace('.py','')
         sys.path.append(module_directory)
-        exec('import %s'%module_name)
-        attributes=eval('dir(%s)'%module_name)
+        exec('import {0}'.format(module_name))
+        attributes=eval('dir({0})'.format(module_name))
         for item in attributes:
             if re.search('test_|_robot|_script',item,re.IGNORECASE):
                 scripts.append(item)
-                output[item]=eval('%s.%s'%(module_name,item))
+                output[item]=eval('{0}.{1}'.format(module_name,item))
             
         output['module']=module_name
         output['scripts']=scripts
@@ -734,8 +734,8 @@ class AdvancedInterfaceFrame(wx.Frame):
         if self.tool_menu_number is 1:
             self.ScriptsMenu=wx.Menu()
             self.ToolMenu.AppendMenu(-1,'Scripts',self.ScriptsMenu)
-        self.ScriptsMenu.Append(help=u'Runs the %s script'%self.tool_menu_number,
-                            id=-1,kind=wx.ITEM_NORMAL, text=u'Run the %s script'%self.tool_menu_number)
+        self.ScriptsMenu.Append(help=u'Runs the {0} script'.format(self.tool_menu_number),
+                            id=-1,kind=wx.ITEM_NORMAL, text=u'Run the {0} script'.format(self.tool_menu_number))
         event.Skip()
     def OnStatesButtonButton(self, event):
         states_directory=os.path.join(PYMEASURE_ROOT,'Data/States')
