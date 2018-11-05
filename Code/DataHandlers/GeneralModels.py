@@ -2388,7 +2388,7 @@ def test_save_schema():
                   }
     new_table=AsciiDataTable(None,**options)
     print(" New Table is:")
-    new_table.__parse__()
+    #new_table.__parse__()
     print new_table
     print type(new_table.data[0][3])
     print new_table.get_data_dictionary_list()
@@ -2397,7 +2397,7 @@ def test_save_schema():
     #print("-"*80)
     #new_table.save()
     #new_table.save_schema()
-    options_2=new_table.options
+    #options_2=new_table.options
     #new_table_2=AsciiDataTable(new_table.path,**options_2)
     #print_comparison(new_table.header,new_table_2.header)
 
@@ -2405,7 +2405,7 @@ def test_read_schema():
     """ Tests the read_schema function
     """
     os.chdir(TESTS_DIRECTORY)
-    file_path="Data_Table_20160301_031_Schema_20160301_001.txt"
+    file_path="Data_Table_20181026_001.schema"
     schema=read_schema(file_path)
     print schema
 
@@ -2534,18 +2534,18 @@ def test_get_item():
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    # test_AsciiDataTable()
+    test_AsciiDataTable()
     test_open_existing_AsciiDataTable()
-    #test_AsciiDataTable_equality()
+    test_AsciiDataTable_equality()
     test_inline_comments()
     test_add_row()
     test_add_index()
-    #show_structure_script()
-    #test_save_schema()
-    #test_read_schema()
+    show_structure_script()
+    test_save_schema()
+    test_read_schema()
     test_change_unit_prefix()
     test_add_column()
-    # test_AsciiDataTable_get_column_and_getitem()
-    # test_copy_method()
-    # test_add_method()
+    test_AsciiDataTable_get_column_and_getitem()
+    test_copy_method()
+    test_add_method()
     test_get_item()

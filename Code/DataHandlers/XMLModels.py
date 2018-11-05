@@ -1846,14 +1846,14 @@ def metadata_robot(file_registry=None,metadata=None):
 
 def test_InstrumentSheet():
     """ A test of the InstrumentSheet class"""
-    instrument_sheet=InstrumentSheet(os.path.join(PYMEASURE_ROOT,'Instruments',INSTRUMENT_SHEETS[0]))
+    instrument_sheet=InstrumentSheet(os.path.join(TESTS_DIRECTORY,'../../../Instruments',INSTRUMENT_SHEETS[0]))
     tags=instrument_sheet.document.getElementsByTagName('Instrument_Type')
     value=[node.childNodes[0].data for node in tags]
     print value
     print dir(instrument_sheet)
     print instrument_sheet.get_image_path()
     print instrument_sheet.commands
-    print str(instrument_sheet.to_HTML())
+    print str(instrument_sheet.to_HTML(os.path.join(XSLT_REPOSITORY,"DEFAULT_INSTRUMENT_STYLE.xsl")))
     instrument_sheet.show()
 def test_dictionary_to_xmlchunk(dictionary={"li":"My list Element"}):
     """Tests the function dictionary_to_xmlchunk"""
@@ -1864,18 +1864,18 @@ def test_dictionary_to_xmlchunk(dictionary={"li":"My list Element"}):
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__=='__main__':
-    #test_XMLModel()
+    test_XMLModel()
     test_XMLLog()
-    #test_log_addition()
-    #test_EndOfDayXMLLog()
-    #test_show()
-    #test_to_HTML()
+    test_log_addition()
+    test_EndOfDayXMLLog()
+    test_show()
+    test_to_HTML()
     test_DataTable()
-    #test_get_header()
-    #test_open_measurement()
-    #test_get_attribute_names()
+    test_get_header()
+    test_open_measurement()
+    test_get_attribute_names()
     #test_FileRegister()
     #test_Metadata()
     #metadata_robot()
-    #test_InstrumentSheet()
+    test_InstrumentSheet()
     test_dictionary_to_xmlchunk()
