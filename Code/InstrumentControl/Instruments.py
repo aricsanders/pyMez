@@ -574,7 +574,8 @@ class VNA(VisaInstrument):
     """Control class for a linear VNA.
     The .measure_sparameters ans .measure_switch_terms return a S2PV1
     class that can be saved, printed or have a simple plot using show(). The attribute frequency_list
-    stores the frequency points as Hz."""
+    stores the frequency points as Hz. Class has been tested on ZVA/PNA but requires an extra text parsing step for
+    the vector star."""
 
     def __init__(self, resource_name=None, **options):
         """Initializes the E8631A control class"""
