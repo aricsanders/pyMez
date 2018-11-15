@@ -923,10 +923,8 @@ table {
 .codehilite .mh { color: #666666 } /* Literal.Number.Hex */
 .codehilite .mi { color: #666666 } /* Literal.Number.Integer */
 .codehilite .mo { color: #666666 } /* Literal.Number.Oct */
-.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
 .codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
 .codehilite .sc { color: #BA2121 } /* Literal.String.Char */
-.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
 .codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 .codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
 .codehilite .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
@@ -937,11 +935,9 @@ table {
 .codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
 .codehilite .ss { color: #19177C } /* Literal.String.Symbol */
 .codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
-.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
 .codehilite .vc { color: #19177C } /* Name.Variable.Class */
 .codehilite .vg { color: #19177C } /* Name.Variable.Global */
 .codehilite .vi { color: #19177C } /* Name.Variable.Instance */
-.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
 .codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
   </style>
 
@@ -1112,7 +1108,7 @@ table {
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#pyMez.Code.Utils.Types.float">LongType</a></span>
+        <span class="class_name"><a href="#pyMez.Code.Utils.Types.float">FloatType</a></span>
         
         </li>
         <li class="mono">
@@ -1124,7 +1120,7 @@ table {
         
         </li>
         <li class="mono">
-        <span class="class_name"><a href="#pyMez.Code.Utils.Types.float">LongType</a></span>
+        <span class="class_name"><a href="#pyMez.Code.Utils.Types.float">FloatType</a></span>
         
         </li>
         <li class="mono">
@@ -1216,7 +1212,7 @@ table {
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Runner</span>
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="nb">type</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">StringType</span><span class="p">,</span><span class="n">ListType</span><span class="p">,</span><span class="n">IntType</span><span class="p">,</span><span class="n">FloatType</span><span class="p">,</span><span class="n">ComplexType</span><span class="p">,</span><span class="n">LongType</span><span class="p">,</span><span class="n">DictionaryType</span><span class="p">]):</span>
 
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The types defined here are {0} : {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">type_names</span><span class="p">[</span><span class="n">index</span><span class="p">],</span><span class="nb">type</span><span class="p">))</span>
@@ -1235,8 +1231,9 @@ table {
       <p id="pyMez.Code.Utils.Types.complex" class="name">class <span class="ident">ComplexType</span></p>
       
   
-    <div class="desc"><p>Create a complex number from a real part and an optional imaginary part.</p>
-<p>This is equivalent to (real + imag*1j) where imag defaults to 0.</p></div>
+    <div class="desc"><p>complex(real[, imag]) -&gt; complex number</p>
+<p>Create a complex number from a real part and an optional imaginary part.
+This is equivalent to (real + imag*1j) where imag defaults to 0.</p></div>
   <div class="source_cont">
 </div>
 
@@ -1245,7 +1242,7 @@ table {
           <h3>Ancestors (in MRO)</h3>
           <ul class="class_list">
           <li><a href="#pyMez.Code.Utils.Types.complex">ComplexType</a></li>
-          <li>builtins.object</li>
+          <li>__builtin__.object</li>
           </ul>
           <h3>Class variables</h3>
             <div class="item">
@@ -1292,7 +1289,7 @@ dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
           <h3>Ancestors (in MRO)</h3>
           <ul class="class_list">
           <li><a href="#pyMez.Code.Utils.Types.dict">DictionaryType</a></li>
-          <li>builtins.object</li>
+          <li>__builtin__.object</li>
           </ul>
       </div>
       </div>
@@ -1301,7 +1298,8 @@ dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
       <p id="pyMez.Code.Utils.Types.float" class="name">class <span class="ident">FloatType</span></p>
       
   
-    <div class="desc"><p>Convert a string or number to a floating point number, if possible.</p></div>
+    <div class="desc"><p>float(x) -&gt; floating point number</p>
+<p>Convert a string or number to a floating point number, if possible.</p></div>
   <div class="source_cont">
 </div>
 
@@ -1309,8 +1307,8 @@ dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
       <div class="class">
           <h3>Ancestors (in MRO)</h3>
           <ul class="class_list">
-          <li><a href="#pyMez.Code.Utils.Types.float">LongType</a></li>
-          <li>builtins.object</li>
+          <li><a href="#pyMez.Code.Utils.Types.float">FloatType</a></li>
+          <li>__builtin__.object</li>
           </ul>
           <h3>Class variables</h3>
             <div class="item">
@@ -1340,16 +1338,16 @@ dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
       <p id="pyMez.Code.Utils.Types.int" class="name">class <span class="ident">IntType</span></p>
       
   
-    <div class="desc"><p>int([x]) -&gt; integer
-int(x, base=10) -&gt; integer</p>
+    <div class="desc"><p>int(x=0) -&gt; int or long
+int(x, base=10) -&gt; int or long</p>
 <p>Convert a number or string to an integer, or return 0 if no arguments
-are given.  If x is a number, return x.<strong>int</strong>().  For floating point
-numbers, this truncates towards zero.</p>
-<p>If x is not a number or if base is given, then x must be a string,
-bytes, or bytearray instance representing an integer literal in the
-given base.  The literal can be preceded by '+' or '-' and be surrounded
-by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.
-Base 0 means to interpret the base from the string as an integer literal.</p>
+are given.  If x is floating point, the conversion truncates towards zero.
+If x is outside the integer range, the function returns a long instead.</p>
+<p>If x is not a number or if base is given, then x must be a string or
+Unicode object representing an integer literal in the given base.  The
+literal can be preceded by '+' or '-' and be surrounded by whitespace.
+The base defaults to 10.  Valid bases are 0 and 2-36.  Base 0 means to
+interpret the base from the string as an integer literal.</p>
 <blockquote>
 <blockquote>
 <blockquote>
@@ -1366,7 +1364,7 @@ Base 0 means to interpret the base from the string as an integer literal.</p>
           <h3>Ancestors (in MRO)</h3>
           <ul class="class_list">
           <li><a href="#pyMez.Code.Utils.Types.int">IntType</a></li>
-          <li>builtins.object</li>
+          <li>__builtin__.object</li>
           </ul>
           <h3>Class variables</h3>
             <div class="item">
@@ -1416,9 +1414,8 @@ Base 0 means to interpret the base from the string as an integer literal.</p>
       <p id="pyMez.Code.Utils.Types.list" class="name">class <span class="ident">ListType</span></p>
       
   
-    <div class="desc"><p>Built-in mutable sequence.</p>
-<p>If no argument is given, the constructor creates a new empty list.
-The argument must be an iterable if specified.</p></div>
+    <div class="desc"><p>list() -&gt; new empty list
+list(iterable) -&gt; new list initialized from iterable's items</p></div>
   <div class="source_cont">
 </div>
 
@@ -1427,7 +1424,7 @@ The argument must be an iterable if specified.</p></div>
           <h3>Ancestors (in MRO)</h3>
           <ul class="class_list">
           <li><a href="#pyMez.Code.Utils.Types.list">ListType</a></li>
-          <li>builtins.object</li>
+          <li>__builtin__.object</li>
           </ul>
       </div>
       </div>
@@ -1436,7 +1433,8 @@ The argument must be an iterable if specified.</p></div>
       <p id="pyMez.Code.Utils.Types.float" class="name">class <span class="ident">LongType</span></p>
       
   
-    <div class="desc"><p>Convert a string or number to a floating point number, if possible.</p></div>
+    <div class="desc"><p>float(x) -&gt; floating point number</p>
+<p>Convert a string or number to a floating point number, if possible.</p></div>
   <div class="source_cont">
 </div>
 
@@ -1444,8 +1442,8 @@ The argument must be an iterable if specified.</p></div>
       <div class="class">
           <h3>Ancestors (in MRO)</h3>
           <ul class="class_list">
-          <li><a href="#pyMez.Code.Utils.Types.float">LongType</a></li>
-          <li>builtins.object</li>
+          <li><a href="#pyMez.Code.Utils.Types.float">FloatType</a></li>
+          <li>__builtin__.object</li>
           </ul>
           <h3>Class variables</h3>
             <div class="item">
@@ -1453,7 +1451,7 @@ The argument must be an iterable if specified.</p></div>
             
     <p class="inheritance">
      <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Utils.Types.float">LongType</a></code>.<code><a href="#pyMez.Code.Utils.Types.float.imag">imag</a></code>
+       <code><a href="#pyMez.Code.Utils.Types.float">FloatType</a></code>.<code><a href="#pyMez.Code.Utils.Types.float.imag">imag</a></code>
     </p>
 
             
@@ -1465,6 +1463,10 @@ The argument must be an iterable if specified.</p></div>
             <div class="item">
             <p id="pyMez.Code.Utils.Types.float.real" class="name">var <span class="ident">real</span></p>
             
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Utils.Types.float">FloatType</a></code>.<code><a href="#pyMez.Code.Utils.Types.float.real">real</a></code>
+    </p>
 
             
   
@@ -1479,15 +1481,9 @@ The argument must be an iterable if specified.</p></div>
       <p id="pyMez.Code.Utils.Types.str" class="name">class <span class="ident">StringType</span></p>
       
   
-    <div class="desc"><p>str(object='') -&gt; str
-str(bytes_or_buffer[, encoding[, errors]]) -&gt; str</p>
-<p>Create a new string object from the given object. If encoding or
-errors is specified, then the object must expose a data buffer
-that will be decoded using the given encoding and error handler.
-Otherwise, returns the result of object.<strong>str</strong>() (if defined)
-or repr(object).
-encoding defaults to sys.getdefaultencoding().
-errors defaults to 'strict'.</p></div>
+    <div class="desc"><p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object.
+If the argument is a string, the return value is the same object.</p></div>
   <div class="source_cont">
 </div>
 
@@ -1496,7 +1492,8 @@ errors defaults to 'strict'.</p></div>
           <h3>Ancestors (in MRO)</h3>
           <ul class="class_list">
           <li><a href="#pyMez.Code.Utils.Types.str">StringType</a></li>
-          <li>builtins.object</li>
+          <li>__builtin__.basestring</li>
+          <li>__builtin__.object</li>
           </ul>
       </div>
       </div>
