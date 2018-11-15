@@ -159,159 +159,159 @@ class KeithleyIVPanel(wx.Panel):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Panel.__init__(self, id=wxID_KEITHLEYIVPANEL,
-              name=u'KeithleyIVPanel', parent=prnt, pos=wx.Point(341, 397),
+              name='KeithleyIVPanel', parent=prnt, pos=wx.Point(341, 397),
               size=wx.Size(768, 643), style=wx.TAB_TRAVERSAL)
         self.SetClientSize(wx.Size(760, 609))
         self.SetBackgroundColour(wx.Colour(192, 192, 192))
 
         self.InformationPanel = wx.Panel(id=wxID_KEITHLEYIVPANELINFORMATIONPANEL,
-              name=u'InformationPanel', parent=self, pos=wx.Point(2, 2),
+              name='InformationPanel', parent=self, pos=wx.Point(2, 2),
               size=wx.Size(756, 148), style=wx.TAB_TRAVERSAL)
 
         self.AquistionParameterPanel = wx.Panel(id=wxID_KEITHLEYIVPANELAQUISTIONPARAMETERPANEL,
-              name=u'AquistionParameterPanel', parent=self, pos=wx.Point(2,
+              name='AquistionParameterPanel', parent=self, pos=wx.Point(2,
               154), size=wx.Size(756, 72), style=wx.TAB_TRAVERSAL)
 
         self.ActionPanel = wx.Panel(id=wxID_KEITHLEYIVPANELACTIONPANEL,
-              name=u'ActionPanel', parent=self, pos=wx.Point(2, 230),
+              name='ActionPanel', parent=self, pos=wx.Point(2, 230),
               size=wx.Size(756, 72), style=wx.TAB_TRAVERSAL)
         self.ActionPanel.SetBackgroundColour(wx.Colour(143, 133, 69))
 
         self.NotesPanel = wx.Panel(id=wxID_KEITHLEYIVPANELNOTESPANEL,
-              name=u'NotesPanel', parent=self, pos=wx.Point(2, 306),
+              name='NotesPanel', parent=self, pos=wx.Point(2, 306),
               size=wx.Size(756, 300), style=wx.TAB_TRAVERSAL)
 
         self.NotesLabel = wx.StaticText(id=wxID_KEITHLEYIVPANELNOTESLABEL,
-              label=u'Notes:', name=u'NotesLabel', parent=self.NotesPanel,
+              label='Notes:', name='NotesLabel', parent=self.NotesPanel,
               pos=wx.Point(0, 0), size=wx.Size(35, 13), style=0)
         self.NotesLabel.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD, False,
-              u'MS Shell Dlg 2'))
+              'MS Shell Dlg 2'))
 
         self.NotesControl = wx.TextCtrl(id=wxID_KEITHLEYIVPANELNOTESCONTROL,
-              name=u'NotesControl', parent=self.NotesPanel, pos=wx.Point(2, 15),
+              name='NotesControl', parent=self.NotesPanel, pos=wx.Point(2, 15),
               size=wx.Size(752, 283), style=wx.VSCROLL | wx.TE_MULTILINE,
-              value=u'')
+              value='')
 
         self.IVButton = wx.Button(id=wxID_KEITHLEYIVPANELIVBUTTON,
-              label=u'Take IV', name=u'IVButton', parent=self.ActionPanel,
+              label='Take IV', name='IVButton', parent=self.ActionPanel,
               pos=wx.Point(5, 5), size=wx.Size(242, 62), style=0)
         self.IVButton.SetFont(wx.Font(18, wx.SWISS, wx.NORMAL, wx.BOLD, False,
-              u'MS Shell Dlg 2'))
+              'MS Shell Dlg 2'))
         self.IVButton.Bind(wx.EVT_BUTTON, self.OnIVButtonButton,
               id=wxID_KEITHLEYIVPANELIVBUTTON)
 
         self.SaveButton = wx.Button(id=wxID_KEITHLEYIVPANELSAVEBUTTON,
-              label=u'Save Data', name=u'SaveButton', parent=self.ActionPanel,
+              label='Save Data', name='SaveButton', parent=self.ActionPanel,
               pos=wx.Point(257, 5), size=wx.Size(242, 62), style=0)
         self.SaveButton.SetFont(wx.Font(18, wx.SWISS, wx.NORMAL, wx.BOLD, False,
-              u'MS Shell Dlg 2'))
+              'MS Shell Dlg 2'))
         self.SaveButton.Bind(wx.EVT_BUTTON, self.OnSaveButtonButton,
               id=wxID_KEITHLEYIVPANELSAVEBUTTON)
 
         self.PlotButton = wx.Button(id=wxID_KEITHLEYIVPANELPLOTBUTTON,
-              label=u'Plot Data', name=u'PlotButton', parent=self.ActionPanel,
+              label='Plot Data', name='PlotButton', parent=self.ActionPanel,
               pos=wx.Point(509, 5), size=wx.Size(242, 62), style=0)
         self.PlotButton.SetFont(wx.Font(18, wx.SWISS, wx.NORMAL, wx.BOLD, False,
-              u'MS Shell Dlg 2'))
+              'MS Shell Dlg 2'))
         self.PlotButton.Bind(wx.EVT_BUTTON, self.OnPlotButtonButton,
               id=wxID_KEITHLEYIVPANELPLOTBUTTON)
 
         self.SampleNameLabel = wx.StaticText(id=wxID_KEITHLEYIVPANELSAMPLENAMELABEL,
-              label=u'Sample Name:', name=u'SampleNameLabel',
+              label='Sample Name:', name='SampleNameLabel',
               parent=self.InformationPanel, pos=wx.Point(0, 0),
               size=wx.Size(104, 19), style=0)
         self.SampleNameLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL,
-              False, u'MS Shell Dlg 2'))
+              False, 'MS Shell Dlg 2'))
 
         self.SampleNameControl = wx.TextCtrl(id=wxID_KEITHLEYIVPANELSAMPLENAMECONTROL,
-              name=u'SampleNameControl', parent=self.InformationPanel,
-              pos=wx.Point(104, 0), size=wx.Size(344, 21), style=0, value=u'')
+              name='SampleNameControl', parent=self.InformationPanel,
+              pos=wx.Point(104, 0), size=wx.Size(344, 21), style=0, value='')
 
         self.AquistionLabelPanel = wx.Panel(id=wxID_KEITHLEYIVPANELAQUISTIONLABELPANEL,
-              name=u'AquistionLabelPanel', parent=self.AquistionParameterPanel,
+              name='AquistionLabelPanel', parent=self.AquistionParameterPanel,
               pos=wx.Point(1, 1), size=wx.Size(754, 34),
               style=wx.TAB_TRAVERSAL)
 
         self.AquistionControlPanel = wx.Panel(id=wxID_KEITHLEYIVPANELAQUISTIONCONTROLPANEL,
-              name=u'AquistionControlPanel',
+              name='AquistionControlPanel',
               parent=self.AquistionParameterPanel, pos=wx.Point(1, 37),
               size=wx.Size(754, 34), style=wx.TAB_TRAVERSAL)
         self.AquistionControlPanel.SetBackgroundColour(wx.Colour(192, 192, 192))
 
         self.StartLabel = wx.StaticText(id=wxID_KEITHLEYIVPANELSTARTLABEL,
-              label=u'Start', name=u'StartLabel',
+              label='Start', name='StartLabel',
               parent=self.AquistionLabelPanel, pos=wx.Point(0, 0),
               size=wx.Size(150, 34), style=wx.SIMPLE_BORDER | wx.ALIGN_CENTRE)
         self.StartLabel.SetBackgroundColour(wx.Colour(192, 192, 192))
         self.StartLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL,
-              False, u'MS Shell Dlg 2'))
+              False, 'MS Shell Dlg 2'))
 
         self.StopLabel = wx.StaticText(id=wxID_KEITHLEYIVPANELSTOPLABEL,
-              label=u'Stop', name=u'StopLabel', parent=self.AquistionLabelPanel,
+              label='Stop', name='StopLabel', parent=self.AquistionLabelPanel,
               pos=wx.Point(150, 0), size=wx.Size(150, 34),
               style=wx.SIMPLE_BORDER | wx.ALIGN_CENTRE)
         self.StopLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL,
-              False, u'MS Shell Dlg 2'))
+              False, 'MS Shell Dlg 2'))
 
         self.NumberOfPointsLabel = wx.StaticText(id=wxID_KEITHLEYIVPANELNUMBEROFPOINTSLABEL,
-              label=u'Number of Points', name=u'NumberOfPointsLabel',
+              label='Number of Points', name='NumberOfPointsLabel',
               parent=self.AquistionLabelPanel, pos=wx.Point(300, 0),
               size=wx.Size(150, 34), style=wx.ALIGN_CENTRE | wx.SIMPLE_BORDER)
         self.NumberOfPointsLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL,
-              wx.NORMAL, False, u'MS Shell Dlg 2'))
+              wx.NORMAL, False, 'MS Shell Dlg 2'))
         self.NumberOfPointsLabel.SetBackgroundColour(wx.Colour(192, 192, 192))
 
         self.SettleTimeLabel = wx.StaticText(id=wxID_KEITHLEYIVPANELSETTLETIMELABEL,
-              label=u'Settle Time', name=u'SettleTimeLabel',
+              label='Settle Time', name='SettleTimeLabel',
               parent=self.AquistionLabelPanel, pos=wx.Point(450, 0),
               size=wx.Size(150, 34), style=wx.ALIGN_CENTRE | wx.SIMPLE_BORDER)
         self.SettleTimeLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL,
-              False, u'MS Shell Dlg 2'))
+              False, 'MS Shell Dlg 2'))
 
         self.BowtieLabel = wx.StaticText(id=wxID_KEITHLEYIVPANELBOWTIELABEL,
-              label=u'Bowtie Sweep', name=u'BowtieLabel',
+              label='Bowtie Sweep', name='BowtieLabel',
               parent=self.AquistionLabelPanel, pos=wx.Point(600, 0),
               size=wx.Size(150, 34), style=wx.ALIGN_CENTRE | wx.SIMPLE_BORDER)
         self.BowtieLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL,
-              False, u'MS Shell Dlg 2'))
+              False, 'MS Shell Dlg 2'))
 
         self.StartControl = wx.TextCtrl(id=wxID_KEITHLEYIVPANELSTARTCONTROL,
-              name=u'StartControl', parent=self.AquistionControlPanel,
+              name='StartControl', parent=self.AquistionControlPanel,
               pos=wx.Point(0, 6), size=wx.Size(150, 21), style=wx.CAPTION,
-              value=u'-.1')
+              value='-.1')
 
         self.StopControl = wx.TextCtrl(id=wxID_KEITHLEYIVPANELSTOPCONTROL,
-              name=u'StopControl', parent=self.AquistionControlPanel,
+              name='StopControl', parent=self.AquistionControlPanel,
               pos=wx.Point(150, 6), size=wx.Size(150, 21), style=0,
-              value=u'.1')
+              value='.1')
 
         self.NumberOfPointsControl = wx.TextCtrl(id=wxID_KEITHLEYIVPANELNUMBEROFPOINTSCONTROL,
-              name=u'NumberOfPointsControl', parent=self.AquistionControlPanel,
+              name='NumberOfPointsControl', parent=self.AquistionControlPanel,
               pos=wx.Point(300, 6), size=wx.Size(150, 21), style=0,
-              value=u'10')
+              value='10')
 
         self.SettleTimeControl = wx.TextCtrl(id=wxID_KEITHLEYIVPANELSETTLETIMECONTROL,
-              name=u'SettleTimeControl', parent=self.AquistionControlPanel,
+              name='SettleTimeControl', parent=self.AquistionControlPanel,
               pos=wx.Point(450, 6), size=wx.Size(150, 21), style=0,
-              value=u'.2')
+              value='.2')
 
         self.BowtieControl = wx.CheckBox(id=wxID_KEITHLEYIVPANELBOWTIECONTROL,
-              label=u'Bowtie', name=u'BowtieControl',
+              label='Bowtie', name='BowtieControl',
               parent=self.AquistionControlPanel, pos=wx.Point(600, 10),
               size=wx.Size(150, 13), style=0)
         self.BowtieControl.SetValue(False)
 
         self.ResistanceLabel = wx.StaticText(id=wxID_KEITHLEYIVPANELRESISTANCELABEL,
-              label=u'Resistance', name=u'ResistanceLabel',
+              label='Resistance', name='ResistanceLabel',
               parent=self.InformationPanel, pos=wx.Point(544, 0),
               size=wx.Size(73, 19), style=0)
         self.ResistanceLabel.Enable(True)
         self.ResistanceLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL,
-              False, u'MS Shell Dlg 2'))
+              False, 'MS Shell Dlg 2'))
 
         self.ResistanceControl = wx.TextCtrl(id=wxID_KEITHLEYIVPANELRESISTANCECONTROL,
-              name=u'ResistanceControl', parent=self.InformationPanel,
-              pos=wx.Point(617, 0), size=wx.Size(100, 21), style=0, value=u'')
+              name='ResistanceControl', parent=self.InformationPanel,
+              pos=wx.Point(617, 0), size=wx.Size(100, 21), style=0, value='')
 
         self.panel1 = wx.Panel(id=wxID_KEITHLEYIVPANELPANEL1, name='panel1',
               parent=self.InformationPanel, pos=wx.Point(448, 0),
@@ -375,7 +375,7 @@ class KeithleyIVPanel(wx.Panel):
 def test_KeithleyIVPanel():
     app = wx.PySimpleApp()
     frame = wx.Frame(None,size=wx.Size(900, 800))
-    panel=KeithleyIVPanel(id=1, name=u'IV Panel',
+    panel=KeithleyIVPanel(id=1, name='IV Panel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(200, 800),
               style=wx.TAB_TRAVERSAL)
     sizer=wx.BoxSizer()

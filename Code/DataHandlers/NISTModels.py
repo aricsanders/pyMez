@@ -149,9 +149,9 @@ def make_wave_parameter_column_names(drive_ports=[1,2],detect_ports=[1,2],receiv
     return column_names
 def asc_type(file_contents):
     """asc_type determines the type of asc file given it's contents, returns the class name of the appropriate model"""
-    if type(file_contents) is StringType:
+    if isinstance(file_contents, StringType):
         contents=file_contents
-    elif type(file_contents) is ListType:
+    elif isinstance(file_contents, ListType):
         contents=string_list_collapse(file_contents)
     else:
         return None
@@ -167,9 +167,9 @@ def asc_type(file_contents):
 def raw_type(file_contents):
     """Given the contents of a file in a list of lines or a single string returns the raw class name. It is assumed
     that the type of file is the 5th line of the header"""
-    if type(file_contents) is StringType:
+    if isinstance(file_contents, StringType):
         lines=file_contents.splitlines()
-    elif type(file_contents) is ListType:
+    elif isinstance(file_contents, ListType):
         lines=file_contents
     #print("The value of {0} is {1}".format('lines[4]',lines[4]))
     out=None
@@ -311,9 +311,9 @@ class OnePortCalrepModel(AsciiDataTable):
                    "row_end_token":None,"escape_character":None,
                    "data_begin_token":None,"data_end_token":None}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # Define Method Aliases if they are available
         if METHOD_ALIASES:
@@ -380,7 +380,7 @@ class OnePortCalrepModel(AsciiDataTable):
             self.metadata["Device_Id"]=lines[0].rstrip().lstrip()
             if len(self.options["header"])>1:
                 self.metadata["Analysis_Date"]=self.options["header"][1].rstrip().lstrip()
-            print("The {0} variable is {1}".format('self.metadata["Device_Id"]',self.metadata["Device_Id"]))
+            print(("The {0} variable is {1}".format('self.metadata["Device_Id"]',self.metadata["Device_Id"])))
             #print("The {0} variable is {1}".format('data.tolist()',data.tolist()))
 
     def show(self):
@@ -404,9 +404,9 @@ class OnePortDUTModel(AsciiDataTable):
                  "column_names_end_token":"\n","data_table_element_separator":None,
                  "row_pattern":row_pattern,"column_types":['float' for i in DUT_COLUMN_NAMES]}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
 
         if METHOD_ALIASES:
@@ -461,9 +461,9 @@ class PowerModel(AsciiDataTable):
                    "row_end_token":None,"escape_character":None,
                    "data_begin_token":None,"data_end_token":None}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # Define Method Aliases if they are available
         if METHOD_ALIASES:
@@ -504,7 +504,7 @@ class PowerModel(AsciiDataTable):
                                             end_token=self.options["row_end_token"])
             self.options["data"]=split_all_rows(self.options["data"],delimiter=self.options["data_delimiter"],
                                      escape_character=self.options["escape_character"])
-            print("{0} is {1}".format("len(self.options['data'][0])",len(self.options['data'][0])))
+            print(("{0} is {1}".format("len(self.options['data'][0])",len(self.options['data'][0]))))
             if len(self.options['data'][0])==9:
                 self.power_pattern=self.power_3term_row_pattern
                 self.options["column_names"]=POWER_3TERM_COLUMN_NAMES
@@ -567,9 +567,9 @@ class OnePortRawModel(AsciiDataTable):
                                            "{3:.4f}{delimiter}{4:.2f}{delimiter}{5:.4f}{delimiter}{6:.2f}",
                    "data_table_element_separator": None}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
 
         # Define Method Aliases if they are available
@@ -694,9 +694,9 @@ class TwoPortRawModel(AsciiDataTable):
                                            "{7:.4f}{delimiter}{8:.2f}",
                    "data_table_element_separator": None}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # Define Method Aliases if they are available
         if METHOD_ALIASES:
@@ -817,9 +817,9 @@ class TwoPortNRRawModel(AsciiDataTable):
                                            "{9:.4f}{delimiter}{10:.2f}",
                    "data_table_element_separator": None}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # Define Method Aliases if they are available
         if METHOD_ALIASES:
@@ -937,9 +937,9 @@ class PowerRawModel(AsciiDataTable):
                                            "{5:.5g}{delimiter}{6:.5g}",
                    "data_table_element_separator": None}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # Define Method Aliases if they are available
         if METHOD_ALIASES:
@@ -1004,9 +1004,9 @@ class TwoPortCalrepModel(object):
         """Intializes the TwoPortCalrepModel class, if a file path is specified it opens and reads the file"""
         defaults= {"specific_descriptor": 'Two_Port_Calrep'}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         self.metadata={}
         if file_path is None:
@@ -1020,9 +1020,9 @@ class TwoPortCalrepModel(object):
             if len(self.joined_table.header)>1:
                 self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
 
-        elif re.match('txt',file_path.split(".")[-1],re.IGNORECASE) or type(file_path) is ListType:
+        elif re.match('txt',file_path.split(".")[-1],re.IGNORECASE) or isinstance(file_path, ListType):
             self.table_names=['S11','S22','S21']
-            if type(file_path) is ListType:
+            if isinstance(file_path, ListType):
                 self.file_names=file_path
                 self.tables=[]
                 for index,table in enumerate(self.table_names):
@@ -1051,8 +1051,8 @@ class TwoPortCalrepModel(object):
                             self.tables.append(OnePortCalrepModel(self.file_names[index]))
 
                 except:
-                    print("Could not import {0} please check that the a,b,c "
-                          "tables are all in the same directory".format(file_path))
+                    print(("Could not import {0} please check that the a,b,c "
+                          "tables are all in the same directory".format(file_path)))
                     raise
             for index,table in enumerate(self.tables):
                 column_names=[]
@@ -1069,11 +1069,11 @@ class TwoPortCalrepModel(object):
                     new_S21=self.tables[2].data[row_number][1]
                     new_S21=10.**(-1*new_S21/20.)
                     new_value=[self.tables[2].data[row_number][i] for i in range(2,6)]
-                    new_value=map(lambda x:abs((1/np.log10(np.e))*new_S21*x/20.),new_value)
+                    new_value=[abs((1/np.log10(np.e))*new_S21*x/20.) for x in new_value]
                     self.tables[2].data[row_number][1]=new_S21
                     for i in range(2,6):
                         self.tables[2].data[row_number][i]=new_value[i-2]
-            for key,value in self.options.iteritems():
+            for key,value in self.options.items():
                 self.tables[0].options[key]=value
             self.joined_table=ascii_data_table_join("Frequency",self.tables[0],self.tables[2])
             self.joined_table=ascii_data_table_join("Frequency",self.joined_table,self.tables[1])
@@ -1129,7 +1129,7 @@ class TwoPortCalrepModel(object):
                 new_S21=self.tables[3][row_number][1]
                 new_S21=10.**(-1*new_S21/20.)
                 new_value=[self.tables[3][row_number][i] for i in range(2,6)]
-                new_value=map(lambda x:abs((1/np.log10(np.e))*new_S21*x/20),new_value)
+                new_value=[abs((1/np.log10(np.e))*new_S21*x/20) for x in new_value]
                 self.tables[3][row_number][1]=new_S21
                 for i in range(2,6):
                     self.tables[3][row_number][i]=new_value[i-2]
@@ -1157,7 +1157,7 @@ class TwoPortCalrepModel(object):
                 self.tables[index].column_names=column_names
 
         self.tables[1].header=self.tables[0]
-        for key,value in self.options.iteritems():
+        for key,value in self.options.items():
             self.tables[1].options[key]=value
         self.joined_table=ascii_data_table_join("Frequency",self.tables[1],self.tables[3])
         self.joined_table=ascii_data_table_join("Frequency",self.joined_table,self.tables[2])
@@ -1200,9 +1200,9 @@ class PowerCalrepModel(object):
         """Intializes the PowerCalrep class, if a file path is specified it opens and reads the file"""
         defaults= {}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         self.metadata={}
         if file_path is None:
@@ -1218,9 +1218,9 @@ class PowerCalrepModel(object):
             if len(self.joined_table.header)>1:
                 self.metadata["Analysis_Date"]=self.joined_table.header[1].rstrip().lstrip()
 
-        elif re.match('txt',file_path.split(".")[-1],re.IGNORECASE) or type(file_path) is ListType:
+        elif re.match('txt',file_path.split(".")[-1],re.IGNORECASE) or isinstance(file_path, ListType):
             self.table_names=['S11','Efficiency']
-            if type(file_path) is ListType:
+            if isinstance(file_path, ListType):
                 self.file_names=file_path
                 self.tables=[]
                 for index,table in enumerate(self.table_names):
@@ -1242,8 +1242,8 @@ class PowerCalrepModel(object):
                         elif index==1:
                             self.tables.append(PowerModel(self.file_names[index]))
                 except:
-                    print("Could not import {0} please check that the a,b "
-                          "tables are all in the same directory".format(file_path))
+                    print(("Could not import {0} please check that the a,b "
+                          "tables are all in the same directory".format(file_path)))
                     raise
 
             # for index,table in enumerate(self.tables):
@@ -1277,7 +1277,7 @@ class PowerCalrepModel(object):
                 self.table_line_numbers.append([table_1_begin_line,table_1_end_line])
             elif index>0 and index<(len(begin_lines)-1):
                 table_begin_line=begin_line+2
-                print("{0} is {1}".format('begin_line',begin_line))
+                print(("{0} is {1}".format('begin_line',begin_line)))
                 table_end_line=begin_lines[index+1]
                 self.table_line_numbers.append([table_begin_line,table_end_line])
             elif index==(len(begin_lines)-1):
@@ -1365,9 +1365,9 @@ class ResultFileModel(AsciiDataTable):
         defaults={"data_delimiter":'  ',"data":None,"header":None,"column_names":None,
           "row_end_token":"\n","metadata":{},"Measurement_Type":None,"column_names_delimiter":None}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         if file_path is not None:
             self.__read_and_fix__(file_path)
@@ -1383,7 +1383,7 @@ class ResultFileModel(AsciiDataTable):
         self.metadata=self.options["metadata"]
         options={"data_begin_line":0,"data_end_line":-1,"data_delimiter":'[\s]+',
                   "row_end_token":"\n"}
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         first_column_types=['String','float','int']
         AsciiDataTable.__init__(self,file_path=file_path,**self.options)
@@ -1445,9 +1445,9 @@ class JBSparameter(AsciiDataTable):
                 rfs=rfs+"{%s:.6g}{delimiter}"%(str(i))
         options["row_formatter_string"]=rfs
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # Define Method Aliases if they are available
         if METHOD_ALIASES:
@@ -1503,9 +1503,9 @@ class TwelveTermErrorModel(AsciiDataTable):
                    "column_types":['float' for i in range(len(TWELVE_TERM_ERROR_COLUMN_NAMES))]
                    }
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         if file_path is not None:
             self.path=file_path
@@ -1519,7 +1519,7 @@ class TwelveTermErrorModel(AsciiDataTable):
             in_file=open(self.path,'r')
             lines=[]
             for line in in_file:
-                lines.append(map(lambda x:float(x),line.split(" ")))
+                lines.append([float(x) for x in line.split(" ")])
             in_file.close()
             self.options["data"]=lines
             self.complex_data=[]
@@ -1540,7 +1540,7 @@ class StandardErrorModel(AsciiDataTable):
     def column_conforms(self,column_name):
         "For a given column_name returns true if all values have an absolute value less than one"
         column_data=self.get_column(column_name)
-        filtered_list=filter(lambda x: abs(x)>1,column_data)
+        filtered_list=[x for x in column_data if abs(x)>1]
         if filtered_list:
             return False
         else:
@@ -1570,9 +1570,9 @@ class StandardErrorModel(AsciiDataTable):
                   "dpi":80}
 
         plot_options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             plot_options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             plot_options[key]=value
 
         x_data=self.get_column(column_index=0)
@@ -1647,9 +1647,9 @@ class W2P(AsciiDataTable):
                     "use_alternative_parser":False
                     }
         self.options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.options[key] = value
         if file_path:
             self.path = file_path
@@ -1666,17 +1666,16 @@ class W2P(AsciiDataTable):
 
             if file_path:
                 self.path = file_path
-            print("{0} sucessfully parsed".format(self.path))
+            print(("{0} sucessfully parsed".format(self.path)))
         self.update_complex_data()
 
     def update_complex_data(self):
         """Uses self.data to update the complex_data attribute. """
         if self.data:
             self.complex_data = []
-            self.complex_column_names = ["Frequency"] + map(lambda x: x.replace("re", ""),
-                                                            self.column_names[1::2])
+            self.complex_column_names = ["Frequency"] + [x.replace("re", "") for x in self.column_names[1::2]]
             for row in self.data[:]:
-                row = map(lambda x: float(x), row)
+                row = [float(x) for x in row]
                 frequency = row[0]
                 real_data = row[1::2]
                 imaginary_data = row[2::2]
@@ -1688,7 +1687,7 @@ class W2P(AsciiDataTable):
         or column_index"""
         if not column_index:
             column_index = self.complex_column_names.index(parameter_name)
-        amplitudes = map(lambda x: abs(x[column_index]), self.complex_data[:])
+        amplitudes = [abs(x[column_index]) for x in self.complex_data[:]]
         return amplitudes
 
     def get_phase(self, parameter_name=None, column_index=None):
@@ -1696,7 +1695,7 @@ class W2P(AsciiDataTable):
         or column_index"""
         if not column_index:
             column_index = self.complex_column_names.index(parameter_name)
-        amplitudes = map(lambda x: 180. / np.pi * cmath.phase(x[column_index]), self.complex_data[:])
+        amplitudes = [180. / np.pi * cmath.phase(x[column_index]) for x in self.complex_data[:]]
         return amplitudes
 
     def __read_and_fix__(self):
@@ -1767,9 +1766,9 @@ class W2P(AsciiDataTable):
                     "x_label": True,
                     "grid": True}
         plot_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             plot_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             plot_options[key] = value
 
         x_data = np.array(self["Frequency"])
@@ -1831,7 +1830,7 @@ def convert_all_two_ports_script(top_directory=None,output_directory=None):
             try:
                 if match:
                     asc_file_name=match.groupdict()["two_port_name"]+".asc"
-                    print asc_file_name
+                    print(asc_file_name)
                     if asc_file_name in ['de.asc','00.asc','dir.asc','IL.asc',"L2.asc","L1.asc"]:raise
                     converted_file=TwoPortCalrepModel(os.path.join(root,asc_file_name))
                     #print converted_file.joined_table.header
@@ -1841,55 +1840,55 @@ def convert_all_two_ports_script(top_directory=None,output_directory=None):
 
 def test_OnePortCalrepModel(file_path_1='700437.txt',file_path_2="700437.asc"):
     os.chdir(TESTS_DIRECTORY)
-    print(" Import of {0} results in:".format(file_path_1))
+    print((" Import of {0} results in:".format(file_path_1)))
     new_table_1=OnePortCalrepModel(file_path=file_path_1)
-    print new_table_1
-    print("-"*80)
+    print(new_table_1)
+    print(("-"*80))
     print("\n")
-    print(" Import of {0} results in:".format(file_path_2))
+    print((" Import of {0} results in:".format(file_path_2)))
     new_table_2=OnePortCalrepModel(file_path=file_path_2)
-    print new_table_2
-    print("{0} results in {1}:".format('new_table_1.get_column("Frequency")',new_table_1.get_column("Frequency")))
-    print new_table_1.get_options()
-    print new_table_1.data[-1]
+    print(new_table_2)
+    print(("{0} results in {1}:".format('new_table_1.get_column("Frequency")',new_table_1.get_column("Frequency"))))
+    print(new_table_1.get_options())
+    print(new_table_1.data[-1])
     new_table_1.show()
 
 def test_OnePortCalrepModel_Ctable(file_path_1='700437.txt'):
     """Tests the OnePortCalrepModel on ctables from 2 port """
     os.chdir(TESTS_DIRECTORY)
-    print(" Import of {0} results in:".format(file_path_1))
+    print((" Import of {0} results in:".format(file_path_1)))
     new_table_1=OnePortCalrepModel(file_path=file_path_1,**{"row_end_token":",\n"})
-    print new_table_1
-    print("-"*80)
+    print(new_table_1)
+    print(("-"*80))
     print("\n")
     new_table_1.show()
 
 
 def test_OnePortRawModel(file_path='OnePortRawTestFile.txt'):
     os.chdir(TESTS_DIRECTORY)
-    print(" Import of {0} results in:".format(file_path))
+    print((" Import of {0} results in:".format(file_path)))
     new_table_1=OnePortRawModel(file_path=file_path)
-    print new_table_1
-    print("-"*80)
-    print("{0} results in {1}:".format('new_table_1.get_column("Frequency")',new_table_1.get_column("Frequency")))
-    print new_table_1.get_options()
-    print new_table_1.metadata
-    print new_table_1.column_names
-    print('index' in new_table_1.column_names )
+    print(new_table_1)
+    print(("-"*80))
+    print(("{0} results in {1}:".format('new_table_1.get_column("Frequency")',new_table_1.get_column("Frequency"))))
+    print(new_table_1.get_options())
+    print(new_table_1.metadata)
+    print(new_table_1.column_names)
+    print(('index' in new_table_1.column_names ))
     new_table_1.show()
 
 def test_TwoPortRawModel(file_path='TestFileTwoPortRaw.txt'):
     os.chdir(TESTS_DIRECTORY)
-    print(" Import of {0} results in:".format(file_path))
+    print((" Import of {0} results in:".format(file_path)))
     new_table_1=TwoPortRawModel(file_path=file_path)
-    print new_table_1
+    print(new_table_1)
     new_table_1.show()
 
 def test_PowerRawModel(file_path='TestFilePowerRaw.txt'):
     os.chdir(TESTS_DIRECTORY)
-    print(" Import of {0} results in:".format(file_path))
+    print((" Import of {0} results in:".format(file_path)))
     new_table_1=PowerRawModel(file_path=file_path)
-    print new_table_1
+    print(new_table_1)
     #new_table_1.show()
 
 def test_JBSparameter(file_path="ftest6_L1_g5_HF_air"):
@@ -1897,23 +1896,23 @@ def test_JBSparameter(file_path="ftest6_L1_g5_HF_air"):
     os.chdir(TESTS_DIRECTORY)
     # open an existing file
     new_table=JBSparameter(file_path=file_path)
-    print new_table.column_names
-    print new_table.get_frequency_units()
+    print(new_table.column_names)
+    print(new_table.get_frequency_units())
     old_prefix=new_table.get_frequency_units().replace('Hz','')
     #new_table.change_unit_prefix(column_selector=0,old_prefix='',new_prefix='G',unit='Hz')
     new_table.change_unit_prefix(column_selector=0,old_prefix=old_prefix,new_prefix='G',unit='Hz')
-    print new_table.column_names
-    print new_table.get_column(None,0)
-    print new_table.get_frequency_units()
-    print new_table.get_header_string()
+    print(new_table.column_names)
+    print(new_table.get_column(None,0))
+    print(new_table.get_frequency_units())
+    print(new_table.get_header_string())
 
 def test_TwoPortCalrepModel(file_name="922729a.txt"):
     """Tests the TwoPortCalrepModel model type"""
     os.chdir(TESTS_DIRECTORY)
     new_two_port=TwoPortCalrepModel(file_name)
     for table in new_two_port.tables:
-        print table
-    print new_two_port.joined_table
+        print(table)
+    print(new_two_port.joined_table)
     #new_two_port.joined_table.save()
     new_two_port.joined_table.path='N205RV.txt'
     new_two_port.joined_table.header=None
@@ -1925,8 +1924,8 @@ def test_PowerCalrepModel(file_name="700083.asc"):
     os.chdir(TESTS_DIRECTORY)
     new_power=PowerCalrepModel(file_name)
     for table in new_power.tables:
-        print table
-    print new_power.joined_table
+        print(table)
+    print(new_power.joined_table)
     #print new_power.joined_table.data[-1]
     new_power.show()
 
@@ -1941,28 +1940,28 @@ def test_sparameter_power_type(file_list=None):
         file_list=file_list
     for file_name in file_list:
         file_type=sparameter_power_type(file_name)
-        print(" The model of {0} is {1}".format(file_name,file_type))
+        print((" The model of {0} is {1}".format(file_name,file_type)))
         try:
             model=globals()[file_type]
             table=model(file_name)
-            print table
+            print(table)
         except:
-            print("There was an error opening {0}".format(file_name))
+            print(("There was an error opening {0}".format(file_name)))
 
 def test_OnePortDUTModel(file_path="69329.dut"):
     """Tests the OnePortDUTModel class"""
     os.chdir(TESTS_DIRECTORY)
     one_port=OnePortDUTModel(file_path)
-    print one_port.__dict__
-    print("The metadata for the OnePortDUT model is {0} ".format(one_port.metadata))
-    print one_port
+    print(one_port.__dict__)
+    print(("The metadata for the OnePortDUT model is {0} ".format(one_port.metadata)))
+    print(one_port)
 
 def test_TwelveTermErrorModel(file_path='CalCoefficients.txt'):
     "Tests the TwelveTermErrorModel"
     os.chdir(TESTS_DIRECTORY)
     correction=TwelveTermErrorModel(file_path)
-    print correction
-    print correction.complex_data
+    print(correction)
+    print(correction.complex_data)
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':

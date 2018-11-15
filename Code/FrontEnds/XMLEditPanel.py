@@ -57,31 +57,31 @@ class XMLEditPanel(wx.Panel):
     def _init_coll_EditSizer_Items(self, parent):
         # generated method, don't edit
 
-        parent.AddWindow(self.notebook1, 1, border=1, flag=wx.ALL | wx.EXPAND)
+        parent.Add(self.notebook1, 1, border=1, flag=wx.ALL | wx.EXPAND)
 
     def _init_coll_FileControlSizer_Items(self, parent):
         # generated method, don't edit
 
-        parent.AddWindow(self.FileOpenButton, 0, border=0, flag=0)
-        parent.AddWindow(self.FileSaveButton, 0, border=0, flag=0)
-        parent.AddWindow(self.ViewSource, 0, border=0, flag=0)
+        parent.Add(self.FileOpenButton, 0, border=0, flag=0)
+        parent.Add(self.FileSaveButton, 0, border=0, flag=0)
+        parent.Add(self.ViewSource, 0, border=0, flag=0)
 
     def _init_coll_MainPanelSizer_Items(self, parent):
         # generated method, don't edit
 
-        parent.AddWindow(self.FileControlPanel, 1, border=1, flag=wx.EXPAND)
-        parent.AddWindow(self.EditDisplayPanel, 9, border=1, flag=wx.EXPAND)
+        parent.Add(self.FileControlPanel, 1, border=1, flag=wx.EXPAND)
+        parent.Add(self.EditDisplayPanel, 9, border=1, flag=wx.EXPAND)
 
     def _init_coll_notebook1_Pages(self, parent):
         # generated method, don't edit
 
         parent.AddPage(imageId=-1, page=self.EditPanel, select=True,
-              text=u'Edit')
+              text='Edit')
         parent.AddPage(imageId=-1, page=self.SourceView, select=False,
-              text=u'Source')
-        parent.AddPage(imageId=-1, page=self.XSLView, select=False, text=u'XSL')
+              text='Source')
+        parent.AddPage(imageId=-1, page=self.XSLView, select=False, text='XSL')
         parent.AddPage(imageId=-1, page=self.TransformedXML, select=False,
-              text=u'HTML')
+              text='HTML')
 
     def _init_sizers(self):
         # generated method, don't edit
@@ -104,36 +104,36 @@ class XMLEditPanel(wx.Panel):
 
     def _init_ctrls(self, prnt):
         # generated method, don't edit
-        wx.Panel.__init__(self, id=wxID_XMLEDITPANEL, name=u'XMLEditPanel',
+        wx.Panel.__init__(self, id=wxID_XMLEDITPANEL, name='XMLEditPanel',
               parent=prnt, pos=wx.Point(358, 257), size=wx.Size(722, 545),
               style=wx.TAB_TRAVERSAL)
         self.SetClientSize(wx.Size(706, 507))
 
         self.FileControlPanel = wx.Panel(id=wxID_XMLEDITPANELFILECONTROLPANEL,
-              name=u'FileControlPanel', parent=self, pos=wx.Point(0, 0),
+              name='FileControlPanel', parent=self, pos=wx.Point(0, 0),
               size=wx.Size(706, 50), style=wx.TAB_TRAVERSAL)
         self.FileControlPanel.SetBackgroundColour(wx.Colour(192, 192, 192))
 
         self.EditDisplayPanel = wx.Panel(id=wxID_XMLEDITPANELEDITDISPLAYPANEL,
-              name=u'EditDisplayPanel', parent=self, pos=wx.Point(0, 50),
+              name='EditDisplayPanel', parent=self, pos=wx.Point(0, 50),
               size=wx.Size(706, 457), style=wx.TAB_TRAVERSAL)
 
         self.FileOpenButton = wx.Button(id=wxID_XMLEDITPANELFILEOPENBUTTON,
-              label=u'Open', name=u'FileOpenButton',
+              label='Open', name='FileOpenButton',
               parent=self.FileControlPanel, pos=wx.Point(0, 0), size=wx.Size(75,
               23), style=0)
         self.FileOpenButton.Bind(wx.EVT_BUTTON, self.OnFileOpenButtonButton,
               id=wxID_XMLEDITPANELFILEOPENBUTTON)
 
         self.FileSaveButton = wx.Button(id=wxID_XMLEDITPANELFILESAVEBUTTON,
-              label=u'Save', name=u'FileSaveButton',
+              label='Save', name='FileSaveButton',
               parent=self.FileControlPanel, pos=wx.Point(75, 0),
               size=wx.Size(75, 23), style=0)
         self.FileSaveButton.Bind(wx.EVT_BUTTON, self.OnFileSaveButtonButton,
               id=wxID_XMLEDITPANELFILESAVEBUTTON)
 
         self.ViewSource = wx.Button(id=wxID_XMLEDITPANELVIEWSOURCE,
-              label=u'View Source', name=u'ViewSource',
+              label='View Source', name='ViewSource',
               parent=self.FileControlPanel, pos=wx.Point(150, 0),
               size=wx.Size(75, 23), style=0)
 
@@ -142,25 +142,25 @@ class XMLEditPanel(wx.Panel):
               1), size=wx.Size(704, 455), style=0)
 
         self.EditPanel = XMLSTC(id=wxID_XMLEDITPANELEDITPANEL,
-              name=u'EditPanel', parent=self.notebook1, pos=wx.Point(0, 0),
+              name='EditPanel', parent=self.notebook1, pos=wx.Point(0, 0),
               size=wx.Size(696, 429), style=wx.TAB_TRAVERSAL)
         self.EditPanel.SetLexer(wx.stc.STC_LEX_XML)
         self.EditPanel.SetHighlightGuide(0)
         self.EditPanel.SetTargetEnd(100)
 
         self.SourceView = XMLSTC(id=wxID_XMLEDITPANELSOURCEVIEW,
-              name=u'SourceView', parent=self.notebook1, pos=wx.Point(0, 0),
+              name='SourceView', parent=self.notebook1, pos=wx.Point(0, 0),
               size=wx.Size(696, 429), style=0)
         self.SourceView.SetLexer(wx.stc.STC_LEX_XML)
         self.SourceView.SetHighlightGuide(0)
         self.SourceView.SetTargetEnd(100)
 
-        self.XSLView = XMLSTC(id=wxID_XMLEDITPANELXSLVIEW, name=u'XSLView',
+        self.XSLView = XMLSTC(id=wxID_XMLEDITPANELXSLVIEW, name='XSLView',
               parent=self.notebook1, pos=wx.Point(0, 0), size=wx.Size(696, 429),
               style=0)
 
         self.TransformedXML = wx.html.HtmlWindow(id=wxID_XMLEDITPANELTRANSFORMEDXML,
-              name=u'TransformedXML', parent=self.notebook1, pos=wx.Point(0, 0),
+              name='TransformedXML', parent=self.notebook1, pos=wx.Point(0, 0),
               size=wx.Size(696, 429), style=wx.html.HW_SCROLLBAR_AUTO)
 
         self._init_coll_notebook1_Pages(self.notebook1)
@@ -171,7 +171,7 @@ class XMLEditPanel(wx.Panel):
         self._init_ctrls(parent)
 
     def OnFileOpenButtonButton(self, event):
-        dlg = wx.FileDialog(self, 'Choose an XML file to open', '.', '', '*.*', wx.OPEN)
+        dlg = wx.FileDialog(self, 'Choose an XML file to open', '.', '', '*.*', wx.FD_OPEN)
         try:
             if dlg.ShowModal() == wx.ID_OK:
                 filename = dlg.GetPath()
@@ -186,7 +186,7 @@ class XMLEditPanel(wx.Panel):
         except:
             path=''
         #print path
-        dlg = wx.FileDialog(self, 'Save the file', '.', path, '', wx.SAVE)
+        dlg = wx.FileDialog(self, 'Save the file', '.', path, '', wx.FD_SAVE)
         try:
             if dlg.ShowModal() == wx.ID_OK:
                 filename = dlg.GetPath()
@@ -255,7 +255,7 @@ class XMLEditPanel(wx.Panel):
 def test_XMLEditPanel():
     app = wx.App(False)
     frame = wx.Frame(None,size=wx.Size(900, 800))
-    panel=XMLEditPanel(id=1, name=u'IV Panel',
+    panel=XMLEditPanel(id=1, name='IV Panel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(200, 800),
               style=wx.TAB_TRAVERSAL)
     sizer=wx.BoxSizer()

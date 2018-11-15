@@ -919,8 +919,10 @@ table {
 .codehilite .mh { color: #666666 } /* Literal.Number.Hex */
 .codehilite .mi { color: #666666 } /* Literal.Number.Integer */
 .codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
 .codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
 .codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
 .codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 .codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
 .codehilite .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
@@ -931,9 +933,11 @@ table {
 .codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
 .codehilite .ss { color: #19177C } /* Literal.String.Symbol */
 .codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
 .codehilite .vc { color: #19177C } /* Name.Variable.Class */
 .codehilite .vg { color: #19177C } /* Name.Variable.Global */
 .codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
 .codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
   </style>
 
@@ -1101,6 +1105,7 @@ table {
         <li class="mono"><a href="HelpUtils.m.html">pyMez.Code.Utils.HelpUtils</a></li>
         <li class="mono"><a href="Names.m.html">pyMez.Code.Utils.Names</a></li>
         <li class="mono"><a href="PerformanceUtils.m.html">pyMez.Code.Utils.PerformanceUtils</a></li>
+        <li class="mono"><a href="Types.m.html">pyMez.Code.Utils.Types</a></li>
         <li class="mono"><a href="pyMezUnitTest.m.html">pyMez.Code.Utils.pyMezUnitTest</a></li>
       </ul>
     </li>
@@ -1173,12 +1178,11 @@ helper functions needed in daily development life. All other packages should if 
       
   
     <div class="desc"><p>Tools to help distribution. This began by renaming all instances of pyMeasure to
- pyMez to avoid PYPI conflicts with another package.</p>
-<h2>Help</h2>
-<p><a href="./index.html"><code>pyMez.Code.Utils</code></a>
-<div>
-<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
-&lt;a href="../../index.h...</p></div>
+ pyMez to avoid PYPI conflicts with another package.
+ Procedure:
+ + update the src folder
+ + update the setup.py file to contain at least a higher number of version
+ + run this module to add init to all of the directori...</p></div>
 
       </div>
       <div class="item">
@@ -1263,6 +1267,19 @@ generating file names</p>
 <a href="../../../pyMez_Documentation.html">Documentation Home</a> |
 <a href="../../index.html">API Documentation Home</a> |
 &lt;a h...</p></div>
+
+      </div>
+      <div class="item">
+      <p class="name"><a href="Types.m.html">pyMez.Code.Utils.Types</a></p>
+      
+  
+    <div class="desc"><p>Types contains type definitions to fix python 2-&gt;3 migration issues</p>
+<h2>Help</h2>
+<p><a href="./index.html"><code>pyMez.Code.Utils</code></a>
+<div>
+<a href="../../../pyMez_Documentation.html">Documentation Home</a> |
+<a href="../../index.html">API Documentation Home</a> |
+&lt;a href="../../../Examples/htm...</p></div>
 
       </div>
       <div class="item">

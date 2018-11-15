@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
+
 <title>Data_Transformation_Check_Standard</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 
 <style type="text/css">
     /*!
@@ -13,8 +16,8 @@
 *
 */
 /*!
- * Bootstrap v3.3.6 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
@@ -201,7 +204,6 @@ th {
   *:before,
   *:after {
     background: transparent !important;
-    color: #000 !important;
     box-shadow: none !important;
     text-shadow: none !important;
   }
@@ -1109,7 +1111,6 @@ a:focus {
   text-decoration: underline;
 }
 a:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -2538,7 +2539,6 @@ select[size] {
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -3029,7 +3029,6 @@ select[multiple].input-lg {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -6749,15 +6748,15 @@ button.close {
 *
 */
 /*!
- *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
 /* FONT PATH
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('../components/font-awesome/fonts/fontawesome-webfont.eot?v=4.2.0');
-  src: url('../components/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('../components/font-awesome/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('../components/font-awesome/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('../components/font-awesome/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+  src: url('../components/font-awesome/fonts/fontawesome-webfont.eot?v=4.7.0');
+  src: url('../components/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../components/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../components/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../components/font-awesome/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../components/font-awesome/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -6814,6 +6813,19 @@ button.close {
   border: solid 0.08em #eee;
   border-radius: .1em;
 }
+.fa-pull-left {
+  float: left;
+}
+.fa-pull-right {
+  float: right;
+}
+.fa.fa-pull-left {
+  margin-right: .3em;
+}
+.fa.fa-pull-right {
+  margin-left: .3em;
+}
+/* Deprecated as of 4.4.0 */
 .pull-right {
   float: right;
 }
@@ -6829,6 +6841,10 @@ button.close {
 .fa-spin {
   -webkit-animation: fa-spin 2s infinite linear;
   animation: fa-spin 2s infinite linear;
+}
+.fa-pulse {
+  -webkit-animation: fa-spin 1s infinite steps(8);
+  animation: fa-spin 1s infinite steps(8);
 }
 @-webkit-keyframes fa-spin {
   0% {
@@ -6851,31 +6867,31 @@ button.close {
   }
 }
 .fa-rotate-90 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 .fa-rotate-180 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 .fa-rotate-270 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
   -webkit-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
 }
 .fa-flip-horizontal {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
   -webkit-transform: scale(-1, 1);
   -ms-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
 .fa-flip-vertical {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
   -webkit-transform: scale(1, -1);
   -ms-transform: scale(1, -1);
   transform: scale(1, -1);
@@ -7360,6 +7376,7 @@ button.close {
 .fa-twitter:before {
   content: "\f099";
 }
+.fa-facebook-f:before,
 .fa-facebook:before {
   content: "\f09a";
 }
@@ -7372,6 +7389,7 @@ button.close {
 .fa-credit-card:before {
   content: "\f09d";
 }
+.fa-feed:before,
 .fa-rss:before {
   content: "\f09e";
 }
@@ -8009,7 +8027,8 @@ button.close {
 .fa-male:before {
   content: "\f183";
 }
-.fa-gittip:before {
+.fa-gittip:before,
+.fa-gratipay:before {
   content: "\f184";
 }
 .fa-sun-o:before {
@@ -8113,7 +8132,7 @@ button.close {
 .fa-digg:before {
   content: "\f1a6";
 }
-.fa-pied-piper:before {
+.fa-pied-piper-pp:before {
   content: "\f1a7";
 }
 .fa-pied-piper-alt:before {
@@ -8239,6 +8258,7 @@ button.close {
   content: "\f1ce";
 }
 .fa-ra:before,
+.fa-resistance:before,
 .fa-rebel:before {
   content: "\f1d0";
 }
@@ -8252,6 +8272,8 @@ button.close {
 .fa-git:before {
   content: "\f1d3";
 }
+.fa-y-combinator-square:before,
+.fa-yc-square:before,
 .fa-hacker-news:before {
   content: "\f1d4";
 }
@@ -8419,6 +8441,657 @@ button.close {
 }
 .fa-meanpath:before {
   content: "\f20c";
+}
+.fa-buysellads:before {
+  content: "\f20d";
+}
+.fa-connectdevelop:before {
+  content: "\f20e";
+}
+.fa-dashcube:before {
+  content: "\f210";
+}
+.fa-forumbee:before {
+  content: "\f211";
+}
+.fa-leanpub:before {
+  content: "\f212";
+}
+.fa-sellsy:before {
+  content: "\f213";
+}
+.fa-shirtsinbulk:before {
+  content: "\f214";
+}
+.fa-simplybuilt:before {
+  content: "\f215";
+}
+.fa-skyatlas:before {
+  content: "\f216";
+}
+.fa-cart-plus:before {
+  content: "\f217";
+}
+.fa-cart-arrow-down:before {
+  content: "\f218";
+}
+.fa-diamond:before {
+  content: "\f219";
+}
+.fa-ship:before {
+  content: "\f21a";
+}
+.fa-user-secret:before {
+  content: "\f21b";
+}
+.fa-motorcycle:before {
+  content: "\f21c";
+}
+.fa-street-view:before {
+  content: "\f21d";
+}
+.fa-heartbeat:before {
+  content: "\f21e";
+}
+.fa-venus:before {
+  content: "\f221";
+}
+.fa-mars:before {
+  content: "\f222";
+}
+.fa-mercury:before {
+  content: "\f223";
+}
+.fa-intersex:before,
+.fa-transgender:before {
+  content: "\f224";
+}
+.fa-transgender-alt:before {
+  content: "\f225";
+}
+.fa-venus-double:before {
+  content: "\f226";
+}
+.fa-mars-double:before {
+  content: "\f227";
+}
+.fa-venus-mars:before {
+  content: "\f228";
+}
+.fa-mars-stroke:before {
+  content: "\f229";
+}
+.fa-mars-stroke-v:before {
+  content: "\f22a";
+}
+.fa-mars-stroke-h:before {
+  content: "\f22b";
+}
+.fa-neuter:before {
+  content: "\f22c";
+}
+.fa-genderless:before {
+  content: "\f22d";
+}
+.fa-facebook-official:before {
+  content: "\f230";
+}
+.fa-pinterest-p:before {
+  content: "\f231";
+}
+.fa-whatsapp:before {
+  content: "\f232";
+}
+.fa-server:before {
+  content: "\f233";
+}
+.fa-user-plus:before {
+  content: "\f234";
+}
+.fa-user-times:before {
+  content: "\f235";
+}
+.fa-hotel:before,
+.fa-bed:before {
+  content: "\f236";
+}
+.fa-viacoin:before {
+  content: "\f237";
+}
+.fa-train:before {
+  content: "\f238";
+}
+.fa-subway:before {
+  content: "\f239";
+}
+.fa-medium:before {
+  content: "\f23a";
+}
+.fa-yc:before,
+.fa-y-combinator:before {
+  content: "\f23b";
+}
+.fa-optin-monster:before {
+  content: "\f23c";
+}
+.fa-opencart:before {
+  content: "\f23d";
+}
+.fa-expeditedssl:before {
+  content: "\f23e";
+}
+.fa-battery-4:before,
+.fa-battery:before,
+.fa-battery-full:before {
+  content: "\f240";
+}
+.fa-battery-3:before,
+.fa-battery-three-quarters:before {
+  content: "\f241";
+}
+.fa-battery-2:before,
+.fa-battery-half:before {
+  content: "\f242";
+}
+.fa-battery-1:before,
+.fa-battery-quarter:before {
+  content: "\f243";
+}
+.fa-battery-0:before,
+.fa-battery-empty:before {
+  content: "\f244";
+}
+.fa-mouse-pointer:before {
+  content: "\f245";
+}
+.fa-i-cursor:before {
+  content: "\f246";
+}
+.fa-object-group:before {
+  content: "\f247";
+}
+.fa-object-ungroup:before {
+  content: "\f248";
+}
+.fa-sticky-note:before {
+  content: "\f249";
+}
+.fa-sticky-note-o:before {
+  content: "\f24a";
+}
+.fa-cc-jcb:before {
+  content: "\f24b";
+}
+.fa-cc-diners-club:before {
+  content: "\f24c";
+}
+.fa-clone:before {
+  content: "\f24d";
+}
+.fa-balance-scale:before {
+  content: "\f24e";
+}
+.fa-hourglass-o:before {
+  content: "\f250";
+}
+.fa-hourglass-1:before,
+.fa-hourglass-start:before {
+  content: "\f251";
+}
+.fa-hourglass-2:before,
+.fa-hourglass-half:before {
+  content: "\f252";
+}
+.fa-hourglass-3:before,
+.fa-hourglass-end:before {
+  content: "\f253";
+}
+.fa-hourglass:before {
+  content: "\f254";
+}
+.fa-hand-grab-o:before,
+.fa-hand-rock-o:before {
+  content: "\f255";
+}
+.fa-hand-stop-o:before,
+.fa-hand-paper-o:before {
+  content: "\f256";
+}
+.fa-hand-scissors-o:before {
+  content: "\f257";
+}
+.fa-hand-lizard-o:before {
+  content: "\f258";
+}
+.fa-hand-spock-o:before {
+  content: "\f259";
+}
+.fa-hand-pointer-o:before {
+  content: "\f25a";
+}
+.fa-hand-peace-o:before {
+  content: "\f25b";
+}
+.fa-trademark:before {
+  content: "\f25c";
+}
+.fa-registered:before {
+  content: "\f25d";
+}
+.fa-creative-commons:before {
+  content: "\f25e";
+}
+.fa-gg:before {
+  content: "\f260";
+}
+.fa-gg-circle:before {
+  content: "\f261";
+}
+.fa-tripadvisor:before {
+  content: "\f262";
+}
+.fa-odnoklassniki:before {
+  content: "\f263";
+}
+.fa-odnoklassniki-square:before {
+  content: "\f264";
+}
+.fa-get-pocket:before {
+  content: "\f265";
+}
+.fa-wikipedia-w:before {
+  content: "\f266";
+}
+.fa-safari:before {
+  content: "\f267";
+}
+.fa-chrome:before {
+  content: "\f268";
+}
+.fa-firefox:before {
+  content: "\f269";
+}
+.fa-opera:before {
+  content: "\f26a";
+}
+.fa-internet-explorer:before {
+  content: "\f26b";
+}
+.fa-tv:before,
+.fa-television:before {
+  content: "\f26c";
+}
+.fa-contao:before {
+  content: "\f26d";
+}
+.fa-500px:before {
+  content: "\f26e";
+}
+.fa-amazon:before {
+  content: "\f270";
+}
+.fa-calendar-plus-o:before {
+  content: "\f271";
+}
+.fa-calendar-minus-o:before {
+  content: "\f272";
+}
+.fa-calendar-times-o:before {
+  content: "\f273";
+}
+.fa-calendar-check-o:before {
+  content: "\f274";
+}
+.fa-industry:before {
+  content: "\f275";
+}
+.fa-map-pin:before {
+  content: "\f276";
+}
+.fa-map-signs:before {
+  content: "\f277";
+}
+.fa-map-o:before {
+  content: "\f278";
+}
+.fa-map:before {
+  content: "\f279";
+}
+.fa-commenting:before {
+  content: "\f27a";
+}
+.fa-commenting-o:before {
+  content: "\f27b";
+}
+.fa-houzz:before {
+  content: "\f27c";
+}
+.fa-vimeo:before {
+  content: "\f27d";
+}
+.fa-black-tie:before {
+  content: "\f27e";
+}
+.fa-fonticons:before {
+  content: "\f280";
+}
+.fa-reddit-alien:before {
+  content: "\f281";
+}
+.fa-edge:before {
+  content: "\f282";
+}
+.fa-credit-card-alt:before {
+  content: "\f283";
+}
+.fa-codiepie:before {
+  content: "\f284";
+}
+.fa-modx:before {
+  content: "\f285";
+}
+.fa-fort-awesome:before {
+  content: "\f286";
+}
+.fa-usb:before {
+  content: "\f287";
+}
+.fa-product-hunt:before {
+  content: "\f288";
+}
+.fa-mixcloud:before {
+  content: "\f289";
+}
+.fa-scribd:before {
+  content: "\f28a";
+}
+.fa-pause-circle:before {
+  content: "\f28b";
+}
+.fa-pause-circle-o:before {
+  content: "\f28c";
+}
+.fa-stop-circle:before {
+  content: "\f28d";
+}
+.fa-stop-circle-o:before {
+  content: "\f28e";
+}
+.fa-shopping-bag:before {
+  content: "\f290";
+}
+.fa-shopping-basket:before {
+  content: "\f291";
+}
+.fa-hashtag:before {
+  content: "\f292";
+}
+.fa-bluetooth:before {
+  content: "\f293";
+}
+.fa-bluetooth-b:before {
+  content: "\f294";
+}
+.fa-percent:before {
+  content: "\f295";
+}
+.fa-gitlab:before {
+  content: "\f296";
+}
+.fa-wpbeginner:before {
+  content: "\f297";
+}
+.fa-wpforms:before {
+  content: "\f298";
+}
+.fa-envira:before {
+  content: "\f299";
+}
+.fa-universal-access:before {
+  content: "\f29a";
+}
+.fa-wheelchair-alt:before {
+  content: "\f29b";
+}
+.fa-question-circle-o:before {
+  content: "\f29c";
+}
+.fa-blind:before {
+  content: "\f29d";
+}
+.fa-audio-description:before {
+  content: "\f29e";
+}
+.fa-volume-control-phone:before {
+  content: "\f2a0";
+}
+.fa-braille:before {
+  content: "\f2a1";
+}
+.fa-assistive-listening-systems:before {
+  content: "\f2a2";
+}
+.fa-asl-interpreting:before,
+.fa-american-sign-language-interpreting:before {
+  content: "\f2a3";
+}
+.fa-deafness:before,
+.fa-hard-of-hearing:before,
+.fa-deaf:before {
+  content: "\f2a4";
+}
+.fa-glide:before {
+  content: "\f2a5";
+}
+.fa-glide-g:before {
+  content: "\f2a6";
+}
+.fa-signing:before,
+.fa-sign-language:before {
+  content: "\f2a7";
+}
+.fa-low-vision:before {
+  content: "\f2a8";
+}
+.fa-viadeo:before {
+  content: "\f2a9";
+}
+.fa-viadeo-square:before {
+  content: "\f2aa";
+}
+.fa-snapchat:before {
+  content: "\f2ab";
+}
+.fa-snapchat-ghost:before {
+  content: "\f2ac";
+}
+.fa-snapchat-square:before {
+  content: "\f2ad";
+}
+.fa-pied-piper:before {
+  content: "\f2ae";
+}
+.fa-first-order:before {
+  content: "\f2b0";
+}
+.fa-yoast:before {
+  content: "\f2b1";
+}
+.fa-themeisle:before {
+  content: "\f2b2";
+}
+.fa-google-plus-circle:before,
+.fa-google-plus-official:before {
+  content: "\f2b3";
+}
+.fa-fa:before,
+.fa-font-awesome:before {
+  content: "\f2b4";
+}
+.fa-handshake-o:before {
+  content: "\f2b5";
+}
+.fa-envelope-open:before {
+  content: "\f2b6";
+}
+.fa-envelope-open-o:before {
+  content: "\f2b7";
+}
+.fa-linode:before {
+  content: "\f2b8";
+}
+.fa-address-book:before {
+  content: "\f2b9";
+}
+.fa-address-book-o:before {
+  content: "\f2ba";
+}
+.fa-vcard:before,
+.fa-address-card:before {
+  content: "\f2bb";
+}
+.fa-vcard-o:before,
+.fa-address-card-o:before {
+  content: "\f2bc";
+}
+.fa-user-circle:before {
+  content: "\f2bd";
+}
+.fa-user-circle-o:before {
+  content: "\f2be";
+}
+.fa-user-o:before {
+  content: "\f2c0";
+}
+.fa-id-badge:before {
+  content: "\f2c1";
+}
+.fa-drivers-license:before,
+.fa-id-card:before {
+  content: "\f2c2";
+}
+.fa-drivers-license-o:before,
+.fa-id-card-o:before {
+  content: "\f2c3";
+}
+.fa-quora:before {
+  content: "\f2c4";
+}
+.fa-free-code-camp:before {
+  content: "\f2c5";
+}
+.fa-telegram:before {
+  content: "\f2c6";
+}
+.fa-thermometer-4:before,
+.fa-thermometer:before,
+.fa-thermometer-full:before {
+  content: "\f2c7";
+}
+.fa-thermometer-3:before,
+.fa-thermometer-three-quarters:before {
+  content: "\f2c8";
+}
+.fa-thermometer-2:before,
+.fa-thermometer-half:before {
+  content: "\f2c9";
+}
+.fa-thermometer-1:before,
+.fa-thermometer-quarter:before {
+  content: "\f2ca";
+}
+.fa-thermometer-0:before,
+.fa-thermometer-empty:before {
+  content: "\f2cb";
+}
+.fa-shower:before {
+  content: "\f2cc";
+}
+.fa-bathtub:before,
+.fa-s15:before,
+.fa-bath:before {
+  content: "\f2cd";
+}
+.fa-podcast:before {
+  content: "\f2ce";
+}
+.fa-window-maximize:before {
+  content: "\f2d0";
+}
+.fa-window-minimize:before {
+  content: "\f2d1";
+}
+.fa-window-restore:before {
+  content: "\f2d2";
+}
+.fa-times-rectangle:before,
+.fa-window-close:before {
+  content: "\f2d3";
+}
+.fa-times-rectangle-o:before,
+.fa-window-close-o:before {
+  content: "\f2d4";
+}
+.fa-bandcamp:before {
+  content: "\f2d5";
+}
+.fa-grav:before {
+  content: "\f2d6";
+}
+.fa-etsy:before {
+  content: "\f2d7";
+}
+.fa-imdb:before {
+  content: "\f2d8";
+}
+.fa-ravelry:before {
+  content: "\f2d9";
+}
+.fa-eercast:before {
+  content: "\f2da";
+}
+.fa-microchip:before {
+  content: "\f2db";
+}
+.fa-snowflake-o:before {
+  content: "\f2dc";
+}
+.fa-superpowers:before {
+  content: "\f2dd";
+}
+.fa-wpexplorer:before {
+  content: "\f2de";
+}
+.fa-meetup:before {
+  content: "\f2e0";
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
 }
 /*!
 *
@@ -8699,6 +9372,10 @@ div.traceback-wrapper {
   max-width: 800px;
   margin: auto;
 }
+div.traceback-wrapper pre.traceback {
+  max-height: 600px;
+  overflow: auto;
+}
 /**
  * Primary styles
  *
@@ -8724,6 +9401,10 @@ body > #header {
   z-index: 100;
 }
 body > #header #header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
   padding-bottom: 5px;
   padding-top: 5px;
   box-sizing: border-box;
@@ -8755,10 +9436,16 @@ body > #header .header-bar {
   padding-top: 1px;
   padding-bottom: 1px;
 }
-@media (max-width: 991px) {
-  #ipython_notebook {
-    margin-left: 10px;
-  }
+[dir="rtl"] #ipython_notebook {
+  margin-right: 10px;
+  margin-left: 0;
+}
+[dir="rtl"] #ipython_notebook.pull-left {
+  float: right !important;
+  float: right;
+}
+.flex-spacer {
+  flex: 1;
 }
 #noscript {
   width: auto;
@@ -8793,8 +9480,14 @@ body > #header .header-bar {
 input.ui-button {
   padding: 0.3em 0.9em;
 }
+span#kernel_logo_widget {
+  margin: 0 10px;
+}
 span#login_widget {
   float: right;
+}
+[dir="rtl"] span#login_widget {
+  float: left;
 }
 span#login_widget > .button,
 #logout {
@@ -8910,6 +9603,9 @@ span#login_widget > .button .badge,
   overflow: auto;
   flex: 1;
 }
+.modal-header {
+  cursor: move;
+}
 @media (min-width: 768px) {
   .modal .modal-dialog {
     width: 700px;
@@ -8930,6 +9626,19 @@ span#login_widget > .button .badge,
   display: inline-block;
   margin-bottom: -4px;
 }
+[dir="rtl"] .center-nav form.pull-left {
+  float: right !important;
+  float: right;
+}
+[dir="rtl"] .center-nav .navbar-text {
+  float: right;
+}
+[dir="rtl"] .navbar-inner {
+  text-align: right;
+}
+[dir="rtl"] div.text-left {
+  text-align: right;
+}
 /*!
 *
 * IPython tree view
@@ -8946,16 +9655,24 @@ span#login_widget > .button .badge,
   margin: 0;
 }
 .alternate_upload input.fileinput {
-  text-align: center;
-  vertical-align: middle;
-  display: inline;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
   opacity: 0;
   z-index: 2;
-  width: 12ex;
-  margin-right: -12ex;
+}
+.alternate_upload .btn-xs > input.fileinput {
+  margin: -1px -5px;
 }
 .alternate_upload .btn-upload {
+  position: relative;
   height: 22px;
+}
+::-webkit-file-upload-button {
+  cursor: pointer;
 }
 /**
  * Primary styles
@@ -8968,6 +9685,12 @@ ul#tabs {
 ul#tabs a {
   padding-top: 6px;
   padding-bottom: 4px;
+}
+[dir="rtl"] ul#tabs.nav-tabs > li {
+  float: right;
+}
+[dir="rtl"] ul#tabs.nav.nav-tabs {
+  padding-right: 0;
 }
 ul.breadcrumb a:focus,
 ul.breadcrumb a:hover {
@@ -8986,6 +9709,14 @@ ul.breadcrumb span {
 }
 .list_toolbar .tree-buttons {
   padding-top: 1px;
+}
+[dir="rtl"] .list_toolbar .tree-buttons .pull-right {
+  float: left !important;
+  float: left;
+}
+[dir="rtl"] .list_toolbar .col-sm-4,
+[dir="rtl"] .list_toolbar .col-sm-8 {
+  float: right;
 }
 .dynamic-buttons {
   padding-top: 3px;
@@ -9041,7 +9772,7 @@ ul.breadcrumb span {
 .list_item > div input {
   margin-right: 7px;
   margin-left: 14px;
-  vertical-align: baseline;
+  vertical-align: text-bottom;
   line-height: 22px;
   position: relative;
   top: -1px;
@@ -9051,6 +9782,9 @@ ul.breadcrumb span {
   margin-left: -1px;
   vertical-align: baseline;
   line-height: 22px;
+}
+[dir="rtl"] .list_item > div input {
+  margin-right: 0;
 }
 .new-file input[type=checkbox] {
   visibility: hidden;
@@ -9066,6 +9800,14 @@ ul.breadcrumb span {
   margin-left: 7px;
   line-height: 22px;
   vertical-align: baseline;
+}
+.item_modified {
+  margin-right: 7px;
+  margin-left: 7px;
+}
+[dir="rtl"] .item_modified.pull-right {
+  float: left !important;
+  float: left;
 }
 .item_buttons {
   line-height: 1em;
@@ -9094,6 +9836,14 @@ ul.breadcrumb span {
   margin-right: 7px;
   float: left;
 }
+[dir="rtl"] .item_buttons.pull-right {
+  float: left !important;
+  float: left;
+}
+[dir="rtl"] .item_buttons .kernel-name {
+  margin-left: 7px;
+  float: right;
+}
 .toolbar_info {
   height: 24px;
   line-height: 24px;
@@ -9119,15 +9869,32 @@ ul.breadcrumb span {
   background-color: transparent;
   font-weight: bold;
 }
+.sort_button {
+  display: inline-block;
+  padding-left: 7px;
+}
+[dir="rtl"] .sort_button.pull-right {
+  float: left !important;
+  float: left;
+}
 #tree-selector {
   padding-right: 0px;
 }
 #button-select-all {
   min-width: 50px;
 }
+[dir="rtl"] #button-select-all.btn {
+  float: right ;
+}
 #select-all {
   margin-left: 7px;
   margin-right: 2px;
+  margin-top: 2px;
+  height: 16px;
+}
+[dir="rtl"] #select-all.pull-left {
+  float: right !important;
+  float: right;
 }
 .menu_icon {
   margin-right: 2px;
@@ -9145,6 +9912,12 @@ ul.breadcrumb span {
   -moz-osx-font-smoothing: grayscale;
   content: "\f114";
 }
+.folder_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.folder_icon:before.fa-pull-right {
+  margin-left: .3em;
+}
 .folder_icon:before.pull-left {
   margin-right: .3em;
 }
@@ -9161,6 +9934,12 @@ ul.breadcrumb span {
   content: "\f02d";
   position: relative;
   top: -1px;
+}
+.notebook_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.notebook_icon:before.fa-pull-right {
+  margin-left: .3em;
 }
 .notebook_icon:before.pull-left {
   margin-right: .3em;
@@ -9180,6 +9959,12 @@ ul.breadcrumb span {
   top: -1px;
   color: #5cb85c;
 }
+.running_notebook_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.running_notebook_icon:before.fa-pull-right {
+  margin-left: .3em;
+}
 .running_notebook_icon:before.pull-left {
   margin-right: .3em;
 }
@@ -9197,6 +9982,12 @@ ul.breadcrumb span {
   position: relative;
   top: -2px;
 }
+.file_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.file_icon:before.fa-pull-right {
+  margin-left: .3em;
+}
 .file_icon:before.pull-left {
   margin-right: .3em;
 }
@@ -9210,6 +10001,12 @@ ul.breadcrumb span {
 ul#new-menu {
   left: auto;
   right: 0;
+}
+#new-menu .dropdown-header {
+  font-size: 10px;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 0 0 3px;
+  margin: -3px 20px 0;
 }
 .kernel-menu-icon {
   padding-right: 12px;
@@ -9265,6 +10062,12 @@ ul#new-menu {
 .rename-button {
   display: none;
 }
+.move-button {
+  display: none;
+}
+.download-button {
+  display: none;
+}
 .shutdown-button {
   display: none;
 }
@@ -9305,6 +10108,12 @@ ul#new-menu {
   -moz-osx-font-smoothing: grayscale;
   width: 20px;
 }
+.dirty-indicator.fa-pull-left {
+  margin-right: .3em;
+}
+.dirty-indicator.fa-pull-right {
+  margin-left: .3em;
+}
 .dirty-indicator.pull-left {
   margin-right: .3em;
 }
@@ -9319,6 +10128,12 @@ ul#new-menu {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 20px;
+}
+.dirty-indicator-dirty.fa-pull-left {
+  margin-right: .3em;
+}
+.dirty-indicator-dirty.fa-pull-right {
+  margin-left: .3em;
 }
 .dirty-indicator-dirty.pull-left {
   margin-right: .3em;
@@ -9335,6 +10150,12 @@ ul#new-menu {
   -moz-osx-font-smoothing: grayscale;
   width: 20px;
 }
+.dirty-indicator-clean.fa-pull-left {
+  margin-right: .3em;
+}
+.dirty-indicator-clean.fa-pull-right {
+  margin-left: .3em;
+}
 .dirty-indicator-clean.pull-left {
   margin-right: .3em;
 }
@@ -9349,6 +10170,12 @@ ul#new-menu {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: "\f00c";
+}
+.dirty-indicator-clean:before.fa-pull-left {
+  margin-right: .3em;
+}
+.dirty-indicator-clean:before.fa-pull-right {
+  margin-left: .3em;
 }
 .dirty-indicator-clean:before.pull-left {
   margin-right: .3em;
@@ -9394,14 +10221,132 @@ ul#new-menu {
     box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
   }
 }
+.CodeMirror-dialog {
+  background-color: #fff;
+}
 /*!
 *
 * IPython notebook
 *
 */
-/* CSS font colors for translated ANSI colors. */
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
 .ansibold {
   font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
 }
 /* use dark versions for foreground, to improve visibility */
 .ansiblack {
@@ -9480,12 +10425,20 @@ div.cell {
   /* This acts as a spacer between cells, that is outside the border */
   margin: 0px;
   outline: none;
-  border-left-width: 1px;
-  padding-left: 5px;
-  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
 }
 div.cell.jupyter-soft-selected {
-  border-left-color: #90CAF9;
   border-left-color: #E3F2FD;
   border-left-width: 1px;
   padding-left: 5px;
@@ -9498,27 +10451,39 @@ div.cell.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected {
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
   border-color: #ababab;
-  border-left-width: 0px;
-  padding-left: 6px;
-  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
 }
 @media print {
-  div.cell.selected {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected.jupyter-soft-selected {
-  border-left-width: 0;
-  padding-left: 6px;
-  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
-}
 .edit_mode div.cell.selected {
   border-color: #66BB6A;
-  border-left-width: 0px;
-  padding-left: 6px;
-  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
 }
 @media print {
   .edit_mode div.cell.selected {
@@ -9551,6 +10516,7 @@ div.cell.selected.jupyter-soft-selected {
   }
 }
 div.inner_cell {
+  min-width: 0;
   /* Old browsers */
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -9571,11 +10537,6 @@ div.inner_cell {
   box-flex: 1;
   /* Modern browsers */
   flex: 1;
-}
-@-moz-document url-prefix() {
-  div.inner_cell {
-    overflow-x: hidden;
-  }
 }
 /* input_area and input_prompt must match in top border and margin for alignment */
 div.input_area {
@@ -9718,7 +10679,9 @@ div.input_area > div.highlight > pre {
 .CodeMirror-lines {
   /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
   /* we have set a different line-height and want this to scale with that. */
-  padding: 0.4em;
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
 }
 .CodeMirror-linenumber {
   padding: 0 8px 0 4px;
@@ -9728,11 +10691,24 @@ div.input_area > div.highlight > pre {
   border-top-left-radius: 2px;
 }
 .CodeMirror pre {
-  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
-  /* .CodeMirror-lines */
-  padding: 0;
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
   border: 0;
   border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
 }
 /*
 
@@ -9986,6 +10962,9 @@ div.output_area img.unconfined,
 div.output_area svg.unconfined {
   max-width: none;
 }
+div.output_area .mglyph > img {
+  max-width: none;
+}
 /* This is needed to protect the pre formating from global settings such
    as that of bootstrap */
 .output {
@@ -10024,7 +11003,7 @@ div.output_area svg.unconfined {
 }
 div.output_area pre {
   margin: 0;
-  padding: 0;
+  padding: 1px 0 1px 0;
   border: 0;
   vertical-align: baseline;
   color: black;
@@ -10184,39 +11163,35 @@ div.output_unrecognized a:hover {
 .rendered_html h6:first-child {
   margin-top: 1em;
 }
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
 .rendered_html ul {
   list-style: disc;
-  margin: 0em 2em;
-  padding-left: 0px;
 }
 .rendered_html ul ul {
   list-style: square;
-  margin: 0em 2em;
+  margin-top: 0;
 }
 .rendered_html ul ul ul {
   list-style: circle;
-  margin: 0em 2em;
 }
 .rendered_html ol {
   list-style: decimal;
-  margin: 0em 2em;
-  padding-left: 0px;
 }
 .rendered_html ol ol {
   list-style: upper-alpha;
-  margin: 0em 2em;
+  margin-top: 0;
 }
 .rendered_html ol ol ol {
   list-style: lower-alpha;
-  margin: 0em 2em;
 }
 .rendered_html ol ol ol ol {
   list-style: lower-roman;
-  margin: 0em 2em;
 }
 .rendered_html ol ol ol ol ol {
   list-style: decimal;
-  margin: 0em 2em;
 }
 .rendered_html * + ul {
   margin-top: 1em;
@@ -10230,14 +11205,23 @@ div.output_unrecognized a:hover {
 }
 .rendered_html pre {
   margin: 1em 2em;
+  padding: 0px;
+  background-color: #fff;
+}
+.rendered_html code {
+  background-color: #eff0f1;
+}
+.rendered_html p code {
+  padding: 1px 5px;
+}
+.rendered_html pre code {
+  background-color: #fff;
 }
 .rendered_html pre,
 .rendered_html code {
   border: 0;
-  background-color: #fff;
   color: #000;
   font-size: 100%;
-  padding: 0px;
 }
 .rendered_html blockquote {
   margin: 1em 2em;
@@ -10245,24 +11229,36 @@ div.output_unrecognized a:hover {
 .rendered_html table {
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid black;
+  border: none;
   border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
 }
 .rendered_html tr,
 .rendered_html th,
 .rendered_html td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  margin: 1em 2em;
-}
-.rendered_html td,
-.rendered_html th {
-  text-align: left;
+  text-align: right;
   vertical-align: middle;
-  padding: 4px;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
 }
 .rendered_html th {
   font-weight: bold;
+}
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
 }
 .rendered_html * + table {
   margin-top: 1em;
@@ -10289,6 +11285,15 @@ div.output_unrecognized a:hover {
 .rendered_html img.unconfined,
 .rendered_html svg.unconfined {
   max-width: none;
+}
+.rendered_html .alert {
+  margin-bottom: initial;
+}
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] .rendered_html p {
+  text-align: right;
 }
 div.text_cell {
   /* Old browsers */
@@ -10343,8 +11348,17 @@ h6:hover .anchor-link {
   overflow-x: auto;
   overflow-y: hidden;
 }
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered .rendered_html td {
+  max-width: none;
+}
 .text_cell.unrendered .text_cell_render {
   display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
 }
 .cm-header-1,
 .cm-header-2,
@@ -10481,6 +11495,28 @@ kbd {
   padding-top: 1px;
   padding-bottom: 1px;
 }
+.jupyter-keybindings {
+  padding: 1px;
+  line-height: 24px;
+  border-bottom: 1px solid gray;
+}
+.jupyter-keybindings input {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.jupyter-keybindings i {
+  padding: 6px;
+}
+.well code {
+  background-color: #ffffff;
+  border-color: #ababab;
+  border-width: 1px;
+  border-style: solid;
+  padding: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
 /* CSS for the cell toolbar */
 .celltoolbar {
   border: thin solid #CFCFCF;
@@ -10613,6 +11649,152 @@ select[multiple].celltoolbar select {
   margin-left: 5px;
   margin-right: 5px;
 }
+.tags_button_container {
+  width: 100%;
+  display: flex;
+}
+.tag-container {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+}
+.tag-container > * {
+  margin: 0 4px;
+}
+.remove-tag-btn {
+  margin-left: 4px;
+}
+.tags-input {
+  display: flex;
+}
+.cell-tag:last-child:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 40px;
+  height: 100%;
+  /* Fade to background color of cell toolbar */
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), #EEE);
+}
+.tags-input > * {
+  margin-left: 4px;
+}
+.cell-tag,
+.tags-input input,
+.tags-input button {
+  display: block;
+  width: 100%;
+  height: 32px;
+  padding: 6px 12px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 1px;
+  box-shadow: none;
+  width: inherit;
+  font-size: inherit;
+  height: 22px;
+  line-height: 22px;
+  padding: 0px 4px;
+  display: inline-block;
+}
+.cell-tag:focus,
+.tags-input input:focus,
+.tags-input button:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.cell-tag::-moz-placeholder,
+.tags-input input::-moz-placeholder,
+.tags-input button::-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+.cell-tag:-ms-input-placeholder,
+.tags-input input:-ms-input-placeholder,
+.tags-input button:-ms-input-placeholder {
+  color: #999;
+}
+.cell-tag::-webkit-input-placeholder,
+.tags-input input::-webkit-input-placeholder,
+.tags-input button::-webkit-input-placeholder {
+  color: #999;
+}
+.cell-tag::-ms-expand,
+.tags-input input::-ms-expand,
+.tags-input button::-ms-expand {
+  border: 0;
+  background-color: transparent;
+}
+.cell-tag[disabled],
+.tags-input input[disabled],
+.tags-input button[disabled],
+.cell-tag[readonly],
+.tags-input input[readonly],
+.tags-input button[readonly],
+fieldset[disabled] .cell-tag,
+fieldset[disabled] .tags-input input,
+fieldset[disabled] .tags-input button {
+  background-color: #eeeeee;
+  opacity: 1;
+}
+.cell-tag[disabled],
+.tags-input input[disabled],
+.tags-input button[disabled],
+fieldset[disabled] .cell-tag,
+fieldset[disabled] .tags-input input,
+fieldset[disabled] .tags-input button {
+  cursor: not-allowed;
+}
+textarea.cell-tag,
+textarea.tags-input input,
+textarea.tags-input button {
+  height: auto;
+}
+select.cell-tag,
+select.tags-input input,
+select.tags-input button {
+  height: 30px;
+  line-height: 30px;
+}
+textarea.cell-tag,
+textarea.tags-input input,
+textarea.tags-input button,
+select[multiple].cell-tag,
+select[multiple].tags-input input,
+select[multiple].tags-input button {
+  height: auto;
+}
+.cell-tag,
+.tags-input button {
+  padding: 0px 4px;
+}
+.cell-tag {
+  background-color: #fff;
+  white-space: nowrap;
+}
+.tags-input input[type=text]:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #ccc;
+}
 .completions {
   position: absolute;
   z-index: 110;
@@ -10638,16 +11820,28 @@ select[multiple].celltoolbar select {
 .completions select option.context {
   color: #286090;
 }
-#kernel_logo_widget {
-  float: right !important;
-  float: right;
-}
 #kernel_logo_widget .current_kernel_logo {
   display: none;
   margin-top: -1px;
   margin-bottom: -1px;
   width: 32px;
   height: 32px;
+}
+[dir="rtl"] #kernel_logo_widget {
+  float: left !important;
+  float: left;
+}
+.modal .modal-body .move-path {
+  display: flex;
+  flex-direction: row;
+  justify-content: space;
+  align-items: center;
+}
+.modal .modal-body .move-path .server-root {
+  padding-right: 20px;
+}
+.modal .modal-body .move-path .path-input {
+  flex: 1;
 }
 #menubar {
   box-sizing: border-box;
@@ -10669,11 +11863,41 @@ select[multiple].celltoolbar select {
 #menubar .navbar-collapse {
   clear: left;
 }
+[dir="rtl"] #menubar .navbar-toggle {
+  float: right;
+}
+[dir="rtl"] #menubar .navbar-collapse {
+  clear: right;
+}
+[dir="rtl"] #menubar .navbar-nav {
+  float: right;
+}
+[dir="rtl"] #menubar .nav {
+  padding-right: 0px;
+}
+[dir="rtl"] #menubar .navbar-nav > li {
+  float: right;
+}
+[dir="rtl"] #menubar .navbar-right {
+  float: left !important;
+}
+[dir="rtl"] ul.dropdown-menu {
+  text-align: right;
+  left: auto;
+}
+[dir="rtl"] ul#new-menu.dropdown-menu {
+  right: auto;
+  left: 0;
+}
 .nav-wrapper {
   border-bottom: 1px solid #e7e7e7;
 }
 i.menu-icon {
   padding-top: 4px;
+}
+[dir="rtl"] i.menu-icon.pull-right {
+  float: left !important;
+  float: left;
 }
 ul#help_menu li a {
   overflow: hidden;
@@ -10681,6 +11905,17 @@ ul#help_menu li a {
 }
 ul#help_menu li a i {
   margin-right: -1.2em;
+}
+[dir="rtl"] ul#help_menu li a {
+  padding-left: 2.2em;
+}
+[dir="rtl"] ul#help_menu li a i {
+  margin-right: 0;
+  margin-left: -1.2em;
+}
+[dir="rtl"] ul#help_menu li a i.pull-right {
+  float: left !important;
+  float: left;
 }
 .dropdown-submenu {
   position: relative;
@@ -10690,6 +11925,10 @@ ul#help_menu li a i {
   left: 100%;
   margin-top: -6px;
   margin-left: -1px;
+}
+[dir="rtl"] .dropdown-submenu > .dropdown-menu {
+  right: 100%;
+  margin-right: -1px;
 }
 .dropdown-submenu:hover > .dropdown-menu {
   display: block;
@@ -10708,11 +11947,23 @@ ul#help_menu li a i {
   margin-top: 2px;
   margin-right: -10px;
 }
+.dropdown-submenu > a:after.fa-pull-left {
+  margin-right: .3em;
+}
+.dropdown-submenu > a:after.fa-pull-right {
+  margin-left: .3em;
+}
 .dropdown-submenu > a:after.pull-left {
   margin-right: .3em;
 }
 .dropdown-submenu > a:after.pull-right {
   margin-left: .3em;
+}
+[dir="rtl"] .dropdown-submenu > a:after {
+  float: left;
+  content: "\f0d9";
+  margin-right: 0;
+  margin-left: -10px;
 }
 .dropdown-submenu:hover > a:after {
   color: #262626;
@@ -10729,6 +11980,10 @@ ul#help_menu li a i {
   float: right;
   z-index: 10;
 }
+[dir="rtl"] #notification_area {
+  float: left !important;
+  float: left;
+}
 .indicator_area {
   float: right !important;
   float: right;
@@ -10739,6 +11994,10 @@ ul#help_menu li a i {
   z-index: 10;
   text-align: center;
   width: auto;
+}
+[dir="rtl"] .indicator_area {
+  float: left !important;
+  float: left;
 }
 #kernel_indicator {
   float: right !important;
@@ -10756,6 +12015,12 @@ ul#help_menu li a i {
   padding-left: 5px;
   padding-right: 5px;
 }
+[dir="rtl"] #kernel_indicator {
+  float: left !important;
+  float: left;
+  border-left: 0;
+  border-right: 1px solid;
+}
 #modal_indicator {
   float: right !important;
   float: right;
@@ -10766,6 +12031,10 @@ ul#help_menu li a i {
   z-index: 10;
   text-align: center;
   width: auto;
+}
+[dir="rtl"] #modal_indicator {
+  float: left !important;
+  float: left;
 }
 #readonly-indicator {
   float: right !important;
@@ -10796,6 +12065,12 @@ ul#help_menu li a i {
   -moz-osx-font-smoothing: grayscale;
   content: "\f040";
 }
+.edit_mode .modal_indicator:before.fa-pull-left {
+  margin-right: .3em;
+}
+.edit_mode .modal_indicator:before.fa-pull-right {
+  margin-left: .3em;
+}
 .edit_mode .modal_indicator:before.pull-left {
   margin-right: .3em;
 }
@@ -10810,6 +12085,12 @@ ul#help_menu li a i {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: ' ';
+}
+.command_mode .modal_indicator:before.fa-pull-left {
+  margin-right: .3em;
+}
+.command_mode .modal_indicator:before.fa-pull-right {
+  margin-left: .3em;
 }
 .command_mode .modal_indicator:before.pull-left {
   margin-right: .3em;
@@ -10826,6 +12107,12 @@ ul#help_menu li a i {
   -moz-osx-font-smoothing: grayscale;
   content: "\f10c";
 }
+.kernel_idle_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.kernel_idle_icon:before.fa-pull-right {
+  margin-left: .3em;
+}
 .kernel_idle_icon:before.pull-left {
   margin-right: .3em;
 }
@@ -10840,6 +12127,12 @@ ul#help_menu li a i {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: "\f111";
+}
+.kernel_busy_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.kernel_busy_icon:before.fa-pull-right {
+  margin-left: .3em;
 }
 .kernel_busy_icon:before.pull-left {
   margin-right: .3em;
@@ -10856,6 +12149,12 @@ ul#help_menu li a i {
   -moz-osx-font-smoothing: grayscale;
   content: "\f1e2";
 }
+.kernel_dead_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.kernel_dead_icon:before.fa-pull-right {
+  margin-left: .3em;
+}
 .kernel_dead_icon:before.pull-left {
   margin-right: .3em;
 }
@@ -10870,6 +12169,12 @@ ul#help_menu li a i {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: "\f127";
+}
+.kernel_disconnected_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.kernel_disconnected_icon:before.fa-pull-right {
+  margin-left: .3em;
 }
 .kernel_disconnected_icon:before.pull-left {
   margin-right: .3em;
@@ -11246,7 +12551,7 @@ div#pager .ui-resizable-handle::after {
 }
 .shortcut_key {
   display: inline-block;
-  width: 20ex;
+  width: 21ex;
   text-align: right;
   font-family: monospace;
 }
@@ -11260,27 +12565,46 @@ div#pager .ui-resizable-handle::after {
   flex: 1;
 }
 span.save_widget {
-  margin-top: 6px;
+  height: 30px;
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  width: 50%;
+  flex: 1;
 }
 span.save_widget span.filename {
-  height: 1em;
+  height: 100%;
   line-height: 1em;
-  padding: 3px;
   margin-left: 16px;
   border: none;
   font-size: 146.5%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   border-radius: 2px;
 }
 span.save_widget span.filename:hover {
   background-color: #e6e6e6;
 }
+[dir="rtl"] span.save_widget.pull-left {
+  float: right !important;
+  float: right;
+}
+[dir="rtl"] span.save_widget span.filename {
+  margin-left: 0;
+  margin-right: 16px;
+}
 span.checkpoint_status,
 span.autosave_status {
   font-size: small;
+  white-space: nowrap;
+  padding: 0 5px;
 }
 @media (max-width: 767px) {
   span.save_widget {
     font-size: small;
+    padding: 0 0 0 5px;
   }
   span.checkpoint_status,
   span.autosave_status {
@@ -11324,6 +12648,9 @@ span.autosave_status {
   margin-top: 0px;
   margin-left: 5px;
 }
+.toolbar-btn-label {
+  margin-left: 6px;
+}
 #maintoolbar {
   margin-bottom: -3px;
   margin-top: -8px;
@@ -11343,6 +12670,10 @@ span.autosave_status {
 }
 .select-xs {
   height: 24px;
+}
+[dir="rtl"] .btn-group > .btn,
+.btn-group-vertical > .btn {
+  float: right;
 }
 .pulse,
 .dropdown-menu > li > a.pulse,
@@ -11493,6 +12824,10 @@ ul.typeahead-list i {
   margin-left: -10px;
   width: 18px;
 }
+[dir="rtl"] ul.typeahead-list i {
+  margin-left: 0;
+  margin-right: -10px;
+}
 ul.typeahead-list {
   max-height: 80vh;
   overflow: auto;
@@ -11501,6 +12836,13 @@ ul.typeahead-list > li > a {
   /** Firefox bug **/
   /* see https://github.com/jupyter/notebook/issues/559 */
   white-space: normal;
+}
+ul.typeahead-list  > li > a.pull-right {
+  float: left !important;
+  float: left;
+}
+[dir="rtl"] .typeahead-list {
+  text-align: right;
 }
 .cmd-palette .modal-body {
   padding: 7px;
@@ -11512,10 +12854,19 @@ ul.typeahead-list > li > a {
   outline: none;
 }
 .no-shortcut {
-  display: none;
+  min-width: 20px;
+  color: transparent;
+}
+[dir="rtl"] .no-shortcut.pull-right {
+  float: left !important;
+  float: left;
+}
+[dir="rtl"] .command-shortcut.pull-right {
+  float: left !important;
+  float: left;
 }
 .command-shortcut:before {
-  content: "(command)";
+  content: "(command mode)";
   padding-right: 3px;
   color: #777777;
 }
@@ -11524,6 +12875,10 @@ ul.typeahead-list > li > a {
   padding-right: 3px;
   color: #777777;
 }
+[dir="rtl"] .edit-shortcut.pull-right {
+  float: left !important;
+  float: left;
+}
 #find-and-replace #replace-preview .match,
 #find-and-replace #replace-preview .insert {
   background-color: #BBDEFB;
@@ -11531,6 +12886,12 @@ ul.typeahead-list > li > a {
   border-style: solid;
   border-width: 1px;
   border-radius: 0px;
+}
+[dir="ltr"] #find-and-replace .input-group-btn + .form-control {
+  border-left: none;
+}
+[dir="rtl"] #find-and-replace .input-group-btn + .form-control {
+  border-right: none;
 }
 #find-and-replace #replace-preview .replace .match {
   background-color: #FFCDD2;
@@ -11558,6 +12919,7 @@ ul.typeahead-list > li > a {
   box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
 }
 .terminal-app .terminal {
+  width: 100%;
   float: left;
   font-family: monospace;
   color: white;
@@ -11571,6 +12933,9 @@ ul.typeahead-list > li > a {
 .terminal-app .terminal dummy-screen {
   line-height: 1em;
   font-size: 14px;
+}
+.terminal-app .terminal .xterm-rows {
+  padding: 10px;
 }
 .terminal-app .terminal-cursor {
   color: black;
@@ -11631,8 +12996,10 @@ ul.typeahead-list > li > a {
 .highlight .mh { color: #666666 } /* Literal.Number.Hex */
 .highlight .mi { color: #666666 } /* Literal.Number.Integer */
 .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
 .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
 .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
 .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
 .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
@@ -11643,9 +13010,11 @@ ul.typeahead-list > li > a {
 .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
 .highlight .ss { color: #19177C } /* Literal.String.Symbol */
 .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
 .highlight .vc { color: #19177C } /* Name.Variable.Class */
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
 <style type="text/css">
@@ -11699,9 +13068,7 @@ body {
 div#notebook {
   overflow: visible;
   border-top: none;
-}
-
-@media print {
+}@media print {
   div.cell {
     display: block;
     page-break-inside: avoid;
@@ -11722,7 +13089,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -11768,20 +13135,16 @@ div#notebook {
         </table>  <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Sparameter-and-Power-Data">Sparameter and Power Data<a class="anchor-link" href="#Sparameter-and-Power-Data">&#182;</a></h1><p>This notebook demonstrates how to open many data sources, arrange the data and combine it into a single csv file. Note, because of the size of the data sources involved they are not included. For more information please contact <a href="mailto:aric.sanders@nist.gov">Aric Sanders</a></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Import-and-transformation-of-data-files-to-a-database">Import and transformation of data files to a database<a class="anchor-link" href="#Import-and-transformation-of-data-files-to-a-database">&#182;</a></h2><h3 id="There-are-several-different-sources-of-structured-data-each-one-with-formatting-differences">There are several different sources of structured data each one with formatting differences<a class="anchor-link" href="#There-are-several-different-sources-of-structured-data-each-one-with-formatting-differences">&#182;</a></h3><h3 id="Check-Standard-data-sources">Check Standard data sources<a class="anchor-link" href="#Check-Standard-data-sources">&#182;</a></h3><ol>
 <li>One Port Raw files that have been converted using Ron Ginley's BDAT -&gt; Ascii converter</li>
@@ -11820,7 +13183,7 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -11828,7 +13191,11 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>The module smithplot was not found,please put it on the python path
 </pre>
@@ -11846,35 +13213,33 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Location of the various data sources</span>
 <span class="c1">#input data sources</span>
-<span class="n">CONVERTED_RAW_FILE_DIRECTORY</span><span class="o">=</span><span class="s1">r&#39;C:\Share\Ck_Std_raw_ascii&#39;</span>
+<span class="n">CONVERTED_RAW_FILE_DIRECTORY</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;C:\Share\Ck_Std_raw_ascii&#39;</span>
 <span class="n">SAS_ONE_PORT</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s1">&#39;onechks.csv&#39;</span><span class="p">)</span>
 <span class="n">SAS_TWO_PORT</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s1">&#39;twochks.csv&#39;</span><span class="p">)</span>
 <span class="n">SAS_POWER</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s1">&#39;powchks.csv&#39;</span><span class="p">)</span>
-<span class="n">DUT_TOP_DIRECTORY</span><span class="o">=</span><span class="s1">r&#39;C:\Share\ascii.dut&#39;</span>
+<span class="n">DUT_TOP_DIRECTORY</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;C:\Share\ascii.dut&#39;</span>
 <span class="c1"># output data </span>
-<span class="n">ONE_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\One_Port_Check_Standard.csv&quot;</span>
-<span class="n">TWO_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\Two_Port_Check_Standard.csv&quot;</span>
-<span class="n">TWO_PORT_NR_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\Two_Port_NR_Check_Standard.csv&quot;</span>
-<span class="n">POWER_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\Power_Check_Standard.csv&quot;</span>
-<span class="n">COMBINED_ONE_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\Combined_One_Port_Check_Standard.csv&quot;</span>
-<span class="n">COMBINED_TWO_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\Combined_Two_Port_Check_Standard.csv&quot;</span>
-<span class="n">COMBINED_POWER_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\Combined_Power_Check_Standard.csv&quot;</span>
-<span class="n">ONE_PORT_CALREP_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_DUT\One_Port_DUT.csv&quot;</span>
-<span class="n">TWO_PORT_CALREP_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_DUT\Two_Port_DUT.csv&quot;</span>
-<span class="n">POWER_3TERM_CALREP_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_DUT\Power_3Term_DUT.csv&quot;</span>
-<span class="n">POWER_4TERM_CALREP_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_DUT\Power_4Term_DUT.csv&quot;</span>
-<span class="n">SQL_DATABASE</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Sql_DUT_Checkstandard\sqlite_sparameter_power.db&quot;</span>
+<span class="n">ONE_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\One_Port_Check_Standard.csv&quot;</span>
+<span class="n">TWO_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\Two_Port_Check_Standard.csv&quot;</span>
+<span class="n">TWO_PORT_NR_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\Two_Port_NR_Check_Standard.csv&quot;</span>
+<span class="n">POWER_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\Power_Check_Standard.csv&quot;</span>
+<span class="n">COMBINED_ONE_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\Combined_One_Port_Check_Standard.csv&quot;</span>
+<span class="n">COMBINED_TWO_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\Combined_Two_Port_Check_Standard.csv&quot;</span>
+<span class="n">COMBINED_POWER_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\Combined_Power_Check_Standard.csv&quot;</span>
+<span class="n">ONE_PORT_CALREP_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_DUT\One_Port_DUT.csv&quot;</span>
+<span class="n">TWO_PORT_CALREP_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_DUT\Two_Port_DUT.csv&quot;</span>
+<span class="n">POWER_3TERM_CALREP_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_DUT\Power_3Term_DUT.csv&quot;</span>
+<span class="n">POWER_4TERM_CALREP_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_DUT\Power_4Term_DUT.csv&quot;</span>
+<span class="n">SQL_DATABASE</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Sql_DUT_Checkstandard\sqlite_sparameter_power.db&quot;</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Creating-import-lists-by-type-for-the-converted-raw-data-sources">Creating import lists by type for the converted raw data sources<a class="anchor-link" href="#Creating-import-lists-by-type-for-the-converted-raw-data-sources">&#182;</a></h3><ol>
 <li>We read all the files in the top folder</li>
@@ -11919,7 +13284,7 @@ div#notebook {
 <span class="c1"># This loop takes about 10 seconds</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -11942,7 +13307,7 @@ div#notebook {
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} out of {1} files were binned&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_binned_files</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">file_names</span><span class="p">))</span> <span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -11950,7 +13315,11 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>There are 6561 total files
 There are 3636 one port raw files
@@ -12037,7 +13406,7 @@ All Files Have Been Acounted For
         
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -12054,7 +13423,7 @@ All Files Have Been Acounted For
 <span class="n">one_port_raw_data_frame</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -12062,7 +13431,11 @@ All Files Have Been Acounted For
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[7]:</div>
+
+
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12234,7 +13607,7 @@ All Files Have Been Acounted For
 <div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">timeit</span> build_csv_from_raw_script(one_port_raw_files[:10],ONE_PORT_CHKSTD_CSV,&quot;OnePortRawModel&quot;)
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -12242,7 +13615,11 @@ All Files Have Been Acounted For
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>10 loops, best of 3: 152 ms per loop
 </pre>
@@ -12262,7 +13639,7 @@ All Files Have Been Acounted For
 <span class="mf">16.3</span><span class="o">*</span><span class="mi">10</span><span class="o">**-</span><span class="mi">3</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">one_port_raw_files</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -12270,7 +13647,11 @@ All Files Have Been Acounted For
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[36]:</div>
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[36]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12297,7 +13678,7 @@ All Files Have Been Acounted For
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} files were converted to a single csv in {1} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">import_list</span><span class="p">),</span><span class="n">diff</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -12305,7 +13686,11 @@ All Files Have Been Acounted For
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>3636 files were converted to a single csv in 122.528 seconds
 </pre>
@@ -12332,7 +13717,7 @@ All Files Have Been Acounted For
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -12340,14 +13725,18 @@ All Files Have Been Acounted For
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
 
 
 
-<div id="d6f97cdd-8c1f-4b8a-98a7-32f474413e94"></div>
+
+
+<div id="6e314c32-28e6-4580-a9d0-eecfff80500e"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#d6f97cdd-8c1f-4b8a-98a7-32f474413e94');
+var element = $('#6e314c32-28e6-4580-a9d0-eecfff80500e');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -13107,7 +14496,11 @@ if (IPython.notebook.kernel != null) {
 
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 
 <div class="output_html rendered_html output_subarea ">
 <img src="data:image/png;base64,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">
@@ -13134,7 +14527,7 @@ if (IPython.notebook.kernel != null) {
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} files were converted to a single csv in {1} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">import_list</span><span class="p">),</span><span class="n">diff</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13142,7 +14535,11 @@ if (IPython.notebook.kernel != null) {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>1574 files were converted to a single csv in 31.946 seconds
 </pre>
@@ -13168,7 +14565,7 @@ if (IPython.notebook.kernel != null) {
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} files were converted to a single csv in {1} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">import_list</span><span class="p">),</span><span class="n">diff</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13176,7 +14573,11 @@ if (IPython.notebook.kernel != null) {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>210 files were converted to a single csv in 10.689 seconds
 </pre>
@@ -13202,7 +14603,7 @@ if (IPython.notebook.kernel != null) {
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} files were converted to a single csv in {1} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">import_list</span><span class="p">),</span><span class="n">diff</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13210,7 +14611,11 @@ if (IPython.notebook.kernel != null) {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>1141 files were converted to a single csv in 7.684 seconds
 </pre>
@@ -13221,19 +14626,15 @@ if (IPython.notebook.kernel != null) {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Now-that-the-conversion-of-the-raw-data-files-is-finished,-we-need-to-import-data-from-the-legacy-SAS-database,-check-to-see-if-it-is-in-the-csv-file,-and-if-it-is-not-add-it.-It-should-be-noted-that-the-data-in-the-SAS-database-has-a-different-number-of-columns,-so-that-some-of-them-need-to-be-translated.-In-addition,-there-is-no-SAS-equivelent-to-two-port-NR.">Now that the conversion of the raw data files is finished, we need to import data from the legacy SAS database, check to see if it is in the csv file, and if it is not add it. It should be noted that the data in the SAS database has a different number of columns, so that some of them need to be translated. In addition, there is no SAS equivelent to two port NR.<a class="anchor-link" href="#Now-that-the-conversion-of-the-raw-data-files-is-finished,-we-need-to-import-data-from-the-legacy-SAS-database,-check-to-see-if-it-is-in-the-csv-file,-and-if-it-is-not-add-it.-It-should-be-noted-that-the-data-in-the-SAS-database-has-a-different-number-of-columns,-so-that-some-of-them-need-to-be-translated.-In-addition,-there-is-no-SAS-equivelent-to-two-port-NR.">&#182;</a></h3>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Adition-of-data-process">Adition of data process<a class="anchor-link" href="#Adition-of-data-process">&#182;</a></h3><ol>
 <li>import tables of new raw and SAS types</li>
@@ -13258,7 +14659,7 @@ if (IPython.notebook.kernel != null) {
 <span class="n">sas_one_port</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">SAS_ONE_PORT</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13277,7 +14678,7 @@ if (IPython.notebook.kernel != null) {
 <span class="n">new</span><span class="o">=</span><span class="n">sas_one_port</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">same</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13315,7 +14716,7 @@ if (IPython.notebook.kernel != null) {
 <span class="n">new</span><span class="p">[</span><span class="s2">&quot;Measurement_Type&quot;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;1-port&#39;</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13331,7 +14732,7 @@ if (IPython.notebook.kernel != null) {
 <span class="k">del</span> <span class="n">new</span><span class="p">[</span><span class="s2">&quot;CAL&quot;</span><span class="p">]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13345,7 +14746,7 @@ if (IPython.notebook.kernel != null) {
 <span class="n">new</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13353,7 +14754,11 @@ if (IPython.notebook.kernel != null) {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[16]:</div>
+
+
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -13474,16 +14879,16 @@ if (IPython.notebook.kernel != null) {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># step 5: add empty columns</span>
-<span class="n">empty_columns</span><span class="o">=</span><span class="p">[</span> <span class="s1">u&#39;Direction&#39;</span><span class="p">,</span>  <span class="s1">u&#39;System_Letter&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Connector_Type_Calibration&#39;</span><span class="p">,</span> <span class="s1">u&#39;Program_Used&#39;</span><span class="p">,</span> <span class="s1">u&#39;Program_Revision&#39;</span><span class="p">,</span> <span class="s1">u&#39;Operator&#39;</span><span class="p">,</span> <span class="s1">u&#39;Calibration_Name&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Number_Connects&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Number_Repeats&#39;</span><span class="p">,</span> <span class="s1">u&#39;Nbs&#39;</span><span class="p">,</span> <span class="s1">u&#39;Number_Frequencies&#39;</span><span class="p">,</span> <span class="s1">u&#39;Start_Frequency&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Device_Description&#39;</span><span class="p">]</span>
+<span class="n">empty_columns</span><span class="o">=</span><span class="p">[</span> <span class="sa">u</span><span class="s1">&#39;Direction&#39;</span><span class="p">,</span>  <span class="sa">u</span><span class="s1">&#39;System_Letter&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Connector_Type_Calibration&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Program_Used&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Program_Revision&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Operator&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Calibration_Name&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Number_Connects&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Number_Repeats&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Nbs&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Number_Frequencies&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Start_Frequency&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Device_Description&#39;</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">empty_column</span> <span class="ow">in</span> <span class="n">empty_columns</span><span class="p">:</span>
     <span class="n">new</span><span class="p">[</span><span class="n">empty_column</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13502,7 +14907,7 @@ if (IPython.notebook.kernel != null) {
 <span class="n">raw_columns</span><span class="o">==</span><span class="n">new_columns</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13510,7 +14915,11 @@ if (IPython.notebook.kernel != null) {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Index([u&#39;Frequency&#39;, u&#39;Direction&#39;, u&#39;Connect&#39;, u&#39;mag&#39;, u&#39;arg&#39;, u&#39;System_Id&#39;,
        u&#39;System_Letter&#39;, u&#39;Connector_Type_Calibration&#39;,
@@ -13539,7 +14948,11 @@ Index([                 u&#39;Frequency&#39;,                  u&#39;Direction&#
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[18]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -13564,7 +14977,7 @@ Index([                 u&#39;Frequency&#39;,                  u&#39;Direction&#
 <span class="n">new</span><span class="o">=</span><span class="n">new</span><span class="p">[</span><span class="o">-</span><span class="n">new</span><span class="p">[</span><span class="s2">&quot;Measurement_Timestamp&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">unique_timestamps</span><span class="p">)]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13592,7 +15005,7 @@ Index([                 u&#39;Frequency&#39;,                  u&#39;Direction&#
 <span class="n">combined</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">COMBINED_ONE_PORT_CHKSTD_CSV</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13616,7 +15029,7 @@ Index([                 u&#39;Frequency&#39;,                  u&#39;Direction&#
       <span class="s2">&quot;data&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number_new</span><span class="o">+</span><span class="n">number_measurements_raw</span><span class="o">==</span><span class="n">number_combined</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">combined</span><span class="p">)))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13624,7 +15037,11 @@ Index([                 u&#39;Frequency&#39;,                  u&#39;Direction&#
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>There were 3407 measurements in the raw one port files
 There were 1959 measurements in the sas one port files
@@ -13648,7 +15065,7 @@ The statement that the number of raw + non-overlapping measurements is equal to 
 <span class="n">combined</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13656,7 +15073,11 @@ The statement that the number of raw + non-overlapping measurements is equal to 
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[22]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -13709,7 +15130,7 @@ dtype: int64</pre>
 <span class="n">combined_csv</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13717,14 +15138,22 @@ dtype: int64</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>1700761 files were imported as a single csv in 5.585 seconds
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>C:\Anaconda2\lib\site-packages\IPython\core\interactiveshell.py:2902: DtypeWarning: Columns (6,7,8,12,14,15,16,23,24) have mixed types. Specify dtype option on import or set low_memory=False.
   interactivity=interactivity, compiler=compiler, result=result)
@@ -13732,7 +15161,11 @@ dtype: int64</pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[23]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -13780,7 +15213,7 @@ dtype: int64</pre>
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The number of 1-port check standards is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number_standards</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13788,7 +15221,11 @@ dtype: int64</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>The number of 1-port check standards is 292
 </pre>
@@ -13799,10 +15236,8 @@ dtype: int64</pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Repeat-for-2-ports">Repeat for 2-ports<a class="anchor-link" href="#Repeat-for-2-ports">&#182;</a></h3>
 </div>
@@ -13852,11 +15287,11 @@ dtype: int64</pre>
 <span class="k">del</span> <span class="n">new</span><span class="p">[</span><span class="s2">&quot;CAL&quot;</span><span class="p">]</span>
 <span class="k">del</span> <span class="n">new</span><span class="p">[</span><span class="s2">&quot;MS12&quot;</span><span class="p">]</span>
 <span class="c1"># step 5: add empty columns</span>
-<span class="n">empty_columns</span><span class="o">=</span><span class="p">[</span> <span class="s1">u&#39;Direction&#39;</span><span class="p">,</span><span class="s1">u&#39;System_Letter&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Connector_Type_Calibration&#39;</span><span class="p">,</span> <span class="s1">u&#39;Program_Used&#39;</span><span class="p">,</span> <span class="s1">u&#39;Program_Revision&#39;</span><span class="p">,</span> <span class="s1">u&#39;Operator&#39;</span><span class="p">,</span> <span class="s1">u&#39;Calibration_Name&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Number_Connects&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Number_Repeats&#39;</span><span class="p">,</span> <span class="s1">u&#39;Nbs&#39;</span><span class="p">,</span> <span class="s1">u&#39;Number_Frequencies&#39;</span><span class="p">,</span> <span class="s1">u&#39;Start_Frequency&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Device_Description&#39;</span><span class="p">]</span>
+<span class="n">empty_columns</span><span class="o">=</span><span class="p">[</span> <span class="sa">u</span><span class="s1">&#39;Direction&#39;</span><span class="p">,</span><span class="sa">u</span><span class="s1">&#39;System_Letter&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Connector_Type_Calibration&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Program_Used&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Program_Revision&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Operator&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Calibration_Name&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Number_Connects&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Number_Repeats&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Nbs&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Number_Frequencies&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Start_Frequency&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Device_Description&#39;</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">empty_column</span> <span class="ow">in</span> <span class="n">empty_columns</span><span class="p">:</span>
     <span class="n">new</span><span class="p">[</span><span class="n">empty_column</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
 <span class="c1"># Now check that the column names are the same and order them</span>
@@ -13894,7 +15329,7 @@ dtype: int64</pre>
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The number of 2-port check standards is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number_standards</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13902,7 +15337,11 @@ dtype: int64</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Index([u&#39;Frequency&#39;, u&#39;Direction&#39;, u&#39;Connect&#39;, u&#39;magS11&#39;, u&#39;argS11&#39;, u&#39;magS21&#39;,
        u&#39;argS21&#39;, u&#39;magS22&#39;, u&#39;argS22&#39;, u&#39;System_Id&#39;, u&#39;System_Letter&#39;,
@@ -13944,10 +15383,8 @@ The number of 2-port check standards is 81
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Repeat-for-power">Repeat for power<a class="anchor-link" href="#Repeat-for-power">&#182;</a></h3>
 </div>
@@ -13964,7 +15401,7 @@ The number of 2-port check standards is 81
 <span class="k">print</span> <span class="n">sas_power</span><span class="o">.</span><span class="n">columns</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -13972,7 +15409,11 @@ The number of 2-port check standards is 81
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Index([u&#39;Frequency&#39;, u&#39;Direction&#39;, u&#39;Connect&#39;, u&#39;magS11&#39;, u&#39;argS11&#39;,
        u&#39;Efficiency&#39;, u&#39;Calibration_Factor&#39;, u&#39;System_Id&#39;, u&#39;System_Letter&#39;,
@@ -14004,7 +15445,7 @@ Index([u&#39;ctype&#39;, u&#39;spid&#39;, u&#39;checkid&#39;, u&#39;CALDATE&#39;
 <span class="k">print</span> <span class="n">test</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -14012,7 +15453,11 @@ Index([u&#39;ctype&#39;, u&#39;spid&#39;, u&#39;checkid&#39;, u&#39;CALDATE&#39;
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>         ctype        spid checkid           CALDATE          MEASDATE   FREQ  \
 0         WR15  HIJ-WR22/1  B15P04  12MAR02:14:52:19  12MAR02:17:51:58  50.00   
@@ -14157,7 +15602,7 @@ Index([u&#39;ctype&#39;, u&#39;spid&#39;, u&#39;checkid&#39;, u&#39;CALDATE&#39;
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">raw_power</span><span class="p">[</span><span class="s2">&quot;Efficiency&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -14165,7 +15610,11 @@ Index([u&#39;ctype&#39;, u&#39;spid&#39;, u&#39;checkid&#39;, u&#39;CALDATE&#39;
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[111]:</div>
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[111]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -14218,12 +15667,12 @@ Index([u&#39;ctype&#39;, u&#39;spid&#39;, u&#39;checkid&#39;, u&#39;CALDATE&#39;
 <span class="k">del</span> <span class="n">new</span><span class="p">[</span><span class="s2">&quot;MEASDATE&quot;</span><span class="p">]</span>
 <span class="k">del</span> <span class="n">new</span><span class="p">[</span><span class="s2">&quot;CAL&quot;</span><span class="p">]</span>
 <span class="c1"># step 5: add empty columns</span>
-<span class="n">empty_columns</span><span class="o">=</span><span class="p">[</span> <span class="s1">u&#39;Direction&#39;</span><span class="p">,</span>  <span class="s1">u&#39;magS22&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;argS22&#39;</span><span class="p">,</span>  <span class="s1">u&#39;System_Letter&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Connector_Type_Calibration&#39;</span><span class="p">,</span> <span class="s1">u&#39;Program_Used&#39;</span><span class="p">,</span> <span class="s1">u&#39;Program_Revision&#39;</span><span class="p">,</span> <span class="s1">u&#39;Operator&#39;</span><span class="p">,</span> <span class="s1">u&#39;Calibration_Name&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Number_Connects&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Number_Repeats&#39;</span><span class="p">,</span> <span class="s1">u&#39;Nbs&#39;</span><span class="p">,</span> <span class="s1">u&#39;Number_Frequencies&#39;</span><span class="p">,</span> <span class="s1">u&#39;Start_Frequency&#39;</span><span class="p">,</span>
-       <span class="s1">u&#39;Device_Description&#39;</span><span class="p">]</span>
+<span class="n">empty_columns</span><span class="o">=</span><span class="p">[</span> <span class="sa">u</span><span class="s1">&#39;Direction&#39;</span><span class="p">,</span>  <span class="sa">u</span><span class="s1">&#39;magS22&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;argS22&#39;</span><span class="p">,</span>  <span class="sa">u</span><span class="s1">&#39;System_Letter&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Connector_Type_Calibration&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Program_Used&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Program_Revision&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Operator&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Calibration_Name&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Number_Connects&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Number_Repeats&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Nbs&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Number_Frequencies&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Start_Frequency&#39;</span><span class="p">,</span>
+       <span class="sa">u</span><span class="s1">&#39;Device_Description&#39;</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">empty_column</span> <span class="ow">in</span> <span class="n">empty_columns</span><span class="p">:</span>
     <span class="n">new</span><span class="p">[</span><span class="n">empty_column</span><span class="p">]</span><span class="o">=</span><span class="bp">None</span>
 <span class="c1"># Now check that the column names are the same and order them</span>
@@ -14261,7 +15710,7 @@ Index([u&#39;ctype&#39;, u&#39;spid&#39;, u&#39;checkid&#39;, u&#39;CALDATE&#39;
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The number of power check standards is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number_standards</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -14269,7 +15718,11 @@ Index([u&#39;ctype&#39;, u&#39;spid&#39;, u&#39;checkid&#39;, u&#39;CALDATE&#39;
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Index([u&#39;Frequency&#39;, u&#39;Direction&#39;, u&#39;Connect&#39;, u&#39;magS11&#39;, u&#39;argS11&#39;,
        u&#39;Efficiency&#39;, u&#39;Calibration_Factor&#39;, u&#39;System_Id&#39;, u&#39;System_Letter&#39;,
@@ -14310,10 +15763,8 @@ The number of power check standards is 91
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Now-we-import-and-shape-the-DUT-files-(.asc)">Now we import and shape the DUT files (.asc)<a class="anchor-link" href="#Now-we-import-and-shape-the-DUT-files-(.asc)">&#182;</a></h3>
 </div>
@@ -14349,7 +15800,7 @@ The number of power check standards is 91
         <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -14365,7 +15816,7 @@ The number of power check standards is 91
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;There are </span><span class="si">%s</span><span class="s2"> power calrep files&quot;</span><span class="o">%</span><span class="k">len</span>(power_files))
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -14373,7 +15824,11 @@ The number of power check standards is 91
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>There are 364 one port calrep files
 There are 514 two port calrep files
@@ -14449,7 +15904,7 @@ There are 901 power calrep files
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} files were converted to a single csv in {1} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">),</span><span class="n">diff</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -14457,7 +15912,11 @@ There are 901 power calrep files
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>device_id is 02806
 analysis_date is 9 Feb 2016
@@ -15548,7 +17007,7 @@ Last File
 <span class="n">one_port_calrep_data_frame</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -15556,7 +17015,11 @@ Last File
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[8]:</div>
+
+
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -15986,7 +17449,7 @@ Last File
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} files were converted to a single csv in {1} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">),</span><span class="n">diff</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -15994,7 +17457,11 @@ Last File
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>C:\Share\ascii.dut\ascii.old\2003\922596.asc was passed due to a data dimensioning problem
 C:\Share\ascii.dut\ascii.old\2003\922597.asc was passed due to a data dimensioning problem
@@ -16036,7 +17503,7 @@ C:\Share\ascii.dut\Old\N35202.asc.old was passed due to a loading issue
 <span class="n">two_port_calrep_data_frame</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -16044,7 +17511,11 @@ C:\Share\ascii.dut\Old\N35202.asc.old was passed due to a loading issue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[14]:</div>
+
+
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -16351,7 +17822,7 @@ C:\Share\ascii.dut\Old\N35202.asc.old was passed due to a loading issue
         <span class="k">pass</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -16359,7 +17830,11 @@ C:\Share\ascii.dut\Old\N35202.asc.old was passed due to a loading issue
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>C:\Share\ascii.dut\ascii.old\700095.ASC dircomp caused an error
 begin_line is 36
@@ -16419,7 +17894,7 @@ C:\Share\ascii.dut\Trans 082711\700581.ASC orig calrep 14.1dc caused an error
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;There are {0} four term files&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">power_4term</span><span class="p">)))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -16427,7 +17902,11 @@ C:\Share\ascii.dut\Trans 082711\700581.ASC orig calrep 14.1dc caused an error
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>There are 694 three term files
 There are 169 four term files
@@ -16538,7 +18017,7 @@ There are 169 four term files
                                          
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -16552,7 +18031,7 @@ There are 169 four term files
 <span class="n">power_calrep_to_csv_script</span><span class="p">(</span><span class="n">power_3term</span><span class="p">,</span><span class="n">POWER_3TERM_CALREP_CSV</span><span class="p">,</span><span class="n">print_report</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -16560,7 +18039,11 @@ There are 169 four term files
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>694 files were converted to a single csv in 10.393 seconds
 </pre>
@@ -16579,7 +18062,7 @@ There are 169 four term files
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">power_calrep_to_csv_script</span><span class="p">(</span><span class="n">power_4term</span><span class="p">,</span><span class="n">POWER_4TERM_CALREP_CSV</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -16587,7 +18070,11 @@ There are 169 four term files
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>169 files were converted to a single csv in 1.16 seconds
 </pre>
@@ -16601,4 +18088,8 @@ There are 169 four term files
     </div>
   </div>
 </body>
+
+ 
+
+
 </html>

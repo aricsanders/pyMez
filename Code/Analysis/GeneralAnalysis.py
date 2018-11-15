@@ -91,7 +91,7 @@ def independent_variable_model_collapse(model,independent_column_name="Frequency
         model_1 = DataFrame_to_AsciiDataTable(model)
     defaults = {"method": "mean"}
     # load other options from model
-    for option, value in model.options.iteritems():
+    for option, value in model.options.items():
         if not re.search('begin_line|end_line', option):
             defaults[option] = value
     for element in model.elements:
@@ -102,15 +102,15 @@ def independent_variable_model_collapse(model,independent_column_name="Frequency
                 defaults[element] = model.__dict__[element][:]
     # We need to preserve the frequency column some how
     collapse_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         collapse_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         collapse_options[key] = value
     unique_independent_variable_list = sorted(list(set(model[independent_column_name])))
     independent_variable_selector = model.column_names.index(independent_column_name)
     out_data = []
     for index, independent_variable in enumerate(unique_independent_variable_list):
-        data_row = filter(lambda x: x[independent_variable_selector] == independent_variable, model.data[:])
+        data_row = [x for x in model.data[:] if x[independent_variable_selector] == independent_variable]
         if re.search('mean|av', collapse_options["method"], re.IGNORECASE):
             new_row = np.mean(np.array(data_row), axis=0).tolist()
         elif re.search('median', collapse_options["method"], re.IGNORECASE):
@@ -148,9 +148,9 @@ def independent_variable_model_difference(model_1, model_2, independent_column_n
     # Set up defaults and pass options
     defaults = {"columns": "all", "interpolate": False, "average": True}
     difference_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         difference_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         difference_options[key] = value
 
     # first check type, if it is a panadas data frame a little conversion is needed, else is for all other models
@@ -170,7 +170,7 @@ def independent_variable_model_difference(model_1, model_2, independent_column_n
     column_names_intersection = list(column_names_set_1.intersection(column_names_set_2))
 
     if not independent_variable_intersection:
-        print("The models do not have any {0} points in common".format(independent_column_name))
+        print(("The models do not have any {0} points in common".format(independent_column_name)))
         return None
     new_column_names = [independent_column_name]
     column_types = ['float']

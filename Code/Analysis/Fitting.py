@@ -46,6 +46,12 @@ from types import *
 import re
 #-----------------------------------------------------------------------------
 # Third Party Imports
+try:
+    from Code.Utils.Types import *
+except:
+    print("The module pyMez.Code.Utils.Types was not found or had an error,"
+          "please check module or put it on the python path")
+    raise ImportError
 
 try:
     import numpy as np
@@ -136,13 +142,13 @@ class FunctionalModel(object):
     def __init__(self,**options):
         defaults= {"parameters":None,"variables":None,"equation":None,"parameter_values":{}}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # fix any lists
         for item in ["parameters","variables"]:
-            if type(self.options[item]) is StringType:
+            if isinstance(self.options[item], StringType):
                 self.options[item]=re.split("\s+",self.options[item])
             self.__dict__[item]=self.options[item]
             self.__dict__[item+"_symbols"]=sympy.symbols(self.options[item])
@@ -180,9 +186,9 @@ class FunctionalModel(object):
         """
         defaults= {"initial_guess":{parameter:0.0 for parameter in self.parameters},"fixed_parameters":None}
         self.fit_options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.fit_options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.fit_options[key]=value
 
         def fit_f(a,x):
@@ -202,10 +208,14 @@ class FunctionalModel(object):
         fit_parameter_dictionary={parameter:fit_parameters[index] for index,parameter in enumerate(self.parameters)}
         self.set_parameters(fit_parameter_dictionary)
 
+
+    def __div__(self, other):
+        return self.__truediv__(other)
+
     def __add__(self,other):
         """Defines addition for the class, if it is another functional model add the models else just change the
         equation"""
-        if type(other) in [FunctionalModel]:
+        if isinstance(other,FunctionalModel):
             parameters=list(set(self.parameters+other.parameters))
             variables=list(set(self.variables+other.variables))
             #print("{0} is {1}".format("parameters",parameters))
@@ -220,7 +230,7 @@ class FunctionalModel(object):
         return new_function
     def __sub__(self,other):
         """Defines subtraction for the class"""
-        if type(other) in [FunctionalModel]:
+        if isinstance(other,FunctionalModel):
             parameters=list(set(self.parameters+other.parameters))
             variables=list(set(self.variables+other.variables))
             #print("{0} is {1}".format("parameters",parameters))
@@ -235,7 +245,7 @@ class FunctionalModel(object):
         return new_function
     def __mul__(self,other):
         """Defines multiplication for the class"""
-        if type(other) in [FunctionalModel]:
+        if isinstance(other,FunctionalModel):
             parameters=list(set(self.parameters+other.parameters))
             variables=list(set(self.variables+other.variables))
             #print("{0} is {1}".format("parameters",parameters))
@@ -251,7 +261,7 @@ class FunctionalModel(object):
 
     def __pow__(self,other):
         """Defines power for the class"""
-        if type(other) in [FunctionalModel]:
+        if isinstance(other,FunctionalModel):
             parameters=list(set(self.parameters+other.parameters))
             variables=list(set(self.variables+other.variables))
             #print("{0} is {1}".format("parameters",parameters))
@@ -265,9 +275,9 @@ class FunctionalModel(object):
         new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
         return new_function
 
-    def __div__(self,other):
+    def __truediv__(self,other):
         """Defines division for the class"""
-        if type(other) in [FunctionalModel]:
+        if isinstance(other,FunctionalModel):
             parameters=list(set(self.parameters+other.parameters))
             variables=list(set(self.variables+other.variables))
             #print("{0} is {1}".format("parameters",parameters))
@@ -304,9 +314,9 @@ class FunctionalModel(object):
         """Fit a data set and show the results"""
         defaults={"title":True}
         plot_options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             plot_options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             plot_options[key]=value
 
         self.fit_data(x_data,y_data,**plot_options)
@@ -379,9 +389,9 @@ class DataSimulator(object):
                    "random_seed":None,
                    "x":np.array([])}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # set the self.model attribute
         if self.options["model"]:
@@ -481,7 +491,7 @@ class DataSimulator(object):
     def __call__(self,x_data):
         """Returns the simulated data for x=x_data, to have deterministic responses, set self.random_seed"""
         if type(x_data) not in [np.array]:
-            if type(x_data) is ListType:
+            if isinstance(x_data, ListType):
                 x_data=np.array(x_data)
             else:
                 x_data=np.array([x_data])
@@ -508,7 +518,7 @@ def test_linear_fit(data=None):
         #print(data)
     initial_guess=[1,0]
     results=least_squares_fit(line_function,data[0],data[1],initial_guess)
-    print("The fit of data is y={1:3.2g} x + {0:3.2g}".format(*results))
+    print(("The fit of data is y={1:3.2g} x + {0:3.2g}".format(*results)))
 
 
 #-----------------------------------------------------------------------------

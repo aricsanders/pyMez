@@ -153,7 +153,7 @@ if WINDOWS_WRAPPER:
             try:
                 self.ShowStatistiCAL()
                 self.application.CalibrateData()
-                print("The command executed sucessfully {0}".format(self.Succesfull()))
+                print(("The command executed sucessfully {0}".format(self.Succesfull())))
 
             except :
                 # This a little lazy, I should catch com_error but I don't know its parent module
@@ -729,7 +729,7 @@ Number of calibration standards
             51. Resistor R3 for port 2 load """
         # line that the standard definition starts
         line_offset=(int(standard_number)-1)*51+56
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.menu_data[line_offset+int(key)]=value
 
     def get_standard(self,standard_number=1):
@@ -895,9 +895,9 @@ class StatistiCALSolutionModel(AsciiDataTable):
         #"column_types":['float' for i in range(len(SOLUTION_VECTOR_COLUMN_NAMES))]
         #print("The len(SOLUTION_VECTOR_COLUMN_NAMES) is {0}".format(len(SOLUTION_VECTOR_COLUMN_NAMES)))
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         if file_path is not None:
             self.path=file_path
@@ -911,7 +911,7 @@ class StatistiCALSolutionModel(AsciiDataTable):
             in_file=open(self.path,'r')
             lines=[]
             for line in in_file:
-                lines.append(map(lambda x:float(x),line.rstrip().lstrip().split(" ")))
+                lines.append([float(x) for x in line.rstrip().lstrip().split(" ")])
             in_file.close()
             self.options["data"]=lines
             self.complex_data=[]
@@ -958,7 +958,7 @@ if WINDOWS_WRAPPER:
         """ Tests the wrapper class for the COM object """
         print("Initializing an instance of Statistical")
         statiscal_app=StatistiCALWrapper()
-        print statiscal_app.Successful
+        print(statiscal_app.Successful)
         statiscal_app.ShowStatistiCAL()
 if WINDOWS_WRAPPER:
     def test_CalibrateDUTWrapper():
@@ -970,10 +970,10 @@ def test_StatistiCALSolutionModel(file_path="Solution_Plus.txt"):
     """Tests the StatistiCALSolutionModel"""
     os.chdir(TESTS_DIRECTORY)
     new_solution=StatistiCALSolutionModel(file_path)
-    print("The solution's column names are {0}".format(new_solution.column_names))
-    print("The solution is {0}".format(new_solution))
-    print("{0} is {1}".format("new_solution.complex_data",new_solution.complex_data))
-    print("{0} is {1}".format("new_solution.S1",new_solution.S1))
+    print(("The solution's column names are {0}".format(new_solution.column_names)))
+    print(("The solution is {0}".format(new_solution)))
+    print(("{0} is {1}".format("new_solution.complex_data",new_solution.complex_data)))
+    print(("{0} is {1}".format("new_solution.S1",new_solution.S1)))
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':

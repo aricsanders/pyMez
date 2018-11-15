@@ -76,9 +76,9 @@ def radical_dataset_to_s2p(radical_data_set,frequency_list,**options):
     to be passed"""
     defaults={"frequency_selector":0,"frequency_column_name":"Frequency"}
     s2p_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         s2p_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         s2p_options[key]=value
     input_data=np.array(radical_data_set)
     sparameters=[]
@@ -105,7 +105,7 @@ def radical_frequency_to_frequency_list(radical_frequency, radical_data_file=Non
         elif type(radical_frequency) in [h5py._hl.files.File]:
             frequency_list = np.array(radical_frequency["RadiCalData/StatistiCalData/F"])[0].tolist()
     except:
-        print("Could not change {0} to a python list".format(radical_frequency))
+        print(("Could not change {0} to a python list".format(radical_frequency)))
 
 
 def radical_error_boxes_to_eight_term_complex(radical_s1, radical_s2, radical_frequency_list, radical_data_file=None):
@@ -137,9 +137,9 @@ def radical_error_boxes_to_eight_term_complex(radical_s1, radical_s2, radical_fr
         for frequency_index, frequency in enumerate(radical_frequency_list):
             new_row = [frequency]
             s1_row = [s1_numpy_array[i][frequency_index] for i in range(len(s1_numpy_array))]
-            s1_complex_row = map(lambda x: complex(x[0], x[1]), s1_row)
+            s1_complex_row = [complex(x[0], x[1]) for x in s1_row]
             s2_row = [s2_numpy_array[i][frequency_index] for i in range(len(s2_numpy_array))]
-            s2_complex_row = map(lambda x: complex(x[0], x[1]), s2_row)
+            s2_complex_row = [complex(x[0], x[1]) for x in s2_row]
             new_row = new_row + s1_complex_row + s2_complex_row
             eight_term_complex_list.append(new_row)
         return eight_term_complex_list
@@ -151,7 +151,7 @@ def radical_error_boxes_to_eight_term_complex(radical_s1, radical_s2, radical_fr
 def print_hd5_keys(hd5_group):
     """Prints hd5 keys and passes if there are none"""
     try:
-        print hd5_group
+        print(hd5_group)
     except: pass
 
 def return_hd5_keys(hd5_group):
@@ -169,9 +169,9 @@ class RadicalDataModel():
     def __init__(self,file_path=None,**options):
         defaults={}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         if file_path is None:
             pass

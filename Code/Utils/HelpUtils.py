@@ -212,7 +212,10 @@ def create_index_html_script(top_directory,group=True):
         for file_name in file_names:
             extension=file_name.split(".")[-1]
             if re.match('py',extension,re.IGNORECASE):
-                in_file=open(os.path.join(directory,file_name),'r')
+                try:
+                    in_file=open(os.path.join(directory,file_name),'r',encoding="latin1")
+                except:
+                    in_file = open(os.path.join(directory, file_name), 'r') #python 2.7 compatibility
                 for line in in_file:
                     if re.search(class_pattern,line):
                         reference_file="pyMez/"+change_extension(os.path.join(clean_directory,file_name),'m')+".html"
@@ -240,7 +243,7 @@ def create_index_html_script(top_directory,group=True):
     #print("{0} is {1}".format('classes_and_functions',classes_and_functions))
     #print("{0} is {1}".format('links_string',links_string))
     # now arrange all in alphabetical order
-    sorted_keys=sorted(links_dictionary.keys(),key=str.lower)
+    sorted_keys=sorted(list(links_dictionary.keys()),key=str.lower)
     links_string=""
     for key in sorted_keys:
         links_string=links_string+links_dictionary[key]
@@ -327,7 +330,7 @@ def create_examples_html_script(jupyter_examples_directory):
     try:
         shutil.rmtree(html_examples_directory)
     except:
-        print("Could not remove {0}".format(html_examples_directory))
+        print(("Could not remove {0}".format(html_examples_directory)))
     shutil.copytree(jupyter_examples_directory,html_examples_directory)
     os.chdir(html_examples_directory)
     file_names=os.listdir(html_examples_directory)
@@ -359,7 +362,7 @@ def change_links_examples_script(top_directory):
     file_names=os.listdir(top_directory)
     for file_name in file_names:
         extension=file_name.split(".")[-1]
-        if re.search('htm',extension,re.IGNORECASE):
+        if re.search('htm',extension,re.IGNORECASE) and os.path.isfile(os.path.join(top_directory,file_name)):
             in_file=open(os.path.join(top_directory,file_name),'r')
             content=in_file.read()
             new_content=content.replace('.ipynb','.html')
@@ -379,9 +382,9 @@ def add_navigation_script(top_directory, navigation_style='button', **options):
                 "page_locations": [DOCUMENTATION_INDEX, API_INDEX, EXAMPLES_INDEX, REFERENCE_INDEX]}
     navigation_options = {}
 
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         navigation_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         navigation_options[key] = value
 
     simple_navigation_html = """<a href='{Documentation Home}'>Documentation Home </a> |
@@ -419,8 +422,11 @@ def add_navigation_script(top_directory, navigation_style='button', **options):
     file_names = os.listdir(top_directory)
     for file_name in file_names:
         extension = file_name.split(".")[-1]
-        if re.search('htm', extension, re.IGNORECASE):
-            in_file = open(os.path.join(top_directory, file_name), 'r')
+        if re.search('htm', extension, re.IGNORECASE) and os.path.isfile(os.path.join(top_directory, file_name)):
+            try:
+                in_file = open(os.path.join(top_directory, file_name), 'r',encoding="latin1")
+            except:
+                in_file = open(os.path.join(top_directory, file_name), 'r')
             lines = []
             for line in in_file:
                 if re.search("\<body\>", line, re.IGNORECASE):
@@ -437,9 +443,13 @@ def add_navigation_script(top_directory, navigation_style='button', **options):
                 else:
                     lines.append(line)
             in_file.close()
-            out_file = open(os.path.join(top_directory, file_name), 'w')
+            try:
+                out_file = open(os.path.join(top_directory, file_name), 'w',encoding="latin1")
+            except:
+                out_file = open(os.path.join(top_directory, file_name), 'w')
             out_file.writelines(lines)
             out_file.close()
+
 def add_navigation_all_api_script(top_directory):
     """Adds a navigation script to all files under top directory. This is specifically designed to
     use after the API documentation is generated"""

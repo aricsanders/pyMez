@@ -919,8 +919,10 @@ table {
 .codehilite .mh { color: #666666 } /* Literal.Number.Hex */
 .codehilite .mi { color: #666666 } /* Literal.Number.Integer */
 .codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
 .codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
 .codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
 .codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 .codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
 .codehilite .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
@@ -931,9 +933,11 @@ table {
 .codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
 .codehilite .ss { color: #19177C } /* Literal.String.Symbol */
 .codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
 .codehilite .vc { color: #19177C } /* Name.Variable.Class */
 .codehilite .vg { color: #19177C } /* Name.Variable.Global */
 .codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
 .codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
   </style>
 
@@ -1197,6 +1201,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.EXTENSION_PATTERN">EXTENSION_PATTERN</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.FORMATS">FORMATS</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.FREQUENCY_UNITS">FREQUENCY_UNITS</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.GENERAL_DESCRIPTORS">GENERAL_DESCRIPTORS</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.GET_STATS_FIELDS">GET_STATS_FIELDS</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.HTML_TEMPLATE_DIRECTORY">HTML_TEMPLATE_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.IMAGE_FILE_EXTENSIONS">IMAGE_FILE_EXTENSIONS</a></li>
@@ -1240,7 +1245,6 @@ table {
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.S2P_RI_COLUMN_NAMES">S2P_RI_COLUMN_NAMES</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.SMITHPLOT">SMITHPLOT</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.SOLUTION_VECTOR_COLUMN_NAMES">SOLUTION_VECTOR_COLUMN_NAMES</a></li>
-    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.StringTypes">StringTypes</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.TESTS_DIRECTORY">TESTS_DIRECTORY</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.TOUCHSTONE_KEYWORDS">TOUCHSTONE_KEYWORDS</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.TWELVE_TERM_ERROR_COLUMN_NAMES">TWELVE_TERM_ERROR_COLUMN_NAMES</a></li>
@@ -1251,6 +1255,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.WKHTML_PATH">WKHTML_PATH</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.XSLT_CAPABLE">XSLT_CAPABLE</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.XSLT_REPOSITORY">XSLT_REPOSITORY</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.type_names">type_names</a></li>
   </ul>
 
 	  </div>
@@ -1335,7 +1340,7 @@ basic html reports and the checkstandard reporting process.</p>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Third Party Imports</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span> <span class="n">__file__</span> <span class="p">),</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span><span class="s1">&#39;..&#39;</span><span class="p">))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span> <span class="vm">__file__</span> <span class="p">),</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span><span class="s1">&#39;..&#39;</span><span class="p">))</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">Code.Analysis.SParameter</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="k">except</span><span class="p">:</span>
@@ -1369,14 +1374,14 @@ basic html reports and the checkstandard reporting process.</p>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Constants</span>
 
-<span class="n">TWO_PORT_NR_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\Two_Port_NR_Check_Standard.csv&quot;</span>
-<span class="n">COMBINED_ONE_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\Combined_One_Port_Check_Standard.csv&quot;</span>
-<span class="n">COMBINED_TWO_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\Combined_Two_Port_Check_Standard.csv&quot;</span>
-<span class="n">COMBINED_POWER_CHKSTD_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_Check_Standard\Combined_Power_Check_Standard.csv&quot;</span>
-<span class="n">ONE_PORT_CALREP_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_DUT\One_Port_DUT.csv&quot;</span>
-<span class="n">TWO_PORT_CALREP_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_DUT\Two_Port_DUT.csv&quot;</span>
-<span class="n">POWER_3TERM_CALREP_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_DUT\Power_3Term_DUT.csv&quot;</span>
-<span class="n">POWER_4TERM_CALREP_CSV</span><span class="o">=</span><span class="s2">r&quot;C:\Share\Converted_DUT\Power_4Term_DUT.csv&quot;</span>
+<span class="n">TWO_PORT_NR_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\Two_Port_NR_Check_Standard.csv&quot;</span>
+<span class="n">COMBINED_ONE_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\Combined_One_Port_Check_Standard.csv&quot;</span>
+<span class="n">COMBINED_TWO_PORT_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\Combined_Two_Port_Check_Standard.csv&quot;</span>
+<span class="n">COMBINED_POWER_CHKSTD_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_Check_Standard\Combined_Power_Check_Standard.csv&quot;</span>
+<span class="n">ONE_PORT_CALREP_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_DUT\One_Port_DUT.csv&quot;</span>
+<span class="n">TWO_PORT_CALREP_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_DUT\Two_Port_DUT.csv&quot;</span>
+<span class="n">POWER_3TERM_CALREP_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_DUT\Power_3Term_DUT.csv&quot;</span>
+<span class="n">POWER_4TERM_CALREP_CSV</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;C:\Share\Converted_DUT\Power_4Term_DUT.csv&quot;</span>
 
 <span class="n">DEFAULT_TOGGLE_SCRIPT</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;&lt;script type=&quot;text/javascript&quot;&gt;</span>
 <span class="s2">    function toggleId(id,$link){</span>
@@ -1510,10 +1515,10 @@ basic html reports and the checkstandard reporting process.</p>
 <span class="sd">    If no file is specified and a checkstandard_name is, then only history and means of that checkstandard are shown in the</span>
 <span class="sd">    report&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the CheckStandardReport Class&quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">:</span> <span class="s2">&quot;CTN112&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;results_directory&quot;</span><span class="p">:</span> <span class="s1">r&#39;C:\Share\resfiles&#39;</span><span class="p">,</span>
+                    <span class="s2">&quot;results_directory&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;C:\Share\resfiles&#39;</span><span class="p">,</span>
                     <span class="s2">&quot;one_port_csv&quot;</span><span class="p">:</span> <span class="n">COMBINED_ONE_PORT_CHKSTD_CSV</span><span class="p">,</span>
                     <span class="s2">&quot;two_port_csv&quot;</span><span class="p">:</span> <span class="n">COMBINED_TWO_PORT_CHKSTD_CSV</span><span class="p">,</span>
                     <span class="s2">&quot;two_port_nr_csv&quot;</span><span class="p">:</span> <span class="n">TWO_PORT_NR_CHKSTD_CSV</span><span class="p">,</span>
@@ -1528,9 +1533,9 @@ basic html reports and the checkstandard reporting process.</p>
                                                    <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;</span><span class="p">]}</span>
                     <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conversion_defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;base_name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
                                     <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;XmlFile&#39;</span><span class="p">,</span> <span class="s1">&#39;CsvFile&#39;</span><span class="p">,</span> <span class="s1">&#39;ExcelFile&#39;</span><span class="p">,</span> <span class="s1">&#39;OdsFile&#39;</span><span class="p">,</span> <span class="s1">&#39;MatFile&#39;</span><span class="p">,</span> <span class="s1">&#39;HtmlFile&#39;</span><span class="p">,</span>
@@ -1545,7 +1550,7 @@ basic html reports and the checkstandard reporting process.</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_defaults</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;conversion_options&quot;</span><span class="p">]</span>
-        <span class="n">HTMLReport</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">HTMLReport</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_ids</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_titles</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1590,7 +1595,7 @@ basic html reports and the checkstandard reporting process.</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Measurement_Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2-port&quot;</span>
         <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="n">measurement_type</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Measurement_Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;power&quot;</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;measurement_type&quot;</span><span class="p">,</span><span class="n">measurement_type</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">((</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;measurement_type&quot;</span><span class="p">,</span><span class="n">measurement_type</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results_file</span> <span class="o">=</span> <span class="n">ResultFileModel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;results_directory&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">]))</span>
         <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">],</span> <span class="s2">&quot;System_Id&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;Measurement_Timestamp&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
                    <span class="s2">&quot;Connector_Type_Measurement&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
@@ -1755,8 +1760,8 @@ basic html reports and the checkstandard reporting process.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span> <span class="o">=</span> <span class="n">standard_error_data_table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calrep_measurement</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">results_file</span><span class="p">,</span>
                                                         <span class="n">table_1_uncertainty_column_names</span><span class="o">=</span><span class="n">error_column_names</span><span class="p">,</span>
                                                         <span class="n">value_column_names</span><span class="o">=</span><span class="n">column_names</span><span class="p">,</span> <span class="n">expansion_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">number_columns_pass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">number_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">number_columns_pass</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">number_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
         <span class="n">good</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">number_columns_pass</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">number_columns</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
         <span class="n">pass_fail</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">if</span> <span class="n">good</span><span class="p">:</span>
@@ -1832,9 +1837,9 @@ basic html reports and the checkstandard reporting process.</p>
                     <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;display:none&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;figure_width&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
         <span class="n">add_options</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_optionss</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;clear_before&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -1852,9 +1857,9 @@ basic html reports and the checkstandard reporting process.</p>
         <span class="sd">&quot;&quot;&quot;Adds a heading to the report, clears the report by default&quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;clear_before&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
         <span class="n">add_options</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;clear_before&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -1887,9 +1892,9 @@ basic html reports and the checkstandard reporting process.</p>
                     <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;display:none;border:1;&quot;</span><span class="p">}</span>
 
         <span class="n">add_options</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;clear_before&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -1908,7 +1913,7 @@ basic html reports and the checkstandard reporting process.</p>
                                                     <span class="n">mime_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">,</span>
                                                     <span class="n">suggested_name</span><span class="o">=</span><span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;download_files_base_names&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">],</span>
                                                     <span class="n">text</span><span class="o">=</span><span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;download_files_base_names&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">])</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+            <span class="k">print</span><span class="p">((</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">)))</span>
             <span class="n">table_graph</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;AsciiDataTable&quot;</span><span class="p">,</span> <span class="n">download</span><span class="p">)</span>
 
             <span class="n">download_links</span> <span class="o">=</span> <span class="n">TableGraph_to_Links</span><span class="p">(</span><span class="n">table_graph</span><span class="p">,</span>
@@ -1929,7 +1934,7 @@ basic html reports and the checkstandard reporting process.</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_toggle</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">({</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;hr&quot;</span><span class="p">})</span>
             <span class="n">meta_table</span> <span class="o">=</span> <span class="s2">&quot;&lt;table id=&#39;metadata&#39; style=&#39;{0}&#39;&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_measurement</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_measurement</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">meta_table</span> <span class="o">=</span> <span class="n">meta_table</span> <span class="o">+</span> <span class="s2">&quot;&lt;tr&gt;&lt;td&gt;{0}&lt;/td&gt;&lt;td&gt;{1}&lt;/td&gt;&lt;/tr&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="n">meta_table</span> <span class="o">=</span> <span class="n">meta_table</span> <span class="o">+</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="n">meta_table</span><span class="p">)</span>
@@ -1951,7 +1956,7 @@ basic html reports and the checkstandard reporting process.</p>
 
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Runner</span>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">test_CheckStandardReport</span><span class="p">()</span>
     
 </pre></div>
@@ -1966,7 +1971,7 @@ basic html reports and the checkstandard reporting process.</p>
       
   <div class="item">
     <div class="name def" id="pyMez.Code.Analysis.Reports.test_CheckStandardReport">
-    <p>def <span class="ident">test_CheckStandardReport</span>(</p><p>raw_file_path=&#39;C:\\ProgramData\\Anaconda2\\lib\\site-packages\\pyMez\\Code\\DataHandlers\\Tests\\CTN208.R1_062614&#39;)</p>
+    <p>def <span class="ident">test_CheckStandardReport</span>(</p><p>raw_file_path=&#39;C:\\Users\\sandersa\\AppData\\Local\\Continuum\\anaconda3\\lib\\site-packages\\pyMez\\Code\\DataHandlers\\Tests\\CTN208.R1_062614&#39;)</p>
     </div>
     
 
@@ -2034,10 +2039,10 @@ report</p></div>
 <span class="sd">    If no file is specified and a checkstandard_name is, then only history and means of that checkstandard are shown in the</span>
 <span class="sd">    report&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the CheckStandardReport Class&quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">:</span> <span class="s2">&quot;CTN112&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;results_directory&quot;</span><span class="p">:</span> <span class="s1">r&#39;C:\Share\resfiles&#39;</span><span class="p">,</span>
+                    <span class="s2">&quot;results_directory&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;C:\Share\resfiles&#39;</span><span class="p">,</span>
                     <span class="s2">&quot;one_port_csv&quot;</span><span class="p">:</span> <span class="n">COMBINED_ONE_PORT_CHKSTD_CSV</span><span class="p">,</span>
                     <span class="s2">&quot;two_port_csv&quot;</span><span class="p">:</span> <span class="n">COMBINED_TWO_PORT_CHKSTD_CSV</span><span class="p">,</span>
                     <span class="s2">&quot;two_port_nr_csv&quot;</span><span class="p">:</span> <span class="n">TWO_PORT_NR_CHKSTD_CSV</span><span class="p">,</span>
@@ -2052,9 +2057,9 @@ report</p></div>
                                                    <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;</span><span class="p">]}</span>
                     <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conversion_defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;base_name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
                                     <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;XmlFile&#39;</span><span class="p">,</span> <span class="s1">&#39;CsvFile&#39;</span><span class="p">,</span> <span class="s1">&#39;ExcelFile&#39;</span><span class="p">,</span> <span class="s1">&#39;OdsFile&#39;</span><span class="p">,</span> <span class="s1">&#39;MatFile&#39;</span><span class="p">,</span> <span class="s1">&#39;HtmlFile&#39;</span><span class="p">,</span>
@@ -2069,7 +2074,7 @@ report</p></div>
             <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_defaults</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;conversion_options&quot;</span><span class="p">]</span>
-        <span class="n">HTMLReport</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">HTMLReport</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_ids</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_titles</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2114,7 +2119,7 @@ report</p></div>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Measurement_Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2-port&quot;</span>
         <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="n">measurement_type</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Measurement_Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;power&quot;</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;measurement_type&quot;</span><span class="p">,</span><span class="n">measurement_type</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">((</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;measurement_type&quot;</span><span class="p">,</span><span class="n">measurement_type</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results_file</span> <span class="o">=</span> <span class="n">ResultFileModel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;results_directory&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">]))</span>
         <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">],</span> <span class="s2">&quot;System_Id&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;Measurement_Timestamp&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
                    <span class="s2">&quot;Connector_Type_Measurement&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
@@ -2279,8 +2284,8 @@ report</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span> <span class="o">=</span> <span class="n">standard_error_data_table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calrep_measurement</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">results_file</span><span class="p">,</span>
                                                         <span class="n">table_1_uncertainty_column_names</span><span class="o">=</span><span class="n">error_column_names</span><span class="p">,</span>
                                                         <span class="n">value_column_names</span><span class="o">=</span><span class="n">column_names</span><span class="p">,</span> <span class="n">expansion_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">number_columns_pass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">number_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">number_columns_pass</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">number_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
         <span class="n">good</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">number_columns_pass</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">number_columns</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
         <span class="n">pass_fail</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">if</span> <span class="n">good</span><span class="p">:</span>
@@ -2356,9 +2361,9 @@ report</p></div>
                     <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;display:none&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;figure_width&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
         <span class="n">add_options</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_optionss</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;clear_before&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -2376,9 +2381,9 @@ report</p></div>
         <span class="sd">&quot;&quot;&quot;Adds a heading to the report, clears the report by default&quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;clear_before&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
         <span class="n">add_options</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;clear_before&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -2411,9 +2416,9 @@ report</p></div>
                     <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;display:none;border:1;&quot;</span><span class="p">}</span>
 
         <span class="n">add_options</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;clear_before&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -2432,7 +2437,7 @@ report</p></div>
                                                     <span class="n">mime_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">,</span>
                                                     <span class="n">suggested_name</span><span class="o">=</span><span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;download_files_base_names&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">],</span>
                                                     <span class="n">text</span><span class="o">=</span><span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;download_files_base_names&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">])</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+            <span class="k">print</span><span class="p">((</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">)))</span>
             <span class="n">table_graph</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;AsciiDataTable&quot;</span><span class="p">,</span> <span class="n">download</span><span class="p">)</span>
 
             <span class="n">download_links</span> <span class="o">=</span> <span class="n">TableGraph_to_Links</span><span class="p">(</span><span class="n">table_graph</span><span class="p">,</span>
@@ -2453,7 +2458,7 @@ report</p></div>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_toggle</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">({</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;hr&quot;</span><span class="p">})</span>
             <span class="n">meta_table</span> <span class="o">=</span> <span class="s2">&quot;&lt;table id=&#39;metadata&#39; style=&#39;{0}&#39;&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_measurement</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_measurement</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">meta_table</span> <span class="o">=</span> <span class="n">meta_table</span> <span class="o">+</span> <span class="s2">&quot;&lt;tr&gt;&lt;td&gt;{0}&lt;/td&gt;&lt;td&gt;{1}&lt;/td&gt;&lt;/tr&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="n">meta_table</span> <span class="o">=</span> <span class="n">meta_table</span> <span class="o">+</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="n">meta_table</span><span class="p">)</span>
@@ -2476,90 +2481,15 @@ report</p></div>
           <li><a href="#pyMez.Code.Analysis.Reports.CheckStandardReport">CheckStandardReport</a></li>
           <li><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></li>
           <li>Code.DataHandlers.HTMLModels.HTMLBase</li>
-          <li>__builtin__.object</li>
+          <li>builtins.object</li>
           </ul>
-          <h3>Instance variables</h3>
-            <div class="item">
-            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.conversion_defaults" class="name">var <span class="ident">conversion_defaults</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.history_dict" class="name">var <span class="ident">history_dict</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.options" class="name">var <span class="ident">options</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.plot_captions" class="name">var <span class="ident">plot_captions</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.plot_ids" class="name">var <span class="ident">plot_ids</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.plot_titles" class="name">var <span class="ident">plot_titles</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-            <div class="item">
-            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.plots" class="name">var <span class="ident">plots</span></p>
-            
-
-            
-  
-  <div class="source_cont">
-</div>
-
-            </div>
-          <h3>Methods</h3>
+          <h3>Static methods</h3>
             
   <div class="item">
     <div class="name def" id="pyMez.Code.Analysis.Reports.CheckStandardReport.__init__">
     <p>def <span class="ident">__init__</span>(</p><p>self, file_path=None, **options)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.__init__">__init__</a></code>
-    </p>
 
     
   
@@ -2567,10 +2497,10 @@ report</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.__init__', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.__init__" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Initializes the CheckStandardReport Class&quot;&quot;&quot;</span>
     <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">:</span> <span class="s2">&quot;CTN112&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;results_directory&quot;</span><span class="p">:</span> <span class="s1">r&#39;C:\Share\resfiles&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;results_directory&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;C:\Share\resfiles&#39;</span><span class="p">,</span>
                 <span class="s2">&quot;one_port_csv&quot;</span><span class="p">:</span> <span class="n">COMBINED_ONE_PORT_CHKSTD_CSV</span><span class="p">,</span>
                 <span class="s2">&quot;two_port_csv&quot;</span><span class="p">:</span> <span class="n">COMBINED_TWO_PORT_CHKSTD_CSV</span><span class="p">,</span>
                 <span class="s2">&quot;two_port_nr_csv&quot;</span><span class="p">:</span> <span class="n">TWO_PORT_NR_CHKSTD_CSV</span><span class="p">,</span>
@@ -2585,9 +2515,9 @@ report</p></div>
                                                <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;</span><span class="p">]}</span>
                 <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">conversion_defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;base_name&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
                                 <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;XmlFile&#39;</span><span class="p">,</span> <span class="s1">&#39;CsvFile&#39;</span><span class="p">,</span> <span class="s1">&#39;ExcelFile&#39;</span><span class="p">,</span> <span class="s1">&#39;OdsFile&#39;</span><span class="p">,</span> <span class="s1">&#39;MatFile&#39;</span><span class="p">,</span> <span class="s1">&#39;HtmlFile&#39;</span><span class="p">,</span>
@@ -2602,7 +2532,7 @@ report</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_defaults</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conversion_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;conversion_options&quot;</span><span class="p">]</span>
-    <span class="n">HTMLReport</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">HTMLReport</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">plot_ids</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">plot_titles</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2655,9 +2585,9 @@ report</p></div>
                 <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;display:none&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;figure_width&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
     <span class="n">add_options</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">add_optionss</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">if</span> <span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;clear_before&quot;</span><span class="p">]:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -2683,21 +2613,17 @@ report</p></div>
     <p>def <span class="ident">add_body</span>(</p><p>self)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_body">add_body</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Adds a body tag to the model if it does not exist</p></div>
+    <div class="desc"><p>Adds a body tag to the model if it does not exist</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_body', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_body" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Adds a body tag to the model if it does not exist&quot;&quot;&quot;</span>
     <span class="n">body</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">tags</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())</span>
+    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;body&quot;</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -2717,14 +2643,10 @@ report</p></div>
     <p>def <span class="ident">add_download_link</span>(</p><p>self, content_string, text=&#39;Download File&#39;, suggested_name=&#39;test.txt&#39;, mime_type=&#39;text/plain&#39;)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_download_link">add_download_link</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Adds a download link to the report</p></div>
+    <div class="desc"><p>Adds a download link to the report</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_download_link', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_download_link" class="source">
@@ -2773,9 +2695,9 @@ report</p></div>
                                               <span class="s2">&quot;Device_History.txt&quot;</span><span class="p">],</span>
                 <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;display:none;border:1;&quot;</span><span class="p">}</span>
     <span class="n">add_options</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">if</span> <span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;clear_before&quot;</span><span class="p">]:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -2794,7 +2716,7 @@ report</p></div>
                                                 <span class="n">mime_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">,</span>
                                                 <span class="n">suggested_name</span><span class="o">=</span><span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;download_files_base_names&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">],</span>
                                                 <span class="n">text</span><span class="o">=</span><span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;download_files_base_names&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">])</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">((</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">)))</span>
         <span class="n">table_graph</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;AsciiDataTable&quot;</span><span class="p">,</span> <span class="n">download</span><span class="p">)</span>
         <span class="n">download_links</span> <span class="o">=</span> <span class="n">TableGraph_to_Links</span><span class="p">(</span><span class="n">table_graph</span><span class="p">,</span>
                                              <span class="n">base_name</span><span class="o">=</span><span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;download_files_base_names&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">],</span>
@@ -2818,14 +2740,10 @@ report</p></div>
     <p>def <span class="ident">add_head</span>(</p><p>self)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_head">add_head</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Adds a head tag to the model if it does not exist</p></div>
+    <div class="desc"><p>Adds a head tag to the model if it does not exist</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_head', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_head" class="source">
@@ -2866,7 +2784,7 @@ report</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_toggle</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">({</span><span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;hr&quot;</span><span class="p">})</span>
         <span class="n">meta_table</span> <span class="o">=</span> <span class="s2">&quot;&lt;table id=&#39;metadata&#39; style=&#39;{0}&#39;&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_measurement</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_measurement</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">meta_table</span> <span class="o">=</span> <span class="n">meta_table</span> <span class="o">+</span> <span class="s2">&quot;&lt;tr&gt;&lt;td&gt;{0}&lt;/td&gt;&lt;td&gt;{1}&lt;/td&gt;&lt;/tr&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="n">meta_table</span> <span class="o">=</span> <span class="n">meta_table</span> <span class="o">+</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="n">meta_table</span><span class="p">)</span>
@@ -2896,9 +2814,9 @@ report</p></div>
     <span class="sd">&quot;&quot;&quot;Adds a heading to the report, clears the report by default&quot;&quot;&quot;</span>
     <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;clear_before&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
     <span class="n">add_options</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">add_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">if</span> <span class="n">add_options</span><span class="p">[</span><span class="s2">&quot;clear_before&quot;</span><span class="p">]:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -2942,14 +2860,10 @@ report</p></div>
     <p>def <span class="ident">add_toggle</span>(</p><p>self, tag_id=None)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_toggle">add_toggle</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Adds a toggle button that toggles the element with id tag_id. This can be used many times</p></div>
+    <div class="desc"><p>Adds a toggle button that toggles the element with id tag_id. This can be used many times</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_toggle', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_toggle" class="source">
@@ -2970,14 +2884,10 @@ report</p></div>
     <p>def <span class="ident">add_toggle_script</span>(</p><p>self, script=&#39;&lt;script type=&#34;text/javascript&#34;&gt;\n    function toggleId(id,$link){\n    $node = document.getElementById(id);\n    if (!$node)\n    return;\n    if (!$node.style.display || $node.style.display == \&#39;none\&#39;) {\n    $node.style.display = \&#39;block\&#39;;\n    $link.value = \&#39;-\&#39;;\n    } else {\n    $node.style.display = \&#39;none\&#39;;\n    $link.value = \&#39;+\&#39;;\n    }\n  }\n  &lt;/script&gt;&#39;)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_toggle_script">add_toggle_script</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Adds a javascript template toggle script to the body of the HTML</p></div>
+    <div class="desc"><p>Adds a javascript template toggle script to the body of the HTML</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_toggle_script', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_toggle_script" class="source">
@@ -2997,14 +2907,10 @@ report</p></div>
     <p>def <span class="ident">add_toggle_style</span>(</p><p>self, style=&#39;&lt;style&gt;\n  .toggleButton {\n      background-color: white;\n      border: 2px solid black;\n       border-radius: 8px;\n       color:red;\n\t   }\n   .toggleButton:hover {\n    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);\n\t}\n    &lt;/stlye&gt;&#39;)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_toggle_style">add_toggle_style</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Adds a css to format the javascript template, should be done once</p></div>
+    <div class="desc"><p>Adds a css to format the javascript template, should be done once</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_toggle_style', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.add_toggle_style" class="source">
@@ -3048,14 +2954,10 @@ report</p></div>
     <p>def <span class="ident">append_to_body</span>(</p><p>self, element)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.append_to_body">append_to_body</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Appends the element to the body of the model, if it is a string it parses first, if it is a
+    <div class="desc"><p>Appends the element to the body of the model, if it is a string it parses first, if it is a
 dictionary it assumes it has the form {"tag":tag_name,"text":text_text,
 "attribute_dictionary":{"attribute_name":"attribute_value"}, and if it is a
 lxml.html.HtmlElement it appends it</p></div>
@@ -3068,20 +2970,20 @@ lxml.html.HtmlElement it appends it</p></div>
 <span class="sd">    &quot;attribute_dictionary&quot;:{&quot;attribute_name&quot;:&quot;attribute_value&quot;}, and if it is a</span>
 <span class="sd">    lxml.html.HtmlElement it appends it&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">tags</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;body&quot;</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
             <span class="n">body</span> <span class="o">=</span> <span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Body tag was not present adding it&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">StringType</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">fragment_fromstring</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DictionaryType</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">DictionaryType</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="o">**</span><span class="n">element</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">HtmlElement</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">HtmlElement</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">element</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not add {0} to body&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">((</span><span class="s2">&quot;Could not add {0} to body&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">)))</span>
 </pre></div>
 
   </div>
@@ -3095,14 +2997,10 @@ lxml.html.HtmlElement it appends it</p></div>
     <p>def <span class="ident">append_to_head</span>(</p><p>self, element)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.append_to_head">append_to_head</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Appends the element to the head of the model, if it is a string it parses first, if it is a
+    <div class="desc"><p>Appends the element to the head of the model, if it is a string it parses first, if it is a
 dictionary it assumes it has the form {"tag":tag_name,"text":text_text,
 "attribute_dictionary":{"attribute_name":"attribute_value"}, and if it is a
 lxml.html.HtmlElement it appends it</p></div>
@@ -3115,20 +3013,20 @@ lxml.html.HtmlElement it appends it</p></div>
 <span class="sd">    &quot;attribute_dictionary&quot;:{&quot;attribute_name&quot;:&quot;attribute_value&quot;}, and if it is a</span>
 <span class="sd">    lxml.html.HtmlElement it appends it&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">tags</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;head&quot;</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
             <span class="n">head</span> <span class="o">=</span> <span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Head tag was not present adding it&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">StringType</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">fragment_fromstring</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DictionaryType</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">DictionaryType</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="o">**</span><span class="n">element</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">HtmlElement</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">HtmlElement</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">element</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not add {0} to head&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">((</span><span class="s2">&quot;Could not add {0} to head&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">)))</span>
 </pre></div>
 
   </div>
@@ -3165,7 +3063,7 @@ lxml.html.HtmlElement it appends it</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Measurement_Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2-port&quot;</span>
     <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="n">measurement_type</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Measurement_Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;power&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;measurement_type&quot;</span><span class="p">,</span><span class="n">measurement_type</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;{0} is {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;measurement_type&quot;</span><span class="p">,</span><span class="n">measurement_type</span><span class="p">)))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">results_file</span> <span class="o">=</span> <span class="n">ResultFileModel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;results_directory&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">]))</span>
     <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;Device_Id&quot;</span><span class="p">],</span> <span class="s2">&quot;System_Id&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;Measurement_Timestamp&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
                <span class="s2">&quot;Connector_Type_Measurement&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
@@ -3344,8 +3242,8 @@ lxml.html.HtmlElement it appends it</p></div>
     <span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span> <span class="o">=</span> <span class="n">standard_error_data_table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calrep_measurement</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">results_file</span><span class="p">,</span>
                                                     <span class="n">table_1_uncertainty_column_names</span><span class="o">=</span><span class="n">error_column_names</span><span class="p">,</span>
                                                     <span class="n">value_column_names</span><span class="o">=</span><span class="n">column_names</span><span class="p">,</span> <span class="n">expansion_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">number_columns_pass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">number_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">number_columns_pass</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">number_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_error</span><span class="o">.</span><span class="n">get_conformation_dictionary</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
     <span class="n">good</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">number_columns_pass</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">number_columns</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
     <span class="n">pass_fail</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="k">if</span> <span class="n">good</span><span class="p">:</span>
@@ -3410,14 +3308,10 @@ lxml.html.HtmlElement it appends it</p></div>
     <p>def <span class="ident">clear</span>(</p><p>self)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.clear">clear</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Clears all content in the HTML</p></div>
+    <div class="desc"><p>Clears all content in the HTML</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.clear', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.clear" class="source">
@@ -3439,14 +3333,10 @@ lxml.html.HtmlElement it appends it</p></div>
     <p>def <span class="ident">embedd_image</span>(</p><p>self, image, image_mode=&#39;MatplotlibFigure&#39;, **options)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.embedd_image">embedd_image</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Embedds an image in the report. image_mode can be  MatplotlibFigure (a reference to the figure class),
+    <div class="desc"><p>Embedds an image in the report. image_mode can be  MatplotlibFigure (a reference to the figure class),
 Image (the PIL class),
 Base64 (a string of the values),
 Png, Jpg, Bmp Tiff(the file name),
@@ -3478,14 +3368,10 @@ or a Ndarray of the image values</p></div>
     <p>def <span class="ident">embedd_image_figure</span>(</p><p>self, image, image_mode=&#39;MatplotlibFigure&#39;, figure_id=&#39;image&#39;, caption=&#39;&#39;, style=&#39;&#39;, **options)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.embedd_image_figure">embedd_image_figure</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Embedds an image in the report. image_mode can be  MatplotlibFigure (a reference to the figure class),
+    <div class="desc"><p>Embedds an image in the report. image_mode can be  MatplotlibFigure (a reference to the figure class),
 Image (the PIL class),
 Base64 (a string of the values),
 Png, Jpg, Bmp Tiff(the file name),
@@ -3572,21 +3458,17 @@ or a Ndarray of the image values. The image is in a <figure id=figure_id> tag</p
     <p>def <span class="ident">save</span>(</p><p>self, file_path=None, **temp_options)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.save">save</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Saves the html file, provide file path to save as, or temp_options</p></div>
+    <div class="desc"><p>Saves the html file, provide file path to save as, or temp_options</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.save', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.save" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">temp_options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Saves the html file, provide file path to save as, or temp_options&quot;&quot;&quot;</span>
     <span class="n">original_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">temp_options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">temp_options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">file_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
@@ -3608,14 +3490,10 @@ or a Ndarray of the image values. The image is in a <figure id=figure_id> tag</p
     <p>def <span class="ident">show</span>(</p><p>self)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.show">show</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Saves html to a temp file and shows it in a browser</p></div>
+    <div class="desc"><p>Saves html to a temp file and shows it in a browser</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.show', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.show" class="source">
@@ -3635,14 +3513,10 @@ or a Ndarray of the image values. The image is in a <figure id=figure_id> tag</p
     <p>def <span class="ident">to_HTML</span>(</p><p>self)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.to_HTML">to_HTML</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Convenience function that echos the content updates the attribute self.text</p></div>
+    <div class="desc"><p>Convenience function that echos the content updates the attribute self.text</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.to_HTML', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.CheckStandardReport.to_HTML" class="source">
@@ -3663,14 +3537,10 @@ or a Ndarray of the image values. The image is in a <figure id=figure_id> tag</p
     <p>def <span class="ident">to_pdf</span>(</p><p>self, file_path=None, **options)</p>
     </div>
     
-    <p class="inheritance">
-     <strong>Inheritance:</strong>
-       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.to_pdf">to_pdf</a></code>
-    </p>
 
     
   
-    <div class="desc inherited"><p>Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name
+    <div class="desc"><p>Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name
 the resulting file to self.path with pdf as the extension</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.CheckStandardReport.to_pdf', this);">Show source &equiv;</a></p>
@@ -3691,6 +3561,77 @@ the resulting file to self.path with pdf as the extension</p></div>
 
   </div>
   
+          <h3>Instance variables</h3>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.conversion_defaults" class="name">var <span class="ident">conversion_defaults</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.history_dict" class="name">var <span class="ident">history_dict</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.options" class="name">var <span class="ident">options</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.plot_captions" class="name">var <span class="ident">plot_captions</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.plot_ids" class="name">var <span class="ident">plot_ids</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.plot_titles" class="name">var <span class="ident">plot_titles</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.CheckStandardReport.plots" class="name">var <span class="ident">plots</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
       </div>
       </div>
       
@@ -3698,6 +3639,8 @@ the resulting file to self.path with pdf as the extension</p></div>
       <p id="pyMez.Code.Analysis.Reports.HTMLReport" class="name">class <span class="ident">HTMLReport</span></p>
       
   
+    <div class="desc"><p>HTMLBase has standard parsing and printing capabilities, designed so that other HTML models
+can inherit from it</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.HTMLReport', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.HTMLReport" class="source">
@@ -3766,9 +3709,9 @@ the resulting file to self.path with pdf as the extension</p></div>
           <ul class="class_list">
           <li><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></li>
           <li>Code.DataHandlers.HTMLModels.HTMLBase</li>
-          <li>__builtin__.object</li>
+          <li>builtins.object</li>
           </ul>
-          <h3>Methods</h3>
+          <h3>Static methods</h3>
             
   <div class="item">
     <div class="name def" id="pyMez.Code.Analysis.Reports.HTMLReport.__init__">
@@ -3782,7 +3725,7 @@ the resulting file to self.path with pdf as the extension</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.HTMLReport.__init__', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Analysis.Reports.HTMLReport.__init__" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Intializes the HTMLBase Class&quot;&quot;&quot;</span>
     <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;specific_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;HTML&#39;</span><span class="p">,</span>
               <span class="s2">&quot;general_descriptor&quot;</span><span class="p">:</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span>
@@ -3794,9 +3737,9 @@ the resulting file to self.path with pdf as the extension</p></div>
               <span class="s2">&quot;head&quot;</span><span class="p">:</span><span class="bp">None</span>
               <span class="p">}</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
     <span class="c1"># Define Method Aliases if they are available</span>
     <span class="k">if</span> <span class="n">METHOD_ALIASES</span><span class="p">:</span>
@@ -3814,10 +3757,10 @@ the resulting file to self.path with pdf as the extension</p></div>
             <span class="n">elements</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;head&quot;</span><span class="p">,</span><span class="s2">&quot;body&quot;</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">element</span><span class="p">]:</span>
-                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">StringType</span><span class="p">):</span>
                         <span class="n">new_element</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">fragment_fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">element</span><span class="p">])</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">Element</span><span class="p">:</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">Element</span><span class="p">):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">element</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]:</span>
@@ -3862,7 +3805,7 @@ the resulting file to self.path with pdf as the extension</p></div>
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Adds a body tag to the model if it does not exist&quot;&quot;&quot;</span>
     <span class="n">body</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">tags</span><span class="o">=</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())</span>
+    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;body&quot;</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -4024,20 +3967,20 @@ lxml.html.HtmlElement it appends it</p></div>
 <span class="sd">    &quot;attribute_dictionary&quot;:{&quot;attribute_name&quot;:&quot;attribute_value&quot;}, and if it is a</span>
 <span class="sd">    lxml.html.HtmlElement it appends it&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">tags</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;body&quot;</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
             <span class="n">body</span> <span class="o">=</span> <span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Body tag was not present adding it&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">StringType</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">fragment_fromstring</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DictionaryType</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">DictionaryType</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="o">**</span><span class="n">element</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">HtmlElement</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">HtmlElement</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">element</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not add {0} to body&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">((</span><span class="s2">&quot;Could not add {0} to body&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">)))</span>
 </pre></div>
 
   </div>
@@ -4067,20 +4010,20 @@ lxml.html.HtmlElement it appends it</p></div>
 <span class="sd">    &quot;attribute_dictionary&quot;:{&quot;attribute_name&quot;:&quot;attribute_value&quot;}, and if it is a</span>
 <span class="sd">    lxml.html.HtmlElement it appends it&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">tags</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;head&quot;</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
             <span class="n">head</span> <span class="o">=</span> <span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Head tag was not present adding it&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">StringType</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">fragment_fromstring</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DictionaryType</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">DictionaryType</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="o">**</span><span class="n">element</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">HtmlElement</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">HtmlElement</span><span class="p">):</span>
             <span class="n">new_element</span><span class="o">=</span><span class="n">element</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Could not add {0} to head&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">((</span><span class="s2">&quot;Could not add {0} to head&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">)))</span>
 </pre></div>
 
   </div>
@@ -4203,7 +4146,7 @@ or a Ndarray of the image values. The image is in a <figure id=figure_id> tag</p
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">temp_options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Saves the html file, provide file path to save as, or temp_options&quot;&quot;&quot;</span>
     <span class="n">original_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">temp_options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">temp_options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
     <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">file_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
@@ -4480,6 +4423,14 @@ the resulting file to self.path with pdf as the extension</p></div>
       </div>
       <div class="item">
       <p id="pyMez.Code.Analysis.Reports.FREQUENCY_UNITS" class="name">var <span class="ident">FREQUENCY_UNITS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.Analysis.Reports.GENERAL_DESCRIPTORS" class="name">var <span class="ident">GENERAL_DESCRIPTORS</span></p>
       
   
   <div class="source_cont">
@@ -4831,14 +4782,6 @@ the resulting file to self.path with pdf as the extension</p></div>
 
       </div>
       <div class="item">
-      <p id="pyMez.Code.Analysis.Reports.StringTypes" class="name">var <span class="ident">StringTypes</span></p>
-      
-  
-  <div class="source_cont">
-</div>
-
-      </div>
-      <div class="item">
       <p id="pyMez.Code.Analysis.Reports.TESTS_DIRECTORY" class="name">var <span class="ident">TESTS_DIRECTORY</span></p>
       
   
@@ -4912,6 +4855,14 @@ the resulting file to self.path with pdf as the extension</p></div>
       </div>
       <div class="item">
       <p id="pyMez.Code.Analysis.Reports.XSLT_REPOSITORY" class="name">var <span class="ident">XSLT_REPOSITORY</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.Analysis.Reports.type_names" class="name">var <span class="ident">type_names</span></p>
       
   
   <div class="source_cont">

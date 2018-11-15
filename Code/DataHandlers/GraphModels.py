@@ -118,7 +118,55 @@ def visit_and_print_all_nodes(graph):
     nodes=graph.node_names
     for node in nodes:
         graph.move_to_node(node)
-        print(graph.data)
+        print((graph.data))
+
+
+def to_node_name(node_data):
+    """Creates a node name given an input object, does a bit of silly type selecting and name rearranging. This matches for 75%
+    of the cases. There are a lot of user defined nodes without a clear path to generate a name. For instance the DataTableGraph
+    node HpFile, does not save with a .hp extension so it would be auto named TxtFile if was only selected by the path name.
+    If it is auto selected it returns StringList because it is of the format ["file_path","schema_path"] """
+
+    # we retrieve the text version of the class name
+    class_name = node_data.__class__.__name__
+    node_name = class_name
+    # now for dict and list types we want to inspect the first Element to see what it is
+    if re.match('list', class_name):
+        node_name = "List"
+        try:
+            element_class_name = node_data[0].__class__.__name__
+            node_name = element_class_name + node_name
+        except:
+            pass
+    elif re.match('dict', class_name):
+        node_name = "Dictionary"
+        try:
+            element_class_name = list(node_data.values())[0].__class__.__name__
+            node_name = element_class_name + node_name
+        except:
+            pass
+    elif re.match('str', class_name):
+        node_name = "String"
+        # Now we have to check if it is an existing file name
+        if os.path.isfile(node_data):
+            node_name = "File"
+            extension = ""
+            try:
+                if re.search("\.", node_data):
+                    extension = node_data.split(".")[-1]
+                    node_name = extension.title() + node_name
+            except:
+                pass
+        elif fnmatch.fnmatch(node_data, "*.*"):
+            node_name = "File"
+            try:
+                if re.search("\.", node_data):
+                    extension = node_data.split(".")[-1]
+                    node_name = extension.title() + node_name
+            except:
+                pass
+    node_name = node_name.replace("str", "String").replace("dict", "Dictionary")
+    return (node_name)
 
 
 def TableGraph_to_Links(table_graph, **options):
@@ -131,9 +179,9 @@ def TableGraph_to_Links(table_graph, **options):
                                'application/vnd.oasis.opendocument.spreadsheet',
                                'application/x-matlab-data', 'text/html', 'application/json']}
     conversion_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         conversion_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         conversion_options[key] = value
     if conversion_options["base_name"] is None:
         base_name = 'test.txt'
@@ -188,8 +236,8 @@ def remove_circular_paths(path):
             #print("{0} is {1}".format("node",node))
             #print("{0} is {1}".format("past_locations",past_locations))
             # Now find all the visits to that location
-            equality_list=map(lambda x:x==node,past_locations)
-            print("{0} is {1}".format("equality_list",equality_list))
+            equality_list=[x==node for x in past_locations]
+            print(("{0} is {1}".format("equality_list",equality_list)))
             # You are intially not between visits
             between=False
 
@@ -244,9 +292,9 @@ class Graph(object):
                     "edge_1_to_2": edge_1_to_2
                     }
         self.options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.options[key] = value
         self.elements = ['graph_name', 'node_names', 'node_descriptions', 'current_node', 'state', 'data']
         for element in self.elements:
@@ -279,7 +327,7 @@ class Graph(object):
             self.state[current_node_state_position] = 1
             self.state_matrix = np.matrix(self.state).T
         except:
-            print("Could not set the state of graph: {0}".format(self.graph_name))
+            print(("Could not set the state of graph: {0}".format(self.graph_name)))
             raise
 
     def add_edge(self, begin_node=None, end_node=None, edge_function=None):
@@ -287,7 +335,7 @@ class Graph(object):
         end_node, and the edge function"""
         # check to see if edge is defined if it is increment a number
         edge_match = re.compile("edge_{0}_{1}".format(begin_node, end_node))
-        keys = self.__dict__.keys()
+        keys = list(self.__dict__.keys())
         # print keys
         iterator = 0
         for key in keys:
@@ -310,7 +358,7 @@ class Graph(object):
         end_node, and the edge function"""
         # check to see if edge is defined if it is increment a number
         jump_match = re.compile("jump_{0}_{1}".format(begin_node, end_node))
-        keys = self.__dict__.keys()
+        keys = list(self.__dict__.keys())
         # print keys
         iterator = 0
         for key in keys:
@@ -326,9 +374,9 @@ class Graph(object):
         """Changes the state of the graph by moving along the path specified"""
         defaults = {"debug": False, "verbose": False}
         move_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             move_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             move_options[key] = value
 
         if move_options["debug"]:
@@ -340,7 +388,7 @@ class Graph(object):
             begin_node = match.groupdict()['begin_node']
             end_node = match.groupdict()['end_node']
             if move_options["verbose"]:
-                print("moving {0} -> {1}".format(begin_node, end_node))
+                print(("moving {0} -> {1}".format(begin_node, end_node)))
             # print self.data
             self.data = self.__dict__[edge](self.data)
             # print self.data
@@ -509,9 +557,9 @@ class Graph(object):
         """Returns the first path found between first node and last node, uses a breadth first search algorithm"""
         defaults = {"debug": False, "method": "BreathFirst"}
         self.get_path_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.get_path_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.get_path_options[key] = value
         unvisited_nodes = self.node_names[:]
         unvisited_nodes.remove(first_node)
@@ -532,21 +580,21 @@ class Graph(object):
                 edge_history.append(current_edge)
             node_history.append(current_node)
             if self.get_path_options["debug"]:
-                print("current_node is {0}".format(current_node))
-                print("current_edge is {0}".format(current_edge))
+                print(("current_node is {0}".format(current_node)))
+                print(("current_edge is {0}".format(current_edge)))
             # if this node is the destination exit returning the path
             if current_node == last_node:
                 if self.get_path_options["debug"]:
-                    print("Node path was found to be {0}".format(node_path))
-                    print("path was found to be {0}".format(edge_path))
-                    print("{0} is {1}".format("path", path))
+                    print(("Node path was found to be {0}".format(node_path)))
+                    print(("path was found to be {0}".format(edge_path)))
+                    print(("{0} is {1}".format("path", path)))
                 return path[last_node][::-1]
 
             adjacent_nodes = self.get_exiting_nodes(current_node)
             adjacent_paths = self.get_exiting_edges(current_node)
             if self.get_path_options["debug"]:
-                print("{0} are {1}".format("adjacent_nodes", adjacent_nodes))
-                print("{0} are {1}".format("adjacent_paths", adjacent_paths))
+                print(("{0} are {1}".format("adjacent_nodes", adjacent_nodes)))
+                print(("{0} are {1}".format("adjacent_paths", adjacent_paths)))
             current_history = edge_history
             for node_index, node in enumerate(adjacent_nodes):
                 if node not in visited_nodes:
@@ -557,7 +605,7 @@ class Graph(object):
                     path[node]
                     # possible_paths.append(current_path.append(node))
                     if self.get_path_options["debug"]:
-                        print("{0} is {1}".format("path_queue", path_queue))
+                        print(("{0} is {1}".format("path_queue", path_queue)))
 
     def move_to_node(self, node):
         """Moves from current_node to the specified node"""
@@ -576,8 +624,8 @@ class Graph(object):
             raise
         out = temp_data == self.data
         out_list = [self.current_node, path, out]
-        print("The assertion that the data remains unchanged,\n"
-              "for node {0} following path {1} is {2}".format(*out_list))
+        print(("The assertion that the data remains unchanged,\n"
+              "for node {0} following path {1} is {2}".format(*out_list)))
         return out
 
     def is_graph_isomorphic(self):
@@ -598,9 +646,9 @@ class Graph(object):
                     "general_descriptor": "plot", "file_name": None,
                     "arrows": True, "node_size": 1000, "font_size": 10, "fix_layout": True}
         show_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             show_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             show_options[key] = value
         if show_options["directory"] is None:
             show_options["directory"] = os.getcwd()
@@ -632,7 +680,7 @@ class Graph(object):
             networkx.draw_networkx(self.display_graph, arrows=show_options["arrows"], node_color=node_colors,
                                    node_size=show_options["node_size"], font_size=show_options["font_size"],
                                    pos=self.display_layout)
-
+        plt.axis('off')
         plt.suptitle(self.options["graph_name"])
         if show_options["file_name"] is None:
             file_name = auto_name(specific_descriptor=show_options["specific_descriptor"],
@@ -668,9 +716,9 @@ class StringGraph(Graph):
                   "edge_1_to_2":edge_1_to_2
                  }
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         Graph.__init__(self,**self.options)
         self.add_node("File","String",String_to_File,"String",File_to_String,node_description="Plain File")
@@ -703,9 +751,9 @@ class TableGraph(Graph):
                   "edge_2_to_1":AsciiDataTable_to_DataFrame,
                   "edge_1_to_2":DataFrame_to_AsciiDataTable}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         Graph.__init__(self,**self.options)
         self.add_node("HdfFile","DataFrame",DataFrame_to_HdfFile,
@@ -775,9 +823,9 @@ class ImageGraph(Graph):
                   "edge_2_to_1":File_to_Image,
                   "edge_1_to_2":lambda x: Image_to_FileType(x,file_path="test",extension="png")}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         Graph.__init__(self,**self.options)
         self.add_node("Jpg","Image",lambda x: Image_to_FileType(x,file_path="test",extension="jpg"),
@@ -813,9 +861,9 @@ class MetadataGraph(Graph):
                   "edge_2_to_1":JsonString_to_Dictionary,
                   "edge_1_to_2":Dictionary_to_JsonString}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         Graph.__init__(self,**self.options)
         self.add_node("JsonFile","JsonString",JsonString_to_JsonFile,
@@ -878,9 +926,9 @@ class TwoPortParameterGraph(Graph):
                           "Z01":50,
                           "Z02":50 }
         graph_options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             graph_options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             graph_options[key]=value
         Graph.__init__(self,**graph_options)
 
@@ -973,9 +1021,9 @@ class DataTableGraph(Graph):
                   "edge_1_to_2":DataFrameDictionary_to_AsciiDataTable
                  }
         graph_options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             graph_options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             graph_options[key]=value
         Graph.__init__(self, **graph_options)
 

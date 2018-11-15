@@ -52,7 +52,10 @@ import xml.dom                                     # Xml document handling
 import xml.dom.minidom                             # For xml parsing
 from xml.dom.minidom import getDOMImplementation   # Making blank XML documents
 import datetime
-import urlparse                                    # To form proper URLs
+try:
+	import urllib.parse as urlparse                                    # To form proper URLs
+except ImportError:
+	import urlparse 
 import socket                                      # To determine IPs and Hosts
 from types import *                                # For Data Type testing
 import fnmatch
@@ -80,6 +83,12 @@ except:
     print("The module pyMez.Code.Utils.Alias was not found")
     METHOD_ALIASES=0
     pass
+try:
+    from Code.Utils.Types import *
+except:
+    print("The module pyMez.Code.Utils.Types was not found or had an error,"
+          "please check module or put it on the python path")
+    raise ImportError
 # For Auto-naming of files if path is not specified
 try:
     from Code.Utils.Names import auto_name
@@ -95,8 +104,8 @@ except:
 try:
     from Code.Utils.GetMetadata import *
 except:
-    print "Can not find the module GetMetadata, please add it to sys.path"
-    print "Anything that uses the functions from GetMetadata will be broken"
+    print("Can not find the module GetMetadata, please add it to sys.path")
+    print("Anything that uses the functions from GetMetadata will be broken")
     pass
 #import pyMez
 #-----------------------------------------------------------------------------
@@ -121,7 +130,7 @@ try:
 
 except:
     #raise
-    print("Could not assign the data directory locations defaulting to the current working directory {0}".format(os.getcwd()))
+    print(("Could not assign the data directory locations defaulting to the current working directory {0}".format(os.getcwd())))
     print("You must pass XML types the style_sheet to print in html")
     INSTRUMENT_SHEETS=os.getcwd()
     XSLT_REPOSITORY=os.getcwd()
@@ -155,9 +164,9 @@ def join_xml(new_root="root",xml_document_list=None,**options):
               "directory":None,
               "extension":'xml'}
     new_xml_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         new_xml_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         new_xml_options[key]=value
     new_xml=XMLBase(None,**new_xml_options)
     #print new_xml
@@ -188,12 +197,15 @@ def make_xml_string(tag,text=None,**attribute_dictionary):
     if text:
         position_arguments.append(text)
     new_tag=lxml.builder.E(*position_arguments,**attribute_dictionary)
-    out_text=lxml.etree.tostring(new_tag)
+    try:
+        out_text = lxml.etree.tostring(new_tag).decode()
+    except:
+        out_text=lxml.etree.tostring(new_tag)
     return out_text
 
 def dictionary_to_xml(dictionary=None,char_between='\n'):
     string_output=''
-    for key,value in dictionary.iteritems():
+    for key,value in dictionary.items():
         xml_open="<"+str(key)+">"
         xml_close="</"+str(key)+">"
         string_output=string_output+xml_open+str(value)+xml_close+char_between
@@ -201,24 +213,24 @@ def dictionary_to_xml(dictionary=None,char_between='\n'):
 
 def dictionary_to_xmlchunk(dictionary, level='attribute'):
     "returns a string formatted as xml when given a python dictionary"
-    if type(dictionary) is not dict:raise
+    if not isinstance(dictionary, dict):raise
     if re.match('attr',level,re.IGNORECASE):
         prefix="<Tuple "
         postfix=" />"
         inner=""
-        for key,value in dictionary.iteritems():
+        for key,value in dictionary.items():
             inner=inner+"%s='%s' "%(key,value)
         xml_out=prefix+inner+postfix
 
     if re.match('tag',level,re.IGNORECASE):
         xml_out=""
-        for key,value in dictionary.iteritems():
+        for key,value in dictionary.items():
             xml_out=xml_out+"<"+str(key)+">"+str(value)+"</"+str(key)+">"
     return xml_out
 
 def dictionary_list_to_xmlchunk(list_of_dictionaries,level='attribute'):
     """returns a string of xml given a list of dictionaries, level says if keys become attribute names or tag names"""
-    if type(list_of_dictionaries) is not list:raise
+    if not isinstance(list_of_dictionaries, list):raise
     xml_out=""
     for item in list_of_dictionaries:
         xml_out=xml_out+dictionary_to_xmlchunk(item,level)+"\n"
@@ -254,7 +266,7 @@ def condition_URL(URL):
 def determine_instrument_type_from_string(string):
     """ Given a string returns the instrument type"""
 
-    if type(string) in StringTypes:
+    if isinstance(string,StringTypes):
          # Start with the easy ones
          for instrument_type in INSTRUMENT_TYPES:
             match= re.compile(instrument_type,re.IGNORECASE)
@@ -285,11 +297,11 @@ def determine_instrument_type(object):
     # should be in the order of likelyhood
     attritbute_names=['instrument_type','address','serial','Id']
     # Check to see if it is a string and then go through the possibilities
-    if type(object) in StringTypes:
+    if isinstance(object,StringType):
         return determine_instrument_type_from_string(object)
     # If it is a object or class look around in normal names looking for a string
     # to process
-    elif type(object)==InstanceType or ClassType:
+    elif isinstance(object, InstanceType) or ClassType:
         for attribute in attritbute_names:
             try:
                 if attribute in dir(object):
@@ -314,9 +326,9 @@ class HTMLEcho():
         # The next more advanced thing to do is retrieve defaults from a settings file
         defaults={}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         if file_path:
             in_file=open(file_path,"r")
@@ -343,9 +355,9 @@ class XMLBase():
                   "content":None
                   }
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # Define Method Aliases if they are available
         if METHOD_ALIASES:
@@ -362,7 +374,7 @@ class XMLBase():
             # Should be a relative path for
             if self.options["style_sheet"] is not None:
                 new_node=self.document.createProcessingInstruction('xml-stylesheet',
-                u'type="text/xsl" href="{0}"'.format(self.options['style_sheet']))
+                'type="text/xsl" href="{0}"'.format(self.options['style_sheet']))
                 self.document.insertBefore(new_node,self.document.documentElement)
             if DEFAULT_FILE_NAME is None:
                 self.path=auto_name(self.options["specific_descriptor"],
@@ -384,10 +396,19 @@ class XMLBase():
         For example: XMLBase[".//BeforeCalibration/Item/SubItem[@Index='6']"] will return all of the elements
         with index=6. This is a thin wrapper of etree.findall"""
         out=self.etree.findall(item)
+
         if len(out)==1:
-            return etree.tostring(out[0])
+            try:
+                string_out=etree.tostring(out[0]).decode()
+            except:
+                string_out = etree.tostring(out[0])
+            return string_out
         else:
-            return map(lambda x: etree.tostring(x),out)
+            try:
+              out_list= [etree.tostring(x).decode() for x in out]
+            except:
+              out_list= [etree.tostring(x) for x in out]
+            return out_list
 
     def update_etree(self):
         "Updates the attribute etree. Should be called anytime the xml content is changed"
@@ -440,22 +461,22 @@ class XMLBase():
             return tagName
         if mode in ['text','txt','cmd line','cmd']:
             for node in self.document.getElementsByTagName('Entry'):
-                print 'Entry Index: %s \tDate: %s'%(node.getAttribute('Index'),
-                node.getAttribute('Date'))
-                print node.firstChild.nodeValue
+                print('Entry Index: %s \tDate: %s'%(node.getAttribute('Index'),
+                node.getAttribute('Date')))
+                print(node.firstChild.nodeValue)
         elif re.search('xml',mode,re.IGNORECASE):
             for node in self.document.getElementsByTagName('Entry'):
-                print node.toprettyxml()
+                print(node.toprettyxml())
         elif re.search('Window|wx',mode,re.IGNORECASE):
             try:
                 import wx
-                import wx.html
+                import wx.html2
             except:
-                print 'Cannot locate wx, please add to sys.path'
+                print('Cannot locate wx, please add to sys.path')
             app = wx.App(False)
             frame=wx.Frame(None)
-            html_window=wx.html.HtmlWindow(frame)
-            html_window.SetPage(str(self.to_HTML()))
+            html_window=wx.html2.WebView.New(frame)
+            html_window.SetPage(str(self.to_HTML()),"")
             frame.Show()
             app.MainLoop()
 
@@ -464,11 +485,11 @@ class XMLBase():
         of self.document for better unicode support"""
         self.update_etree()
         try:
-            string_representation = etree.tostring(self.etree)
+            string_representation = etree.tostring(self.etree,encoding="unicode")
 
         except:
             string_representation = self.document.toprettyxml()
-        return string_representation
+        return str(string_representation)
 
 class XMLLog(XMLBase):
     """ Data container for a general XMLLog"""
@@ -480,9 +501,9 @@ class XMLLog(XMLBase):
                   'entry_style_sheet':DEFAULT_LOG_STYLE,
                   'specific_descriptor':'XML','general_descriptor':'Log'}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         XMLBase.__init__(self,file_path,**self.options)
         # TODO: Check how scalable a dictionary of nodes is
@@ -497,7 +518,7 @@ class XMLLog(XMLBase):
         if entry is None:
             new_entry=self.document.createElement('Entry')
             value=''
-        elif type(entry) is str:
+        elif isinstance(entry, str):
             if re.search('<Entry>(.)+</Entry>',entry):
                 new_document=xml.dom.minidom.parseString(entry)
                 new_entry=new_document.documentElement
@@ -511,7 +532,7 @@ class XMLLog(XMLBase):
         if len(self.Index_node_dictionary)==0:
             new_Index='1'
         else:
-            max_Index=max([int(Index) for Index in self.Index_node_dictionary.keys()])
+            max_Index=max([int(Index) for Index in list(self.Index_node_dictionary.keys())])
             new_Index=str(max_Index+1)
         # Add the Index attribute to the new entry
         Index_attribute=self.document.createAttribute('Index')
@@ -623,7 +644,7 @@ class XMLLog(XMLBase):
         try:
             self.set_current_entry(new_Index)
         except KeyError:
-            Indices=map(lambda x:int(x),self.Index_node_dictionary.keys()) 
+            Indices=[int(x) for x in list(self.Index_node_dictionary.keys())] 
             if min(Indices)<Index:
                Indices.sort()
                new_Index=Indices[Indices.index(Index)-1]
@@ -645,7 +666,7 @@ class XMLLog(XMLBase):
         try:
             self.set_current_entry(new_Index)
         except KeyError:
-            Indices=map(lambda x:int(x),self.Index_node_dictionary.keys()) 
+            Indices=[int(x) for x in list(self.Index_node_dictionary.keys())] 
             if max(Indices)>Index:
                Indices.sort()
                new_Index=Indices[Indices.index(Index)+1]
@@ -664,18 +685,18 @@ class XMLLog(XMLBase):
             return tagName
         if mode in ['text','txt','cmd line','cmd']:
             for node in self.document.getElementsByTagName('Entry'):
-                print 'Entry Index: %s \tDate: %s'%(node.getAttribute('Index'),
-                node.getAttribute('Date'))
-                print node.firstChild.nodeValue
+                print('Entry Index: %s \tDate: %s'%(node.getAttribute('Index'),
+                node.getAttribute('Date')))
+                print(node.firstChild.nodeValue)
         elif re.search('xml',mode,re.IGNORECASE):
             for node in self.document.getElementsByTagName('Entry'):
-                print node.toprettyxml()
+                print(node.toprettyxml())
         elif re.search('Window|wx',mode,re.IGNORECASE):
             try:
                 import wx
                 import wx.html
             except:
-                print 'Cannot locate wx, please add to sys.path'
+                print('Cannot locate wx, please add to sys.path')
             app = wx.App(False)
             frame=wx.Frame(None)
             html_window=wx.html.HtmlWindow(frame)
@@ -722,9 +743,9 @@ class EndOfDayXMLLog(XMLLog):
     def __init__(self,path=None,**options):
         defaults={"style_sheet":os.path.join(XSLT_REPOSITORY,'DEFAULT_END_OF_DAY_LOG_STYLE.xsl').replace('\\','/')}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         XMLLog.__init__(self,path,**self.options)
         if path is None:
@@ -741,7 +762,7 @@ class EndOfDayXMLLog(XMLLog):
             node=self.get_entry(Index)
         except:
             raise
-        for tag,value in entry.iteritems():
+        for tag,value in entry.items():
             new_element=self.document.createElement(tag)
             new_text=self.document.createTextNode(str(value))
             new_element.appendChild(new_text)
@@ -781,9 +802,9 @@ class DataTable(XMLBase):
                   "extension":'xml'
                   }
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         XMLBase.__init__(self,file_path,**self.options)
 
@@ -796,17 +817,17 @@ class DataTable(XMLBase):
         try:
             data_dictionary=self.options['data_dictionary']
             if len(data_dictionary)>0:
-                for key,value in data_dictionary.iteritems():
+                for key,value in data_dictionary.items():
                     # This hanldes Tag:Text dictionaries
                     if re.search('description',key,re.IGNORECASE):
                         #This is the flat dictionary handling code {"Data_Description:{key:value}}
                         #Need one that is {"Data_Description":{"Context":{key:value}}}
                         new_entry=self.document.createElement(key)
-                        for tag,element_text in value.iteritems():
-                            if type(element_text) is DictionaryType:
+                        for tag,element_text in value.items():
+                            if isinstance(element_text, DictionaryType):
                                 new_tag=self.document.createElement(tag)
                                 new_entry.appendChild(new_tag)
-                                for inner_tag,inner_element_text in element_text.iteritems():
+                                for inner_tag,inner_element_text in element_text.items():
                                     new_inner_tag=self.document.createElement(inner_tag)
                                     new_inner_text=self.document.createTextNode(inner_element_text)
                                     new_inner_tag.appendChild(new_inner_text)
@@ -831,16 +852,16 @@ class DataTable(XMLBase):
         data_node=self.document.createElement('Data')
         #self.document.documentElement.appendChild(data_node)
         for row in data_list:
-            if type(row) in [ListType,TupleType]:
+            if isinstance(row,(list,tuple)):
                 new_entry=self.document.createElement('Tuple')
                 for j,datum in enumerate(row):
                     x_attribute=self.document.createAttribute('X%s'%j)
                     new_entry.setAttributeNode(x_attribute)
                     new_entry.setAttribute('X%s'%j,str(datum))
                 data_node.appendChild(new_entry)
-            elif type(row) is DictionaryType:
+            elif isinstance(row, DictionaryType):
                 new_entry=self.document.createElement('Tuple')
-                for key,datum in row.iteritems():
+                for key,datum in row.items():
                     x_attribute=self.document.createAttribute(key)
                     new_entry.setAttributeNode(x_attribute)
                     new_entry.setAttribute(key,str(datum))
@@ -851,15 +872,16 @@ class DataTable(XMLBase):
         """ Returns the attribute names in the first tuple element in the 'data' element """
         attribute_names=[]
         data_nodes=self.document.getElementsByTagName('Data')
+        #print("{0} is {1}".format("data_nodes",data_nodes))
         first_tuple_node=data_nodes[0].childNodes[1]
         text=first_tuple_node.toprettyxml()
         text_list=text.split(' ')
-        #print text_list
+        #print(text_list)
         for item in text_list:
             try:
                 match=re.search('(?P<attribute_name>\w+)=',item)
                 name=match.group('attribute_name')
-                #print name
+                #print(name)
                 attribute_names.append(name)
             except:pass
         return attribute_names
@@ -921,9 +943,9 @@ class FileRegister(XMLBase):
                     "extension": 'xml'
                     }
         self.options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.options[key] = value
         XMLBase.__init__(self, file_path, **self.options)
 
@@ -940,13 +962,13 @@ class FileRegister(XMLBase):
         except KeyError:
             # The Id is not in the existing list so start buliding Id.
             # Determine the IP Address of the host in the URL
-            if parsed_URL[1] in ['', u'']:  # if it is empty assume local host
+            if parsed_URL[1] in ['', '']:  # if it is empty assume local host
                 IP_address = socket.gethostbyaddr(socket.gethostname())[2][0]
             else:
                 IP_address = socket.gethostbyaddr(parsed_URL[1])[2][0]
             Id_cache = {}
             # We begin with all the entries with the same IP address
-            for (key, value) in self.Id_dictionary.iteritems():
+            for (key, value) in self.Id_dictionary.items():
                 if value.startswith(IP_address):
                     Id_cache[key] = value
             # If the Id_cache is empty then we just assign the number
@@ -987,14 +1009,14 @@ class FileRegister(XMLBase):
                     # If the Id_cache is not empty
                 else:
                     path_cache = dict([(URL, URL_to_path(URL, form='list'))
-                                       for URL in Id_cache.keys()])
+                                       for URL in list(Id_cache.keys())])
                     # print Id_cache
                     part_cache = dict([(URL, [path_cache[URL][place],
                                               Id_cache[URL].split('.')[place + 4]])
-                                       for URL in Id_cache.keys()])
-                    parts_list = [part_cache[URL][0] for URL in Id_cache.keys()]
+                                       for URL in list(Id_cache.keys())])
+                    parts_list = [part_cache[URL][0] for URL in list(Id_cache.keys())]
                     node_number = max([int(Id_cache[URL].split('.')[place + 4][1:])
-                                       for URL in Id_cache.keys()])
+                                       for URL in list(Id_cache.keys())])
                     # If it is the last place
                     if place == len(path_list) - 1:
                         new_node_number = node_number + 1
@@ -1011,7 +1033,7 @@ class FileRegister(XMLBase):
                         new_node_type = '1'
                         # Check to see if it is already in the FR
                         if path_list[place] in parts_list:
-                            for URL in Id_cache.keys():
+                            for URL in list(Id_cache.keys()):
                                 if part_cache[URL][0] == path_list[place]:
                                     new_node = part_cache[URL][1]
 
@@ -1021,7 +1043,7 @@ class FileRegister(XMLBase):
                             new_node = new_node_type + str(new_node_number)
                         temp_Id = temp_Id + '.' + new_node
                         # Update the Id_cache for the next round, and the place
-                        for URL in Id_cache.keys():
+                        for URL in list(Id_cache.keys()):
                             try:
                                 if not part_cache[URL][0] == path_list[place]:
                                     del (Id_cache[URL])
@@ -1036,8 +1058,8 @@ class FileRegister(XMLBase):
     def add_entry(self, URL):
         """ Adds an entry to the current File Register """
         URL = condition_URL(URL)
-        if URL in self.Id_dictionary.keys():
-            print 'Already there'
+        if URL in list(self.Id_dictionary.keys()):
+            print('Already there')
             return
         # the xml entry is <File Date="" Host="" Type="" Id="" URL=""/>
         File_Registry = self.document.documentElement
@@ -1056,22 +1078,22 @@ class FileRegister(XMLBase):
         attribute_values['Id'] = self.create_Id(URL)
         attribute_values['Date'] = datetime.datetime.utcnow().isoformat()
         type_code = attribute_values['Id'].split('.')[-1][0]
-        if type_code in ['1', u'1']:
+        if type_code in ['1', '1']:
             attribute_values['Type'] = "Directory"
-        elif type_code in ['2', u'2']:
+        elif type_code in ['2', '2']:
             attribute_values['Type'] = "Ordinary"
-        elif type_code in ['3', u'3']:
+        elif type_code in ['3', '3']:
             attribute_values['Type'] = "Driver"
         else:
             attribute_values['Type'] = "Other"
         parsed_URL = urlparse.urlparse(condition_URL(URL))
-        if parsed_URL[1] in ['', u'']:  # if it is empty assume local host
+        if parsed_URL[1] in ['', '']:  # if it is empty assume local host
             attribute_values['Host'] = socket.gethostbyaddr(socket.gethostname())[0]
         else:
             attribute_values['Host'] = parsed_URL[1]
 
         # Now set them all in the actual attribute
-        for (key, value) in attribute_values.iteritems():
+        for (key, value) in attribute_values.items():
             new_entry.setAttribute(key, value)
         File_Registry.appendChild(new_entry)
         # Finally update the self.Id_dictionary
@@ -1091,7 +1113,7 @@ class FileRegister(XMLBase):
         default_options = {'ignore': None, 'only': None, 'print_ignored_files': True,
                            'directories_only': False, 'files_only': False}
         tree_options = default_options
-        for option, value in options.iteritems():
+        for option, value in options.items():
             tree_options[option] = value
         # print tree_options
         # condition the URL
@@ -1106,15 +1128,15 @@ class FileRegister(XMLBase):
                     try:
                         if tree_options['files_only']:
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it is not a file" % file
+                                print("ignoring %s because it is not a file" % file)
                             raise
                         if tree_options['ignore'] is not None and re.search(tree_options['ignore'], directory):
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it does not match the only option" % directory
+                                print("ignoring %s because it does not match the only option" % directory)
                             raise
                         elif tree_options['only'] is not None and not re.search(tree_options['only'], directory):
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it does not match the only option" % directory
+                                print("ignoring %s because it does not match the only option" % directory)
                             raise
                         else:
                             self.add_entry(condition_URL(os.path.join(home, directory)))
@@ -1125,15 +1147,15 @@ class FileRegister(XMLBase):
                     try:
                         if tree_options['directories_only']:
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it is not a directory" % file
+                                print("ignoring %s because it is not a directory" % file)
                             raise
                         if tree_options['ignore'] is not None and re.search(tree_options['ignore'], file):
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it matches the ignore option" % file
+                                print("ignoring %s because it matches the ignore option" % file)
                             raise
                         elif tree_options['only'] is not None and not re.search(tree_options['only'], file):
                             if tree_options['print_ignored_files']:
-                                print "ignoring %s because it does not match the only option" % file
+                                print("ignoring %s because it does not match the only option" % file)
                             raise
                         else:
                             # print (home,file)
@@ -1168,13 +1190,13 @@ class FileRegister(XMLBase):
     def get_data(self):
         """Gets a list of lists that represent the data in the file register"""
         node_list = self.document.getElementsByTagName("File")
-        data = [[attribute[1] for attribute in item.attributes.items()] for item in node_list]
+        data = [[attribute[1] for attribute in list(item.attributes.items())] for item in node_list]
         return data
 
     def get_data_dictionary_list(self):
         """Returns a list of dictionaries that have the data in the file register attributes"""
         node_list = self.document.getElementsByTagName("File")
-        data_dictionary_list = [{attribute[0]: attribute[1] for attribute in item.attributes.items()} for item in
+        data_dictionary_list = [{attribute[0]: attribute[1] for attribute in list(item.attributes.items())} for item in
                                 node_list]
         return data_dictionary_list
 
@@ -1195,16 +1217,16 @@ class Metadata(XMLBase):
                   "metadata_file":None
                   }
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         FileRegistry=file_path
         Metadata_File=self.options['metadata_file']
         # Process the file register
-        if type(FileRegistry) is InstanceType:
+        if isinstance(FileRegistry, InstanceType):
             self.FileRegister=FileRegistry
-        elif type(FileRegistry) in StringTypes:
+        elif isinstance(FileRegistry,StringType):
             self.FileRegister=FileRegister(FileRegistry)
         # Process or create the Metadata File
         if Metadata_File is None:
@@ -1224,7 +1246,7 @@ class Metadata(XMLBase):
             # add in the default xsl
             new_node=self.document.createProcessingInstruction(
                 'xml-stylesheet',
-                u'type="text/xsl" href="%s"'%self.options['style_sheet'])
+                'type="text/xsl" href="%s"'%self.options['style_sheet'])
             self.document.insertBefore(new_node,self.document.documentElement)
             # make sure there is a fileregister reference
             FR_Path=self.FileRegister.path
@@ -1234,10 +1256,10 @@ class Metadata(XMLBase):
             self.document.insertBefore(new_node,self.document.documentElement)
         else:
             # The metadata file exists as a saved file or an instance
-            if type(Metadata_File) is InstanceType:
+            if isinstance(Metadata_File, InstanceType):
                 self.document=Metadata_File.document
                 self.path=Metadata_File.path
-            elif type(Metadata_File) in StringTypes:
+            elif isinstance(Metadata_File,StringType):
                 XMLBase.__init__(self,file_path,**self.options)
 
         # TODO: This dictionary of nodes worries me-- it may not scale well
@@ -1250,20 +1272,18 @@ class Metadata(XMLBase):
             self.document.getElementsByTagName('File')])
 
         self.name_dictionary=dict([(Id,os.path.split(self.URL_dictionary[Id])[1])
-            for Id in self.URL_dictionary.keys()])
+            for Id in list(self.URL_dictionary.keys())])
 
-        self.current_node=self.node_dictionary.values()[0]
+        self.current_node=list(self.node_dictionary.values())[0]
 
     def search_name(self,name=None,re_flags=re.IGNORECASE):
         """ Returns a list of URL's that have an element matching name"""
         try:
             if re_flags in [None,'']:
-                urls=filter(lambda x: re.search(name,x),
-                self.URL_dictionary.values())
+                urls=[x for x in list(self.URL_dictionary.values()) if re.search(name,x)]
                 return urls
             else:
-                urls=filter(lambda x: re.search(name,x,flags=re_flags),
-                self.URL_dictionary.values())
+                urls=[x for x in list(self.URL_dictionary.values()) if re.search(name,x,flags=re_flags)]
                 return urls
         except:
             raise
@@ -1306,11 +1326,11 @@ class Metadata(XMLBase):
         if not value is None:
             new_text=self.document.createTextNode(str(value))
             new_element.appendChild(new_text)
-        attributes=[key for key in Atributes.keys()]
+        attributes=[key for key in list(Atributes.keys())]
         new_attributes=dict([(attribute,
         self.document.createAttribute(attribute)) for attribute in \
         attributes])
-        for (key,value) in Atributes.iteritems():
+        for (key,value) in Atributes.items():
             new_element.setAttribute(key,str(value))
         self.current_node.appendChild(new_element)
 
@@ -1336,7 +1356,7 @@ class Metadata(XMLBase):
 
     def print_current_node(self):
         """ Prints the current node """
-        print self.current_node.toxml()
+        print(self.current_node.toxml())
 
 class InstrumentSheet(XMLBase):
     """ Class that handles the xml instrument sheet. An instrument sheet is an xml file with static metadata about
@@ -1353,9 +1373,9 @@ class InstrumentSheet(XMLBase):
                   "extension":'xml'
                   }
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
 
 
@@ -1398,7 +1418,7 @@ class InstrumentSheet(XMLBase):
         if not text is None:
             text_node=self.document.createTextNode(tag_name)
             new_entry.appendChild(text_node)
-        for key,value in attribute_dictionary.iteritems():
+        for key,value in attribute_dictionary.items():
             new_attribute=self.document.creatAttribute(key)
             new_entry.setAttributeNode(new_attribute)
             new_entry.setAttribute(key,str(value))
@@ -1452,9 +1472,9 @@ class InstrumentState(XMLBase):
                     "state_table": None
                     }
         self.options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.options[key] = value
 
         XMLBase.__init__(self, file_path, **self.options)
@@ -1462,7 +1482,7 @@ class InstrumentState(XMLBase):
         self.document.documentElement.appendChild(self.state_node)
 
         if self.options["state_dictionary"]:
-            for key, value in self.options["state_dictionary"].iteritems():
+            for key, value in self.options["state_dictionary"].items():
                 new_entry = self.document.createElement('Tuple')
                 set_attribute = self.document.createAttribute('Set')
                 value_attribute = self.document.createAttribute('Value')
@@ -1472,14 +1492,14 @@ class InstrumentState(XMLBase):
                 new_entry.setAttribute('Value', str(value))
                 self.state_node.appendChild(new_entry)
         if self.options["state_table"]:
-            if "Index" in self.options["state_table"][0].keys():
+            if "Index" in list(self.options["state_table"][0].keys()):
                 table = sorted(self.options["state_table"], key=lambda x: x["Index"])
             else:
                 table = self.options["state_table"]
 
             for row in table[:]:
                 new_entry = self.document.createElement('Tuple')
-                for key, value in row.iteritems():
+                for key, value in row.items():
                     set_attribute = self.document.createAttribute(key)
                     new_entry.setAttributeNode(set_attribute)
                     new_entry.setAttribute(key, "{0}".format(value))
@@ -1521,7 +1541,7 @@ class InstrumentState(XMLBase):
         except:
             self.add_state_description()
             state_description = self.document.getElementsByTagName('State_Description')[0]
-        for key, value in description_dictionary.iteritems():
+        for key, value in description_dictionary.items():
             element = self.document.createElement("{0}".format(key))
             text = self.document.createTextNode("{0}".format(value))
             element.appendChild(text)
@@ -1582,18 +1602,18 @@ def test_XMLModel(test_new=True,test_existing=False):
         os.chdir(TESTS_DIRECTORY)
         new_xml=XMLBase(None,**{'style_sheet':'../XSL/DEFAULT_STYLE.xsl'})
         print("The New Sheet has been created as new_xml \n")
-        print('*'*80)
-        print("The New File Path is {0}".format(os.path.join(TESTS_DIRECTORY,new_xml.path)))
-        print('*'*80)
+        print(('*'*80))
+        print(("The New File Path is {0}".format(os.path.join(TESTS_DIRECTORY,new_xml.path))))
+        print(('*'*80))
         print("The result of print new_xml")
         print(new_xml)
-        print('*'*80)
+        print(('*'*80))
         print("The result of new_xml.to_HTML()")
-        print new_xml.to_HTML()
-        print('*'*80)
+        print(new_xml.to_HTML())
+        print(('*'*80))
         print("The result of new_xml.options")
-        print new_xml.options
-        print('*'*80)
+        print(new_xml.options)
+        print(('*'*80))
         print("The new_xml has been saved")
         new_xml.save()
     if test_existing:
@@ -1601,18 +1621,18 @@ def test_XMLModel(test_new=True,test_existing=False):
         os.chdir(TESTS_DIRECTORY)
         new_xml=XMLBase('Data_Table_021311_1.xml',**{'style_sheet':'../XSL/DEFAULT_STYLE.xsl'})
         print("The New Sheet has been created as new_xml \n")
-        print('*'*80)
-        print("The New File Path is {0}".format(os.path.join(TESTS_DIRECTORY,new_xml.path)))
-        print('*'*80)
+        print(('*'*80))
+        print(("The New File Path is {0}".format(os.path.join(TESTS_DIRECTORY,new_xml.path))))
+        print(('*'*80))
         print("The result of print new_xml")
         print(new_xml)
-        print('*'*80)
+        print(('*'*80))
         print("The result of new_xml.to_HTML()")
-        print new_xml.to_HTML()
-        print('*'*80)
+        print(new_xml.to_HTML())
+        print(('*'*80))
         print("The result of new_xml.options")
-        print new_xml.options
-        print('*'*80)
+        print(new_xml.options)
+        print(('*'*80))
         print("The new_xml has been saved")
         new_xml.save()
 
@@ -1623,7 +1643,7 @@ def test_XMLLog():
     print('Log Contents Upon Creation: using print new_log')
     print(new_log)
     print('\n')
-    print('The New Log\'s path is %s'%new_log.path)
+    print(('The New Log\'s path is %s'%new_log.path))
     print('Add an entry using new_log.add_entry("This is a test")')
     new_log.add_entry("This is a test")
     print('Log Contents: using print new_log')
@@ -1641,11 +1661,11 @@ def test_log_addition():
     log_2=XMLLog()
     log_2.add_entry("I am Log Number 2")
     print('Log_1 Contents: using print')
-    print log_1
+    print(log_1)
     print('Log_2 Contents: using print')
-    print log_2
+    print(log_2)
     print('Log_1+Log_2 Contents: using print')
-    print log_1+log_2
+    print(log_1+log_2)
 
 def test_EndOfDayXMLLog():
     """ Script to test that daily logs work properly"""
@@ -1655,7 +1675,7 @@ def test_EndOfDayXMLLog():
     print('Log Contents Upon Creation: using print new_log')
     print(new_log)
     print('\n')
-    print('The New Log\'s path is %s'%new_log.path)
+    print(('The New Log\'s path is %s'%new_log.path))
     print('Add an entry using new_log.add_entry("This is a test")')
     new_log.add_entry("This is a test")
     print('Add an entry using new_log.add_entry_information(1,dictionary)')
@@ -1672,17 +1692,17 @@ def test_show():
     "Tests the show() method of the XMLLog class"
     os.chdir(TESTS_DIRECTORY)
     new_log=XMLLog()
-    print 'New Log Created...'
-    print 'The Result of Show() is:'
-    print '*'*80
+    print('New Log Created...')
+    print('The Result of Show() is:')
+    print('*'*80)
     entries=['1','2','Now I see!', 'Today was a good day']
     for entry in entries:
         new_log.add_entry(entry)
-    print new_log.show()
-    print '\n'*4
-    print 'The Result of XMLLog.show(xml) is:'
-    print '*'*80
-    print new_log.show('xml')
+    print(new_log.show())
+    print('\n'*4)
+    print('The Result of XMLLog.show(xml) is:')
+    print('*'*80)
+    print(new_log.show('xml'))
     #the window version
     new_log.show('wx')
 
@@ -1690,24 +1710,24 @@ def test_to_HTML():
     "Tests the to_HTML method of the XMLLog class"
     os.chdir(TESTS_DIRECTORY)
     new_log=XMLLog()
-    print 'New Log Created...'
-    print 'The Result of Show() is:'
-    print '*'*80
+    print('New Log Created...')
+    print('The Result of Show() is:')
+    print('*'*80)
     entries=['1','2','Now I see!', 'Today was a good day']
     for entry in entries:
         new_log.add_entry(entry)
-    print new_log.show()
-    print '\n'*4
-    print 'The Result of XMLLog.to_HTML(xml) is:'
-    print '*'*80
-    print new_log.to_HTML()
+    print(new_log.show())
+    print('\n'*4)
+    print('The Result of XMLLog.to_HTML(xml) is:')
+    print('*'*80)
+    print(new_log.to_HTML())
 
 def test_DataTable():
     """ Tests the DataTable Class"""
     test_data=[tuple([2*i+j for i in range(3)]) for j in range(5)]
     test_options={'data_table':test_data}
     new_table=DataTable(None,**test_options)
-    print new_table
+    print(new_table)
     test_dictionary={'Data_Description':{'x':'X Distance in microns.',
     'y':'y Distance in microns.','Notes':'This data is fake'},'Data':[[1,2],[2,3]]}
     test_dictionary_2={'Data_Description':{'x':'x Distance in microns.',
@@ -1720,13 +1740,13 @@ def test_DataTable():
     new_table_2=DataTable(**test_options_2)
     new_table_3=DataTable(**test_options_3)
     new_table_4=DataTable(**test_options_4)
-    print new_table_2
-    print new_table_3
-    print new_table_3.to_list('x')
-    print new_table_3.to_tuple_list(['x','y'])
-    print new_table_3.path
+    print(new_table_2)
+    print(new_table_3)
+    print(new_table_3.to_list('x'))
+    print(new_table_3.to_tuple_list(['x','y']))
+    print(new_table_3.path)
     new_table_3.get_header()
-    print new_table_4
+    print(new_table_4)
 
 def test_get_header():
     """ Test of the get header function of the DataTable Class """
@@ -1734,17 +1754,17 @@ def test_get_header():
     'y':'y Distance in microns.','Notes':'This data is fake'},'Data':[[1,2],[2,3]]}
     new_table=DataTable(**{'data_dictionary':test_dictionary})
     header=new_table.get_header()
-    print header
-    print new_table.get_header('xml')
+    print(header)
+    print(new_table.get_header('xml'))
     return True
 
 def test_open_measurement(sheet_name='Data_Table_021311_1.xml'):
     """Tests opening a sheet"""
     os.chdir(TESTS_DIRECTORY)
     measurement=DataTable(sheet_name)
-    print("The file path is {0}".format(measurement.path))
+    print(("The file path is {0}".format(measurement.path)))
     #print measurement
-    print measurement.get_header()
+    print(measurement.get_header())
     return True
 
 def test_get_attribute_names(sheet_name='Data_Table_021311_1.xml'):
@@ -1752,21 +1772,21 @@ def test_get_attribute_names(sheet_name='Data_Table_021311_1.xml'):
     os.chdir(TESTS_DIRECTORY)
     measurement=DataTable(sheet_name)
     names=measurement.get_attribute_names()
-    print 'the names list is:',names
-    print 'Using the names list to create a data table:'
-    print '*'*80+'\n'+'%s   %s  %s'%(names[0], names[1], names[2])+'\n'+'*'*80
+    print('the names list is:',names)
+    print('Using the names list to create a data table:')
+    print('*'*80+'\n'+'%s   %s  %s'%(names[0], names[1], names[2])+'\n'+'*'*80)
     for index,item in enumerate(measurement.to_list(names[0])):
         row=''
         for name in names:
             row=measurement.to_list(name)[index] +'\t'+row
-        print row
+        print(row)
 
 def test_FileRegister():
     "Tests the FileRegister Class"
     os.chdir(TESTS_DIRECTORY)
     new_file_register=FileRegister()
     new_file_register.add_tree(os.getcwd())
-    print new_file_register
+    print(new_file_register)
 
 def test_Metadata(File_Registry=None,Metadata_File=None):
     os.chdir(TESTS_DIRECTORY)
@@ -1774,7 +1794,7 @@ def test_Metadata(File_Registry=None,Metadata_File=None):
         File_Registry=os.path.join(TESTS_DIRECTORY,'Resource_Registry_20160222_001.xml')
     options={'file_registry':File_Registry}
     new_Metadata=Metadata(None,**options)
-    print new_Metadata.current_node_to_HTML()
+    print(new_Metadata.current_node_to_HTML())
     #new_Metadata.save()
 
 def metadata_robot(file_registry=None,metadata=None):
@@ -1791,21 +1811,21 @@ def metadata_robot(file_registry=None,metadata=None):
     else:
         metadata_file=Metadata(file_register,**{"metadata_file":metadata})
 
-    for URL in metadata_file.FileRegister.Id_dictionary.keys():
+    for URL in list(metadata_file.FileRegister.Id_dictionary.keys()):
         try:
             system_metadata=get_system_metadata(URL_to_path(URL))
             metadata_file.get_file_node(URL)
             metadata_file.remove_element_in_current_node('System_Metadata')
             metadata_file.add_element_to_current_node(XML_tag='System_Metadata',**system_metadata)
         except:
-            print 'No system metadata for %s'%URL
+            print('No system metadata for %s'%URL)
             pass
         try:
             file_metadata=get_file_metadata(URL_to_path(URL))
 
 
             new_file_info_node=metadata_file.document.createElement('File_Metadata')
-            for key,value in file_metadata.iteritems():
+            for key,value in file_metadata.items():
                 new_node=metadata_file.document.createElement(key)
                 new_text=metadata_file.document.createTextNode(str(value))
                 new_node.appendChild(new_text)
@@ -1814,24 +1834,24 @@ def metadata_robot(file_registry=None,metadata=None):
             metadata_file.add_element_to_current_node(node=new_file_info_node)
 
         except:
-            print 'no file data for %s'%URL
+            print('no file data for %s'%URL)
             pass
         try:
             image_metadata=get_image_metadata(URL_to_path(URL))
             if not image_metadata is None:
                 new_image_info_node=metadata_file.document.createElement('Image_Metadata')
-                for key,value in image_metadata.iteritems():
+                for key,value in image_metadata.items():
                     new_node=metadata_file.document.createElement(key)
-                    print key,str(value)
-                    print str(value) in ['','&#30;',chr(30)]
+                    print(key,str(value))
+                    print(str(value) in ['','&#30;',chr(30)])
                     new_text=metadata_file.document.createTextNode(str(value).replace(chr(30),''))
                     new_node.appendChild(new_text)
                     new_image_info_node.appendChild(new_node)
                 metadata_file.remove_element_in_current_node('Image_Metadata')
                 metadata_file.add_element_to_current_node(node=new_image_info_node)
-                print ' Image data'
+                print(' Image data')
         except:
-            print 'no image metadata for %s'%URL
+            print('no image metadata for %s'%URL)
 
             pass
         try:
@@ -1846,36 +1866,36 @@ def metadata_robot(file_registry=None,metadata=None):
 
 def test_InstrumentSheet():
     """ A test of the InstrumentSheet class"""
-    instrument_sheet=InstrumentSheet(os.path.join(TESTS_DIRECTORY,'../../../Instruments',INSTRUMENT_SHEETS[0]))
+    instrument_sheet=InstrumentSheet(os.path.join(PYMEASURE_ROOT,'Instruments',INSTRUMENT_SHEETS[0]))
     tags=instrument_sheet.document.getElementsByTagName('Instrument_Type')
     value=[node.childNodes[0].data for node in tags]
-    print value
-    print dir(instrument_sheet)
-    print instrument_sheet.get_image_path()
-    print instrument_sheet.commands
-    print str(instrument_sheet.to_HTML(os.path.join(XSLT_REPOSITORY,"DEFAULT_INSTRUMENT_STYLE.xsl")))
+    print(value)
+    print(dir(instrument_sheet))
+    print(instrument_sheet.get_image_path())
+    print(instrument_sheet.commands)
+    print(str(instrument_sheet.to_HTML()))
     instrument_sheet.show()
 def test_dictionary_to_xmlchunk(dictionary={"li":"My list Element"}):
     """Tests the function dictionary_to_xmlchunk"""
-    print("The input dicitionary is {0}".format(dictionary))
+    print(("The input dicitionary is {0}".format(dictionary)))
     output=dictionary_to_xmlchunk(dictionary)
-    print("The result of dictionary_to_xmlchunk is {0}".format(output))
+    print(("The result of dictionary_to_xmlchunk is {0}".format(output)))
 
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__=='__main__':
-    test_XMLModel()
+    #test_XMLModel()
     test_XMLLog()
-    test_log_addition()
-    test_EndOfDayXMLLog()
-    test_show()
-    test_to_HTML()
+    #test_log_addition()
+    #test_EndOfDayXMLLog()
+    #test_show()
+    #test_to_HTML()
     test_DataTable()
-    test_get_header()
-    test_open_measurement()
-    test_get_attribute_names()
+    #test_get_header()
+    #test_open_measurement()
+    #test_get_attribute_names()
     #test_FileRegister()
     #test_Metadata()
     #metadata_robot()
-    test_InstrumentSheet()
+    #test_InstrumentSheet()
     test_dictionary_to_xmlchunk()

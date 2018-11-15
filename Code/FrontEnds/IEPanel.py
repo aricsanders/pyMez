@@ -21,9 +21,9 @@ Help
 """
 # Todo: replace this with wx.html2.Webview
 import  wx
-# import wx.html2
-if wx.Platform == '__WXMSW__':
-    import wx.lib.iewin_old as iewin
+import wx.html2 as iewin
+#if wx.Platform == '__WXMSW__':
+#    import wx.lib.iewin_old as iewin
 wxID_CONTROL_PANEL=-1
 #----------------------------------------------------------------------
 # Todo: sizer does not respond in y direction
@@ -39,8 +39,8 @@ class IEPanel(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL)
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.ie = iewin.IEHtmlWindow(self)
-        self.ie.LoadString(overview)
+        self.ie = iewin.WebView.New(self)
+        self.ie.SetPage(overview,"")
 
         btn = wx.Button(self, -1, "Open", style=wx.BU_EXACTFIT)
         self.Bind(wx.EVT_BUTTON, self.OnOpenButton, btn)
@@ -76,7 +76,7 @@ class IEPanel(wx.Panel):
         btnSizer.Add(txt, 0, wx.CENTER|wx.ALL, 2)
         
         self.location = wx.ComboBox(
-                            self, -1, self.current, style=wx.CB_DROPDOWN|wx.PROCESS_ENTER
+                            self, -1, self.current, style=wx.CB_DROPDOWN
                             )
         
         self.Bind(wx.EVT_COMBOBOX, self.OnLocationSelect, self.location)
@@ -87,16 +87,16 @@ class IEPanel(wx.Panel):
         sizer.Add(btnSizer, 0, wx.EXPAND)
         sizer.Add(self.ie, 1, wx.EXPAND)
 
-        self.ie.LoadUrl(self.current)
+        self.ie.LoadURL(self.current)
         self.location.Append(self.current)
-        self.ie._set_AddressBar(True)
+        
         self.SetSizer(sizer)
         # Since this is a wx.Window we have to call Layout ourselves
         self.Bind(wx.EVT_SIZE, self.OnSize)
         
         
         #Added this to make address bar work correctly
-        self.Bind(iewin.EVT_NavigateComplete2, self.after_navigate)
+        self.Bind(iewin.EVT_WEBVIEW_LOADED, self.after_navigate)
 
         ## Hook up the event handlers for the IE window.  Using
         ## AddEventSink is how we tell the COM system to look in this
@@ -112,7 +112,7 @@ class IEPanel(wx.Panel):
         
     def write(self,string=None):
         """Writes test to the ie window"""
-        self.ie.LoadString(str(string))
+        self.ie.SetPage(str(string),"")
 
     def read(self):
         return self.ie.GetText()
@@ -129,13 +129,13 @@ class IEPanel(wx.Panel):
     def OnLocationSelect(self, evt):
         url = self.location.GetStringSelection()
         self.log.append('OnLocationSelect: %s\n' % url)
-        self.ie.Navigate(url)
+        self.ie.LoadURL(url)
         self.current=url
         self.UpdateLocation()
     def OnLocationKey(self, evt):
         if evt.GetKeyCode() == wx.WXK_RETURN:
             URL = self.location.GetValue()
-            self.ie.Navigate(URL)
+            self.ie.LoadURL(URL)
             self.current=URL
             self.UpdateLocation()
         else:
@@ -148,31 +148,34 @@ class IEPanel(wx.Panel):
 
     def OnOpenButton(self, event):
         
-        dlg = wx.FileDialog(self, 'Choose a file', '.', '', '*.*', wx.OPEN)
+        dlg = wx.FileDialog(self, 'Choose a file', '.', '', '*.*', wx.FD_OPEN)
         try:
             if dlg.ShowModal() == wx.ID_OK:
                 self.current = dlg.GetPath()
-                self.ie.Navigate(self.current)
+                self.ie.LoadURL(self.current)
 
         finally:
             dlg.Destroy()
         
    
     def OnHomeButton(self, event):
-        self.ie.GoHome()    ## ET Phone Home!
+        self.ie.LoadURL("https://aricsanders.github.io/")    ## ET Phone Home!
         
         self.UpdateLocation()
         
     def OnPrevPageButton(self, event):
-        self.ie.GoBack()
-        self.UpdateLocation()
+        try:
+            self.ie.GoBack()
+            self.UpdateLocation()
+        except:pass
+		
     def OnNextPageButton(self, event):
         self.ie.GoForward()
         self.UpdateLocation()
     def UpdateLocation(self):
         """Updates the location bar with up to self.history_max"""
         #There is something wierd about this I think it needs to check if it is busy
-        self.current=self.ie._get_LocationURL()
+        self.current=self.ie.GetCurrentURL()
         self.current=str(self.current)
         if not self.current in self.history:
             self.location.Append(self.current)
@@ -191,10 +194,11 @@ class IEPanel(wx.Panel):
         self.ie.Stop()
 
     def OnSearchPageButton(self, evt):
-        self.ie.GoSearch()
+        self.ie.LoadURL("https://www.google.com")
+        self.UpdateLocation()
 
     def OnRefreshPageButton(self, evt):
-        self.ie.Refresh(iewin.REFRESH_COMPLETELY)
+        self.ie.Reload()
 
 
     # Here are some of the event methods for the IE COM events.  See
@@ -256,7 +260,7 @@ events and etc. as would be expected from any other wx window.
 def test_panel():
     app = wx.App(False)
     frame = wx.Frame(None,size=wx.Size(900, 800))
-    panel=IEPanel(id=1, name=u'IEPanel',
+    panel=IEPanel(id=1, name='IEPanel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(200, 800),
               style=wx.TAB_TRAVERSAL)
     sizer=wx.BoxSizer()
@@ -273,10 +277,10 @@ def test_panel():
 if __name__ == '__main__':
     app = wx.App(False)
     frame = wx.Frame(None,size=wx.Size(900, 800))
-    panel=IEPanel(id=1, name=u'IEPanel',
+    panel=IEPanel(id=1, name='IEPanel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(200, 800),
               style=wx.TAB_TRAVERSAL)
-    sizer=wx.BoxSizer()
+    sizer=wx.BoxSizer(wx.VERTICAL)
     sizer.Add(panel,1,wx.EXPAND,2)
     frame.SetSizerAndFit(sizer)
     frame.SetSize(wx.Size(800, 600))

@@ -96,9 +96,9 @@ def standard_error_data_table(table_1,table_2,**options):
                    "expansion_factor":1,
                    'debug':False}
 
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         error_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         error_options[key]=value
     # Begin by checking at least one table has an error associated with it
     if error_options["table_1_uncertainty_type"] is None and error_options["table_2_uncertainty_type"] is None:
@@ -111,18 +111,18 @@ def standard_error_data_table(table_1,table_2,**options):
     # first find a unique list of the independent variable for both curves
     if error_options["debug"]:
         begin_time=datetime.datetime.utcnow()
-        print("started finding intersection of"
+        print(("started finding intersection of"
               "table_1[{0}] and table_2[{1}] at {2}".format(error_options["independent_variable_column_name"],
                                                            error_options["independent_variable_column_name"],
-                                                           begin_time))
+                                                           begin_time)))
     x_set_table_1=set(table_1[error_options["independent_variable_column_name"]])
     x_set_table_2=set(table_2[error_options["independent_variable_column_name"]])
     unique_x=sorted(list(x_set_table_1.intersection(x_set_table_2)))
     if error_options["debug"]:
         end_time=datetime.datetime.utcnow()
-        print("finished finding intersection at {0}".format(end_time))
+        print(("finished finding intersection at {0}".format(end_time)))
         delta_time=end_time-begin_time
-        print("it took {0} to find the intersection that contained {1} points".format(delta_time,len(unique_x)))
+        print(("it took {0} to find the intersection that contained {1} points".format(delta_time,len(unique_x))))
     if not unique_x:
         raise StandardErrorError("No points in the intersection, please either interpolate one data set or compare"
                                  "with another data set")
@@ -134,11 +134,11 @@ def standard_error_data_table(table_1,table_2,**options):
     # we choose the row by using unique_x
     for x_value in unique_x:
         # here if there are multiple values for x_value we ignore them
-        table_1_row=filter(lambda x: x[x_column_index_table_1]==x_value,table_1.data)[0]
+        table_1_row=list(filter(lambda x: x[x_column_index_table_1]==x_value,table_1.data))[0]
         # we begin a new_row
-        table_2_rows=filter(lambda x: x[x_column_index_table_2]==x_value,table_2.data)
+        table_2_rows=[x for x in table_2.data if x[x_column_index_table_2]==x_value]
         if error_options["debug"]:
-            print("{0} is {1}".format("table_2_rows",table_2_rows))
+            print(("{0} is {1}".format("table_2_rows",table_2_rows)))
         for table_2_row in table_2_rows:
             new_row=[x_value]
             for column_index,column_name in enumerate(error_options["value_column_names"]):
@@ -187,8 +187,8 @@ def standard_error_data_table(table_1,table_2,**options):
         standard_error_column_names.append("SE"+column_name)
     error_options["column_names"]=standard_error_column_names[:]
     if error_options["debug"]:
-        print("{0} is {1}".format("standard_error_column_names",standard_error_column_names))
-        print("{0} is {1}".format("out_data",out_data))
+        print(("{0} is {1}".format("standard_error_column_names",standard_error_column_names)))
+        print(("{0} is {1}".format("out_data",out_data)))
     error_options["column_types"]=['float' for column in  standard_error_column_names[:]]
     error_options["data"]=out_data[:]
     out_table=StandardErrorModel(None,**error_options)
@@ -206,11 +206,11 @@ def test_standard_error(test_list=None):
     second_value,second_error]"""
     if test_list is None:
         [first_value,first_error,second_value,second_error]=[2.75,.1,3.45,.2]
-    print("The 1st value is {0}, with an uncertainty of {1}".format(first_value,first_error))
-    print("The 2nd value is {0}, with an uncertainty of {1}".format(second_value, second_error))
-    print("The standard_error is {0}".format(standard_error(first_value,
+    print(("The 1st value is {0}, with an uncertainty of {1}".format(first_value,first_error)))
+    print(("The 2nd value is {0}, with an uncertainty of {1}".format(second_value, second_error)))
+    print(("The standard_error is {0}".format(standard_error(first_value,
                                                             first_error,
-                                                            second_value,second_error)))
+                                                            second_value,second_error))))
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':

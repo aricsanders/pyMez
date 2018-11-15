@@ -41,7 +41,7 @@ def alias(object):
     for attribute in dir(object):
         if not re.match('_',attribute):
             try:
-                if type(eval('object.%s'%attribute)) is types.MethodType:
+                if isinstance(eval('object.%s'%attribute), types.MethodType):
                     old_names.append(attribute)
             except:pass
     # If they are camelCase make them all lower with underscores or vice versa
@@ -91,14 +91,14 @@ class MyTestClass():
 #-------------------------------------------------------------------------------
 # Module Scripts
 def test_alias():
-    print " Before making the instance the attributes defined are:"
+    print(" Before making the instance the attributes defined are:")
     for attribute in dir(MyTestClass):
-        print 'Attribute Name: %s'%(attribute)
+        print('Attribute Name: %s'%(attribute))
     new=MyTestClass()
  
-    print " After making the instance the attributes defined are:"
+    print(" After making the instance the attributes defined are:")
     for attribute in dir(new):
-        print 'Attribute Name: %s'%(attribute)
+        print('Attribute Name: %s'%(attribute))
 #-------------------------------------------------------------------------------
 # Module Runner
 

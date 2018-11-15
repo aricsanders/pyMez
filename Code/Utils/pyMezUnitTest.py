@@ -71,7 +71,7 @@ class TestXMLModels(unittest.TestCase):
     def setUp(self):
         "Sets up the unit test"
         self.module_tests=[]
-        for key,value in globals().copy()["pyMez"].__dict__.iteritems():
+        for key,value in globals().copy()["pyMez"].__dict__.items():
             if re.match("test_",key):
                 self.module_tests.append(key)
 

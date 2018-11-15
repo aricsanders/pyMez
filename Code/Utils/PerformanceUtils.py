@@ -34,11 +34,11 @@ def timer(function):
         start_time=datetime.datetime.now()
         result=function(*args,**keywordargs)
         stop_time=datetime.datetime.now()
-        print("The function {0} started at {1} and ended at {2}".format(function.__name__,
+        print(("The function {0} started at {1} and ended at {2}".format(function.__name__,
                                                                         start_time,
-                                                                        stop_time))
+                                                                        stop_time)))
         diff=stop_time-start_time
-        print("It took {0} seconds to run".format(diff.total_seconds()))
+        print(("It took {0} seconds to run".format(diff.total_seconds())))
         return result
 
     return timed

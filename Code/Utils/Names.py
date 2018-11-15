@@ -124,58 +124,58 @@ def test_module():
     """ Tests the module by writing files in the current working directory """
     base_name='Test_File'
     number_files=20
-    print 'The result of get_filename_iterator() is %s'%get_filename_iterator(base_name,extension='txt')
-    print '-'*80
-    print '\n'
-    print 'The current working diretory is %s \n'%os.getcwd()
+    print('The result of get_filename_iterator() is %s'%get_filename_iterator(base_name,extension='txt'))
+    print('-'*80)
+    print('\n')
+    print('The current working diretory is %s \n'%os.getcwd())
     for i in range(number_files):
         try:
             new_name=base_name+"_"+get_filename_iterator(base_name,extension='txt')+'.txt'
             f=open(new_name,'w')
             f.write(str(i))
             f.close()
-            print "Wrote New File %s"%new_name
+            print("Wrote New File %s"%new_name)
         except:
             raise
-            print 'failed'
-    print "End of test"
-    print '\n'
-    print '-'*80
+            print('failed')
+    print("End of test")
+    print('\n')
+    print('-'*80)
             
 def clean_up_test_module():
     """ Deletes the files writen by test_module() """
     base_name='Test_File'
     number_files=int(get_filename_iterator(base_name,extension='txt'))-1
-    print "The number of files is {:0d}".format(number_files)
-    print '\n\nThe result of get_filename_iterator(base_name,os.getcwd(),"txt") is %s'%get_filename_iterator(base_name,extension='txt')
-    print '-'*80
-    print 'The current working diretory is %s \n'%os.getcwd()
+    print("The number of files is {:0d}".format(number_files))
+    print('\n\nThe result of get_filename_iterator(base_name,os.getcwd(),"txt") is %s'%get_filename_iterator(base_name,extension='txt'))
+    print('-'*80)
+    print('The current working diretory is %s \n'%os.getcwd())
     for i in range(number_files):
         try:
             new_name=base_name+'_'+"{:03d}".format(i+1)+'.txt'
             os.remove(new_name)
-            print "Removed File %s"%new_name
+            print("Removed File %s"%new_name)
             
         except:
             raise
-            print 'failed'
-    print "End of cleanup"
-    print '\n'
-    print '-'*80
+            print('failed')
+    print("End of cleanup")
+    print('\n')
+    print('-'*80)
 def test_auto_name():
     """Tests the auto name function"""
-    print("The result of auto_name('Test','AutoName',None,'txt) is {0}".format(auto_name('Test',
+    print(("The result of auto_name('Test','AutoName',None,'txt) is {0}".format(auto_name('Test',
                                                                                          'AutoName',
-                                                                                         None,'txt')))
+                                                                                         None,'txt'))))
 
 def test_filename_change_iterator():
     """Tests the filename decrement and increment functions"""
     name=auto_name('Test','AutoName',None,'txt')
-    print("The original name is {0}".format(name))
-    print("-"*80)
-    print("The result of filename_increment is {0}".format(filename_increment(name)))
-    print("-"*80)
-    print("The result of filename_decrement is {0}".format(filename_decrement(name)))
+    print(("The original name is {0}".format(name)))
+    print(("-"*80))
+    print(("The result of filename_increment is {0}".format(filename_increment(name))))
+    print(("-"*80))
+    print(("The result of filename_decrement is {0}".format(filename_decrement(name))))
 
 #-------------------------------------------------------------------------------
 # Module Runner

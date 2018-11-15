@@ -41,14 +41,14 @@ try:
     import Code.InstrumentControl.Instruments
     import Code.DataHandlers.XMLModels
 except:
-    print "This module requires pyMez.Code to be on sys.path"
+    print("This module requires pyMez.Code to be on sys.path")
     raise
 
 try: 
     from scipy import linspace,stats
 except:
-    print """ This module uses scipy linspace, if scipy is not available you must
-    define your own linspace function under this comment"""
+    print(""" This module uses scipy linspace, if scipy is not available you must
+    define your own linspace function under this comment""")
     raise
 #-------------------------------------------------------------------------------
 # Module Constants
@@ -72,7 +72,7 @@ class KeithleyIV():
         try:
             self.instrument=Code.InstrumentControl.Instruments.VisaInstrument('Keithley')
         except:
-            print 'Entering Fake Mode'
+            print('Entering Fake Mode')
             pass
         self.notes=''
         self.name=''
@@ -107,17 +107,17 @@ class KeithleyIV():
          and a boolen that determines if all sweeps begin and end on zero"""
          if not bowtie:
             try:
-                if (type(start)!=float or type(stop)!=float or type(number_points)!=float):
-                    [start,stop,number_points]=map(lambda x: float(x),[start,stop,number_points])
+                if (not isinstance(start, float) or not isinstance(stop, float) or not isinstance(number_points, float)):
+                    [start,stop,number_points]=[float(x) for x in [start,stop,number_points]]
                 voltage_array=linspace(start,stop,number_points)
                 voltage_list=voltage_array.tolist()
                 return voltage_list
             except:
-                print "make_voltage_list failed"
+                print("make_voltage_list failed")
          elif bowtie:
             try:
-                if (type(start)!=float or type(stop)!=float or type(number_points)!=float):
-                    [start,stop,number_points]=map(lambda x: float(x),[start,stop,number_points])
+                if (not isinstance(start, float) or not isinstance(stop, float) or not isinstance(number_points, float)):
+                    [start,stop,number_points]=[float(x) for x in [start,stop,number_points]]
                 array_1=linspace(float(0),start,number_points)
                 list_1=array_1.tolist()
                 array_2=linspace(float(0),stop,number_points)
@@ -131,7 +131,7 @@ class KeithleyIV():
                 return voltage_list 
             except:
                 raise
-                print "make_voltage_list failed"    
+                print("make_voltage_list failed")    
     def take_IV(self,voltage_list,auto_range=True,settle_time=.02):
         """ Method for taking an IV"""
         self.data_list=[]
@@ -221,21 +221,21 @@ class LSNACalibration():
 
                     }
         self.options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.options[key] = value
         # if the user passes a string then create an instrument, else assume it is some visa type with write and query
 
         if self.options["diagnostic_mode"]:
             self.vna = Code.InstrumentControl.FakeInstrument(self.options["vna"])
-        elif type(self.options["vna"]) is StringType:
+        elif isinstance(self.options["vna"], StringType):
             self.vna=Code.InstrumentControl.VNA(self.options["vna"])
         else:
             self.vna=self.options["vna"]
         if self.options["diagnostic_mode"]:
             self.pm=Code.InstrumentControl.FakeInstrument(self.options["power_meter"])
-        elif type(self.options["power_meter"]) is StringType:
+        elif isinstance(self.options["power_meter"], StringType):
             self.pm=Code.InstrumentControl.VisaInstrument(self.options["power_meter"])
         else:
             self.pm=self.options["power_meter"]
@@ -260,8 +260,8 @@ class LSNACalibration():
 def test_KeithleyIV():
     """ Tests the keithleyIV class"""
     experiment=KeithleyIV()
-    print experiment.make_voltage_list(-1,1,100)
-    print experiment.make_voltage_list(-1,1,100,True)
+    print(experiment.make_voltage_list(-1,1,100))
+    print(experiment.make_voltage_list(-1,1,100,True))
     fake_list=experiment.make_voltage_list(-1,1,10,True)
     for index,voltage in enumerate(fake_list):
         

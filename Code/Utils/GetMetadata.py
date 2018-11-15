@@ -33,7 +33,7 @@ if os.name=='nt':
         from win32com import storagecon     # storage constants
         
     except:
-        print 'Error in importing pythoncom, win32com. Check that pywintypes27 snf pythoncom27 dlls are in win32/lib'
+        print('Error in importing pythoncom, win32com. Check that pywintypes27 snf pythoncom27 dlls are in win32/lib')
         pass
 # Try to import EXIF for Jpeg and Tiff stuff
 try:
@@ -78,7 +78,7 @@ def get_stats(path):
 
             pssread = stg.QueryInterface(pythoncom.IID_IPropertySetStorage)
         except:
-            print "No extended storage"
+            print("No extended storage")
         else:
             try: 
                 ps=pssread.Open(pythoncom.FMTID_SummaryInformation,
@@ -135,7 +135,7 @@ def get_system_metadata(path):
     """ Returns a dictionary of the data found with os.stat """
     metadata_dictionary=dict([(Field,os.stat(path)[index]) for index,Field in \
     enumerate(OS_STAT_FIELDS)])
-    for key,value in metadata_dictionary.iteritems():
+    for key,value in metadata_dictionary.items():
         if 'time' in key:
             metadata_dictionary[key]=\
             datetime.datetime.fromtimestamp(value).isoformat()
@@ -143,7 +143,7 @@ def get_system_metadata(path):
 def get_file_metadata(path):
     """ Returns Windows File System information using com"""
     metadata_dictionary={}
-    for key,value in get_stats(path).iteritems():
+    for key,value in get_stats(path).items():
         metadata_dictionary[key]=value
     return metadata_dictionary
 def get_image_metadata(path):
@@ -152,7 +152,7 @@ def get_image_metadata(path):
     metadata_dictionary={}
     if file_extension in IMAGE_FILE_EXTENSIONS and PIL_AVAILABLE:
         im=Image.open(path)
-        for key,value in im.info.iteritems():
+        for key,value in im.info.items():
             metadata_dictionary[key]=value
         del(im)
         if EXIF_AVAILABLE:
@@ -160,7 +160,7 @@ def get_image_metadata(path):
                 f=open(path,'rb')
                 EXIF_dictionary=EXIF.process_file(f)
                 
-                for key,value in EXIF_dictionary.iteritems():
+                for key,value in EXIF_dictionary.items():
                     metadata_dictionary[key.replace(' ','_')]=value 
             except: pass              
         return metadata_dictionary
@@ -192,20 +192,20 @@ def get_metadata(path):
     # First we get the easy stuff --- Do the formating later
     metadata_dictionary=dict([(Field,os.stat(path)[index]) for index,Field in \
     enumerate(OS_STAT_FIELDS)])
-    for key,value in metadata_dictionary.iteritems():
+    for key,value in metadata_dictionary.items():
         if 'time' in key:
             metadata_dictionary[key]=\
             datetime.datetime.fromtimestamp(value).isoformat()
     # Now for the detailed stuff
     try: 
-        for key,value in get_stats(path).iteritems():
+        for key,value in get_stats(path).items():
             metadata_dictionary[key]=value
     except: pass
     # now the image stuff
     file_extension=path.split('.')[-1].lower()
     if file_extension in IMAGE_FILE_EXTENSIONS and PIL_AVAILABLE:
         im=Image.open(path)
-        for key,value in im.info.iteritems():
+        for key,value in im.info.items():
             metadata_dictionary[key]=value
         del(im)
                   
@@ -217,15 +217,15 @@ def get_metadata(path):
 def test_get_metadata(test_file_path='Data_Table_021311_1.xml'):
     """ Script to test the metadata function """
     os.chdir(TESTS_DIRECTORY)
-    print 'The Test Path is: %s'%os.path.join(TESTS_DIRECTORY,test_file_path)
-    print '-'*80
-    for key,value in get_metadata(test_file_path).iteritems():
-        print '%s : %s'%(key,value)
+    print('The Test Path is: %s'%os.path.join(TESTS_DIRECTORY,test_file_path))
+    print('-'*80)
+    for key,value in get_metadata(test_file_path).items():
+        print('%s : %s'%(key,value))
         
 def test_get_python_metadata():
     os.chdir(TESTS_DIRECTORY)
     MD=get_python_metadata(os.path.join(TESTS_DIRECTORY,'test_metadata.py'))
-    print MD
+    print(MD)
     # for key,value in MD.iteritems():
     #     print '%s : %s'%(key,value)
             

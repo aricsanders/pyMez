@@ -47,14 +47,14 @@ try:
     from PIL import Image
     PIL_AVAILABLE=1
 except:
-    print 'PIL is required for some camera operations'
+    print('PIL is required for some camera operations')
     PIL_AVAILABLE=0
 try:
     import visa,pyvisa
 except:
-    print "To control comm and gpib instruments this module requires the package PyVisa"
-    print " Please download it at  http://pyvisa.sourceforge.net/ "
-    print " Or add it to the Python Path"
+    print("To control comm and gpib instruments this module requires the package PyVisa")
+    print(" Please download it at  http://pyvisa.sourceforge.net/ ")
+    print(" Or add it to the Python Path")
     pass 
 try:
     #raise
@@ -67,7 +67,7 @@ except:
     # If the import of DataHandlers Does not work 
     class  InstrumentSheet():pass
     DATA_SHEETS=0
-    print "Can't Find MySelf"
+    print("Can't Find MySelf")
     pass
 
 try:
@@ -116,14 +116,17 @@ def whos_there():
     gpib_resources=[]
     gpib_idn_dictionary={}
     for instrument in resource_list:
-        if re.search("GPIB",instrument,re.IGNORECASE):
-            resource=resource_manager.open_resource(instrument)
-            gpib_resources.append(resource)
-            idn=resource.query("*IDN?")
-            gpib_idn_dictionary[instrument]=idn
+        if re.search("GPIB|USB",instrument,re.IGNORECASE):
+            try:
+                resource=resource_manager.open_resource(instrument)
+                gpib_resources.append(resource)
+                idn=resource.query("*IDN?")
+                gpib_idn_dictionary[instrument]=idn
+            except:
+                print("{0} did not respond to idn query".format(instrument))
     if gpib_resources:
-        for instrument_name,idn in gpib_idn_dictionary.iteritems():
-            print("{0} is at address {1}".format(idn,instrument_name))
+        for instrument_name,idn in gpib_idn_dictionary.items():
+            print(("{0} is at address {1}".format(idn,instrument_name)))
         #return gpib_idn_dictionary
     else:
         print("There are no GPIB resources available")
@@ -167,7 +170,7 @@ def determine_instrument_type(object):
         return determine_instrument_type_from_string(object)
     # If it is a object or class look around in normal names looking for a string
     # to process
-    elif type(object)==InstanceType or ClassType:
+    elif isinstance(object, InstanceType) or ClassType:
         for attribute in attritbute_names:
             try:
                 if attribute in dir(object):
@@ -184,7 +187,7 @@ def determine_instrument_type(object):
 def find_description(identifier,output='path',directory=None):
     """ Finds an instrument description in pyMez/Instruments given an identifier, 
     outputs a path or the file. Right now this outputs the first sheet that matches the identifier"""
-    if type(identifier) in StringTypes:
+    if isinstance(identifier,str):
         # Now read in all the Instrument sheets and look for a match
         if directory is None:
             instrument_folder=os.path.join(PYMEASURE_ROOT,'Instruments')
@@ -234,9 +237,9 @@ class FakeInstrument(InstrumentSheet):
         defaults = {"state_directory": os.getcwd(),
                     "instrument_description_directory": os.path.join(PYMEASURE_ROOT, 'Instruments')}
         self.options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.options[key] = value
         # First we try to look up the description and get info from it
         if DATA_SHEETS:
@@ -310,11 +313,11 @@ class FakeInstrument(InstrumentSheet):
             else:
                 self.state_buffer.pop(1)
                 self.state_buffer.insert(-1, self.get_state())
-            for state_command, value in state_dictionary.iteritems():
+            for state_command, value in state_dictionary.items():
                 self.write(state_command + ' ' + str(value))
             self.current_state = self.get_state()
         if state_table:
-            if "Index" in state_table[0].keys():
+            if "Index" in list(state_table[0].keys()):
                 state_table = sorted(state_table, key=lambda x: x["Index"])
             if len(self.state_buffer) + 1 < self.STATE_BUFFER_MAX_LENGTH:
                 self.state_buffer.append(self.get_state())
@@ -337,12 +340,12 @@ class FakeInstrument(InstrumentSheet):
             if state_query_dictionary is None or len(state_query_dictionary) == 0:
                 state_query_dictionary = self.DEFAULT_STATE_QUERY_DICTIONARY
             state = dict([(state_command, self.query(str(query)).replace("\n", "")) for state_command, query
-                          in state_query_dictionary.iteritems()])
+                          in state_query_dictionary.items()])
             return state
         else:
             # a state_query_table is a list of dictionaries, each row has at least a Set and Query key but could
             # have an Index key that denotes order
-            if "Index" in state_query_table[0].keys():
+            if "Index" in list(state_query_table[0].keys()):
                 state_query_table = sorted(state_query_table, key=lambda x: int(x["Index"]))
                 state = []
                 for state_row in state_query_table:
@@ -410,9 +413,9 @@ class VisaInstrument(InstrumentSheet):
         defaults={"state_directory":os.getcwd(),
                   "instrument_description_directory":os.path.join(PYMEASURE_ROOT,'Instruments')}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # First we try to look up the description and get info from it
         if DATA_SHEETS:
@@ -479,11 +482,11 @@ class VisaInstrument(InstrumentSheet):
             else:
                 self.state_buffer.pop(1)
                 self.state_buffer.insert(-1,self.get_state())
-            for state_command,value in state_dictionary.iteritems():
+            for state_command,value in state_dictionary.items():
                 self.write(state_command+' '+str(value))
             self.current_state=self.get_state()
         if state_table:
-            if "Index" in state_table[0].keys():
+            if "Index" in list(state_table[0].keys()):
                 state_table=sorted(state_table,key=lambda x:x["Index"])
             if len(self.state_buffer)+1<self.STATE_BUFFER_MAX_LENGTH:
                 self.state_buffer.append(self.get_state())
@@ -506,12 +509,12 @@ class VisaInstrument(InstrumentSheet):
             if state_query_dictionary is None or len(state_query_dictionary)==0 :
                 state_query_dictionary=self.DEFAULT_STATE_QUERY_DICTIONARY
             state=dict([(state_command,self.query(str(query)).replace("\n","")) for state_command,query
-            in state_query_dictionary.iteritems()])
+            in state_query_dictionary.items()])
             return state
         else:
             # a state_query_table is a list of dictionaries, each row has at least a Set and Query key but could
             # have an Index key that denotes order
-            if "Index" in state_query_table[0].keys():
+            if "Index" in list(state_query_table[0].keys()):
                 state_query_table=sorted(state_query_table,key=lambda x:int(x["Index"]))
                 state=[]
                 for state_row in state_query_table:
@@ -574,16 +577,15 @@ class VNA(VisaInstrument):
     """Control class for a linear VNA.
     The .measure_sparameters ans .measure_switch_terms return a S2PV1
     class that can be saved, printed or have a simple plot using show(). The attribute frequency_list
-    stores the frequency points as Hz. Class has been tested on ZVA/PNA but requires an extra text parsing step for
-    the vector star."""
+    stores the frequency points as Hz."""
 
     def __init__(self, resource_name=None, **options):
         """Initializes the E8631A control class"""
         defaults = {"state_directory": os.getcwd(), "frequency_units": "Hz"}
         self.options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.options[key] = value
         VisaInstrument.__init__(self, resource_name, **self.options)
         if self.fake_mode:
@@ -611,8 +613,8 @@ class VNA(VisaInstrument):
                 number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
                 logspace_start = np.log10(start)
                 logspace_stop = np.log10(stop)
-                self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
-                                                                                     num=number_points, base=10).tolist())
+                self.frequency_list = [round(x, ndigits=3) for x in np.logspace(logspace_start, logspace_stop,
+                                                                                     num=number_points, base=10).tolist()]
             elif re.search("SEG", self.sweep_type, re.IGNORECASE):
                 number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
                 for i in range(number_segments):
@@ -683,9 +685,9 @@ class VNA(VisaInstrument):
          This method will cause an error if the traces are already defined"""
         defaults = {"port1": 1,"port2":2, "b_name_list": ["A", "B", "C", "D"]}
         initialize_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             initialize_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             initialize_options[key] = value
         self.write("DISPlay:WINDow1:STATE ON")
         scattering_parameter_names=["S11","S12","S21","S22"]
@@ -739,11 +741,11 @@ class VNA(VisaInstrument):
 
     def initialize(self, **options):
         """Intializes the system"""
-        defaults = {"reset": True}
+        defaults = {"reset": False}
         initialize_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             initialize_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             initialize_options[key] = value
         if initialize_options["reset"]:
             self.write("SYST:FPRESET")
@@ -768,8 +770,8 @@ class VNA(VisaInstrument):
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
             logspace_start = np.log10(start)
             logspace_stop = np.log10(stop)
-            self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
-                                                                                 num=number_points, base=10).tolist())
+            self.frequency_list = [round(x, ndigits=3) for x in np.logspace(logspace_start, logspace_stop,
+                                                                                 num=number_points, base=10).tolist()]
         elif re.search("SEG", self.sweep_type, re.IGNORECASE):
             number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
             for i in range(number_segments):
@@ -816,7 +818,7 @@ class VNA(VisaInstrument):
         """Sets the frequency units of the class, all values are still written to the VNA
         as Hz and the attrbiute frequncy_list is in Hz,
         however all commands that deal with sweeps and measurements will be in units"""
-        for unit in VNA_FREQUENCY_UNIT_MULTIPLIERS.keys():
+        for unit in list(VNA_FREQUENCY_UNIT_MULTIPLIERS.keys()):
             if re.match(unit, frequency_units, re.IGNORECASE):
                 self.frequency_units = unit
 
@@ -831,7 +833,7 @@ class VNA(VisaInstrument):
             stop = start
             number_points = 1
         # fix the frequency units
-        for unit in VNA_FREQUENCY_UNIT_MULTIPLIERS.keys():
+        for unit in list(VNA_FREQUENCY_UNIT_MULTIPLIERS.keys()):
             if re.match(unit, frequency_units, re.IGNORECASE):
                 start = start * VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
                 stop = stop * VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
@@ -866,7 +868,7 @@ class VNA(VisaInstrument):
         # This routine is broken
 
         number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
-        print("{0} is {1}".format("number_segments", number_segments))
+        print(("{0} is {1}".format("number_segments", number_segments)))
         if len(self.frequency_table) < number_segments:
             difference = number_segments - len(self.frequency_table)
             max_segment = number_segments
@@ -877,12 +879,12 @@ class VNA(VisaInstrument):
         elif len(self.frequency_table) > number_segments:
             difference = len(self.frequency_table) - number_segments
             max_segment = number_segments + 1
-            print("{0} is {1}".format("difference", difference))
+            print(("{0} is {1}".format("difference", difference)))
             while (difference != 0):
                 self.write("SENS:SEGM{0}:ADD".format(max_segment))
                 max_segment += 1
                 difference -= 1
-                print("{0} is {1}".format("difference", difference))
+                print(("{0} is {1}".format("difference", difference)))
         else:
             pass
 
@@ -918,7 +920,7 @@ class VNA(VisaInstrument):
             stop = start
             number_points = 1
 
-        for unit in VNA_FREQUENCY_UNIT_MULTIPLIERS.keys():
+        for unit in list(VNA_FREQUENCY_UNIT_MULTIPLIERS.keys()):
             if re.match(unit, frequency_units, re.IGNORECASE):
                 start = start * VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
                 stop = stop * VNA_FREQUENCY_UNIT_MULTIPLIERS[unit]
@@ -935,12 +937,11 @@ class VNA(VisaInstrument):
             self.write('SENS:SWE:TYPE LOG')
             logspace_start = np.log10(start)
             logspace_stop = np.log10(stop)
-            self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
-                                                                                 num=number_points, base=10).tolist())
+            self.frequency_list = [round(x, ndigits=3) for x in np.logspace(logspace_start, logspace_stop,
+                                                                                 num=number_points, base=10).tolist()]
         else:
             self.write('SENS:SWE:TYPE LIN')
-            self.frequency_list = map(lambda x: round(x, ndigits=3),
-                                      np.linspace(start, stop, number_points).tolist())
+            self.frequency_list = [round(x, ndigits=3) for x in np.linspace(start, stop, number_points).tolist()]
         self.write("SENS:FREQ:START {0}".format(start))
         self.write("SENS:FREQ:STOP {0}".format(stop))
         self.write("SENS:SWE:POIN {0}".format(number_points))
@@ -966,9 +967,9 @@ class VNA(VisaInstrument):
         set the option order= "PORT"""
         defaults = {"view_trace": True,"initialize":True,"order":"FR"}
         self.measure_switch_term_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.measure_switch_term_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.measure_switch_term_options[key] = value
         # this resets the traces to be based on swith terms
         # Set VS to be remotely triggered by GPIB
@@ -1019,7 +1020,7 @@ class VNA(VisaInstrument):
                            real_reverse[index], imaginary_reverse[index],
                            0, 0,
                            0, 0]
-                new_row = map(lambda x: float(x), new_row)
+                new_row = [float(x) for x in new_row]
                 switch_data.append(new_row)
         elif re.search("p",self.measure_switch_term_options["order"],re.IGNORECASE):
             for index, frequency in enumerate(self.frequency_list[:]):
@@ -1028,7 +1029,7 @@ class VNA(VisaInstrument):
                            real_foward[index], imaginary_forward[index],
                            0, 0,
                            0, 0]
-                new_row = map(lambda x: float(x), new_row)
+                new_row = [float(x) for x in new_row]
                 switch_data.append(new_row)
         option_line = "# Hz S RI R 50"
         # add some options here about auto saving
@@ -1041,9 +1042,9 @@ class VNA(VisaInstrument):
         """Triggers a single sparameter measurement for all 4 parameters and returns a SP2V1 object"""
         defaults = {"trigger": "single"}
         self.measure_sparameter_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.measure_sparameter_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.measure_sparameter_options[key] = value
         if self.measure_sparameter_options["trigger"] in ["single"]:
             self.write("INITiate:CONTinuous OFF")
@@ -1078,7 +1079,14 @@ class VNA(VisaInstrument):
         while self.is_busy():
             time.sleep(.01)
         s22_string = self.query('CALC:DATA? SDATA')
-        # String Parsing
+
+        # String Parsing, Vector star specific, but no harm to Keysight, Rohde
+        s11_string=re.sub("#\d+\n","",s11_string)
+        s12_string=re.sub("#\d+\n","",s12_string)
+        s21_string=re.sub("#\d+\n","",s21_string)
+        s22_string=re.sub("#\d+\n","",s22_string)
+
+
         s11_list = s11_string.replace("\n", "").split(",")
         s12_list = s12_string.replace("\n", "").split(",")
         s21_list = s21_string.replace("\n", "").split(",")
@@ -1099,7 +1107,7 @@ class VNA(VisaInstrument):
                        reS21[index], imS21[index],
                        reS12[index], imS12[index],
                        reS22[index], imS22[index]]
-            new_row = map(lambda x: float(x), new_row)
+            new_row = [float(x) for x in new_row]
             sparameter_data.append(new_row)
         option_line = "# Hz S RI R 50"
         # add some options here about auto saving
@@ -1107,13 +1115,14 @@ class VNA(VisaInstrument):
         s2p = S2PV1(None, option_line=option_line, data=sparameter_data)
         s2p.change_frequency_units(self.frequency_units)
         return s2p
+
     def initialize_w2p(self,**options):
         """Initializes the system for w2p acquisition"""
-        defaults = {"reset": True, "port1": 1,"port2":2, "b_name_list": ["A", "B", "C", "D"]}
+        defaults = {"reset": False, "port1": 1,"port2":2, "b_name_list": ["A", "B", "C", "D"]}
         initialize_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             initialize_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             initialize_options[key] = value
         if initialize_options["reset"]:
             self.write("SYST:FPRESET")
@@ -1162,11 +1171,11 @@ class VNA(VisaInstrument):
 
     def initialize_w1p(self, **options):
         """Initializes the system for w1p acquisition, default works for ZVA"""
-        defaults = {"reset": True, "port": 1, "b_name_list": ["A", "B", "C", "D"],"source_port":1}
+        defaults = {"reset": False, "port": 1, "b_name_list": ["A", "B", "C", "D"],"source_port":1}
         initialize_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             initialize_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             initialize_options[key] = value
         if initialize_options["reset"]:
             self.write("SYST:FPRESET")
@@ -1189,8 +1198,8 @@ class VNA(VisaInstrument):
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
             logspace_start = np.log10(start)
             logspace_stop = np.log10(stop)
-            self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
-                                                                                 num=number_points, base=10).tolist())
+            self.frequency_list = [round(x, ndigits=3) for x in np.logspace(logspace_start, logspace_stop,
+                                                                                 num=number_points, base=10).tolist()]
         elif re.search("SEG", self.sweep_type, re.IGNORECASE):
             number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
             for i in range(number_segments):
@@ -1223,8 +1232,8 @@ class VNA(VisaInstrument):
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
             logspace_start = np.log10(start)
             logspace_stop = np.log10(stop)
-            self.frequency_list = map(lambda x: round(x, ndigits=3), np.logspace(logspace_start, logspace_stop,
-                                                                                 num=number_points, base=10).tolist())
+            self.frequency_list = [round(x, ndigits=3) for x in np.logspace(logspace_start, logspace_stop,
+                                                                                 num=number_points, base=10).tolist()]
         elif re.search("SEG", self.sweep_type, re.IGNORECASE):
             number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
             for i in range(number_segments):
@@ -1251,9 +1260,9 @@ class VNA(VisaInstrument):
                     "b_name_list": ["A", "B", "C", "D"],
                     "w1p_options": None}
         self.measure_w1p_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.measure_w1p_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.measure_w1p_options[key] = value
         if self.measure_w1p_options["trigger"] in ["single"]:
             self.write("INITiate:CONTinuous OFF")
@@ -1267,7 +1276,7 @@ class VNA(VisaInstrument):
         # Set the format to ascii and set up sweep definitions
         self.write('FORM:ASC,0')
         # First get the A and Blists
-        self.write('CALC:PAR:SEL A{0}_D{0}'.format(self.measure_w1p_options["port"]))
+        self.write('CALC:PAR:SEL "A{0}_D{0}"'.format(self.measure_w1p_options["port"]))
         self.write('CALC:FORM MLIN')
         while self.is_busy():
             time.sleep(.01)
@@ -1291,7 +1300,7 @@ class VNA(VisaInstrument):
             new_row = [frequency / 10. ** 9,
                        re_a[index], im_a[index],
                        re_b[index], im_b[index]]
-            new_row = map(lambda x: float(x), new_row)
+            new_row = [float(x) for x in new_row]
             wparameter_data.append(new_row)
         column_names = ["Frequency", "reA1_D1", "imA1_D1", "reB1_D1", "imB1_D1"]
         # add some options here about auto saving
@@ -1301,7 +1310,7 @@ class VNA(VisaInstrument):
                    "general_descriptor": "One_Port", "extension": "w1p",
                    "column_types":["float" for column in column_names]}
         if self.measure_w1p_options["w1p_options"]:
-            for key,value in self.measure_w1p_options["w1p_options"].iteritems():
+            for key,value in self.measure_w1p_options["w1p_options"].items():
                 options[key]=value
         w1p = AsciiDataTable(None, **options)
         return w1p
@@ -1313,9 +1322,9 @@ class VNA(VisaInstrument):
                     "b_name_list": ["A", "B", "C", "D"],
                     "w2p_options": None}
         self.measure_w2p_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.measure_w2p_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.measure_w2p_options[key] = value
         if self.measure_w2p_options["trigger"] in ["single"]:
             self.write("INITiate:CONTinuous OFF")
@@ -1338,14 +1347,14 @@ class VNA(VisaInstrument):
         # now get data for all of them
         all_wave_raw_string=[]
         for waveparameter in waveparameter_names:
-            self.write('CALC:PAR:SEL {0}'.format(waveparameter))
+            self.write('CALC:PAR:SEL "{0}"'.format(waveparameter))
             self.write('CALC:FORM MLIN')
             while self.is_busy():
                 time.sleep(.01)
             all_wave_raw_string .append(self.query('CALC:DATA? SDATA'))
 
         # String Parsing
-        all_wave_list=map(lambda x:x.replace("\n","").split(","),all_wave_raw_string)
+        all_wave_list=[x.replace("\n","").split(",") for x in all_wave_raw_string]
         # Construct a list of lists that is data in RI format
         re_all_wave_list = [a_list[0::2] for a_list in all_wave_list]
         im_all_wave_list = [a_list[1::2] for a_list in all_wave_list]
@@ -1358,7 +1367,7 @@ class VNA(VisaInstrument):
                 wave_row.append(value)
                 wave_row.append(im_row[index])
             new_row = [frequency / 10. ** 9]+wave_row
-            new_row = map(lambda x: float(x), new_row)
+            new_row = [float(x) for x in new_row]
             wparameter_data.append(new_row)
         waveparameter_column_names=[]
         for drive_port in [self.measure_w2p_options["port1"], self.measure_w2p_options["port2"]]:
@@ -1377,7 +1386,7 @@ class VNA(VisaInstrument):
                    "general_descriptor": "Two_Port", "extension": "w2p",
                    "column_types":["float" for column in column_names]}
         if self.measure_w2p_options["w2p_options"]:
-            for key,value in self.measure_w2p_options["w2p_options"].iteritems():
+            for key,value in self.measure_w2p_options["w2p_options"].items():
                 options[key]=value
         w2p = W2P(None, **options)
         return w2p
@@ -1434,9 +1443,9 @@ class HighSpeedOscope(VisaInstrument):
         """Initializes the oscilloscope  for data collection"""
         defaults = {"reset": True}
         initialize_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             initialize_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             initialize_options[key] = value
         pass
 
@@ -1451,13 +1460,13 @@ class HighSpeedOscope(VisaInstrument):
                     "download_format":"ASCII","verbose_timing":False,
                     }
         self.measure_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.measure_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.measure_options[key] = value
         if self.measure_options["verbose_timing"]:
             start_timer=datetime.datetime.now()
-            print("The .measure_waves method began at {0}".format(start_timer))
+            print(("The .measure_waves method began at {0}".format(start_timer)))
 
         self.set_number_points(self.measure_options["number_points"])
         channel_string_list = ["CHAN1", "CHAN2", "CHAN3", "CHAN4"]
@@ -1487,15 +1496,15 @@ class HighSpeedOscope(VisaInstrument):
         if self.measure_options["verbose_timing"]:
             setup_timer=datetime.datetime.now()
             time_difference=setup_timer-start_timer
-            print("The setup of the sweep finished at {0} and took {1} seconds".format(setup_timer,time_difference))
+            print(("The setup of the sweep finished at {0} and took {1} seconds".format(setup_timer,time_difference)))
         frames_data = []
         for frame_index in range(self.measure_options["number_frames"]):
             if self.measure_options["verbose_timing"]:
                 frame_timer=datetime.datetime.now()
                 time_difference=frame_timer-start_timer
-                print(" Frame {0} began at {1}, {2} seconds from measure_waves begin ".format(frame_index,
+                print((" Frame {0} began at {1}, {2} seconds from measure_waves begin ".format(frame_index,
                                                                                               frame_timer,
-                                                                                              time_difference.seconds))
+                                                                                              time_difference.seconds)))
             new_frame = []
 
             # calculate time position for this frame
@@ -1507,7 +1516,7 @@ class HighSpeedOscope(VisaInstrument):
 
             if self.measure_options["verbose_timing"]:
                 timer=datetime.datetime.now()
-                print("Writing Channel Command at {0}".format(timer))
+                print(("Writing Channel Command at {0}".format(timer)))
 
             # acquire channels desired
             channel_string = ""
@@ -1521,13 +1530,13 @@ class HighSpeedOscope(VisaInstrument):
 
             if self.measure_options["verbose_timing"]:
                 timer=datetime.datetime.now()
-                print("Finished Writing Channel Command at {0}".format(timer))
+                print(("Finished Writing Channel Command at {0}".format(timer)))
             # trigger reading and wait
             self.write("*OPC?")
 
             if self.measure_options["verbose_timing"]:
                 timer=datetime.datetime.now()
-                print("Finshed Trigger Command and Started to Read Channels at {0}".format(timer))
+                print(("Finshed Trigger Command and Started to Read Channels at {0}".format(timer)))
             # get data from the necessary channels
             for channel_read_index, channel_read in enumerate(self.measure_options["channels"]):
                 # get data for channel 1
@@ -1546,15 +1555,15 @@ class HighSpeedOscope(VisaInstrument):
                 # print("{0} is {1}".format("data_column",data_column))
                 if self.measure_options["verbose_timing"]:
                     timer = datetime.datetime.now()
-                    print("Finshed Data Acquistion for Channel {0} at {1}".format(channel_read,timer))
+                    print(("Finshed Data Acquistion for Channel {0} at {1}".format(channel_read,timer)))
             frames_data.append(new_frame)
 
 
         if self.measure_options["verbose_timing"]:
             timer = datetime.datetime.now()
-            print("Data Manipulation Began at {0}".format(timer))
+            print(("Data Manipulation Began at {0}".format(timer)))
         # reshape measurement data
-        measurement_data = [range(len(frames_data[0])) for x in range(number_points * len(frames_data))]
+        measurement_data = [list(range(len(frames_data[0]))) for x in range(number_points * len(frames_data))]
         #         print(len(measurement_data))
         #         print(len(measurement_data[0]))
         #         print("{0} is{1}".format("len(frames_data)",len(frames_data)))
@@ -1562,7 +1571,7 @@ class HighSpeedOscope(VisaInstrument):
         #         print("{0} is{1}".format("len(frames_data[0][0])",len(frames_data[0][0])))
         if self.measure_options["verbose_timing"]:
             timer = datetime.datetime.now()
-            print("Data reshaping step1 ended at {0}".format(timer))
+            print(("Data reshaping step1 ended at {0}".format(timer)))
         for frame_index, frame in enumerate(frames_data):
             for column_index, column in enumerate(frame):
                 for row_index, row in enumerate(column):
@@ -1573,7 +1582,7 @@ class HighSpeedOscope(VisaInstrument):
 
         if self.measure_options["verbose_timing"]:
             timer = datetime.datetime.now()
-            print("Data reshaping step 2 ended at {0}".format(timer))
+            print(("Data reshaping step 2 ended at {0}".format(timer)))
         # reset timeout
         self.resource.timeout = timeout
         data_out = []
@@ -1584,7 +1593,7 @@ class HighSpeedOscope(VisaInstrument):
             data_out.append(new_row)
         if self.measure_options["add_header"]:
             header = []
-            for key, value in self.measure_options.iteritems():
+            for key, value in self.measure_options.items():
                 header.append("{0} = {1}".format(key, value))
         else:
             header = None
@@ -1604,7 +1613,7 @@ class HighSpeedOscope(VisaInstrument):
         else:
             table_options["column_types"]=["float"]+["int" for i in range(len(column_names)-1)]
 
-        for key, value in self.measure_options["output_table_options"].iteritems():
+        for key, value in self.measure_options["output_table_options"].items():
             table_options[key] = value
 
         output_table = AsciiDataTable(None, **table_options)
@@ -1620,7 +1629,7 @@ class HighSpeedOscope(VisaInstrument):
 
         if self.measure_options["verbose_timing"]:
             timer = datetime.datetime.now()
-            print("Data Manipulation Ended at {0}".format(timer))
+            print(("Data Manipulation Ended at {0}".format(timer)))
 
         return output_table
 
@@ -1731,44 +1740,44 @@ class HighSpeedOscope(VisaInstrument):
 # Module Scripts
 
 def test_determine_instrument_type():
-    print 'Type is %s'%determine_instrument_type('GPIB::22')
-    print 'Type is %s'%determine_instrument_type('COMM::1')
-    print 'Type is %s'%determine_instrument_type('CoMm::1') 
-    print 'Type is %s'%determine_instrument_type('SRS830') 
-    print 'Type is %s'%determine_instrument_type('36111') 
+    print('Type is %s'%determine_instrument_type('GPIB::22'))
+    print('Type is %s'%determine_instrument_type('COMM::1'))
+    print('Type is %s'%determine_instrument_type('CoMm::1')) 
+    print('Type is %s'%determine_instrument_type('SRS830')) 
+    print('Type is %s'%determine_instrument_type('36111')) 
     class blank():pass
     new=blank()
-    print type(new)
-    print 'Type is %s'%determine_instrument_type(new)
+    print(type(new))
+    print('Type is %s'%determine_instrument_type(new))
     new.instrument_type='Ocean_Optics'
-    print new.instrument_type
-    print 'Type is %s'%determine_instrument_type(new)
-    TF=(type(new)==InstanceType or ClassType)
-    print TF
-    print dir(new)
-    print 'instrument_type' in dir(new)
+    print(new.instrument_type)
+    print('Type is %s'%determine_instrument_type(new))
+    TF=(isinstance(new, InstanceType) or ClassType)
+    print(TF)
+    print(dir(new))
+    print('instrument_type' in dir(new))
         
 
 
 def test_find_description():
     """Tests the function find description"""
-    print "The path of the description of %s is %s"%('Lockin2',find_description('Lockin2'))
-    print "The File Contents are:"
-    print find_description('Lockin2','file')
+    print("The path of the description of %s is %s"%('Lockin2',find_description('Lockin2')))
+    print("The File Contents are:")
+    print(find_description('Lockin2','file'))
      
 def test_VisaInstrument(address="GPIB::21"):
     """ Simple test of the VisaInstrument class"""
     instrument=VisaInstrument(address)
     #print instrument.ask('*IDN?')
-    print dir(instrument)
-    print instrument.idn
-    print instrument.DEFAULT_STATE_QUERY_DICTIONARY
-    print instrument.current_state
-    print 'Writing 0 volts to AUX4'
+    print(dir(instrument))
+    print(instrument.idn)
+    print(instrument.DEFAULT_STATE_QUERY_DICTIONARY)
+    print(instrument.current_state)
+    print('Writing 0 volts to AUX4')
     instrument.set_state(**{'AUXV 4,':0})
-    print instrument.current_state
-    print instrument.state_buffer
-    print instrument.commands
+    print(instrument.current_state)
+    print(instrument.state_buffer)
+    print(instrument.commands)
 
 #-------------------------------------------------------------------------------
 # Module Runner       

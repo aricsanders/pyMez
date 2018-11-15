@@ -92,7 +92,7 @@ def make_parameter_table(parameter_directory):
     column_names=["Parameter_Name","Value","Distribution_Type","Width","Standard_Uncertainty","Units"]
     data=[]
     for index,parameter in enumerate(parameter_models):
-        print("Parameter Number: {0}, Name:{1}".format(index,parameter.get_mechanism_name()) )
+        print(("Parameter Number: {0}, Name:{1}".format(index,parameter.get_mechanism_name()) ))
         row=[os.path.split(parameter.get_mechanism_name())[-1].split(".")[0],
              parameter.get_value(),parameter.get_distribution_type(),
              parameter.get_distribution_width(),parameter.get_standard_uncertainty(),
@@ -134,8 +134,8 @@ class MUFParameter(XMLBase):
             type_number=MODEL_DISTRIBUTION_LIST.index(distribution_type)
             type_name=distribution_type
         else:
-            print("Could not set the type {0} please choose a"
-                  " type or index from {1}".format(distribution_type,MODEL_DISTRIBUTION_LIST))
+            print(("Could not set the type {0} please choose a"
+                  " type or index from {1}".format(distribution_type,MODEL_DISTRIBUTION_LIST)))
             return
         distribution_type_tag = self.etree.findall(".//DistributionType")[0]
         distribution_type_tag.attrib["ControlText"]=type_name
@@ -170,8 +170,8 @@ class MUFParameter(XMLBase):
             unit_number=MODEL_DISTRIBUTION_LIST.index(units)
             unit_name=units
         else:
-            print("Could not set the units {0} please choose a"
-                  " type or index from {1}".format(units,MODEL_UNIT_LIST))
+            print(("Could not set the units {0} please choose a"
+                  " type or index from {1}".format(units,MODEL_UNIT_LIST)))
             return
         unit_tag = self.etree.findall(".//Units")[0]
         unit_tag.attrib["ControlText"]=unit_name
@@ -248,8 +248,8 @@ class MUFVNAUncert(XMLBase):
     def get_DUTs(self):
         "Returns the names and locations of DUTs"
         duts=[]
-        names=map(lambda x: x.attrib["Text"],self.etree.findall(".//DUTMeasurements/Item/SubItem[@Index='0']"))
-        locations=map(lambda x: x.attrib["Text"],self.etree.findall(".//DUTMeasurements/Item/SubItem[@Index='1']"))
+        names=[x.attrib["Text"] for x in self.etree.findall(".//DUTMeasurements/Item/SubItem[@Index='0']")]
+        locations=[x.attrib["Text"] for x in self.etree.findall(".//DUTMeasurements/Item/SubItem[@Index='1']")]
         for index,name in enumerate(names):
             name_location_dictionary={"name":name,"location":locations[index]}
             duts.append(name_location_dictionary)
@@ -286,8 +286,8 @@ class MUFMeasurement(XMLBase):
         mechanism names"""
         out_dictionary={}
         try:
-            names=map(lambda x: x.attrib["Text"],self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='0']"))
-            mechanisms=map(lambda x: x.attrib["Text"],self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='2']"))
+            names=[x.attrib["Text"] for x in self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='0']")]
+            mechanisms=[x.attrib["Text"] for x in self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='2']")]
             for index,name in enumerate(names):
                 split_parameter_name=os.path.split(mechanisms[index])[-1]
                 parameter_name=split_parameter_name.split(".")[0]
@@ -301,9 +301,9 @@ class MUFMeasurement(XMLBase):
         """Returns a list of dictionaries that has the keys name, location, and parameter_location"""
         covariance_list=[]
         try:
-            names=map(lambda x: x.attrib["Text"],self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='0']"))
-            locations=map(lambda x: x.attrib["Text"],self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='1']"))
-            mechanisms = map(lambda x: x.attrib["Text"], self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='2']"))
+            names=[x.attrib["Text"] for x in self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='0']")]
+            locations=[x.attrib["Text"] for x in self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='1']")]
+            mechanisms = [x.attrib["Text"] for x in self.etree.findall(".//PerturbedSParams/Item/SubItem[@Index='2']")]
             for index,name in enumerate(names):
                 name_location_dictionary={"name":name,"location":locations[index],"parameter_location":mechanisms[index]}
                 covariance_list.append(name_location_dictionary)
@@ -316,10 +316,8 @@ class MUFMeasurement(XMLBase):
         """Returns a list of dictionaries that has the keys name, location"""
         montecarlo_list=[]
         try:
-            names=map(lambda x: x.attrib["Text"],
-                      self.etree.findall(".//MonteCarloPerturbedSParams/Item/SubItem[@Index='0']"))
-            locations=map(lambda x: x.attrib["Text"],
-                          self.etree.findall(".//MonteCarloPerturbedSParams/Item/SubItem[@Index='1']"))
+            names=[x.attrib["Text"] for x in self.etree.findall(".//MonteCarloPerturbedSParams/Item/SubItem[@Index='0']")]
+            locations=[x.attrib["Text"] for x in self.etree.findall(".//MonteCarloPerturbedSParams/Item/SubItem[@Index='1']")]
             for index,name in enumerate(names):
                 name_location_dictionary={"name":name,"location":locations[index]}
                 montecarlo_list.append(name_location_dictionary)
@@ -371,9 +369,9 @@ class MUFComplexModel(AsciiDataTable):
                     "column_types": ['float' for i in range(len(["Frequency", "re", "im"]))]
                     }
         self.options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.options[key] = value
         if file_path is not None:
             self.path = file_path
@@ -387,7 +385,7 @@ class MUFComplexModel(AsciiDataTable):
         in_file = open(self.path, 'r')
         lines = []
         for line in in_file:
-            lines.append(map(lambda x: float(x), line.split("\t")))
+            lines.append([float(x) for x in line.split("\t")])
         in_file.close()
         self.options["data"] = lines
         self.complex_data = []
@@ -402,7 +400,7 @@ class MUFComplexModel(AsciiDataTable):
         try:
             re_data = self["re"][:]
             re_data_var = [re_data[i + 2] - 2.0 * re_data[i + 1] + re_data[i] for i in range(len(re_data) - 2)]
-            self.variation_parameter = 100 * max(map(lambda x: abs(x), re_data_var))
+            self.variation_parameter = 100 * max([abs(x) for x in re_data_var])
         except:
             raise
             self.variation_parameter = 0
@@ -455,8 +453,8 @@ if CLR:
         if timeit:
             stop=datetime.datetime.utcnow()
             runtime=stop-start
-            print("VNAUncertainty finished running  at {0}".format(stop))
-            print("The script took {0} seconds to run".format(runtime.seconds))
+            print(("VNAUncertainty finished running  at {0}".format(stop)))
+            print(("The script took {0} seconds to run".format(runtime.seconds)))
 
 
 #-----------------------------------------------------------------------------

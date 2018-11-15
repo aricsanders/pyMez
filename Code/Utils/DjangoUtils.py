@@ -64,9 +64,9 @@ def create_nav_bar_string(**options):
                              <span class="glyphicon glyphicon-search"></span></button>
                             </form>"""}
     nav_bar_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         nav_bar_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         nav_bar_options[key] = value
     output_string = ""
     string_template = """

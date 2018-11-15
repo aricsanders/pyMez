@@ -923,8 +923,10 @@ table {
 .codehilite .mh { color: #666666 } /* Literal.Number.Hex */
 .codehilite .mi { color: #666666 } /* Literal.Number.Integer */
 .codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
 .codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
 .codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
 .codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 .codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
 .codehilite .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
@@ -935,9 +937,11 @@ table {
 .codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
 .codehilite .ss { color: #19177C } /* Literal.String.Symbol */
 .codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
 .codehilite .vc { color: #19177C } /* Name.Variable.Class */
 .codehilite .vg { color: #19177C } /* Name.Variable.Global */
 .codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
 .codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
   </style>
 
@@ -1231,7 +1235,7 @@ generating file names</p>
 <span class="k">def</span> <span class="nf">split_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns a list of file name pieces. The list will contain any CamelCase, snake_case or</span>
 <span class="sd">    common delimiter seperated words (last element is nominally the file extension)&quot;&quot;&quot;</span>
-    <span class="n">out_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;([</span><span class="se">\a</span><span class="s2">-z])([\A-Z])&quot;</span><span class="p">,</span><span class="s1">r&#39;\1 \2&#39;</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">out_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;([</span><span class="se">\a</span><span class="s2">-z])([\A-Z])&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;\1 \2&#39;</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">out_list</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;[\W|\.|_]+&quot;</span><span class="p">,</span><span class="n">out_string</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out_list</span>
 
@@ -1281,63 +1285,63 @@ generating file names</p>
     <span class="sd">&quot;&quot;&quot; Tests the module by writing files in the current working directory &quot;&quot;&quot;</span>
     <span class="n">base_name</span><span class="o">=</span><span class="s1">&#39;Test_File&#39;</span>
     <span class="n">number_files</span><span class="o">=</span><span class="mi">20</span>
-    <span class="k">print</span> <span class="s1">&#39;The result of get_filename_iterator() is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span>
-    <span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="k">print</span> <span class="s1">&#39;The current working diretory is </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;The result of get_filename_iterator() is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;The current working diretory is </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_files</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_name</span><span class="o">=</span><span class="n">base_name</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span>
             <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">new_name</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">print</span> <span class="s2">&quot;Wrote New File </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">new_name</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Wrote New File </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">new_name</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span>
-            <span class="k">print</span> <span class="s1">&#39;failed&#39;</span>
-    <span class="k">print</span> <span class="s2">&quot;End of test&quot;</span>
-    <span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="k">print</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;failed&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;End of test&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
             
 <span class="k">def</span> <span class="nf">clean_up_test_module</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot; Deletes the files writen by test_module() &quot;&quot;&quot;</span>
     <span class="n">base_name</span><span class="o">=</span><span class="s1">&#39;Test_File&#39;</span>
     <span class="n">number_files</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span>
-    <span class="k">print</span> <span class="s2">&quot;The number of files is {:0d}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number_files</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">The result of get_filename_iterator(base_name,os.getcwd(),&quot;txt&quot;) is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span>
-    <span class="k">print</span> <span class="s1">&#39;The current working diretory is </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The number of files is {:0d}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number_files</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">The result of get_filename_iterator(base_name,os.getcwd(),&quot;txt&quot;) is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;The current working diretory is </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_files</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_name</span><span class="o">=</span><span class="n">base_name</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="s2">&quot;{:03d}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span>
             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
-            <span class="k">print</span> <span class="s2">&quot;Removed File </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">new_name</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Removed File </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">new_name</span><span class="p">)</span>
             
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span>
-            <span class="k">print</span> <span class="s1">&#39;failed&#39;</span>
-    <span class="k">print</span> <span class="s2">&quot;End of cleanup&quot;</span>
-    <span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="k">print</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;failed&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;End of cleanup&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">test_auto_name</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Tests the auto name function&quot;&quot;&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of auto_name(&#39;Test&#39;,&#39;AutoName&#39;,None,&#39;txt) is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">auto_name</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">,</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;The result of auto_name(&#39;Test&#39;,&#39;AutoName&#39;,None,&#39;txt) is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">auto_name</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">,</span>
                                                                                          <span class="s1">&#39;AutoName&#39;</span><span class="p">,</span>
-                                                                                         <span class="bp">None</span><span class="p">,</span><span class="s1">&#39;txt&#39;</span><span class="p">)))</span>
+                                                                                         <span class="bp">None</span><span class="p">,</span><span class="s1">&#39;txt&#39;</span><span class="p">))))</span>
 
 <span class="k">def</span> <span class="nf">test_filename_change_iterator</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Tests the filename decrement and increment functions&quot;&quot;&quot;</span>
     <span class="n">name</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">,</span><span class="s1">&#39;AutoName&#39;</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;txt&#39;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The original name is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of filename_increment is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_increment</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of filename_decrement is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_decrement</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;The original name is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;The result of filename_increment is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_increment</span><span class="p">(</span><span class="n">name</span><span class="p">))))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;The result of filename_decrement is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_decrement</span><span class="p">(</span><span class="n">name</span><span class="p">))))</span>
 
 <span class="c1">#-------------------------------------------------------------------------------</span>
 <span class="c1"># Module Runner</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">test_module</span><span class="p">()</span>
     <span class="n">clean_up_test_module</span><span class="p">()</span>
     <span class="n">test_auto_name</span><span class="p">()</span>
@@ -1428,22 +1432,22 @@ generating file names</p>
     <span class="sd">&quot;&quot;&quot; Deletes the files writen by test_module() &quot;&quot;&quot;</span>
     <span class="n">base_name</span><span class="o">=</span><span class="s1">&#39;Test_File&#39;</span>
     <span class="n">number_files</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span>
-    <span class="k">print</span> <span class="s2">&quot;The number of files is {:0d}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number_files</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">The result of get_filename_iterator(base_name,os.getcwd(),&quot;txt&quot;) is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span>
-    <span class="k">print</span> <span class="s1">&#39;The current working diretory is </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The number of files is {:0d}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number_files</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">The result of get_filename_iterator(base_name,os.getcwd(),&quot;txt&quot;) is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;The current working diretory is </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_files</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_name</span><span class="o">=</span><span class="n">base_name</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="s2">&quot;{:03d}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span>
             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
-            <span class="k">print</span> <span class="s2">&quot;Removed File </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">new_name</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Removed File </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">new_name</span><span class="p">)</span>
             
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span>
-            <span class="k">print</span> <span class="s1">&#39;failed&#39;</span>
-    <span class="k">print</span> <span class="s2">&quot;End of cleanup&quot;</span>
-    <span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="k">print</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;failed&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;End of cleanup&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -1604,7 +1608,7 @@ common delimiter seperated words (last element is nominally the file extension)<
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">split_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns a list of file name pieces. The list will contain any CamelCase, snake_case or</span>
 <span class="sd">    common delimiter seperated words (last element is nominally the file extension)&quot;&quot;&quot;</span>
-    <span class="n">out_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;([</span><span class="se">\a</span><span class="s2">-z])([\A-Z])&quot;</span><span class="p">,</span><span class="s1">r&#39;\1 \2&#39;</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">out_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;([</span><span class="se">\a</span><span class="s2">-z])([\A-Z])&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;\1 \2&#39;</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">out_list</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;[\W|\.|_]+&quot;</span><span class="p">,</span><span class="n">out_string</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out_list</span>
 </pre></div>
@@ -1629,9 +1633,9 @@ common delimiter seperated words (last element is nominally the file extension)<
   <div id="source-pyMez.Code.Utils.Names.test_auto_name" class="source">
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">test_auto_name</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Tests the auto name function&quot;&quot;&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of auto_name(&#39;Test&#39;,&#39;AutoName&#39;,None,&#39;txt) is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">auto_name</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">,</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;The result of auto_name(&#39;Test&#39;,&#39;AutoName&#39;,None,&#39;txt) is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">auto_name</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">,</span>
                                                                                          <span class="s1">&#39;AutoName&#39;</span><span class="p">,</span>
-                                                                                         <span class="bp">None</span><span class="p">,</span><span class="s1">&#39;txt&#39;</span><span class="p">)))</span>
+                                                                                         <span class="bp">None</span><span class="p">,</span><span class="s1">&#39;txt&#39;</span><span class="p">))))</span>
 </pre></div>
 
   </div>
@@ -1655,11 +1659,11 @@ common delimiter seperated words (last element is nominally the file extension)<
     <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">test_filename_change_iterator</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Tests the filename decrement and increment functions&quot;&quot;&quot;</span>
     <span class="n">name</span><span class="o">=</span><span class="n">auto_name</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">,</span><span class="s1">&#39;AutoName&#39;</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="s1">&#39;txt&#39;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The original name is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of filename_increment is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_increment</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The result of filename_decrement is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_decrement</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;The original name is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;The result of filename_increment is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_increment</span><span class="p">(</span><span class="n">name</span><span class="p">))))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">((</span><span class="s2">&quot;The result of filename_decrement is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_decrement</span><span class="p">(</span><span class="n">name</span><span class="p">))))</span>
 </pre></div>
 
   </div>
@@ -1684,23 +1688,23 @@ common delimiter seperated words (last element is nominally the file extension)<
     <span class="sd">&quot;&quot;&quot; Tests the module by writing files in the current working directory &quot;&quot;&quot;</span>
     <span class="n">base_name</span><span class="o">=</span><span class="s1">&#39;Test_File&#39;</span>
     <span class="n">number_files</span><span class="o">=</span><span class="mi">20</span>
-    <span class="k">print</span> <span class="s1">&#39;The result of get_filename_iterator() is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span>
-    <span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="k">print</span> <span class="s1">&#39;The current working diretory is </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;The result of get_filename_iterator() is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;The current working diretory is </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_files</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_name</span><span class="o">=</span><span class="n">base_name</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">get_filename_iterator</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span>
             <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">new_name</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">print</span> <span class="s2">&quot;Wrote New File </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">new_name</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Wrote New File </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">new_name</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span>
-            <span class="k">print</span> <span class="s1">&#39;failed&#39;</span>
-    <span class="k">print</span> <span class="s2">&quot;End of test&quot;</span>
-    <span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="k">print</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;failed&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;End of test&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
 </pre></div>
 
   </div>

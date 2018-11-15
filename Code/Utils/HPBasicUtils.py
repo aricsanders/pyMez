@@ -84,9 +84,9 @@ class HPBasicCode():
         # Code to set options
         defaults={}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
 #-----------------------------------------------------------------------------
 # Module Scripts

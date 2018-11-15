@@ -101,65 +101,65 @@ MINIMUM_DB_ARG_VALUE=0
 def print_s1p_attributes(new_table):
     """prints some important attributes of s1p table"""
     print("The attributes for the table as read in are")
-    print("-"*80)
-    print("The attribute {0} is {1}".format('data',str(new_table.data)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('comments',str(new_table.comments)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('option_line',str(new_table.option_line)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('format',str(new_table.format)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('column_names',str(new_table.column_names)))
-    print("-"*80)
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('data',str(new_table.data))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('comments',str(new_table.comments))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('option_line',str(new_table.option_line))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('format',str(new_table.format))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('column_names',str(new_table.column_names))))
+    print(("-"*80))
 
 def print_s2p_attributes(new_table):
     """prints some important attributes of s2p table"""
     print("The attributes for the table as read in are")
-    print("-"*80)
-    print("The attribute {0} is {1}".format('data',str(new_table.data)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('noiseparameter_data',str(new_table.noiseparameter_data)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('comments',str(new_table.comments)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('option_line',str(new_table.option_line)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('format',str(new_table.format)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('column_names',str(new_table.column_names)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('noiseparameter_column_names',str(new_table.noiseparameter_column_names)))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('data',str(new_table.data))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('noiseparameter_data',str(new_table.noiseparameter_data))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('comments',str(new_table.comments))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('option_line',str(new_table.option_line))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('format',str(new_table.format))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('column_names',str(new_table.column_names))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('noiseparameter_column_names',str(new_table.noiseparameter_column_names))))
 def print_snp_attributes(new_table):
     """prints some important attributes of snp table"""
     print("The attributes for the table as read in are")
-    print("-"*80)
-    print("The attribute {0} is {1}".format('data',str(new_table.data)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('noiseparameter_data',str(new_table.noiseparameter_data)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('comments',str(new_table.comments)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('option_line',str(new_table.option_line)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('format',str(new_table.format)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('column_names',str(new_table.column_names)))
-    print("-"*80)
-    print("-"*80)
-    print("-"*80)
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('data',str(new_table.data))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('noiseparameter_data',str(new_table.noiseparameter_data))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('comments',str(new_table.comments))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('option_line',str(new_table.option_line))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('format',str(new_table.format))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('column_names',str(new_table.column_names))))
+    print(("-"*80))
+    print(("-"*80))
+    print(("-"*80))
 
 def make_row_match_string(column_names,delimiter_pattern='[\s,]+'):
     """Returns a regex string for matching a row given a set of column names assuming the row delimiter
@@ -282,7 +282,7 @@ def parse_combined_float_list(float_string_list):
     all values data types are assumed to be floats returned as floats"""
     parsed_data=[]
     for row in float_string_list:
-        new_row=map(lambda x:float(x),re.split("[\s|,]+",row.rstrip().lstrip().replace("\n","\t")))
+        new_row=[float(x) for x in re.split("[\s|,]+",row.rstrip().lstrip().replace("\n","\t"))]
         parsed_data.append(new_row)
     return parsed_data
 
@@ -293,9 +293,9 @@ def s2p_mean(list_s2p_models,**options):
     #This will work on any table that the data is stored in data, need to add a sparameter version
     defaults={"frequency_selector":0,"frequency_column_name":"Frequency"}
     average_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         average_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         average_options[key]=value
     frequency_list=[]
     average_data=[]
@@ -305,7 +305,7 @@ def s2p_mean(list_s2p_models,**options):
     for frequency in unique_frequency_list:
         new_row=[]
         for table in list_s2p_models:
-            data_list=filter(lambda x: x[average_options["frequency_selector"]]==frequency,table.data)
+            data_list=[x for x in table.data if x[average_options["frequency_selector"]]==frequency]
             table_average=np.mean(np.array(data_list),axis=0)
             new_row.append(table_average)
             #print new_row
@@ -327,9 +327,9 @@ def s2p_difference(s2p_one,s2p_two,**options):
             raise TypeError("Frequencies must be of the same length")
     defaults={"frequency_selector":0,"frequency_column_name":"Frequency"}
     difference_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         difference_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         difference_options[key]=value
     difference_data=[]
     for index,row in enumerate(s2p_one.data[:]):
@@ -362,7 +362,7 @@ class SNPBase():
         """Adds a comment to the SNP file"""
         if self.comments is None:
             self.comments=[]
-        if type(comment) is StringType:
+        if isinstance(comment, StringType):
             for old_comment in self.comments:
                 if old_comment[2] == 0:
                     old_comment[1] += 1
@@ -370,7 +370,7 @@ class SNPBase():
             self.options["option_line_line"]+=1
             self.options["sparameter_begin_line"]+=1
 
-        if type(comment) is ListType:
+        if isinstance(comment, ListType):
             if comment[1]==0:
                 for old_comment in self.comments:
                     if old_comment[2]==0:
@@ -411,7 +411,7 @@ class SNPBase():
                      "P":10.**15,"tera":10.**12,"T":10.**12,"giga":10.**9,"G":10.**9,"mega":10.**6,"M":10.**6,
                      "kilo":10.**3,"k":10.**3,"hecto":10.**2,"h":10.**2,"deka":10.,"da":10.,None:1.,"":1.,
                      "deci":10.**-1,"d":10.**-1,"centi":10.**-2,"c":10.**-2,"milli":10.**-3,"m":10.**-3,
-                     "micro":10.**-6,"mu":10.**-6,u"\u00B5":10.**-6,"nano":10.**-9,
+                     "micro":10.**-6,"mu":10.**-6,"\u00B5":10.**-6,"nano":10.**-9,
                      "n":10.**-9,"pico":10.**-12,"p":10.**-12,"femto":10.**-15,
                      "f":10.**-15,"atto":10.**-18,"a":10.**-18,"zepto":10.**-21,"z":10.**-21,
                      "yocto":10.**-24,"y":10.**-24}
@@ -442,7 +442,7 @@ class SNPBase():
                     self.sparameter_complex[index][column_selector]=\
                     str((multipliers[old_prefix]/multipliers[new_prefix])*float(self.sparameter_complex[index][column_selector]))
                 else:
-                    print type(self.data[index][column_selector])
+                    print(type(self.data[index][column_selector]))
                     raise
             for index,row in enumerate(self.noiseparameter_data[:]):
                 if type(self.noiseparameter_data[index][column_selector]) in [FloatType,LongType]:
@@ -453,7 +453,7 @@ class SNPBase():
                     self.noiseparameter_data[index][column_selector]=\
                     str((multipliers[old_prefix]/multipliers[new_prefix])*float(self.noiseparameter_data[index][column_selector]))
                 else:
-                    print type(self.noiseparameter_data[index][column_selector])
+                    print(type(self.noiseparameter_data[index][column_selector]))
                     raise
             old_unit_pattern=re.compile(old_unit,re.IGNORECASE)
             self.frequency_units=new_frequency_units
@@ -469,7 +469,7 @@ class SNPBase():
                 old=self.column_names[column_selector]
                 self.column_names[column_selector]=old.replace(old_unit,new_unit)
         except:
-            print("Could not change the unit prefix of column {0}".format(column_selector))
+            print(("Could not change the unit prefix of column {0}".format(column_selector)))
             raise
 
 
@@ -500,7 +500,7 @@ class SNPBase():
                 return self.noiseparameter_data
         else:
             for item in items:
-                if type(item) is IntType:
+                if isinstance(item, IntType):
                     column_selectors.append(item)
                 else:
                     #print self.column_names
@@ -533,9 +533,9 @@ class SNPBase():
                     "grid": True,
                     "silent":False}
         plot_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             plot_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             plot_options[key] = value
 
         current_format = self.format[:]
@@ -625,9 +625,9 @@ class S1PV1(SNPBase):
 
                   }
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         self.noiseparameter_data=[]
         SNPBase.__init__(self)
@@ -642,7 +642,7 @@ class S1PV1(SNPBase):
             self.sparameter_complex=self.options["sparameter_complex"]
             match=re.match(OPTION_LINE_PATTERN,self.option_line)
             # set the values associated with the option line
-            for key,value in match.groupdict().iteritems():
+            for key,value in match.groupdict().items():
                 self.__dict__[key.lower()]=value
             if re.match('db',self.format,re.IGNORECASE):
                 self.column_names=S2P_DB_COLUMN_NAMES
@@ -715,7 +715,7 @@ class S1PV1(SNPBase):
                 add_option_line=0
 
 
-        for key,value in match.groupdict().iteritems():
+        for key,value in match.groupdict().items():
                     self.__dict__[key.lower()]=value
         if re.match('db',self.format,re.IGNORECASE):
             self.column_names=S1P_DB_COLUMN_NAMES
@@ -749,7 +749,7 @@ class S1PV1(SNPBase):
         """Creates the output string"""
         #number of lines = option line + comments that start at zero + rows in sparameter data + rows in noise data
         original_options=self.options
-        for key,value in temp_options.iteritems():
+        for key,value in temp_options.items():
             self.options[key]=value
         if self.comments is None:
             number_line_comments=0
@@ -796,14 +796,14 @@ class S1PV1(SNPBase):
         """Adds data to the sparameter attribute, which is a list of s-parameters. The
         data can be a list of 5 real numbers
          or dictionary with appropriate column names, note column names are not case sensitive"""
-        if type(row_data) is ListType:
+        if isinstance(row_data, ListType):
             if len(row_data) == 3:
                     self.data.append(row_data)
             else:
                 print("Could not add row, the data was a list of the wrong dimension, if you desire to add multiple"
                       "rows use add_sparameter_rows")
                 return
-        if type(row_data) is DictionaryType:
+        if isinstance(row_data, DictionaryType):
             new_row=[]
             for column_name in self.column_names:
                 #print row_data
@@ -816,7 +816,7 @@ class S1PV1(SNPBase):
         complex form for easy conversion and manipulation. Row_data is assumed to be of the same form that would be
         given to add_sparameter_row"""
 
-        if type(row_data) is ListType and len(row_data)==3 and type(row_data[1]) is ComplexType:
+        if isinstance(row_data, ListType) and len(row_data)==3 and isinstance(row_data[1], ComplexType):
             self.sparameter_complex.append(row_data)
         else:
             row_data=self.sparameter_row_to_complex(row_data=row_data)
@@ -832,13 +832,13 @@ class S1PV1(SNPBase):
                   "data")
         out_row=[]
         try:
-            if type(row_data) is StringType:
+            if isinstance(row_data, StringType):
                 row_data=re.search(self.row_pattern,row_data).groupdict()
-            elif type(row_data) is ListType:
+            elif isinstance(row_data, ListType):
                 row_data={self.column_names[index]:row_data[index] for index in range(3)}
-            if type(row_data) is not DictionaryType:
+            if not isinstance(row_data, DictionaryType):
                 raise
-            row_data={key:float(value) for key,value in row_data.iteritems()}
+            row_data={key:float(value) for key,value in row_data.items()}
             # now row data is in dictionary form with known keys, the tranformation is only based on self.format
             if re.match('db',self.format,re.IGNORECASE):
                 S11=cmath.rect(10.**(row_data["dbS11"]/20.),(math.pi/180.)*row_data["argS11"])
@@ -935,9 +935,9 @@ class S2PV1(SNPBase):
                   "sparameter_end_line":None,
                   }
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         SNPBase.__init__(self)
         self.elements=['data','noiseparameter_data','comments','option_line']
@@ -953,7 +953,7 @@ class S2PV1(SNPBase):
             self.sparameter_complex=self.options["sparameter_complex"]
             match=re.match(OPTION_LINE_PATTERN,self.option_line)
             # set the values associated with the option line
-            for key,value in match.groupdict().iteritems():
+            for key,value in match.groupdict().items():
                 self.__dict__[key.lower()]=value
             if re.match('db',self.format,re.IGNORECASE):
                 self.column_names=S2P_DB_COLUMN_NAMES
@@ -1025,7 +1025,7 @@ class S2PV1(SNPBase):
                 match=re.search(OPTION_LINE_PATTERN,line,re.IGNORECASE)
                 add_option_line=0
         # set the attributes associated with the option line
-        for key,value in match.groupdict().iteritems():
+        for key,value in match.groupdict().items():
                     self.__dict__[key.lower()]=value
         # now the option line attributes are set deduce column properties from them
         if re.match('db',self.format,re.IGNORECASE):
@@ -1073,7 +1073,7 @@ class S2PV1(SNPBase):
         #number of lines = option line + comments that start at zero + rows in sparameter data + rows in noise data
         # Is this different for snp? The only difference is noiseparameter_data.
         original_options=self.options
-        for key,value in temp_options.iteritems():
+        for key,value in temp_options.items():
             self.options[key]=value
         if self.comments is None:
             number_line_comments=0
@@ -1132,14 +1132,14 @@ class S2PV1(SNPBase):
         """Adds data to the sparameter attribute, which is a list of s-parameters. The
         data can be a list of 9 real numbers
          or dictionary with appropriate column names, note column names are not case sensitive"""
-        if type(row_data) is ListType:
+        if isinstance(row_data, ListType):
             if len(row_data) == 9:
                     self.data.append(row_data)
             else:
                 print("Could not add row, the data was a list of the wrong dimension, if you desire to add multiple"
                       "rows use add_sparameter_rows")
                 return
-        if type(row_data) is DictionaryType:
+        if isinstance(row_data, DictionaryType):
             new_row=[]
             for column_name in self.column_names:
                 #print row_data
@@ -1154,7 +1154,7 @@ class S2PV1(SNPBase):
         complex form for easy conversion and manipulation. Row_data is assumed to be of the same form that would be
         given to add_sparameter_row"""
 
-        if type(row_data) is ListType and len(row_data)==5 and type(row_data[1]) is ComplexType:
+        if isinstance(row_data, ListType) and len(row_data)==5 and isinstance(row_data[1], ComplexType):
             self.sparameter_complex.append(row_data)
         else:
             row_data=self.sparameter_row_to_complex(row_data=row_data)
@@ -1170,13 +1170,13 @@ class S2PV1(SNPBase):
                   "data")
         out_row=[]
         try:
-            if type(row_data) is StringType:
+            if isinstance(row_data, StringType):
                 row_data=re.search(self.row_pattern,row_data).groupdict()
-            elif type(row_data) is ListType:
+            elif isinstance(row_data, ListType):
                 row_data={self.column_names[index]:row_data[index] for index in range(9)}
-            if type(row_data) is not DictionaryType:
+            if not isinstance(row_data, DictionaryType):
                 raise
-            row_data={key:float(value) for key,value in row_data.iteritems()}
+            row_data={key:float(value) for key,value in row_data.items()}
             # now row data is in dictionary form with known keys, the tranformation is only based on self.format
             if re.match('db',self.format,re.IGNORECASE):
                 S11=cmath.rect(10.**(row_data["dbS11"]/20.),(math.pi/180.)*row_data["argS11"])
@@ -1205,14 +1205,14 @@ class S2PV1(SNPBase):
         """Adds data to the noiseparameter_data attribute, which is a list of noise parameters. The
         data can be a list of 5 real numbers dictionary with appropriate column names,
         note column names are not case sensitive"""
-        if type(row_data) is ListType:
+        if isinstance(row_data, ListType):
             if len(row_data) == 5:
                     self.noiseparameter_data.append(row_data)
             else:
                 print("Could not add row, the data was a list of the wrong dimension, if you desire to add multiple"
                       "rows use add_sparameter_rows")
                 return
-        if type(row_data) is DictionaryType:
+        if isinstance(row_data, DictionaryType):
             new_row=[]
             for column_name in self.noiseparameter_column_names:
                 new_row.append(float(row_data[column_name]))
@@ -1342,9 +1342,9 @@ class SNP(SNPBase):
                   "sparameter_end_line":None,
                   }
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # adds common functions from base class
         SNPBase.__init__(self)
@@ -1375,7 +1375,7 @@ class SNP(SNPBase):
             self.number_lines_per_sparameter=3
             self.wrap_value=6
         else:
-            self.number_lines_per_sparameter=self.number_ports**2/4
+            self.number_lines_per_sparameter=int(self.number_ports**2/4)
             self.wrap_value=8
         if file_path is not None:
             self.path=file_path
@@ -1387,7 +1387,7 @@ class SNP(SNPBase):
             self.sparameter_complex=self.options["sparameter_complex"]
             match=re.match(OPTION_LINE_PATTERN,self.option_line)
             # set the values associated with the option line
-            for key,value in match.groupdict().iteritems():
+            for key,value in match.groupdict().items():
                 self.__dict__[key.lower()]=value
             if re.match('db',self.format,re.IGNORECASE):
                 self.column_names=build_snp_column_names(self.number_ports,"db")
@@ -1481,7 +1481,7 @@ class SNP(SNPBase):
         else:
             for index,comment in enumerate(self.comments):
                 skipped=removed_lines
-                shift=map(lambda x: x<comment[1],skipped).count(True)
+                shift=list(map(lambda x: x<comment[1],skipped)).count(True)
                 self.comments[index][1]=self.comments[index][1]-shift
                 if comment[2]>1:
                     self.comments[index][2]=-1
@@ -1499,7 +1499,7 @@ class SNP(SNPBase):
                 match=re.search(OPTION_LINE_PATTERN,line,re.IGNORECASE)
                 add_option_line=0
         # set the attributes associated with the option line
-        for key,value in match.groupdict().iteritems():
+        for key,value in match.groupdict().items():
                     self.__dict__[key.lower()]=value
         # now the option line attributes are set deduce column properties from them
         self.column_names=build_snp_column_names(self.number_ports,self.format)
@@ -1518,7 +1518,7 @@ class SNP(SNPBase):
         # zero + rows in sparameter data*number_lines_per_sparameter + rows in noise data
         # Is this different for snp? The only difference is noiseparameter_data.
         original_options=self.options
-        for key,value in temp_options.iteritems():
+        for key,value in temp_options.items():
             self.options[key]=value
         if self.comments is None:
             number_line_comments=0
@@ -1581,14 +1581,14 @@ class SNP(SNPBase):
          or dictionary with appropriate column names, note column names are not case sensitive
          it is assumed that the row_data is in the format that the model is currently in. Check
          SNP.format if in doubt"""
-        if type(row_data) is ListType:
+        if isinstance(row_data, ListType):
             if len(row_data) == self.number_ports**2+1:
                     self.data.append(row_data)
             else:
                 print("Could not add row, the data was a list of the wrong dimension, if you desire to add multiple"
                       "rows use add_sparameter_rows")
                 return
-        if type(row_data) is DictionaryType:
+        if isinstance(row_data, DictionaryType):
             new_row=[]
             for column_name in self.column_names:
                 #print row_data
@@ -1601,7 +1601,7 @@ class SNP(SNPBase):
         complex form for easy conversion and manipulation. Row_data is assumed to be of the same form that would be
         given to add_sparameter_row"""
 
-        if type(row_data) is ListType and len(row_data)==(self.number_ports**2+1) and type(row_data[1]) is ComplexType:
+        if isinstance(row_data, ListType) and len(row_data)==(self.number_ports**2+1) and isinstance(row_data[1], ComplexType):
             self.sparameter_complex.append(row_data)
         else:
             row_data=self.sparameter_row_to_complex(row_data=row_data)
@@ -1616,14 +1616,14 @@ class SNP(SNPBase):
                   "data")
         out_row=[]
         try:
-            if type(row_data) is StringType:
+            if isinstance(row_data, StringType):
                 row_data=parse_combined_float_list([row_data])[0]
                 row_data={self.column_names[index]:row_data[index] for index in range(len(self.column_names))}
-            elif type(row_data) is ListType:
+            elif isinstance(row_data, ListType):
                 row_data={self.column_names[index]:row_data[index] for index in range(len(self.column_names))}
-            if type(row_data) is not DictionaryType:
+            if not isinstance(row_data, DictionaryType):
                 raise
-            row_data={key:float(value) for key,value in row_data.iteritems()}
+            row_data={key:float(value) for key,value in row_data.items()}
             # now row data is in dictionary form with known keys, the tranformation is only based on self.format
             if self.number_ports==2:
                 if re.match('db',self.format,re.IGNORECASE):
@@ -1744,9 +1744,9 @@ class SNP(SNPBase):
                   "file_name":None,
                   "type":"matplotlib"}
         plot_options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             plot_options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             plot_options[key]=value
         # plot data
 
@@ -1792,14 +1792,14 @@ class SNP(SNPBase):
 def test_option_string():
     """Tests the regex for extracting option string values"""
     match=re.search(OPTION_LINE_PATTERN,"# GHz S RI R 50")
-    print match.groupdict()
-    print match.groupdict()["Format"] in FORMATS
+    print(match.groupdict())
+    print(match.groupdict()["Format"] in FORMATS)
 
 def test_S1PV1(file_path="OnePortTouchstoneTestFile.s1p"):
     """Tests the s1pv1 class"""
     os.chdir(TESTS_DIRECTORY)
     new_table=S1PV1(file_path)
-    print new_table
+    print(new_table)
     print_s1p_attributes(new_table=new_table)
     new_table.change_data_format(new_format='DB')
     print_s1p_attributes(new_table=new_table)
@@ -1807,35 +1807,35 @@ def test_S1PV1(file_path="OnePortTouchstoneTestFile.s1p"):
     print_s1p_attributes(new_table=new_table)
     new_table.change_data_format(new_format='RI')
     print_s1p_attributes(new_table=new_table)
-    print new_table
+    print(new_table)
     new_table.show()
 
 def test_s2pv1(file_path="thru.s2p"):
     """Tests the s2pv1 class"""
     os.chdir(TESTS_DIRECTORY)
     new_table=S2PV1(file_path)
-    print new_table
+    print(new_table)
     print("The Table as read in with line numbers is")
     for index,line in enumerate(new_table.lines):
-        print("{0} {1}".format(index,line))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('data',str(new_table.data)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('noiseparameter_data',str(new_table.noiseparameter_data)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('comments',str(new_table.comments)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('option_line',str(new_table.option_line)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('format',str(new_table.format)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('column_names',str(new_table.column_names)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('noiseparameter_column_names',str(new_table.noiseparameter_column_names)))
+        print(("{0} {1}".format(index,line)))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('data',str(new_table.data))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('noiseparameter_data',str(new_table.noiseparameter_data))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('comments',str(new_table.comments))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('option_line',str(new_table.option_line))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('format',str(new_table.format))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('column_names',str(new_table.column_names))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('noiseparameter_column_names',str(new_table.noiseparameter_column_names))))
 def test_SNP(file_path="thru.s2p"):
     """Tests the SNP class"""
     os.chdir(TESTS_DIRECTORY)
@@ -1843,25 +1843,25 @@ def test_SNP(file_path="thru.s2p"):
     #print new_table
     print("The Table as read in with line numbers is")
     for index,line in enumerate(new_table.lines):
-        print("{0} {1}".format(index,line))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('data',str(new_table.data)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('comments',str(new_table.comments)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('option_line',str(new_table.option_line)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('format',str(new_table.format)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('column_names',str(new_table.column_names)))
-    print("-"*80)
-    print("The attribute {0} is {1}".format('sparameter_lines',str(new_table.sparameter_lines)))
-    print("-"*80)
-    print str(new_table)
+        print(("{0} {1}".format(index,line)))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('data',str(new_table.data))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('sparameter_complex',str(new_table.sparameter_complex))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('comments',str(new_table.comments))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('option_line',str(new_table.option_line))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('format',str(new_table.format))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('frequncy_units',str(new_table.frequency_units))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('column_names',str(new_table.column_names))))
+    print(("-"*80))
+    print(("The attribute {0} is {1}".format('sparameter_lines',str(new_table.sparameter_lines))))
+    print(("-"*80))
+    print(str(new_table))
 
 def test_change_format(file_path="thru.s2p"):
     """Tests the s2pv1 class"""
@@ -1874,7 +1874,7 @@ def test_change_format(file_path="thru.s2p"):
     print_s2p_attributes(new_table=new_table)
     new_table.change_data_format(new_format='RI')
     print_s2p_attributes(new_table=new_table)
-    print new_table
+    print(new_table)
     new_table.show()
 def test_change_format_SNP(file_path="thru.s2p"):
     """Tests the s2pv1 class"""
@@ -1892,37 +1892,37 @@ def test_change_frequency_units(file_path="thru.s2p"):
     """Tests the models change_frequency_units method"""
     os.chdir(TESTS_DIRECTORY)
     new_table=SNP(file_path)
-    print("The frequency units are {0},"
+    print(("The frequency units are {0},"
           "and the frequency values are {1}".format(new_table.frequency_units,
-                                             new_table.get_column("Frequency")))
+                                             new_table.get_column("Frequency"))))
     new_table.change_frequency_units("Hz")
-    print("The frequency units are {0},"
+    print(("The frequency units are {0},"
           "and the frequency values are {1}".format(new_table.frequency_units,
-                                             new_table.get_column("Frequency")))
+                                             new_table.get_column("Frequency"))))
     new_table.change_frequency_units("MHz")
-    print("The frequency units are {0},"
+    print(("The frequency units are {0},"
           "and the frequency values are {1}".format(new_table.frequency_units,
-                                             new_table.get_column("Frequency")))
+                                             new_table.get_column("Frequency"))))
     new_table.change_frequency_units("kHz")
-    print("The frequency units are {0},"
+    print(("The frequency units are {0},"
           "and the frequency values are {1}".format(new_table.frequency_units,
-                                             new_table.get_column("Frequency")))
+                                             new_table.get_column("Frequency"))))
     new_table.change_frequency_units("THz")
-    print("The frequency units are {0},"
+    print(("The frequency units are {0},"
           "and the frequency values are {1}".format(new_table.frequency_units,
-                                             new_table.get_column("Frequency")))
+                                             new_table.get_column("Frequency"))))
     new_table.change_frequency_units("Hz")
-    print("The frequency units are {0},"
+    print(("The frequency units are {0},"
           "and the frequency values are {1}".format(new_table.frequency_units,
-                                             new_table.get_column("Frequency")))
-    print new_table
+                                             new_table.get_column("Frequency"))))
+    print(new_table)
     new_table.show()
 def test_build_snp_column_names():
     """Tests the function build_snp_column_names"""
     for n_port in range(1,10):
         for format in ["RI","DB","MA"]:
-            print("The column names for a {0}-port device in {1} format are ".format(n_port,format))
-            print("{0}".format(build_snp_column_names(number_of_ports=n_port,format=format)))
+            print(("The column names for a {0}-port device in {1} format are ".format(n_port,format)))
+            print(("{0}".format(build_snp_column_names(number_of_ports=n_port,format=format))))
 def test_s2p_mean(s2p_list=["thru.s2p","thru.s2p"]):
     """Tests the s2p_mean function by applying it the files in TESTS_DIRECTORY"""
     os.chdir(TESTS_DIRECTORY)
@@ -1951,10 +1951,10 @@ def test_add_comment(file_path="thru.s2p"):
     os.chdir(TESTS_DIRECTORY)
     s2p=SNP(file_path)
     print("Before adding a comment")
-    print("-"*80)
+    print(("-"*80))
     print(s2p)
     print("After adding a comment")
-    print("-"*80)
+    print(("-"*80))
     s2p.add_comment("A new comment")
     print(s2p)
 

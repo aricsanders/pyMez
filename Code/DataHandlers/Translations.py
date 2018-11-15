@@ -55,12 +55,19 @@ import sys
 import json
 import subprocess
 import base64
-import StringIO
-import cStringIO
+import io
+import io
 import re
 #-----------------------------------------------------------------------------
 # Third Party Imports
 sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
+try:
+    from Code.Utils.Types import *
+except:
+    print("The module pyMez.Code.Utils.Types was not found or had an error,"
+          "please check module or put it on the python path")
+    raise ImportError
+
 try:
     from Code.DataHandlers.GeneralModels import *
 except:
@@ -160,6 +167,8 @@ INKSCAPE_PATH=r'C:\Program Files (x86)\Inkscape\inkscape.exe'
 "Path to the Inkscape executable."
 WKHTML_PATH=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
 "Path to the wkhtmltopdf executable."
+
+
 #-----------------------------------------------------------------------------
 # Module Functions
 # todo: rename all translations as UpperCamelCase_to_UpperCamelCase
@@ -210,14 +219,14 @@ def StringList_to_File(string_list,file_name="test"):
     return file_name
 def String_to_StringIo(string):
     """Converts a string to a StringIO.StringIO object"""
-    return StringIO.StringIO(string)
+    return io.StringIO(string)
 def StringIo_to_String(string_io_object):
     """Converts a StringIO.StringIO object to a string """
     return string_io_object.getvalue()
 def String_to_CStringIo(string):
     """Converts a string to a StringIO.StringIO object.
     Inverse of CStringIo_to_StringIo"""
-    return cStringIO.StringIO(string)
+    return io.StringIO(string)
 def CStringIo_to_String(string_io_object):
     """Converts a StringIO.StringIO object to a string.
      Inverse of String_to_CStringIo"""
@@ -229,13 +238,17 @@ def String_to_DownloadLink(string,**options):
               "mime_type":"text/plain",
               "text":"Download File"}
     link_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         link_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         link_options[key]=value
-    if type(string) not in StringTypes:
+    if not isinstance(string,str):
         string=str(string)
-    base_64=base64.encodestring(string)
+    try:
+        string=string.encode()
+        base_64 = base64.b64encode(string).decode()
+    except:
+        base_64 = base64.b64encode(string)
     out_text="<a href='data:{0};base64,{1}' download = '{2}'>{3}</a>".format(link_options["mime_type"],
                                                                                     base_64,
                                                                                     link_options["suggested_name"],
@@ -250,7 +263,10 @@ def DownloadLink_to_String(download_link):
 
     if re.search(encoded_pattern, download_link):
         encoded_data = re.search(encoded_pattern, download_link).groupdict()["encoded_text"]
-        decoded_data = base64.decodestring(encoded_data)
+        try:
+            decoded_data = base64.b64decode(bytes(encoded_data))
+        except:
+            decoded_data = base64.b64decode(encoded_data)
         return decoded_data
     else:
         print("Could Not Decode Link")
@@ -261,13 +277,16 @@ def String_to_SVGAnchorLinkElement(string,**options):
     defaults={"suggested_name":"test.txt",
               "mime_type":"text/plain"}
     link_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         link_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         link_options[key]=value
-    if type(string) not in StringTypes:
+    if not isinstance(string,str):
         string=str(string)
-    base_64=base64.encodestring(string)
+    try:
+        base_64=base64.b64encode(string.encode()).decode()
+    except:
+        base_64 = base64.b64encode(string.encode())
     data_uri="data:{0};base64,{1}".format(link_options["mime_type"],base_64)
     anchor_dictionary={"tag":"a","xlink:href":data_uri,"xlink:download":link_options["suggested_name"]}
     out_element=make_html_element(**anchor_dictionary)
@@ -281,9 +300,9 @@ def AsciiDataTable_to_XmlDataTable(ascii_data_table,**options):
               "style_sheet":"./DEFAULT_STYLE.xsl"
                      }
     XML_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         XML_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         XML_options[key]=value
     # Todo: Clean this up so the AsciiDataTable.column_names always goes to an XML attribute that is properly named
     for index,column_name in enumerate(ascii_data_table.column_names[:]):
@@ -291,16 +310,16 @@ def AsciiDataTable_to_XmlDataTable(ascii_data_table,**options):
 
     data_description={}
     if ascii_data_table.options["column_descriptions"] is not None:
-        if type(ascii_data_table.options["column_descriptions"]) is DictionaryType:
-            for key,value in ascii_data_table.options["column_descriptions"].iteritems():
+        if isinstance(ascii_data_table.options["column_descriptions"], DictionaryType):
+            for key,value in ascii_data_table.options["column_descriptions"].items():
                 data_description[key]=value
-        elif type(ascii_data_table.options["column_descriptions"]) is ListType:
+        elif isinstance(ascii_data_table.options["column_descriptions"], ListType):
             for index,value in enumerate(ascii_data_table.options["column_descriptions"]):
                 key=ascii_data_table.column_names[index]
                 data_description[key]=value
 
     if ascii_data_table.metadata is not None:
-        for key,value in ascii_data_table.metadata.iteritems():
+        for key,value in ascii_data_table.metadata.items():
             data_description[key]=value
     else:
         if ascii_data_table.header is not None:
@@ -320,9 +339,9 @@ def XmlBase_to_XsltResultString(xml_model,**options):
     """Uses the xml_model's to_HTML method to return a HTML string"""
     defaults={"style_sheet":os.path.join(TESTS_DIRECTORY,XSLT_REPOSITORY,"DEFAULT_STYLE.xsl")}
     transform_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         transform_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         transform_options[key]=value
     return xml_model.to_HTML(**transform_options)
 
@@ -331,9 +350,9 @@ def XmlBase_to_XsltResultFile(xml_model,**options):
     defaults={"style_sheet":os.path.join(TESTS_DIRECTORY,XSLT_REPOSITORY,"DEFAULT_STYLE.xsl"),
               "file_path":"test.xml"}
     transform_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         transform_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         transform_options[key]=value
     xml_model.save_HTML(XSLT=transform_options["style_sheet"],file_path=transform_options["file_path"])
     return transform_options["file_path"]
@@ -365,7 +384,7 @@ def AsciiDataTable_to_DataFrameDictionary(AsciiDataTable):
             # needs to be before data search
             elif re.search('meta',element,re.IGNORECASE):
                 #print("{0} is {1}".format('element',element))
-                metadata_table=pandas.DataFrame([[key,value] for key,value in AsciiDataTable.metadata.iteritems()],
+                metadata_table=pandas.DataFrame([[key,value] for key,value in AsciiDataTable.metadata.items()],
                                 columns=["Property","Value"])
                 output_dict["Metadata"]=metadata_table
             elif re.search('data|^meta',element,re.IGNORECASE):
@@ -416,11 +435,11 @@ def DataFrameDictionary_to_AsciiDataTable(DataFrame_dict, **options):
                 "data_delimiter": "  ", "data_table_element_separator": None}
     # defaults={}
     table_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         table_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         table_options[key] = value
-    keys = DataFrame_dict.keys()
+    keys = list(DataFrame_dict.keys())
     for key in keys:
         table_key = key
         if re.search("comments", key, re.IGNORECASE):
@@ -429,7 +448,7 @@ def DataFrameDictionary_to_AsciiDataTable(DataFrame_dict, **options):
 
         elif key in ["data", "Data"]:
             table_options["column_names"] = DataFrame_dict[key].columns.tolist()
-            table_options["column_types"] = map(lambda x: str(x), DataFrame_dict[key].dtypes.tolist())
+            table_options["column_types"] = [str(x) for x in DataFrame_dict[key].dtypes.tolist()]
             table_options["data"] = DataFrame_dict[key].as_matrix().tolist()
 
         elif re.search("footer", key, re.IGNORECASE):
@@ -464,7 +483,7 @@ def DataFrameDictionary_to_HdfFile(DataFrame_dict, hdf_file_name="Test.hd5"):
     keys = sorted(DataFrame_dict.keys())
     for key in keys:
         DataFrame_dict[key].to_hdf(hdf_file_name, key)
-    print("{0} is {1}".format('key', key))
+    print(("{0} is {1}".format('key', key)))
     return hdf_file_name
 
 
@@ -472,7 +491,7 @@ def HdfFile_to_DataFrameDictionary(hdf_file_name):
     """Creates a dictionary of pandas.DataFrames given a hd5 file name, does this require the table names?
     """
     hdf = h5py.File(hdf_file_name)
-    keys = hdf.keys()
+    keys = list(hdf.keys())
     pandas_dictionary = {key: pandas.read_hdf(hdf_file_name, key) for key in keys}
     return pandas_dictionary
 
@@ -532,7 +551,7 @@ def File_to_AsciiDataTable(paths):
     [file_name, schema] = paths
     options = read_schema(schema)
     table = AsciiDataTable(file_name, **options)
-    print table
+    print(table)
     return table
 
 
@@ -553,14 +572,14 @@ def DataFrame_to_AsciiDataTable(pandas_data_frame,**options):
     # Set up defaults and pass options
     defaults={}
     conversion_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         conversion_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         conversion_options[key]=value
 
     conversion_options["column_names"]=pandas_data_frame.columns.tolist()[:]
     conversion_options["data"]=pandas_data_frame.as_matrix().tolist()[:]
-    conversion_options["column_types"]=map(lambda x:str(x),pandas_data_frame.dtypes.tolist()[:])
+    conversion_options["column_types"]=[str(x) for x in pandas_data_frame.dtypes.tolist()[:]]
 
     new_table=AsciiDataTable(None,**conversion_options)
     return new_table
@@ -574,28 +593,28 @@ def AsciiDataTable_to_ExcelFile(ascii_data_table,file_path=None):
 def S2PV1_to_XmlDataTable(s2p,**options):
     """Transforms a s2p's sparameters to a XmlDataTable. Converts the format to #GHz DB first"""
     defaults={"specific_descriptor":s2p.options["specific_descriptor"],
-                     "general_descriptor":s2p.options["general_descriptor"],
+                      "general_descriptor":s2p.options["general_descriptor"],
                       "directory":s2p.options["directory"],
-              "style_sheet":"../XSL/S2P_DB_STYLE.xsl"
-                     }
+                      "style_sheet":"../XSL/S2P_DB_STYLE.xsl",
+                      "format":"DB"}
     XML_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         XML_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         XML_options[key]=value
     data_description={}
     if s2p.options["column_descriptions"] is not None:
-        for key,value in s2p.options["column_descriptions"].iteritems():
+        for key,value in s2p.options["column_descriptions"].items():
             data_description[key]=value
     if s2p.metadata is not None:
-        for key,value in s2p.metadata.iteritems():
+        for key,value in s2p.metadata.items():
             data_description[key]=value
     else:
         if s2p.comments is not None:
             for index,line in enumerate(s2p.comments):
                 key="Comments_{0:0>3}".format(index)
                 data_description[key]=line[0]
-    s2p.change_data_format(new_format='DB')
+    s2p.change_data_format(new_format=XML_options["format"])
     s2p.change_frequency_units('GHz')
     data_dictionary={"Data_Description":data_description,"Data":s2p.get_data_dictionary_list()}
     XML_options["data_dictionary"]=data_dictionary
@@ -610,16 +629,16 @@ def SNP_to_XmlDataTable(snp,**options):
               "style_sheet":"../XSL/DEFAULT_MEASUREMENT_STYLE.xsl"
                      }
     XML_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         XML_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         XML_options[key]=value
     data_description={}
     if snp.options["column_descriptions"] is not None:
-        for key,value in snp.options["column_descriptions"].iteritems():
+        for key,value in snp.options["column_descriptions"].items():
             data_description[key]=value
     if snp.metadata is not None:
-        for key,value in snp.metadata.iteritems():
+        for key,value in snp.metadata.items():
             data_description[key]=value
     else:
         if snp.comments is not None:
@@ -641,16 +660,16 @@ def S1PV1_to_XmlDataTable(s1p,**options):
               "style_sheet":"../XSL/S1P_STYLE.xsl"
                      }
     XML_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         XML_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         XML_options[key]=value
     data_description={}
     if s1p.options["column_descriptions"] is not None:
-        for key,value in s1p.options["column_descriptions"].iteritems():
+        for key,value in s1p.options["column_descriptions"].items():
             data_description[key]=value
     if s1p.metadata is not None:
-        for key,value in s1p.metadata.iteritems():
+        for key,value in s1p.metadata.items():
             data_description[key]=value
     else:
         if s1p.comments is not None:
@@ -673,9 +692,9 @@ def TwoPortCalrepModel_to_XmlDataTable(two_port_calrep_table,**options):
               "style_sheet":"../XSL/TWO_PORT_CALREP_STYLE.xsl"
                      }
     XML_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         XML_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         XML_options[key]=value
     new_xml=AsciiDataTable_to_XmlDataTable(table,**XML_options)
     return new_xml
@@ -712,9 +731,9 @@ def OnePortCalrep_to_XmlDataTable(one_port_calrep_table,**options):
               "style_sheet":"../XSL/ONE_PORT_CALREP_STYLE.xsl"
                      }
     XML_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         XML_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         XML_options[key]=value
     new_xml=AsciiDataTable_to_XmlDataTable(table,**XML_options)
     return new_xml
@@ -728,9 +747,9 @@ def TwoPortRawModel_to_XmlDataTable(two_port_raw_table,**options):
               "style_sheet":"../XSL/TWO_PORT_RAW_STYLE.xsl"
                      }
     XML_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         XML_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         XML_options[key]=value
     new_xml=AsciiDataTable_to_XmlDataTable(table,**XML_options)
     return new_xml
@@ -780,9 +799,9 @@ def PowerRawModel_to_XmlDataTable(power_raw_table,**options):
               "style_sheet":"../XSL/POWER_RAW_STYLE.xsl"
                      }
     XML_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         XML_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         XML_options[key]=value
     new_xml=AsciiDataTable_to_XmlDataTable(table,**XML_options)
     return new_xml
@@ -876,8 +895,7 @@ def MatFile_to_AsciiTable(matlab_file_name):
     with no header or footer."""
     matlab_data_dictionary=loadmat(matlab_file_name)
     ascii_data_table=AsciiDataTable(None,
-                                    column_names=map(lambda x: x.rstrip().lstrip(),
-                                                     matlab_data_dictionary["column_names"].tolist()),
+                                    column_names=[x.rstrip().lstrip() for x in matlab_data_dictionary["column_names"].tolist()],
                                      data=matlab_data_dictionary["data"].tolist())
     return ascii_data_table
 
@@ -987,7 +1005,7 @@ def Image_to_FileType(pil_image,file_path=None,extension="png"):
     new_file_name=root_name+"."+extension.replace(".","")
     if re.search('jp|bmp',extension,re.IGNORECASE):
         pil_image.convert('RGB')
-    print("{0} is {1}".format("pil_image.mode",pil_image.mode))
+    print(("{0} is {1}".format("pil_image.mode",pil_image.mode)))
     pil_image.save(new_file_name)
     return new_file_name
 
@@ -1010,7 +1028,7 @@ def Image_to_FaviconFile(pil_image,file_path="favicon.png"):
 def PngFile_to_Base64(file_name):
     """Converts a png file to a base 64 encoded string"""
     in_file=open(file_name, "rb")
-    encoded=base64.b64encode(in_file.read())
+    encoded=base64.b64encode(in_file.read()).decode()
     return encoded
 
 def Base64_to_PngFile(base64_encoded_png,file_name="test.png"):
@@ -1146,7 +1164,7 @@ def FigFile_to_MatplotlibFigure(filename,fignr=1):
         leg_entries = tuple(legs.properties.String)
         py_locs = ['upper center','lower center','right','left','upper right','upper left','lower right','lower left','best']
         MAT_locs=['North','South','East','West','NorthEast', 'NorthWest', 'SouthEast', 'SouthWest','Best']
-        Mat2py = dict(zip(MAT_locs,py_locs))
+        Mat2py = dict(list(zip(MAT_locs,py_locs)))
         location = legs.properties.Location
         legend(leg_entries,loc=Mat2py[location])
     hold(False)
@@ -1171,7 +1189,7 @@ def Dictionary_to_JsonString(python_dictionary):
 def JsonString_to_Dictionary(json_string):
     """Uses json module to return a python dictionary"""
     out_dictionary=json.loads(json_string)
-    for key,value in out_dictionary.iteritems():
+    for key,value in out_dictionary.items():
         out_dictionary[key]=replace_None(value)
     return out_dictionary
 
@@ -1194,7 +1212,7 @@ def JsonFile_to_JsonString(json_file_name):
 def Dictionary_to_XmlString(dictionary=None,char_between='\n'):
     """Transforms a python dictionary to a XML string of the form <key>value</key>"""
     string_output=''
-    for key,value in dictionary.iteritems():
+    for key,value in dictionary.items():
         xml_open="<"+str(key)+">"
         xml_close="</"+str(key)+">"
         string_output=string_output+xml_open+str(value)+xml_close+char_between
@@ -1217,7 +1235,7 @@ def XmlString_to_Dictionary(xml_string):
 def Dictionary_to_HtmlMetaString(python_dictionary):
     """Converts a python dictionary to meta tags for html"""
     out_string=""
-    for key,value in python_dictionary.iteritems():
+    for key,value in python_dictionary.items():
         out_string=out_string+"<meta name="+'"{0}"'.format(key)+" content="+'"{0}"'.format(value)+" />\n"
     return out_string
 
@@ -1241,7 +1259,7 @@ def Dictionary_to_XmlTupleString(python_dictionary):
     postfix=" />"
     inner=""
     xml_out=""
-    for key,value in python_dictionary.iteritems():
+    for key,value in python_dictionary.items():
         inner=inner+'{0}="{1}" ' .format(key,value)
         xml_out=prefix+inner+postfix
     return xml_out
@@ -1256,7 +1274,7 @@ def XmlTupleString_to_Dictionary(tuple_line):
     out_dictionary={}
     for line in lines:
         split_line=line.split("=")
-        print split_line
+        print(split_line)
         if len(split_line)==2:
             key=split_line[0].rstrip().lstrip().replace("\"","")
             value=split_line[1].rstrip().lstrip().replace("\"","")
@@ -1277,7 +1295,7 @@ def Dictionary_to_ListList(python_dictionary):
     """Returns a list with two lists : [[key_list][item_list]]"""
     key_list=[]
     value_list=[]
-    for key,value in python_dictionary.iteritems():
+    for key,value in python_dictionary.items():
         key_list.append(key)
         value_list.append(value)
     out_list=[key_list,value_list]
@@ -1294,7 +1312,7 @@ def ListList_to_Dictionary(list_list):
 
 def Dictionary_to_DataFrame(python_dictionary):
     """Takes a python dictionary and maps it to a pandas dataframe"""
-    data_frame=pandas.DataFrame([[key,value] for key,value in python_dictionary.iteritems()],
+    data_frame=pandas.DataFrame([[key,value] for key,value in python_dictionary.items()],
                                 columns=["Property","Value"])
     data_frame.fillna("None")
     return data_frame
@@ -1309,7 +1327,7 @@ def Dictionary_to_HeaderList(python_dictionary):
     "Converts a python dictionary to a list of strings in the form ['key1=value1',..'keyN=valueN']"
     out_string=""
     out_list=[]
-    for key,value in python_dictionary.iteritems():
+    for key,value in python_dictionary.items():
         out_string="{0}={1}".format(key,value)
         out_list.append(out_string)
     return out_list
@@ -1328,8 +1346,8 @@ def HeaderList_to_Dictionary(header_list):
 def MatFile_to_AsciiDataTableKeyValue(matlab_file_name):
     matlab_data_dictionary=loadmat(matlab_file_name)
     #print matlab_data_dictionary
-    data=[map(lambda x: x.rstrip().lstrip(),row) for row in matlab_data_dictionary["data"].tolist()]
-    column_names=map(lambda x: x.rstrip().lstrip(), matlab_data_dictionary["column_names"].tolist())
+    data=[[x.rstrip().lstrip() for x in row] for row in matlab_data_dictionary["data"].tolist()]
+    column_names=[x.rstrip().lstrip() for x in matlab_data_dictionary["column_names"].tolist()]
     ascii_data_table=AsciiDataTable(None,column_names=column_names,data=data)
     return ascii_data_table
 # Word Translations Warning COM interface can be very unreliable
@@ -1753,7 +1771,7 @@ def test_AsciiDataTable_to_XmlDataTable(input_file="700437.asc"):
     os.chdir(TESTS_DIRECTORY)
     one_port=OnePortRawModel(input_file)
     XML_one_port=AsciiDataTable_to_XmlDataTable(one_port)
-    print XML_one_port
+    print(XML_one_port)
     XML_one_port.save()
     XML_one_port.save_HTML()
 
@@ -1776,9 +1794,9 @@ def test_StatistiCALSolutionModel_to_XmlDataTable(input_file="Solution_Plus.txt"
     solution=StatistiCALSolutionModel(input_file)
     options={"style_sheet":"../XSL/DEFAULT_MEASUREMENT_STYLE.xsl"}
     XML_solution=AsciiDataTable_to_XmlDataTable(solution,**options)
-    print XML_solution
+    print(XML_solution)
     XML_solution.show()
-    print XML_solution.to_HTML()
+    print(XML_solution.to_HTML())
 
 def test_AsciiDataTable_to_DataFrame(input_file="700437.asc"):
     os.chdir(TESTS_DIRECTORY)
@@ -1803,7 +1821,7 @@ def timeit_script(script='test_AsciiDataTable_to_XmlDataTable()',
                   setup="from __main__ import test_AsciiDataTable_to_XmlDataTable",n_loops=10):
     """Returns the mean time from running script n_loops time. To import a script, put a string
     import statement in setup"""
-    print timeit.timeit(script,setup=setup,number=n_loops)/n_loops
+    print(timeit.timeit(script,setup=setup,number=n_loops)/n_loops)
 
 def test_S2P_to_XmlDataTable_02(file_path="thru.s2p",**options):
     os.chdir(TESTS_DIRECTORY)
@@ -1850,7 +1868,7 @@ def test_PowerRawModel_to_XmlDataTable(file_path='CTNP15.A1_042601',**options):
     """Test's the conversion of the TwoPorRaw to XmlDataTable"""
     os.chdir(TESTS_DIRECTORY)
     power=PowerRawModel(file_path)
-    print power
+    print(power)
     xml=PowerRawModel_to_XmlDataTable(power,**options)
     xml.save("SavedTestPowerRaw.xml")
     xml.save_HTML(file_path="SavedTestPowerPortRaw.html")
@@ -1859,9 +1877,9 @@ def test_JBSparameter_to_S2PV1(file_path='QuartzRefExample_L1_g10_HF'):
     os.chdir(TESTS_DIRECTORY)
     table=JBSparameter(file_path)
     s2p=JBSparameter_to_S2PV1(table)
-    print("Before conversion the JBSparameter file is {0} ".format(table))
+    print(("Before conversion the JBSparameter file is {0} ".format(table)))
     s2p.change_data_format('RI')
-    print("After Conversion the JBSparameter file is {0} ".format(s2p))
+    print(("After Conversion the JBSparameter file is {0} ".format(s2p)))
     s2p.show()
 #-----------------------------------------------------------------------------
 # Module Runner

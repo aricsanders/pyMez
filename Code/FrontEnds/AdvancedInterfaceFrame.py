@@ -83,7 +83,7 @@ def get_top_parent(window):
     try:
         parent=window.Parent
         print(parent)
-        if parent in [None,''] or not type(parent) is InstanceType:
+        if parent in [None,''] or not isinstance(parent, InstanceType):
             raise
         get_top_parent(parent)
     except:
@@ -198,12 +198,12 @@ class AdvancedInterfaceFrame(wx.Frame):
     def _init_coll_ToolMenu_Items(self, parent):
         # generated method, don't edit
 
-        parent.Append(help=u'Runs a python program as a script',
+        parent.Append(help='Runs a python program as a script',
               id=wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON,
-              kind=wx.ITEM_NORMAL, text=u'Run Python Module As a Script')
-        parent.Append(help=u'Load Scripts from a python Module',
+              kind=wx.ITEM_NORMAL, text='Run Python Module As a Script')
+        parent.Append(help='Load Scripts from a python Module',
               id=wxID_BASICINTERFACEFRAMETOOLMENULOADSCRIPTS,
-              kind=wx.ITEM_NORMAL, text=u'Load Scripts from Module')
+              kind=wx.ITEM_NORMAL, text='Load Scripts from Module')
         self.Bind(wx.EVT_MENU, self.OnToolMenuRun_pythonMenu,
               id=wxID_BASICINTERFACEFRAMETOOLMENURUN_PYTHON)
         self.Bind(wx.EVT_MENU, self.OnToolMenuLoadscriptsMenu,
@@ -212,12 +212,12 @@ class AdvancedInterfaceFrame(wx.Frame):
     def _init_coll_FileMenu_Items(self, parent):
         # generated method, don't edit
 
-        parent.Append(help=u'Open a file',
+        parent.Append(help='Open a file',
               id=wxID_BASICINTERFACEFRAMEFILEMENUOPEN, kind=wx.ITEM_NORMAL,
-              text=u'Open')
-        parent.Append(help=u'Adds a new panel to main notebook',
+              text='Open')
+        parent.Append(help='Adds a new panel to main notebook',
               id=wxID_BASICINTERFACEFRAMEFILEMENUNEW, kind=wx.ITEM_NORMAL,
-              text=u'New Panel')
+              text='New Panel')
         self.Bind(wx.EVT_MENU, self.OnFileMenuOpenMenu,
               id=wxID_BASICINTERFACEFRAMEFILEMENUOPEN)
         self.Bind(wx.EVT_MENU, self.OnFileMenuNewMenu,
@@ -226,34 +226,34 @@ class AdvancedInterfaceFrame(wx.Frame):
     def _init_coll_InterfaceMenuBar_Menus(self, parent):
         # generated method, don't edit
 
-        parent.Append(menu=self.FileMenu, title=u'File')
-        parent.Append(menu=self.HelpMenu, title=u'Help')
-        parent.Append(menu=self.ToolMenu, title=u'Tools')
+        parent.Append(menu=self.FileMenu, title='File')
+        parent.Append(menu=self.HelpMenu, title='Help')
+        parent.Append(menu=self.ToolMenu, title='Tools')
 
     def _init_coll_UpperInterface_Pages(self, parent):
         # generated method, don't edit
 
         parent.AddPage(imageId=-1, page=self.Display, select=True,
-              text=u'Display')
+              text='Display')
         parent.AddPage(imageId=-1, page=self.PlotPanel, select=False,
-              text=u'Plot')
+              text='Plot')
         parent.AddPage(imageId=-1, page=self.panel1, select=False,
-              text=u'Keithley IV')
+              text='Keithley IV')
 
     def _init_coll_LowerInterface_Pages(self, parent):
         # generated method, don't edit
 
-        parent.AddPage(imageId=-1, page=self.Shell, select=True, text=u'Shell')
+        parent.AddPage(imageId=-1, page=self.Shell, select=True, text='Shell')
         parent.AddPage(imageId=-1, page=self.LogsPanel, select=False,
-              text=u'Logs')
+              text='Logs')
         parent.AddPage(imageId=-1, page=self.ArbDBPanel, select=False,
-              text=u'Files')
+              text='Files')
 
     def _init_coll_InterfaceStatusBar_Fields(self, parent):
         # generated method, don't edit
         parent.SetFieldsCount(1)
 
-        parent.SetStatusText(number=0, text=u'Status')
+        parent.SetStatusText(number=0, text='Status')
 
         parent.SetStatusWidths([-1])
 
@@ -263,14 +263,14 @@ class AdvancedInterfaceFrame(wx.Frame):
         parent.DoAddTool(bitmap=wx.Bitmap(str(os.path.join(IMAGE_DIRECTORY,'Component.png')),
               wx.BITMAP_TYPE_PNG), bmpDisabled=wx.NullBitmap,
               id=wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA,
-              kind=wx.ITEM_NORMAL, label=u'Boa',
-              longHelp=u'Launch Boa Constructor',
-              shortHelp=u'Launch Boa Constructor')
+              kind=wx.ITEM_NORMAL, label='Boa',
+              longHelp='Launch Boa Constructor',
+              shortHelp='Launch Boa Constructor')
         parent.DoAddTool(bitmap=wx.Bitmap(str(os.path.join(IMAGE_DIRECTORY,'jupyter-logo.png')),
               wx.BITMAP_TYPE_PNG), bmpDisabled=wx.NullBitmap,
               id=wxID_BASICINTERFACEFRAMEINTERFACETOOLBARSAGE,
-              kind=wx.ITEM_NORMAL, label=u'',
-              longHelp=u'Launch SAGE and display ', shortHelp=u'Launch SAGE')
+              kind=wx.ITEM_NORMAL, label='',
+              longHelp='Launch SAGE and display ', shortHelp='Launch SAGE')
         self.Bind(wx.EVT_TOOL, self.OnInterfaceToolBarLaunchboaTool,
               id=wxID_BASICINTERFACEFRAMEINTERFACETOOLBARLAUNCHBOA)
         self.Bind(wx.EVT_TOOL, self.OnInterfaceToolBarTools1Tool,
@@ -318,7 +318,7 @@ class AdvancedInterfaceFrame(wx.Frame):
 
         self.InterfaceMenuBar = wx.MenuBar()
 
-        self.ToolMenu = wx.Menu(title=u'Tools')
+        self.ToolMenu = wx.Menu(title='Tools')
 
         self._init_coll_FileMenu_Items(self.FileMenu)
         self._init_coll_InterfaceMenuBar_Menus(self.InterfaceMenuBar)
@@ -327,86 +327,86 @@ class AdvancedInterfaceFrame(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_BASICINTERFACEFRAME,
-              name=u'AdvancedInterfaceFrame', parent=prnt, pos=wx.Point(-5, 106),
+              name='AdvancedInterfaceFrame', parent=prnt, pos=wx.Point(-5, 106),
               size=wx.Size(1448, 874), style=wx.DEFAULT_FRAME_STYLE,
-              title=u'Advanced Interface')
+              title='Advanced Interface')
         self._init_utils()
         self.SetClientSize(wx.Size(1440, 840))
         self.SetMenuBar(self.InterfaceMenuBar)
         self.Bind(wx.EVT_CLOSE, self.OnBasicInterfaceFrameClose)
 
         self.InterfaceStatusBar = wx.StatusBar(id=wxID_BASICINTERFACEFRAMEINTERFACESTATUSBAR,
-              name=u'InterfaceStatusBar', parent=self, style=0)
-        self.InterfaceStatusBar.SetHelpText(u'Status')
-        self.InterfaceStatusBar.SetLabel(u'')
+              name='InterfaceStatusBar', parent=self, style=0)
+        self.InterfaceStatusBar.SetHelpText('Status')
+        self.InterfaceStatusBar.SetLabel('')
         self._init_coll_InterfaceStatusBar_Fields(self.InterfaceStatusBar)
         self.SetStatusBar(self.InterfaceStatusBar)
 
         self.InterfaceToolBar = wx.ToolBar(id=wxID_BASICINTERFACEFRAMEINTERFACETOOLBAR,
-              name=u'InterfaceToolBar', parent=self, pos=wx.Point(0, 0),
+              name='InterfaceToolBar', parent=self, pos=wx.Point(0, 0),
               size=wx.Size(1440, 40),
               style=wx.TAB_TRAVERSAL | wx.TB_3DBUTTONS | wx.TB_HORIZONTAL | wx.MAXIMIZE_BOX | wx.NO_BORDER)
-        self.InterfaceToolBar.SetHelpText(u'Launch Boa Contstructor')
-        self.InterfaceToolBar.SetToolTipString(u'InterfaceToolBar')
+        self.InterfaceToolBar.SetHelpText('Launch Boa Contstructor')
+        self.InterfaceToolBar.SetToolTipString('InterfaceToolBar')
         self.InterfaceToolBar.SetToolBitmapSize(wx.Size(30, 30))
         self.InterfaceToolBar.SetToolPacking(0)
         self.InterfaceToolBar.SetToolSeparation(1)
         self.SetToolBar(self.InterfaceToolBar)
 
         self.MainPanel = wx.Panel(id=wxID_BASICINTERFACEFRAMEMAINPANEL,
-              name=u'MainPanel', parent=self, pos=wx.Point(1, 1),
+              name='MainPanel', parent=self, pos=wx.Point(1, 1),
               size=wx.Size(1438, 838), style=wx.TAB_TRAVERSAL)
 
         self.LeftInterfacePanel = wx.Panel(id=wxID_BASICINTERFACEFRAMELEFTINTERFACEPANEL,
-              name=u'LeftInterfacePanel', parent=self.MainPanel, pos=wx.Point(2,
+              name='LeftInterfacePanel', parent=self.MainPanel, pos=wx.Point(2,
               2), size=wx.Size(1355, 834), style=wx.TAB_TRAVERSAL)
 
         self.RightControlPanel = wx.Panel(id=wxID_BASICINTERFACEFRAMERIGHTCONTROLPANEL,
-              name=u'RightControlPanel', parent=self.MainPanel,
+              name='RightControlPanel', parent=self.MainPanel,
               pos=wx.Point(1361, 2), size=wx.Size(75, 834),
               style=wx.TAB_TRAVERSAL)
         self.RightControlPanel.SetBackgroundColour(wx.Colour(192, 192, 192))
 
         self.LowerControlPanel = wx.Panel(id=wxID_BASICINTERFACEFRAMELOWERCONTROLPANEL,
-              name=u'LowerControlPanel', parent=self.LeftInterfacePanel,
+              name='LowerControlPanel', parent=self.LeftInterfacePanel,
               pos=wx.Point(2, 808), size=wx.Size(1351, 24),
               style=wx.TAB_TRAVERSAL)
         self.LowerControlPanel.SetBackgroundColour(wx.Colour(0, 255, 128))
 
         self.UpperInterfacePanel = wx.Panel(id=wxID_BASICINTERFACEFRAMEUPPERINTERFACEPANEL,
-              name=u'UpperInterfacePanel', parent=self.LeftInterfacePanel,
+              name='UpperInterfacePanel', parent=self.LeftInterfacePanel,
               pos=wx.Point(2, 2), size=wx.Size(1351, 640),
               style=wx.TAB_TRAVERSAL)
         self.UpperInterfacePanel.SetBackgroundColour(wx.Colour(128, 128, 128))
-        self.UpperInterfacePanel.SetHelpText(u'UpperInterfacePanel')
+        self.UpperInterfacePanel.SetHelpText('UpperInterfacePanel')
 
         self.LowerInterfacePanel = wx.Panel(id=wxID_BASICINTERFACEFRAMELOWERINTERFACEPANEL,
-              name=u'LowerInterfacePanel', parent=self.LeftInterfacePanel,
+              name='LowerInterfacePanel', parent=self.LeftInterfacePanel,
               pos=wx.Point(2, 646), size=wx.Size(1351, 158),
               style=wx.TAB_TRAVERSAL)
         self.LowerInterfacePanel.SetBackgroundColour(wx.Colour(192, 192, 192))
 
         self.UpperInterface = wx.Notebook(id=wxID_BASICINTERFACEFRAMEUPPERINTERFACE,
-              name=u'UpperInterface', parent=self.UpperInterfacePanel,
+              name='UpperInterface', parent=self.UpperInterfacePanel,
               pos=wx.Point(2, 2), size=wx.Size(1347, 636), style=0)
 
         self.LowerInterface = wx.Treebook(id=wxID_BASICINTERFACEFRAMELOWERINTERFACE,
-              name=u'LowerInterface', parent=self.LowerInterfacePanel,
+              name='LowerInterface', parent=self.LowerInterfacePanel,
               pos=wx.Point(2, 2), size=wx.Size(1347, 154), style=0)
         self.LowerInterface.Bind(wx.EVT_TREEBOOK_PAGE_CHANGED,
               self.OnLowerInterfaceTreebookPageChanged,
               id=wxID_BASICINTERFACEFRAMELOWERINTERFACE)
 
         self.Display = IEPanel(id=wxID_BASICINTERFACEFRAMEDISPLAY,
-              name=u'Display', parent=self.UpperInterface, pos=wx.Point(0, 0),
+              name='Display', parent=self.UpperInterface, pos=wx.Point(0, 0),
               size=wx.Size(1339, 610), style=wx.TAB_TRAVERSAL)
 
-        self.Shell = ShellPanel(id=wxID_BASICINTERFACEFRAMESHELL, name=u'Shell',
+        self.Shell = ShellPanel(id=wxID_BASICINTERFACEFRAMESHELL, name='Shell',
               parent=self.LowerInterface, pos=wx.Point(0, 0), size=wx.Size(1281,
               154), style=wx.TAB_TRAVERSAL)
 
         self.button1 = wx.Button(id=wxID_BASICINTERFACEFRAMEBUTTON1,
-              label=u'Java Script Example', name='button1',
+              label='Java Script Example', name='button1',
               parent=self.LowerControlPanel, pos=wx.Point(0, 0),
               size=wx.Size(136, 23), style=0)
         self.button1.Bind(wx.EVT_BUTTON, self.OnButton1Button,
@@ -423,29 +423,29 @@ class AdvancedInterfaceFrame(wx.Frame):
               pos=wx.Point(211, 0), size=wx.Size(75, 23), style=0)
 
         self.ExecuteButton = wx.Button(id=wxID_BASICINTERFACEFRAMEEXECUTEBUTTON,
-              label=u'Execute IEPanel.py', name=u'ExecuteButton',
+              label='Execute IEPanel.py', name='ExecuteButton',
               parent=self.LowerControlPanel, pos=wx.Point(286, 0),
               size=wx.Size(111, 23), style=0)
         self.ExecuteButton.Bind(wx.EVT_BUTTON, self.OnExecuteButtonButton,
               id=wxID_BASICINTERFACEFRAMEEXECUTEBUTTON)
 
         self.ReplaceRightControlButtton = wx.Button(id=wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON,
-              label=u'Replace Right Control Panel',
-              name=u'ReplaceRightControlButtton', parent=self.LowerControlPanel,
+              label='Replace Right Control Panel',
+              name='ReplaceRightControlButtton', parent=self.LowerControlPanel,
               pos=wx.Point(397, 0), size=wx.Size(180, 24), style=0)
         self.ReplaceRightControlButtton.Bind(wx.EVT_BUTTON,
               self.OnReplaceRightControlButttonButton,
               id=wxID_BASICINTERFACEFRAMEREPLACERIGHTCONTROLBUTTTON)
 
         self.StatesButton = wx.Button(id=wxID_BASICINTERFACEFRAMESTATESBUTTON,
-              label=u'States', name=u'StatesButton',
+              label='States', name='StatesButton',
               parent=self.RightControlPanel, pos=wx.Point(0, 0),
               size=wx.Size(75, 23), style=0)
         self.StatesButton.Bind(wx.EVT_BUTTON, self.OnStatesButtonButton,
               id=wxID_BASICINTERFACEFRAMESTATESBUTTON)
 
         self.InstrumentsButton = wx.Button(id=wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON,
-              label=u'Instruments', name=u'InstrumentsButton',
+              label='Instruments', name='InstrumentsButton',
               parent=self.RightControlPanel, pos=wx.Point(0, 23),
               size=wx.Size(75, 23), style=0)
         self.InstrumentsButton.Bind(wx.EVT_BUTTON,
@@ -453,15 +453,15 @@ class AdvancedInterfaceFrame(wx.Frame):
               id=wxID_BASICINTERFACEFRAMEINSTRUMENTSBUTTON)
 
         self.LogsPanel = SimpleLogLowerInterfacePanel(id=wxID_BASICINTERFACEFRAMELOGSPANEL,
-              name=u'LogsPanel', parent=self.LowerInterface, pos=wx.Point(0, 0),
+              name='LogsPanel', parent=self.LowerInterface, pos=wx.Point(0, 0),
               size=wx.Size(1281, 154), style=wx.TAB_TRAVERSAL)
 
         self.ArbDBPanel = SimpleArbDBLowerInterfacePanel(id=wxID_BASICINTERFACEFRAMEARBDBPANEL,
-              name=u'ArbDBPanel', parent=self.LowerInterface, pos=wx.Point(0,
+              name='ArbDBPanel', parent=self.LowerInterface, pos=wx.Point(0,
               0), size=wx.Size(1281, 154), style=wx.TAB_TRAVERSAL)
 
         self.EndOfTheDayButton = wx.Button(id=wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON,
-              label=u'End of The Day Log', name=u'EndOfTheDayButton',
+              label='End of The Day Log', name='EndOfTheDayButton',
               parent=self.LowerControlPanel, pos=wx.Point(577, 0),
               size=wx.Size(103, 23), style=0)
         self.EndOfTheDayButton.Bind(wx.EVT_BUTTON,
@@ -469,14 +469,14 @@ class AdvancedInterfaceFrame(wx.Frame):
               id=wxID_BASICINTERFACEFRAMEENDOFTHEDAYBUTTON)
 
         self.VisaDialogButton = wx.Button(id=wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON,
-              label=u'VISA Communicator', name=u'VisaDialogButton',
+              label='VISA Communicator', name='VisaDialogButton',
               parent=self.LowerControlPanel, pos=wx.Point(680, 0),
               size=wx.Size(184, 23), style=0)
         self.VisaDialogButton.Bind(wx.EVT_BUTTON, self.OnVisaDialogButtonButton,
               id=wxID_BASICINTERFACEFRAMEVISADIALOGBUTTON)
 
         self.PlotPanel = MatplotlibWxPanel(id=wxID_BASICINTERFACEFRAMEPLOTPANEL,
-              name=u'PlotPanel', parent=self.UpperInterface, pos=wx.Point(0, 0),
+              name='PlotPanel', parent=self.UpperInterface, pos=wx.Point(0, 0),
               size=wx.Size(1339, 610), style=wx.TAB_TRAVERSAL)
 
         self.panel1 = KeithleyIVPanel(id=wxID_BASICINTERFACEFRAMEPANEL1,
@@ -597,7 +597,7 @@ class AdvancedInterfaceFrame(wx.Frame):
 
     def OnExecuteButtonButton(self, event):
         path=str(os.path.join(PYMEASURE_ROOT,'Code/FrontEnds/IEPanel.py'))
-        execfile(path)
+        exec(compile(open(path).read(), path, 'exec'))
 
     def OnLowerInterfaceTreebookPageChanged(self, event):
         self.update_display()
@@ -639,7 +639,7 @@ class AdvancedInterfaceFrame(wx.Frame):
                 
 
                 try:
-                    execfile(filename,self.locals)
+                    exec(compile(open(filename).read(), filename, 'exec'),self.locals)
                 except:
                     pass
 
@@ -662,7 +662,7 @@ class AdvancedInterfaceFrame(wx.Frame):
                     for index,script in enumerate(module_scripts['scripts']):
                         new_id=wx.NewId()
                         menu_item=wx.MenuItem(self.ToolMenu,id=new_id,
-                        kind=wx.ITEM_NORMAL, text=u'Run %s '%script,
+                        kind=wx.ITEM_NORMAL, text='Run %s '%script,
                         help='Run %s  from the %s module'%(script,module))
                         self.ScriptsMenu.AppendItem(menu_item)
                         self.loaded_script_menu_items.append(menu_item)
@@ -680,7 +680,7 @@ class AdvancedInterfaceFrame(wx.Frame):
                     #self.bind_menu()        
               
                 except:
-                    print('Could Not Import {0}'.format(module))
+                    print(('Could Not Import {0}'.format(module)))
                     raise
         finally:
             dlg.Destroy()
@@ -734,8 +734,8 @@ class AdvancedInterfaceFrame(wx.Frame):
         if self.tool_menu_number is 1:
             self.ScriptsMenu=wx.Menu()
             self.ToolMenu.AppendMenu(-1,'Scripts',self.ScriptsMenu)
-        self.ScriptsMenu.Append(help=u'Runs the {0} script'.format(self.tool_menu_number),
-                            id=-1,kind=wx.ITEM_NORMAL, text=u'Run the {0} script'.format(self.tool_menu_number))
+        self.ScriptsMenu.Append(help='Runs the {0} script'.format(self.tool_menu_number),
+                            id=-1,kind=wx.ITEM_NORMAL, text='Run the {0} script'.format(self.tool_menu_number))
         event.Skip()
     def OnStatesButtonButton(self, event):
         states_directory=os.path.join(PYMEASURE_ROOT,'Data/States')

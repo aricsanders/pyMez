@@ -175,7 +175,7 @@ class ShellEditor(wx.stc.StyledTextCtrl,
     def execStartupScript(self, startupfile):
         if startupfile:
             startuptext = '## Startup script: ' + startupfile
-            self.pushLine('print({0};execfile({0}))'.format(`startuptext`, `startupfile`))
+            self.pushLine('print({0};execfile({0}))'.format(repr(startuptext), repr(startupfile)))
         else:
             self.pushLine('')
 
@@ -296,13 +296,13 @@ class ShellEditor(wx.stc.StyledTextCtrl,
 
     def getCodeCompOptions(self, word, rootWord, matchWord, lnNo):
         if not rootWord:
-            return self.interp.locals.keys() + __builtins__.keys() + keyword.kwlist
+            return list(self.interp.locals.keys()) + list(__builtins__.keys()) + keyword.kwlist
         else:
             try: obj = eval(rootWord, self.interp.locals)
-            except Exception, error: return []
+            except Exception as error: return []
             else:
                 try: return recdir(obj)
-                except Exception, err: return []
+                except Exception as err: return []
 
     def OnShellCodeComplete(self, event):
         self.codeCompCheck()
@@ -352,10 +352,10 @@ class ShellEditor(wx.stc.StyledTextCtrl,
             self.OnShellHome(event)
             return
         elif controlDown:
-            if shiftDown and self.sc.has_key((wx.ACCEL_CTRL|wx.ACCEL_SHIFT, kk)):
+            if shiftDown and (wx.ACCEL_CTRL|wx.ACCEL_SHIFT, kk) in self.sc:
                 self.sc[(wx.ACCEL_CTRL|wx.ACCEL_SHIFT, kk)](self)
                 return
-            elif self.sc.has_key((wx.ACCEL_CTRL, kk)):
+            elif (wx.ACCEL_CTRL, kk) in self.sc:
                 self.sc[(wx.ACCEL_CTRL, kk)](self)
                 return
         
@@ -371,7 +371,7 @@ class ShellEditor(wx.stc.StyledTextCtrl,
 def recdir(obj):
     res = dir(obj)
     if hasattr(obj, '__class__') and obj != obj.__class__:
-        if hasattr(obj, '__class__') and type(obj) != types.ModuleType:
+        if hasattr(obj, '__class__') and not isinstance(obj, types.ModuleType):
             res.extend(recdir(obj.__class__))
         if hasattr(obj, '__bases__'):
             for base in obj.__bases__:
@@ -379,7 +379,7 @@ def recdir(obj):
 
     unq = {}
     for name in res: unq[name] = None
-    return unq.keys()
+    return list(unq.keys())
 
 # not used anymore, now using wx.py.introspect
 def tipforobj(obj, ccstc):
@@ -388,18 +388,18 @@ def tipforobj(obj, ccstc):
     docs = ''
     if hasattr(obj, '__doc__') and obj.__doc__:
         wxNS = Utils.getEntireWxNamespace()
-        if type(obj) is types.ClassType:
-            if wxNS.has_key(obj.__name__):
+        if isinstance(obj, type):
+            if obj.__name__ in wxNS:
                 docs = obj.__init__.__doc__
-        elif type(obj) is types.InstanceType:
-            if wxNS.has_key(obj.__class__.__name__):
+        elif isinstance(obj, types.InstanceType):
+            if obj.__class__.__name__ in wxNS:
                 docs = obj.__doc__
-        elif type(obj) is types.MethodType:
-            if wxNS.has_key(obj.im_class.__name__):
+        elif isinstance(obj, types.MethodType):
+            if obj.__self__.__class__.__name__ in wxNS:
                 docs = obj.__doc__
     # Get docs from builtin's docstrings or from Signature module
     if not docs:
-        if type(obj) is types.BuiltinFunctionType:
+        if isinstance(obj, types.BuiltinFunctionType):
             try: docs = obj.__doc__
             except AttributeError: docs = ''
         else:
@@ -452,7 +452,7 @@ class PseudoFileIn:
                 time.sleep(0.001)
                 wx.Yield()
             line = self._buffer.pop()
-            if line is None: raise Exception, 'Terminate'
+            if line is None: raise Exception('Terminate')
             if not(line.strip()): return '\n'
             else: return line
         finally:
@@ -609,7 +609,7 @@ if __name__ == '__main__':
     app = wx.App(False)
 
     frame = wx.Frame(None,size=wx.Size(762, 502))
-    panel=ShellPanel(id=1, name=u'ShellPanel',
+    panel=ShellPanel(id=1, name='ShellPanel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(762, 502),
               style=wx.TAB_TRAVERSAL)
     sizer=wx.BoxSizer()

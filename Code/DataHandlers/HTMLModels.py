@@ -63,6 +63,13 @@ except:
     print("Setting Default file name to New_XML.xml")
     DEFAULT_FILE_NAME='New_XML.xml'
     pass
+
+try:
+    from Code.Utils.Types import *
+except:
+    print("The module pyMez.Code.Utils.Types was not found or had an error,"
+          "please check module or put it on the python path")
+    raise ImportError
 # TODO: decide if I am going to use cssselect
 # try:
 #     import cssselect
@@ -124,9 +131,9 @@ class HTMLBase(object):
                   "head":None
                   }
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         # Define Method Aliases if they are available
         if METHOD_ALIASES:
@@ -145,10 +152,10 @@ class HTMLBase(object):
                 elements=["head","body"]
                 for element in elements:
                     if self.options[element]:
-                        if type(element) is StringType:
+                        if isinstance(element, StringType):
                             new_element=lxml.html.fragment_fromstring(self.options[element])
                             self.root.append(new_element)
-                        elif type(element) is lxml.html.Element:
+                        elif isinstance(element, lxml.html.Element):
                             self.root.append(self.options[element])
                 self.text=str(self)
             if self.options["path"]:
@@ -173,12 +180,12 @@ class HTMLBase(object):
 
     def __str__(self):
         """Defines the response when str() or print() is called"""
-        return lxml.html.tostring(self.document)
+        return lxml.html.tostring(self.document,encoding="unicode")
 
     def save(self,file_path=None,**temp_options):
         """Saves the html file, provide file path to save as, or temp_options"""
         original_options=self.options.copy()
-        for key,value in temp_options.iteritems():
+        for key,value in temp_options.items():
             self.options[key]=value
         if file_path is None:
             file_path=self.path
@@ -217,7 +224,7 @@ class HTMLBase(object):
     def add_body(self):
         """Adds a body tag to the model if it does not exist"""
         body=make_html_element(tag="body",text="")
-        tags=map(lambda x:x.tag.lower(),self.root.getchildren())
+        tags=[x.tag.lower() for x in self.root.getchildren()]
         if not "body" in tags:
             self.root.append(body)
         else:
@@ -237,21 +244,21 @@ class HTMLBase(object):
         "attribute_dictionary":{"attribute_name":"attribute_value"}, and if it is a
         lxml.html.HtmlElement it appends it"""
         try:
-            tags = map(lambda x: x.tag.lower(), self.root.getchildren())
+            tags = [x.tag.lower() for x in self.root.getchildren()]
             if not "body" in tags:
                 body = make_html_element(tag="body", text="")
                 print("Body tag was not present adding it")
                 self.root.append(body)
 
-            if type(element) is StringType:
+            if isinstance(element, StringType):
                 new_element=lxml.html.fragment_fromstring(element)
-            elif type(element) is DictionaryType:
+            elif isinstance(element, DictionaryType):
                 new_element=make_html_element(**element)
-            elif type(element) in [lxml.html.HtmlElement]:
+            elif isinstance(element,lxml.html.HtmlElement):
                 new_element=element
             self.root.body.append(new_element)
         except:
-            print("Could not add {0} to body".format(element))
+            print(("Could not add {0} to body".format(element)))
 
     def append_to_head(self,element):
         """Appends the element to the head of the model, if it is a string it parses first, if it is a
@@ -259,21 +266,21 @@ class HTMLBase(object):
         "attribute_dictionary":{"attribute_name":"attribute_value"}, and if it is a
         lxml.html.HtmlElement it appends it"""
         try:
-            tags = map(lambda x: x.tag.lower(), self.root.getchildren())
+            tags = [x.tag.lower() for x in self.root.getchildren()]
             if not "head" in tags:
                 head = make_html_element(tag="head", text="")
                 print("Head tag was not present adding it")
                 self.root.insert(0,head)
 
-            if type(element) is StringType:
+            if isinstance(element, StringType):
                 new_element=lxml.html.fragment_fromstring(element)
-            elif type(element) is DictionaryType:
+            elif isinstance(element, DictionaryType):
                 new_element=make_html_element(**element)
-            elif type(element) in [lxml.html.HtmlElement]:
+            elif isinstance(element,lxml.html.HtmlElement):
                 new_element=element
             self.root.head.append(new_element)
         except:
-            print("Could not add {0} to head".format(element))
+            print(("Could not add {0} to head".format(element)))
 
     def to_HTML(self):
         """Convenience function that echos the content updates the attribute self.text"""
@@ -284,8 +291,8 @@ class HTMLBase(object):
         """Adds two html sheets and returns the answer"""
         children_model_1=self.root.getchildren()
         children_model_2=other.root.getchildren()
-        tags_model_1=map(lambda x:x.tag,children_model_1)
-        tags_model_2=map(lambda x:x.tag,children_model_2)
+        tags_model_1=[x.tag for x in children_model_1]
+        tags_model_2=[x.tag for x in children_model_2]
         # if the models don't have a head or body add them
         if not "head" in tags_model_1:
             head = make_html_element(tag="head", text="")
@@ -316,7 +323,7 @@ def test_HTMLBase(file_name="One_Port_Raw_Sparameter_20160307_001.html"):
     """Tests the HTMLBase Class"""
     os.chdir(TESTS_DIRECTORY)
     html=HTMLBase(file_name)
-    print html
+    print(html)
     #html.to_pdf()
     html.show()
 
@@ -329,7 +336,7 @@ def test_HTMLBase_no_file(head=None,body=None):
         body="<body><h1> A Test </h1></body>"
 
     html=HTMLBase(None,head=head,body=body)
-    print html
+    print(html)
     # saves a pdf
     #html.to_pdf()
     html.show()
@@ -338,20 +345,20 @@ def test_make_html_element():
     """Tests both the make_html_string function
     """
     [tag,text,id_attribute]=["h3","A level 3 heading",{"id":"heading-here"}]
-    print("The input of the function is tag = {0}, text = {1}, attribute dictionary = {2}".format(tag,text,                                                                                               id_attribute))
-    print("The resulting html string is {0}".format(make_html_string(tag,text,**id_attribute)))
+    print(("The input of the function is tag = {0}, text = {1}, attribute dictionary = {2}".format(tag,text,                                                                                               id_attribute)))
+    print(("The resulting html string is {0}".format(make_html_string(tag,text,**id_attribute))))
 
 def test_HTMLBase_addition(first="One_Port_Raw_Sparameter_20160307_001.html",second="One_Port_Raw_Sparameter_20160307_001.html"):
     os.chdir(TESTS_DIRECTORY)
     html_1=HTMLBase(first)
     html_2=HTMLBase(second)
-    print("-"*80)
-    print("The first HTML is {0}".format(str(html_1)))
-    print("-"*80)
-    print("The second HTML is {0}".format(str(html_2)))
-    print("-"*80)
+    print(("-"*80))
+    print(("The first HTML is {0}".format(str(html_1))))
+    print(("-"*80))
+    print(("The second HTML is {0}".format(str(html_2))))
+    print(("-"*80))
     html_3=html_1+html_2
-    print("The addition is {0}".format(str(html_3)))
+    print(("The addition is {0}".format(str(html_3))))
     html_3.show()
     html_3.save("combined_html.html")
 

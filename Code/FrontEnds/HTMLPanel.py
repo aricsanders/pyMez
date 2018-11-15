@@ -55,7 +55,7 @@ class Panel1(wx.Panel):
     def _init_coll_boxSizer1_Items(self, parent):
         # generated method, don't edit
 
-        parent.AddWindow(self.htmlWindow1, 1, border=0, flag=wx.EXPAND)
+        parent.Add(self.htmlWindow1, 1, border=0, flag=wx.EXPAND)
 
     def _init_sizers(self):
         # generated method, don't edit
@@ -86,7 +86,7 @@ class Panel1(wx.Panel):
 if __name__ == '__main__':
     app = wx.App(False)
     frame = wx.Frame(None,size=wx.Size(762, 502))
-    panel=Panel1(id=1, name=u'HTMLPanel',
+    panel=Panel1(id=1, name='HTMLPanel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(762, 502),
               style=wx.TAB_TRAVERSAL)
     panel.htmlWindow1.LoadPage("http://www.example.com")

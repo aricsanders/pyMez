@@ -132,8 +132,8 @@ class MyNavigationToolbar(NavigationToolbar2WxAgg):
                     #print(x_name,y_name)
                     self.axes.set_xlabel(x_name,fontsize=20)
                     self.axes.set_ylabel(y_name,fontsize=20)
-                    x_data=np.array(map(lambda x:float(x),data_sheet.to_list(x_name)))
-                    y_data=np.array(map(lambda x:float(x),data_sheet.to_list(y_name)))
+                    x_data=np.array([float(x) for x in data_sheet.to_list(x_name)])
+                    y_data=np.array([float(x) for x in data_sheet.to_list(y_name)])
                     ax.plot(x_data,y_data)
                     self.canvas.draw()
                     # Set the Title
@@ -208,7 +208,7 @@ class MatplotlibWxPanel(wx.Panel):
 if __name__ == '__main__':
     app = wx.App(False)
     frame = wx.Frame(None,size=wx.Size(900, 800))
-    panel=MatplotlibWxPanel(id=1, name=u'MatplotlibWxPanel',
+    panel=MatplotlibWxPanel(id=1, name='MatplotlibWxPanel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(200, 800),
               style=wx.TAB_TRAVERSAL)
     sizer=wx.BoxSizer()

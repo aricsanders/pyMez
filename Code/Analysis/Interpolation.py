@@ -110,15 +110,15 @@ def test_interpolate(data_set=None):
         data_set=[[i,i**2,i**3] for i in range(100)]
     interpolation_functions=interpolate_data(data_set)
     type_of_f=type(interpolation_functions[0](1))
-    print("The types of of the function results are {0}".format(type_of_f))
-    print("type(f(x)) == numpy.ndarray is {0}".format(type_of_f in [np.ndarray,"<type 'numpy.ndarray'>"]))
+    print(("The types of of the function results are {0}".format(type_of_f)))
+    print(("type(f(x)) == numpy.ndarray is {0}".format(type_of_f in [np.ndarray,"<type 'numpy.ndarray'>"])))
     new_x=[i for i in range(100)]
     interpolated_data=build_interpolated_data_set(new_x,interpolation_functions)
     print("Testing interpolation of data set")
-    print("*"*80)
-    print("the old data set is {0} ".format(data_set))
-    print("*"*80)
-    print("the new data set is {0}".format(interpolated_data))
+    print(("*"*80))
+    print(("the old data set is {0} ".format(data_set)))
+    print(("*"*80))
+    print(("the new data set is {0}".format(interpolated_data)))
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':

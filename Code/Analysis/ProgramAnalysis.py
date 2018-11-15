@@ -76,9 +76,9 @@ def create_svg_black_box_diagram(inputs, outputs, function, **options):
 
                 }
     example_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         example_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         example_options[key] = value
     palette_width = example_options["image_width"]
     palette_height = example_options["image_height"]
@@ -86,7 +86,7 @@ def create_svg_black_box_diagram(inputs, outputs, function, **options):
     edge_border = example_options["edge_border"]
     path_border = example_options["path_border"]
     thirds = round(palette_width / 3.0)
-    input_names = inputs.keys()
+    input_names = list(inputs.keys())
     number_inputs = len(input_names)
     output_names = outputs
     number_outputs = len(output_names)
@@ -94,7 +94,7 @@ def create_svg_black_box_diagram(inputs, outputs, function, **options):
     if example_options["output_transformation_function"]:
         output_data = example_options["output_transformation_function"](output_data)
         # print(output_data)
-    if type(output_data) is ListType:
+    if isinstance(output_data, ListType):
         output_dictionary = {name: output_data[i] for i, name in enumerate(output_names)}
     else:
         output_dictionary = {output_names[0]: output_data}

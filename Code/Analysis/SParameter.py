@@ -147,7 +147,7 @@ def frequency_model_collapse_multiple_measurements(model, **options):
         model_1 = DataFrame_to_AsciiDataTable(model)
     defaults = {"method": "mean"}
     # load other options from model
-    for option, value in model.options.iteritems():
+    for option, value in model.options.items():
         if not re.search('begin_line|end_line', option):
             defaults[option] = value
     for element in model.elements:
@@ -158,15 +158,15 @@ def frequency_model_collapse_multiple_measurements(model, **options):
                 defaults[element] = model.__dict__[element][:]
     # We need to preserve the frequency column some how
     collapse_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         collapse_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         collapse_options[key] = value
     unique_frequency_list = sorted(list(set(model["Frequency"])))
     frequency_selector = model.column_names.index("Frequency")
     out_data = []
     for index, frequency in enumerate(unique_frequency_list):
-        data_row = filter(lambda x: x[frequency_selector] == frequency, model.data[:])
+        data_row = [x for x in model.data[:] if x[frequency_selector] == frequency]
         if re.search('mean|av', collapse_options["method"], re.IGNORECASE):
             new_row = np.mean(np.array(data_row), axis=0).tolist()
         elif re.search('median', collapse_options["method"], re.IGNORECASE):
@@ -203,9 +203,9 @@ def frequency_model_difference(model_1, model_2, **options):
     # Set up defaults and pass options
     defaults = {"columns": "all", "interpolate": False, "average": True}
     difference_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         difference_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         difference_options[key] = value
 
     # first check type, if it is a panadas data frame a little conversion is needed, else is for all other models
@@ -238,7 +238,7 @@ def frequency_model_difference(model_1, model_2, **options):
     for row_index, frequency in enumerate(model_1["Frequency"]):
         new_row = [frequency]
         if frequency in frequency_intersection:
-            model_2_frequency_row = filter(lambda x: x[model_2_frequency_selector] == frequency, model_2.data)[0]
+            model_2_frequency_row =list( filter(lambda x: x[model_2_frequency_selector] == frequency, model_2.data))[0]
             # print("{0} is {1}".format("model_2_frequency_row",model_2_frequency_row))
             for column_index, column in enumerate(model_1.column_names):
                 if column in column_names_intersection and column not in ["Frequency"]:
@@ -270,9 +270,9 @@ def create_monte_carlo_reference_curve(monte_carlo_directory, **options):
     has a mean or median and a standard deviation for the uncertainty"""
     defaults = {"method": "mean", "format": "RI", "filter": "s\d+p"}
     reference_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         reference_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         reference_options[key] = value
     file_names = os.listdir(monte_carlo_directory)
     filtered_file_names = []
@@ -305,9 +305,9 @@ def create_sensitivity_reference_curve(sensitivity_directory,nominal_file_path="
     has a mean or median and a RMS variance from the nominal value for the uncertainty"""
     defaults = {"format": "RI", "filter": "s\d+p"}
     reference_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         reference_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         reference_options[key] = value
     file_names = os.listdir(sensitivity_directory)
     filtered_file_names = []
@@ -361,9 +361,9 @@ def plot_reference_curve(reference_curve, **options):
                 "share_x": "col"}
     plot_options = {}
 
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         plot_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         plot_options[key] = value
 
     value_columns = reference_curve.options["value_column_names"]
@@ -423,14 +423,14 @@ def plot_reference_curve_comparison(reference_curve_list, **options):
                 "labels":None}
     plot_options = {}
 
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         plot_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         plot_options[key] = value
     if plot_options["labels"]:
         labels=plot_options["labels"]
     else:
-        labels=map(lambda x:x.path,reference_curve_list)
+        labels=[x.path for x in reference_curve_list]
     value_columns = reference_curve_list[0].options["value_column_names"]
     uncertainty_columns = reference_curve_list[0].options["uncertainty_column_names"]
     number_plots = len(value_columns)
@@ -568,9 +568,9 @@ def one_port_robin_comparison_plot(input_asc_file,input_res_file,**options):
     use device_history=True in options to show device history"""
     defaults={"device_history":False,"mag_res":False}
     plot_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         plot_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         plot_options[key]=value
     history=np.loadtxt(input_res_file,skiprows=1)
     column_names=["Frequency",'magS11','argS11','magS11N','argS11N','UmagS11N','UargS11N']
@@ -972,13 +972,13 @@ def correct_sparameters(sparameters,correction,**options):
     unless reciprocal=False"""
     defaults={"reciprocal":True,"output_type":None,"file_path":None}
     correction_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         correction_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         correction_options[key]=value
     try:
         # import and condition sparameters and correction
-        if type(sparameters) is StringType:
+        if isinstance(sparameters, StringType):
             # Assume sparameters is given by file name
             sparameters_table=S2PV1(sparameters)
             sparameters=sparameters_table.sparameter_complex
@@ -986,12 +986,12 @@ def correct_sparameters(sparameters,correction,**options):
         elif re.search('S2PV1',type(sparameters)):
             output_type='S2PV1'
             sparameters=sparameters.sparameter_complex
-        elif type(sparameters) is ListType:
+        elif isinstance(sparameters, ListType):
             # check to see if it is a list of complex variables or matrix
-            if type(sparameters[1]) is ComplexType:
+            if isinstance(sparameters[1], ComplexType):
                 output_type='complex_list'
             # Handle frequency, matrix lists
-            elif type(sparameters[1]) in ['np.array','np.matrix'] and type(sparameters) is FloatType :
+            elif type(sparameters[1]) in ['np.array','np.matrix'] and isinstance(sparameters, FloatType) :
                 output_type='matrix_list'
                 sparameters=two_port_matrix_to_complex_form(sparameters)
             # handle matrix
@@ -1013,7 +1013,7 @@ def correct_sparameters(sparameters,correction,**options):
         if re.match('file',output_type, re.IGNORECASE):
             output_table=S2PV1(correction_options["file_path"],sparameter_complex=corrected_sparameters)
             output_table.save()
-            print("Output was saved as {0}".format(output_table.path))
+            print(("Output was saved as {0}".format(output_table.path)))
         elif re.search("complex",output_type,re.IGNORECASE):
             return corrected_sparameters
         elif re.search("matrix_list",output_type,re.IGNORECASE):
@@ -1032,9 +1032,9 @@ def average_one_port_sparameters(table_list,**options):
     #This will work on any table that the data is stored in data, need to add a sparameter version
     defaults={"frequency_selector":0,"frequency_column_name":"Frequency"}
     average_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         average_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         average_options[key]=value
     frequency_list=[]
     average_data=[]
@@ -1044,7 +1044,7 @@ def average_one_port_sparameters(table_list,**options):
     for frequency in unique_frequency_list:
         new_row=[]
         for table in table_list:
-            data_list=filter(lambda x: x[average_options["frequency_selector"]]==frequency,table.data)
+            data_list=[x for x in table.data if x[average_options["frequency_selector"]]==frequency]
             table_average=np.mean(np.array(data_list),axis=0)
             new_row.append(table_average)
             #print new_row
@@ -1136,9 +1136,9 @@ def mean_from_history(history_frame,**options):
              "Measurement_Date":None,"Measurement_Time":None,"Direction":None,
               "column_names":['Frequency','magS11','argS11'],"outlier_removal":True}
     mean_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         mean_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
             mean_options[key]=value
 
     filters=["Device_Id","System_Id","Measurement_Timestamp","Connector_Type_Measurement",
@@ -1178,9 +1178,9 @@ def median_from_history(history_frame,**options):
              "Measurement_Date":None,"Measurement_Time":None,"Direction":None,
               "column_names":['Frequency','magS11','argS11'],"outlier_removal":True}
     median_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         median_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
             median_options[key]=value
 
     filters=["Device_Id","System_Id","Measurement_Timestamp","Connector_Type_Measurement",
@@ -1212,9 +1212,9 @@ def raw_difference_frame(raw_model,mean_frame,**options):
     """Creates a difference pandas.DataFrame given a raw NIST model and a mean pandas.DataFrame"""
     defaults={"column_names":mean_frame.columns.tolist()}
     difference_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         difference_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         difference_options[key]=value
     difference_list=[]
     for row in raw_model.data[:]:
@@ -1260,12 +1260,12 @@ def raw_comparison_plot_with_residuals(raw_nist,mean_frame,difference_frame,**op
               "specific_descriptor":raw_nist.metadata["Device_Id"]+"_Check_Standard",
               "general_descriptor":"Plot","file_name":None}
     comparison_plot_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         comparison_plot_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         comparison_plot_options[key]=value
     column_names=mean_frame.columns.tolist()
-    number_rows=len(column_names)/2
+    number_rows=int(len(column_names)/2)
     fig, compare_axes = plt.subplots(nrows=number_rows, ncols=2, sharex='col',figsize=(8,6),dpi=80)
     measurement_date=raw_nist.metadata["Measurement_Date"]
     diff_axes=[]
@@ -1325,9 +1325,9 @@ def calrep_history_plot(calrep_model,history_frame,**options):
               "max_num":None,
               "error_style":"area"}
     history_plot_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         history_plot_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         history_plot_options[key]=value
     # The way we plot depends on the models
     model=calrep_model.__class__.__name__
@@ -1346,7 +1346,7 @@ def calrep_history_plot(calrep_model,history_frame,**options):
 
     device_history=history_frame[history_frame["Device_Id"]==calrep_model.metadata["Device_Id"]]
     unique_analysis_dates=sorted(device_history["Analysis_Date"].unique().tolist())
-    print("{0} are {1}".format("unique_analysis_dates",unique_analysis_dates))
+    print(("{0} are {1}".format("unique_analysis_dates",unique_analysis_dates)))
     if re.search('Power',model):
         number_rows=2
         column_names=['magS11','argS11','Efficiency','Calibration_Factor']
@@ -1455,9 +1455,9 @@ def compare_s2p_plots(list_S2PV1,**options):
               "title":None,
               "grid":True}
     comparison_plot_options={}
-    for key,value in defaults.iteritems():
+    for key,value in defaults.items():
         comparison_plot_options[key]=value
-    for key,value in options.iteritems():
+    for key,value in options.items():
         comparison_plot_options[key]=value
 
     # create a set of 8 subplots
@@ -1556,9 +1556,9 @@ def plot_frequency_model(frequency_model, **options):
                 "plot_size": (8, 6),
                 "dpi": 80}
     plot_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         plot_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         plot_options[key] = value
     if type(frequency_model) in [pandas.DataFrame]:
         frequency_model = DataFrame_to_AsciiDataTable(frequency_model)
@@ -1617,9 +1617,9 @@ def plot_frequency_model_histogram(frequency_model, **options):
                 "dpi": 80,
                 "non_plotable_text": "Not Plotable"}
     plot_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         plot_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         plot_options[key] = value
     if type(frequency_model) in [pandas.DataFrame]:
         frequency_model = DataFrame_to_AsciiDataTable(frequency_model)
@@ -1734,9 +1734,9 @@ def plot_calrep_uncertainty(calrep_model,**options):
                 "error_names":['Type B','SNIST','Connect','Total Uncertainty'],
                 "error_plot_formats": ['r-x','b-x','g-x','k-x']}
     comparison_plot_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         comparison_plot_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         comparison_plot_options[key] = value
     # figure out the number of plots based on the measurement type
     measurement_type = calrep_model.metadata["Measurement_Type"]
@@ -1811,9 +1811,9 @@ def plot_checkstandard_history(device_history, **options):
                 "extra_plot_labels": None,
                 "extra_plot_formats": None}
     history_plot_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         history_plot_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         history_plot_options[key] = value
     device_id = device_history["Device_Id"].unique().tolist()[0]
     measurement_type = device_history["Measurement_Type"].unique().tolist()[0]
@@ -1931,9 +1931,9 @@ def plot_calrep_results_comparison(calrep_model, results_model, **options):
                 "calrep_format": 'k-x',
                 "results_format": 'r-x'}
     comparison_plot_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         comparison_plot_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         comparison_plot_options[key] = value
     # figure out the number of plots based on the measurement type
     measurement_type = calrep_model.metadata["Measurement_Type"]
@@ -2010,9 +2010,9 @@ def plot_calrep_results_difference_comparison(calrep_model, results_model, **opt
                 "debug": False,
                 "title": 'Calrep diference of {0}'.format(calrep_model.metadata["Device_Id"])}
     comparison_plot_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         comparison_plot_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         comparison_plot_options[key] = value
     # figure out the number of plots based on the measurement type
     measurement_type = calrep_model.metadata["Measurement_Type"]
@@ -2038,7 +2038,7 @@ def plot_calrep_results_difference_comparison(calrep_model, results_model, **opt
         error_columns.append(error_column)
     difference_model = frequency_model_difference(calrep_model, results_model)
     if comparison_plot_options["debug"]:
-        print("{0} is {1}".format("difference_model.column_names", difference_model.column_names))
+        print(("{0} is {1}".format("difference_model.column_names", difference_model.column_names)))
     # We want plots that have frequency as the x-axis and y that has an error
     difference_x = difference_model["Frequency"]
     calrep_x = calrep_model["Frequency"]
@@ -2150,9 +2150,9 @@ def plot_checkstandard_history(device_history, **options):
                 "extra_plot_labels": None,
                 "extra_plot_formats": None}
     history_plot_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         history_plot_options[key] = value
-    for key, value in options.iteritems():
+    for key, value in options.items():
         history_plot_options[key] = value
     device_id = device_history["Device_Id"].unique().tolist()[0]
     measurement_type = device_history["Measurement_Type"].unique().tolist()[0]
@@ -2277,24 +2277,24 @@ def plot_raw_MUF_comparison(raw_directory=r"C:\Share\35CalComp\35_ascii_results"
     # deal with options
     defaults = {"save_plots": False}
     comparison_options = {}
-    for key, value in defaults.iteritems():
+    for key, value in defaults.items():
         comparison_options[key] = value
-    for key, value in comparison_options.iteritems():
+    for key, value in comparison_options.items():
         comparison_options[key] = value
     # load files into python classes
     model_name = sparameter_power_type(os.path.join(raw_directory, measurement_names[0]))
-    print model_name
+    print(model_name)
     # raw_type(os.path.join(raw_directory,'M105P1.L1_030716'))
     model = globals()[model_name]
-    measurements = map(lambda x: model(os.path.join(raw_directory, x)), measurement_names)
-    calrep_measurements = map(lambda x: calrep(x), measurements)
+    measurements = [model(os.path.join(raw_directory, x)) for x in measurement_names]
+    calrep_measurements = [calrep(x) for x in measurements]
     montecarlo_reference_curve = create_monte_carlo_reference_curve(monte_carlo_directory=montecarlo_directory,
                                                                     format="MA")
     sensitivity_reference_curve = create_sensitivity_reference_curve(nominal_file_path=nominal_path,
                                                                      sensitivity_directory=sensitivity_directory,
                                                                      format="MA")
-    print("-" * 80)
-    print("{0}".format(measurements[0].metadata["Device_Id"]))
+    print(("-" * 80))
+    print(("{0}".format(measurements[0].metadata["Device_Id"])))
 
     # update global preferences
     plt.rcParams.update({'font.size': 22, 'figure.figsize': (12, 6)})
@@ -2470,7 +2470,7 @@ def plot_raw_MUF_comparison(raw_directory=r"C:\Share\35CalComp\35_ascii_results"
                 plot_row[0].set_ylim(ymin=-.025, ymax=.025)
     plt.tight_layout()
     plt.show()
-    print("-" * 80)
+    print(("-" * 80))
     # Return files if you need them later
     return [measurements, calrep_measurements, montecarlo_reference_curve, sensitivity_reference_curve]
 #-----------------------------------------------------------------------------
@@ -2493,7 +2493,7 @@ def test_average_one_port_sparameters():
     ax1.plot(table_list[0].get_column('Frequency'),table_list[0].get_column('argS11'),'bx')
     ax1.set_title('Phase S11')
     plt.show()
-    print out_table
+    print(out_table)
 
 def test_comparison(input_file=None):
     """test_comparison tests the raw_mean,difference and comparison plot functionality"""
@@ -2544,7 +2544,7 @@ def test_comparison(input_file=None):
         history_key='power'
         options["column_names"]=['Frequency','magS11','argS11','Efficiency','Calibration_Factor']
     #print history[history_key][:5]
-    print history_key
+    print(history_key)
     mean_frame=mean_from_history(history_dict[history_key].copy(),**options)
     #print mean_frame
     difference_frame=raw_difference_frame(table,mean_frame)
@@ -2554,7 +2554,7 @@ def test_comparison(input_file=None):
     raw_comparison_plot_with_residuals(table,mean_frame,difference_frame,**plot_options)
     #stop_time=datetime.datetime.now()
     diff=stop_time-start_time
-    print("It took {0} seconds to process".format(diff.total_seconds()))
+    print(("It took {0} seconds to process".format(diff.total_seconds())))
 
 def test_compare_s2p_plots(file_list=["thru.s2p",'20160301_30ft_cable_0.s2p','TwoPortTouchstoneTestFile.s2p']):
     """Tests the compare_s2p_plots function"""

@@ -33,8 +33,8 @@ except:
 try:
     import pyMez.Code.DataHandlers.XMLModels as Logs
 except:
-    print """This module requires  pyMez.Code.DataHandlers.Logs to operate properly,
-            add the directory directly above pyMez to sys.path"""  
+    print("""This module requires  pyMez.Code.DataHandlers.Logs to operate properly,
+            add the directory directly above pyMez to sys.path""")  
 import wx
 import wx.stc
 
@@ -78,47 +78,47 @@ class SimpleArbDBLowerInterfacePanel(wx.Panel):
     def _init_coll_boxSizer3_Items(self, parent):
         # generated method, don't edit
 
-        parent.AddWindow(self.PreviousEntryButton, 0, border=0, flag=0)
-        parent.AddWindow(self.NextEntryButton, 0, border=0, flag=0)
-        parent.AddWindow(self.IdLabel, 0, border=0, flag=0)
-        parent.AddWindow(self.IdControl, 0, border=0, flag=0)
-        parent.AddWindow(self.DateLabel, 0, border=0, flag=0)
-        parent.AddWindow(self.DateControl, 0, border=0, flag=0)
-        parent.AddWindow(self.CurrentLogLabel, 0, border=0, flag=0)
-        parent.AddWindow(self.CurrentFileRegisterControl, 1, border=0,
+        parent.Add(self.PreviousEntryButton, 0, border=0, flag=0)
+        parent.Add(self.NextEntryButton, 0, border=0, flag=0)
+        parent.Add(self.IdLabel, 0, border=0, flag=0)
+        parent.Add(self.IdControl, 0, border=0, flag=0)
+        parent.Add(self.DateLabel, 0, border=0, flag=0)
+        parent.Add(self.DateControl, 0, border=0, flag=0)
+        parent.Add(self.CurrentLogLabel, 0, border=0, flag=0)
+        parent.Add(self.CurrentFileRegisterControl, 1, border=0,
               flag=wx.EXPAND)
-        parent.AddWindow(self.CurrentMetadatLabel, 0, border=0, flag=0)
-        parent.AddWindow(self.CurrentMetadataControl, 1, border=0,
+        parent.Add(self.CurrentMetadatLabel, 0, border=0, flag=0)
+        parent.Add(self.CurrentMetadataControl, 1, border=0,
               flag=wx.EXPAND)
 
     def _init_coll_boxSizer4_Items(self, parent):
         # generated method, don't edit
 
-        parent.AddWindow(self.OpenButton, 1, border=0, flag=wx.ALL | wx.EXPAND)
-        parent.AddWindow(self.SaveAsButton, 1, border=0,
+        parent.Add(self.OpenButton, 1, border=0, flag=wx.ALL | wx.EXPAND)
+        parent.Add(self.SaveAsButton, 1, border=0,
               flag=wx.ALIGN_LEFT | wx.ALL | wx.EXPAND)
-        parent.AddWindow(self.NewEntryButton, 1, border=0,
+        parent.Add(self.NewEntryButton, 1, border=0,
               flag=wx.ALIGN_LEFT | wx.ALL | wx.EXPAND)
-        parent.AddWindow(self.RemoveEntryButton, 1, border=0,
+        parent.Add(self.RemoveEntryButton, 1, border=0,
               flag=wx.ALL | wx.EXPAND)
-        parent.AddWindow(self.SaveButton, 1, border=0,
+        parent.Add(self.SaveButton, 1, border=0,
               flag=wx.LEFT | wx.ALL | wx.EXPAND)
-        parent.AddWindow(self.DescriptionButton, 1, border=0,
+        parent.Add(self.DescriptionButton, 1, border=0,
               flag=wx.ALIGN_LEFT | wx.ALL | wx.EXPAND)
 
     def _init_coll_boxSizer1_Items(self, parent):
         # generated method, don't edit
 
-        parent.AddWindow(self.ControlsPanel, 0, border=2,
+        parent.Add(self.ControlsPanel, 0, border=2,
               flag=wx.ALL | wx.EXPAND)
-        parent.AddWindow(self.TextEntryPanel, 5, border=2,
+        parent.Add(self.TextEntryPanel, 5, border=2,
               flag=wx.ALL | wx.EXPAND)
 
     def _init_coll_boxSizer2_Items(self, parent):
         # generated method, don't edit
 
-        parent.AddWindow(self.Entry, 1, border=2, flag=wx.ALL | wx.EXPAND)
-        parent.AddWindow(self.EntryControlPanel, 0, border=2,
+        parent.Add(self.Entry, 1, border=2, flag=wx.ALL | wx.EXPAND)
+        parent.Add(self.EntryControlPanel, 0, border=2,
               flag=wx.ALIGN_BOTTOM | wx.EXPAND | wx.ALL)
 
     def _init_sizers(self):
@@ -144,30 +144,30 @@ class SimpleArbDBLowerInterfacePanel(wx.Panel):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Panel.__init__(self, id=wxID_SIMPLEARBDBLOWERINTERFACEPANEL,
-              name=u'SimpleArbDBLowerInterfacePanel', parent=prnt,
+              name='SimpleArbDBLowerInterfacePanel', parent=prnt,
               pos=wx.Point(199, 316), size=wx.Size(1277, 374),
               style=wx.TAB_TRAVERSAL)
         self.SetClientSize(wx.Size(1269, 340))
 
         self.ControlsPanel = wx.Panel(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELCONTROLSPANEL,
-              name=u'ControlsPanel', parent=self, pos=wx.Point(2, 2),
+              name='ControlsPanel', parent=self, pos=wx.Point(2, 2),
               size=wx.Size(80, 336), style=wx.TAB_TRAVERSAL)
 
         self.TextEntryPanel = wx.Panel(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELTEXTENTRYPANEL,
-              name=u'TextEntryPanel', parent=self, pos=wx.Point(86, 2),
+              name='TextEntryPanel', parent=self, pos=wx.Point(86, 2),
               size=wx.Size(1181, 336), style=wx.TAB_TRAVERSAL)
 
         self.EntryControlPanel = wx.Panel(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRYCONTROLPANEL,
-              name=u'EntryControlPanel', parent=self.TextEntryPanel,
+              name='EntryControlPanel', parent=self.TextEntryPanel,
               pos=wx.Point(2, 310), size=wx.Size(1177, 24),
               style=wx.TAB_TRAVERSAL)
 
         self.PreviousEntryButton = wx.BitmapButton(bitmap=wx.Bitmap(str(os.path.join(IMAGE_DIRECTORY,'Previous.png')),
               wx.BITMAP_TYPE_PNG),
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON,
-              name=u'PreviousEntryButton', parent=self.EntryControlPanel,
+              name='PreviousEntryButton', parent=self.EntryControlPanel,
               pos=wx.Point(0, 0), size=wx.Size(24, 24), style=wx.BU_AUTODRAW)
-        self.PreviousEntryButton.SetHelpText(u'Previous Entry')
+        self.PreviousEntryButton.SetHelpText('Previous Entry')
         self.PreviousEntryButton.Bind(wx.EVT_BUTTON,
               self.OnPreviousEntryButtonButton,
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELPREVIOUSENTRYBUTTON)
@@ -175,125 +175,124 @@ class SimpleArbDBLowerInterfacePanel(wx.Panel):
         self.NextEntryButton = wx.BitmapButton(bitmap=wx.Bitmap(str(os.path.join(IMAGE_DIRECTORY,'Next.png')),
               wx.BITMAP_TYPE_PNG),
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON,
-              name=u'NextEntryButton', parent=self.EntryControlPanel,
+              name='NextEntryButton', parent=self.EntryControlPanel,
               pos=wx.Point(24, 0), size=wx.Size(24, 24), style=wx.BU_AUTODRAW)
-        self.NextEntryButton.SetHelpText(u'Next Entry')
+        self.NextEntryButton.SetHelpText('Next Entry')
         self.NextEntryButton.Bind(wx.EVT_BUTTON, self.OnNextEntryButtonButton,
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELNEXTENTRYBUTTON)
 
         self.IdLabel = wx.StaticText(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELIDLABEL,
-              label=u'Id:', name=u'IdLabel', parent=self.EntryControlPanel,
+              label='Id:', name='IdLabel', parent=self.EntryControlPanel,
               pos=wx.Point(48, 0), size=wx.Size(55, 24), style=wx.ALIGN_CENTRE)
         self.IdLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD, False,
-              u'MS Shell Dlg 2'))
-        self.IdLabel.SetHelpText(u'')
+              'MS Shell Dlg 2'))
+        self.IdLabel.SetHelpText('')
 
         self.IdControl = wx.TextCtrl(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELIDCONTROL,
-              name=u'IdControl', parent=self.EntryControlPanel,
-              pos=wx.Point(103, 0), size=wx.Size(97, 24), style=0, value=u'Id')
+              name='IdControl', parent=self.EntryControlPanel,
+              pos=wx.Point(103, 0), size=wx.Size(97, 24), style=0, value='Id')
         self.IdControl.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.NORMAL,
-              False, u'MS Shell Dlg 2'))
+              False, 'MS Shell Dlg 2'))
 
         self.DateLabel = wx.StaticText(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELDATELABEL,
-              label=u'Date:', name=u'DateLabel', parent=self.EntryControlPanel,
+              label='Date:', name='DateLabel', parent=self.EntryControlPanel,
               pos=wx.Point(200, 0), size=wx.Size(55, 24),
               style=wx.ALIGN_CENTRE)
         self.DateLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD, False,
-              u'MS Shell Dlg 2'))
+              'MS Shell Dlg 2'))
 
         self.DateControl = wx.TextCtrl(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELDATECONTROL,
-              name=u'DateControl', parent=self.EntryControlPanel,
+              name='DateControl', parent=self.EntryControlPanel,
               pos=wx.Point(255, 0), size=wx.Size(190, 21), style=0,
-              value=u'Date Code of Entry')
+              value='Date Code of Entry')
         self.DateControl.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.NORMAL,
-              False, u'MS Shell Dlg 2'))
+              False, 'MS Shell Dlg 2'))
 
         self.OpenButton = wx.Button(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON,
-              label=u'Open Files', name=u'OpenButton',
+              label='Open Files', name='OpenButton',
               parent=self.ControlsPanel, pos=wx.Point(0, 0), size=wx.Size(80,
               56), style=wx.CAPTION)
-        self.OpenButton.SetHelpText(u'')
-        self.OpenButton.SetToolTipString(u'OpenButton')
+        self.OpenButton.SetHelpText('')
+        self.OpenButton.SetToolTipString('OpenButton')
         self.OpenButton.Bind(wx.EVT_BUTTON, self.OnOpenButtonButton,
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELOPENBUTTON)
 
         self.SaveAsButton = wx.Button(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON,
-              label=u'Save As', name=u'SaveAsButton', parent=self.ControlsPanel,
+              label='Save As', name='SaveAsButton', parent=self.ControlsPanel,
               pos=wx.Point(0, 56), size=wx.Size(80, 56), style=0)
-        self.SaveAsButton.SetHelpText(u'Save the current log as a different name')
+        self.SaveAsButton.SetHelpText('Save the current log as a different name')
         self.SaveAsButton.Bind(wx.EVT_BUTTON, self.OnSaveAsButtonButton,
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEASBUTTON)
 
         self.NewEntryButton = wx.Button(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON,
-              label=u'New Log Entry', name=u'NewEntryButton',
+              label='New Log Entry', name='NewEntryButton',
               parent=self.ControlsPanel, pos=wx.Point(0, 112), size=wx.Size(80,
               56), style=0)
-        self.NewEntryButton.SetHelpText(u'Add a new entry to the current log')
+        self.NewEntryButton.SetHelpText('Add a new entry to the current log')
         self.NewEntryButton.Bind(wx.EVT_BUTTON, self.OnNewEntryButtonButton,
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELNEWENTRYBUTTON)
 
         self.RemoveEntryButton = wx.Button(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON,
-              label=u'Remove Entry', name=u'RemoveEntryButton',
+              label='Remove Entry', name='RemoveEntryButton',
               parent=self.ControlsPanel, pos=wx.Point(0, 168), size=wx.Size(80,
               56), style=0)
-        self.RemoveEntryButton.SetHelpText(u'Remove the current entry')
+        self.RemoveEntryButton.SetHelpText('Remove the current entry')
         self.RemoveEntryButton.Bind(wx.EVT_BUTTON,
               self.OnRemoveEntryButtonButton,
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELREMOVEENTRYBUTTON)
 
         self.SaveButton = wx.Button(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON,
-              label=u'Save', name=u'SaveButton', parent=self.ControlsPanel,
+              label='Save', name='SaveButton', parent=self.ControlsPanel,
               pos=wx.Point(0, 224), size=wx.Size(80, 56), style=0)
-        self.SaveButton.SetHelpText(u'Save the current entry')
+        self.SaveButton.SetHelpText('Save the current entry')
         self.SaveButton.Bind(wx.EVT_BUTTON, self.OnSaveButtonButton,
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELSAVEBUTTON)
 
         self.DescriptionButton = wx.Button(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON,
-              label=u'Description', name=u'DescriptionButton',
+              label='Description', name='DescriptionButton',
               parent=self.ControlsPanel, pos=wx.Point(0, 280), size=wx.Size(80,
               56), style=0)
-        self.DescriptionButton.SetHelpText(u'Show the log description')
+        self.DescriptionButton.SetHelpText('Show the log description')
         self.DescriptionButton.Bind(wx.EVT_BUTTON,
               self.OnDescriptionButtonButton,
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELDESCRIPTIONBUTTON)
 
         self.CurrentLogLabel = wx.StaticText(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTLOGLABEL,
-              label=u'Current File Registry:', name=u'CurrentLogLabel',
+              label='Current File Registry:', name='CurrentLogLabel',
               parent=self.EntryControlPanel, pos=wx.Point(445, 0),
               size=wx.Size(185, 19), style=wx.ALIGN_CENTRE)
         self.CurrentLogLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD,
-              False, u'MS Shell Dlg 2'))
+              False, 'MS Shell Dlg 2'))
 
         self.CurrentFileRegisterControl = wx.TextCtrl(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTFILEREGISTERCONTROL,
-              name=u'CurrentFileRegisterControl', parent=self.EntryControlPanel,
+              name='CurrentFileRegisterControl', parent=self.EntryControlPanel,
               pos=wx.Point(630, 0), size=wx.Size(178, 24), style=0,
-              value=u'Name of File Registry ')
+              value='Name of File Registry ')
         self.CurrentFileRegisterControl.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL,
-              wx.NORMAL, False, u'MS Shell Dlg 2'))
+              wx.NORMAL, False, 'MS Shell Dlg 2'))
 
         self.Entry = wx.TextCtrl(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY,
-              name=u'Entry', parent=self.TextEntryPanel, pos=wx.Point(2, 2),
+              name='Entry', parent=self.TextEntryPanel, pos=wx.Point(2, 2),
               size=wx.Size(1177, 304),
-              style=wx.TE_MULTILINE | wx.VSCROLL | wx.TE_LINEWRAP | wx.TE_WORDWRAP,
-              value=u'')
+              value='')
         self.Entry.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL, False,
-              u'MS Shell Dlg 2'))
+              'MS Shell Dlg 2'))
         self.Entry.Bind(wx.EVT_TEXT_ENTER, self.OnEntryTextEnter,
               id=wxID_SIMPLEARBDBLOWERINTERFACEPANELENTRY)
 
         self.CurrentMetadatLabel = wx.StaticText(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATLABEL,
-              label=u'Current Metadata File: ', name=u'CurrentMetadatLabel',
+              label='Current Metadata File: ', name='CurrentMetadatLabel',
               parent=self.EntryControlPanel, pos=wx.Point(808, 0),
               size=wx.Size(190, 19), style=0)
         self.CurrentMetadatLabel.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL,
-              wx.BOLD, False, u'MS Shell Dlg 2'))
+              wx.BOLD, False, 'MS Shell Dlg 2'))
 
         self.CurrentMetadataControl = wx.TextCtrl(id=wxID_SIMPLEARBDBLOWERINTERFACEPANELCURRENTMETADATACONTROL,
-              name=u'CurrentMetadataControl', parent=self.EntryControlPanel,
+              name='CurrentMetadataControl', parent=self.EntryControlPanel,
               pos=wx.Point(998, 0), size=wx.Size(179, 24), style=0,
-              value=u'Name of Metadata File')
+              value='Name of Metadata File')
         self.CurrentMetadataControl.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL,
-              wx.NORMAL, False, u'MS Shell Dlg 2'))
+              wx.NORMAL, False, 'MS Shell Dlg 2'))
 
         self._init_sizers()
 
@@ -384,7 +383,7 @@ class SimpleArbDBLowerInterfacePanel(wx.Panel):
 if __name__ == '__main__':
     app = wx.PySimpleApp()
     frame = wx.Frame(None,size=wx.Size(900, 800))
-    panel=SimpleArbDBLowerInterfacePanel(id=1, name=u'IEPanel',
+    panel=SimpleArbDBLowerInterfacePanel(id=1, name='IEPanel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(200, 800),
               style=wx.TAB_TRAVERSAL)
     sizer=wx.BoxSizer()

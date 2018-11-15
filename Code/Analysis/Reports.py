@@ -233,9 +233,9 @@ class CheckStandardReport(HTMLReport):
                                                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']}
                     }
         self.options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             self.options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             self.options[key] = value
         self.conversion_defaults = {"base_name": None,
                                     "nodes": ['XmlFile', 'CsvFile', 'ExcelFile', 'OdsFile', 'MatFile', 'HtmlFile',
@@ -295,7 +295,7 @@ class CheckStandardReport(HTMLReport):
             self.options["Measurement_Type"] = "2-port"
         elif re.match("p", measurement_type, re.IGNORECASE):
             self.options["Measurement_Type"] = "power"
-        print("{0} is {1}".format("measurement_type",measurement_type))
+        print(("{0} is {1}".format("measurement_type",measurement_type)))
         self.results_file = ResultFileModel(os.path.join(self.options["results_directory"], self.options["Device_Id"]))
         options = {"Device_Id": self.options["Device_Id"], "System_Id": None, "Measurement_Timestamp": None,
                    "Connector_Type_Measurement": None,
@@ -460,8 +460,8 @@ class CheckStandardReport(HTMLReport):
         self.standard_error = standard_error_data_table(self.calrep_measurement, self.results_file,
                                                         table_1_uncertainty_column_names=error_column_names,
                                                         value_column_names=column_names, expansion_factor=1)
-        number_columns_pass = self.standard_error.get_conformation_dictionary().values().count(True)
-        number_columns = len(self.standard_error.get_conformation_dictionary().values())
+        number_columns_pass = list(self.standard_error.get_conformation_dictionary().values()).count(True)
+        number_columns = len(list(self.standard_error.get_conformation_dictionary().values()))
         good = int(round(float(number_columns_pass - 1) / float(number_columns - 1)))
         pass_fail = ""
         if good:
@@ -537,9 +537,9 @@ class CheckStandardReport(HTMLReport):
                     "style": "display:none",
                     "figure_width": 14}
         add_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             add_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             add_optionss[key] = value
         if add_options["clear_before"]:
             self.clear()
@@ -557,9 +557,9 @@ class CheckStandardReport(HTMLReport):
         """Adds a heading to the report, clears the report by default"""
         defaults = {"clear_before": False}
         add_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             add_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             add_options[key] = value
         if add_options["clear_before"]:
             self.clear()
@@ -592,9 +592,9 @@ class CheckStandardReport(HTMLReport):
                     "style": "display:none;border:1;"}
 
         add_options = {}
-        for key, value in defaults.iteritems():
+        for key, value in defaults.items():
             add_options[key] = value
-        for key, value in options.iteritems():
+        for key, value in options.items():
             add_options[key] = value
         if add_options["clear_before"]:
             self.clear()
@@ -613,7 +613,7 @@ class CheckStandardReport(HTMLReport):
                                                     mime_type="text/plain",
                                                     suggested_name=add_options["download_files_base_names"][index],
                                                     text=add_options["download_files_base_names"][index])
-            print("{0} is {1}".format("index", index))
+            #print(("{0} is {1}".format("index", index)))
             table_graph.set_state("AsciiDataTable", download)
 
             download_links = TableGraph_to_Links(table_graph,
@@ -634,7 +634,7 @@ class CheckStandardReport(HTMLReport):
             self.add_toggle("metadata")
             self.append_to_body({"tag": "hr"})
             meta_table = "<table id='metadata' style='{0}'>".format(style)
-            for key, value in self.raw_measurement.metadata.iteritems():
+            for key, value in self.raw_measurement.metadata.items():
                 meta_table = meta_table + "<tr><td>{0}</td><td>{1}</td></tr>".format(key, value)
             meta_table = meta_table + "</table>"
             self.append_to_body(meta_table)

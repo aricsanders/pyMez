@@ -57,7 +57,7 @@ def replace_all(top_directory):
                 out_file.write(infile_contents)
                 out_file.close()
             except:
-                print("Could not replace term in file {0}".format(os.path.join(directory,filename)))
+                print(("Could not replace term in file {0}".format(os.path.join(directory,filename))))
 def add_init_to_all(top_directory):
     """Script that looks for an __init__.py file in every folder and if it is not there inserts one. This is a
     very uninspired hack to the problem of including data in the distribution"""

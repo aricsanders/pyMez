@@ -744,7 +744,7 @@ class StyledTextCtrlPanel(wx.Panel):
     def _init_coll_boxSizer1_Items(self, parent):
         # generated method, don't edit
 
-        parent.AddWindow(self.styledTextCtrl1, 1, border=2, flag=wx.EXPAND)
+        parent.Add(self.styledTextCtrl1, 1, border=2, flag=wx.EXPAND)
 
     def _init_sizers(self):
         # generated method, don't edit
@@ -757,7 +757,7 @@ class StyledTextCtrlPanel(wx.Panel):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Panel.__init__(self, id=wxID_STYLEDTEXTCTRLPANEL,
-              name=u'StyledTextCtrlPanel', parent=prnt, pos=wx.Point(519, 269),
+              name='StyledTextCtrlPanel', parent=prnt, pos=wx.Point(519, 269),
               size=wx.Size(589, 342), style=wx.TAB_TRAVERSAL)
         self.SetClientSize(wx.Size(573, 304))
 
@@ -773,7 +773,7 @@ class StyledTextCtrlPanel(wx.Panel):
 def test_StyledTextCtrlPanel():
     app = wx.PySimpleApp()
     frame = wx.Frame(None,size=wx.Size(900, 800))
-    panel=StyledTextCtrlPanel(id=1, name=u'IV Panel',
+    panel=StyledTextCtrlPanel(id=1, name='IV Panel',
               parent=frame, pos=wx.Point(350, 204), size=wx.Size(200, 800),
               style=wx.TAB_TRAVERSAL)
     panel.styledTextCtrl1.SetText(demoText )

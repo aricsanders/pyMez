@@ -24,13 +24,13 @@ import os                                           # path functions etc.
 import fnmatch                                     # unix Style filename filter 
 import sys                                         # System 
 import re                                          # For regular expressions     
-import urlparse                                    # To form proper URLs 
+import urllib.parse                                    # To form proper URLs 
 import datetime                                    # For timestamping     
 import xml.dom                                     # Xml document handling 
 import xml.dom.minidom                             # For xml parsing
 from xml.dom.minidom import getDOMImplementation   # Making blank XML documents 
 from types import *                                # to allow input testing
-import StringIO
+import io
 #-------------------------------------------------------------------------------
 # Third Party Imports
 
@@ -81,12 +81,12 @@ class EtreeXML():
             try:
                 print("There is no path, set it to save file.")
                 print("etree considers this a element")
-                self.document=etree.parse(StringIO.StringIO(xml_document))
+                self.document=etree.parse(io.StringIO(xml_document))
                 self.path=''
             except:raise
         self.info=[]
         self.root=self.document.getroot()
-        self.processing_instructions=map(lambda x:str(x),self.get_processing_instructions())
+        self.processing_instructions=[str(x) for x in self.get_processing_instructions()]
         # Try to load the XSL from the sheet itself
         for instruction in self.get_processing_instructions():
             try:
@@ -140,7 +140,7 @@ class EtreeXML():
 
     def __str__(self):
         """ Defines how EtreeXML is displayed """
-        return etree.tostring(self.document, pretty_print=True)
+        return etree.tostring(self.document, pretty_print=True,encoding="unicode")
 #-------------------------------------------------------------------------------
 # Scripts
 def test_EtreeXML():
@@ -159,15 +159,15 @@ def test_EtreeXML():
     #print new_xml.node_dictionary
     for element in new_xml.document.iter():
         
-        print("Element name: %s"%element.tag)
+        print(("Element name: %s"%element.tag))
         if element.text:
-            print("\tElement Text: %s"%element.text)
+            print(("\tElement Text: %s"%element.text))
         if element.attrib:
             attribute_text="Attribues are "
-            for key,value in element.attrib.iteritems():
+            for key,value in element.attrib.items():
                 attribute_text=attribute_text+"%s = %s, "%(key,value)
-            print attribute_text
-    print("The path is %s"%new_xml.path)
+            print(attribute_text)
+    print(("The path is %s"%new_xml.path))
     
 #-------------------------------------------------------------------------------
 # Module Runner

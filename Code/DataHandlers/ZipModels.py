@@ -86,9 +86,9 @@ class ZipArchive():
                   "path":None,
                   "files":None}
         self.options={}
-        for key,value in defaults.iteritems():
+        for key,value in defaults.items():
             self.options[key]=value
-        for key,value in options.iteritems():
+        for key,value in options.items():
             self.options[key]=value
         if file_path is None:
             if self.options["path"] is None:
@@ -116,7 +116,10 @@ class ZipArchive():
             pass
         else:
             if not self.options["temp_directory"]:
-                os.mkdir("./Temp")
+                try:
+                    os.mkdir("./Temp")
+                except:
+                    pass
                 self.options["temp_directory"]="./Temp"
             temp_path=os.path.join(self.options["temp_directory"],"temp_file")
             temp_extracted=extract_all(self.zip_file,temp_path)
@@ -170,7 +173,7 @@ def test_ZipArchive(file_path="Test_Zip_File.zip"):
     new_zip.add_file(file_path,archive_name="New_directory/file.txt")
     #new_zip.add_all_from_directory(r"C:\Users\sandersa\PyCharm Projects\Jupyter-Notebooks\Radical_Correction_Files")
     new_zip.write_string(test_string,"String_test.txt")
-    print new_zip.files
+    print(new_zip.files)
     new_zip.close()
 #-----------------------------------------------------------------------------
 # Module Runner
