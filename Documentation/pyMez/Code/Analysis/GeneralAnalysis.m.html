@@ -1308,7 +1308,7 @@ table {
     <span class="sd">&quot;&quot;&quot;Returns a model with a single set of independent variables. Default is to average values together</span>
 <span class="sd">    but geometric mean, std, variance, rss, mad and median are options.</span>
 <span class="sd">    Geometric means of odd number of negative values fails&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
         <span class="n">model_1</span> <span class="o">=</span> <span class="n">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;mean&quot;</span><span class="p">}</span>
     <span class="c1"># load other options from model</span>
@@ -1375,9 +1375,9 @@ table {
         <span class="n">difference_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="c1"># first check type, if it is a panadas data frame a little conversion is needed, else is for all other models</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">model_1</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_1</span><span class="p">,</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
         <span class="n">model_1</span> <span class="o">=</span> <span class="n">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">model_1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">model_2</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_2</span><span class="p">,</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
         <span class="n">model_2</span> <span class="o">=</span> <span class="n">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">model_2</span><span class="p">)</span>
     <span class="c1"># now start with a set of frequencies (unique values from both)</span>
     <span class="n">independent_variable_set_1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">model_1</span><span class="p">[</span><span class="n">independent_column_name</span><span class="p">])</span>
@@ -1471,7 +1471,7 @@ Geometric means of odd number of negative values fails</p></div>
     <span class="sd">&quot;&quot;&quot;Returns a model with a single set of independent variables. Default is to average values together</span>
 <span class="sd">    but geometric mean, std, variance, rss, mad and median are options.</span>
 <span class="sd">    Geometric means of odd number of negative values fails&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
         <span class="n">model_1</span> <span class="o">=</span> <span class="n">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;mean&quot;</span><span class="p">}</span>
     <span class="c1"># load other options from model</span>
@@ -1560,9 +1560,9 @@ pandas.DataFrame, if a column is a non-numeric type it drops it.</p></div>
         <span class="n">difference_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="c1"># first check type, if it is a panadas data frame a little conversion is needed, else is for all other models</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">model_1</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_1</span><span class="p">,</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
         <span class="n">model_1</span> <span class="o">=</span> <span class="n">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">model_1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">model_2</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_2</span><span class="p">,</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
         <span class="n">model_2</span> <span class="o">=</span> <span class="n">DataFrame_to_AsciiDataTable</span><span class="p">(</span><span class="n">model_2</span><span class="p">)</span>
     <span class="c1"># now start with a set of frequencies (unique values from both)</span>
     <span class="n">independent_variable_set_1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">model_1</span><span class="p">[</span><span class="n">independent_column_name</span><span class="p">])</span>

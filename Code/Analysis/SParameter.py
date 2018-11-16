@@ -16,8 +16,10 @@ see also <a href="./NISTUncertainty.m.html">NISTUncertainty</a>
     #!python
     >>test_compare_s2p_plots()
 
- <h3><a href="../../../Examples/html/SParameter_Example.html">SParameter Example</a></h3>
-
+<h3><a href="../../../Examples/html/Applying_Calibration_Example.html">Applying a Correction Example</a></h3>
+<h3><a href="../../../Examples/html/Calrep_Example.html">Using the Python Verison of Calrep</a></h3>
+<h3><a href="../../../Examples/html/Creating_Comparing_Reference_Curves_MUFModels.html">Analysis of files made by the
+NIST Microwave Uncertainty Framework</a></h3>
 Requirements
 ------------
 + [sys](https://docs.python.org/2/library/sys.html)

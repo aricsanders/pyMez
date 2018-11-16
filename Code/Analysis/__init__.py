@@ -7,7 +7,7 @@ in DataHandlers. Any module in the Analysis subpackage can import from DataHandl
 
  Examples
 --------
-<a href="../../../Examples/How_to_Calrep.html"> How to calrep a raw data file</a>
+<a href="../../../Examples/html/Calrep_Example.html"> How to calrep a raw data file</a>
 
 Import Structure
 ----------------

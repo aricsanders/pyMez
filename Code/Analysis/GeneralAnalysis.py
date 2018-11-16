@@ -87,7 +87,7 @@ def independent_variable_model_collapse(model,independent_column_name="Frequency
     """Returns a model with a single set of independent variables. Default is to average values together
     but geometric mean, std, variance, rss, mad and median are options.
     Geometric means of odd number of negative values fails"""
-    if type(model) in [pandas.DataFrame]:
+    if isinstance(model,pandas.DataFrame):
         model_1 = DataFrame_to_AsciiDataTable(model)
     defaults = {"method": "mean"}
     # load other options from model
@@ -154,9 +154,9 @@ def independent_variable_model_difference(model_1, model_2, independent_column_n
         difference_options[key] = value
 
     # first check type, if it is a panadas data frame a little conversion is needed, else is for all other models
-    if type(model_1) in [pandas.DataFrame]:
+    if isinstance(model_1,pandas.DataFrame):
         model_1 = DataFrame_to_AsciiDataTable(model_1)
-    if type(model_2) in [pandas.DataFrame]:
+    if isinstance(model_2,pandas.DataFrame):
         model_2 = DataFrame_to_AsciiDataTable(model_2)
     # now start with a set of frequencies (unique values from both)
     independent_variable_set_1 = set(model_1[independent_column_name])
