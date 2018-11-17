@@ -1201,6 +1201,7 @@ class VNA(VisaInstrument):
             self.frequency_list = [round(x, ndigits=3) for x in np.logspace(logspace_start, logspace_stop,
                                                                                  num=number_points, base=10).tolist()]
         elif re.search("SEG", self.sweep_type, re.IGNORECASE):
+            self.frequency_table=[]
             number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
             for i in range(number_segments):
                 start = float(self.query("SENS:SEGM{0}:FREQ:START?".format(i + 1)).replace("\n", ""))
