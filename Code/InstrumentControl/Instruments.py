@@ -870,14 +870,14 @@ class VNA(VisaInstrument):
         number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
         print(("{0} is {1}".format("number_segments", number_segments)))
         if len(self.frequency_table) < number_segments:
-            difference = number_segments - len(self.frequency_table)-1
+            difference = number_segments - len(self.frequency_table)
             max_segment = number_segments
             while (difference != 0):
                 self.write("SENS:SEGM{0}:DEL".format(max_segment))
                 max_segment -= 1
                 difference -= 1
         elif len(self.frequency_table) > number_segments:
-            difference = len(self.frequency_table) - number_segments-1
+            difference = len(self.frequency_table) - number_segments
             max_segment = number_segments + 1
             print(("{0} is {1}".format("difference", difference)))
             while (difference != 0):
