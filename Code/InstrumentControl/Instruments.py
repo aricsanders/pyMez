@@ -868,7 +868,7 @@ class VNA(VisaInstrument):
         # This routine is broken
 
         number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
-        print(("{0} is {1}".format("number_segments", number_segments)))
+        #print(("{0} is {1}".format("number_segments", number_segments)))
         if len(self.frequency_table) < number_segments:
             difference = number_segments - len(self.frequency_table)
             max_segment = number_segments
@@ -879,12 +879,12 @@ class VNA(VisaInstrument):
         elif len(self.frequency_table) > number_segments:
             difference = len(self.frequency_table) - number_segments
             max_segment = number_segments + 1
-            print(("{0} is {1}".format("difference", difference)))
+            #print(("{0} is {1}".format("difference", difference)))
             while (difference != 0):
                 self.write("SENS:SEGM{0}:ADD".format(max_segment))
                 max_segment += 1
                 difference -= 1
-                print(("{0} is {1}".format("difference", difference)))
+                #print(("{0} is {1}".format("difference", difference)))
         else:
             pass
 
@@ -895,6 +895,17 @@ class VNA(VisaInstrument):
             self.write("SENS:SEGM{0}:FREQ:STOP {1}".format(row_index + 1, stop))
             self.write("SENS:SEGM{0}:SWE:POIN {1}".format(row_index + 1, number_points))
             self.write("SENS:SEGM{0}:STAT ON".format(row_index + 1))
+
+    def remove_segment(self,segment=1):
+        """Removes a the segment, default is segment 1 """
+        self.write("SENS:SEGM{0}:DEL".format(segment))
+
+    def remove_all_segments(self):
+        """Removes all segments from VNA"""
+        segment_count = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
+        for i in range(segment_count):
+            segment = segment_count - i
+            self.write("SENS:SEGM{0}:DEL".format(segment))
 
     def write_frequency_table(self, frequency_table=None):
         """Writes frequency_table to the instrument, the frequency table should be in the form
@@ -948,7 +959,7 @@ class VNA(VisaInstrument):
 
     def get_frequency(self):
         "Returns the frequency in python list format"
-        return self.frequency_list
+        return self.get_frequency_list()
 
     def is_busy(self):
         """Checks if the instrument is currently doing something and returns a boolean value"""
@@ -1233,9 +1244,10 @@ class VNA(VisaInstrument):
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
             logspace_start = np.log10(start)
             logspace_stop = np.log10(stop)
-            self.frequency_list = [round(x, ndigits=3) for x in np.logspace(logspace_start, logspace_stop,
-                                                                                 num=number_points, base=10).tolist()]
+            self.frequency_list = np.logspace(logspace_start, logspace_stop,num=number_points, base=10).tolist()
+
         elif re.search("SEG", self.sweep_type, re.IGNORECASE):
+            self.frequency_table=[]
             number_segments = int(self.query("SENS:SEGM:COUN?").replace("\n", ""))
             for i in range(number_segments):
                 start = float(self.query("SENS:SEGM{0}:FREQ:START?".format(i + 1)).replace("\n", ""))
@@ -1245,11 +1257,11 @@ class VNA(VisaInstrument):
                 self.frequency_table.append({"start": start, "stop": stop,
                                              "number_points": number_points, "step": step})
                 self.frequency_table = fix_segment_table(self.frequency_table)
-                frequency_list = []
-                for row in self.frequency_table[:]:
-                    new_list = np.linspace(row["start"], row["stop"], row["number_points"]).tolist()
-                    frequency_list = frequency_list + new_list
-                self.frequency_list = frequency_list
+            frequency_list = []
+            for row in self.frequency_table[:]:
+                new_list = np.linspace(row["start"], row["stop"], row["number_points"]).tolist()
+                frequency_list = frequency_list + new_list
+            self.frequency_list = frequency_list
         else:
             self.frequency_list = []
         return self.frequency_list[:]
