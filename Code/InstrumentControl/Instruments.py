@@ -1450,7 +1450,7 @@ class NRPPowerMeter(PowerMeter):
         self.write("INIT")
 
 class HighSpeedOscope(VisaInstrument):
-    """Control Class for high speed oscilloscopes. Based on code from Diogo """
+    """Control Class for high speed oscilloscopes. Based on Keysight/Agilent 86100C Based on code from Diogo """
 
     def initialize(self, **options):
         """Initializes the oscilloscope  for data collection"""
@@ -1521,7 +1521,7 @@ class HighSpeedOscope(VisaInstrument):
             new_frame = []
 
             # calculate time position for this frame
-            time_position = frame_index * self.measure_options["timebase_scale"] + self.measure_options[
+            time_position = frame_index * self.measure_options["timebase_scale"]*10. + self.measure_options[
                 "initial_time_offset"]
 
             # define postion to start the acquisition
