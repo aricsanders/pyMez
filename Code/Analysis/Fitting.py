@@ -151,10 +151,12 @@ class FunctionalModel(object):
             if isinstance(self.options[item], StringType):
                 self.options[item]=re.split("\s+",self.options[item])
             self.__dict__[item]=self.options[item]
-            self.__dict__[item+"_symbols"]=sympy.symbols(self.options[item])
+            # ------------ This was not needed for multisine fit removed 11/27/2018
+            # self.__dict__[item+"_symbols"]=sympy.symbols(self.options[item])
             # this creates the python variables in the global namespace, may back fire with lots of variables
-            for index,symbol in enumerate(self.__dict__[item+"_symbols"][:]):
-                globals()[item[index]]=symbol
+            # for index,symbol in enumerate(self.__dict__[item+"_symbols"][:]):
+            #     globals()[item[index]]=symbol
+            # -----------------
             self.options[item]=None
         self.equation=sympy.sympify(self.options["equation"])
         self.function=sympy.lambdify(self.parameters+self.variables,self.equation,'numpy')
