@@ -46,6 +46,8 @@ from types import *
 import re
 #-----------------------------------------------------------------------------
 # Third Party Imports
+sys.path.append(os.path.join(os.path.dirname( __file__ ), '..','..'))
+
 try:
     from Code.Utils.Types import *
 except:
@@ -506,7 +508,22 @@ class DataSimulator(object):
             out=out[0]
         return out
 
-
+class Multicosine(FunctionalModel):
+    """Multicosine creates a Functional Model of the form f(t) = A_1*cos(2*pi*frequency_list[0]*t+phi_1)+
+    ... A_N*cos(2*pi*frequency_list[N]*t+phi_N). It requires a frequency_list to be passed on creation"""
+    def __init__(self,frequency_list):
+        # Constructing the equation string to pass to FunctionalModel
+        number_terms = len(frequency_list)
+        fit_function = ""
+        for i in range(number_terms):
+            if i < number_terms - 1:
+                fit_function = fit_function + "A_{0}*cos(2*pi*{1}*t+phi_{0})+".format(i + 1, frequency_list[i])
+            else:
+                fit_function = fit_function + "A_{0}*cos(2*pi*{1}*t+phi_{0})".format(i + 1, frequency_list[i])
+        # Construct the parameter List
+        parameter_list = ["A_{0}".format(i + 1) for i in range(number_terms)] + ["phi_{0}".format(i + 1) for i in
+                                                                                 range(number_terms)]
+        FunctionalModel.__init__(self,parameters=parameter_list,variables="t",equation=fit_function)
 
 #-----------------------------------------------------------------------------
 # Module Scripts
@@ -522,8 +539,19 @@ def test_linear_fit(data=None):
     results=least_squares_fit(line_function,data[0],data[1],initial_guess)
     print(("The fit of data is y={1:3.2g} x + {0:3.2g}".format(*results)))
 
+def test_Multicosine():
+    """ Tests the creation of a Multicosine"""
+    frequency_list=np.linspace(10**9,2*10**9,3)
+    print("The frequecy_list is {0}".format(frequency_list))
+    print("Creating Multicosine ....")
+    multisine=Multicosine(frequency_list)
+    print("The mutlisine is {0}".format(multisine))
+    print("The latex form is "+ multisine.to_latex())
+
+
 
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
     test_linear_fit()
+    test_Multicosine()

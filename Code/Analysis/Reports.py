@@ -296,7 +296,10 @@ class CheckStandardReport(HTMLReport):
         elif re.match("p", measurement_type, re.IGNORECASE):
             self.options["Measurement_Type"] = "power"
         print(("{0} is {1}".format("measurement_type",measurement_type)))
-        self.results_file = ResultFileModel(os.path.join(self.options["results_directory"], self.options["Device_Id"]))
+        try:
+            self.results_file = ResultFileModel(os.path.join(self.options["results_directory"], self.options["Device_Id"]))
+        except:
+            self.results_file=ResultFileModel(None)
         options = {"Device_Id": self.options["Device_Id"], "System_Id": None, "Measurement_Timestamp": None,
                    "Connector_Type_Measurement": None,
                    "Measurement_Date": None, "Measurement_Time": None, "outlier_removal": False}

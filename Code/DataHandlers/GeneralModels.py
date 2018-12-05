@@ -9,7 +9,7 @@
  class is AsciiDataTable that is an abstracted model of a data table with a header full of metadata, a
  column modeled table (like excel or a csv table) and a footer. Made a change 10/19/2018 to AsciiDataTable
  that now by default saves a .schema file and looks for one to open the table (save_schema=True,
- open_with_schema =True )
+ open_with_schema =True ) Currently it is great for small ~1MB or less files. If it is extremely slow use numpy.loadtxt
 
 
 Examples
