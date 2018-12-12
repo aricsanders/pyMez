@@ -4,7 +4,7 @@
 
 
 <Instrument>
-<!-- Information Specific To My ZVA110-->
+<!-- Information Specific To My Power Meter-->
     <Specific_Information>
         <Name>NRPPowerMeter</Name>
         <Alias>RS_NRP_Power_Meter_4639_01</Alias>

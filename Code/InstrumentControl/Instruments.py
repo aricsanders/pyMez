@@ -475,7 +475,8 @@ class VisaInstrument(InstrumentSheet):
         return self.resource.query(command)
 
     def set_state(self,state_dictionary=None,state_table=None):
-        """ Sets the instrument to the state specified by Command:Value pairs"""
+        """ Sets the instrument to the state specified by state_dictionary={Command:Value,..} pairs, or a list of dictionaries
+        of the form state_table=[{"Set":Command,"Value":Value},..]"""
         if state_dictionary:
             if len(self.state_buffer)+1<self.STATE_BUFFER_MAX_LENGTH:
                 self.state_buffer.append(self.get_state())
@@ -539,16 +540,25 @@ class VisaInstrument(InstrumentSheet):
         self.current_state=self.get_state()
         self.save_state(None,state_dictionary=self.current_state)
         
-    def save_state(self,state_path=None,state_dictionary=None,state_table=None):
-        """ Saves any state dictionary to an xml file, with state_path, if not specified defaults to autonamed state
+    def save_state(self,state_path=None,state_dictionary=None,state_table=None,refresh_state=False):
+        """ Saves any state dictionary to an xml file, with state_path,
+         if not specified defaults to autonamed state and the default state dictionary refreshed at the time
+         of the method call. If refresh_state=True it gets the state at the time of call otherwise
+         the state is assumed to be all ready complete. state=instrument.get_state(state_dictionary) and then
+         instrument.save_state(state). Or instrument.save_state(state_dictionary=state_dictionary,refresh=True)
          """
         if state_path is None:
             state_path=auto_name(specific_descriptor=self.name,general_descriptor="State",
                                  directory=self.options["state_directory"])
+            state_path=os.path.join(self.options["state_directory"],state_path)
         if state_dictionary:
+            if refresh_state:
+                state_dictionary=self.get_state(state_dictionary)
             new_state=InstrumentState(None,**{"state_dictionary":state_dictionary,
                                               "style_sheet":"./DEFAULT_STATE_STYLE.xsl"})
         elif state_table:
+            if refresh_state:
+                state_table=self.get_state(state_table)
             new_state=InstrumentState(None,**{"state_table":state_table,
                                               "style_sheet":"./DEFAULT_STATE_STYLE.xsl"})
         else:
@@ -556,9 +566,9 @@ class VisaInstrument(InstrumentSheet):
                                               "style_sheet":"./DEFAULT_STATE_STYLE.xsl"})
 
         try:
-            new_state.add_state_description()
             new_state.append_description(description_dictionary=self.description)
         except: raise #pass
+
         new_state.save(state_path)
         return state_path
 

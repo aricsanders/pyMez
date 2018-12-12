@@ -311,6 +311,7 @@ def s2p_mean(list_s2p_models,**options):
             #print new_row
         average_data.append(np.mean(new_row,axis=0).tolist())
     average_options["data"]=average_data
+    average_options["option_line"]=list_s2p_models[0].option_line
     new_s2p=S2PV1(None,**average_options)
     return new_s2p
 
@@ -340,6 +341,7 @@ def s2p_difference(s2p_one,s2p_two,**options):
         new_row[0]=row[0]
         difference_data.append(new_row)
     difference_options["data"]=difference_data
+    difference_options["option_line"]=s2p_one.option_line
     new_s2p=S2PV1(None,**difference_options)
     return new_s2p
 

@@ -437,6 +437,8 @@ class DataSimulator(object):
         """Sets the dependent variable values, min, max and number of points or step"""
         if [variable_min,variable_max]==[None,None]:
             self.x=np.array([])
+        elif isinstance(variable_min,list):
+            self.x=variable_min
         else:
             if variable_step:
                 number_points=(variable_max-variable_min)/variable_step

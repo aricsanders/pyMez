@@ -2910,7 +2910,7 @@ wrappers around the pyvisa instrument class with static xml based metadata added
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;INIT&quot;</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">HighSpeedOscope</span><span class="p">(</span><span class="n">VisaInstrument</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Control Class for high speed oscilloscopes. Based on code from Diogo &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Control Class for high speed oscilloscopes. Based on Keysight/Agilent 86100C Based on code from Diogo &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the oscilloscope  for data collection&quot;&quot;&quot;</span>
@@ -2981,7 +2981,7 @@ wrappers around the pyvisa instrument class with static xml based metadata added
             <span class="n">new_frame</span> <span class="o">=</span> <span class="p">[]</span>
 
             <span class="c1"># calculate time position for this frame</span>
-            <span class="n">time_position</span> <span class="o">=</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span>
+            <span class="n">time_position</span> <span class="o">=</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">]</span><span class="o">*</span><span class="mf">10.</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span>
                 <span class="s2">&quot;initial_time_offset&quot;</span><span class="p">]</span>
 
             <span class="c1"># define postion to start the acquisition</span>
@@ -4533,12 +4533,12 @@ window (using wx)</p></div>
       <p id="pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope" class="name">class <span class="ident">HighSpeedOscope</span></p>
       
   
-    <div class="desc"><p>Control Class for high speed oscilloscopes. Based on code from Diogo</p></div>
+    <div class="desc"><p>Control Class for high speed oscilloscopes. Based on Keysight/Agilent 86100C Based on code from Diogo</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.InstrumentControl.Instruments.HighSpeedOscope" class="source">
     <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">HighSpeedOscope</span><span class="p">(</span><span class="n">VisaInstrument</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Control Class for high speed oscilloscopes. Based on code from Diogo &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Control Class for high speed oscilloscopes. Based on Keysight/Agilent 86100C Based on code from Diogo &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the oscilloscope  for data collection&quot;&quot;&quot;</span>
@@ -4609,7 +4609,7 @@ window (using wx)</p></div>
             <span class="n">new_frame</span> <span class="o">=</span> <span class="p">[]</span>
 
             <span class="c1"># calculate time position for this frame</span>
-            <span class="n">time_position</span> <span class="o">=</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span>
+            <span class="n">time_position</span> <span class="o">=</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">]</span><span class="o">*</span><span class="mf">10.</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span>
                 <span class="s2">&quot;initial_time_offset&quot;</span><span class="p">]</span>
 
             <span class="c1"># define postion to start the acquisition</span>
@@ -5562,7 +5562,7 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
                                                                                           <span class="n">time_difference</span><span class="o">.</span><span class="n">seconds</span><span class="p">)))</span>
         <span class="n">new_frame</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># calculate time position for this frame</span>
-        <span class="n">time_position</span> <span class="o">=</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span>
+        <span class="n">time_position</span> <span class="o">=</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span><span class="s2">&quot;timebase_scale&quot;</span><span class="p">]</span><span class="o">*</span><span class="mf">10.</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_options</span><span class="p">[</span>
             <span class="s2">&quot;initial_time_offset&quot;</span><span class="p">]</span>
         <span class="c1"># define postion to start the acquisition</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;:TIM:POS {0}ns&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_position</span><span class="p">))</span>

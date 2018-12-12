@@ -1292,7 +1292,7 @@ table {
  class is AsciiDataTable that is an abstracted model of a data table with a header full of metadata, a
  column modeled table (like excel or a csv table) and a footer. Made a change 10/19/2018 to AsciiDataTable
  that now by default saves a .schema file and looks for one to open the table (save_schema=True,
- open_with_schema =True )</p>
+ open_with_schema =True ) Currently it is great for small ~1MB or less files. If it is extremely slow use numpy.loadtxt</p>
 <h2>Examples</h2>
 <div class="codehilite"><pre><span></span><span class="o">&gt;&gt;</span><span class="kn">from</span> <span class="nn">pyMez</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="o">&gt;&gt;</span><span class="n">table</span><span class="o">=</span><span class="n">AsciiDataTable</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span><span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;b])</span>
@@ -1333,7 +1333,7 @@ table {
 <span class="sd"> class is AsciiDataTable that is an abstracted model of a data table with a header full of metadata, a</span>
 <span class="sd"> column modeled table (like excel or a csv table) and a footer. Made a change 10/19/2018 to AsciiDataTable</span>
 <span class="sd"> that now by default saves a .schema file and looks for one to open the table (save_schema=True,</span>
-<span class="sd"> open_with_schema =True )</span>
+<span class="sd"> open_with_schema =True ) Currently it is great for small ~1MB or less files. If it is extremely slow use numpy.loadtxt</span>
 
 
 <span class="sd">Examples</span>

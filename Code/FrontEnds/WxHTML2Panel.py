@@ -34,10 +34,10 @@ import wx.html2 as webview
 #-----------------------------------------------------------------------------
 # Module Classes
 class WxHTML2Panel(wx.Panel):
-        def __init__(self, parent, id, pos, size, style, name):
+        def __init__(self, parent,id):
                         #(self, parent, log, frame=None):
             self.log = io.StringIO()
-            wx.Panel.__init__(self, parent, id, pos, size, style, name)
+            wx.Panel.__init__(self, parent,id)
             self.current = "http://wxPython.org"
 
 

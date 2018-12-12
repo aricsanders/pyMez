@@ -11,6 +11,9 @@ basic html reports and the checkstandard reporting process.
   Examples
 --------
     #!python
+    >>report=HTMLReport()
+    >>report.embedd_image("my.png",image_mode="PngFile")
+    >>report.show()
 
 
 Requirements
