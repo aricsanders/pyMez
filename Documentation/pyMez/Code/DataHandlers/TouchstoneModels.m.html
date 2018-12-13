@@ -1591,6 +1591,7 @@ table {
             <span class="c1">#print new_row</span>
         <span class="n">average_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">new_row</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
     <span class="n">average_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">average_data</span>
+    <span class="n">average_options</span><span class="p">[</span><span class="s2">&quot;option_line&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">list_s2p_models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">option_line</span>
     <span class="n">new_s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">average_options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_s2p</span>
 
@@ -1620,6 +1621,7 @@ table {
         <span class="n">new_row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">difference_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
     <span class="n">difference_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">difference_data</span>
+    <span class="n">difference_options</span><span class="p">[</span><span class="s2">&quot;option_line&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">s2p_one</span><span class="o">.</span><span class="n">option_line</span>
     <span class="n">new_s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">difference_options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_s2p</span>
 
@@ -3723,6 +3725,7 @@ formats should all be the same</p></div>
         <span class="n">new_row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">difference_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
     <span class="n">difference_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">difference_data</span>
+    <span class="n">difference_options</span><span class="p">[</span><span class="s2">&quot;option_line&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">s2p_one</span><span class="o">.</span><span class="n">option_line</span>
     <span class="n">new_s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">difference_options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_s2p</span>
 </pre></div>
@@ -3772,6 +3775,7 @@ of s2ps</p></div>
             <span class="c1">#print new_row</span>
         <span class="n">average_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">new_row</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
     <span class="n">average_options</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">average_data</span>
+    <span class="n">average_options</span><span class="p">[</span><span class="s2">&quot;option_line&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">list_s2p_models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">option_line</span>
     <span class="n">new_s2p</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">average_options</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_s2p</span>
 </pre></div>
