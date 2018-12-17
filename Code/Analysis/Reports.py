@@ -74,6 +74,11 @@ try:
 except:
     print("Code.DataHandlers.GraphModels did not import correctly")
     raise ImportError
+try:
+    from bokeh.plotting import figure
+    from bokeh.embed import components
+except:
+    pass
 #-----------------------------------------------------------------------------
 # Module Constants
 
@@ -139,7 +144,53 @@ ONE_PORT_DTYPE={'Frequency':'float',
                 }
 #-----------------------------------------------------------------------------
 # Module Functions
+def bokeh_parse_format_string(format_string):
+    """Returns a string with color and a list with string styles [color,[style1,style2..]]to be given to bokeh plot"""
+    style_dictionary={"*":"asterisk",
+                     "o":"circle",
+                     "o+":"circle_cross",
+                     "ox":"circle_x",
+                     "+":"cross",
+                     "--":"dash",
+                     "d":"diamond",
+                     "d+":"diamond_cross",
+                     "v":"inverted_triangle",
+                     "sq":"square",
+                     "sq+":"square_cross",
+                     "sqx":"square_x",
+                     "^":"triangle",
+                     "x":"x",
+                     "-":"line"}
+    color_dictionary={"r":"red",
+                      "b":"blue",
+                      "k":"black",
+                      "w":"white",
+                      "g":"green",
+                      "c":"cyan",
+                      "m":"magenta",
+                      "y":"yellow"}
+    remaining_code=format_string
+    color="blue"
+    for color_code in color_dictionary.keys():
+        if re.match(color_code,remaining_code):
+            color=color_dictionary[color_code]
+            remaining_code=remaining_code.replace(color_code,"")
+    styles=[]
+    if "--" in remaining_code:
+        style="dash"
+        styles.append(style)
+        remaining_code=remaining_code.replace("--","")
 
+    i=0
+    sorted_style_keys=sorted(style_dictionary.keys())[::-1]
+    while ((remaining_code!="") or (i<len(style_dictionary.keys())-1)):
+        style_key=sorted_style_keys[i]
+
+        if re.search(re.escape(style_key),remaining_code):
+            styles.append(style_dictionary[style_key])
+            remaining_code=remaining_code.replace(style_key,"")
+        i+=1
+    return [color,styles]
 #-----------------------------------------------------------------------------
 # Module Classes
 class HTMLReport(HTMLBase):
@@ -197,6 +248,75 @@ class HTMLReport(HTMLBase):
         for child in element_list:
             self.root.remove(child)
 
+
+class BokehReport(HTMLReport):
+    def __init__(self):
+        self.cdn_script_string = """<script src="https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>"""
+        self.cdn_css_string = """<link href="https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css" rel="stylesheet" type="text/css">"""
+        HTMLReport.__init__(self)
+        self.add_head()
+        self.add_body()
+        self.append_to_head(self.cdn_css_string)
+        self.append_to_head(self.cdn_script_string)
+        self.figures = []
+        self.div_elements = []
+        self.script_elements = []
+
+    def plot(self, x_data, y_data, format="", **options):
+        """Creates an interactive plot using bokeh and appends to the body"""
+        defaults = {"tools": "pan,box_zoom,reset,save",
+                    "title": None,
+                    "plot_width": 400,
+                    "plot_height": 400,
+                    "styles": ["line"],
+                    "color": "gray",
+                    "figure_index": False,
+                    "glyph_options": {}}
+        self.plot_options = {}
+        for key, value in defaults.items():
+            self.plot_options[key] = value
+        for key, value in options.items():
+            self.plot_options[key] = value
+        figure_option_keys = ["tools", "title", "plot_width", "plot_height", "active_drag", "active_inspect",
+                              "active_scroll", "active_tap", "tooltips"]
+        figure_options = {}
+        for key in self.plot_options.keys():
+            if key in figure_option_keys:
+                figure_options[key] = self.plot_options[key]
+
+        if self.plot_options["figure_index"] is not False:
+            plot = self.figures[self.plot_options["figure_index"]]
+        else:
+            plot = figure(**figure_options)
+            self.figures.append(plot)
+        if format:
+            [color, styles] = bokeh_parse_format_string(format)
+        else:
+            [color, styles] = [self.plot_options["color"], self.plot_options["styles"]]
+        for style in styles:
+            if style in ["line"]:
+                plotter = getattr(plot, style)
+                plotter(x_data, y_data, line_color=color, **self.plot_options["glyph_options"])
+            elif style is "dash":
+                plot.line(x_data, y_data, line_dash="dashed")
+            else:
+                plotter = getattr(plot, style)
+                plotter(x_data, y_data, fill_color=color, line_color=color, **self.plot_options["glyph_options"])
+
+        script, div = components(plot)
+
+        if self.plot_options["figure_index"] is not False:
+            figure_index = self.plot_options["figure_index"]
+            self.root.head.remove(self.script_elements[figure_index])
+            self.append_to_head(str(script))
+            self.script_elements[figure_index] = self.root.head.getchildren()[-1]
+            new_div_element = lxml.etree.fromstring(str(div))
+            self.div_elements[figure_index].attrib["id"] = new_div_element.attrib["id"]
+        else:
+            self.append_to_head(str(script))
+            self.append_to_body(str(div))
+            self.div_elements.append(self.root.body.getchildren()[-1])
+            self.script_elements.append(self.root.head.getchildren()[-1])
 
 class CheckStandardReport(HTMLReport):
     """Class that creates a report based on a calibrated measurement of a checkstandard. Input can be a file path to

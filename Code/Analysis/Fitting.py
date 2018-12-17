@@ -83,6 +83,13 @@ except:
           "please put it on the python path")
 #-----------------------------------------------------------------------------
 # Module Constants
+LAMBDIFY_MODULES = ["numpy",
+                    {"besselj": sympy.besselj,
+                     "bessely": sympy.bessely,
+                     "besseli": sympy.besseli,
+                     "besselk": sympy.besselk,
+                     "hankel1": sympy.hankel1,
+                     "hankel2": sympy.hankel2}]
 
 #-----------------------------------------------------------------------------
 # Module Functions
@@ -132,6 +139,8 @@ def build_modeled_data_set(x_list,function_list):
 #-----------------------------------------------------------------------------
 # Module Classes
 
+
+
 class FunctionalModel(object):
     """FittingModel is a class that holds a fitting function, it uses sympy to provide
      symbolic manipulation of the function and formatted output. If called it acts like a
@@ -141,171 +150,204 @@ class FunctionalModel(object):
      or
      line.set_parameters(m=1,b=2)
      line(1)"""
-    def __init__(self,**options):
-        defaults= {"parameters":None,"variables":None,"equation":None,"parameter_values":{}}
-        self.options={}
-        for key,value in defaults.items():
-            self.options[key]=value
-        for key,value in options.items():
-            self.options[key]=value
+
+    def __init__(self, **options):
+        defaults = {"parameters": None,
+                    "variables": None,
+                    "equation": None,
+                    "parameter_values": {},
+                    "special_function": False}
+        self.options = {}
+        for key, value in defaults.items():
+            self.options[key] = value
+        for key, value in options.items():
+            self.options[key] = value
         # fix any lists
-        for item in ["parameters","variables"]:
+        for item in ["parameters", "variables"]:
             if isinstance(self.options[item], StringType):
-                self.options[item]=re.split("\s+",self.options[item])
-            self.__dict__[item]=self.options[item]
+                self.options[item] = re.split("\s+", self.options[item])
+            self.__dict__[item] = self.options[item]
             # ------------ This was not needed for multisine fit removed 11/27/2018
             # self.__dict__[item+"_symbols"]=sympy.symbols(self.options[item])
             # this creates the python variables in the global namespace, may back fire with lots of variables
             # for index,symbol in enumerate(self.__dict__[item+"_symbols"][:]):
             #     globals()[item[index]]=symbol
             # -----------------
-            self.options[item]=None
-        self.equation=sympy.sympify(self.options["equation"])
-        self.function=sympy.lambdify(self.parameters+self.variables,self.equation,'numpy')
-        self.parameter_values=self.options["parameter_values"]
-        self.options["parameter_values"]={}
+            self.options[item] = None
+        self.special_function = self.options["special_function"]
+        self.equation = sympy.sympify(self.options["equation"])
+        special_function_keys = list(LAMBDIFY_MODULES[1].keys())
+        for key in special_function_keys:
+            if re.search(key, str(self.options["equation"])):
+                self.special_function = True
+        if self.special_function:
+            self.function = sympy.lambdify(self.parameters + self.variables, self.equation, modules=LAMBDIFY_MODULES)
+        else:
+            self.function = sympy.lambdify(self.parameters + self.variables, self.equation, "numpy")
+        self.parameter_values = self.options["parameter_values"]
+        self.options["parameter_values"] = {}
 
-    def __call__(self,*args,**keywordargs):
+    def __call__(self, *args, **keywordargs):
         """Controls the behavior when called as a function"""
-        return self.function(*args,**keywordargs)
+        return self.function(*args, **keywordargs)
 
-    def set_parameters(self,parameter_dictionary=None,**parameter_dictionary_keyword):
+    def set_parameters(self, parameter_dictionary=None, **parameter_dictionary_keyword):
         """Sets the parameters to values in dictionary"""
         if parameter_dictionary is None:
             try:
-                parameter_dictionary=parameter_dictionary_keyword
+                parameter_dictionary = parameter_dictionary_keyword
             except:
                 pass
-        self.parameter_values=parameter_dictionary
-        self.function=sympy.lambdify(self.variables,self.equation.subs(self.parameter_values),'numpy')
-
+        self.parameter_values = parameter_dictionary
+        if self.special_function:
+            self.function = np.vectorize(lambda x: sympy.N(sympy.lambdify(self.variables,
+                                                                          self.equation.subs(self.parameter_values),
+                                                                          modules=LAMBDIFY_MODULES)(x)))
+        else:
+            self.function = sympy.lambdify(self.variables, self.equation.subs(self.parameter_values),
+                                           modules=LAMBDIFY_MODULES)
 
     def clear_parameters(self):
         """Clears the parmeters specified by set_parameters"""
-        self.function=sympy.lambdify(self.parameters+self.variables,self.equation,'numpy')
-        self.parameter_values={}
+        self.function = sympy.lambdify(self.parameters + self.variables, self.equation, modules=LAMBDIFY_MODULES)
+        self.parameter_values = {}
 
-    def fit_data(self,x_data,y_data,**options):
+    def fit_data(self, x_data, y_data, **options):
         """Uses the equation to fit the data, after fitting the data sets the parameters.
         """
-        defaults= {"initial_guess":{parameter:0.0 for parameter in self.parameters},"fixed_parameters":None}
-        self.fit_options={}
-        for key,value in defaults.items():
-            self.fit_options[key]=value
-        for key,value in options.items():
-            self.fit_options[key]=value
+        defaults = {"initial_guess": {parameter: 0.0 for parameter in self.parameters}, "fixed_parameters": None}
+        self.fit_options = {}
+        for key, value in defaults.items():
+            self.fit_options[key] = value
+        for key, value in options.items():
+            self.fit_options[key] = value
 
-        def fit_f(a,x):
+        def fit_f(a, x):
             self.clear_parameters()
-            input_list=[]
+            input_list = []
             for parameter in a:
                 input_list.append(parameter)
-            input_list.append(x)
-            return self.function(*input_list)
+            if self.special_function:
+                if isinstance(x, list):
+                    out = np.array(list(map(lambda y: sympy.N(self.function(*(input_list + [y]))), x)),
+                                   dtype=np.float64)
+                    return out
+                elif isinstance(x, np.ndarray):
+                    out = np.array(list(map(lambda y: sympy.N(self.function(*(input_list + [y]))), x.tolist())),
+                                   dtype=np.float64)
+                    return out
+                else:
+                    out = sympy.N(self.function(*input_list))
+                    return out
+            else:
+                input_list.append(x)
+                return self.function(*input_list)
+
         # this needs to be reflected in fit_parameters
-        a0=[]
+        a0 = []
         for key in self.parameters[:]:
             a0.append(self.fit_options["initial_guess"][key])
-        a0=np.array(a0)
-        result=least_squares_fit(fit_f,x_data,y_data,a0)
-        fit_parameters=result.tolist()
-        fit_parameter_dictionary={parameter:fit_parameters[index] for index,parameter in enumerate(self.parameters)}
+        a0 = np.array(a0)
+        result = least_squares_fit(fit_f, x_data, y_data, a0)
+        fit_parameters = result.tolist()
+        fit_parameter_dictionary = {parameter: fit_parameters[index] for index, parameter in enumerate(self.parameters)}
         self.set_parameters(fit_parameter_dictionary)
-
 
     def __div__(self, other):
         return self.__truediv__(other)
 
-    def __add__(self,other):
+    def __add__(self, other):
         """Defines addition for the class, if it is another functional model add the models else just change the
         equation"""
-        if isinstance(other,FunctionalModel):
-            parameters=list(set(self.parameters+other.parameters))
-            variables=list(set(self.variables+other.variables))
-            #print("{0} is {1}".format("parameters",parameters))
-            #print("{0} is {1}".format("variables",variables))
-            equation=self.equation+other.equation
-            #print("{0} is {1}".format("equation",equation))
+        if isinstance(other, FunctionalModel):
+            parameters = list(set(self.parameters + other.parameters))
+            variables = list(set(self.variables + other.variables))
+            # print("{0} is {1}".format("parameters",parameters))
+            # print("{0} is {1}".format("variables",variables))
+            equation = self.equation + other.equation
+            # print("{0} is {1}".format("equation",equation))
         else:
-            parameters=self.parameters
-            variables=self.variables
-            equation=self.equation+other
-        new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+            parameters = self.parameters
+            variables = self.variables
+            equation = self.equation + other
+        new_function = FunctionalModel(parameters=parameters, variables=variables, equation=equation)
         return new_function
-    def __sub__(self,other):
+
+    def __sub__(self, other):
         """Defines subtraction for the class"""
-        if isinstance(other,FunctionalModel):
-            parameters=list(set(self.parameters+other.parameters))
-            variables=list(set(self.variables+other.variables))
-            #print("{0} is {1}".format("parameters",parameters))
-            #print("{0} is {1}".format("variables",variables))
-            equation=self.equation-other.equation
-            #print("{0} is {1}".format("equation",equation))
+        if isinstance(other, FunctionalModel):
+            parameters = list(set(self.parameters + other.parameters))
+            variables = list(set(self.variables + other.variables))
+            # print("{0} is {1}".format("parameters",parameters))
+            # print("{0} is {1}".format("variables",variables))
+            equation = self.equation - other.equation
+            # print("{0} is {1}".format("equation",equation))
         else:
-            parameters=self.parameters
-            variables=self.variables
-            equation=self.equation-other
-        new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+            parameters = self.parameters
+            variables = self.variables
+            equation = self.equation - other
+        new_function = FunctionalModel(parameters=parameters, variables=variables, equation=equation)
         return new_function
-    def __mul__(self,other):
+
+    def __mul__(self, other):
         """Defines multiplication for the class"""
-        if isinstance(other,FunctionalModel):
-            parameters=list(set(self.parameters+other.parameters))
-            variables=list(set(self.variables+other.variables))
-            #print("{0} is {1}".format("parameters",parameters))
-            #print("{0} is {1}".format("variables",variables))
-            equation=self.equation*other.equation
-            #print("{0} is {1}".format("equation",equation))
+        if isinstance(other, FunctionalModel):
+            parameters = list(set(self.parameters + other.parameters))
+            variables = list(set(self.variables + other.variables))
+            # print("{0} is {1}".format("parameters",parameters))
+            # print("{0} is {1}".format("variables",variables))
+            equation = self.equation * other.equation
+            # print("{0} is {1}".format("equation",equation))
         else:
-            parameters=self.parameters
-            variables=self.variables
-            equation=self.equation*other
-        new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+            parameters = self.parameters
+            variables = self.variables
+            equation = self.equation * other
+        new_function = FunctionalModel(parameters=parameters, variables=variables, equation=equation)
         return new_function
 
-    def __pow__(self,other):
+    def __pow__(self, other):
         """Defines power for the class"""
-        if isinstance(other,FunctionalModel):
-            parameters=list(set(self.parameters+other.parameters))
-            variables=list(set(self.variables+other.variables))
-            #print("{0} is {1}".format("parameters",parameters))
-            #print("{0} is {1}".format("variables",variables))
-            equation=self.equation**other.equation
-            #print("{0} is {1}".format("equation",equation))
+        if isinstance(other, FunctionalModel):
+            parameters = list(set(self.parameters + other.parameters))
+            variables = list(set(self.variables + other.variables))
+            # print("{0} is {1}".format("parameters",parameters))
+            # print("{0} is {1}".format("variables",variables))
+            equation = self.equation ** other.equation
+            # print("{0} is {1}".format("equation",equation))
         else:
-            parameters=self.parameters
-            variables=self.variables
-            equation=self.equation**other
-        new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+            parameters = self.parameters
+            variables = self.variables
+            equation = self.equation ** other
+        new_function = FunctionalModel(parameters=parameters, variables=variables, equation=equation)
         return new_function
 
-    def __truediv__(self,other):
+    def __truediv__(self, other):
         """Defines division for the class"""
-        if isinstance(other,FunctionalModel):
-            parameters=list(set(self.parameters+other.parameters))
-            variables=list(set(self.variables+other.variables))
-            #print("{0} is {1}".format("parameters",parameters))
-            #print("{0} is {1}".format("variables",variables))
-            equation=self.equation/other.equation
-            #print("{0} is {1}".format("equation",equation))
+        if isinstance(other, FunctionalModel):
+            parameters = list(set(self.parameters + other.parameters))
+            variables = list(set(self.variables + other.variables))
+            # print("{0} is {1}".format("parameters",parameters))
+            # print("{0} is {1}".format("variables",variables))
+            equation = self.equation / other.equation
+            # print("{0} is {1}".format("equation",equation))
         else:
-            parameters=self.parameters
-            variables=self.variables
-            equation=self.equation/other
-        new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+            parameters = self.parameters
+            variables = self.variables
+            equation = self.equation / other
+        new_function = FunctionalModel(parameters=parameters, variables=variables, equation=equation)
         return new_function
 
     def __str__(self):
         """Controls the string behavior of the function"""
         return str(self.equation.subs(self.parameter_values))
 
-    def compose(self,other):
+    def compose(self, other):
         """Returns self.equation.sub(variable=other)"""
-        if len(self.variables)==1:
-            variables=other.variables
-            parameters=list(set(self.parameters+other.parameters))
-            equation=self.equation.subs({self.variables[0]:other})
-            new_function=FunctionalModel(parameters=parameters,variables=variables,equation=equation)
+        if len(self.variables) == 1:
+            variables = other.variables
+            parameters = list(set(self.parameters + other.parameters))
+            equation = self.equation.subs({self.variables[0]: other})
+            new_function = FunctionalModel(parameters=parameters, variables=variables, equation=equation)
             return new_function
         else:
             return None
@@ -314,19 +356,19 @@ class FunctionalModel(object):
         """Returns a Latex form of the equation using current parameters"""
         return sympy.latex(self.equation.subs(self.parameter_values))
 
-    def plot_fit(self,x_data,y_data,**options):
+    def plot_fit(self, x_data, y_data, **options):
         """Fit a data set and show the results"""
-        defaults={"title":True}
-        plot_options={}
-        for key,value in defaults.items():
-            plot_options[key]=value
-        for key,value in options.items():
-            plot_options[key]=value
+        defaults = {"title": True}
+        plot_options = {}
+        for key, value in defaults.items():
+            plot_options[key] = value
+        for key, value in options.items():
+            plot_options[key] = value
 
-        self.fit_data(x_data,y_data,**plot_options)
-        figure=plt.figure("Fit")
-        plt.plot(x_data,y_data,label="Raw Data")
-        plt.plot(x_data,self.function(x_data),'ro',label="Fit")
+        self.fit_data(x_data, y_data, **plot_options)
+        figure = plt.figure("Fit")
+        plt.plot(x_data, y_data, label="Raw Data")
+        plt.plot(x_data, self.function(x_data), 'ro', label="Fit")
         plt.legend(loc=0)
         if plot_options["title"]:
             if plot_options["title"] is True:
@@ -336,24 +378,25 @@ class FunctionalModel(object):
         plt.show()
         return figure
 
-    def d(self,respect_to=None,order=1):
+    def d(self, respect_to=None, order=1):
         """Takes the derivative with respect to variable or parameter provided or defaults to first variable"""
         if respect_to is None:
-            respect_to=self.variables[0]
-        equation=self.equation.copy()
+            respect_to = self.variables[0]
+        equation = self.equation.copy()
         for i in range(order):
-            equation=sympy.diff(equation,respect_to)
-        return FunctionalModel(parameters=self.parameters[:],variables=self.variables[:],equation=str(equation))
+            equation = sympy.diff(equation, respect_to)
+        return FunctionalModel(parameters=self.parameters[:], variables=self.variables[:], equation=str(equation))
 
-    def integrate(self,respect_to=None,order=1):
+    def integrate(self, respect_to=None, order=1):
         """Integrates with respect to variable or parameter provided or defaults to first variable.
         Does not add a constant of integration."""
         if respect_to is None:
-            respect_to=self.variables_symbols[0]
-        equation=self.equation.copy()
+            respect_to = self.variables_symbols[0]
+        equation = self.equation.copy()
         for i in range(order):
-            equation=sympy.integrate(equation,respect_to)
-        return FunctionalModel(parameters=self.parameters[:],variables=self.variables[:],equation=str(equation))
+            equation = sympy.integrate(equation, respect_to)
+        return FunctionalModel(parameters=self.parameters[:], variables=self.variables[:], equation=str(equation))
+
     # todo: This feature does not work because of the namspace of the parameters and variables
     # I don't know what name sympify uses when it creates the equation
     # def series(self,variable_or_parameter,value=0,order=6):
@@ -364,12 +407,13 @@ class FunctionalModel(object):
     #     variables=self.variables[:]
     #     return FunctionalModel(equation=equation,variables=variables,parameters=parameters)
 
-    def limit(self,variable_or_parameter,point):
+    def limit(self, variable_or_parameter, point):
         """Finds the symbolic limit of the FunctionalModel for the variable or parameter approaching point"""
-        equation=sympy.limit(self.equation,variable_or_parameter,point)
-        parameters=self.parameters[:]
-        variables=self.variables[:]
-        return FunctionalModel(equation=equation,variables=variables,parameters=parameters)
+        equation = sympy.limit(self.equation, variable_or_parameter, point)
+        parameters = self.parameters[:]
+        variables = self.variables[:]
+        return FunctionalModel(equation=equation, variables=variables, parameters=parameters)
+
 
 class DataSimulator(object):
     """A class that simulates data. It creates a data set from a FunctionalModel with the parameters set,
