@@ -171,9 +171,8 @@ class WxHTML2Panel(wx.Panel):
 if __name__ == '__main__':
     app = wx.App(False)
     frame = wx.Frame(None,size=wx.Size(900, 800))
-    panel=WxHTML2Panel(id=1, name='IEPanel',
-              parent=frame, pos=wx.Point(350, 204), size=wx.Size(200, 800),
-              style=wx.TAB_TRAVERSAL)
+    panel=WxHTML2Panel(id=1,
+              parent=frame)
     sizer=wx.BoxSizer()
     sizer.Add(panel,1,wx.EXPAND,2)
     frame.SetSizerAndFit(sizer)
