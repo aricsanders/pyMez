@@ -6,7 +6,7 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ Fitting is a module containing classes and functions for fitting and simulating
-data.
+data. The primary class to fit data and create functions is FunctionalModel.
 
 
  Examples
@@ -149,9 +149,12 @@ class FunctionalModel(object):
      the parameters must be set. line(m=2,b=1,x=1)
      or
      line.set_parameters(m=1,b=2)
-     line(1)"""
+     line(1). To fit data use the .fit_data(x_data,y_data) method. This will automatically set the parameters to
+     the fit values."""
 
     def __init__(self, **options):
+        """Initializes the FunctionalModel, note if the equation passed has a special function bessel,etc.
+        it will find it"""
         defaults = {"parameters": None,
                     "variables": None,
                     "equation": None,
