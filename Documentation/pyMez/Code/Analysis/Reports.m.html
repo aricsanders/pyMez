@@ -1097,6 +1097,7 @@ table {
 	<div id="functionsNavigation">
       
   <ul>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.bokeh_parse_format_string">bokeh_parse_format_string</a></li>
     <li class="mono"><a href="#pyMez.Code.Analysis.Reports.test_CheckStandardReport">test_CheckStandardReport</a></li>
   </ul>
 
@@ -1106,6 +1107,31 @@ table {
     <li class="set"><h3><a href="#header-classes">Classes</a>
 	<input type="button" class="toggleButton"  value="+" onclick="toggleId('classesNavigation',this)"></h3>
       <ul id="classesNavigation">
+        <li class="mono">
+        <span class="class_name"><a href="#pyMez.Code.Analysis.Reports.BokehReport">BokehReport</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.__init__">__init__</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.add_body">add_body</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.add_download_link">add_download_link</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.add_head">add_head</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.add_toggle">add_toggle</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.add_toggle_script">add_toggle_script</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.add_toggle_style">add_toggle_style</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.append_to_body">append_to_body</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.append_to_head">append_to_head</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.clear">clear</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.embedd_image">embedd_image</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.embedd_image_figure">embedd_image_figure</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.plot">plot</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.save">save</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.show">show</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.to_HTML">to_HTML</a></li>
+    <li class="mono"><a href="#pyMez.Code.Analysis.Reports.BokehReport.to_pdf">to_pdf</a></li>
+  </ul>
+
+        </li>
         <li class="mono">
         <span class="class_name"><a href="#pyMez.Code.Analysis.Reports.CheckStandardReport">CheckStandardReport</a></span>
         
@@ -1373,6 +1399,11 @@ basic html reports and the checkstandard reporting process.</p>
 <span class="k">except</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Code.DataHandlers.GraphModels did not import correctly&quot;</span><span class="p">)</span>
     <span class="k">raise</span> <span class="ne">ImportError</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span>
+    <span class="kn">from</span> <span class="nn">bokeh.embed</span> <span class="kn">import</span> <span class="n">components</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Constants</span>
 
@@ -1438,7 +1469,53 @@ basic html reports and the checkstandard reporting process.</p>
                 <span class="p">}</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Functions</span>
+<span class="k">def</span> <span class="nf">bokeh_parse_format_string</span><span class="p">(</span><span class="n">format_string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a string with color and a list with string styles [color,[style1,style2..]]to be given to bokeh plot&quot;&quot;&quot;</span>
+    <span class="n">style_dictionary</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;*&quot;</span><span class="p">:</span><span class="s2">&quot;asterisk&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;o&quot;</span><span class="p">:</span><span class="s2">&quot;circle&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;o+&quot;</span><span class="p">:</span><span class="s2">&quot;circle_cross&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;ox&quot;</span><span class="p">:</span><span class="s2">&quot;circle_x&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;+&quot;</span><span class="p">:</span><span class="s2">&quot;cross&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;--&quot;</span><span class="p">:</span><span class="s2">&quot;dash&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;d&quot;</span><span class="p">:</span><span class="s2">&quot;diamond&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;d+&quot;</span><span class="p">:</span><span class="s2">&quot;diamond_cross&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;v&quot;</span><span class="p">:</span><span class="s2">&quot;inverted_triangle&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;sq&quot;</span><span class="p">:</span><span class="s2">&quot;square&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;sq+&quot;</span><span class="p">:</span><span class="s2">&quot;square_cross&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;sqx&quot;</span><span class="p">:</span><span class="s2">&quot;square_x&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;^&quot;</span><span class="p">:</span><span class="s2">&quot;triangle&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;x&quot;</span><span class="p">:</span><span class="s2">&quot;x&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;-&quot;</span><span class="p">:</span><span class="s2">&quot;line&quot;</span><span class="p">}</span>
+    <span class="n">color_dictionary</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;r&quot;</span><span class="p">:</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;k&quot;</span><span class="p">:</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;w&quot;</span><span class="p">:</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;g&quot;</span><span class="p">:</span><span class="s2">&quot;green&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;c&quot;</span><span class="p">:</span><span class="s2">&quot;cyan&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;m&quot;</span><span class="p">:</span><span class="s2">&quot;magenta&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="s2">&quot;yellow&quot;</span><span class="p">}</span>
+    <span class="n">remaining_code</span><span class="o">=</span><span class="n">format_string</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span>
+    <span class="k">for</span> <span class="n">color_code</span> <span class="ow">in</span> <span class="n">color_dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">color_code</span><span class="p">,</span><span class="n">remaining_code</span><span class="p">):</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">color_dictionary</span><span class="p">[</span><span class="n">color_code</span><span class="p">]</span>
+            <span class="n">remaining_code</span><span class="o">=</span><span class="n">remaining_code</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">color_code</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">if</span> <span class="s2">&quot;--&quot;</span> <span class="ow">in</span> <span class="n">remaining_code</span><span class="p">:</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;dash&quot;</span>
+        <span class="n">styles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
+        <span class="n">remaining_code</span><span class="o">=</span><span class="n">remaining_code</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
+    <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">sorted_style_keys</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">style_dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">())[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">while</span> <span class="p">((</span><span class="n">remaining_code</span><span class="o">!=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">style_dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="n">style_key</span><span class="o">=</span><span class="n">sorted_style_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">style_key</span><span class="p">),</span><span class="n">remaining_code</span><span class="p">):</span>
+            <span class="n">styles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">style_dictionary</span><span class="p">[</span><span class="n">style_key</span><span class="p">])</span>
+            <span class="n">remaining_code</span><span class="o">=</span><span class="n">remaining_code</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">style_key</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">color</span><span class="p">,</span><span class="n">styles</span><span class="p">]</span>
 <span class="c1">#-----------------------------------------------------------------------------</span>
 <span class="c1"># Module Classes</span>
 <span class="k">class</span> <span class="nc">HTMLReport</span><span class="p">(</span><span class="n">HTMLBase</span><span class="p">):</span>
@@ -1496,6 +1573,75 @@ basic html reports and the checkstandard reporting process.</p>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">element_list</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
 
+
+<span class="k">class</span> <span class="nc">BokehReport</span><span class="p">(</span><span class="n">HTMLReport</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdn_script_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;script src=&quot;https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js&quot;&gt;&lt;/script&gt;&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdn_css_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;link href=&quot;https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;&quot;&quot;&quot;</span>
+        <span class="n">HTMLReport</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_head</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_body</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cdn_css_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cdn_script_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">div_elements</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates an interactive plot using bokeh and appends to the body&quot;&quot;&quot;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tools&quot;</span><span class="p">:</span> <span class="s2">&quot;pan,box_zoom,reset,save&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;plot_width&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+                    <span class="s2">&quot;plot_height&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+                    <span class="s2">&quot;styles&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;line&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;figure_index&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                    <span class="s2">&quot;glyph_options&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">figure_option_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;plot_width&quot;</span><span class="p">,</span> <span class="s2">&quot;plot_height&quot;</span><span class="p">,</span> <span class="s2">&quot;active_drag&quot;</span><span class="p">,</span> <span class="s2">&quot;active_inspect&quot;</span><span class="p">,</span>
+                              <span class="s2">&quot;active_scroll&quot;</span><span class="p">,</span> <span class="s2">&quot;active_tap&quot;</span><span class="p">,</span> <span class="s2">&quot;tooltips&quot;</span><span class="p">]</span>
+        <span class="n">figure_options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">figure_option_keys</span><span class="p">:</span>
+                <span class="n">figure_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">figures</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="o">**</span><span class="n">figure_options</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">figures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">format</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">color</span><span class="p">,</span> <span class="n">styles</span><span class="p">]</span> <span class="o">=</span> <span class="n">bokeh_parse_format_string</span><span class="p">(</span><span class="n">format</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">color</span><span class="p">,</span> <span class="n">styles</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;styles&quot;</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="n">styles</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">style</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;line&quot;</span><span class="p">]:</span>
+                <span class="n">plotter</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+                <span class="n">plotter</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;glyph_options&quot;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">style</span> <span class="ow">is</span> <span class="s2">&quot;dash&quot;</span><span class="p">:</span>
+                <span class="n">plot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">line_dash</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">plotter</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+                <span class="n">plotter</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">fill_color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;glyph_options&quot;</span><span class="p">])</span>
+
+        <span class="n">script</span><span class="p">,</span> <span class="n">div</span> <span class="o">=</span> <span class="n">components</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">figure_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span><span class="p">[</span><span class="n">figure_index</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">script</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span><span class="p">[</span><span class="n">figure_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">new_div_element</span> <span class="o">=</span> <span class="n">lxml</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">div</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">div_elements</span><span class="p">[</span><span class="n">figure_index</span><span class="p">]</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_div_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">script</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">div</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">div_elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="k">class</span> <span class="nc">CheckStandardReport</span><span class="p">(</span><span class="n">HTMLReport</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class that creates a report based on a calibrated measurement of a checkstandard. Input can be a file path to</span>
@@ -1975,6 +2121,73 @@ basic html reports and the checkstandard reporting process.</p>
     <h2 class="section-title" id="header-functions">Functions</h2>
       
   <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.bokeh_parse_format_string">
+    <p>def <span class="ident">bokeh_parse_format_string</span>(</p><p>format_string)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Returns a string with color and a list with string styles [color,[style1,style2..]]to be given to bokeh plot</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.bokeh_parse_format_string', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.bokeh_parse_format_string" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">bokeh_parse_format_string</span><span class="p">(</span><span class="n">format_string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a string with color and a list with string styles [color,[style1,style2..]]to be given to bokeh plot&quot;&quot;&quot;</span>
+    <span class="n">style_dictionary</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;*&quot;</span><span class="p">:</span><span class="s2">&quot;asterisk&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;o&quot;</span><span class="p">:</span><span class="s2">&quot;circle&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;o+&quot;</span><span class="p">:</span><span class="s2">&quot;circle_cross&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;ox&quot;</span><span class="p">:</span><span class="s2">&quot;circle_x&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;+&quot;</span><span class="p">:</span><span class="s2">&quot;cross&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;--&quot;</span><span class="p">:</span><span class="s2">&quot;dash&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;d&quot;</span><span class="p">:</span><span class="s2">&quot;diamond&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;d+&quot;</span><span class="p">:</span><span class="s2">&quot;diamond_cross&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;v&quot;</span><span class="p">:</span><span class="s2">&quot;inverted_triangle&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;sq&quot;</span><span class="p">:</span><span class="s2">&quot;square&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;sq+&quot;</span><span class="p">:</span><span class="s2">&quot;square_cross&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;sqx&quot;</span><span class="p">:</span><span class="s2">&quot;square_x&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;^&quot;</span><span class="p">:</span><span class="s2">&quot;triangle&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;x&quot;</span><span class="p">:</span><span class="s2">&quot;x&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;-&quot;</span><span class="p">:</span><span class="s2">&quot;line&quot;</span><span class="p">}</span>
+    <span class="n">color_dictionary</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;r&quot;</span><span class="p">:</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;k&quot;</span><span class="p">:</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;w&quot;</span><span class="p">:</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;g&quot;</span><span class="p">:</span><span class="s2">&quot;green&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;c&quot;</span><span class="p">:</span><span class="s2">&quot;cyan&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;m&quot;</span><span class="p">:</span><span class="s2">&quot;magenta&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="s2">&quot;yellow&quot;</span><span class="p">}</span>
+    <span class="n">remaining_code</span><span class="o">=</span><span class="n">format_string</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span>
+    <span class="k">for</span> <span class="n">color_code</span> <span class="ow">in</span> <span class="n">color_dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">color_code</span><span class="p">,</span><span class="n">remaining_code</span><span class="p">):</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">color_dictionary</span><span class="p">[</span><span class="n">color_code</span><span class="p">]</span>
+            <span class="n">remaining_code</span><span class="o">=</span><span class="n">remaining_code</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">color_code</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">if</span> <span class="s2">&quot;--&quot;</span> <span class="ow">in</span> <span class="n">remaining_code</span><span class="p">:</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;dash&quot;</span>
+        <span class="n">styles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
+        <span class="n">remaining_code</span><span class="o">=</span><span class="n">remaining_code</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">sorted_style_keys</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">style_dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">())[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">while</span> <span class="p">((</span><span class="n">remaining_code</span><span class="o">!=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">style_dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="n">style_key</span><span class="o">=</span><span class="n">sorted_style_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">style_key</span><span class="p">),</span><span class="n">remaining_code</span><span class="p">):</span>
+            <span class="n">styles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">style_dictionary</span><span class="p">[</span><span class="n">style_key</span><span class="p">])</span>
+            <span class="n">remaining_code</span><span class="o">=</span><span class="n">remaining_code</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">style_key</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">color</span><span class="p">,</span><span class="n">styles</span><span class="p">]</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
     <div class="name def" id="pyMez.Code.Analysis.Reports.test_CheckStandardReport">
     <p>def <span class="ident">test_CheckStandardReport</span>(</p><p>raw_file_path=&#39;C:\\ProgramData\\Anaconda2\\lib\\site-packages\\pyMez\\Code\\DataHandlers\\Tests\\CTN208.R1_062614&#39;)</p>
     </div>
@@ -1999,6 +2212,767 @@ basic html reports and the checkstandard reporting process.</p>
   
 
     <h2 class="section-title" id="header-classes">Classes</h2>
+      
+      <div class="item">
+      <p id="pyMez.Code.Analysis.Reports.BokehReport" class="name">class <span class="ident">BokehReport</span></p>
+      
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">BokehReport</span><span class="p">(</span><span class="n">HTMLReport</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdn_script_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;script src=&quot;https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js&quot;&gt;&lt;/script&gt;&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdn_css_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;link href=&quot;https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;&quot;&quot;&quot;</span>
+        <span class="n">HTMLReport</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_head</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_body</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cdn_css_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cdn_script_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">div_elements</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates an interactive plot using bokeh and appends to the body&quot;&quot;&quot;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tools&quot;</span><span class="p">:</span> <span class="s2">&quot;pan,box_zoom,reset,save&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                    <span class="s2">&quot;plot_width&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+                    <span class="s2">&quot;plot_height&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+                    <span class="s2">&quot;styles&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;line&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;figure_index&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                    <span class="s2">&quot;glyph_options&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">figure_option_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;plot_width&quot;</span><span class="p">,</span> <span class="s2">&quot;plot_height&quot;</span><span class="p">,</span> <span class="s2">&quot;active_drag&quot;</span><span class="p">,</span> <span class="s2">&quot;active_inspect&quot;</span><span class="p">,</span>
+                              <span class="s2">&quot;active_scroll&quot;</span><span class="p">,</span> <span class="s2">&quot;active_tap&quot;</span><span class="p">,</span> <span class="s2">&quot;tooltips&quot;</span><span class="p">]</span>
+        <span class="n">figure_options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">figure_option_keys</span><span class="p">:</span>
+                <span class="n">figure_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">figures</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="o">**</span><span class="n">figure_options</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">figures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">format</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">color</span><span class="p">,</span> <span class="n">styles</span><span class="p">]</span> <span class="o">=</span> <span class="n">bokeh_parse_format_string</span><span class="p">(</span><span class="n">format</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">color</span><span class="p">,</span> <span class="n">styles</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;styles&quot;</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="n">styles</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">style</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;line&quot;</span><span class="p">]:</span>
+                <span class="n">plotter</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+                <span class="n">plotter</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;glyph_options&quot;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">style</span> <span class="ow">is</span> <span class="s2">&quot;dash&quot;</span><span class="p">:</span>
+                <span class="n">plot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">line_dash</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">plotter</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+                <span class="n">plotter</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">fill_color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;glyph_options&quot;</span><span class="p">])</span>
+
+        <span class="n">script</span><span class="p">,</span> <span class="n">div</span> <span class="o">=</span> <span class="n">components</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">figure_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span><span class="p">[</span><span class="n">figure_index</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">script</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span><span class="p">[</span><span class="n">figure_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">new_div_element</span> <span class="o">=</span> <span class="n">lxml</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">div</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">div_elements</span><span class="p">[</span><span class="n">figure_index</span><span class="p">]</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_div_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">script</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">div</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">div_elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+
+  </div>
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="#pyMez.Code.Analysis.Reports.BokehReport">BokehReport</a></li>
+          <li><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></li>
+          <li>Code.DataHandlers.HTMLModels.HTMLBase</li>
+          <li>__builtin__.object</li>
+          </ul>
+          <h3>Instance variables</h3>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.BokehReport.cdn_css_string" class="name">var <span class="ident">cdn_css_string</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.BokehReport.cdn_script_string" class="name">var <span class="ident">cdn_script_string</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.BokehReport.div_elements" class="name">var <span class="ident">div_elements</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.BokehReport.figures" class="name">var <span class="ident">figures</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="pyMez.Code.Analysis.Reports.BokehReport.script_elements" class="name">var <span class="ident">script_elements</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+          <h3>Methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.__init__">__init__</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Intializes the HTMLBase Class</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.__init__', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.__init__" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cdn_script_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;script src=&quot;https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js&quot;&gt;&lt;/script&gt;&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cdn_css_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;link href=&quot;https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;&quot;&quot;&quot;</span>
+    <span class="n">HTMLReport</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_head</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_body</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cdn_css_string</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cdn_script_string</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">div_elements</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.add_body">
+    <p>def <span class="ident">add_body</span>(</p><p>self)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_body">add_body</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Adds a body tag to the model if it does not exist</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.add_body', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.add_body" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a body tag to the model if it does not exist&quot;&quot;&quot;</span>
+    <span class="n">body</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;body&quot;</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;body already exists, tag was not added &quot;</span><span class="p">)</span>
+        <span class="k">pass</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.add_download_link">
+    <p>def <span class="ident">add_download_link</span>(</p><p>self, content_string, text=&#39;Download File&#39;, suggested_name=&#39;test.txt&#39;, mime_type=&#39;text/plain&#39;)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_download_link">add_download_link</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Adds a download link to the report</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.add_download_link', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.add_download_link" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_download_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content_string</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Download File&quot;</span><span class="p">,</span> <span class="n">suggested_name</span><span class="o">=</span><span class="s2">&quot;test.txt&quot;</span><span class="p">,</span>
+                      <span class="n">mime_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a download link to the report&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="n">String_to_DownloadLink</span><span class="p">(</span><span class="n">content_string</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span>
+                                               <span class="n">suggested_name</span><span class="o">=</span><span class="n">suggested_name</span><span class="p">,</span>
+                                               <span class="n">mime_type</span><span class="o">=</span><span class="n">mime_type</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.add_head">
+    <p>def <span class="ident">add_head</span>(</p><p>self)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_head">add_head</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Adds a head tag to the model if it does not exist</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.add_head', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.add_head" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_head</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a head tag to the model if it does not exist&quot;&quot;&quot;</span>
+    <span class="n">head</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;head&quot;</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;head&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;head already exists, tag was not added &quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.add_toggle">
+    <p>def <span class="ident">add_toggle</span>(</p><p>self, tag_id=None)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_toggle">add_toggle</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Adds a toggle button that toggles the element with id tag_id. This can be used many times</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.add_toggle', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.add_toggle" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a toggle button that toggles the element with id tag_id. This can be used many times &quot;&quot;&quot;</span>
+    <span class="n">toggle</span> <span class="o">=</span> <span class="s1">&#39;&lt;input type=&quot;button&quot; class=&quot;toggleButton&quot;  value=&quot;+&quot; onclick=&quot;toggleId(</span><span class="se">\&#39;</span><span class="s1">{0}</span><span class="se">\&#39;</span><span class="s1">,this)&quot;&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag_id</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="n">toggle</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.add_toggle_script">
+    <p>def <span class="ident">add_toggle_script</span>(</p><p>self, script=&#39;&lt;script type=&#34;text/javascript&#34;&gt;\n    function toggleId(id,$link){\n    $node = document.getElementById(id);\n    if (!$node)\n    return;\n    if (!$node.style.display || $node.style.display == \&#39;none\&#39;) {\n    $node.style.display = \&#39;block\&#39;;\n    $link.value = \&#39;-\&#39;;\n    } else {\n    $node.style.display = \&#39;none\&#39;;\n    $link.value = \&#39;+\&#39;;\n    }\n  }\n  &lt;/script&gt;&#39;)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_toggle_script">add_toggle_script</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Adds a javascript template toggle script to the body of the HTML</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.add_toggle_script', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.add_toggle_script" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_toggle_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script</span><span class="o">=</span><span class="n">DEFAULT_TOGGLE_SCRIPT</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a javascript template toggle script to the body of the HTML&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.add_toggle_style">
+    <p>def <span class="ident">add_toggle_style</span>(</p><p>self, style=&#39;&lt;style&gt;\n  .toggleButton {\n      background-color: white;\n      border: 2px solid black;\n       border-radius: 8px;\n       color:red;\n\t   }\n   .toggleButton:hover {\n    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);\n\t}\n    &lt;/stlye&gt;&#39;)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.add_toggle_style">add_toggle_style</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Adds a css to format the javascript template, should be done once</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.add_toggle_style', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.add_toggle_style" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">add_toggle_style</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">DEFAULT_TOGGLE_STYLE</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a css to format the javascript template, should be done once&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.append_to_body">
+    <p>def <span class="ident">append_to_body</span>(</p><p>self, element)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.append_to_body">append_to_body</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Appends the element to the body of the model, if it is a string it parses first, if it is a
+dictionary it assumes it has the form {"tag":tag_name,"text":text_text,
+"attribute_dictionary":{"attribute_name":"attribute_value"}, and if it is a
+lxml.html.HtmlElement it appends it</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.append_to_body', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.append_to_body" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">append_to_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">element</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Appends the element to the body of the model, if it is a string it parses first, if it is a</span>
+<span class="sd">    dictionary it assumes it has the form {&quot;tag&quot;:tag_name,&quot;text&quot;:text_text,</span>
+<span class="sd">    &quot;attribute_dictionary&quot;:{&quot;attribute_name&quot;:&quot;attribute_value&quot;}, and if it is a</span>
+<span class="sd">    lxml.html.HtmlElement it appends it&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;body&quot;</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+            <span class="n">body</span> <span class="o">=</span> <span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Body tag was not present adding it&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">StringType</span><span class="p">):</span>
+            <span class="n">new_element</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">fragment_fromstring</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">DictionaryType</span><span class="p">):</span>
+            <span class="n">new_element</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="o">**</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">HtmlElement</span><span class="p">):</span>
+            <span class="n">new_element</span><span class="o">=</span><span class="n">element</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">((</span><span class="s2">&quot;Could not add {0} to body&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">)))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.append_to_head">
+    <p>def <span class="ident">append_to_head</span>(</p><p>self, element)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.append_to_head">append_to_head</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Appends the element to the head of the model, if it is a string it parses first, if it is a
+dictionary it assumes it has the form {"tag":tag_name,"text":text_text,
+"attribute_dictionary":{"attribute_name":"attribute_value"}, and if it is a
+lxml.html.HtmlElement it appends it</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.append_to_head', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.append_to_head" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">append_to_head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">element</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Appends the element to the head of the model, if it is a string it parses first, if it is a</span>
+<span class="sd">    dictionary it assumes it has the form {&quot;tag&quot;:tag_name,&quot;text&quot;:text_text,</span>
+<span class="sd">    &quot;attribute_dictionary&quot;:{&quot;attribute_name&quot;:&quot;attribute_value&quot;}, and if it is a</span>
+<span class="sd">    lxml.html.HtmlElement it appends it&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;head&quot;</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+            <span class="n">head</span> <span class="o">=</span> <span class="n">make_html_element</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Head tag was not present adding it&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">head</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">StringType</span><span class="p">):</span>
+            <span class="n">new_element</span><span class="o">=</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">fragment_fromstring</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">DictionaryType</span><span class="p">):</span>
+            <span class="n">new_element</span><span class="o">=</span><span class="n">make_html_element</span><span class="p">(</span><span class="o">**</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span><span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">HtmlElement</span><span class="p">):</span>
+            <span class="n">new_element</span><span class="o">=</span><span class="n">element</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">((</span><span class="s2">&quot;Could not add {0} to head&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">)))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.clear">
+    <p>def <span class="ident">clear</span>(</p><p>self)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.clear">clear</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Clears all content in the HTML</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.clear', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.clear" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Clears all content in the HTML&quot;&quot;&quot;</span>
+    <span class="n">element_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">element_list</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.embedd_image">
+    <p>def <span class="ident">embedd_image</span>(</p><p>self, image, image_mode=&#39;MatplotlibFigure&#39;, **options)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.embedd_image">embedd_image</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Embedds an image in the report. image_mode can be  MatplotlibFigure (a reference to the figure class),
+Image (the PIL class),
+Base64 (a string of the values),
+Png, Jpg, Bmp Tiff(the file name),
+or a Ndarray of the image values</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.embedd_image', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.embedd_image" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">embedd_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">image_mode</span><span class="o">=</span><span class="s2">&quot;MatplotlibFigure&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Embedds an image in the report. image_mode can be  MatplotlibFigure (a reference to the figure class),</span>
+<span class="sd">    Image (the PIL class),</span>
+<span class="sd">    Base64 (a string of the values),</span>
+<span class="sd">    Png, Jpg, Bmp Tiff(the file name),</span>
+<span class="sd">    or a Ndarray of the image values&quot;&quot;&quot;</span>
+    <span class="c1"># might change this to self.ImageGraph and use it elsewhere</span>
+    <span class="n">image_graph</span> <span class="o">=</span> <span class="n">ImageGraph</span><span class="p">()</span>
+    <span class="n">image_graph</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">image_mode</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+    <span class="n">image_graph</span><span class="o">.</span><span class="n">move_to_node</span><span class="p">(</span><span class="s2">&quot;EmbeddedHtml&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="n">image_graph</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.embedd_image_figure">
+    <p>def <span class="ident">embedd_image_figure</span>(</p><p>self, image, image_mode=&#39;MatplotlibFigure&#39;, figure_id=&#39;image&#39;, caption=&#39;&#39;, style=&#39;&#39;, **options)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.embedd_image_figure">embedd_image_figure</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Embedds an image in the report. image_mode can be  MatplotlibFigure (a reference to the figure class),
+Image (the PIL class),
+Base64 (a string of the values),
+Png, Jpg, Bmp Tiff(the file name),
+or a Ndarray of the image values. The image is in a <figure id=figure_id> tag</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.embedd_image_figure', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.embedd_image_figure" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">embedd_image_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">image_mode</span><span class="o">=</span><span class="s2">&quot;MatplotlibFigure&quot;</span><span class="p">,</span> <span class="n">figure_id</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Embedds an image in the report. image_mode can be  MatplotlibFigure (a reference to the figure class),</span>
+<span class="sd">    Image (the PIL class),</span>
+<span class="sd">    Base64 (a string of the values),</span>
+<span class="sd">    Png, Jpg, Bmp Tiff(the file name),</span>
+<span class="sd">    or a Ndarray of the image values. The image is in a &lt;figure id=figure_id&gt; tag&quot;&quot;&quot;</span>
+    <span class="c1"># might change this to self.ImageGraph and use it elsewhere</span>
+    <span class="n">image_graph</span> <span class="o">=</span> <span class="n">ImageGraph</span><span class="p">()</span>
+    <span class="n">image_graph</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">image_mode</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+    <span class="n">image_graph</span><span class="o">.</span><span class="n">move_to_node</span><span class="p">(</span><span class="s2">&quot;EmbeddedHtml&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="s2">&quot;&lt;figure id=&#39;{0}&#39; style=&#39;{3}&#39;&gt;{1}&lt;figcaption&gt;{2}&lt;/figcaption&gt;&lt;/figure&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">figure_id</span><span class="p">,</span>
+                                                                                                       <span class="n">image_graph</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                                                                                                       <span class="n">caption</span><span class="p">,</span>
+                                                                                                       <span class="n">style</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.plot">
+    <p>def <span class="ident">plot</span>(</p><p>self, x_data, y_data, format=&#39;&#39;, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Creates an interactive plot using bokeh and appends to the body</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.plot', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.plot" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates an interactive plot using bokeh and appends to the body&quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tools&quot;</span><span class="p">:</span> <span class="s2">&quot;pan,box_zoom,reset,save&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s2">&quot;plot_width&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+                <span class="s2">&quot;plot_height&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+                <span class="s2">&quot;styles&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;line&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;figure_index&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;glyph_options&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">figure_option_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;plot_width&quot;</span><span class="p">,</span> <span class="s2">&quot;plot_height&quot;</span><span class="p">,</span> <span class="s2">&quot;active_drag&quot;</span><span class="p">,</span> <span class="s2">&quot;active_inspect&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;active_scroll&quot;</span><span class="p">,</span> <span class="s2">&quot;active_tap&quot;</span><span class="p">,</span> <span class="s2">&quot;tooltips&quot;</span><span class="p">]</span>
+    <span class="n">figure_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">figure_option_keys</span><span class="p">:</span>
+            <span class="n">figure_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">figures</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="o">**</span><span class="n">figure_options</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">figures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">format</span><span class="p">:</span>
+        <span class="p">[</span><span class="n">color</span><span class="p">,</span> <span class="n">styles</span><span class="p">]</span> <span class="o">=</span> <span class="n">bokeh_parse_format_string</span><span class="p">(</span><span class="n">format</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="p">[</span><span class="n">color</span><span class="p">,</span> <span class="n">styles</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;styles&quot;</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="n">styles</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">style</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;line&quot;</span><span class="p">]:</span>
+            <span class="n">plotter</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+            <span class="n">plotter</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;glyph_options&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">style</span> <span class="ow">is</span> <span class="s2">&quot;dash&quot;</span><span class="p">:</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">line_dash</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plotter</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+            <span class="n">plotter</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">fill_color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;glyph_options&quot;</span><span class="p">])</span>
+    <span class="n">script</span><span class="p">,</span> <span class="n">div</span> <span class="o">=</span> <span class="n">components</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="n">figure_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_options</span><span class="p">[</span><span class="s2">&quot;figure_index&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span><span class="p">[</span><span class="n">figure_index</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">script</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span><span class="p">[</span><span class="n">figure_index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">new_div_element</span> <span class="o">=</span> <span class="n">lxml</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">div</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">div_elements</span><span class="p">[</span><span class="n">figure_index</span><span class="p">]</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_div_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append_to_head</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">script</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append_to_body</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">div</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">div_elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">script_elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.save">
+    <p>def <span class="ident">save</span>(</p><p>self, file_path=None, **temp_options)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.save">save</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Saves the html file, provide file path to save as, or temp_options</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.save', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.save" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">temp_options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Saves the html file, provide file path to save as, or temp_options&quot;&quot;&quot;</span>
+    <span class="n">original_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">temp_options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">file_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
+    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">=</span><span class="n">original_options</span>
+    <span class="k">return</span> <span class="n">file_path</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.show">
+    <p>def <span class="ident">show</span>(</p><p>self)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.show">show</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Saves html to a temp file and shows it in a browser</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.show', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.show" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Saves html to a temp file and shows it in a browser&quot;&quot;&quot;</span>
+    <span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">open_in_browser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.to_HTML">
+    <p>def <span class="ident">to_HTML</span>(</p><p>self)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.to_HTML">to_HTML</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Convenience function that echos the content updates the attribute self.text</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.to_HTML', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.to_HTML" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">to_HTML</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convenience function that echos the content updates the attribute self.text&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.Analysis.Reports.BokehReport.to_pdf">
+    <p>def <span class="ident">to_pdf</span>(</p><p>self, file_path=None, **options)</p>
+    </div>
+    
+    <p class="inheritance">
+     <strong>Inheritance:</strong>
+       <code><a href="#pyMez.Code.Analysis.Reports.HTMLReport">HTMLReport</a></code>.<code><a href="#pyMez.Code.Analysis.Reports.HTMLReport.to_pdf">to_pdf</a></code>
+    </p>
+
+    
+  
+    <div class="desc inherited"><p>Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name
+the resulting file to self.path with pdf as the extension</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Analysis.Reports.BokehReport.to_pdf', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.Analysis.Reports.BokehReport.to_pdf" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">to_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts the file to a pdf and saves it at file_path. If file_path is None, it will auto name</span>
+<span class="sd">    the resulting file to self.path with pdf as the extension&quot;&quot;&quot;</span>
+    <span class="c1">#todo: add toc and other options in wkhtmltopdf</span>
+    <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">file_path</span><span class="o">=</span><span class="n">change_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="s2">&quot;pdf&quot;</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">pdfkit</span><span class="o">.</span><span class="n">configuration</span><span class="p">(</span><span class="n">wkhtmltopdf</span><span class="o">=</span><span class="n">WKHTML_PATH</span><span class="p">)</span>
+    <span class="n">pdfkit</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span><span class="n">file_path</span><span class="p">,</span><span class="n">configuration</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">file_path</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+      </div>
+      </div>
       
       <div class="item">
       <p id="pyMez.Code.Analysis.Reports.CheckStandardReport" class="name">class <span class="ident">CheckStandardReport</span></p>
