@@ -71,6 +71,8 @@ class KeithleyIV():
         """ initializes the KeithleyIV experiment class"""
         try:
             self.instrument=Code.InstrumentControl.Instruments.VisaInstrument('Keithley')
+            if self.instrument.fake_mode:
+                raise
         except:
             print('Entering Fake Mode')
             pass
