@@ -171,7 +171,7 @@ WKHTML_PATH=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
 
 #-----------------------------------------------------------------------------
 # Module Functions
-# todo: rename all translations as UpperCamelCase_to_UpperCamelCase
+
 def Model_to_File(model,file_path=None):
     """Uses the save method of a model to create file, default path is save default for the model"""
     if file_path:
@@ -1759,6 +1759,134 @@ def ABCDFrequencyList_to_SFrequencyList(ABCD_frequency_list,Z01=complex(50,0),Z0
         s_frequency_list.append([frequency,S11,S12,S21,S22])
     return s_frequency_list
 
+
+def FileName_to_HtmlBase(file_path, xsl_directory=os.path.join(TESTS_DIRECTORY, "../XSL")):
+    """Return an html version of the file for display"""
+    file_location = file_path
+    extension = file_location.split('.')[-1]
+    if extension in ['s2p', "S2P"]:
+        table = S2PV1(file_location)
+        table.change_data_format("RI")
+        xml = S2PV1_to_XmlDataTable(table, format="RI", style_sheet=os.path.join(xsl_directory, "S2P_RI_STYLE.xsl"))
+
+    elif extension in ['parameter', 'model', 'vnauncert', 'meas']:
+        xml = XMLBase(file_location, **{"style_sheet": os.path.join(xsl_directory, "MUF_MENU_STYLE.xsl")})
+
+    elif extension in ['conn']:
+        xml = XMLBase(file_location, **{"style_sheet": os.path.join(xsl_directory, "VNATOOLS_CONNECTOR_STYLE.xsl")})
+
+    elif extension in ['vnadev']:
+        xml = XMLBase(file_location, **{"style_sheet": os.path.join(xsl_directory, "VNATOOLS_VNA_STYLE.xsl")})
+
+    elif extension in ['cable']:
+        xml = XMLBase(file_location, **{"style_sheet": os.path.join(xsl_directory, "VNATOOLS_CABLE_STYLE.xsl")})
+
+    elif re.search('xml', extension, re.IGNORECASE):
+        if re.search("Resource_Registry", file_location, re.IGNORECASE) and not re.search("Metadata", file_location,
+                                                                                          re.IGNORECASE):
+            xml = XMLBase(file_location, **{"style_sheet": os.path.join(xsl_directory, "FR_STYLE.xsl")})
+        elif re.search("Resource_Registry", file_location, re.IGNORECASE) and re.search("Metadata", file_location,
+                                                                                        re.IGNORECASE):
+            xml = XMLBase(file_location, **{"style_sheet": os.path.join(xsl_directory, "METADATA_STYLE.xsl")})
+        elif re.search("Log", file_location, re.IGNORECASE):
+            xml = XMLBase(file_location, **{"style_sheet": os.path.join(xsl_directory, "DEFAULT_LOG_STYLE.xsl")})
+        else:
+            xml = XMLBase(file_location, **{"style_sheet": os.path.join(xsl_directory, "DEFAULT_STYLE.xsl")})
+
+    elif re.search('htm', extension, re.IGNORECASE):
+        xml = HTMLEcho(file_location)
+
+    elif extension in ['s1p', 'S1P']:
+        table = S1PV1(file_location)
+        xml = S1PV1_to_XmlDataTable(table, **{"style_sheet": os.path.join(xsl_directory, "S1P_STYLE.xsl")})
+
+    elif re.match('s[\d]+p', extension, re.IGNORECASE):
+        table = SNP(file_location)
+        table.change_data_format("MA")
+        xml = SNP_to_XmlDataTable(table, style_sheet=os.path.join(xsl_directory, "S2P_MA_STYLE.xsl"), format="MA")
+
+    elif re.match('w2p', extension, re.IGNORECASE):
+        # print("Caught File, Being Handled by .txt statement")
+        # print("{0} is {1}".format('file_location',file_location))
+
+        table = W2P(file_location)
+
+        xml = AsciiDataTable_to_XmlDataTable(table,
+                                             **{"style_sheet": os.path.join(xsl_directory,
+                                                                            "DEFAULT_MEASUREMENT_STYLE.xsl")})
+    elif re.match('txt', extension, re.IGNORECASE):
+        # print("Caught File, Being Handled by .txt statement")
+        # print("{0} is {1}".format('file_location',file_location))
+        if re.search("CalCoefficients", file_location, re.IGNORECASE):
+            print("Caught File, Being Handled by CalCoefficients.txt statement")
+            table = TwelveTermErrorModel(file_location)
+
+            xml = AsciiDataTable_to_XmlDataTable(table,
+                                                 **{"style_sheet": os.path.join(xsl_directory,
+                                                                                "DEFAULT_MEASUREMENT_STYLE.xsl")})
+
+        elif re.search("Solution_Plus", file_location, re.IGNORECASE):
+            # print("Caught File, Being Handled by StatistiCALSolutionModel")
+            table = StatistiCALSolutionModel(file_location)
+            xml = AsciiDataTable_to_XmlDataTable(table,
+                                                 **{"style_sheet": os.path.join(xsl_directory,
+                                                                                "DEFAULT_MEASUREMENT_STYLE.xsl")})
+
+    elif file_location.split('.')[-1] == file_location and re.search('_', file_location):
+        print("Caught by JB Handler")
+        table = JBSparameter(file_location)
+        # old_prefix=table.get_frequency_units().replace('Hz','')
+        # table.change_unit_prefix(column_selector=0,old_prefix=old_prefix,new_prefix='G',unit='Hz')
+        # table.column_names=S2P_RI_COLUMN_NAMES
+        # xml=AsciiDataTable_to_XmlDataTable(table,**{"style_sheet":"../XSL/S2P_STYLE_02.xsl"})
+        s2p = JBSparameter_to_S2PV1(table)
+        xml = S2PV1_to_XmlDataTable(s2p, style_sheet=os.path.join(xsl_directory, "S2P_DB_STYLE.xsl"))
+
+    elif extension in ['asc', 'ASC', 'dut', 'DUT'] and not re.search('raw', file_location, re.IGNORECASE):
+        file_model = sparameter_power_type(file_location)
+        # print("{0} is {1}".format('file_model',file_model))
+        model = globals()[file_model]
+        calrep_model = model(file_location)
+        if re.search("PowerCalrep", file_model):
+            table = calrep_model.joined_table
+            # print("{0} is {1}".format("table.column_names",table.column_names))
+            if "uCe" in table.column_names:
+                style_sheet = os.path.join(xsl_directory, "POWER_3TERM_CALREP_STYLE.xsl")
+                # print("Power Model is 3TERM")
+            else:
+                style_sheet = os.path.join(xsl_directory, "POWER_CALREP_STYLE.xsl")
+                # print("Power Model is 4TERM")
+
+        elif re.search("TwoPortCalrep", file_model):
+            table = calrep_model.joined_table
+            style_sheet = os.path.join(xsl_directory, "TWO_PORT_CALREP_STYLE.xsl")
+
+        else:
+            table = calrep_model
+            style_sheet = os.path.join(xsl_directory, "ONE_PORT_CALREP_STYLE_002.xsl")
+
+        xml = AsciiDataTable_to_XmlDataTable(table, **{"style_sheet": style_sheet})
+
+    elif re.search('(.)+_(.)+', extension) or re.search('raw', file_location, re.IGNORECASE):
+        # print("The file is a raw file")
+        file_model = sparameter_power_type(file_location)
+        model = globals()[file_model]
+        table = model(file_location)
+        # print("{0} is {1}".format('file_model',file_model))
+        if re.search("OnePort", file_model):
+            style_sheet = os.path.join(xsl_directory, "ONE_PORT_RAW_STYLE.xsl")
+        elif re.search("TwoPort", file_model):
+            style_sheet = os.path.join(xsl_directory, "TWO_PORT_RAW_STYLE.xsl")
+        elif re.search("PowerRaw", file_model):
+            print("This is a raw Power File")
+            style_sheet = os.path.join(xsl_directory, "POWER_RAW_STYLE_002.xsl")
+        xml = AsciiDataTable_to_XmlDataTable(table, **{"style_sheet": style_sheet})
+    else:
+        raise
+        # xml=XMLBase(style_sheet=os.path.join(xsl_directory,"DEFAULT_STYLE.xsl"))
+
+    html = HTMLBase(html_text=xml.to_HTML())
+    return html
 #-----------------------------------------------------------------------------
 # Module Classes
 

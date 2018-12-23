@@ -385,10 +385,21 @@ class XMLBase():
                 # Just a backup plan if the python path is messed up
                 self.path=DEFAULT_FILE_NAME
         else:
-            file_in=open(file_path,'r')
-            self.document=xml.dom.minidom.parse(file_in)
-            file_in.close()
-            self.path=file_path
+            try:
+                try:
+                    file_in = open(file_path, 'r', encoding="utf-8")
+                except:
+                    file_in = open(file_path, 'r')
+                self.document = xml.dom.minidom.parse(file_in)
+                file_in.close()
+                self.path = file_path
+            except:
+                file_in = open(file_path, 'r', encoding="utf-8")
+                content = str(file_in.read())
+                # print("File Content is {0}".format(content))
+                self.etree = etree.fromstring(content)
+                self.document = xml.dom.minidom.parseString(etree.tostring(self.etree, encoding="unicode"))
+
         self.etree=etree.fromstring(self.document.toxml())
 
     def __getitem__(self, item):
