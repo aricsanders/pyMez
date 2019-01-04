@@ -1,12 +1,14 @@
 #-----------------------------------------------------------------------------
 # Name:        VisaDialog.py
-# Purpose:     To comunicate with visa compatible instruments
+# Purpose:     To communicate with visa compatible instruments
 # Author:      Aric Sanders
 # Created:     3/02/2016
 # License:     MIT License
 #-----------------------------------------------------------------------------
 """ VisaDialog is a very simple dialog for writing and reading commands over GPIB and RS232
-Help
+Help        box_layout = Layout(align_items='stretch',
+                    border='solid',
+                    width='50%')
 ---------------
 <a href="./index.html">`pyMez.Code.FrontEnds`</a>
 <div>
