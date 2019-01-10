@@ -111,15 +111,15 @@ FAKE_S2P=S2PV1(os.path.join(TESTS_DIRECTORY,"704b.S2P"))
 def fake_data(data):
     """Fake data is a method decorator that returns a set of fake data if the instrument mode is
     self.fake_mode=True.
-    For example just add @fake_data(data_to_return) before a an instrument method"""
+    For example just add @fake_data(data_to_return) before an instrument method"""
     def method_decorator(method):
-        def return_fake_data(*args,**kwargs):
+        def return_data(self,*args,**kwargs):
             if self.fake_mode:
                 return data
             else:
-                return method(*args,**kwargs)
+                return method(self,*args,**kwargs)
+        return return_data
     return method_decorator
-
 
 def whos_there():
     """Whos_there is a function that prints the idn string for all

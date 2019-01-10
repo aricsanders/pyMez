@@ -78,6 +78,87 @@ p2c = 'Type "copyright", "credits" or "license" for more information.'
 
 only_first_block = 1
 
+class PythonInterpreter:
+
+    def __init__(self, name = "<console>"):
+
+        self.name = name
+        self.locals = {}
+
+        self.lines = []
+
+    def push(self, line):
+
+        #
+        # collect lines
+
+        if self.lines:
+            if line:
+                self.lines.append(line)
+                return 1 # want more!
+            else:
+                line = string.join(self.lines, "\n") + "\n"
+        else:
+            if not line:
+                return 0
+            else:
+                line = line.rstrip()+'\n'
+
+        #
+        # compile what we've got this far
+        try:
+            if sys.version_info[:2] >= (2, 2):
+                import __future__
+                code = compile(line, self.name, "single",
+                               __future__.generators.compiler_flag, 1)
+            else:
+                code = compile(line, self.name, "single")
+            self.lines = []
+
+        except SyntaxError, why:
+            if why[0] == "unexpected EOF while parsing":
+                # start collecting lines
+                self.lines.append(line)
+                return 1 # want more!
+            else:
+                self.showtraceback()
+
+        except:
+            self.showtraceback()
+
+        else:
+            # execute
+            try:
+                exec code in self.locals
+            except:
+                self.showtraceback()
+
+        return 0
+
+    def showtraceback(self):
+
+        self.lines = []
+
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        if exc_type == SyntaxError:# and len(sys.exc_value) == 2:
+            # emulate interpreter behaviour
+            if len(sys.exc_value.args) == 2:
+                fn, ln, indent = sys.exc_value[1][:3]
+                indent += 3
+                pad = " " * indent
+                if fn is not None:
+                    src = linecache.getline(fn, ln)
+                    if src:
+                        src = src.rstrip()+'\n'
+                        sys.stderr.write('  File "%s", line %d\n%s%s'%(
+                                         fn, ln, pad, src))
+                sys.stderr.write(pad + "^\n")
+            sys.stderr.write("''' %s '''\n"%(str(sys.exc_type) + \
+                str(sys.exc_value.args and (" : " +sys.exc_value[0]) or '')))
+        else:
+            traceback.print_tb(sys.exc_traceback.tb_next, None)
+            sys.stderr.write("''' %s '''\n" %(str(sys.exc_type) + " : " + \
+                                            str(sys.exc_value)))
 
 class IShellEditor:
     def destroy(self):
