@@ -104,10 +104,23 @@ INSTRUMENTS_DEFINED=[]
 #TODO Make PYMEASURE_ROOT be read from the settings folder
 PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
 VNA_FREQUENCY_UNIT_MULTIPLIERS={"Hz":1.,"kHz":10.**3,"MHz":10.**6,"GHz":10.**9,"THz":10.**12}
+FAKE_S2P=S2PV1(os.path.join(TESTS_DIRECTORY,"704b.S2P"))
 #-------------------------------------------------------------------------------
 # Module Functions
 
-#TODO: Move these functions to DataHandlers.Instruments instead
+def fake_data(data):
+    """Fake data is a method decorator that returns a set of fake data if the instrument mode is
+    self.fake_mode=True.
+    For example just add @fake_data(data_to_return) before a an instrument method"""
+    def method_decorator(method):
+        def return_fake_data(*args,**kwargs):
+            if self.fake_mode:
+                return data
+            else:
+                return method(*args,**kwargs)
+    return method_decorator
+
+
 def whos_there():
     """Whos_there is a function that prints the idn string for all
     GPIB instruments connected"""
@@ -1058,7 +1071,7 @@ class VNA(VisaInstrument):
         s2p = S2PV1(None, option_line=option_line, data=switch_data)
         s2p.change_frequency_units(self.frequency_units)
         return s2p
-
+    @fake_data(FAKE_S2P)
     def measure_sparameters(self, **options):
         """Triggers a single sparameter measurement for all 4 parameters and returns a SP2V1 object"""
         defaults = {"trigger": "single"}
