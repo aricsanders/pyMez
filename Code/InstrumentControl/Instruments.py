@@ -104,12 +104,12 @@ INSTRUMENTS_DEFINED=[]
 #TODO Make PYMEASURE_ROOT be read from the settings folder
 PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
 VNA_FREQUENCY_UNIT_MULTIPLIERS={"Hz":1.,"kHz":10.**3,"MHz":10.**6,"GHz":10.**9,"THz":10.**12}
-FAKE_S2P=S2PV1(os.path.join(TESTS_DIRECTORY,"704b.S2P"))
+EMULATION_S2P=S2PV1(os.path.join(TESTS_DIRECTORY,"704b.S2P"))
 #-------------------------------------------------------------------------------
 # Module Functions
 
 def emulation_data(data):
-    """Fake data is a method decorator that returns a set of emulation data if the instrument mode is
+    """emulation data is a method decorator that returns a set of emulation data if the instrument mode is
     self.emulation_mode=True.
     For example just add @emulation_data(data_to_return) before an instrument method"""
     def method_decorator(method):
@@ -241,7 +241,7 @@ class VisaInstrumentError(Exception):
         Exception.__init__(self,*args)
 
 
-class FakeInstrument(InstrumentSheet):
+class EmulationInstrument(InstrumentSheet):
     """ General Class to communicate with COMM and GPIB instruments
     This is a blend of the pyvisa resource and an xml description. """
 
@@ -415,7 +415,7 @@ class FakeInstrument(InstrumentSheet):
 
     def close(self):
         """Closes the VISA session"""
-        print("Fake Instrument has been closed")
+        print("Emulation Instrument has been closed")
         
 class VisaInstrument(InstrumentSheet):
     """ General Class to communicate with COMM and GPIB instruments
@@ -465,7 +465,7 @@ class VisaInstrument(InstrumentSheet):
             self.emulation_mode = False
         except:
             print("Unable to load resource entering emulation mode ...")
-            self.resource=FakeInstrument(self.instrument_address)
+            self.resource=EmulationInstrument(self.instrument_address)
             self.history=self.resource.history
             self.emulation_mode=True
         self.current_state=self.get_state()
@@ -1071,7 +1071,7 @@ class VNA(VisaInstrument):
         s2p = S2PV1(None, option_line=option_line, data=switch_data)
         s2p.change_frequency_units(self.frequency_units)
         return s2p
-    @emulation_data(FAKE_S2P)
+    @emulation_data(EMULATION_S2P)
     def measure_sparameters(self, **options):
         """Triggers a single sparameter measurement for all 4 parameters and returns a SP2V1 object"""
         defaults = {"trigger": "single"}
