@@ -147,6 +147,7 @@ def make_wave_parameter_column_names(drive_ports=[1,2],detect_ports=[1,2],receiv
                                                                               complex_type))
     column_names = ["Frequency"] + waveparameter_column_names
     return column_names
+
 def asc_type(file_contents):
     """asc_type determines the type of asc file given it's contents, returns the class name of the appropriate model"""
     if isinstance(file_contents, StringType):
@@ -1626,13 +1627,196 @@ class ReverbChamber():
 class RobotData():
     pass
 
+class W1P(AsciiDataTable):
+    """W1p is a class for holding 1 port wave parameters. The wave parameters are in the format used
+    by the uncertainty framework, [Frequency,reA1_D1,imA1_D1,reB1_D1..imB1_D1]"""
+
+    def __init__(self, file_path=None, **options):
+        """Intializes the W2P """
+        defaults = {"data_delimiter": "  ", "column_names_delimiter": ",", "specific_descriptor": None,
+                    "general_descriptor": 'Wave_Parameters', "extension": 'w1p', "comment_begin": "!",
+                    "comment_end": "\n",
+                    "header": None,
+                    "column_names": make_wave_parameter_column_names(drive_ports=[1],detect_ports=[1]),
+                    "column_names_begin_token": "!", "column_names_end_token": "\n", "data": None,
+                    "row_formatter_string": None, "data_table_element_separator": None, "row_begin_token": None,
+                    "row_end_token": None, "escape_character": None,
+                    "data_begin_token": None, "data_end_token": None,
+                    "column_types": ['float' for i in range(len(make_wave_parameter_column_names(drive_ports=[1],detect_ports=[1])))],
+                    "column_units": ["GHz"] + [None for i in range(len(make_wave_parameter_column_names(drive_ports=[1],detect_ports=[1])) - 1)],
+                    "use_alternative_parser":False
+                    }
+        self.options = {}
+        for key, value in defaults.items():
+            self.options[key] = value
+        for key, value in options.items():
+            self.options[key] = value
+        if file_path:
+            self.path = file_path
+
+        try:
+            AsciiDataTable.__init__(self, file_path, **self.options)
+
+        except:
+            print("Moving to parsing unknown schema")
+            self.__read_and_fix__()
+            self.options["data"] = self.data
+            self.options["comments"] = self.comments
+            AsciiDataTable.__init__(self, **self.options)
+
+            if file_path:
+                self.path = file_path
+            print(("{0} sucessfully parsed".format(self.path)))
+        self.update_complex_data()
+
+    def update_complex_data(self):
+        """Uses self.data to update the complex_data attribute. """
+        if self.data:
+            self.complex_data = []
+            self.complex_column_names = ["Frequency"] + [x.replace("re", "") for x in self.column_names[1::2]]
+            for row in self.data[:]:
+                row = [float(x) for x in row]
+                frequency = row[0]
+                real_data = row[1::2]
+                imaginary_data = row[2::2]
+                new_row = [frequency] + [complex(real, imaginary_data[index]) for index, real in enumerate(real_data)]
+                self.complex_data.append(new_row)
+
+    def get_amplitude(self, parameter_name=None, column_index=None):
+        """Returns a list of amplitudes of the complex wave parameter specified by parameter_name,
+        or column_index"""
+        if not column_index:
+            column_index = self.complex_column_names.index(parameter_name)
+        amplitudes = [abs(x[column_index]) for x in self.complex_data[:]]
+        return amplitudes
+
+    def get_phase(self, parameter_name=None, column_index=None):
+        """Returns a list of amplitudes of the complex wave parameter specified by parameter_name,
+        or column_index"""
+        if not column_index:
+            column_index = self.complex_column_names.index(parameter_name)
+        amplitudes = [180. / np.pi * cmath.phase(x[column_index]) for x in self.complex_data[:]]
+        return amplitudes
+
+    def __read_and_fix__(self):
+        """Reads a w2p file and fixes any problems with delimiters. Since w2p files may use
+        any white space or combination of white space as data delimiters it reads the data and creates
+        a uniform delimter. This means a file saved with save() will not be the same as the original if the
+        whitespace is not uniform. It will also remove blank lines. """
+
+        in_file = open(self.path, 'r')
+        # to keep the logic clean we will repeatedly cycle through self.lines
+        # but in theory we could do it all on the line input stage
+        self.lines = []
+        for line in in_file:
+            self.lines.append(line)
+        # now we need to collect and extract all the inline comments
+        # There should be two types ones that have char position EOL, -1 or 0
+        self.comments = collect_inline_comments(self.lines, begin_token="!", end_token="\n")
+        # change all of them to be 0 or -1
+        if self.comments is None:
+            pass
+        else:
+            for index, comment in enumerate(self.comments):
+                if comment[2] > 1:
+                    self.comments[index][2] = -1
+                else:
+                    self.comments[index][2] = 0
+
+        # now use our w2p column names
+        self.column_names = make_wave_parameter_column_names(drive_ports=[1],detect_ports=[1])
+        # print("{0} are {1}".format("self.column_names",self.column_names))
+
+        # remove the comments
+        stripped_lines = strip_inline_comments(self.lines, begin_token="!", end_token="\n")
+        # print stripped_lines
+        self.data = []
+        self.options["data_begin_line"] = self.options["data_end_line"] = 0
+        data_lines = []
+        self.row_pattern = make_row_match_string(self.column_names)
+        # print("{0} is {1}".format("self.row_pattern",self.row_pattern))
+        for index, line in enumerate(stripped_lines):
+            if re.search(self.row_pattern, line):
+                data_lines.append(index)
+                # print re.search(self.row_pattern,line).groupdict()
+                row_data = re.search(self.row_pattern, line).groupdict()
+                self.add_row(row_data=row_data)
+
+        if data_lines != []:
+            self.options["data_begin_line"] = min(data_lines) + len(self.comments)
+            self.options["data_end_line"] = max(data_lines) + len(self.comments)
+
+    def show(self, **options):
+        """Plots any table with frequency as its x-axis and column_names as the x-axis in a
+        series of subplots"""
+        defaults = {"display_legend": False,
+                    "save_plot": False,
+                    "directory": None,
+                    "specific_descriptor": "WaveParameter",
+                    "general_descriptor": "Plot",
+                    "file_name": None,
+                    "plots_per_column": 2,
+                    "plot_format": 'b-',
+                    "share_x": False,
+                    "subplots_title": True,
+                    "plot_title": None,
+                    "plot_size": (12, 24),
+                    "dpi": 80,
+                    "format": "MA",
+                    "x_label": True,
+                    "grid": True}
+        plot_options = {}
+        for key, value in defaults.items():
+            plot_options[key] = value
+        for key, value in options.items():
+            plot_options[key] = value
+
+        x_data = np.array(self["Frequency"])
+        y_data_columns = self.column_names[:]
+        y_data_columns.remove("Frequency")
+        number_plots = len(y_data_columns)
+        number_columns = plot_options["plots_per_column"]
+        number_rows = int(round(float(number_plots) / float(number_columns)))
+        figure, axes = plt.subplots(ncols=number_columns, nrows=number_rows, sharex=plot_options["share_x"],
+                                    figsize=plot_options["plot_size"], dpi=plot_options["dpi"])
+        for plot_index, ax in enumerate(axes.flat):
+            if plot_index < number_plots:
+                y_data = np.array(self[y_data_columns[plot_index]])
+                ax.plot(x_data, y_data, plot_options["plot_format"], label=y_data_columns[plot_index])
+                if plot_options["display_legend"]:
+                    ax.legend()
+                if plot_options["subplots_title"]:
+                    ax.set_title(y_data_columns[plot_index])
+                if plot_options["x_label"]:
+                    ax.set_xlabel("Frequency ")
+                if plot_options["grid"]:
+                    ax.grid()
+            else:
+                pass
+
+        if plot_options["plot_title"]:
+            plt.suptitle(plot_options["plot_title"])
+        plt.tight_layout()
+        # Dealing with the save option
+        if plot_options["file_name"] is None:
+            file_name = auto_name(specific_descriptor=plot_options["specific_descriptor"],
+                                  general_descriptor=plot_options["general_descriptor"],
+                                  directory=plot_options["directory"], extension='png', padding=3)
+        else:
+            file_name = plot_options["file_name"]
+        if plot_options["save_plot"]:
+            # print file_name
+            plt.savefig(os.path.join(plot_options["directory"], file_name))
+        else:
+            plt.show()
+        return figure
 
 class W2P(AsciiDataTable):
     """W2p is a class for holding 2 port wave parameters. The wave parameters are in the format used
     by the uncertainty framework, [Frequency,reA1_D1,imA1_D1,reB1_D1..imB2_D2]"""
 
     def __init__(self, file_path=None, **options):
-        """Intializes the TwelveTermErrorModel """
+        """Intializes the W2P """
         defaults = {"data_delimiter": "  ", "column_names_delimiter": ",", "specific_descriptor": None,
                     "general_descriptor": 'Wave_Parameters', "extension": 'w2p', "comment_begin": "!",
                     "comment_end": "\n",
@@ -1962,12 +2146,18 @@ def test_TwelveTermErrorModel(file_path='CalCoefficients.txt'):
     correction=TwelveTermErrorModel(file_path)
     print(correction)
     print(correction.complex_data)
+
+def test_W1P(file_path="Line_4909_WR15_Wave_Parameters_Port2_20180313_001.w1p"):
+    os.chdir(TESTS_DIRECTORY)
+    w1p=W1P(file_path)
+    print(w1p)
+    w1p.show()
 #-----------------------------------------------------------------------------
 # Module Runner
 if __name__ == '__main__':
-    test_OnePortCalrepModel()
-    test_OnePortCalrepModel('700437.asc')
-    test_OnePortCalrepModel_Ctable(file_path_1='922729c.txt')
+    #test_OnePortCalrepModel()
+    #test_OnePortCalrepModel('700437.asc')
+    #test_OnePortCalrepModel_Ctable(file_path_1='922729c.txt')
     #test_OnePortRawModel()
     #test_OnePortRawModel('OnePortRawTestFile_002.txt')
     #test_TwoPortRawModel()
@@ -1975,7 +2165,7 @@ if __name__ == '__main__':
     #test_PowerRawModel()
     #test_JBSparameter()
     #test_JBSparameter('QuartzRefExample_L1_g10_HF')
-    test_TwoPortCalrepModel()
+    #test_TwoPortCalrepModel()
     #test_TwoPortCalrepModel('N205RV.asc')
     #test_PowerCalrepModel()
     #test_PowerCalrepModel('700083b.txt')
@@ -1983,3 +2173,4 @@ if __name__ == '__main__':
     #test_sparameter_power_type()
    #test_OnePortDUTModel()
     #test_TwelveTermErrorModel()
+    test_W1P(file_path="Line_4909_WR15_Wave_Parameters_Port2_20180313_002.w1p")

@@ -6,7 +6,9 @@
 #-----------------------------------------------------------------------------
 """ The Module Instruments Contains Classes and functions to control 
 instruments; GPIB,RS232 and other visa instruments. Instrument control classes are
-wrappers around the pyvisa instrument class with static xml based metadata added in.
+wrappers around the pyvisa instrument class with static xml based metadata added in. In addition,
+instruments have an emulation_mode that allows for the tracking of commands when not connected to a
+viable communications bus.
 
 
 Examples
@@ -105,6 +107,11 @@ INSTRUMENTS_DEFINED=[]
 PYMEASURE_ROOT=os.path.join(os.path.dirname( __file__ ), '..','..')
 VNA_FREQUENCY_UNIT_MULTIPLIERS={"Hz":1.,"kHz":10.**3,"MHz":10.**6,"GHz":10.**9,"THz":10.**12}
 EMULATION_S2P=S2PV1(os.path.join(TESTS_DIRECTORY,"704b.S2P"))
+EMULATION_S1P=S1PV1(os.path.join(TESTS_DIRECTORY,"Power_Meter.s1p"))
+EMULATION_W1P=W1P(os.path.join(TESTS_DIRECTORY,"Line_4909_WR15_Wave_Parameters_Port2_20180313_001.w1p"))
+EMULATION_W2P=W2P(os.path.join(TESTS_DIRECTORY,"Line_5079_WR15_Wave_Parameters_20180313_001.w2p"))
+EMULATION_SWITCH_TERMS=S2PV1(os.path.join(TESTS_DIRECTORY,"GTrue_Thru_WR15_Switch_Terms_20180313_001.s2p"))
+#EMULATION_SCOPE_DATA=
 #-------------------------------------------------------------------------------
 # Module Functions
 
@@ -762,8 +769,8 @@ class VNA(VisaInstrument):
                                                                     initialize_options["port2"]))
 
 
-    def initialize(self, **options):
-        """Intializes the system"""
+    def initialize_s2p(self, **options):
+        """Intializes the system to take two sparameters"""
         defaults = {"reset": False}
         initialize_options = {}
         for key, value in defaults.items():
@@ -812,6 +819,25 @@ class VNA(VisaInstrument):
                 self.frequency_list = frequency_list
         else:
             self.frequency_list = []
+
+    def initialize(self,**options):
+        """A handler to initialize the system to acquire the parameters of choice.
+        The default behavior is to initialize_s2p"""
+        defaults={"parameters":"s2p"}
+        self.initialize_options={}
+        for key,value in defaults.items():
+            self.initialize_options[key]=value
+        for key,value in options.items():
+            self.initialize_options[key]=value
+        if re.search("s2p",self.initialize_options["parameters"],re.IGNORECASE):
+            self.initialize_s2p(**self.initialize_options)
+        elif re.search("w1p",self.initialize_options["parameters"],re.IGNORECASE):
+            self.initialize_w1p(**self.initialize_options)
+        elif re.search("w2p",self.initialize_options["parameters"],re.IGNORECASE):
+            self.initialize_w2p(**self.initialize_options)
+        else:
+            print("Initialization failed because it did not understand {0}".format(self.initialize_options))
+
 
     def set_power(self, power):
         """Sets the power of the Instrument in dbm"""
@@ -996,6 +1022,7 @@ class VNA(VisaInstrument):
         for trace in traces:
             self.write("DISP:WIND{0}:TRAC{1}:DEL".format(window, trace))
 
+    @emulation_data(EMULATION_SWITCH_TERMS)
     def measure_switch_terms(self, **options):
         """Measures switch terms and returns a s2p table in forward and reverse format. To return in port format
         set the option order= "PORT"""
@@ -1039,6 +1066,11 @@ class VNA(VisaInstrument):
             time.sleep(.01)
         self.write("CALC:PAR:SEL 'REV';")
         reverse_switch_string = self.query("CALC:DATA? SDATA")
+
+        # Anritsu Specific String Parsing
+        foward_switch_string=re.sub("#\d+\n","",foward_switch_string)
+        reverse_switch_string=re.sub("#\d+\n","",reverse_switch_string)
+
         # Now parse the string
         foward_switch_list = foward_switch_string.replace("\n", "").split(",")
         reverse_switch_list = reverse_switch_string.replace("\n", "").split(",")
@@ -1071,6 +1103,7 @@ class VNA(VisaInstrument):
         s2p = S2PV1(None, option_line=option_line, data=switch_data)
         s2p.change_frequency_units(self.frequency_units)
         return s2p
+
     @emulation_data(EMULATION_S2P)
     def measure_sparameters(self, **options):
         """Triggers a single sparameter measurement for all 4 parameters and returns a SP2V1 object"""
@@ -1150,6 +1183,7 @@ class VNA(VisaInstrument):
         s2p.change_frequency_units(self.frequency_units)
         return s2p
 
+    @emulation_data(EMULATION_W2P)
     def initialize_w2p(self,**options):
         """Initializes the system for w2p acquisition"""
         defaults = {"reset": False, "port1": 1,"port2":2, "b_name_list": ["A", "B", "C", "D"]}
@@ -1203,6 +1237,7 @@ class VNA(VisaInstrument):
         self.sweep_type = self.get_sweep_type()
         self.frequency_list=self.get_frequency_list()
 
+    @emulation_data(EMULATION_W1P)
     def initialize_w1p(self, **options):
         """Initializes the system for w1p acquisition, default works for ZVA"""
         defaults = {"reset": False, "port": 1, "b_name_list": ["A", "B", "C", "D"],"source_port":1}
@@ -1323,9 +1358,17 @@ class VNA(VisaInstrument):
         while self.is_busy():
             time.sleep(.01)
         b_string = self.query('CALC:DATA? SDATA')
+
+        # Anritsu Specific String Parsing
+        a_string=re.sub("#\d+\n","",a_string)
+        b_string=re.sub("#\d+\n","",b_string)
+
         # String Parsing
         a_list = a_string.replace("\n", "").split(",")
         b_list = b_string.replace("\n", "").split(",")
+
+
+
         # Construct a list of lists that is data in RI format
         re_a = a_list[0::2]
         im_a = a_list[1::2]
@@ -1388,6 +1431,10 @@ class VNA(VisaInstrument):
             while self.is_busy():
                 time.sleep(.01)
             all_wave_raw_string .append(self.query('CALC:DATA? SDATA'))
+
+        # Anritsu specific parsing
+        for index,wave in enumerate(all_wave_raw_string):
+            all_wave_raw_string[index]=re.sub("#\d+\n","",wave)
 
         # String Parsing
         all_wave_list=[x.replace("\n","").split(",") for x in all_wave_raw_string]

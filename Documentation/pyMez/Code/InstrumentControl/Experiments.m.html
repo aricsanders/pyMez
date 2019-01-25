@@ -1251,6 +1251,8 @@ multiple instrument data acquisition with data</p>
         <span class="sd">&quot;&quot;&quot; initializes the KeithleyIV experiment class&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">=</span><span class="n">Code</span><span class="o">.</span><span class="n">InstrumentControl</span><span class="o">.</span><span class="n">Instruments</span><span class="o">.</span><span class="n">VisaInstrument</span><span class="p">(</span><span class="s1">&#39;Keithley&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">fake_mode</span><span class="p">:</span>
+                <span class="k">raise</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Entering Fake Mode&#39;</span><span class="p">)</span>
             <span class="k">pass</span>
@@ -1519,6 +1521,8 @@ taking a two point measurement using its internal voltage source written 02/2011
         <span class="sd">&quot;&quot;&quot; initializes the KeithleyIV experiment class&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">=</span><span class="n">Code</span><span class="o">.</span><span class="n">InstrumentControl</span><span class="o">.</span><span class="n">Instruments</span><span class="o">.</span><span class="n">VisaInstrument</span><span class="p">(</span><span class="s1">&#39;Keithley&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">fake_mode</span><span class="p">:</span>
+                <span class="k">raise</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Entering Fake Mode&#39;</span><span class="p">)</span>
             <span class="k">pass</span>
@@ -1717,6 +1721,8 @@ taking a two point measurement using its internal voltage source written 02/2011
     <span class="sd">&quot;&quot;&quot; initializes the KeithleyIV experiment class&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">=</span><span class="n">Code</span><span class="o">.</span><span class="n">InstrumentControl</span><span class="o">.</span><span class="n">Instruments</span><span class="o">.</span><span class="n">VisaInstrument</span><span class="p">(</span><span class="s1">&#39;Keithley&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">fake_mode</span><span class="p">:</span>
+            <span class="k">raise</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Entering Fake Mode&#39;</span><span class="p">)</span>
         <span class="k">pass</span>
