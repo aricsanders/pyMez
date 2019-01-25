@@ -108,13 +108,13 @@ FAKE_S2P=S2PV1(os.path.join(TESTS_DIRECTORY,"704b.S2P"))
 #-------------------------------------------------------------------------------
 # Module Functions
 
-def fake_data(data):
-    """Fake data is a method decorator that returns a set of fake data if the instrument mode is
-    self.fake_mode=True.
-    For example just add @fake_data(data_to_return) before an instrument method"""
+def emulation_data(data):
+    """Fake data is a method decorator that returns a set of emulation data if the instrument mode is
+    self.emulation_mode=True.
+    For example just add @emulation_data(data_to_return) before an instrument method"""
     def method_decorator(method):
         def return_data(self,*args,**kwargs):
-            if self.fake_mode:
+            if self.emulation_mode:
                 return data
             else:
                 return method(self,*args,**kwargs)
@@ -420,7 +420,7 @@ class FakeInstrument(InstrumentSheet):
 class VisaInstrument(InstrumentSheet):
     """ General Class to communicate with COMM and GPIB instruments
     This is a blend of the pyvisa resource and an xml description. If there is no device connected
-     enters into a fake mode. Where all the commands are logged as .history and the attribute fake_mode=True"""
+     enters into a emulation mode. Where all the commands are logged as .history and the attribute emulation_mode=True"""
     def __init__(self,resource_name=None,**options):
         """ Initializes the VisaInstrument Class"""
         defaults={"state_directory":os.getcwd(),
@@ -462,12 +462,12 @@ class VisaInstrument(InstrumentSheet):
             self.resource_manager=visa.ResourceManager()
             # Call the visa instrument class-- this gives ask,write,read
             self.resource=self.resource_manager.open_resource(self.instrument_address)
-            self.fake_mode = False
+            self.emulation_mode = False
         except:
-            print("Unable to load resource entering fake mode ...")
+            print("Unable to load resource entering emulation mode ...")
             self.resource=FakeInstrument(self.instrument_address)
             self.history=self.resource.history
-            self.fake_mode=True
+            self.emulation_mode=True
         self.current_state=self.get_state()
         
 
@@ -611,7 +611,7 @@ class VNA(VisaInstrument):
         for key, value in options.items():
             self.options[key] = value
         VisaInstrument.__init__(self, resource_name, **self.options)
-        if self.fake_mode:
+        if self.emulation_mode:
             self.power = -20
             self.IFBW = 10
             self.frequency_units = self.options["frequency_units"]
@@ -1071,7 +1071,7 @@ class VNA(VisaInstrument):
         s2p = S2PV1(None, option_line=option_line, data=switch_data)
         s2p.change_frequency_units(self.frequency_units)
         return s2p
-    @fake_data(FAKE_S2P)
+    @emulation_data(FAKE_S2P)
     def measure_sparameters(self, **options):
         """Triggers a single sparameter measurement for all 4 parameters and returns a SP2V1 object"""
         defaults = {"trigger": "single"}
