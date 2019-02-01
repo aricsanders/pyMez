@@ -271,7 +271,7 @@ def create_index_html_script(top_directory,group=True):
     out_file.write(links_string)
     out_file.close()
 
-def create_imports_html_script(top_directory,output_directory=None):
+def create_imports_html_script(top_directory,output_directory=None,output_name="pyMez_Imports.html"):
     """Reads all .py files under top directory and creates an html page that
     contains all of the imports and the file that imports them."""
     if output_directory is None:
@@ -297,7 +297,7 @@ def create_imports_html_script(top_directory,output_directory=None):
     for import_name in unique_imports:
         html_string=html_string+"<li>{0}</li>".format(import_name)
     html_string=IMPORT_HMTL_PREFIX+html_string+INDEX_HTML_POSTFIX
-    out_file=open(os.path.join(output_directory,"pyMez_Imports.html"),"w")
+    out_file=open(os.path.join(output_directory,output_name),"w")
     out_file.write(html_string)
     out_file.close()
 
