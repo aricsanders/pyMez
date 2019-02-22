@@ -1287,6 +1287,7 @@ table {
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.get_state">get_state</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.get_sweep_type">get_sweep_type</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.initialize">initialize</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.initialize_s2p">initialize_s2p</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.initialize_w1p">initialize_w1p</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.initialize_w2p">initialize_w2p</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.VNA.is_busy">is_busy</a></li>
@@ -1377,7 +1378,11 @@ table {
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.DEFAULT_FILE_NAME">DEFAULT_FILE_NAME</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.DEFAULT_MODE">DEFAULT_MODE</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.DUT_COLUMN_NAMES">DUT_COLUMN_NAMES</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.EMULATION_S1P">EMULATION_S1P</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.EMULATION_S2P">EMULATION_S2P</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.EMULATION_SWITCH_TERMS">EMULATION_SWITCH_TERMS</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.EMULATION_W1P">EMULATION_W1P</a></li>
+    <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.EMULATION_W2P">EMULATION_W2P</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.EXTENSION_PATTERN">EXTENSION_PATTERN</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.FORMATS">FORMATS</a></li>
     <li class="mono"><a href="#pyMez.Code.InstrumentControl.Instruments.FREQUENCY_UNITS">FREQUENCY_UNITS</a></li>
@@ -1571,6 +1576,11 @@ viable communications bus.</p>
 <span class="n">PYMEASURE_ROOT</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span> <span class="n">__file__</span> <span class="p">),</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
 <span class="n">VNA_FREQUENCY_UNIT_MULTIPLIERS</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Hz&quot;</span><span class="p">:</span><span class="mf">1.</span><span class="p">,</span><span class="s2">&quot;kHz&quot;</span><span class="p">:</span><span class="mf">10.</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span><span class="s2">&quot;MHz&quot;</span><span class="p">:</span><span class="mf">10.</span><span class="o">**</span><span class="mi">6</span><span class="p">,</span><span class="s2">&quot;GHz&quot;</span><span class="p">:</span><span class="mf">10.</span><span class="o">**</span><span class="mi">9</span><span class="p">,</span><span class="s2">&quot;THz&quot;</span><span class="p">:</span><span class="mf">10.</span><span class="o">**</span><span class="mi">12</span><span class="p">}</span>
 <span class="n">EMULATION_S2P</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;704b.S2P&quot;</span><span class="p">))</span>
+<span class="n">EMULATION_S1P</span><span class="o">=</span><span class="n">S1PV1</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Power_Meter.s1p&quot;</span><span class="p">))</span>
+<span class="n">EMULATION_W1P</span><span class="o">=</span><span class="n">W1P</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Line_4909_WR15_Wave_Parameters_Port2_20180313_001.w1p&quot;</span><span class="p">))</span>
+<span class="n">EMULATION_W2P</span><span class="o">=</span><span class="n">W2P</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;Line_5079_WR15_Wave_Parameters_20180313_001.w2p&quot;</span><span class="p">))</span>
+<span class="n">EMULATION_SWITCH_TERMS</span><span class="o">=</span><span class="n">S2PV1</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTS_DIRECTORY</span><span class="p">,</span><span class="s2">&quot;GTrue_Thru_WR15_Switch_Terms_20180313_001.s2p&quot;</span><span class="p">))</span>
+<span class="c1">#EMULATION_SCOPE_DATA=</span>
 <span class="c1">#-------------------------------------------------------------------------------</span>
 <span class="c1"># Module Functions</span>
 
@@ -2228,8 +2238,8 @@ viable communications bus.</p>
                                                                     <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
 
 
-    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Intializes the system&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">initialize_s2p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Intializes the system to take two sparameters&quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
         <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -2278,6 +2288,25 @@ viable communications bus.</p>
                 <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="n">frequency_list</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A handler to initialize the system to acquire the parameters of choice.</span>
+<span class="sd">        The default behavior is to initialize_s2p&quot;&quot;&quot;</span>
+        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;parameters&quot;</span><span class="p">:</span><span class="s2">&quot;s2p&quot;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;s2p&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize_s2p</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;w1p&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize_w1p</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;w2p&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize_w2p</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Initialization failed because it did not understand {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">set_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the power of the Instrument in dbm&quot;&quot;&quot;</span>
@@ -2462,6 +2491,7 @@ viable communications bus.</p>
         <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISP:WIND{0}:TRAC{1}:DEL&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">trace</span><span class="p">))</span>
 
+    <span class="nd">@emulation_data</span><span class="p">(</span><span class="n">EMULATION_SWITCH_TERMS</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">measure_switch_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Measures switch terms and returns a s2p table in forward and reverse format. To return in port format</span>
 <span class="sd">        set the option order= &quot;PORT&quot;&quot;&quot;</span>
@@ -2505,6 +2535,11 @@ viable communications bus.</p>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:SEL &#39;REV&#39;;&quot;</span><span class="p">)</span>
         <span class="n">reverse_switch_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;CALC:DATA? SDATA&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Anritsu Specific String Parsing</span>
+        <span class="n">foward_switch_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">foward_switch_string</span><span class="p">)</span>
+        <span class="n">reverse_switch_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">reverse_switch_string</span><span class="p">)</span>
+
         <span class="c1"># Now parse the string</span>
         <span class="n">foward_switch_list</span> <span class="o">=</span> <span class="n">foward_switch_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
         <span class="n">reverse_switch_list</span> <span class="o">=</span> <span class="n">reverse_switch_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
@@ -2537,6 +2572,7 @@ viable communications bus.</p>
         <span class="n">s2p</span> <span class="o">=</span> <span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">option_line</span><span class="o">=</span><span class="n">option_line</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">switch_data</span><span class="p">)</span>
         <span class="n">s2p</span><span class="o">.</span><span class="n">change_frequency_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_units</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">s2p</span>
+
     <span class="nd">@emulation_data</span><span class="p">(</span><span class="n">EMULATION_S2P</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">measure_sparameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Triggers a single sparameter measurement for all 4 parameters and returns a SP2V1 object&quot;&quot;&quot;</span>
@@ -2616,6 +2652,7 @@ viable communications bus.</p>
         <span class="n">s2p</span><span class="o">.</span><span class="n">change_frequency_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_units</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">s2p</span>
 
+    <span class="nd">@emulation_data</span><span class="p">(</span><span class="n">EMULATION_W2P</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">initialize_w2p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the system for w2p acquisition&quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;port1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s2">&quot;port2&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;b_name_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">]}</span>
@@ -2669,6 +2706,7 @@ viable communications bus.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">sweep_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sweep_type</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_frequency_list</span><span class="p">()</span>
 
+    <span class="nd">@emulation_data</span><span class="p">(</span><span class="n">EMULATION_W1P</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">initialize_w1p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the system for w1p acquisition, default works for ZVA&quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b_name_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">],</span><span class="s2">&quot;source_port&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
@@ -2789,9 +2827,17 @@ viable communications bus.</p>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
         <span class="n">b_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;CALC:DATA? SDATA&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Anritsu Specific String Parsing</span>
+        <span class="n">a_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">a_string</span><span class="p">)</span>
+        <span class="n">b_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">b_string</span><span class="p">)</span>
+
         <span class="c1"># String Parsing</span>
         <span class="n">a_list</span> <span class="o">=</span> <span class="n">a_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
         <span class="n">b_list</span> <span class="o">=</span> <span class="n">b_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+
+
+
         <span class="c1"># Construct a list of lists that is data in RI format</span>
         <span class="n">re_a</span> <span class="o">=</span> <span class="n">a_list</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">im_a</span> <span class="o">=</span> <span class="n">a_list</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
@@ -2854,6 +2900,10 @@ viable communications bus.</p>
             <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
                 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
             <span class="n">all_wave_raw_string</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;CALC:DATA? SDATA&#39;</span><span class="p">))</span>
+
+        <span class="c1"># Anritsu specific parsing</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">wave</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_wave_raw_string</span><span class="p">):</span>
+            <span class="n">all_wave_raw_string</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">wave</span><span class="p">)</span>
 
         <span class="c1"># String Parsing</span>
         <span class="n">all_wave_list</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_wave_raw_string</span><span class="p">]</span>
@@ -8647,8 +8697,8 @@ stores the frequency points as Hz.</p></div>
                                                                     <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
 
 
-    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Intializes the system&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">initialize_s2p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Intializes the system to take two sparameters&quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
         <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -8697,6 +8747,25 @@ stores the frequency points as Hz.</p></div>
                 <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="n">frequency_list</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A handler to initialize the system to acquire the parameters of choice.</span>
+<span class="sd">        The default behavior is to initialize_s2p&quot;&quot;&quot;</span>
+        <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;parameters&quot;</span><span class="p">:</span><span class="s2">&quot;s2p&quot;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;s2p&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize_s2p</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;w1p&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize_w1p</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;w2p&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize_w2p</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Initialization failed because it did not understand {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">))</span>
+
 
     <span class="k">def</span> <span class="nf">set_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the power of the Instrument in dbm&quot;&quot;&quot;</span>
@@ -8881,6 +8950,7 @@ stores the frequency points as Hz.</p></div>
         <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISP:WIND{0}:TRAC{1}:DEL&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">trace</span><span class="p">))</span>
 
+    <span class="nd">@emulation_data</span><span class="p">(</span><span class="n">EMULATION_SWITCH_TERMS</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">measure_switch_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Measures switch terms and returns a s2p table in forward and reverse format. To return in port format</span>
 <span class="sd">        set the option order= &quot;PORT&quot;&quot;&quot;</span>
@@ -8924,6 +8994,11 @@ stores the frequency points as Hz.</p></div>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:SEL &#39;REV&#39;;&quot;</span><span class="p">)</span>
         <span class="n">reverse_switch_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;CALC:DATA? SDATA&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Anritsu Specific String Parsing</span>
+        <span class="n">foward_switch_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">foward_switch_string</span><span class="p">)</span>
+        <span class="n">reverse_switch_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">reverse_switch_string</span><span class="p">)</span>
+
         <span class="c1"># Now parse the string</span>
         <span class="n">foward_switch_list</span> <span class="o">=</span> <span class="n">foward_switch_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
         <span class="n">reverse_switch_list</span> <span class="o">=</span> <span class="n">reverse_switch_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
@@ -8956,6 +9031,7 @@ stores the frequency points as Hz.</p></div>
         <span class="n">s2p</span> <span class="o">=</span> <span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">option_line</span><span class="o">=</span><span class="n">option_line</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">switch_data</span><span class="p">)</span>
         <span class="n">s2p</span><span class="o">.</span><span class="n">change_frequency_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_units</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">s2p</span>
+
     <span class="nd">@emulation_data</span><span class="p">(</span><span class="n">EMULATION_S2P</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">measure_sparameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Triggers a single sparameter measurement for all 4 parameters and returns a SP2V1 object&quot;&quot;&quot;</span>
@@ -9035,6 +9111,7 @@ stores the frequency points as Hz.</p></div>
         <span class="n">s2p</span><span class="o">.</span><span class="n">change_frequency_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_units</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">s2p</span>
 
+    <span class="nd">@emulation_data</span><span class="p">(</span><span class="n">EMULATION_W2P</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">initialize_w2p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the system for w2p acquisition&quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;port1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s2">&quot;port2&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;b_name_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">]}</span>
@@ -9088,6 +9165,7 @@ stores the frequency points as Hz.</p></div>
         <span class="bp">self</span><span class="o">.</span><span class="n">sweep_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sweep_type</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_frequency_list</span><span class="p">()</span>
 
+    <span class="nd">@emulation_data</span><span class="p">(</span><span class="n">EMULATION_W1P</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">initialize_w1p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the system for w1p acquisition, default works for ZVA&quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b_name_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">],</span><span class="s2">&quot;source_port&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
@@ -9208,9 +9286,17 @@ stores the frequency points as Hz.</p></div>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
         <span class="n">b_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;CALC:DATA? SDATA&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Anritsu Specific String Parsing</span>
+        <span class="n">a_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">a_string</span><span class="p">)</span>
+        <span class="n">b_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">b_string</span><span class="p">)</span>
+
         <span class="c1"># String Parsing</span>
         <span class="n">a_list</span> <span class="o">=</span> <span class="n">a_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
         <span class="n">b_list</span> <span class="o">=</span> <span class="n">b_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+
+
+
         <span class="c1"># Construct a list of lists that is data in RI format</span>
         <span class="n">re_a</span> <span class="o">=</span> <span class="n">a_list</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">im_a</span> <span class="o">=</span> <span class="n">a_list</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
@@ -9273,6 +9359,10 @@ stores the frequency points as Hz.</p></div>
             <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
                 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
             <span class="n">all_wave_raw_string</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;CALC:DATA? SDATA&#39;</span><span class="p">))</span>
+
+        <span class="c1"># Anritsu specific parsing</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">wave</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_wave_raw_string</span><span class="p">):</span>
+            <span class="n">all_wave_raw_string</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">wave</span><span class="p">)</span>
 
         <span class="c1"># String Parsing</span>
         <span class="n">all_wave_list</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_wave_raw_string</span><span class="p">]</span>
@@ -10088,12 +10178,50 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
 
     
   
-    <div class="desc"><p>Intializes the system</p></div>
+    <div class="desc"><p>A handler to initialize the system to acquire the parameters of choice.
+The default behavior is to initialize_s2p</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments.VNA.initialize', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.InstrumentControl.Instruments.VNA.initialize" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Intializes the system&quot;&quot;&quot;</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A handler to initialize the system to acquire the parameters of choice.</span>
+<span class="sd">    The default behavior is to initialize_s2p&quot;&quot;&quot;</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;parameters&quot;</span><span class="p">:</span><span class="s2">&quot;s2p&quot;</span><span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">value</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;s2p&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize_s2p</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;w1p&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize_w1p</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;w2p&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize_w2p</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Initialization failed because it did not understand {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initialize_options</span><span class="p">))</span>
+</pre></div>
+
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="pyMez.Code.InstrumentControl.Instruments.VNA.initialize_s2p">
+    <p>def <span class="ident">initialize_s2p</span>(</p><p>self, **options)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Intializes the system to take two sparameters</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments.VNA.initialize_s2p', this);">Show source &equiv;</a></p>
+  <div id="source-pyMez.Code.InstrumentControl.Instruments.VNA.initialize_s2p" class="source">
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">initialize_s2p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Intializes the system to take two sparameters&quot;&quot;&quot;</span>
     <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
     <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -10152,65 +10280,20 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
             
   <div class="item">
     <div class="name def" id="pyMez.Code.InstrumentControl.Instruments.VNA.initialize_w1p">
-    <p>def <span class="ident">initialize_w1p</span>(</p><p>self, **options)</p>
+    <p>def <span class="ident">initialize_w1p</span>(</p><p>self, *args, **kwargs)</p>
     </div>
     
 
     
   
-    <div class="desc"><p>Initializes the system for w1p acquisition, default works for ZVA</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments.VNA.initialize_w1p', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.InstrumentControl.Instruments.VNA.initialize_w1p" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">initialize_w1p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Initializes the system for w1p acquisition, default works for ZVA&quot;&quot;&quot;</span>
-    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b_name_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">],</span><span class="s2">&quot;source_port&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
-    <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">if</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SYST:FPRESET&quot;</span><span class="p">)</span>
-    <span class="n">b_name</span> <span class="o">=</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;b_name_list&quot;</span><span class="p">][</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:STATE ON&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{0}_D{0}&#39;,R{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe1:FEED &#39;A{0}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{0}_D{0}&#39;,{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">],</span>
-                                                                   <span class="n">b_name</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe2:FEED &#39;B{0}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">sweep_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sweep_type</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;LIN&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sweep_type</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SENS:FREQ:START?&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-        <span class="n">stop</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SENS:FREQ:STOP?&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-        <span class="n">number_points</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SENS:SWE:POIN?&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">number_points</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;LIN&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sweep_type</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SENS:FREQ:START?&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-        <span class="n">stop</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SENS:FREQ:STOP?&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-        <span class="n">number_points</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SENS:SWE:POIN?&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-        <span class="n">logspace_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
-        <span class="n">logspace_stop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ndigits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">logspace_start</span><span class="p">,</span> <span class="n">logspace_stop</span><span class="p">,</span>
-                                                                             <span class="n">num</span><span class="o">=</span><span class="n">number_points</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
-    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;SEG&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sweep_type</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frequency_table</span><span class="o">=</span><span class="p">[]</span>
-        <span class="n">number_segments</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SENS:SEGM:COUN?&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_segments</span><span class="p">):</span>
-            <span class="n">start</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SENS:SEGM{0}:FREQ:START?&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-            <span class="n">stop</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SENS:SEGM{0}:FREQ:STOP?&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-            <span class="n">number_points</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SENS:SEGM{0}:SWE:POIN?&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-            <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">number_points</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">frequency_table</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span> <span class="s2">&quot;stop&quot;</span><span class="p">:</span> <span class="n">stop</span><span class="p">,</span>
-                                         <span class="s2">&quot;number_points&quot;</span><span class="p">:</span> <span class="n">number_points</span><span class="p">,</span> <span class="s2">&quot;step&quot;</span><span class="p">:</span> <span class="n">step</span><span class="p">})</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">frequency_table</span> <span class="o">=</span> <span class="n">fix_segment_table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_table</span><span class="p">)</span>
-            <span class="n">frequency_list</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency_table</span><span class="p">[:]:</span>
-                <span class="n">new_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;stop&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;number_points&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-                <span class="n">frequency_list</span> <span class="o">=</span> <span class="n">frequency_list</span> <span class="o">+</span> <span class="n">new_list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="n">frequency_list</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">return_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">emulation_mode</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -10221,64 +10304,20 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
             
   <div class="item">
     <div class="name def" id="pyMez.Code.InstrumentControl.Instruments.VNA.initialize_w2p">
-    <p>def <span class="ident">initialize_w2p</span>(</p><p>self, **options)</p>
+    <p>def <span class="ident">initialize_w2p</span>(</p><p>self, *args, **kwargs)</p>
     </div>
     
 
     
   
-    <div class="desc"><p>Initializes the system for w2p acquisition</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments.VNA.initialize_w2p', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.InstrumentControl.Instruments.VNA.initialize_w2p" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">initialize_w2p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Initializes the system for w2p acquisition&quot;&quot;&quot;</span>
-    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s2">&quot;port1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s2">&quot;port2&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;b_name_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">]}</span>
-    <span class="n">initialize_options</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">initialize_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">if</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;reset&quot;</span><span class="p">]:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SYST:FPRESET&quot;</span><span class="p">)</span>
-    <span class="n">b1_name</span> <span class="o">=</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;b_name_list&quot;</span><span class="p">][</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="n">b2_name</span><span class="o">=</span> <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;b_name_list&quot;</span><span class="p">][</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="c1"># Initialize Port 1 traces A1_D1,B1_D1,B2_D1</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:STATE ON&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{0}_D{0}&#39;,R{0},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe1:FEED &#39;A{0}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{0}_D{0}&#39;,{1},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span><span class="n">b1_name</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe2:FEED &#39;B{0}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{1}_D{0}&#39;,R{1},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                        <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe3:FEED &#39;A{1}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{1}_D{0}&#39;,{2},{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                       <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
-                                                                       <span class="n">b2_name</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe4:FEED &#39;B{1}_D{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                       <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
-    <span class="c1"># Initialize Port 2 Traces A1_D2,B1_D2,</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{0}_D{1}&#39;,R{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                        <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe5:FEED &#39;A{0}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{0}_D{1}&#39;,{2},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                       <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
-                                                                       <span class="n">b1_name</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe6:FEED &#39;B{0}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;A{1}_D{1}&#39;,R{1},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                        <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]</span> <span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe7:FEED &#39;A{1}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALCulate:PARameter:DEFine &#39;B{1}_D{1}&#39;,{2},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                       <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">],</span>
-                                                                       <span class="n">b2_name</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe8:FEED &#39;B{1}_D{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port1&quot;</span><span class="p">],</span>
-                                                                <span class="n">initialize_options</span><span class="p">[</span><span class="s2">&quot;port2&quot;</span><span class="p">]))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">sweep_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sweep_type</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_frequency_list</span><span class="p">()</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">return_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">emulation_mode</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -10366,90 +10405,20 @@ if no state is provided it returns the DEFAULT_STATE_QUERY_DICTIONARY as read in
             
   <div class="item">
     <div class="name def" id="pyMez.Code.InstrumentControl.Instruments.VNA.measure_switch_terms">
-    <p>def <span class="ident">measure_switch_terms</span>(</p><p>self, **options)</p>
+    <p>def <span class="ident">measure_switch_terms</span>(</p><p>self, *args, **kwargs)</p>
     </div>
     
 
     
   
-    <div class="desc"><p>Measures switch terms and returns a s2p table in forward and reverse format. To return in port format
-set the option order= "PORT</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.InstrumentControl.Instruments.VNA.measure_switch_terms', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.InstrumentControl.Instruments.VNA.measure_switch_terms" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">measure_switch_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Measures switch terms and returns a s2p table in forward and reverse format. To return in port format</span>
-<span class="sd">    set the option order= &quot;PORT&quot;&quot;&quot;</span>
-    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;view_trace&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span><span class="s2">&quot;initialize&quot;</span><span class="p">:</span><span class="bp">True</span><span class="p">,</span><span class="s2">&quot;order&quot;</span><span class="p">:</span><span class="s2">&quot;FR&quot;</span><span class="p">}</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="c1"># this resets the traces to be based on swith terms</span>
-    <span class="c1"># Set VS to be remotely triggered by GPIB</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SENS:HOLD:FUNC HOLD&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;TRIG:REM:TYP CHAN&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;initialize&quot;</span><span class="p">]:</span>
-        <span class="c1"># Set the Channel to have 2 Traces</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:COUN 2&quot;</span><span class="p">)</span>
-        <span class="c1"># Trace 1 This is port 2 or Forward Switch Terms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:DEF &#39;FWD&#39;,R2B,1&quot;</span><span class="p">)</span>  <span class="c1"># note this command is different for vector star A2,B2</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;view_trace&quot;</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe5:FEED &#39;FWD&#39;&quot;</span><span class="p">)</span>
-        <span class="c1"># Trace 2 This is port 1 or Reverse Switch Terms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:PAR:DEF &#39;REV&#39;,R1A,2&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;view_trace&quot;</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DISPlay:WINDow1:TRACe6:FEED &#39;REV&#39;&quot;</span><span class="p">)</span>
-    <span class="c1"># Select Channel</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC1:SEL;&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ABORT;TRIG:SING;&quot;</span><span class="p">)</span>
-    <span class="c1"># Sleep for the duration of the scan</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.5</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IFBW</span><span class="p">))</span>
-    <span class="c1"># wait for other functions to be completed</span>
-    <span class="c1"># while self.is_busy():</span>
-    <span class="c1">#     time.sleep(.01)</span>
-    <span class="c1"># Set the read format</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FORM:ASC,0&quot;</span><span class="p">)</span>
-    <span class="c1"># Read in the data</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:SEL &#39;FWD&#39;;&quot;</span><span class="p">)</span>
-    <span class="n">foward_switch_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;CALC:DATA? SDATA&quot;</span><span class="p">)</span>
-    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CALC:PAR:SEL &#39;REV&#39;;&quot;</span><span class="p">)</span>
-    <span class="n">reverse_switch_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;CALC:DATA? SDATA&quot;</span><span class="p">)</span>
-    <span class="c1"># Now parse the string</span>
-    <span class="n">foward_switch_list</span> <span class="o">=</span> <span class="n">foward_switch_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
-    <span class="n">reverse_switch_list</span> <span class="o">=</span> <span class="n">reverse_switch_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
-    <span class="n">real_foward</span> <span class="o">=</span> <span class="n">foward_switch_list</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">imaginary_forward</span> <span class="o">=</span> <span class="n">foward_switch_list</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">real_reverse</span> <span class="o">=</span> <span class="n">reverse_switch_list</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">imaginary_reverse</span> <span class="o">=</span> <span class="n">reverse_switch_list</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">switch_data</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">frequency</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">[:]):</span>
-            <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">frequency</span><span class="p">,</span>
-                       <span class="n">real_foward</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">imaginary_forward</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
-                       <span class="n">real_reverse</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">imaginary_reverse</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
-                       <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
-                       <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-            <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">new_row</span><span class="p">]</span>
-            <span class="n">switch_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_switch_term_options</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">],</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">frequency</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_list</span><span class="p">[:]):</span>
-            <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">frequency</span><span class="p">,</span>
-                       <span class="n">real_reverse</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">imaginary_reverse</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
-                       <span class="n">real_foward</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">imaginary_forward</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
-                       <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
-                       <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-            <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">new_row</span><span class="p">]</span>
-            <span class="n">switch_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
-    <span class="n">option_line</span> <span class="o">=</span> <span class="s2">&quot;# Hz S RI R 50&quot;</span>
-    <span class="c1"># add some options here about auto saving</span>
-    <span class="c1"># do we want comment options?</span>
-    <span class="n">s2p</span> <span class="o">=</span> <span class="n">S2PV1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">option_line</span><span class="o">=</span><span class="n">option_line</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">switch_data</span><span class="p">)</span>
-    <span class="n">s2p</span><span class="o">.</span><span class="n">change_frequency_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency_units</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">s2p</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">return_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">emulation_mode</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 
   </div>
@@ -10503,6 +10472,9 @@ port and returns a w1p object.</p></div>
     <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
     <span class="n">b_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;CALC:DATA? SDATA&#39;</span><span class="p">)</span>
+    <span class="c1"># Anritsu Specific String Parsing</span>
+    <span class="n">a_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">a_string</span><span class="p">)</span>
+    <span class="n">b_string</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">b_string</span><span class="p">)</span>
     <span class="c1"># String Parsing</span>
     <span class="n">a_list</span> <span class="o">=</span> <span class="n">a_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
     <span class="n">b_list</span> <span class="o">=</span> <span class="n">b_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
@@ -10587,6 +10559,9 @@ port and returns a w2p object.</p></div>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_busy</span><span class="p">():</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
         <span class="n">all_wave_raw_string</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;CALC:DATA? SDATA&#39;</span><span class="p">))</span>
+    <span class="c1"># Anritsu specific parsing</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">wave</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_wave_raw_string</span><span class="p">):</span>
+        <span class="n">all_wave_raw_string</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;#\d+</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">wave</span><span class="p">)</span>
     <span class="c1"># String Parsing</span>
     <span class="n">all_wave_list</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_wave_raw_string</span><span class="p">]</span>
     <span class="c1"># Construct a list of lists that is data in RI format</span>
@@ -12457,7 +12432,39 @@ window (using wx)</p></div>
 
       </div>
       <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.EMULATION_S1P" class="name">var <span class="ident">EMULATION_S1P</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
       <p id="pyMez.Code.InstrumentControl.Instruments.EMULATION_S2P" class="name">var <span class="ident">EMULATION_S2P</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.EMULATION_SWITCH_TERMS" class="name">var <span class="ident">EMULATION_SWITCH_TERMS</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.EMULATION_W1P" class="name">var <span class="ident">EMULATION_W1P</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="pyMez.Code.InstrumentControl.Instruments.EMULATION_W2P" class="name">var <span class="ident">EMULATION_W2P</span></p>
       
   
   <div class="source_cont">

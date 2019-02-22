@@ -1442,7 +1442,7 @@ table {
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">links_string</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<span class="k">def</span> <span class="nf">create_imports_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">output_directory</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">create_imports_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">output_directory</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">output_name</span><span class="o">=</span><span class="s2">&quot;pyMez_Imports.html&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Reads all .py files under top directory and creates an html page that</span>
 <span class="sd">    contains all of the imports and the file that imports them.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">output_directory</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -1468,7 +1468,7 @@ table {
     <span class="k">for</span> <span class="n">import_name</span> <span class="ow">in</span> <span class="n">unique_imports</span><span class="p">:</span>
         <span class="n">html_string</span><span class="o">=</span><span class="n">html_string</span><span class="o">+</span><span class="s2">&quot;&lt;li&gt;{0}&lt;/li&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">import_name</span><span class="p">)</span>
     <span class="n">html_string</span><span class="o">=</span><span class="n">IMPORT_HMTL_PREFIX</span><span class="o">+</span><span class="n">html_string</span><span class="o">+</span><span class="n">INDEX_HTML_POSTFIX</span>
-    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_directory</span><span class="p">,</span><span class="s2">&quot;pyMez_Imports.html&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_directory</span><span class="p">,</span><span class="n">output_name</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_string</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
@@ -1964,7 +1964,7 @@ If file_path is not specified it auto names it and saves it in the current worki
       
   <div class="item">
     <div class="name def" id="pyMez.Code.Utils.HelpUtils.create_imports_html_script">
-    <p>def <span class="ident">create_imports_html_script</span>(</p><p>top_directory, output_directory=None)</p>
+    <p>def <span class="ident">create_imports_html_script</span>(</p><p>top_directory, output_directory=None, output_name=&#39;pyMez_Imports.html&#39;)</p>
     </div>
     
 
@@ -1975,7 +1975,7 @@ contains all of the imports and the file that imports them.</p></div>
   <div class="source_cont">
   <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-pyMez.Code.Utils.HelpUtils.create_imports_html_script', this);">Show source &equiv;</a></p>
   <div id="source-pyMez.Code.Utils.HelpUtils.create_imports_html_script" class="source">
-    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">create_imports_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">output_directory</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">create_imports_html_script</span><span class="p">(</span><span class="n">top_directory</span><span class="p">,</span><span class="n">output_directory</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">output_name</span><span class="o">=</span><span class="s2">&quot;pyMez_Imports.html&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Reads all .py files under top directory and creates an html page that</span>
 <span class="sd">    contains all of the imports and the file that imports them.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">output_directory</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -2001,7 +2001,7 @@ contains all of the imports and the file that imports them.</p></div>
     <span class="k">for</span> <span class="n">import_name</span> <span class="ow">in</span> <span class="n">unique_imports</span><span class="p">:</span>
         <span class="n">html_string</span><span class="o">=</span><span class="n">html_string</span><span class="o">+</span><span class="s2">&quot;&lt;li&gt;{0}&lt;/li&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">import_name</span><span class="p">)</span>
     <span class="n">html_string</span><span class="o">=</span><span class="n">IMPORT_HMTL_PREFIX</span><span class="o">+</span><span class="n">html_string</span><span class="o">+</span><span class="n">INDEX_HTML_POSTFIX</span>
-    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_directory</span><span class="p">,</span><span class="s2">&quot;pyMez_Imports.html&quot;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_directory</span><span class="p">,</span><span class="n">output_name</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_string</span><span class="p">)</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
