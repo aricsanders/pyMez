@@ -637,7 +637,7 @@ class VNA(VisaInstrument):
                 stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
                 number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
                 self.frequency_list = np.linspace(start, stop, number_points).tolist()
-            elif re.search("LIN", self.sweep_type, re.IGNORECASE):
+            elif re.search("LOG", self.sweep_type, re.IGNORECASE):
                 start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
                 stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
                 number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
@@ -794,7 +794,7 @@ class VNA(VisaInstrument):
             stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
             self.frequency_list = np.linspace(start, stop, number_points).tolist()
-        elif re.search("LIN", self.sweep_type, re.IGNORECASE):
+        elif re.search("LOG", self.sweep_type, re.IGNORECASE):
             start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
             stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
@@ -1261,7 +1261,7 @@ class VNA(VisaInstrument):
             stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
             self.frequency_list = np.linspace(start, stop, number_points).tolist()
-        elif re.search("LIN", self.sweep_type, re.IGNORECASE):
+        elif re.search("LOG", self.sweep_type, re.IGNORECASE):
             start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
             stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
@@ -1296,7 +1296,7 @@ class VNA(VisaInstrument):
             stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
             self.frequency_list = np.linspace(start, stop, number_points).tolist()
-        elif re.search("LIN", self.sweep_type, re.IGNORECASE):
+        elif re.search("LOG", self.sweep_type, re.IGNORECASE):
             start = float(self.query("SENS:FREQ:START?").replace("\n", ""))
             stop = float(self.query("SENS:FREQ:STOP?").replace("\n", ""))
             number_points = int(self.query("SENS:SWE:POIN?").replace("\n", ""))
