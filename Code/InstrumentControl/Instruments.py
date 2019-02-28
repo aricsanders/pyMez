@@ -697,6 +697,25 @@ class VNA(VisaInstrument):
         self.write("INITiate:CONTinuous OFF")
         self.write("ABORT;INITiate:IMMediate;*wai")
 
+    def get_trace_catalog(self):
+        """Returns the trace catalog as a string"""
+        trace_string = self.query("CALC:PAR:CAT?")
+        return trace_string
+
+    def get_trace_list(self):
+        """Returns the active trace names as a list"""
+        trace_string = self.query("CALC:PAR:CAT?")
+        trace_list = trace_string.replace("\n", "").split(",")[0::3]
+        return trace_list
+
+    def delete_all_traces(self):
+        """Deletes all active traces"""
+        trace_string = self.query("CALC:PAR:CAT?")
+        # remove endline, split on , and then take every third one
+        trace_list = trace_string.replace("\n", "").split(",")[0::3]
+        for trace in trace_list:
+            self.write("CALC:PAR:DEL '{0}'".format(trace))
+
 
     def set_source_output(self,state=0):
         """Sets all of the outputs of the VNA to OFF(0) or ON (1). This disables/enables all the source outputs."""
