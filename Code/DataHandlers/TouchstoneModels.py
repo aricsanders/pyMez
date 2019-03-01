@@ -51,15 +51,15 @@ except:
           "please put it on the python path")
     raise ImportError
 import matplotlib.pyplot as plt
-try:
-    import smithplot
-    SMITHPLOT=1
-    "Constant assigned as true if the module smithplot is present, this module is currently broken"
-
-except:
-    print("The module smithplot was not found,"
-          "please put it on the python path")
-    SMITHPLOT=0
+# try:
+#     import smithplot
+#     SMITHPLOT=1
+#     "Constant assigned as true if the module smithplot is present, this module is currently broken"
+#
+# except:
+#     print("The module smithplot was not found,"
+#           "please put it on the python path")
+#     SMITHPLOT=0
 #-----------------------------------------------------------------------------
 # Module Constants
 TOUCHSTONE_KEYWORDS=["Version","Number of Ports","Two-Port Order","Number of Frequencies",
