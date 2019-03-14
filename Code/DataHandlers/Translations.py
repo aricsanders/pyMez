@@ -444,27 +444,27 @@ def DataFrameDictionary_to_AsciiDataTable(DataFrame_dict, **options):
         table_key = key
         if re.search("comments", key, re.IGNORECASE):
             table_key = "inline_comments"
-            table_options[table_key] = DataFrame_dict[key].as_matrix().tolist()
+            table_options[table_key] = DataFrame_dict[key].values.tolist()
 
         elif key in ["data", "Data"]:
             table_options["column_names"] = DataFrame_dict[key].columns.tolist()
             table_options["column_types"] = [str(x) for x in DataFrame_dict[key].dtypes.tolist()]
-            table_options["data"] = DataFrame_dict[key].as_matrix().tolist()
+            table_options["data"] = DataFrame_dict[key].values.tolist()
 
         elif re.search("footer", key, re.IGNORECASE):
-            list_of_lists = DataFrame_dict[key].as_matrix().tolist()
+            list_of_lists = DataFrame_dict[key].values.tolist()
             list_of_strings = [str(row[0]) for row in list_of_lists]
             table_options["footer"] = list_of_strings
 
         elif re.search("header", key, re.IGNORECASE):
             table_options["treat_header_as_comment"] = True
-            list_of_lists = DataFrame_dict[key].as_matrix().tolist()
+            list_of_lists = DataFrame_dict[key].values.tolist()
             list_of_strings = [str(row[0]) for row in list_of_lists]
             # print("{0} is {1}".format("list_of_lists",list_of_lists))
             table_options["header"] = list_of_strings
 
         elif re.search("meta", key, re.IGNORECASE):
-            list_of_lists = DataFrame_dict[key].as_matrix().tolist()
+            list_of_lists = DataFrame_dict[key].values.tolist()
             dictionary = {str(row[0]): str(row[1]) for row in list_of_lists}
             table_options["metadata"] = dictionary
 
@@ -578,7 +578,7 @@ def DataFrame_to_AsciiDataTable(pandas_data_frame,**options):
         conversion_options[key]=value
 
     conversion_options["column_names"]=pandas_data_frame.columns.tolist()[:]
-    conversion_options["data"]=pandas_data_frame.as_matrix().tolist()[:]
+    conversion_options["data"]=pandas_data_frame.values.tolist()[:]
     conversion_options["column_types"]=[str(x) for x in pandas_data_frame.dtypes.tolist()[:]]
 
     new_table=AsciiDataTable(None,**conversion_options)
@@ -919,7 +919,7 @@ def HtmlString_to_HtmlFile(html_string,file_name="test.html"):
 def HtmlFile_to_DataFrame(html_file_name):
     in_file=open(html_file_name,'r')
     pandas_data_frame=pandas.read_html(in_file)
-    return pandas_data_frame
+    return pandas_data_frame[0]
 
 def HtmlFile_to_HtmlString(html_file_name):
     in_file=open(html_file_name,'r')
@@ -1319,7 +1319,7 @@ def Dictionary_to_DataFrame(python_dictionary):
 
 def DataFrame_to_Dictionary(pandas_data_frame):
     """Takes a pandas.DataFrame with column names ["Property","Value"] and returns a python dictionary"""
-    list_of_lists=pandas_data_frame.as_matrix().tolist()
+    list_of_lists=pandas_data_frame.values.tolist()
     dictionary={row[0]:replace_None(row[1]) for row in list_of_lists}
     return dictionary
 

@@ -585,8 +585,8 @@ class Graph(object):
             # if this node is the destination exit returning the path
             if current_node == last_node:
                 if self.get_path_options["debug"]:
-                    print(("Node path was found to be {0}".format(node_path)))
-                    print(("path was found to be {0}".format(edge_path)))
+                    #print(("Node path was found to be {0}".format(node_path)))
+                    #print(("path was found to be {0}".format(edge_path)))
                     print(("{0} is {1}".format("path", path)))
                 return path[last_node][::-1]
 

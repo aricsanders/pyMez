@@ -474,6 +474,7 @@ class CheckStandardReport(HTMLReport):
                                                                           max(self.get_measurement_dates()))
         self.add_report_heading()
         self.append_to_body({"tag": "p", "text": summary_text})
+
         download_options={"mime_types":self.conversion_options["mime_types"],
          "download_formats":self.conversion_options["nodes"],
          "download_extensions":self.conversion_options["extensions"],
@@ -730,25 +731,28 @@ class CheckStandardReport(HTMLReport):
         # convert all data to AsciiDataTable format
         download_table = "<table id='downloads' style='{0}'>".format(add_options["style"])
         for index, download in enumerate(add_options["download_files"][:]):
-            if add_options["download_files_input_format"][index] not in ["AsciiDataTable"]:
-                table_graph.set_state(add_options["download_files_input_format"][index], download)
-                table_graph.move_to_node("AsciiDataTable")
-                download = table_graph.data.copy()
-            # now we cycle throught the download formats, for each file we load the graph and then create the download links
-            ascii_download = String_to_DownloadLink(string=str(download),
-                                                    mime_type="text/plain",
-                                                    suggested_name=add_options["download_files_base_names"][index],
-                                                    text=add_options["download_files_base_names"][index])
-            #print(("{0} is {1}".format("index", index)))
-            table_graph.set_state("AsciiDataTable", download)
+            try:
+                if add_options["download_files_input_format"][index] not in ["AsciiDataTable"]:
+                    table_graph.set_state(add_options["download_files_input_format"][index], download)
+                    table_graph.move_to_node("AsciiDataTable")
+                    download = table_graph.data.copy()
+                # now we cycle throught the download formats, for each file we load the graph and then create the download links
+                ascii_download = String_to_DownloadLink(string=str(download),
+                                                        mime_type="text/plain",
+                                                        suggested_name=add_options["download_files_base_names"][index],
+                                                        text=add_options["download_files_base_names"][index])
+                #print(("{0} is {1}".format("index", index)))
+                table_graph.set_state("AsciiDataTable", download)
 
-            download_links = TableGraph_to_Links(table_graph,
-                                                 base_name=add_options["download_files_base_names"][index],
-                                                 nodes=download_formats,
-                                                 extensions=download_extensions,
-                                                 mime_types=mime_types)
+                download_links = TableGraph_to_Links(table_graph,
+                                                     base_name=add_options["download_files_base_names"][index],
+                                                     nodes=download_formats,
+                                                     extensions=download_extensions,
+                                                     mime_types=mime_types)
 
-            download_table = download_table + "<tr><td>{0}</td><td>{1}</td></tr>".format(ascii_download, download_links)
+                download_table = download_table + "<tr><td>{0}</td><td>{1}</td></tr>".format(ascii_download, download_links)
+            except:
+                print("Could not add file ")
         download_table = download_table + "</table>"
         self.append_to_body(download_table)
         self.append_to_body({"tag": "hr"})
