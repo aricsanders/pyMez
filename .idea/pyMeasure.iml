@@ -2,7 +2,7 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 2.7.13 (C:\ProgramData\Anaconda2\python.exe)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Jupyter-Notebooks" />
     <orderEntry type="module" module-name="html-examples" />
@@ -18,6 +18,13 @@
     <orderEntry type="module" module-name="test_site" />
     <orderEntry type="module" module-name="Jupyter-Notebooks" />
     <orderEntry type="module" module-name="Diogo's Python Code" />
+    <orderEntry type="module" module-name="support-scripts" />
+    <orderEntry type="library" name="R User Library" level="project" />
+    <orderEntry type="library" name="R Skeletons" level="application" />
+    <orderEntry type="module" module-name="support-scripts" />
+    <orderEntry type="module" module-name="designed_experiments" />
+    <orderEntry type="module" module-name="designed_experiments" />
+    <orderEntry type="module" module-name="nasctn_workflow" />
   </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="Nosetests" />

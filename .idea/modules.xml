@@ -3,13 +3,16 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://C:/Share/Diogo's Python Code/.idea/Diogo's Python Code.iml" filepath="C:/Share/Diogo's Python Code/.idea/Diogo's Python Code.iml" />
-      <module fileurl="file://$USER_HOME$/PyCharmProjects/Jupyter-Notebooks/.idea/Jupyter-Notebooks.iml" filepath="$USER_HOME$/PyCharmProjects/Jupyter-Notebooks/.idea/Jupyter-Notebooks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Jupyter-Notebooks/.idea/Jupyter-Notebooks.iml" filepath="$PROJECT_DIR$/../Jupyter-Notebooks/.idea/Jupyter-Notebooks.iml" />
       <module fileurl="file://$PROJECT_DIR$/../aricsanders.github.io/.idea/aricsanders.github.io.iml" filepath="$PROJECT_DIR$/../aricsanders.github.io/.idea/aricsanders.github.io.iml" />
       <module fileurl="file://$PROJECT_DIR$/../boa/.idea/boa.iml" filepath="$PROJECT_DIR$/../boa/.idea/boa.iml" />
-      <module fileurl="file://$USER_HOME$/PyCharmProjects/check_standard/.idea/check_standard.iml" filepath="$USER_HOME$/PyCharmProjects/check_standard/.idea/check_standard.iml" />
-      <module fileurl="file://$USER_HOME$/PyCharmProjects/html-examples/.idea/html-examples.iml" filepath="$USER_HOME$/PyCharmProjects/html-examples/.idea/html-examples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../check_standard/.idea/check_standard.iml" filepath="$PROJECT_DIR$/../check_standard/.idea/check_standard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../designed_experiments/.idea/designed_experiments.iml" filepath="$PROJECT_DIR$/../designed_experiments/.idea/designed_experiments.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../html-examples/.idea/html-examples.iml" filepath="$PROJECT_DIR$/../html-examples/.idea/html-examples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../nasctn_workflow/.idea/nasctn_workflow.iml" filepath="$PROJECT_DIR$/../nasctn_workflow/.idea/nasctn_workflow.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/pyMeasure.iml" filepath="$PROJECT_DIR$/.idea/pyMeasure.iml" />
-      <module fileurl="file://$USER_HOME$/PyCharmProjects/test_site/.idea/test_site.iml" filepath="$USER_HOME$/PyCharmProjects/test_site/.idea/test_site.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../support-scripts/.idea/support-scripts.iml" filepath="$PROJECT_DIR$/../support-scripts/.idea/support-scripts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../test_site/.idea/test_site.iml" filepath="$PROJECT_DIR$/../test_site/.idea/test_site.iml" />
     </modules>
   </component>
 </project>
